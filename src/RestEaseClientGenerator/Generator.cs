@@ -288,23 +288,16 @@ namespace RestEaseClientGenerator
                 switch (responseMediaType.Schema?.GetSchemaType())
                 {
                     case SchemaType.Array:
-                        string arrayType = responseMediaType.Schema.Items.Reference != null ? responseMediaType.Schema.Items.Reference.Id : MapSchema(responseMediaType.Schema.Items, "", responseMediaType.Schema.Nullable).ToString();
+                        string arrayType = responseMediaType.Schema.Items.Reference != null ?
+                            responseMediaType.Schema.Items.Reference.Id :
+                            MapSchema(responseMediaType.Schema.Items, "", responseMediaType.Schema.Nullable).ToString();
                         returnType = $"<{arrayType}[]>";
                         break;
 
                     case SchemaType.Object:
-                        if (responseMediaType.Schema.Reference != null)
-                        {
-                            returnType = $"<{responseMediaType.Schema.Reference.Id}>";
-                        }
-                        else
-                        {
-                            returnType = $"<{MapSchema(responseMediaType.Schema.AdditionalProperties, "", responseMediaType.Schema.AdditionalProperties.Nullable, false)}>";
-                        }
-                        break;
-
-                    default:
-                        returnType = "";
+                        returnType = responseMediaType.Schema.Reference != null ?
+                            $"<{responseMediaType.Schema.Reference.Id}>" :
+                            $"<{MapSchema(responseMediaType.Schema.AdditionalProperties, "", responseMediaType.Schema.AdditionalProperties.Nullable, false)}>";
                         break;
                 }
             }
