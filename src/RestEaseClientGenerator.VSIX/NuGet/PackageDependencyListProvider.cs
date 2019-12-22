@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace RestEaseClientCodeGeneratorVSIX.NuGet
+namespace ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Core.NuGet
 {
     public class PackageDependencyListProvider
     {
@@ -8,7 +8,7 @@ namespace RestEaseClientCodeGeneratorVSIX.NuGet
         {
             switch (generator)
             {
-                case SupportedCodeGenerator.RestEase:
+                case SupportedCodeGenerator.AutoRest:
                     yield return PackageDependencies.RestEase;
                     break;
             }

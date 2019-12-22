@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
+using ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Core.Options.General;
 
-namespace RestEaseClientCodeGeneratorVSIX.Options.General
+namespace ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Options.General
 {
     public class CustomPathOptions 
         : OptionsBase<IGeneralOptions, GeneralOptionPage>, IGeneralOptions
@@ -13,19 +14,19 @@ namespace RestEaseClientCodeGeneratorVSIX.Options.General
                 if (options == null)
                     options = GetFromDialogPage();
 
-                //JavaPath = options.JavaPath;
-                //NpmPath = options.NpmPath;
-                //NSwagPath = options.NSwagPath;
-                //SwaggerCodegenPath = options.SwaggerCodegenPath;
-                //OpenApiGeneratorPath = options.OpenApiGeneratorPath;
+                JavaPath = options.JavaPath;
+                NpmPath = options.NpmPath;
+                NSwagPath = options.NSwagPath;
+                SwaggerCodegenPath = options.SwaggerCodegenPath;
+                OpenApiGeneratorPath = options.OpenApiGeneratorPath;
             }
             catch (Exception e)
             {
-                //JavaPath = PathProvider.GetJavaPath();
-                //NpmPath = PathProvider.GetNpmPath();
-                //NSwagPath = PathProvider.GetNSwagStudioPath();
-                //SwaggerCodegenPath = PathProvider.GetSwaggerCodegenPath();
-                //OpenApiGeneratorPath = PathProvider.GetOpenApiGeneratorPath();
+                JavaPath = PathProvider.GetJavaPath();
+                NpmPath = PathProvider.GetNpmPath();
+                NSwagPath = PathProvider.GetNSwagStudioPath();
+                SwaggerCodegenPath = PathProvider.GetSwaggerCodegenPath();
+                OpenApiGeneratorPath = PathProvider.GetOpenApiGeneratorPath();
 
                 Trace.WriteLine(e);
                 Trace.WriteLine(Environment.NewLine);

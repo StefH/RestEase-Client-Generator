@@ -1,6 +1,8 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Core.Options;
+using Microsoft.VisualStudio.Shell;
 
-namespace RestEaseClientCodeGeneratorVSIX.Options
+namespace ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Options
 {
     [ExcludeFromCodeCoverage]
     public class OptionsFactory : IOptionsFactory

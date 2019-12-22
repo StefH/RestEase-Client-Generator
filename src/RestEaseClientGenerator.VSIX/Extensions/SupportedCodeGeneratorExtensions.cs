@@ -1,21 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using RestEaseClientCodeGeneratorVSIX.CustomTool.AutoRest;
-using RestEaseClientCodeGeneratorVSIX.NuGet;
+using ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Core;
+using ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Core.NuGet;
+using ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.CustomTool.AutoRest;
 
-namespace RestEaseClientCodeGeneratorVSIX.Extensions
+namespace ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Extensions
 {
     public static class SupportedCodeGeneratorExtensions
     {
-        private static readonly PackageDependencyListProvider DependencyListProvider = new PackageDependencyListProvider();
+        private static readonly PackageDependencyListProvider DependencyListProvider
+            = new PackageDependencyListProvider();
 
         public static string GetCustomToolName(this SupportedCodeGenerator generator)
         {
             string customTool = null;
             switch (generator)
             {
-                case SupportedCodeGenerator.RestEase:
-                    customTool = nameof(RestEaseCodeGenerator);
+                case SupportedCodeGenerator.AutoRest:
+                    customTool = nameof(AutoRestCodeGenerator);
                     break;
             }
 
@@ -24,8 +26,9 @@ namespace RestEaseClientCodeGeneratorVSIX.Extensions
 
         public static SupportedCodeGenerator GetSupportedCodeGenerator(this Type type)
         {
-            if (type.IsAssignableFrom(typeof(RestEaseCodeGenerator)))
-                return SupportedCodeGenerator.RestEase;
+
+            if (type.IsAssignableFrom(typeof(AutoRestCodeGenerator)))
+                return SupportedCodeGenerator.AutoRest;
 
             throw new NotSupportedException();
         }

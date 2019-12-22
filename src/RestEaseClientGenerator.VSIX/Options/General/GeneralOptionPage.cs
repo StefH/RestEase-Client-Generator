@@ -1,10 +1,11 @@
-﻿using ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Windows;
-using Microsoft.VisualStudio.Shell;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Windows.Forms;
+using ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Core.Options.General;
+using ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Windows;
+using Microsoft.VisualStudio.Shell;
 
-namespace RestEaseClientCodeGeneratorVSIX.Options.General
+namespace ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Options.General
 {
     [ExcludeFromCodeCoverage]
     public class GeneralOptionPage : DialogPage, IGeneralOptions
@@ -13,6 +14,9 @@ namespace RestEaseClientCodeGeneratorVSIX.Options.General
 
         public GeneralOptionPage()
         {
+            JavaPath = PathProvider.GetJavaPath();
+            NpmPath = PathProvider.GetNpmPath();
+            NSwagPath = PathProvider.GetNSwagStudioPath();
         }
 
         [Category("File Paths")]
@@ -29,17 +33,18 @@ namespace RestEaseClientCodeGeneratorVSIX.Options.General
         [DisplayName("NSwag Path")]
         [Description("Full path to NSwag.exe (Installs from NPM if not found)")]
         public string NSwagPath { get; set; }
-
+        
         [Category("File Paths")]
         [DisplayName("Swagger Codegen CLI Path")]
         [Description("Full path to Swagger Codegen JAR file")]
         public string SwaggerCodegenPath { get; set; }
-
+        
         [Category("File Paths")]
         [DisplayName("OpenAPI Generator Path")]
         [Description("Full path OpenAPI Generator JAR file")]
         public string OpenApiGeneratorPath { get; set; }
 
-        protected override IWin32Window Window => new GeneralOptionsPageCustom(this);
+        protected override IWin32Window Window
+            => new GeneralOptionsPageCustom(this);
     }
 }

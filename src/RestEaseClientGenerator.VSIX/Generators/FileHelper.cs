@@ -2,7 +2,7 @@
 using System.IO;
 using System.Security.Cryptography;
 
-namespace RestEaseClientCodeGeneratorVSIX.Generators
+namespace ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Core.Generators
 {
     public static class FileHelper
     {

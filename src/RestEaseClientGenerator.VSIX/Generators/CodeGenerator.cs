@@ -1,21 +1,24 @@
 ﻿using System;
 using System.IO;
-using RestEaseClientGenerator;
 
-namespace RestEaseClientCodeGeneratorVSIX.Generators
+namespace ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Core.Generators
 {
+    public interface ICodeGenerator
+    {
+        string GenerateCode(IProgressReporter pGenerateProgress);
+    }
+
     public abstract class CodeGenerator : ICodeGenerator
     {
         protected readonly string DefaultNamespace;
         protected readonly string SwaggerFile;
-        private readonly IProcessLauncher _processLauncher;
-        private readonly IGenerator _generator = new Generator();
+        private readonly IProcessLauncher processLauncher;
 
         protected CodeGenerator(string swaggerFile, string defaultNamespace, IProcessLauncher processLauncher)
         {
             SwaggerFile = swaggerFile ?? throw new ArgumentNullException(nameof(swaggerFile));
             DefaultNamespace = defaultNamespace ?? throw new ArgumentNullException(nameof(defaultNamespace));
-            _processLauncher = processLauncher ?? throw new ArgumentNullException(nameof(processLauncher));
+            this.processLauncher = processLauncher ?? throw new ArgumentNullException(nameof(processLauncher));
         }
 
         public virtual string GenerateCode(IProgressReporter pGenerateProgress)
@@ -23,12 +26,7 @@ namespace RestEaseClientCodeGeneratorVSIX.Generators
             try
             {
                 pGenerateProgress.Progress(10);
-
-                string name = Path.GetFileNameWithoutExtension(SwaggerFile);
-                string path = Path.GetDirectoryName(SwaggerFile);
-
-                var result = _generator.FromStream(File.OpenRead(path), DefaultNamespace, name, out var diag);
-
+                var path = Path.GetDirectoryName(SwaggerFile);
                 var outputFile = Path.Combine(
                     path ?? throw new InvalidOperationException(),
                     $"{Guid.NewGuid()}.cs");
@@ -37,7 +35,7 @@ namespace RestEaseClientCodeGeneratorVSIX.Generators
                 var arguments = GetArguments(outputFile);
                 pGenerateProgress.Progress(30);
 
-                _processLauncher.Start(command, arguments);
+                processLauncher.Start(command, arguments);
                 pGenerateProgress.Progress(80);
 
                 return FileHelper.ReadThenDelete(outputFile);

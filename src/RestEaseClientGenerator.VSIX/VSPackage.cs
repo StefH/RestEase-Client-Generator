@@ -2,16 +2,16 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using System.Threading;
+using ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Commands;
+using ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Commands.AddNew;
+using ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Commands.CustomTool;
+using ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Options.AutoRest;
+using ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Options.General;
 using Microsoft.VisualStudio.Shell;
-using RestEaseClientCodeGeneratorVSIX.Commands;
-using RestEaseClientCodeGeneratorVSIX.Commands.AddNew;
-using RestEaseClientCodeGeneratorVSIX.Commands.CustomTool;
-using RestEaseClientCodeGeneratorVSIX.Options.General;
-using RestEaseClientCodeGeneratorVSIX.Options.RestEase;
-using RestEaseClientCodeGeneratorVSIX.Windows;
+using OutputWindow = ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Windows.OutputWindow;
 using Task = System.Threading.Tasks.Task;
 
-namespace RestEaseClientCodeGeneratorVSIX
+namespace ChristianHelle.DeveloperTools.CodeGenerators.ApiClient
 {
     [ExcludeFromCodeCoverage]
     [Guid("47AFE4E1-5A52-4FE1-8CA7-EDB8310BDA4A")]
@@ -32,20 +32,19 @@ namespace RestEaseClientCodeGeneratorVSIX
         0,
         true)]
     [ProvideOptionPage(
-        typeof(RestEaseOptionsPage),
+        typeof(AutoRestOptionsPage),
         VsixName,
-        RestEaseOptionsPage.Name,
+        AutoRestOptionsPage.Name,
         0,
         0,
         true)]
-
-
+    
     public sealed class VsPackage : AsyncPackage
     {
         public const string VsixName = "RestEase Client Code Generator";
 
         private readonly ICommandInitializer[] commands = {
-            new RestEaseCodeGeneratorCustomToolSetter(),
+            new AutoRestCodeGeneratorCustomToolSetter(),
             new NewAutoRestClientCommand()
         };
 

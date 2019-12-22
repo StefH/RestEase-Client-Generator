@@ -4,7 +4,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using RestEaseClientCodeGeneratorVSIX.Windows;
 
 namespace ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Windows
 {

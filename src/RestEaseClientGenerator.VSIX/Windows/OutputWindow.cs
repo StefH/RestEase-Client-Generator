@@ -7,24 +7,24 @@ using Microsoft.VisualStudio.Shell.Interop;
 
 #pragma warning disable VSTHRD010 // Invoke single-threaded types on Main thread
 
-namespace RestEaseClientCodeGeneratorVSIX.Windows
+namespace ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Windows
 {
     [ExcludeFromCodeCoverage]
     public static class OutputWindow
     {
-        private static string _name;
-        private static IVsOutputWindowPane _pane;
-        private static IVsOutputWindow _output;
+        private static string name;
+        private static IVsOutputWindowPane pane;
+        private static IVsOutputWindow output;
 
         public static void Initialize(IServiceProvider provider, string outputSource)
         {
-            if (_output != null)
+            if (output != null)
                 return;
 
             ThreadHelper.ThrowIfNotOnUIThread();
-            _output = (IVsOutputWindow)provider.GetService(typeof(SVsOutputWindow));
-            Assumes.Present(_output);
-            _name = outputSource;
+            output = (IVsOutputWindow)provider.GetService(typeof(SVsOutputWindow));
+            Assumes.Present(output);
+            name = outputSource;
 
             Trace.Listeners.Add(new OutputWindowTraceListener());
         }
@@ -34,7 +34,7 @@ namespace RestEaseClientCodeGeneratorVSIX.Windows
             try
             {
                 if (EnsurePane()) 
-                    _pane.OutputString($"{DateTime.Now}: {message}{Environment.NewLine}");
+                    pane.OutputString($"{DateTime.Now}: {message}{Environment.NewLine}");
             }
             catch
             {
@@ -44,13 +44,13 @@ namespace RestEaseClientCodeGeneratorVSIX.Windows
         
         private static bool EnsurePane()
         {
-            if (_pane != null)
+            if (pane != null)
                 return true;
 
             var guid = Guid.NewGuid();
-            _output.CreatePane(ref guid, _name, 1, 1);
-            _output.GetPane(ref guid, out _pane);
-            return _pane != null;
+            output.CreatePane(ref guid, name, 1, 1);
+            output.GetPane(ref guid, out pane);
+            return pane != null;
         }
     }
 }

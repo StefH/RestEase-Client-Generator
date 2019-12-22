@@ -1,19 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="82b69558-85eb-478e-ae27-acdded965870" Version="1.0.0" Language="en-US" Publisher="Stef Heyenrath" />
+        <Identity Id="18316dd0-2bbc-49b0-bd7c-c355031fade2" Version="1.0.0" Language="en-US" Publisher="Stef Heyenrath" />
         <DisplayName>RestEase Client Code Generator</DisplayName>
-        <Description xml:space="preserve">Generate a RestEase compatible client based on a Swagger / OpenAPI specification files.</Description>
-        <MoreInfo>https://marketplace.visualstudio.com/items?itemName=TODO</MoreInfo>
+        <Description xml:space="preserve">Gnerate a RestEase compatible client based on a Swagger / OpenAPI specification files</Description>
+        <MoreInfo>https://marketplace.visualstudio.com/items?itemName=XXX</MoreInfo>
         <Icon>Resources\Icon.png</Icon>
         <PreviewImage>Resources\Icon.png</PreviewImage>
-        <Tags>RestEase; OpenAPI; Swagger; REST API; REST Client; Code Generator</Tags>
+        <Tags>OpenAPI; Swagger; RestEase; REST API; Code Generator; REST Client</Tags>
     </Metadata>
     <Installation>
         <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[15.0, 17.0)" />
     </Installation>
     <Dependencies>
-        <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.6,)" />
+        <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.5,)" />
     </Dependencies>
     <Assets>
         <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%;PkgdefProjectOutputGroup|" />

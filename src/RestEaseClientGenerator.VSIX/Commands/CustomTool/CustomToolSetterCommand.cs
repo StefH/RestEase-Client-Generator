@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace RestEaseClientCodeGeneratorVSIX.Commands.CustomTool
+namespace ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Commands.CustomTool
 {
     [ExcludeFromCodeCoverage]
     public static class CustomToolSetterCommand

@@ -1,21 +1,23 @@
-﻿using Microsoft.VisualStudio.Shell;
+﻿using ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Core;
+using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
+using System;
 
-namespace RestEaseClientCodeGeneratorVSIX.CustomTool
+namespace ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.CustomTool
 {
     public class ProgressReporter : IProgressReporter
     {
-        private readonly IVsGeneratorProgress _generateProgress;
+        private readonly IVsGeneratorProgress pGenerateProgress;
 
-        public ProgressReporter(IVsGeneratorProgress generateProgress)
+        public ProgressReporter(IVsGeneratorProgress pGenerateProgress)
         {
-            _generateProgress = generateProgress;
+            this.pGenerateProgress = pGenerateProgress;
         }
 
         public void Progress(uint progress, uint total = 100)
         {
             ThreadHelper.ThrowIfNotOnUIThread();
-            _generateProgress.Progress(progress, total);
+            pGenerateProgress.Progress(progress, total);
         }
     }
 }

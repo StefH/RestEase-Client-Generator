@@ -1,12 +1,13 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
+using ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Core;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.TextTemplating.VSHost;
 
-namespace RestEaseClientCodeGeneratorVSIX.CustomTool.AutoRest
+namespace ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.CustomTool.AutoRest
 {
     [ExcludeFromCodeCoverage]
-    [Guid("AAAE3194-DD0B-44FC-B8C4-B40EB2BF6499")]
+    [Guid("A2AE3194-DD0B-44FC-B8C4-B40EB2BF6498")]
     [ComVisible(true)]
     [ProvideObject(typeof(AutoRestCSharpCodeGenerator))]
     [CodeGeneratorRegistration(typeof(AutoRestCSharpCodeGenerator),
@@ -14,7 +15,7 @@ namespace RestEaseClientCodeGeneratorVSIX.CustomTool.AutoRest
                               ProvideCodeGeneratorAttribute.CSharpProjectGuid,
                               GeneratesDesignTimeSource = true,
                               GeneratorRegKeyName = "AutoRestCodeGenerator")]
-    public class AutoRestCSharpCodeGenerator : RestEaseCodeGenerator
+    public class AutoRestCSharpCodeGenerator : AutoRestCodeGenerator
     {
         public const string Description = "C# AutoRest API Client Code Generator";
 

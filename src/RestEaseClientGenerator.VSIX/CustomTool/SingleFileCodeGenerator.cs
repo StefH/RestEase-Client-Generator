@@ -2,19 +2,22 @@
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
+using ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Core;
+using ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Core.Converters;
+using ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Core.Extensions;
+using ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Core.Generators;
+using ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Extensions;
+using ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Generators;
 using Microsoft.VisualStudio.Shell.Interop;
-using RestEaseClientCodeGeneratorVSIX.Converters;
-using RestEaseClientCodeGeneratorVSIX.Extensions;
-using RestEaseClientCodeGeneratorVSIX.Generators;
 
-namespace RestEaseClientCodeGeneratorVSIX.CustomTool
+namespace ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.CustomTool
 {
     [ExcludeFromCodeCoverage]
     [ComVisible(true)]
     public abstract class SingleFileCodeGenerator : IVsSingleFileGenerator
     {
-        private readonly SupportedLanguage _supportedLanguage;
-        private readonly ILanguageConverter _converter;
+        private readonly SupportedLanguage supportedLanguage;
+        private readonly ILanguageConverter converter;
 
         public SupportedCodeGenerator CodeGenerator { get; }
 
@@ -23,9 +26,9 @@ namespace RestEaseClientCodeGeneratorVSIX.CustomTool
             SupportedLanguage supportedLanguage = SupportedLanguage.CSharp,
             ILanguageConverter converter = null)
         {
-            CodeGenerator = supportedCodeGenerator;
-            _supportedLanguage = supportedLanguage;
-            _converter = converter;
+            this.CodeGenerator = supportedCodeGenerator;
+            this.supportedLanguage = supportedLanguage;
+            this.converter = converter;
         }
 
         public abstract int DefaultExtension(out string pbstrDefaultExtension);
@@ -48,7 +51,7 @@ namespace RestEaseClientCodeGeneratorVSIX.CustomTool
                     wszDefaultNamespace,
                     bstrInputFileContents,
                     wszInputFilePath,
-                    _supportedLanguage,
+                    supportedLanguage,
                     CodeGenerator);
 
                 var code = codeGenerator.GenerateCode(new ProgressReporter(pGenerateProgress));
@@ -58,7 +61,7 @@ namespace RestEaseClientCodeGeneratorVSIX.CustomTool
                     return 1;
                 }
 
-                if (_supportedLanguage == SupportedLanguage.VisualBasic && _converter != null)
+                if (supportedLanguage == SupportedLanguage.VisualBasic && converter != null)
                 {
                     Trace.WriteLine(Environment.NewLine);
                     Trace.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
@@ -66,7 +69,7 @@ namespace RestEaseClientCodeGeneratorVSIX.CustomTool
                     Trace.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                     Trace.WriteLine(Environment.NewLine);
 
-                    code = _converter
+                    code = converter
                         .ConvertAsync(code)
                         .GetAwaiter()
                         .GetResult();

@@ -1,19 +1,23 @@
 ﻿using System;
-using RestEaseClientCodeGeneratorVSIX.Generators.RestEase;
-using RestEaseClientCodeGeneratorVSIX.Options;
-using RestEaseClientCodeGeneratorVSIX.Options.RestEase;
+using ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Core;
+using ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Core.Generators;
+using ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Core.Generators.AutoRest;
+using ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Core.Options;
+using ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Core.Options.AutoRest;
+using ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Options;
+using ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Options.AutoRest;
 
-namespace RestEaseClientCodeGeneratorVSIX.Generators
+namespace ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Generators
 {
     public class CodeGeneratorFactory : ICodeGeneratorFactory
     {
-        private readonly IProcessLauncher _processLauncher;
-        private readonly IOptionsFactory _optionsFactory;
+        private readonly IProcessLauncher processLauncher;
+        private readonly IOptionsFactory optionsFactory;
 
         public CodeGeneratorFactory(IOptionsFactory optionsFactory = null, IProcessLauncher processLauncher = null)
         {
-            _optionsFactory = optionsFactory ?? new OptionsFactory();
-            _processLauncher = processLauncher ?? new ProcessLauncher();
+            this.optionsFactory = optionsFactory ?? new OptionsFactory();
+            this.processLauncher = processLauncher ?? new ProcessLauncher();
         }
 
         public ICodeGenerator Create(
@@ -25,12 +29,12 @@ namespace RestEaseClientCodeGeneratorVSIX.Generators
         {
             switch (generator)
             {
-                case SupportedCodeGenerator.RestEase:
-                    return new RestEaseCSharpCodeGenerator(
+                case SupportedCodeGenerator.AutoRest:
+                    return new AutoRestCSharpCodeGenerator(
                         inputFilePath,
                         defaultNamespace,
-                        _optionsFactory.Create<IRestEaseOptions, RestEaseOptionsPage>(),
-                        _processLauncher);                
+                        optionsFactory.Create<IAutoRestOptions, AutoRestOptionsPage>(),
+                        processLauncher);
 
                 default:
                     throw new NotSupportedException();

@@ -3,14 +3,15 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Threading;
+using ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Core;
+using ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Extensions;
 using ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Windows;
 using EnvDTE;
 using Microsoft.VisualStudio.Shell;
-using RestEaseClientCodeGeneratorVSIX.Extensions;
 using VSLangProj;
 using Task = System.Threading.Tasks.Task;
 
-namespace RestEaseClientCodeGeneratorVSIX.Commands.AddNew
+namespace ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Commands.AddNew
 {
     [ExcludeFromCodeCoverage]
     public abstract class NewRestClientCommand : ICommandInitializer

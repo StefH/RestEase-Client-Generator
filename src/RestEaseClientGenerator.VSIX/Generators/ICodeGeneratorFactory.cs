@@ -1,4 +1,4 @@
-﻿namespace RestEaseClientCodeGeneratorVSIX.Generators
+﻿namespace ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Core.Generators
 {
     public interface ICodeGeneratorFactory
     {

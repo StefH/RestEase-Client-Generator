@@ -1,4 +1,4 @@
-﻿namespace RestEaseClientCodeGeneratorVSIX.Options
+﻿namespace ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Core.Options
 {
     public interface IOptionsFactory
     {

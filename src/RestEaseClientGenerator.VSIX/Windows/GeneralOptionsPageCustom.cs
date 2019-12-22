@@ -2,7 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Windows.Forms;
-using RestEaseClientCodeGeneratorVSIX.Options.General;
+using ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Options.General;
 
 namespace ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Windows
 {
