@@ -1,0 +1,41 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!--<Compile Remove="PetStore\**\*.cs" />-->
+    <!--<Compile Remove="PetStoreJson\**\*.cs" />-->
+    <!--<Compile Remove="Infura\**\*.cs" />-->
+    <Compile Remove="Strato\**\*.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\RestEaseClientGenerator\RestEaseClientGenerator.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="infura.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="PetStore.json">
+      <!--<Generator>OpenApiCodeGenerator</Generator>
+      <LastGenOutput>PetStore.cs</LastGenOutput>-->
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="petstore.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="strato-api.yml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="PetStore\Api\" />
+    <Folder Include="PetStore\Models\" />
+  </ItemGroup>
+
+</Project>

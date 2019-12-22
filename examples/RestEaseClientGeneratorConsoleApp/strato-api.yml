@@ -1,0 +1,1545 @@
+﻿{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.2",
+    "title": "Strato API",
+    "license": {
+      "url": "http://mit.com",
+      "name": "MIT"
+    },
+    "description": "This is the strato api"
+  },
+  "basePath": "/strato-api/eth/v1.2/",
+  "paths": {
+    "/transaction": {
+      "get": {
+        "produces": [
+          "application/json;charset=utf-8"
+        ],
+        "parameters": [
+          {
+            
+            "format": "hex string",
+            "minimum": 0,
+            "in": "query",
+            "name": "from",
+            "type": "string"
+          },
+          {
+            
+            "format": "hex string",
+            "minimum": 0,
+            "in": "query",
+            "name": "to",
+            "type": "string"
+          },
+          {
+            
+            "format": "hex string",
+            "minimum": 0,
+            "in": "query",
+            "name": "address",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "value",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "maxvalue",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "minvalue",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "gasprice",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "maxgasprice",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "mingasprice",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "gaslimit",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "maxgaslimit",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "mingaslimit",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "blocknumber",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "hash",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid `hash` or `blocknumber` or `mingaslimit` or `maxgaslimit` or `gaslimit` or `mingasprice` or `maxgasprice` or `gasprice` or `minvalue` or `maxvalue` or `value` or `address` or `to` or `from`"
+          },
+          "200": {
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/Transaction"
+              },
+              "type": "array"
+            },
+            "description": ""
+          }
+        }
+      },
+      "post": {
+        "consumes": [
+          "application/json;charset=utf-8"
+        ],
+        "produces": [
+          "text/plain;charset=utf-8"
+        ],
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PostTransaction"
+            },
+            "in": "body",
+            "name": "body"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid `body`"
+          },
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Keccak256 hash, 32 byte hex encoded string"
+            },
+            "description": ""
+          }
+        }
+      }
+    },
+    "/transaction/last/{integer}": {
+      "get": {
+        "produces": [
+          "application/json;charset=utf-8"
+        ],
+        "parameters": [
+          {
+            "required": true,
+            "in": "path",
+            "name": "integer",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "`integer` not found"
+          },
+          "200": {
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/Transaction"
+              },
+              "type": "array"
+            },
+            "description": ""
+          }
+        }
+      }
+    },
+    "/transactionList": {
+      "post": {
+        "consumes": [
+          "application/json;charset=utf-8"
+        ],
+        "produces": [
+          "application/json;charset=utf-8"
+        ],
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/PostTransaction"
+              },
+              "type": "array"
+            },
+            "in": "body",
+            "name": "body"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid `body`"
+          },
+          "200": {
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/Keccak256 hash, 32 byte hex encoded string"
+              },
+              "type": "array"
+            },
+            "description": ""
+          }
+        }
+      }
+    },
+    "/transactionResult/{hash}": {
+      "get": {
+        "produces": [
+          "application/json;charset=utf-8"
+        ],
+        "parameters": [
+          {
+            "required": true,
+            "in": "path",
+            "name": "hash",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "`hash` not found"
+          },
+          "200": {
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/TransactionResult"
+              },
+              "type": "array"
+            },
+            "description": ""
+          }
+        }
+      }
+    },
+    "/transactionResult/batch": {
+      "post": {
+        "consumes": [
+          "text/plain;charset=utf-8"
+        ],
+        "produces": [
+          "application/json;charset=utf-8"
+        ],
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/Keccak256 hash, 32 byte hex encoded string"
+              },
+              "type": "array"
+            },
+            "in": "body",
+            "name": "body"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid `body`"
+          },
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/BatchTransactionResult"
+            },
+            "description": ""
+          }
+        }
+      }
+    },
+    "/block": {
+      "get": {
+        "produces": [
+          "application/json;charset=utf-8"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "number",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "minnumber",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "maxnumber",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "gaslim",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "mingaslim",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "maxgaslim",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "gasused",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "mingasused",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "maxgasused",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "diff",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "mindiff",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "maxdiff",
+            "type": "integer"
+          },
+          {
+            
+            "format": "hex string",
+            "minimum": 0,
+            "in": "query",
+            "name": "txaddress",
+            "type": "string"
+          },
+          {
+            
+            "format": "hex string",
+            "minimum": 0,
+            "in": "query",
+            "name": "address",
+            "type": "string"
+          },
+          {
+            
+            "format": "hex string",
+            "minimum": 0,
+            "in": "query",
+            "name": "coinbase",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "hash",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid `hash` or `coinbase` or `address` or `txaddress` or `maxdiff` or `mindiff` or `diff` or `maxgasused` or `mingasused` or `gasused` or `maxgaslim` or `mingaslim` or `gaslim` or `maxnumber` or `minnumber` or `number`"
+          },
+          "200": {
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/Block"
+              },
+              "type": "array"
+            },
+            "description": ""
+          }
+        }
+      }
+    },
+    "/block/last/{integer}": {
+      "get": {
+        "produces": [
+          "application/json;charset=utf-8"
+        ],
+        "parameters": [
+          {
+            "required": true,
+            "in": "path",
+            "name": "integer",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "`integer` not found"
+          },
+          "200": {
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/Block"
+              },
+              "type": "array"
+            },
+            "description": ""
+          }
+        }
+      }
+    },
+    "/account": {
+      "get": {
+        "produces": [
+          "application/json;charset=utf-8"
+        ],
+        "parameters": [
+          {
+            
+            "format": "hex string",
+            "minimum": 0,
+            "in": "query",
+            "name": "address",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "balance",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "minbalance",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "maxbalance",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "nonce",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "minnonce",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "maxnonce",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid `maxnonce` or `minnonce` or `nonce` or `maxbalance` or `minbalance` or `balance` or `address`"
+          },
+          "200": {
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/Account"
+              },
+              "type": "array"
+            },
+            "description": ""
+          }
+        }
+      }
+    },
+    "/stats/difficulty": {
+      "get": {
+        "produces": [
+          "application/json;charset=utf-8"
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Difficulty"
+            },
+            "description": ""
+          }
+        }
+      }
+    },
+    "/stats/totaltx": {
+      "get": {
+        "produces": [
+          "application/json;charset=utf-8"
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/TxCount"
+            },
+            "description": ""
+          }
+        }
+      }
+    },
+    "/storage": {
+      "get": {
+        "produces": [
+          "application/json;charset=utf-8"
+        ],
+        "parameters": [
+          {
+            
+            "format": "hex string",
+            "minimum": 0,
+            "in": "query",
+            "name": "address",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid `address`"
+          },
+          "200": {
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/Storage"
+              },
+              "type": "array"
+            },
+            "description": ""
+          }
+        }
+      }
+    },
+    "/faucet": {
+      "post": {
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "text/plain;charset=utf-8"
+        ],
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Address"
+            },
+            "in": "body",
+            "name": "body"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid `body`"
+          },
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Keccak256 hash, 32 byte hex encoded string"
+            },
+            "description": ""
+          }
+        }
+      }
+    },
+    "/solc": {
+      "post": {
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "text/plain;charset=utf-8"
+        ],
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Post Users Contract Request"
+            },
+            "in": "body",
+            "name": "body"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid `body`"
+          },
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/SolcResponse"
+            },
+            "description": ""
+          }
+        }
+      }
+    },
+    "/extabi": {
+      "post": {
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "text/plain;charset=utf-8"
+        ],
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Post Users Contract Request"
+            },
+            "in": "body",
+            "name": "body"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid `body`"
+          },
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/ExtabiResponse"
+            },
+            "description": ""
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Transaction": {
+      "description": "A transaction",
+      "required": [
+        "transactionType",
+        "hash",
+        "gasLimit",
+        "gasPrice",
+        "from",
+        "value",
+        "r",
+        "s",
+        "v",
+        "nonce",
+        "origin"
+      ],
+      "properties": {
+        "transactionType": {
+          "$ref": "#/definitions/TransactionType"
+        },
+        "hash": {
+          "$ref": "#/definitions/Keccak256 hash, 32 byte hex encoded string"
+        },
+        "gasLimit": {
+          "$ref": "#/definitions/Natural"
+        },
+        "codeOrData": {
+          "type": "string"
+        },
+        "gasPrice": {
+          "$ref": "#/definitions/Natural"
+        },
+        "to": {
+          "$ref": "#/definitions/Address"
+        },
+        "from": {
+          "$ref": "#/definitions/Address"
+        },
+        "value": {
+          "$ref": "#/definitions/Natural"
+        },
+        "fromBlock": {
+          "type": "boolean"
+        },
+        "blockNumber": {
+          "maximum": 9223372036854775807,
+          "minimum": -9223372036854775808,
+          "type": "integer"
+        },
+        "r": {
+          "$ref": "#/definitions/hex natural"
+        },
+        "s": {
+          "$ref": "#/definitions/hex natural"
+        },
+        "v": {
+          "$ref": "#/definitions/hex word8"
+        },
+        "timestamp": {
+          "$ref": "#/definitions/UTCTime"
+        },
+        "nonce": {
+          "$ref": "#/definitions/Natural"
+        },
+        "origin": {
+          "type": "string"
+        }
+      },
+      "example": {
+        "transactionType": "Transfer",
+        "origin": "API",
+        "hash": "6b0d5d3309777e2e799976ea377ce6aeb4a485b1e7cae56f41a85ada9855fb99",
+        "gasLimit": "90000000",
+        "codeOrData": "",
+        "gasPrice": "50000000000",
+        "to": "00000000000000000000000000000000deadbeef",
+        "value": "154",
+        "from": "000000000000000000000000000000000000abba",
+        "fromBlock": "True",
+        "blockNumber": 342,
+        "r": "a90ee66c8faf6ce19a5e0496fc809cc1d6984d8636afc9c8a8b2ac381cabc014",
+        "s": "5a5e4ac0d5b1d8cde2662075ee00ecd2da47faae2729252c92237057c6e5b32a",
+        "timestamp": "2017-05-26 23:59:37115 UTC",
+        "v": "1c",
+        "nonce": "123"
+      },
+      "type": "object"
+    },
+    "TransactionType": {
+      "type": "string",
+      "enum": [
+        "Contract",
+        "FunctionCall",
+        "Transfer"
+      ]
+    },
+    "Keccak256 hash, 32 byte hex encoded string": {
+      "description": "Keccak256 hash, 32 byte hex encoded string",
+      "example": "4fbe47914a102ae6561597c95ab95819ddfd6b18c7abc3004c099aeaed2234b4",
+      "type": "string"
+    },
+    "Natural": {
+      "example": 8,
+      "type": "number"
+    },
+    "Address": {
+      "description": "Ethereum Address, 20 byte hex encoded string",
+      "example": "address=deadbeef",
+      "type": "string"
+    },
+    "hex natural": {
+      "example": "8",
+      "type": "string"
+    },
+    "hex word8": {
+      "format": "binary",
+      "type": "string"
+    },
+    "UTCTime": {
+      "example": "2016-07-22T00:00:00Z",
+      "format": "yyyy-mm-ddThh:MM:ssZ",
+      "type": "string"
+    },
+    "PostTransaction": {
+      "description": "Post Transaction",
+      "required": [
+        "hash",
+        "gasLimit",
+        "codeOrData",
+        "gasPrice",
+        "from",
+        "value",
+        "r",
+        "s",
+        "v",
+        "nonce"
+      ],
+      "properties": {
+        "hash": {
+          "$ref": "#/definitions/Keccak256 hash, 32 byte hex encoded string"
+        },
+        "gasLimit": {
+          "$ref": "#/definitions/Natural"
+        },
+        "codeOrData": {
+          "type": "string"
+        },
+        "gasPrice": {
+          "$ref": "#/definitions/Natural"
+        },
+        "to": {
+          "$ref": "#/definitions/Address"
+        },
+        "from": {
+          "$ref": "#/definitions/Address"
+        },
+        "value": {
+          "$ref": "#/definitions/Natural"
+        },
+        "r": {
+          "$ref": "#/definitions/hex natural"
+        },
+        "s": {
+          "$ref": "#/definitions/hex natural"
+        },
+        "v": {
+          "$ref": "#/definitions/hex word8"
+        },
+        "nonce": {
+          "$ref": "#/definitions/Natural"
+        }
+      },
+      "example": {
+        "hash": "4fbe47914a102ae6561597c95ab95819ddfd6b18c7abc3004c099aeaed2234b4",
+        "gasLimit": 21000,
+        "codeOrData": "",
+        "gasPrice": 50000000000,
+        "to": "00000000000000000000000000000000deadbeef",
+        "value": "10000000000000000000",
+        "from": "111dec89c25cbda1c12d67621ee3c10ddb8196bf",
+        "r": "1",
+        "s": "1",
+        "v": "1c",
+        "nonce": 0
+      },
+      "type": "object"
+    },
+    "TransactionResult": {
+      "description": "Transaction Result",
+      "required": [
+        "blockHash",
+        "transactionHash",
+        "message",
+        "response",
+        "trace",
+        "gasUsed",
+        "etherUsed",
+        "contractsCreated",
+        "contractsDeleted",
+        "stateDiff",
+        "time",
+        "newStorage",
+        "deletedStorage"
+      ],
+      "properties": {
+        "blockHash": {
+          "$ref": "#/definitions/Keccak256 hash, 32 byte hex encoded string"
+        },
+        "transactionHash": {
+          "$ref": "#/definitions/Keccak256 hash, 32 byte hex encoded string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "response": {
+          "type": "string"
+        },
+        "trace": {
+          "type": "string"
+        },
+        "gasUsed": {
+          "$ref": "#/definitions/hex word256"
+        },
+        "etherUsed": {
+          "$ref": "#/definitions/hex word256"
+        },
+        "contractsCreated": {
+          "type": "string"
+        },
+        "contractsDeleted": {
+          "type": "string"
+        },
+        "stateDiff": {
+          "type": "string"
+        },
+        "time": {
+          "format": "double",
+          "type": "number"
+        },
+        "newStorage": {
+          "type": "string"
+        },
+        "deletedStorage": {
+          "type": "string"
+        }
+      },
+      "example": {
+        "deletedStorage": "Deleted Storage",
+        "contractsDeleted": "[MyOldContract]",
+        "gasUsed": "ffffffffffffffff",
+        "stateDiff": "I am a state Diff",
+        "time": 0.2321,
+        "response": "I'm a tx result response",
+        "blockHash": "ed167af05357a559c591267b8c797507f5527a7088caf411d33b89be727610f0",
+        "transactionHash": "1bc9423464da0090d450d66757be3b7a9a9c9287e636d67b173dc643bb1dfeb9",
+        "etherUsed": "a",
+        "newStorage": "New Storage",
+        "message": "I'm a tx result message",
+        "trace": "tx trace",
+        "contractsCreated": "[MyNewContractA, MyNewContractB]"
+      },
+      "type": "object"
+    },
+    "hex word256": {
+      "format": "binary",
+      "type": "string"
+    },
+    "BatchTransactionResult": {
+      "required": [
+        "unBatchTransactionResult"
+      ],
+      "properties": {
+        "unBatchTransactionResult": {
+          "additionalProperties": {
+            "items": {
+              "$ref": "#/definitions/TransactionResult"
+            },
+            "type": "array"
+          },
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "Block": {
+      "required": [
+        "blockKind",
+        "blockBlockUncles",
+        "blockReceiptTransactions",
+        "blockBlockData"
+      ],
+      "properties": {
+        "blockKind": {
+          "type": "string"
+        },
+        "blockBlockUncles": {
+          "items": {
+            "$ref": "#/definitions/BlockData"
+          },
+          "type": "array"
+        },
+        "blockReceiptTransactions": {
+          "items": {
+            "$ref": "#/definitions/Transaction"
+          },
+          "type": "array"
+        },
+        "blockBlockData": {
+          "$ref": "#/definitions/BlockData"
+        }
+      },
+      "type": "object"
+    },
+    "BlockData": {
+      "required": [
+        "blockdataExtraData",
+        "blockdataGasUsed",
+        "blockdataGasLimit",
+        "blockdataKind",
+        "blockdataUnclesHash",
+        "blockdataMixHash",
+        "blockdataReceiptsRoot",
+        "blockdataNumber",
+        "blockdataDifficulty",
+        "blockdataTimestamp",
+        "blockdataCoinbase",
+        "blockdataParentHash",
+        "blockdataNonce",
+        "blockdataStateRoot",
+        "blockdataTransactionsRoot"
+      ],
+      "properties": {
+        "blockdataExtraData": {
+          "$ref": "#/definitions/Natural"
+        },
+        "blockdataGasUsed": {
+          "$ref": "#/definitions/Natural"
+        },
+        "blockdataGasLimit": {
+          "$ref": "#/definitions/Natural"
+        },
+        "blockdataKind": {
+          "type": "string"
+        },
+        "blockdataUnclesHash": {
+          "$ref": "#/definitions/Keccak256 hash, 32 byte hex encoded string"
+        },
+        "blockdataMixHash": {
+          "$ref": "#/definitions/Keccak256 hash, 32 byte hex encoded string"
+        },
+        "blockdataReceiptsRoot": {
+          "type": "string"
+        },
+        "blockdataNumber": {
+          "$ref": "#/definitions/Natural"
+        },
+        "blockdataDifficulty": {
+          "$ref": "#/definitions/Natural"
+        },
+        "blockdataTimestamp": {
+          "$ref": "#/definitions/UTCTime"
+        },
+        "blockdataCoinbase": {
+          "$ref": "#/definitions/hex natural"
+        },
+        "blockdataParentHash": {
+          "$ref": "#/definitions/Keccak256 hash, 32 byte hex encoded string"
+        },
+        "blockdataNonce": {
+          "maximum": 18446744073709551615,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "blockdataStateRoot": {
+          "$ref": "#/definitions/Keccak256 hash, 32 byte hex encoded string"
+        },
+        "blockdataTransactionsRoot": {
+          "$ref": "#/definitions/Keccak256 hash, 32 byte hex encoded string"
+        }
+      },
+      "type": "object"
+    },
+    "Account": {
+      "description": "An account",
+      "required": [
+        "address",
+        "nonce",
+        "kind",
+        "balance",
+        "contractRoot",
+        "code",
+        "codeHash",
+        "latestBlockNum",
+        "source"
+      ],
+      "properties": {
+        "address": {
+          "$ref": "#/definitions/Address"
+        },
+        "nonce": {
+          "$ref": "#/definitions/Nonce"
+        },
+        "kind": {
+          "type": "string"
+        },
+        "balance": {
+          "$ref": "#/definitions/Natural"
+        },
+        "contractRoot": {
+          "$ref": "#/definitions/Keccak256 hash, 32 byte hex encoded string"
+        },
+        "code": {
+          "type": "string"
+        },
+        "codeHash": {
+          "$ref": "#/definitions/Keccak256 hash, 32 byte hex encoded string"
+        },
+        "latestBlockNum": {
+          "$ref": "#/definitions/Natural"
+        },
+        "source": {
+          "type": "string"
+        }
+      },
+      "example": {
+        "contractRoot": "64e604787cbf194841e7b68d7cd28786f6c9a0a3ab9f8b0a0e87cb4387ab0107",
+        "kind": "AddressStateRef",
+        "balance": "123",
+        "address": "00000000000000000000000000000000deadbeef",
+        "latestBlockNum": 23,
+        "codeHash": "157dbaa9b67adce425ab2c9398f1017944d4b898aabab5a9d4507b3ae11afc61",
+        "code": "60606040526000357c01000000000000000000000000000000000000000000000000000000009004806360fe47b11460415780636d4ce63c14605757603f565b005b605560048080359060200190919050506078565b005b606260048050506086565b6040518082815260200191505060405180910390f35b806000600050819055505b50565b600060006000505490506094565b9056",
+        "source": "pragma solidity ^0.4.8;\n\ncontract SimpleStorage {\n\n\tuint public myInt;\n\n\tfunction SimpleStorage(uint _myInt) {\n\t\tmyInt = _myInt;\n\t}\n}",
+        "nonce": 42
+      },
+      "type": "object"
+    },
+    "Nonce": {
+      "description": "Numeric Nonce",
+      "example": 1,
+      "type": "integer"
+    },
+    "Difficulty": {
+      "required": [
+        "unDifficulty"
+      ],
+      "properties": {
+        "unDifficulty": {
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "TxCount": {
+      "required": [
+        "unTxCount"
+      ],
+      "properties": {
+        "unTxCount": {
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "Storage": {
+      "required": [
+        "storageAddress",
+        "storageKey",
+        "storageValue"
+      ],
+      "properties": {
+        "storageAddress": {
+          "$ref": "#/definitions/Address"
+        },
+        "storageKey": {
+          "$ref": "#/definitions/hex word256"
+        },
+        "storageValue": {
+          "$ref": "#/definitions/hex word256"
+        }
+      },
+      "type": "object"
+    },
+    "SolcResponse": {
+      "required": [
+        "solcresponseSrc"
+      ],
+      "properties": {
+        "solcresponseSrc": {
+          "additionalProperties": {
+            "$ref": "#/definitions/AbiBin"
+          },
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "AbiBin": {
+      "required": [
+        "abi",
+        "bin",
+        "binRuntime"
+      ],
+      "properties": {
+        "abi": {
+          "type": "string"
+        },
+        "bin": {
+          "type": "string"
+        },
+        "binRuntime": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Post Users Contract Request": {
+      "type": "string"
+    },
+    "ExtabiResponse": {
+      "required": [
+        "extabiresponseSrc"
+      ],
+      "properties": {
+        "extabiresponseSrc": {
+          "additionalProperties": {
+            "$ref": "#/definitions/Xabi schema"
+          },
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "Xabi schema": {
+      "description": "Xabi types",
+      "required": [
+        "funcs",
+        "constr",
+        "vars",
+        "types",
+        "modifiers"
+      ],
+      "properties": {
+        "funcs": {
+          "additionalProperties": {
+            "$ref": "#/definitions/Function Type"
+          },
+          "type": "object"
+        },
+        "constr": {
+          "additionalProperties": {
+            "$ref": "#/definitions/Function Type"
+          },
+          "type": "object"
+        },
+        "vars": {
+          "additionalProperties": {
+            "$ref": "#/definitions/VarType"
+          },
+          "type": "object"
+        },
+        "types": {
+          "additionalProperties": {
+            "$ref": "#/definitions/TypeDef"
+          },
+          "type": "object"
+        },
+        "modifiers": {
+          "additionalProperties": {
+            "$ref": "#/definitions/Function Modifier"
+          },
+          "type": "object"
+        }
+      },
+      "example": {
+        "modifiers": {
+          "onlyOwner": {
+            "args": {},
+            "contents": "if (msg.sender != owner) throw; _;",
+            "selector": "onlyOwner",
+            "vals": {}
+          }
+        },
+        "funcs": {
+          "set": {
+            "modifiers": null,
+            "args": {
+              "x": {
+                "signed": false,
+                "type": "Int",
+                "index": 0,
+                "bytes": 32
+              }
+            },
+            "contents": "return; ",
+            "visibility": null,
+            "payable": null,
+            "vals": {},
+            "mutable": null
+          },
+          "get": {
+            "modifiers": null,
+            "args": {},
+            "contents": "return x; ",
+            "visibility": null,
+            "payable": null,
+            "vals": {
+              "#0": {
+                "signed": false,
+                "type": "Int",
+                "index": 0,
+                "bytes": 32
+              }
+            },
+            "mutable": null
+          }
+        },
+        "types": {
+          "SimpleStorage": {
+            "names": [
+              "SUCCESS",
+              "ERROR"
+            ],
+            "type": "Enum",
+            "bytes": 0
+          }
+        },
+        "constr": {},
+        "vars": {
+          "storedData": {
+            "atBytes": 0,
+            "signed": false,
+            "type": "Int",
+            "bytes": 32,
+            "public": false
+          }
+        }
+      },
+      "type": "object"
+    },
+    "Function Type": {
+      "description": "Xabi Function Type",
+      "required": [
+        "args",
+        "vals"
+      ],
+      "properties": {
+        "args": {
+          "additionalProperties": {
+            "$ref": "#/definitions/Solidity type"
+          },
+          "type": "object"
+        },
+        "vals": {
+          "additionalProperties": {
+            "$ref": "#/definitions/Solidity type"
+          },
+          "type": "object"
+        },
+        "contents": {
+          "type": "string"
+        },
+        "mutable": {
+          "type": "boolean"
+        },
+        "payable": {
+          "type": "boolean"
+        },
+        "visibility": {
+          "$ref": "#/definitions/Visibility of a Function"
+        },
+        "modifiers": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "example": {
+        "modifiers": null,
+        "args": {
+          "userAddress": {
+            "signed": false,
+            "type": "Int",
+            "index": 0,
+            "bytes": 32
+          }
+        },
+        "contents": "return userAddress;",
+        "visibility": null,
+        "payable": null,
+        "vals": {
+          "#0": {
+            "signed": false,
+            "type": "Int",
+            "index": 0,
+            "bytes": 32
+          }
+        },
+        "mutable": null
+      },
+      "type": "object"
+    },
+    "Solidity type": {
+      "description": "Represents a soldity type",
+      "required": [
+        "indexedTypeIndex",
+        "indexedTypeType"
+      ],
+      "properties": {
+        "indexedTypeIndex": {
+          "maximum": 2147483647,
+          "format": "int32",
+          "minimum": -2147483648,
+          "type": "integer"
+        },
+        "indexedTypeType": {
+          "$ref": "#/definitions/Solidity type"
+        }
+      },
+      "example": {
+        "dynamic": false,
+        "value": {
+          "type": "Bytes"
+        },
+        "key": {
+          "type": "Address"
+        },
+        "type": "Mapping",
+        "index": 10
+      },
+      "type": "object"
+    },
+    "Visibility of a Function": {
+      "description": "Xabi Function Visibility",
+      "example": "Public",
+      "type": "string",
+      "enum": [
+        "Private",
+        "Public",
+        "Internal",
+        "External"
+      ]
+    },
+    "VarType": {
+      "description": "Represents a Solidity Variable",
+      "required": [
+        "varTypeAtBytes",
+        "varTypeType"
+      ],
+      "properties": {
+        "varTypeAtBytes": {
+          "maximum": 2147483647,
+          "format": "int32",
+          "minimum": -2147483648,
+          "type": "integer"
+        },
+        "varTypePublic": {
+          "type": "boolean"
+        },
+        "varTypeType": {
+          "$ref": "#/definitions/Solidity type"
+        }
+      },
+      "example": {
+        "atBytes": 16,
+        "type": "Address",
+        "public": true
+      },
+      "type": "object"
+    },
+    "TypeDef": {
+      "description": "User defined type (Struct or Enum)",
+      "properties": {
+        "Enum": {
+          "required": [
+            "names",
+            "bytes"
+          ],
+          "type": "object",
+          "properties": {
+            "names": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "bytes": {
+              "maximum": 18446744073709551615,
+              "minimum": 0,
+              "type": "integer"
+            }
+          }
+        },
+        "Struct": {
+          "required": [
+            "fields",
+            "bytes"
+          ],
+          "type": "object",
+          "properties": {
+            "bytes": {
+              "maximum": 18446744073709551615,
+              "minimum": 0,
+              "type": "integer"
+            },
+            "fields": {
+              "additionalProperties": {
+                "$ref": "#/definitions/FieldType"
+              },
+              "type": "object"
+            }
+          }
+        },
+        "Contract": {
+          "required": [
+            "bytes"
+          ],
+          "type": "object",
+          "properties": {
+            "bytes": {
+              "maximum": 18446744073709551615,
+              "minimum": 0,
+              "type": "integer"
+            }
+          }
+        }
+      },
+      "example": {
+        "names": [
+          "SUCCESS",
+          "FAILURE",
+          "NOT_AUTHORIZED"
+        ],
+        "type": "Enum",
+        "bytes": 3735928559
+      },
+      "maxProperties": 1,
+      "minProperties": 1,
+      "type": "object"
+    },
+    "FieldType": {
+      "description": "Represents a Solidity Field Type",
+      "required": [
+        "fieldTypeAtBytes",
+        "fieldTypeType"
+      ],
+      "properties": {
+        "fieldTypeAtBytes": {
+          "maximum": 2147483647,
+          "format": "int32",
+          "minimum": -2147483648,
+          "type": "integer"
+        },
+        "fieldTypeType": {
+          "$ref": "#/definitions/Solidity type"
+        }
+      },
+      "example": {
+        "atBytes": 32,
+        "type": "Address"
+      },
+      "type": "object"
+    },
+    "Function Modifier": {
+      "description": "Xabi Function Modifier",
+      "required": [
+        "args",
+        "selector",
+        "vals"
+      ],
+      "properties": {
+        "args": {
+          "additionalProperties": {
+            "$ref": "#/definitions/Solidity type"
+          },
+          "type": "object"
+        },
+        "selector": {
+          "type": "string"
+        },
+        "vals": {
+          "additionalProperties": {
+            "$ref": "#/definitions/Solidity type"
+          },
+          "type": "object"
+        },
+        "contents": {
+          "type": "string"
+        }
+      },
+      "example": {
+        "args": {
+          "userAddress": {
+            "signed": false,
+            "type": "Int",
+            "index": 0,
+            "bytes": 32
+          }
+        },
+        "contents": null,
+        "selector": "0adfe412",
+        "vals": {
+          "#0": {
+            "signed": false,
+            "type": "Int",
+            "index": 0,
+            "bytes": 32
+          }
+        }
+      },
+      "type": "object"
+    }
+  }
+}
