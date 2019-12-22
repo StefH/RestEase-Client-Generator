@@ -9,7 +9,7 @@
     <!--<Compile Remove="PetStore\**\*.cs" />-->
     <!--<Compile Remove="PetStoreJson\**\*.cs" />-->
     <!--<Compile Remove="Infura\**\*.cs" />-->
-    <Compile Remove="Strato\**\*.cs" />
+    <!--<Compile Remove="Strato\**\*.cs" />-->
   </ItemGroup>
 
   <ItemGroup>
@@ -31,11 +31,6 @@
     <None Update="strato-api.yml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="PetStore\Api\" />
-    <Folder Include="PetStore\Models\" />
   </ItemGroup>
 
 </Project>

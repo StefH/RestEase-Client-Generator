@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace RestEaseClientGenerator
+namespace RestEaseClientGenerator.Utils
 {
     /// <summary>
     /// Copied from https://raw.githubusercontent.com/andeart/CaseConversions/master/CaseConversions/CaseConversion.cs
