@@ -1,8 +1,8 @@
-﻿using RestEaseClientCodeGeneratorVSIX.Options.AutoRest;
-using System;
+﻿using System;
 using System.IO;
+using RestEaseClientCodeGeneratorVSIX.Options.RestEase;
 
-namespace RestEaseClientCodeGeneratorVSIX.Generators.Restease
+namespace RestEaseClientCodeGeneratorVSIX.Generators.RestEase
 {
     public class RestEaseCSharpCodeGenerator : CodeGenerator
     {

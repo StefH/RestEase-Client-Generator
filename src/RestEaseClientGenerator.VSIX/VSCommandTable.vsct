@@ -9,9 +9,9 @@
     <Groups>
       <Group guid="guidPackageCmdSet" id="SubmenuGroup" />
       <Group guid="guidPackageCmdSet" id="CommandsGroup" />
-      
-      <Group guid="guidNewRestEaseClientCmdSet" id="NewSubmenuGroup" />
-      <Group guid="guidNewRestEaseClientCmdSet" id="NewCommandsGroup" />
+
+      <Group guid="guidNewRestApiClientCmdSet" id="NewSubmenuGroup" />
+      <Group guid="guidNewRestApiClientCmdSet" id="NewCommandsGroup" />
     </Groups>
 
     <Menus>
@@ -22,7 +22,7 @@
           <ButtonText>RestEase Client Generator</ButtonText>
         </Strings>
       </Menu>
-      <Menu guid="guidNewRestEaseClientCmdSet" id="NewSubmenu" type="Menu" priority="0xFFFF">
+      <Menu guid="guidNewRestApiClientCmdSet" id="NewSubmenu" type="Menu" priority="0xFFFF">
         <Parent guid="guidSHLMainMenu" id="IDG_VS_CTXT_PROJECT_ADD_ITEMS"/>
         <CommandFlag>DynamicVisibility</CommandFlag>
         <Strings>
@@ -38,7 +38,7 @@
         </Strings>
       </Button>
 
-      <Button guid="guidNewRestEaseClientCmdSet" id="GenerateWithRestEase" priority="0x0100" type="Button">
+      <Button guid="guidNewRestApiClientCmdSet" id="GenerateWithRestEase" priority="0x0100" type="Button">
         <Strings>
           <ButtonText>Generate</ButtonText>
         </Strings>
@@ -59,20 +59,19 @@
     <CommandPlacement guid="guidPackageCmdSet" id="RestEaseCodeGeneratorCustomToolSetter" priority="0x0001" >
       <Parent guid="guidPackageCmdSet" id="CommandsGroup"/>
     </CommandPlacement>
-    
-    <CommandPlacement guid="guidNewRestEaseClientCmdSet" id="NewSubmenuGroup" priority="0xFFFF">
+
+    <CommandPlacement guid="guidNewRestApiClientCmdSet" id="NewSubmenuGroup" priority="0xFFFF">
       <Parent guid="guidSHLMainMenu" id="IDG_VS_CTXT_PROJECT_ADD_ITEMS"/>
     </CommandPlacement>
-    <CommandPlacement guid="guidNewRestEaseClientCmdSet" id="NewSubmenu" priority="0x0001">
-      <Parent guid="guidNewRestEaseClientCmdSet" id="NewSubmenuGroup"/>
+    <CommandPlacement guid="guidNewRestApiClientCmdSet" id="NewSubmenu" priority="0x0001">
+      <Parent guid="guidNewRestApiClientCmdSet" id="NewSubmenuGroup"/>
     </CommandPlacement>
-    <CommandPlacement guid="guidNewRestEaseClientCmdSet" id="NewCommandsGroup" priority="0x0001">
-      <Parent guid="guidNewRestEaseClientCmdSet" id="NewSubmenu"/>
+    <CommandPlacement guid="guidNewRestApiClientCmdSet" id="NewCommandsGroup" priority="0x0001">
+      <Parent guid="guidNewRestApiClientCmdSet" id="NewSubmenu"/>
     </CommandPlacement>
-    <CommandPlacement guid="guidNewRestEaseClientCmdSet" id="GenerateWithRestEase" priority="0x0001" >
-      <Parent guid="guidNewRestEaseClientCmdSet" id="NewCommandsGroup"/>
+    <CommandPlacement guid="guidNewRestApiClientCmdSet" id="GenerateWithRestEase" priority="0x0001" >
+      <Parent guid="guidNewRestApiClientCmdSet" id="NewCommandsGroup"/>
     </CommandPlacement>
-    
   </CommandPlacements>
 
   <VisibilityConstraints>
@@ -80,18 +79,18 @@
   </VisibilityConstraints>
 
   <Symbols>
-    <GuidSymbol name="guidPackage" value="{47AFE4E1-0000-4FE1-8CA7-EDB8310BDA44}" />
+    <GuidSymbol name="guidPackage" value="{47AFE4E1-0000-4FE1-8CA7-EDB8310BDA4A}" />
 
-    <GuidSymbol name="guidUIContext" value="{A3381E62-0000-436F-824E-5F0097387C11}" />
-    <GuidSymbol name="guidPackageCmdSet" value="{C292653B-0000-4B8C-B672-3375D8561881}">
+    <GuidSymbol name="guidUIContext" value="{A3381E62-5D85-436F-824E-5F0097387C11}" />
+    <GuidSymbol name="guidPackageCmdSet" value="{C292653B-5876-4B8C-B672-3375D8561881}">
       <IDSymbol name="SubmenuGroup" value="0x1020" />
       <IDSymbol name="CommandsGroup" value="0x1021" />
       <IDSymbol name="Submenu" value="0x0100" />
       <IDSymbol name="RestEaseCodeGeneratorCustomToolSetter" value="0x0200" />
     </GuidSymbol>
 
-    <GuidSymbol name="guidNewRestEaseClientContext" value="{7CEC8679-0000-48BF-9FA4-5FAA38CBE0FA}" />
-    <GuidSymbol name="guidNewRestEaseClientCmdSet" value="{E4B99F94-0000-4CAA-ADCD-24302C232938}">
+    <GuidSymbol name="guidNewRestApiClientContext" value="{7CEC8679-C1B8-48BF-9FA4-5FAA38CBE0FA}" />
+    <GuidSymbol name="guidNewRestApiClientCmdSet" value="{E4B99F94-D11F-4CAA-ADCD-24302C232938}">
       <IDSymbol name="NewSubmenuGroup" value="0x1020" />
       <IDSymbol name="NewCommandsGroup" value="0x1021" />
       <IDSymbol name="NewSubmenu" value="0x0100" />

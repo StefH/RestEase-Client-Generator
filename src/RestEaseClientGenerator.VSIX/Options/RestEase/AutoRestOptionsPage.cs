@@ -2,7 +2,7 @@ using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.VisualStudio.Shell;
 
-namespace RestEaseClientCodeGeneratorVSIX.Options.AutoRest
+namespace RestEaseClientCodeGeneratorVSIX.Options.RestEase
 {
     [ExcludeFromCodeCoverage]
     public class RestEaseOptionsPage : DialogPage, IRestEaseOptions

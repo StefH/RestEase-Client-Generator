@@ -1,7 +1,7 @@
 using System;
 using System.Diagnostics;
 
-namespace RestEaseClientCodeGeneratorVSIX.Options.AutoRest
+namespace RestEaseClientCodeGeneratorVSIX.Options.RestEase
 {
     public class RestEaseOptions : OptionsBase<IRestEaseOptions, RestEaseOptionsPage>, IRestEaseOptions
     {

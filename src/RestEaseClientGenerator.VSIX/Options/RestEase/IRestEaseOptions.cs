@@ -1,4 +1,4 @@
-namespace RestEaseClientCodeGeneratorVSIX.Options.AutoRest
+namespace RestEaseClientCodeGeneratorVSIX.Options.RestEase
 {
     public interface IRestEaseOptions
     {

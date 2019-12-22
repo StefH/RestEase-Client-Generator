@@ -13,15 +13,15 @@ using Task = System.Threading.Tasks.Task;
 namespace RestEaseClientCodeGeneratorVSIX.Commands.AddNew
 {
     [ExcludeFromCodeCoverage]
-    public class NewRestEaseClientCommand : ICommandInitializer
+    public abstract class NewRestClientCommand : ICommandInitializer
     {
-        protected Guid CommandSet { get; } = new Guid("E5B99F94-D11F-4CAA-ADCD-24302C232900");
+        protected Guid CommandSet { get; } = new Guid("E4B99F94-D11F-4CAA-ADCD-24302C232938");
 
-        protected virtual int CommandId { get; } = 0x200;
+        protected virtual int CommandId { get; } = 0x100;
+        protected abstract SupportedCodeGenerator CodeGenerator { get; }
 
-        private SupportedCodeGenerator CodeGenerator = SupportedCodeGenerator.RestEase;
-
-        public Task InitializeAsync(AsyncPackage package, CancellationToken token) => package.SetupCommandAsync(CommandSet, CommandId, OnExecuteAsync, token);
+        public Task InitializeAsync(AsyncPackage package, CancellationToken token) 
+            => package.SetupCommandAsync(CommandSet, CommandId, OnExecuteAsync, token);
 
         private async Task OnExecuteAsync(DTE dte, AsyncPackage package)
         {
@@ -42,6 +42,16 @@ namespace RestEaseClientCodeGeneratorVSIX.Commands.AddNew
             var contents = result.OpenApiSpecification;
             var filename = result.OutputFilename + ".json";
 
+            //if (CodeGenerator == SupportedCodeGenerator.NSwagStudio)
+            //{
+            //    var outputNamespace = ProjectExtensions.GetActiveProject(dte)?.GetTopLevelNamespace();
+            //    contents = await NSwagStudioFileHelper.CreateNSwagStudioFileAsync(
+            //        result,
+            //        new NSwagStudioOptions(),
+            //        outputNamespace);
+            //    filename = filename.Replace(".json", ".nswag");
+            //}
+
             var filePath = Path.Combine(folder, filename);
             File.WriteAllText(filePath, contents);
 
@@ -50,14 +60,11 @@ namespace RestEaseClientCodeGeneratorVSIX.Commands.AddNew
             var projectItem = project.AddFileToProject(dte, fileInfo, "None");
             projectItem.Properties.Item("BuildAction").Value = prjBuildAction.prjBuildActionNone;
 
-            var customTool = CodeGenerator.GetCustomToolName();
-            projectItem.Properties.Item("CustomTool").Value = customTool;
-
             //if (CodeGenerator != SupportedCodeGenerator.NSwagStudio)
-            //{
-            //    var customTool = CodeGenerator.GetCustomToolName();
-            //    projectItem.Properties.Item("CustomTool").Value = customTool;
-            //}
+            {
+                var customTool = CodeGenerator.GetCustomToolName();
+                projectItem.Properties.Item("CustomTool").Value = customTool;
+            }
             //else
             //{
             //    var generator = new NSwagStudioCodeGenerator(filePath, new CustomPathOptions(), new ProcessLauncher());

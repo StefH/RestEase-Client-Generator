@@ -14,7 +14,7 @@ namespace RestEaseClientCodeGeneratorVSIX.Commands.CustomTool
     public abstract class CustomToolSetter<T> : ICommandInitializer where T : SingleFileCodeGenerator
     {
         protected abstract int CommandId { get; }
-        protected Guid CommandSet { get; } = new Guid("C292653B-0000-4B8C-B672-3375D8561881");
+        protected Guid CommandSet { get; } = new Guid("C292653B-5876-4B8C-B672-3375D8561881");
 
         public Task InitializeAsync(
             AsyncPackage package,
@@ -37,9 +37,7 @@ namespace RestEaseClientCodeGeneratorVSIX.Commands.CustomTool
 
             var project = ProjectExtensions.GetActiveProject(dte);
 
-            await project.InstallMissingPackagesAsync(
-                package,
-                typeof(T).GetSupportedCodeGenerator());
+            await project.InstallMissingPackagesAsync(package, typeof(T).GetSupportedCodeGenerator());
         }
     }
 }

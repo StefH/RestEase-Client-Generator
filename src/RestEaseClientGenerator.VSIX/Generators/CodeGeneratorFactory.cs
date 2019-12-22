@@ -1,7 +1,7 @@
 ﻿using System;
-using RestEaseClientCodeGeneratorVSIX.Generators.Restease;
+using RestEaseClientCodeGeneratorVSIX.Generators.RestEase;
 using RestEaseClientCodeGeneratorVSIX.Options;
-using RestEaseClientCodeGeneratorVSIX.Options.AutoRest;
+using RestEaseClientCodeGeneratorVSIX.Options.RestEase;
 
 namespace RestEaseClientCodeGeneratorVSIX.Generators
 {

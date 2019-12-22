@@ -4,8 +4,7 @@ namespace RestEaseClientCodeGeneratorVSIX.NuGet
 {
     public class PackageDependencyListProvider
     {
-        public IEnumerable<PackageDependency> GetDependencies(
-            SupportedCodeGenerator generator)
+        public IEnumerable<PackageDependency> GetDependencies(SupportedCodeGenerator generator)
         {
             switch (generator)
             {
