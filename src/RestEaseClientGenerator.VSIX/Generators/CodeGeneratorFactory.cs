@@ -1,7 +1,7 @@
 ﻿using System;
-using RestEaseClientGenerator.VSIX.Generators.AutoRest;
+using RestEaseClientGenerator.VSIX.Generators.RestEase;
 using RestEaseClientGenerator.VSIX.Options;
-using RestEaseClientGenerator.VSIX.Options.AutoRest;
+using RestEaseClientGenerator.VSIX.Options.RestEase;
 
 namespace RestEaseClientGenerator.VSIX.Generators
 {
@@ -25,11 +25,11 @@ namespace RestEaseClientGenerator.VSIX.Generators
         {
             switch (generator)
             {
-                case SupportedCodeGenerator.AutoRest:
-                    return new AutoRestCSharpCodeGenerator(
+                case SupportedCodeGenerator.RestEase:
+                    return new RestEaseCSharpCodeGenerator(
                         inputFilePath,
                         defaultNamespace,
-                        optionsFactory.Create<IAutoRestOptions, AutoRestOptionsPage>(),
+                        optionsFactory.Create<IRestEaseOptions, RestEaseOptionsPage>(),
                         processLauncher);
 
                 default:

@@ -1,6 +1,6 @@
-namespace RestEaseClientGenerator.VSIX.Options.AutoRest
+namespace RestEaseClientGenerator.VSIX.Options.RestEase
 {
-    public interface IAutoRestOptions
+    public interface IRestEaseOptions
     {
         bool AddCredentials { get; set; }
         bool OverrideClientName { get; set; }

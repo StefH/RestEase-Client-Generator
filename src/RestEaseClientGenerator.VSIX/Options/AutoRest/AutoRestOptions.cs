@@ -1,11 +1,11 @@
 using System;
 using System.Diagnostics;
 
-namespace RestEaseClientGenerator.VSIX.Options.AutoRest
+namespace RestEaseClientGenerator.VSIX.Options.RestEase
 {
-    public class AutoRestOptions : OptionsBase<IAutoRestOptions, AutoRestOptionsPage>, IAutoRestOptions
+    public class RestEaseOptions : OptionsBase<IRestEaseOptions, RestEaseOptionsPage>, IRestEaseOptions
     {
-        public AutoRestOptions(IAutoRestOptions options)
+        public RestEaseOptions(IRestEaseOptions options)
         {
             try
             {

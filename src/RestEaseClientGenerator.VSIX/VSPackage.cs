@@ -6,7 +6,7 @@ using Microsoft.VisualStudio.Shell;
 using RestEaseClientGenerator.VSIX.Commands;
 using RestEaseClientGenerator.VSIX.Commands.AddNew;
 using RestEaseClientGenerator.VSIX.Commands.CustomTool;
-using RestEaseClientGenerator.VSIX.Options.AutoRest;
+using RestEaseClientGenerator.VSIX.Options.RestEase;
 using RestEaseClientGenerator.VSIX.Options.General;
 using OutputWindow = RestEaseClientGenerator.VSIX.Windows.OutputWindow;
 using Task = System.Threading.Tasks.Task;
@@ -32,9 +32,9 @@ namespace RestEaseClientGenerator.VSIX
         0,
         true)]
     [ProvideOptionPage(
-        typeof(AutoRestOptionsPage),
+        typeof(RestEaseOptionsPage),
         VsixName,
-        AutoRestOptionsPage.Name,
+        RestEaseOptionsPage.Name,
         0,
         0,
         true)]
@@ -44,8 +44,8 @@ namespace RestEaseClientGenerator.VSIX
         public const string VsixName = "RestEase Client Code Generator";
 
         private readonly ICommandInitializer[] commands = {
-            new AutoRestCodeGeneratorCustomToolSetter(),
-            new NewAutoRestClientCommand()
+            new RestEaseCodeGeneratorCustomToolSetter(),
+            new NewRestEaseClientCommand()
         };
 
         public static AsyncPackage Instance { get; private set; }

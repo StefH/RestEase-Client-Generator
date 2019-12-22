@@ -1,4 +1,4 @@
-namespace RestEaseClientGenerator.VSIX.Options.AutoRest
+namespace RestEaseClientGenerator.VSIX.Options.RestEase
 {
     public enum SyncMethodOptions
     {

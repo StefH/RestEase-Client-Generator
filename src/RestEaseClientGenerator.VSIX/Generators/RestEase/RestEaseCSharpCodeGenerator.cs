@@ -1,18 +1,18 @@
 ﻿using System;
 using System.IO;
-using RestEaseClientGenerator.VSIX.Options.AutoRest;
+using RestEaseClientGenerator.VSIX.Options.RestEase;
 using RestEaseClientGenerator.VSIX.Options.General;
 
-namespace RestEaseClientGenerator.VSIX.Generators.AutoRest
+namespace RestEaseClientGenerator.VSIX.Generators.RestEase
 {
-    public class AutoRestCSharpCodeGenerator : CodeGenerator
+    public class RestEaseCSharpCodeGenerator : CodeGenerator
     {
-        private readonly IAutoRestOptions options;
+        private readonly IRestEaseOptions options;
 
-        public AutoRestCSharpCodeGenerator(
+        public RestEaseCSharpCodeGenerator(
             string swaggerFile,
             string defaultNamespace,
-            IAutoRestOptions options,
+            IRestEaseOptions options,
             IProcessLauncher processLauncher)
             : base(swaggerFile, defaultNamespace, processLauncher)
         {
@@ -53,12 +53,12 @@ namespace RestEaseClientGenerator.VSIX.Generators.AutoRest
 
         protected override string GetCommand()
         {
-            var autorestCmd = PathProvider.GetAutoRestPath();
+            //var RestEaseCmd = PathProvider.GetRestEasePath();
 
-            if (!File.Exists(autorestCmd))
-                DependencyDownloader.InstallAutoRest();
+            //if (!File.Exists(RestEaseCmd))
+            //    DependencyDownloader.InstallRestEase();
 
-            return autorestCmd;
+            return ""; //RestEaseCmd;
         }
     }
 }

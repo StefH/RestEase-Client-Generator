@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using RestEaseClientGenerator.VSIX.CustomTool.AutoRest;
+using RestEaseClientGenerator.VSIX.CustomTool.RestEase;
 using RestEaseClientGenerator.VSIX.NuGet;
 
 namespace RestEaseClientGenerator.VSIX.Extensions
@@ -15,8 +15,8 @@ namespace RestEaseClientGenerator.VSIX.Extensions
             string customTool = null;
             switch (generator)
             {
-                case SupportedCodeGenerator.AutoRest:
-                    customTool = nameof(AutoRestCodeGenerator);
+                case SupportedCodeGenerator.RestEase:
+                    customTool = nameof(RestEaseCodeGenerator);
                     break;
             }
 
@@ -26,8 +26,8 @@ namespace RestEaseClientGenerator.VSIX.Extensions
         public static SupportedCodeGenerator GetSupportedCodeGenerator(this Type type)
         {
 
-            if (type.IsAssignableFrom(typeof(AutoRestCodeGenerator)))
-                return SupportedCodeGenerator.AutoRest;
+            if (type.IsAssignableFrom(typeof(RestEaseCodeGenerator)))
+                return SupportedCodeGenerator.RestEase;
 
             throw new NotSupportedException();
         }

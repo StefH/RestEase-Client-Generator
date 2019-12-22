@@ -2,12 +2,12 @@ using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.VisualStudio.Shell;
 
-namespace RestEaseClientGenerator.VSIX.Options.AutoRest
+namespace RestEaseClientGenerator.VSIX.Options.RestEase
 {
     [ExcludeFromCodeCoverage]
-    public class AutoRestOptionsPage : DialogPage, IAutoRestOptions
+    public class RestEaseOptionsPage : DialogPage, IRestEaseOptions
     {
-        public const string Name = "AutoRest";
+        public const string Name = "RestEase";
 
         [Category(Name)]
         [DisplayName("Add Credentials")]

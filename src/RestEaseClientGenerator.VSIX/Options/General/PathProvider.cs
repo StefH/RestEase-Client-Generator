@@ -46,10 +46,10 @@ namespace RestEaseClientGenerator.VSIX.Options.General
                 NpmHelper.GetPrefixPath(),
                 "nswag.cmd");
 
-        public static string GetAutoRestPath()
+        public static string GetRestEasePath()
             => Path.Combine(
                 NpmHelper.GetPrefixPath(),
-                "autorest.cmd");
+                "RestEase.cmd");
 
         public static string GetSwaggerCodegenPath()
             => Path.Combine(

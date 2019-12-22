@@ -8,7 +8,7 @@ namespace RestEaseClientGenerator.VSIX.NuGet
         {
             switch (generator)
             {
-                case SupportedCodeGenerator.AutoRest:
+                case SupportedCodeGenerator.RestEase:
                     yield return PackageDependencies.RestEase;
                     break;
             }
