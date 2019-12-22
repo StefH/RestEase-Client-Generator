@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Core.Generators
+namespace RestEaseClientGenerator.VSIX.Generators
 {
     public interface ICodeGenerator
     {

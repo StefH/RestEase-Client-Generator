@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Core.NuGet
+namespace RestEaseClientGenerator.VSIX.NuGet
 {
     public class PackageDependencyListProvider
     {

@@ -1,4 +1,4 @@
-﻿namespace ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Core.Options.General
+﻿namespace RestEaseClientGenerator.VSIX.Options.General
 {
     public interface IGeneralOptions
     {

@@ -2,15 +2,12 @@
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
-using ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Core;
-using ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Core.Converters;
-using ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Core.Extensions;
-using ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Core.Generators;
-using ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Extensions;
-using ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Generators;
 using Microsoft.VisualStudio.Shell.Interop;
+using RestEaseClientGenerator.VSIX.Converters;
+using RestEaseClientGenerator.VSIX.Extensions;
+using RestEaseClientGenerator.VSIX.Generators;
 
-namespace ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.CustomTool
+namespace RestEaseClientGenerator.VSIX.CustomTool
 {
     [ExcludeFromCodeCoverage]
     [ComVisible(true)]

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Core.NuGet
+namespace RestEaseClientGenerator.VSIX.NuGet
 {
     public static class PackageDependencies
     {

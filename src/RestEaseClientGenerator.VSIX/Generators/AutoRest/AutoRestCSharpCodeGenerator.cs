@@ -1,9 +1,9 @@
 ﻿using System;
 using System.IO;
-using ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Core.Options.AutoRest;
-using ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Core.Options.General;
+using RestEaseClientGenerator.VSIX.Options.AutoRest;
+using RestEaseClientGenerator.VSIX.Options.General;
 
-namespace ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Core.Generators.AutoRest
+namespace RestEaseClientGenerator.VSIX.Generators.AutoRest
 {
     public class AutoRestCSharpCodeGenerator : CodeGenerator
     {

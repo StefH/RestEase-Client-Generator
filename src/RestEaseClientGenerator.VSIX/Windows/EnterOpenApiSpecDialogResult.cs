@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Windows
+namespace RestEaseClientGenerator.VSIX.Windows
 {
     [ExcludeFromCodeCoverage]
     public class EnterOpenApiSpecDialogResult

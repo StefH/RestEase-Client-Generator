@@ -2,14 +2,13 @@
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
-using ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Core.Extensions;
-using ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.CustomTool;
-using ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Extensions;
 using EnvDTE;
 using Microsoft.VisualStudio.Shell;
+using RestEaseClientGenerator.VSIX.CustomTool;
+using RestEaseClientGenerator.VSIX.Extensions;
 using Task = System.Threading.Tasks.Task;
 
-namespace ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Commands.CustomTool
+namespace RestEaseClientGenerator.VSIX.Commands.CustomTool
 {
     [ExcludeFromCodeCoverage]
     public abstract class CustomToolSetter<T>

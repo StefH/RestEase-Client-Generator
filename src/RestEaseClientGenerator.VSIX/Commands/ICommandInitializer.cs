@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.Shell;
 using Task = System.Threading.Tasks.Task;
 
-namespace ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Commands
+namespace RestEaseClientGenerator.VSIX.Commands
 {
     public interface ICommandInitializer
     {

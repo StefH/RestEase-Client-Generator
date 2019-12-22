@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Windows
+namespace RestEaseClientGenerator.VSIX.Windows
 {
     internal static class NativeMethods
     {

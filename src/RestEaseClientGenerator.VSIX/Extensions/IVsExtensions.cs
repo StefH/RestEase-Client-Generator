@@ -4,7 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 
-namespace ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Extensions
+namespace RestEaseClientGenerator.VSIX.Extensions
 {
     [ExcludeFromCodeCoverage]
     public static class IVsExtensions

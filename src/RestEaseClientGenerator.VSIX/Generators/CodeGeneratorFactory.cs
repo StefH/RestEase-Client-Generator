@@ -1,13 +1,9 @@
 ﻿using System;
-using ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Core;
-using ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Core.Generators;
-using ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Core.Generators.AutoRest;
-using ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Core.Options;
-using ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Core.Options.AutoRest;
-using ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Options;
-using ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Options.AutoRest;
+using RestEaseClientGenerator.VSIX.Generators.AutoRest;
+using RestEaseClientGenerator.VSIX.Options;
+using RestEaseClientGenerator.VSIX.Options.AutoRest;
 
-namespace ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Generators
+namespace RestEaseClientGenerator.VSIX.Generators
 {
     public class CodeGeneratorFactory : ICodeGeneratorFactory
     {

@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Core.Converters
+namespace RestEaseClientGenerator.VSIX.Converters
 {
     public interface ILanguageConverter
     {

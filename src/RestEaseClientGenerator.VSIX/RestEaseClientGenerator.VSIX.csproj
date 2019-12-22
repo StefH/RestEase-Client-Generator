@@ -23,8 +23,8 @@
     <ProjectGuid>{9C54D0EC-F441-4525-806D-BD0688656280}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ChristianHelle.DeveloperTools.CodeGenerators.ApiClient</RootNamespace>
-    <AssemblyName>ApiClientCodeGenerator</AssemblyName>
+    <RootNamespace>RestEaseClientGenerator.VSIX</RootNamespace>
+    <AssemblyName>RestEaseClientGenerator.VSIX</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <GeneratePkgDefFile>true</GeneratePkgDefFile>
     <IncludeAssemblyInVSIXContainer>true</IncludeAssemblyInVSIXContainer>

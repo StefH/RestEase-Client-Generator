@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Core.Generators
+namespace RestEaseClientGenerator.VSIX.Generators
 {
     public static class CSharpFileMerger
     {

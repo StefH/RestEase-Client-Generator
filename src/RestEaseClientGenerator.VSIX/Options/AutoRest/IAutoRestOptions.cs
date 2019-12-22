@@ -1,4 +1,4 @@
-namespace ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Core.Options.AutoRest
+namespace RestEaseClientGenerator.VSIX.Options.AutoRest
 {
     public interface IAutoRestOptions
     {

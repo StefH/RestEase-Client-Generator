@@ -1,10 +1,10 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.IO;
 using System.Net;
-using ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Core.Generators;
+using ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Core;
+using RestEaseClientGenerator.VSIX.Generators;
 
-namespace ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Core
+namespace RestEaseClientGenerator.VSIX
 {
     public static class DependencyDownloader
     {

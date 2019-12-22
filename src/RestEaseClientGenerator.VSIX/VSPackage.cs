@@ -2,16 +2,16 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using System.Threading;
-using ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Commands;
-using ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Commands.AddNew;
-using ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Commands.CustomTool;
-using ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Options.AutoRest;
-using ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Options.General;
 using Microsoft.VisualStudio.Shell;
-using OutputWindow = ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Windows.OutputWindow;
+using RestEaseClientGenerator.VSIX.Commands;
+using RestEaseClientGenerator.VSIX.Commands.AddNew;
+using RestEaseClientGenerator.VSIX.Commands.CustomTool;
+using RestEaseClientGenerator.VSIX.Options.AutoRest;
+using RestEaseClientGenerator.VSIX.Options.General;
+using OutputWindow = RestEaseClientGenerator.VSIX.Windows.OutputWindow;
 using Task = System.Threading.Tasks.Task;
 
-namespace ChristianHelle.DeveloperTools.CodeGenerators.ApiClient
+namespace RestEaseClientGenerator.VSIX
 {
     [ExcludeFromCodeCoverage]
     [Guid("47AFE4E1-5A52-4FE1-8CA7-EDB8310BDA4A")]

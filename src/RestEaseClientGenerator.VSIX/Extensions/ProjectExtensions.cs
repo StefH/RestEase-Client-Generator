@@ -5,9 +5,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
-using ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Core;
-using ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Core.Extensions;
-using ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Core.NuGet;
 using EnvDTE;
 using Microsoft;
 using Microsoft.VisualStudio;
@@ -16,8 +13,9 @@ using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.TextManager.Interop;
 using NuGet.VisualStudio;
+using RestEaseClientGenerator.VSIX.NuGet;
 
-namespace ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Extensions
+namespace RestEaseClientGenerator.VSIX.Extensions
 {
     [ExcludeFromCodeCoverage]
     public static class ProjectExtensions

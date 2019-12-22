@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Text;
 
-namespace ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Core.Generators
+namespace RestEaseClientGenerator.VSIX.Generators
 {
     public interface IProcessLauncher
     {

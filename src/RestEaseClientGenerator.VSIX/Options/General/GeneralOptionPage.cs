@@ -1,11 +1,10 @@
 ﻿using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Windows.Forms;
-using ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Core.Options.General;
 using ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Windows;
 using Microsoft.VisualStudio.Shell;
 
-namespace ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Options.General
+namespace RestEaseClientGenerator.VSIX.Options.General
 {
     [ExcludeFromCodeCoverage]
     public class GeneralOptionPage : DialogPage, IGeneralOptions

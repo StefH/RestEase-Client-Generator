@@ -1,8 +1,7 @@
 using System;
 using System.Diagnostics;
-using ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Core.Options.AutoRest;
 
-namespace ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Options.AutoRest
+namespace RestEaseClientGenerator.VSIX.Options.AutoRest
 {
     public class AutoRestOptions : OptionsBase<IAutoRestOptions, AutoRestOptionsPage>, IAutoRestOptions
     {

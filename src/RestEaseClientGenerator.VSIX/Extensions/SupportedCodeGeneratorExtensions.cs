@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Core;
-using ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Core.NuGet;
-using ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.CustomTool.AutoRest;
+using RestEaseClientGenerator.VSIX.CustomTool.AutoRest;
+using RestEaseClientGenerator.VSIX.NuGet;
 
-namespace ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Extensions
+namespace RestEaseClientGenerator.VSIX.Extensions
 {
     public static class SupportedCodeGeneratorExtensions
     {

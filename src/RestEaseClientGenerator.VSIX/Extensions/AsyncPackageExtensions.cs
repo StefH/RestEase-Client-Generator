@@ -7,7 +7,7 @@ using EnvDTE;
 using Microsoft.VisualStudio.Shell;
 using Task = System.Threading.Tasks.Task;
 
-namespace ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Extensions
+namespace RestEaseClientGenerator.VSIX.Extensions
 {
     [ExcludeFromCodeCoverage]
     public static class AsyncPackageExtensions

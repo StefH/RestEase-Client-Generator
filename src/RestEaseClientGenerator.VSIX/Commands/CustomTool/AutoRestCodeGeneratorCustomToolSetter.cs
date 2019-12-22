@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.CustomTool.AutoRest;
+using RestEaseClientGenerator.VSIX.CustomTool.AutoRest;
 
-namespace ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Commands.CustomTool
+namespace RestEaseClientGenerator.VSIX.Commands.CustomTool
 {
     [ExcludeFromCodeCoverage]
     public class AutoRestCodeGeneratorCustomToolSetter

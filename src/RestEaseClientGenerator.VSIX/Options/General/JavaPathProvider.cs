@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
-using ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Core.Generators;
+using RestEaseClientGenerator.VSIX.Generators;
 
-namespace ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Core.Options.General
+namespace RestEaseClientGenerator.VSIX.Options.General
 {
     public class JavaPathProvider
     {

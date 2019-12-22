@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 
-namespace ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Core.Options.General
+namespace RestEaseClientGenerator.VSIX.Options.General
 {
     public static class PathProvider
     {

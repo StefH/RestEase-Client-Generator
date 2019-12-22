@@ -1,9 +1,8 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Core;
 using System.Runtime.InteropServices;
-using ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.Core.Converters;
+using RestEaseClientGenerator.VSIX.Converters;
 
-namespace ChristianHelle.DeveloperTools.CodeGenerators.ApiClient.CustomTool.AutoRest
+namespace RestEaseClientGenerator.VSIX.CustomTool.AutoRest
 {
     [ExcludeFromCodeCoverage]
     [ComVisible(true)]
