@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-//using RestEaseClientGenerator;
+using RestEaseClientGenerator;
 
 namespace RestEaseClientCodeGeneratorVSIX.Generators
 {
@@ -9,7 +9,7 @@ namespace RestEaseClientCodeGeneratorVSIX.Generators
         protected readonly string DefaultNamespace;
         protected readonly string SwaggerFile;
         private readonly IProcessLauncher _processLauncher;
-        //private readonly IGenerator _generator = new Generator();
+        private readonly IGenerator _generator = new Generator();
 
         protected CodeGenerator(string swaggerFile, string defaultNamespace, IProcessLauncher processLauncher)
         {
@@ -24,12 +24,10 @@ namespace RestEaseClientCodeGeneratorVSIX.Generators
             {
                 pGenerateProgress.Progress(10);
 
-
                 string name = Path.GetFileNameWithoutExtension(SwaggerFile);
                 string path = Path.GetDirectoryName(SwaggerFile);
 
-                //var result = _generator.FromStream(File.OpenRead(path), DefaultNamespace, name, out var diag);
-
+                var result = _generator.FromStream(File.OpenRead(path), DefaultNamespace, name, out var diag);
 
                 var outputFile = Path.Combine(
                     path ?? throw new InvalidOperationException(),
