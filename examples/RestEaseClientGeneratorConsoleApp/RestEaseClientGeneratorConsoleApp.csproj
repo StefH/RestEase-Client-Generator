@@ -9,7 +9,7 @@
     <!--<Compile Remove="PetStore\**\*.cs" />-->
     <!--<Compile Remove="PetStoreJson\**\*.cs" />-->
     <!--<Compile Remove="Infura\**\*.cs" />-->
-    <!--<Compile Remove="Strato\**\*.cs" />-->
+    <!--<Compile Remove="Cog\**\*.cs" />-->
   </ItemGroup>
 
   <ItemGroup>
@@ -17,6 +17,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="cognitive-services-personalizer.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="infura.yaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -26,9 +29,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="petstore.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="strato-api.yml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

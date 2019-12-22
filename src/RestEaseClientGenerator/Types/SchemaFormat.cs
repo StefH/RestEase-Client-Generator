@@ -1,4 +1,4 @@
-﻿namespace WireMock.Net.OpenApiParser.Types
+﻿namespace RestEaseClientGenerator.Types
 {
     public enum SchemaFormat
     {

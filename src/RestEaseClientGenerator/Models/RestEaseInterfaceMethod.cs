@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace RestEaseClientGenerator
+﻿namespace RestEaseClientGenerator.Models
 {
     internal class RestEaseInterfaceMethod
     {

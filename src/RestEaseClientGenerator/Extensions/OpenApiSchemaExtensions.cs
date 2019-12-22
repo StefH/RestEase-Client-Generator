@@ -1,7 +1,7 @@
 ﻿using Microsoft.OpenApi.Models;
-using WireMock.Net.OpenApiParser.Types;
+using RestEaseClientGenerator.Types;
 
-namespace WireMock.Net.OpenApiParser.Extensions
+namespace RestEaseClientGenerator.Extensions
 {
     public static class OpenApiSchemaExtensions
     {

@@ -7,14 +7,15 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using WireMock.Net.OpenApiParser.Extensions;
-using WireMock.Net.OpenApiParser.Types;
+using RestEaseClientGenerator.Extensions;
+using RestEaseClientGenerator.Models;
+using RestEaseClientGenerator.Types;
 
 namespace RestEaseClientGenerator
 {
-    public class InterfaceGenerator
+    public class Generator : IGenerator
     {
-        private static CodeDomProvider CodeProvider = CodeDomProvider.CreateProvider("C#");
+        private static readonly CodeDomProvider CodeProvider = CodeDomProvider.CreateProvider("C#");
 
         //public interface IPetStoreApiExample
         //{
@@ -27,14 +28,14 @@ namespace RestEaseClientGenerator
         //    Task<Pet[]> Get(int? limit);
         //}
 
-        public ICollection<GeneratedFile> FromStream(Stream stream, string ns, string apiName, out OpenApiDiagnostic diagnostic)
+        public ICollection<GeneratedFile> FromStream(Stream stream, string clientNamespace, string apiName, out OpenApiDiagnostic diagnostic)
         {
             var reader = new OpenApiStreamReader();
             var openApiDocument = reader.Read(stream, out diagnostic);
 
             var files = new List<GeneratedFile>();
 
-            var models = MapModels(openApiDocument.Components.Schemas, ns);
+            var models = MapModels(openApiDocument.Components.Schemas, clientNamespace);
             files.AddRange(models.Select(model => new GeneratedFile
             {
                 Path = "Models",
@@ -42,7 +43,7 @@ namespace RestEaseClientGenerator
                 Content = BuildModel(model)
             }));
 
-            var @interface = MapInterface(openApiDocument.Paths, apiName, ns);
+            var @interface = MapInterface(openApiDocument.Paths, apiName, clientNamespace);
             files.Add(new GeneratedFile
             {
                 Path = "Api",
@@ -191,23 +192,16 @@ namespace RestEaseClientGenerator
         {
             var list = new List<string> { httpMethodPascalCased };
 
-            int by = 0;
-            foreach (string part in path.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries))
+            bool byFound = false;
+            foreach (string part in path.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries))
             {
                 if (part.StartsWith("{"))
                 {
-                    var text = part.Split(new char[] { '{', '}' }, StringSplitOptions.RemoveEmptyEntries)[0].ToPascalCase();
+                    var text = part.Split(new[] { '{', '}' }, StringSplitOptions.RemoveEmptyEntries)[0].ToPascalCase();
 
-                    if (by == 0)
-                    {
-                        list.Add($"By{text}");
-                    }
-                    else
-                    {
-                        list.Add($"And{text}");
-                    }
+                    list.Add(byFound ? $"By{text}" : $"And{text}");
 
-                    by++;
+                    byFound = true;
                 }
                 else
                 {
@@ -216,6 +210,29 @@ namespace RestEaseClientGenerator
             }
 
             return string.Join("", list);
+        }
+
+        private static bool TryGetOpenApiMediaType(IDictionary<string, OpenApiMediaType> content, out OpenApiMediaType mediaType)
+        {
+            if (content.TryGetValue("application/json", out mediaType))
+            {
+                return true;
+            }
+
+            var jsonKey = content.Keys.FirstOrDefault(key => key.Contains("application/json"));
+            if (jsonKey != null)
+            {
+                mediaType = content[jsonKey];
+                return true;
+            }
+
+            if (content.Count > 0)
+            {
+                mediaType = content.First().Value;
+                return true;
+            }
+
+            return false;
         }
 
         private static RestEaseInterfaceMethodDetails MapOperationToMappingModel(string path, string httpMethod, OpenApiOperation operation)
@@ -236,18 +253,18 @@ namespace RestEaseClientGenerator
                 .ToList();
 
             var bodyParameterList = new List<string>();
-            if (operation.RequestBody != null && operation.RequestBody.Content.TryGetValue("application/json", out OpenApiMediaType jsonMediaType))
+            if (operation.RequestBody != null && TryGetOpenApiMediaType(operation.RequestBody.Content, out OpenApiMediaType requestMediaType))
             {
                 string bodyParameter;
-                switch (jsonMediaType.Schema?.GetSchemaType())
+                switch (requestMediaType.Schema?.GetSchemaType())
                 {
                     case SchemaType.Array:
-                        string arrayType = jsonMediaType.Schema.Items.Reference != null ? jsonMediaType?.Schema.Items.Reference.Id : MapSchema(jsonMediaType.Schema.Items, "", jsonMediaType.Schema.Nullable).ToString();
+                        string arrayType = requestMediaType.Schema.Items.Reference != null ? requestMediaType.Schema.Items.Reference.Id : MapSchema(requestMediaType.Schema.Items, "", requestMediaType.Schema.Nullable).ToString();
                         bodyParameter = $"{arrayType}[]";
                         break;
 
                     case SchemaType.Object:
-                        bodyParameter = jsonMediaType.Schema.Reference.Id;
+                        bodyParameter = requestMediaType.Schema.Reference.Id;
                         break;
 
                     default:
@@ -255,7 +272,10 @@ namespace RestEaseClientGenerator
                         break;
                 }
 
-                bodyParameterList.Add($"[Body] {bodyParameter} {bodyParameter.ToCamelCase()}");
+                if (!string.IsNullOrEmpty(bodyParameter))
+                {
+                    bodyParameterList.Add($"[Body] {bodyParameter} {bodyParameter.ToCamelCase()}");
+                }
             }
 
             var methodParameterList = pathParameterList.Union(bodyParameterList).Union(queryParameterList);
@@ -263,23 +283,23 @@ namespace RestEaseClientGenerator
             var response = operation.Responses.First();
 
             string returnType = "";
-            if (response.Value != null && response.Value.Content.TryGetValue("application/json", out OpenApiMediaType jsonMediaType2))
+            if (response.Value != null && TryGetOpenApiMediaType(response.Value.Content, out OpenApiMediaType responseMediaType))
             {
-                switch (jsonMediaType2.Schema?.GetSchemaType())
+                switch (responseMediaType.Schema?.GetSchemaType())
                 {
                     case SchemaType.Array:
-                        string arrayType = jsonMediaType2.Schema.Items.Reference != null ? jsonMediaType2.Schema.Items.Reference.Id : MapSchema(jsonMediaType2.Schema.Items, "", jsonMediaType2.Schema.Nullable).ToString();
+                        string arrayType = responseMediaType.Schema.Items.Reference != null ? responseMediaType.Schema.Items.Reference.Id : MapSchema(responseMediaType.Schema.Items, "", responseMediaType.Schema.Nullable).ToString();
                         returnType = $"<{arrayType}[]>";
                         break;
 
                     case SchemaType.Object:
-                        if (jsonMediaType2.Schema.Reference != null)
+                        if (responseMediaType.Schema.Reference != null)
                         {
-                            returnType = $"<{jsonMediaType2.Schema.Reference.Id}>";
+                            returnType = $"<{responseMediaType.Schema.Reference.Id}>";
                         }
                         else
                         {
-                            returnType = $"<{MapSchema(jsonMediaType2.Schema.AdditionalProperties, "", jsonMediaType2.Schema.AdditionalProperties.Nullable, false)}>";
+                            returnType = $"<{MapSchema(responseMediaType.Schema.AdditionalProperties, "", responseMediaType.Schema.AdditionalProperties.Nullable, false)}>";
                         }
                         break;
 
@@ -304,6 +324,7 @@ namespace RestEaseClientGenerator
         }
         #endregion
 
+        #region Builders
         private static string BuildModel(Model model)
         {
             var builder = new StringBuilder();
@@ -347,5 +368,6 @@ namespace RestEaseClientGenerator
 
             return builder.ToString();
         }
+        #endregion
     }
 }
