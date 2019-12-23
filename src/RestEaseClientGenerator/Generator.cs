@@ -55,9 +55,9 @@ namespace RestEaseClientGenerator
         }
 
         #region Models
-        private static IEnumerable<Model> MapModels(IDictionary<string, OpenApiSchema> schemas, string ns)
+        private static IEnumerable<RestEaseModel> MapModels(IDictionary<string, OpenApiSchema> schemas, string ns)
         {
-            return schemas.Where(s => s.Value.GetSchemaType() == SchemaType.Object).Select(x => new Model
+            return schemas.Where(s => s.Value.GetSchemaType() == SchemaType.Object).Select(x => new RestEaseModel
             {
                 NameSpace = ns,
                 ClassName = x.Key.ToPascalCase(),
@@ -318,14 +318,14 @@ namespace RestEaseClientGenerator
         #endregion
 
         #region Builders
-        private static string BuildModel(Model model)
+        private static string BuildModel(RestEaseModel restEaseModel)
         {
             var builder = new StringBuilder();
-            builder.AppendLine($"namespace {model.NameSpace}.Models");
+            builder.AppendLine($"namespace {restEaseModel.NameSpace}.Models");
             builder.AppendLine("{");
-            builder.AppendLine($"    public class {model.ClassName}");
+            builder.AppendLine($"    public class {restEaseModel.ClassName}");
             builder.AppendLine("    {");
-            foreach (var property in model.Properties)
+            foreach (var property in restEaseModel.Properties)
             {
                 builder.AppendLine($"        public {property} {{ get; set; }}");
                 builder.AppendLine();
