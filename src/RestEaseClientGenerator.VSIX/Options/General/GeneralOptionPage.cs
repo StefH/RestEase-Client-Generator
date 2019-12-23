@@ -13,9 +13,9 @@ namespace RestEaseClientGenerator.VSIX.Options.General
 
         public GeneralOptionPage()
         {
-            JavaPath = PathProvider.GetJavaPath();
-            NpmPath = PathProvider.GetNpmPath();
-            NSwagPath = PathProvider.GetNSwagStudioPath();
+            //JavaPath = PathProvider.GetJavaPath();
+            //NpmPath = PathProvider.GetNpmPath();
+            //NSwagPath = PathProvider.GetNSwagStudioPath();
         }
 
         [Category("File Paths")]

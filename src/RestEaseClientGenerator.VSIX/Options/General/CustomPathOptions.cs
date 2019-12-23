@@ -21,11 +21,11 @@ namespace RestEaseClientGenerator.VSIX.Options.General
             }
             catch (Exception e)
             {
-                JavaPath = PathProvider.GetJavaPath();
-                NpmPath = PathProvider.GetNpmPath();
-                NSwagPath = PathProvider.GetNSwagStudioPath();
-                SwaggerCodegenPath = PathProvider.GetSwaggerCodegenPath();
-                OpenApiGeneratorPath = PathProvider.GetOpenApiGeneratorPath();
+                //JavaPath = PathProvider.GetJavaPath();
+                //NpmPath = PathProvider.GetNpmPath();
+                //NSwagPath = PathProvider.GetNSwagStudioPath();
+                //SwaggerCodegenPath = PathProvider.GetSwaggerCodegenPath();
+                //OpenApiGeneratorPath = PathProvider.GetOpenApiGeneratorPath();
 
                 Trace.WriteLine(e);
                 Trace.WriteLine(Environment.NewLine);

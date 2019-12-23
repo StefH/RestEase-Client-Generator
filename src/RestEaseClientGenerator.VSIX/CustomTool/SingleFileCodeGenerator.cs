@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 using Microsoft.VisualStudio.Shell.Interop;
 using RestEaseClientGenerator.VSIX.Converters;
@@ -30,7 +32,9 @@ namespace RestEaseClientGenerator.VSIX.CustomTool
 
         public abstract int DefaultExtension(out string pbstrDefaultExtension);
 
-        public ICodeGeneratorFactory Factory { get; set; } = new CodeGeneratorFactory();
+        // public ICodeGeneratorFactory Factory { get; set; } = new CodeGeneratorFactory();
+
+        private readonly IGenerator generator = new Generator();
 
         public int Generate(
             string wszInputFilePath,
@@ -44,33 +48,16 @@ namespace RestEaseClientGenerator.VSIX.CustomTool
             {
                 pGenerateProgress.Progress(5);
 
-                var codeGenerator = Factory.Create(
-                    wszDefaultNamespace,
-                    bstrInputFileContents,
-                    wszInputFilePath,
-                    supportedLanguage,
-                    CodeGenerator);
+                string apiName = Path.GetFileNameWithoutExtension(wszInputFilePath);
+                var result = generator.FromStream(File.OpenRead(wszInputFilePath), wszDefaultNamespace, apiName, out var diagnostic);
 
-                var code = codeGenerator.GenerateCode(new ProgressReporter(pGenerateProgress));
-                if (string.IsNullOrWhiteSpace(code))
+                if (diagnostic.Errors.Any() || !result.Any())
                 {
                     pcbOutput = 0;
                     return 1;
                 }
 
-                if (supportedLanguage == SupportedLanguage.VisualBasic && converter != null)
-                {
-                    Trace.WriteLine(Environment.NewLine);
-                    Trace.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-                    Trace.WriteLine("!!! EXPERIMENTAL - Attempting to convert C# code to Visual Basic !!!");
-                    Trace.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-                    Trace.WriteLine(Environment.NewLine);
-
-                    code = converter
-                        .ConvertAsync(code)
-                        .GetAwaiter()
-                        .GetResult();
-                }
+                string code = result.First().Content;
 
                 rgbOutputFileContents[0] = code.ConvertToIntPtr(out pcbOutput);
                 pGenerateProgress.Progress(100);
