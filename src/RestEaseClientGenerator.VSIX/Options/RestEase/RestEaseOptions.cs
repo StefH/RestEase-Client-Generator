@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using RestEaseClientGenerator.Types;
 
 namespace RestEaseClientGenerator.VSIX.Options.RestEase
 {
@@ -12,19 +13,19 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
                 if (options == null)
                     options = GetFromDialogPage();
 
-                TODO = options.TODO;
+                ArrayType = options.ArrayType;
             }
             catch (Exception e)
             {
                 Trace.WriteLine(e);
                 Trace.WriteLine(Environment.NewLine);
                 Trace.WriteLine("Error reading user options. Reverting to default values");
-                Trace.WriteLine($"TODO = {TODO}");
+                Trace.WriteLine($"ArrayType = {ArrayType}");
 
-                TODO = false;
+                ArrayType = ArrayType.Array;
             }
         }
 
-        public bool TODO { get; set; }
+        public ArrayType ArrayType { get; set; }
     }
 }

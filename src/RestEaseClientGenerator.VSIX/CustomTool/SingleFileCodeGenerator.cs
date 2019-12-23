@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using Microsoft.VisualStudio.Shell.Interop;
+using RestEaseClientGenerator.Settings;
 using RestEaseClientGenerator.VSIX.Extensions;
 using RestEaseClientGenerator.VSIX.Options;
 using RestEaseClientGenerator.VSIX.Options.RestEase;
@@ -45,7 +46,13 @@ namespace RestEaseClientGenerator.VSIX.CustomTool
                 string apiName = Path.GetFileNameWithoutExtension(wszInputFilePath);
 
                 Trace.WriteLine("Generating interface and models");
-                var result = _generator.FromStream(File.OpenRead(wszInputFilePath), wszDefaultNamespace, apiName, out var diagnostic);
+                var settings = new GeneratorSettings
+                {
+                    Namespace = wszDefaultNamespace,
+                    ApiName = apiName,
+                    ArrayType = options.ArrayType
+                };
+                var result = _generator.FromStream(File.OpenRead(wszInputFilePath), settings, out var diagnostic);
 
                 if (diagnostic.Errors.Any() || !result.Any())
                 {

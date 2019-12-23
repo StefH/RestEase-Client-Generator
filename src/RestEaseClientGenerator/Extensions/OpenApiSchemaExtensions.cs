@@ -3,7 +3,7 @@ using RestEaseClientGenerator.Types;
 
 namespace RestEaseClientGenerator.Extensions
 {
-    public static class OpenApiSchemaExtensions
+    internal static class OpenApiSchemaExtensions
     {
         public static SchemaType GetSchemaType(this OpenApiSchema schema)
         {

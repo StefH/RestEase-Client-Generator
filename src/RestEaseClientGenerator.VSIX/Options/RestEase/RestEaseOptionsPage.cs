@@ -1,6 +1,7 @@
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.VisualStudio.Shell;
+using RestEaseClientGenerator.Types;
 
 namespace RestEaseClientGenerator.VSIX.Options.RestEase
 {
@@ -10,8 +11,8 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         public const string Name = "Settings";
 
         [Category(Name)]
-        [DisplayName("TODO")]
-        [Description("TODO...")]
-        public bool TODO { get; set; }
+        [DisplayName("ArrayType")]
+        [Description("Array type to use. The default is Array ([]).")]
+        public ArrayType ArrayType { get; set; }
     }
 }

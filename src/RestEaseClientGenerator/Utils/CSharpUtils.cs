@@ -1,5 +1,6 @@
 ﻿using System.CodeDom.Compiler;
 using System.Text.RegularExpressions;
+using RestEaseClientGenerator.Extensions;
 
 namespace RestEaseClientGenerator.Utils
 {
@@ -11,24 +12,24 @@ namespace RestEaseClientGenerator.Utils
         private static readonly CodeDomProvider CodeProvider = CodeDomProvider.CreateProvider("C#");
         private static readonly Regex Regex = new Regex(@"[^\p{Ll}\p{Lu}\p{Lt}\p{Lo}\p{Nd}\p{Nl}\p{Mn}\p{Mc}\p{Cf}\p{Pc}\p{Lm}]");
 
-        public static string CreateValidIdentifier(string identifier, bool applyCamelCase = true)
+        public static string CreateValidIdentifier(string identifier, bool applyCamelCase = false)
         {
-            string validIdentifier = applyCamelCase ? identifier.ToCamelCase() : identifier;
-            bool isValid = CodeProvider.IsValidIdentifier(validIdentifier);
+            string camelCasedIdentifier = applyCamelCase ? identifier.ToCamelCase() : identifier;
+            bool isValid = CodeProvider.IsValidIdentifier(camelCasedIdentifier);
 
             if (!isValid)
             {
                 // File name contains invalid chars, remove them
-                validIdentifier = Regex.Replace(validIdentifier, string.Empty);
+                camelCasedIdentifier = Regex.Replace(camelCasedIdentifier, string.Empty);
 
                 // Class name doesn't begin with a letter, insert an underscore
-                if (!char.IsLetter(validIdentifier, 0))
+                if (!char.IsLetter(camelCasedIdentifier, 0))
                 {
-                    validIdentifier = validIdentifier.Insert(0, "_");
+                    camelCasedIdentifier = camelCasedIdentifier.Insert(0, "_");
                 }
             }
 
-            return validIdentifier.Replace(" ", string.Empty);
+            return CodeProvider.CreateValidIdentifier(camelCasedIdentifier.Replace(" ", string.Empty));
         }
     }
 }
