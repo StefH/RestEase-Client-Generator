@@ -89,7 +89,7 @@
   </VisibilityConstraints>
 
   <Symbols>
-    <GuidSymbol name="guidPackage" value="{47AFE4E1-5A52-4FE1-8CA7-EDB8310BDA4A}" />
+    <GuidSymbol name="guidPackage" value="{47AFE4E1-0000-4FE1-8CA7-EDB8310BDA4A}" />
 
     <GuidSymbol name="guidUIContext" value="{A3381E62-5D85-436F-824E-5F0097387C11}" />
     <GuidSymbol name="guidPackageCmdSet" value="{C292653B-5876-4B8C-B672-3375D8561881}">

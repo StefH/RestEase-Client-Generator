@@ -14,7 +14,7 @@ using Task = System.Threading.Tasks.Task;
 namespace RestEaseClientGenerator.VSIX
 {
     [ExcludeFromCodeCoverage]
-    [Guid("47AFE4E1-5A52-4FE1-8CA7-EDB8310BDA4A")]
+    [Guid("47AFE4E1-0000-4FE1-8CA7-EDB8310BDA4A")]
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
     [InstalledProductRegistration(VsixName, "", "1.0")]
     [ProvideMenuResource("Menus.ctmenu", 1)]
