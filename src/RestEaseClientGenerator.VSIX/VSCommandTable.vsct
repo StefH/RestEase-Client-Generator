@@ -92,7 +92,7 @@
     <GuidSymbol name="guidPackage" value="{47AFE4E1-0000-4FE1-8CA7-EDB8310BDA4A}" />
 
     <GuidSymbol name="guidUIContext" value="{A3381E62-5D85-436F-824E-5F0097387C11}" />
-    <GuidSymbol name="guidPackageCmdSet" value="{C292653B-5876-4B8C-B672-3375D8561881}">
+    <GuidSymbol name="guidPackageCmdSet" value="{C292653B-0000-4B8C-B672-3375D8561881}">
       <IDSymbol name="SubmenuGroup" value="0x1020" />
       <IDSymbol name="CommandsGroup" value="0x1021" />
       <IDSymbol name="Submenu" value="0x0100" />
