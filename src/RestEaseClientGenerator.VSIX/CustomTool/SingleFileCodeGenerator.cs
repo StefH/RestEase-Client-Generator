@@ -5,9 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using Microsoft.VisualStudio.Shell.Interop;
-using RestEaseClientGenerator.VSIX.Converters;
 using RestEaseClientGenerator.VSIX.Extensions;
-using RestEaseClientGenerator.VSIX.Generators;
 
 namespace RestEaseClientGenerator.VSIX.CustomTool
 {
@@ -15,24 +13,14 @@ namespace RestEaseClientGenerator.VSIX.CustomTool
     [ComVisible(true)]
     public abstract class SingleFileCodeGenerator : IVsSingleFileGenerator
     {
-        private readonly SupportedLanguage supportedLanguage;
-        private readonly ILanguageConverter converter;
-
         public SupportedCodeGenerator CodeGenerator { get; }
 
-        protected SingleFileCodeGenerator(
-            SupportedCodeGenerator supportedCodeGenerator,
-            SupportedLanguage supportedLanguage = SupportedLanguage.CSharp,
-            ILanguageConverter converter = null)
+        protected SingleFileCodeGenerator(SupportedCodeGenerator supportedCodeGenerator)
         {
-            this.CodeGenerator = supportedCodeGenerator;
-            this.supportedLanguage = supportedLanguage;
-            this.converter = converter;
+            CodeGenerator = supportedCodeGenerator;
         }
 
         public abstract int DefaultExtension(out string pbstrDefaultExtension);
-
-        // public ICodeGeneratorFactory Factory { get; set; } = new CodeGeneratorFactory();
 
         private readonly IGenerator generator = new Generator();
 

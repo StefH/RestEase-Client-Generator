@@ -54,18 +54,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Commands\AddNew\NewAutoRestClientCommand.cs" />
+    <Compile Include="Commands\AddNew\NewRestEaseClientCommand.cs" />
     <Compile Include="Commands\AddNew\NewRestClientCommand.cs" />
-    <Compile Include="Commands\CustomTool\AutoRestCodeGeneratorCustomToolSetter.cs" />
+    <Compile Include="Commands\CustomTool\RestEaseCodeGeneratorCustomToolSetter.cs" />
     <Compile Include="Commands\CustomTool\CustomToolSetter.cs" />
     <Compile Include="Commands\CustomTool\CustomToolSetterCommand.cs" />
     <Compile Include="Commands\ICommandInitializer.cs" />
-    <Compile Include="Converters\ILanguageConverter.cs" />
     <Compile Include="CustomTool\ProgressReporter.cs" />
     <Compile Include="Extensions\AsyncPackageExtensions.cs" />
     <Compile Include="Extensions\IVsExtensions.cs" />
-    <Compile Include="CustomTool\RestEase\AutoRestCodeGenerator.cs" />
-    <Compile Include="CustomTool\RestEase\AutoRestCSharpCodeGenerator.cs" />
+    <Compile Include="CustomTool\RestEase\RestEaseCodeGenerator.cs" />
+    <Compile Include="CustomTool\RestEase\RestEaseCSharpCodeGenerator.cs" />
     <Compile Include="CustomTool\SingleFileCodeGenerator.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\SupportedCodeGeneratorExtensions.cs" />
@@ -75,12 +74,12 @@
     <Compile Include="NuGet\PackageDependencies.cs" />
     <Compile Include="NuGet\PackageDependency.cs" />
     <Compile Include="NuGet\PackageDependencyListProvider.cs" />
-    <Compile Include="Options\AutoRest\AutoRestOptions.cs" />
-    <Compile Include="Options\AutoRest\AutoRestOptionsPage.cs">
+    <Compile Include="Options\RestEase\AutoRestOptions.cs" />
+    <Compile Include="Options\RestEase\AutoRestOptionsPage.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Options\AutoRest\IAutoRestOptions.cs" />
-    <Compile Include="Options\AutoRest\SyncMethodOptions.cs" />
+    <Compile Include="Options\RestEase\IAutoRestOptions.cs" />
+    <Compile Include="Options\RestEase\SyncMethodOptions.cs" />
     <Compile Include="Options\General\IGeneralOptions.cs" />
     <Compile Include="Options\IOptionsFactory.cs" />
     <Compile Include="Options\OptionsBase.cs" />
@@ -232,9 +231,7 @@
       <Version>7.0.3301</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Generators\RestEase\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

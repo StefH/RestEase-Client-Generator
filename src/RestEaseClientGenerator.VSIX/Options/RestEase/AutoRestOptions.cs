@@ -15,7 +15,7 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
                 AddCredentials = options.AddCredentials;
                 OverrideClientName = options.OverrideClientName;
                 UseInternalConstructors = options.UseInternalConstructors;
-                SyncMethods = options.SyncMethods;
+                //SyncMethods = options.SyncMethods;
                 UseDateTimeOffset = options.UseDateTimeOffset;
                 ClientSideValidation = options.ClientSideValidation;
             }
@@ -27,14 +27,13 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
                 Trace.WriteLine($"AddCredentials = {AddCredentials}");
                 Trace.WriteLine($"OverrideClientName = {OverrideClientName}");
                 Trace.WriteLine($"UseInternalConstructors = {UseInternalConstructors}");
-                Trace.WriteLine($"SyncMethods = {SyncMethods}");
+                // Trace.WriteLine($"SyncMethods = {SyncMethods}");
                 Trace.WriteLine($"UseDateTimeOffset = {UseDateTimeOffset}");
                 Trace.WriteLine($"UseDateTimeOClientSideValidationffset = {ClientSideValidation}");
 
                 AddCredentials = false;
                 OverrideClientName = false;
                 UseInternalConstructors = false;
-                SyncMethods = SyncMethodOptions.Essential;
                 UseDateTimeOffset = false;
                 ClientSideValidation = true;
             }
@@ -43,7 +42,7 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         public bool AddCredentials { get; set; }
         public bool OverrideClientName { get; set; }
         public bool UseInternalConstructors { get; set; }
-        public SyncMethodOptions SyncMethods { get; set; }
+        // public SyncMethodOptions SyncMethods { get; set; }
         public bool UseDateTimeOffset { get; set; }
         public bool ClientSideValidation { get; set; }
     }

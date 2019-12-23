@@ -18,11 +18,6 @@ namespace RestEaseClientGenerator.VSIX.CustomTool.RestEase
     {
         public const string Description = "C# RestEase API Client Code Generator";
 
-        public RestEaseCSharpCodeGenerator() 
-            : base(SupportedLanguage.CSharp)
-        {
-        }
-
         public override int DefaultExtension(out string pbstrDefaultExtension)
         {
             pbstrDefaultExtension = ".cs";

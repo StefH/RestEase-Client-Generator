@@ -1,6 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
-using RestEaseClientGenerator.VSIX.Converters;
 
 namespace RestEaseClientGenerator.VSIX.CustomTool.RestEase
 {
@@ -8,8 +7,7 @@ namespace RestEaseClientGenerator.VSIX.CustomTool.RestEase
     [ComVisible(true)]
     public abstract class RestEaseCodeGenerator : SingleFileCodeGenerator
     {
-        protected RestEaseCodeGenerator(SupportedLanguage language, ILanguageConverter languageConverter = null)
-            : base(SupportedCodeGenerator.RestEase, language, languageConverter)
+        protected RestEaseCodeGenerator() : base(SupportedCodeGenerator.RestEase)
         {
         }
     }
