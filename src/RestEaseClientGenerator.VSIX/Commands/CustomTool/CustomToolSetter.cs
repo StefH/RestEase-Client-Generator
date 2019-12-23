@@ -16,14 +16,7 @@ namespace RestEaseClientGenerator.VSIX.Commands.CustomTool
         protected abstract int CommandId { get; }
         protected Guid CommandSet { get; } = new Guid("C292653B-0000-4B8C-B672-3375D8561881");
 
-        public Task InitializeAsync(
-            AsyncPackage package,
-            CancellationToken token)
-            => package.SetupCommandAsync(
-                CommandSet,
-                CommandId,
-                OnExecuteAsync,
-                token);
+        public Task InitializeAsync(AsyncPackage package, CancellationToken token) => package.SetupCommandAsync(CommandSet, CommandId, OnExecuteAsync, token);
 
         private async Task OnExecuteAsync(DTE dte, AsyncPackage package)
         {
@@ -37,9 +30,7 @@ namespace RestEaseClientGenerator.VSIX.Commands.CustomTool
 
             var project = ProjectExtensions.GetActiveProject(dte);
 
-            await project.InstallMissingPackagesAsync(
-                package,
-                typeof(T).GetSupportedCodeGenerator());
+            await project.InstallMissingPackagesAsync(package, typeof(T).GetSupportedCodeGenerator());
         }
     }
 }
