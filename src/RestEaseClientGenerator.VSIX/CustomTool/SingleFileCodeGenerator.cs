@@ -6,6 +6,8 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using Microsoft.VisualStudio.Shell.Interop;
 using RestEaseClientGenerator.VSIX.Extensions;
+using RestEaseClientGenerator.VSIX.Options;
+using RestEaseClientGenerator.VSIX.Options.RestEase;
 
 namespace RestEaseClientGenerator.VSIX.CustomTool
 {
@@ -22,7 +24,9 @@ namespace RestEaseClientGenerator.VSIX.CustomTool
 
         public abstract int DefaultExtension(out string pbstrDefaultExtension);
 
-        private readonly IGenerator generator = new Generator();
+        private readonly IOptionsFactory _optionsFactory = new OptionsFactory();
+
+        private readonly IGenerator _generator = new Generator();
 
         public int Generate(
             string wszInputFilePath,
@@ -34,10 +38,12 @@ namespace RestEaseClientGenerator.VSIX.CustomTool
         {
             try
             {
+                var options = _optionsFactory.Create<IRestEaseOptions, RestEaseOptionsPage>();
+
                 pGenerateProgress.Progress(5);
 
                 string apiName = Path.GetFileNameWithoutExtension(wszInputFilePath);
-                var result = generator.FromStream(File.OpenRead(wszInputFilePath), wszDefaultNamespace, apiName, out var diagnostic);
+                var result = _generator.FromStream(File.OpenRead(wszInputFilePath), wszDefaultNamespace, apiName, out var diagnostic);
 
                 if (diagnostic.Errors.Any() || !result.Any())
                 {

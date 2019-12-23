@@ -16,7 +16,7 @@ namespace RestEaseClientGenerator.VSIX.CustomTool.RestEase
                               GeneratorRegKeyName = "RestEaseCodeGenerator")]
     public class RestEaseCSharpCodeGenerator : RestEaseCodeGenerator
     {
-        public const string Description = "C# RestEase API Client Code Generator";
+        public const string Description = "RestEase Client Code Generator";
 
         public override int DefaultExtension(out string pbstrDefaultExtension)
         {
