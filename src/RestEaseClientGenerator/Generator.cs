@@ -1,31 +1,19 @@
-﻿using Microsoft.OpenApi.Models;
-using Microsoft.OpenApi.Readers;
-using RestEaseClientGenerator.Utils;
-using System;
-using System.CodeDom.Compiler;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi.Readers;
 using RestEaseClientGenerator.Extensions;
 using RestEaseClientGenerator.Models;
 using RestEaseClientGenerator.Types;
+using RestEaseClientGenerator.Utils;
 
 namespace RestEaseClientGenerator
 {
     public class Generator : IGenerator
     {
-        //public interface IPetStoreApiExample
-        //{
-        //    /// <summary>
-        //    /// List all pets
-        //    /// </summary>
-        //    /// <param name="limit">How many items to return at one time (max 100)</param>
-        //    /// <returns>A paged array of pets</returns>
-        //    [Get("{endpoint}/pets")]
-        //    Task<Pet[]> Get(int? limit);
-        //}
-
         public ICollection<GeneratedFile> FromStream(Stream stream, string clientNamespace, string apiName, out OpenApiDiagnostic diagnostic)
         {
             var reader = new OpenApiStreamReader();
@@ -233,17 +221,25 @@ namespace RestEaseClientGenerator
             return false;
         }
 
-        private static string BuildQueryParameter(OpenApiParameter parameter, string parameterType)
+        private static (string Identifier, string Text, string Summary) BuildQueryParameter(OpenApiParameter parameter, string parameterType)
         {
             string identifier = parameter.Name;
             string validIdentifier = CSharpUtils.CreateValidIdentifier(identifier);
 
             if (identifier != validIdentifier)
             {
-                return $"[{parameterType}(Name = \"{identifier}\")] {MapSchema(parameter.Schema, validIdentifier, !parameter.Required, false)}";
+                return (
+                    validIdentifier,
+                    $"[{parameterType}(Name = \"{identifier}\")] {MapSchema(parameter.Schema, validIdentifier, !parameter.Required, false)}",
+                    parameter.Description
+                    );
             }
 
-            return $"[{parameterType}] {MapSchema(parameter.Schema, identifier, !parameter.Required, false)}";
+            return (
+                identifier,
+                $"[{parameterType}] {MapSchema(parameter.Schema, identifier, !parameter.Required, false)}",
+                parameter.Description
+                );
         }
 
         private static RestEaseInterfaceMethodDetails MapOperationToMappingModel(string path, string httpMethod, OpenApiOperation operation)
@@ -263,7 +259,7 @@ namespace RestEaseClientGenerator
                 .Select(p => BuildQueryParameter(p, "Query"))
                 .ToList();
 
-            var bodyParameterList = new List<string>();
+            var bodyParameterList = new List<(string Identifier, string Text, string Summary)>();
             if (operation.RequestBody != null && TryGetOpenApiMediaType(operation.RequestBody.Content, out OpenApiMediaType requestMediaType))
             {
                 string bodyParameter;
@@ -285,11 +281,15 @@ namespace RestEaseClientGenerator
 
                 if (!string.IsNullOrEmpty(bodyParameter))
                 {
-                    bodyParameterList.Add($"[Body] {bodyParameter} {bodyParameter.ToCamelCase()}");
+                    string bodyParameterIdentifierName = bodyParameter.ToCamelCase();
+                    bodyParameterList.Add((bodyParameterIdentifierName, $"[Body] {bodyParameter} {bodyParameterIdentifierName}", requestMediaType.Schema?.Description));
                 }
             }
 
-            var methodParameterList = pathParameterList.Union(bodyParameterList).Union(queryParameterList);
+            var methodParameterList = pathParameterList
+                .Union(bodyParameterList)
+                .Union(queryParameterList)
+                .ToList();
 
             var response = operation.Responses.First();
 
@@ -313,14 +313,29 @@ namespace RestEaseClientGenerator
                 }
             }
 
+            //public interface IPetStoreApiExample
+            //{
+            //    /// <summary>
+            //    /// List all pets
+            //    /// </summary>
+            //    /// <param name="limit">How many items to return at one time (max 100)</param>
+            //    /// <returns>A paged array of pets</returns>
+            //    [Get("{endpoint}/pets")]
+            //    Task<Pet[]> Get(int? limit);
+            //}
+
+            var summaryParameters = methodParameterList.Select(mp => $"<param name=\"{mp.Identifier}\">{mp.Summary}</param>").ToList();
+
             var method = new RestEaseInterfaceMethodDetails
             {
+                Summary = operation.Summary ?? $"{methodRestEaseMethod} (endpoint{path})",
+                SummaryParameters = summaryParameters,
                 RestEaseAttribute = $"[{methodRestEaseForAnnotation}(\"{{endpoint}}{path}\")]",
                 RestEaseMethod = new RestEaseInterfaceMethod
                 {
                     ReturnType = returnType,
                     Name = methodRestEaseMethod,
-                    Parameters = string.Join(", ", methodParameterList)
+                    Parameters = string.Join(", ", methodParameterList.Select(mp => mp.Text))
                 }
             };
 
@@ -358,11 +373,21 @@ namespace RestEaseClientGenerator
             builder.AppendLine("{");
             builder.AppendLine($"    public interface {api.Name}");
             builder.AppendLine("    {");
+            builder.AppendLine("        /// <summary>");
+            builder.AppendLine("        /// The endpoint for this Api");
+            builder.AppendLine("        /// </summary>");
             builder.AppendLine("        [Path(\"endpoint\", UrlEncode = false)]");
             builder.AppendLine("        string Endpoint { get; set; }");
             builder.AppendLine();
             foreach (var method in api.Methods)
             {
+                builder.AppendLine("        /// <summary>");
+                builder.AppendLine($"        /// {method.Summary}");
+                builder.AppendLine("        /// </summary>");
+                foreach (var p in method.SummaryParameters)
+                {
+                    builder.AppendLine($"        /// {p}");
+                }
                 builder.AppendLine($"        {method.RestEaseAttribute}");
                 builder.AppendLine($"        Task{method.RestEaseMethod.ReturnType} {method.RestEaseMethod.Name}Async({method.RestEaseMethod.Parameters});");
                 builder.AppendLine();

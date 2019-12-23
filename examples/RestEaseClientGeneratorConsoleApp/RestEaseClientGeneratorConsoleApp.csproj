@@ -14,6 +14,10 @@
     <Folder Include="Drc\Api\" />
   
     <Folder Include="Drc\Models\" />
+  
+    <Folder Include="PetStore\Api\" />
+  
+    <Folder Include="PetStore\Models\" />
   </ItemGroup>
 
   <ItemGroup>

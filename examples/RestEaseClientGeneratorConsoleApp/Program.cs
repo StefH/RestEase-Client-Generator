@@ -15,10 +15,10 @@ namespace RestEaseClientGeneratorConsoleApp
                 File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Drc/{file.Path}/{file.Name}", file.Content);
             }
 
-            //foreach (var file in generator.FromStream(File.OpenRead("petstore.yaml"), "RestEaseClientGeneratorConsoleApp.PetStore", "PetStore", out OpenApiDiagnostic diagnosticPetStore1))
-            //{
-            //    File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/PetStore/{file.Path}/{file.Name}", file.Content);
-            //}
+            foreach (var file in generator.FromStream(File.OpenRead("petstore.yaml"), "RestEaseClientGeneratorConsoleApp.PetStore", "PetStore", out OpenApiDiagnostic diagnosticPetStore1))
+            {
+                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/PetStore/{file.Path}/{file.Name}", file.Content);
+            }
 
             //foreach (var file in generator.FromStream(File.OpenRead("petstore.json"), "RestEaseClientGeneratorConsoleApp.PetStoreJson", "PetStoreJson", out OpenApiDiagnostic diagnosticPetStore1))
             //{
