@@ -1,5 +1,4 @@
 ﻿using System.CodeDom.Compiler;
-using System.Globalization;
 using System.Text.RegularExpressions;
 
 namespace RestEaseClientGenerator.Utils
