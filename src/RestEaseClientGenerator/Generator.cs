@@ -15,8 +15,6 @@ namespace RestEaseClientGenerator
 {
     public class Generator : IGenerator
     {
-        private static readonly CodeDomProvider CodeProvider = CodeDomProvider.CreateProvider("C#");
-
         //public interface IPetStoreApiExample
         //{
         //    /// <summary>
@@ -235,6 +233,19 @@ namespace RestEaseClientGenerator
             return false;
         }
 
+        private static string BuildQueryParameter(OpenApiParameter parameter, string parameterType)
+        {
+            string identifier = parameter.Name;
+            string validIdentifier = CSharpUtils.CreateValidIdentifier(identifier);
+
+            if (identifier != validIdentifier)
+            {
+                return $"[{parameterType}(Name = \"{identifier}\")] {MapSchema(parameter.Schema, validIdentifier, !parameter.Required, false)}";
+            }
+
+            return $"[{parameterType}] {MapSchema(parameter.Schema, identifier, !parameter.Required, false)}";
+        }
+
         private static RestEaseInterfaceMethodDetails MapOperationToMappingModel(string path, string httpMethod, OpenApiOperation operation)
         {
             string methodRestEaseForAnnotation = httpMethod.ToPascalCase();
@@ -244,12 +255,12 @@ namespace RestEaseClientGenerator
 
             var pathParameterList = operation.Parameters
                 .Where(p => p.In == ParameterLocation.Path && p.Schema.GetSchemaType() != SchemaType.Object)
-                .Select(p => $"[Path] {MapSchema(p.Schema, p.Name, !p.Required, false)}")
+                .Select(p => BuildQueryParameter(p, "Path"))
                 .ToList();
 
             var queryParameterList = operation.Parameters
                 .Where(p => p.In == ParameterLocation.Query && p.Schema.GetSchemaType() != SchemaType.Object)
-                .Select(p => $"[Query] {MapSchema(p.Schema, CodeProvider.CreateValidIdentifier(p.Name), !p.Required, false)}")
+                .Select(p => BuildQueryParameter(p, "Query"))
                 .ToList();
 
             var bodyParameterList = new List<string>();

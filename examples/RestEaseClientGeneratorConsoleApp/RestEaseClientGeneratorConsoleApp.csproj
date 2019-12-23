@@ -10,6 +10,10 @@
     <!--<Compile Remove="PetStoreJson\**\*.cs" />-->
     <!--<Compile Remove="Infura\**\*.cs" />-->
     <!--<Compile Remove="Cog\**\*.cs" />-->
+  
+    <Folder Include="Drc\Api\" />
+  
+    <Folder Include="Drc\Models\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -18,6 +22,9 @@
 
   <ItemGroup>
     <None Update="cognitive-services-personalizer.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="drc.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="infura.yaml">
