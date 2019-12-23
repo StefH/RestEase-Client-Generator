@@ -232,14 +232,14 @@ namespace RestEaseClientGenerator
                     validIdentifier,
                     $"[{parameterType}(Name = \"{identifier}\")] {MapSchema(parameter.Schema, validIdentifier, !parameter.Required, false)}",
                     parameter.Description
-                    );
+                );
             }
 
             return (
                 identifier,
                 $"[{parameterType}] {MapSchema(parameter.Schema, identifier, !parameter.Required, false)}",
                 parameter.Description
-                );
+            );
         }
 
         private static RestEaseInterfaceMethodDetails MapOperationToMappingModel(string path, string httpMethod, OpenApiOperation operation)

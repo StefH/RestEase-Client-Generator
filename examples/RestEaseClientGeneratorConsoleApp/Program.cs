@@ -20,20 +20,20 @@ namespace RestEaseClientGeneratorConsoleApp
                 File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/PetStore/{file.Path}/{file.Name}", file.Content);
             }
 
-            //foreach (var file in generator.FromStream(File.OpenRead("petstore.json"), "RestEaseClientGeneratorConsoleApp.PetStoreJson", "PetStoreJson", out OpenApiDiagnostic diagnosticPetStore1))
-            //{
-            //    File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/PetStoreJson/{file.Path}/{file.Name}", file.Content);
-            //}
+            foreach (var file in generator.FromStream(File.OpenRead("petstore.json"), "RestEaseClientGeneratorConsoleApp.PetStoreJson", "PetStoreJson", out OpenApiDiagnostic diagnosticPetStore1))
+            {
+                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/PetStoreJson/{file.Path}/{file.Name}", file.Content);
+            }
 
-            //foreach (var file in generator.FromStream(File.OpenRead("infura.yaml"), "RestEaseClientGeneratorConsoleApp.Infura", "Infura", out OpenApiDiagnostic diagnosticPetStore1))
-            //{
-            //    File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Infura/{file.Path}/{file.Name}", file.Content);
-            //}
+            foreach (var file in generator.FromStream(File.OpenRead("infura.yaml"), "RestEaseClientGeneratorConsoleApp.Infura", "Infura", out OpenApiDiagnostic diagnosticPetStore1))
+            {
+                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Infura/{file.Path}/{file.Name}", file.Content);
+            }
 
-            //foreach (var file in generator.FromStream(File.OpenRead("cognitive-services-personalizer.json"), "RestEaseClientGeneratorConsoleApp.Cog", "Cog", out OpenApiDiagnostic diagnosticPetStore1))
-            //{
-            //    File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Cog/{file.Path}/{file.Name}", file.Content);
-            //}
+            foreach (var file in generator.FromStream(File.OpenRead("cognitive-services-personalizer.json"), "RestEaseClientGeneratorConsoleApp.Cog", "Cog", out OpenApiDiagnostic diagnosticPetStore1))
+            {
+                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Cog/{file.Path}/{file.Name}", file.Content);
+            }
         }
     }
 }
