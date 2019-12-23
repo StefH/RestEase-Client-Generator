@@ -43,11 +43,13 @@ namespace RestEaseClientGenerator.VSIX.CustomTool
                 pGenerateProgress.Progress(5);
 
                 string apiName = Path.GetFileNameWithoutExtension(wszInputFilePath);
+
+                Trace.WriteLine("Generating interface and models");
                 var result = _generator.FromStream(File.OpenRead(wszInputFilePath), wszDefaultNamespace, apiName, out var diagnostic);
 
                 if (diagnostic.Errors.Any() || !result.Any())
                 {
-                    var errorMessages = string.Join(",", diagnostic.Errors.Select(e => e.Message));
+                    var errorMessages = string.Join(" | ", diagnostic.Errors.Select(e => e.Message));
                     Trace.WriteLine($"OpenApiDiagnostic errors: {errorMessages}");
 
                     pcbOutput = 0;
@@ -59,6 +61,8 @@ namespace RestEaseClientGenerator.VSIX.CustomTool
 
                 rgbOutputFileContents[0] = allCode.ConvertToIntPtr(out pcbOutput);
                 pGenerateProgress.Progress(100);
+
+                Trace.WriteLine("All done");
             }
             catch (Exception e)
             {
