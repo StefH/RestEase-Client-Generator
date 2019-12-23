@@ -35,14 +35,6 @@ namespace RestEaseClientGenerator
 
             var files = new List<GeneratedFile>();
 
-            var models = MapModels(openApiDocument.Components.Schemas, clientNamespace);
-            files.AddRange(models.Select(model => new GeneratedFile
-            {
-                Path = "Models",
-                Name = $"{model.ClassName}.cs",
-                Content = BuildModel(model)
-            }));
-
             var @interface = MapInterface(openApiDocument.Paths, apiName, clientNamespace);
             files.Add(new GeneratedFile
             {
@@ -50,6 +42,14 @@ namespace RestEaseClientGenerator
                 Name = $"{@interface.Name}.cs",
                 Content = BuildInterface(@interface)
             });
+
+            var models = MapModels(openApiDocument.Components.Schemas, clientNamespace);
+            files.AddRange(models.Select(model => new GeneratedFile
+            {
+                Path = "Models",
+                Name = $"{model.ClassName}.cs",
+                Content = BuildModel(model)
+            }));
 
             return files;
         }

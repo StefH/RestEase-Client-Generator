@@ -45,9 +45,9 @@ namespace RestEaseClientGenerator.VSIX.CustomTool
                     return 1;
                 }
 
-                string code = result.First().Content;
+                string allCode = string.Join("\r\n", result.Select(x => x.Content));
 
-                rgbOutputFileContents[0] = code.ConvertToIntPtr(out pcbOutput);
+                rgbOutputFileContents[0] = allCode.ConvertToIntPtr(out pcbOutput);
                 pGenerateProgress.Progress(100);
             }
             catch (Exception e)
