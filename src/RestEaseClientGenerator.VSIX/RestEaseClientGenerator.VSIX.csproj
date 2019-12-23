@@ -73,11 +73,11 @@
     <Compile Include="NuGet\PackageDependencies.cs" />
     <Compile Include="NuGet\PackageDependency.cs" />
     <Compile Include="NuGet\PackageDependencyListProvider.cs" />
-    <Compile Include="Options\RestEase\AutoRestOptions.cs" />
-    <Compile Include="Options\RestEase\AutoRestOptionsPage.cs">
+    <Compile Include="Options\RestEase\RestEaseOptions.cs" />
+    <Compile Include="Options\RestEase\RestEaseOptionsPage.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Options\RestEase\IAutoRestOptions.cs" />
+    <Compile Include="Options\RestEase\IRestEaseOptions.cs" />
     <Compile Include="Options\RestEase\SyncMethodOptions.cs" />
     <Compile Include="Options\IOptionsFactory.cs" />
     <Compile Include="Options\OptionsBase.cs" />
