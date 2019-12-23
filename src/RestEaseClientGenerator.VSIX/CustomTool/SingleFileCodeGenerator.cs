@@ -41,10 +41,14 @@ namespace RestEaseClientGenerator.VSIX.CustomTool
 
                 if (diagnostic.Errors.Any() || !result.Any())
                 {
+                    var errorMessages = string.Join(",", diagnostic.Errors.Select(e => e.Message));
+                    Trace.WriteLine($"OpenApiDiagnostic errors: {errorMessages}");
+
                     pcbOutput = 0;
                     return 1;
                 }
 
+                pGenerateProgress.Progress(90);
                 string allCode = string.Join("\r\n", result.Select(x => x.Content));
 
                 rgbOutputFileContents[0] = allCode.ConvertToIntPtr(out pcbOutput);

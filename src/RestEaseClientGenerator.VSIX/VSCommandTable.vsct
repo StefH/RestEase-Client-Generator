@@ -9,7 +9,7 @@
     <Groups>
       <Group guid="guidPackageCmdSet" id="SubmenuGroup" />
       <Group guid="guidPackageCmdSet" id="CommandsGroup" />
-      
+
       <Group guid="guidNewRestApiClientCmdSet" id="NewSubmenuGroup" />
       <Group guid="guidNewRestApiClientCmdSet" id="NewCommandsGroup" />
     </Groups>
@@ -34,13 +34,13 @@
     <Buttons>
       <Button guid="guidPackageCmdSet" id="RestEaseCodeGeneratorCustomToolSetter" priority="0x0100" type="Button">
         <Strings>
-          <ButtonText>Generate interface &amp;amp; models</ButtonText>
+          <ButtonText>Generate interface and models</ButtonText>
         </Strings>
       </Button>
 
       <Button guid="guidNewRestApiClientCmdSet" id="GenerateWithRestEase" priority="0x0100" type="Button">
         <Strings>
-          <ButtonText>Generate interface &amp;amp; models</ButtonText>
+          <ButtonText>Generate interface and models</ButtonText>
         </Strings>
       </Button>
     </Buttons>
@@ -59,7 +59,7 @@
     <CommandPlacement guid="guidPackageCmdSet" id="RestEaseCodeGeneratorCustomToolSetter" priority="0x0001" >
       <Parent guid="guidPackageCmdSet" id="CommandsGroup"/>
     </CommandPlacement>
-    
+
     <CommandPlacement guid="guidNewRestApiClientCmdSet" id="NewSubmenuGroup" priority="0xFFFF">
       <Parent guid="guidSHLMainMenu" id="IDG_VS_CTXT_PROJECT_ADD_ITEMS"/>
     </CommandPlacement>
@@ -76,7 +76,6 @@
 
   <VisibilityConstraints>
     <VisibilityItem guid="guidPackageCmdSet" id="Submenu" context="guidUIContext"/>
-    <!--<VisibilityItem guid="guidPackageNSwagStudioCmdSet" id="NSwagStudioCommand" context="guidNSwagStudioContext"/>-->
   </VisibilityConstraints>
 
   <Symbols>
@@ -89,11 +88,6 @@
       <IDSymbol name="Submenu" value="0x0100" />
       <IDSymbol name="RestEaseCodeGeneratorCustomToolSetter" value="0x0200" />
     </GuidSymbol>
-
-    <!--<GuidSymbol name="guidNSwagStudioContext" value="{65B3A74F-CD47-476A-A992-0C3DE31455FD}" />
-    <GuidSymbol name="guidPackageNSwagStudioCmdSet" value="{F76783DA-7AE3-4EDB-BDF4-B580CAB1BA90}">
-      <IDSymbol name="NSwagStudioCommand" value="0x0100" />
-    </GuidSymbol>-->
 
     <GuidSymbol name="guidNewRestApiClientContext" value="{7CEC8679-C1B8-48BF-9FA4-5FAA38CBE0FA}" />
     <GuidSymbol name="guidNewRestApiClientCmdSet" value="{E4B99F94-D11F-4CAA-ADCD-24302C232938}">

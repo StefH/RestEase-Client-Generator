@@ -19,11 +19,11 @@ namespace RestEaseClientGenerator.VSIX
     [InstalledProductRegistration(VsixName, "", "1.0")]
     [ProvideMenuResource("Menus.ctmenu", 1)]
     [ProvideUIContextRule(
-        CustomToolSetterCommand.ContextGuid,
-        CustomToolSetterCommand.Name,
-        CustomToolSetterCommand.Expression,
-        new[] { CustomToolSetterCommand.Expression },
-        new[] { CustomToolSetterCommand.TermValue })]
+        "A3381E62-5D85-436F-824E-5F0097387C11",
+        "UI Context",
+        "json | yml | yaml",
+        new[] { "json", "yml", "yaml" },
+        new[] { "HierSingleSelectionName:.json$", "HierSingleSelectionName:.yml$", "HierSingleSelectionName:.yaml$" })]
     [ProvideOptionPage(
         typeof(GeneralOptionPage),
         VsixName,
@@ -38,7 +38,7 @@ namespace RestEaseClientGenerator.VSIX
         0,
         0,
         true)]
-    
+
     public sealed class VsPackage : AsyncPackage
     {
         public const string VsixName = "RestEase Client Code Generator";
