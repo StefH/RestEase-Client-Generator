@@ -79,14 +79,9 @@
     </Compile>
     <Compile Include="Options\RestEase\IAutoRestOptions.cs" />
     <Compile Include="Options\RestEase\SyncMethodOptions.cs" />
-    <Compile Include="Options\General\IGeneralOptions.cs" />
     <Compile Include="Options\IOptionsFactory.cs" />
     <Compile Include="Options\OptionsBase.cs" />
-    <Compile Include="Options\General\CustomPathOptions.cs" />
     <Compile Include="Options\OptionsFactory.cs" />
-    <Compile Include="Options\General\GeneralOptionPage.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="SupportedCodeGenerator.cs" />
     <Compile Include="SupportedLanguage.cs" />
     <Compile Include="Windows\OutputWindow.cs" />
@@ -101,12 +96,6 @@
     </Compile>
     <Compile Include="VsPackage.cs" />
     <Compile Include="Windows\EnterOpenApiSpecDialogResult.cs" />
-    <Compile Include="Windows\GeneralOptionsPageCustom.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Windows\GeneralOptionsPageCustom.Designer.cs">
-      <DependentUpon>GeneralOptionsPageCustom.cs</DependentUpon>
-    </Compile>
     <Compile Include="Windows\NativeMethods.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -155,9 +144,6 @@
       <DependentUpon>VsPackage.cs</DependentUpon>
       <MergeWithCTO>true</MergeWithCTO>
       <ManifestResourceName>VSPackage</ManifestResourceName>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Windows\GeneralOptionsPageCustom.resx">
-      <DependentUpon>GeneralOptionsPageCustom.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -7,7 +7,6 @@ using RestEaseClientGenerator.VSIX.Commands;
 using RestEaseClientGenerator.VSIX.Commands.AddNew;
 using RestEaseClientGenerator.VSIX.Commands.CustomTool;
 using RestEaseClientGenerator.VSIX.Options.RestEase;
-using RestEaseClientGenerator.VSIX.Options.General;
 using OutputWindow = RestEaseClientGenerator.VSIX.Windows.OutputWindow;
 using Task = System.Threading.Tasks.Task;
 
@@ -24,13 +23,13 @@ namespace RestEaseClientGenerator.VSIX
         "json | yml | yaml",
         new[] { "json", "yml", "yaml" },
         new[] { "HierSingleSelectionName:.json$", "HierSingleSelectionName:.yml$", "HierSingleSelectionName:.yaml$" })]
-    [ProvideOptionPage(
-        typeof(GeneralOptionPage),
-        VsixName,
-        GeneralOptionPage.Name,
-        0,
-        0,
-        true)]
+    //[ProvideOptionPage(
+    //    typeof(GeneralOptionPage),
+    //    VsixName,
+    //    GeneralOptionPage.Name,
+    //    0,
+    //    0,
+    //    true)]
     [ProvideOptionPage(
         typeof(RestEaseOptionsPage),
         VsixName,

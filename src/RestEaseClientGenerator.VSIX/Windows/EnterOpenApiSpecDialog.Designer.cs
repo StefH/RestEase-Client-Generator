@@ -130,7 +130,7 @@
             this.ShowIcon = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Enter URL to OpenAPI Specification JSON file";
+            this.Text = "Enter URL to OpenAPI Specification JSON or YML file";
             this.TopMost = true;
             this.Load += new System.EventHandler(this.EnterOpenApiSpecDialog_Load);
             this.ResumeLayout(false);
