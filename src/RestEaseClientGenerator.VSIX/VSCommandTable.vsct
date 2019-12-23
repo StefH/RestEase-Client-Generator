@@ -22,11 +22,12 @@
           <ButtonText>RestEase Client Generator</ButtonText>
         </Strings>
       </Menu>
+
       <Menu guid="guidNewRestApiClientCmdSet" id="NewSubmenu" type="Menu" priority="0xFFFF">
         <Parent guid="guidSHLMainMenu" id="IDG_VS_CTXT_PROJECT_ADD_ITEMS"/>
         <CommandFlag>DynamicVisibility</CommandFlag>
         <Strings>
-          <ButtonText>New RestEase Client</ButtonText>
+          <ButtonText>New RestEase Client from specification</ButtonText>
         </Strings>
       </Menu>
     </Menus>
@@ -34,13 +35,13 @@
     <Buttons>
       <Button guid="guidPackageCmdSet" id="RestEaseCodeGeneratorCustomToolSetter" priority="0x0100" type="Button">
         <Strings>
-          <ButtonText>Generate interface and models</ButtonText>
+          <ButtonText>Generate</ButtonText>
         </Strings>
       </Button>
 
       <Button guid="guidNewRestApiClientCmdSet" id="GenerateWithRestEase" priority="0x0100" type="Button">
         <Strings>
-          <ButtonText>Generate interface and models</ButtonText>
+          <ButtonText>Generate</ButtonText>
         </Strings>
       </Button>
     </Buttons>
@@ -81,7 +82,7 @@
   <Symbols>
     <GuidSymbol name="guidPackage" value="{47AFE4E1-0000-4FE1-8CA7-EDB8310BDA4A}" />
 
-    <GuidSymbol name="guidUIContext" value="{A3381E62-5D85-436F-824E-5F0097387C11}" />
+    <GuidSymbol name="guidUIContext" value="{A3381E62-0000-436F-824E-5F0097387C11}" />
     <GuidSymbol name="guidPackageCmdSet" value="{C292653B-0000-4B8C-B672-3375D8561881}">
       <IDSymbol name="SubmenuGroup" value="0x1020" />
       <IDSymbol name="CommandsGroup" value="0x1021" />
@@ -90,7 +91,7 @@
     </GuidSymbol>
 
     <GuidSymbol name="guidNewRestApiClientContext" value="{7CEC8679-C1B8-48BF-9FA4-5FAA38CBE0FA}" />
-    <GuidSymbol name="guidNewRestApiClientCmdSet" value="{E4B99F94-D11F-4CAA-ADCD-24302C232938}">
+    <GuidSymbol name="guidNewRestApiClientCmdSet" value="{E4B99F94-0000-4CAA-ADCD-24302C232938}">
       <IDSymbol name="NewSubmenuGroup" value="0x1020" />
       <IDSymbol name="NewCommandsGroup" value="0x1021" />
       <IDSymbol name="NewSubmenu" value="0x0100" />

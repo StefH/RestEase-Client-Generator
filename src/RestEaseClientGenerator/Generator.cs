@@ -313,17 +313,6 @@ namespace RestEaseClientGenerator
                 }
             }
 
-            //public interface IPetStoreApiExample
-            //{
-            //    /// <summary>
-            //    /// List all pets
-            //    /// </summary>
-            //    /// <param name="limit">How many items to return at one time (max 100)</param>
-            //    /// <returns>A paged array of pets</returns>
-            //    [Get("{endpoint}/pets")]
-            //    Task<Pet[]> Get(int? limit);
-            //}
-
             var summaryParameters = methodParameterList.Select(mp => $"<param name=\"{mp.Identifier}\">{mp.Summary}</param>").ToList();
 
             var method = new RestEaseInterfaceMethodDetails
@@ -354,7 +343,10 @@ namespace RestEaseClientGenerator
             foreach (var property in restEaseModel.Properties)
             {
                 builder.AppendLine($"        public {property} {{ get; set; }}");
-                builder.AppendLine();
+                if (property != restEaseModel.Properties.Last())
+                {
+                    builder.AppendLine();
+                }
             }
             builder.AppendLine("    }");
             builder.AppendLine("}");
@@ -390,7 +382,11 @@ namespace RestEaseClientGenerator
                 }
                 builder.AppendLine($"        {method.RestEaseAttribute}");
                 builder.AppendLine($"        Task{method.RestEaseMethod.ReturnType} {method.RestEaseMethod.Name}Async({method.RestEaseMethod.Parameters});");
-                builder.AppendLine();
+
+                if (method != api.Methods.Last())
+                {
+                    builder.AppendLine();
+                }
             }
             builder.AppendLine("    }");
             builder.AppendLine("}");

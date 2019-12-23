@@ -45,6 +45,7 @@
             this.tbUrl.Name = "tbUrl";
             this.tbUrl.Size = new System.Drawing.Size(429, 20);
             this.tbUrl.TabIndex = 0;
+            this.tbUrl.Text = "https://petstore.swagger.io/v2/swagger.json";
             // 
             // lblUrl
             // 
@@ -98,7 +99,7 @@
             this.tbFilename.Name = "tbFilename";
             this.tbFilename.Size = new System.Drawing.Size(429, 20);
             this.tbFilename.TabIndex = 2;
-            this.tbFilename.Text = "Swagger";
+            this.tbFilename.Text = "PetStore";
             // 
             // lblStatus
             // 

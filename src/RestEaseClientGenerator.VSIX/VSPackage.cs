@@ -18,7 +18,7 @@ namespace RestEaseClientGenerator.VSIX
     [InstalledProductRegistration(VsixName, "", "1.0")]
     [ProvideMenuResource("Menus.ctmenu", 1)]
     [ProvideUIContextRule(
-        "A3381E62-5D85-436F-824E-5F0097387C11",
+        "A3381E62-0000-436F-824E-5F0097387C11",
         "UI Context",
         "json | yml | yaml",
         new[] { "json", "yml", "yaml" },

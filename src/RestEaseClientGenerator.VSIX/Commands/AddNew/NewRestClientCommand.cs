@@ -15,7 +15,7 @@ namespace RestEaseClientGenerator.VSIX.Commands.AddNew
     [ExcludeFromCodeCoverage]
     public abstract class NewRestClientCommand : ICommandInitializer
     {
-        protected Guid CommandSet { get; } = new Guid("E4B99F94-D11F-4CAA-ADCD-24302C232938");
+        protected Guid CommandSet { get; } = new Guid("E4B99F94-0000-4CAA-ADCD-24302C232938");
 
         protected virtual int CommandId { get; } = 0x100;
         protected abstract SupportedCodeGenerator CodeGenerator { get; }
