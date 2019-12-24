@@ -22,14 +22,23 @@ This Visual Studio Extension will automatically add the required nuget packages 
 
 
 ## Screenshots
-TODO
 
-## Options
+### Add new specification and generate client code
+![Add from OpenAPI Specification](https://github.com/StefH/RestEase-Client-Generator/raw/master/resources/add-new.png)
+![Enter URL to OpenAPI Specification](https://github.com/StefH/RestEase-Client-Generator/raw/master/resources/openurl.png)
+
+### Generate client code for existing .json, .yml or .yaml file
+![Solution Explorer Context Menus](https://github.com/StefH/RestEase-Client-Generator/raw/master/resources/generate.png)
+
+## Settings
 
 | Name | Description |
 | - | - |
 | ArrayType | Array type to use. The default is Array '[]'.
 | Fail on OpenApi Errors | Don't generate the file if errors are detected when parsing the specification file. The default value is 'false'.
+
+### Screenshot
+![Settings](https://github.com/StefH/RestEase-Client-Generator/raw/master/resources/settings.png)
 
 
 ## Credits
