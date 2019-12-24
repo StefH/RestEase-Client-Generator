@@ -22,6 +22,15 @@ namespace RestEaseClientGenerator.Mappers
                 case ArrayType.IEnumerable:
                     return $"IEnumerable<{value}>";
 
+                case ArrayType.ICollection:
+                    return $"ICollection<{value}>";
+
+                case ArrayType.IList:
+                    return $"IList<{value}>";
+
+                case ArrayType.List:
+                    return $"List<{value}>";
+
                 default:
                     return $"{value}[]";
             }

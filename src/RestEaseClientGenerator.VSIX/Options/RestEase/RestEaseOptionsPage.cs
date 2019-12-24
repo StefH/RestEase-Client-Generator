@@ -19,5 +19,10 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         [DisplayName("Fail on OpenApi Errors")]
         [Description("Don't generate the file if errors are detected when parsing the specification file. The default value is 'false'.")]
         public bool FailOnOpenApiErrors { get; set; }
+
+        [Category(Name)]
+        [DisplayName("Add Authorization header")]
+        [Description("Add an Authorization header to the generated interface. The default value is 'false'.")]
+        public bool AddAuthorizationHeader { get; set; }
     }
 }

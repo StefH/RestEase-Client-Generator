@@ -75,6 +75,10 @@ namespace RestEaseClientGenerator
             {
                 builder.AppendLine("using System.Collections.Generic;");
             }
+            if (settings.AddAuthorizationHeader)
+            {
+                builder.AppendLine("using System.Net.Http.Headers;");
+            }
             builder.AppendLine("using System.Threading.Tasks;");
             builder.AppendLine("using RestEase;");
             builder.AppendLine($"using {api.Namespace}.Models;");
@@ -83,6 +87,12 @@ namespace RestEaseClientGenerator
             builder.AppendLine("{");
             builder.AppendLine($"    public interface {api.Name}");
             builder.AppendLine("    {");
+            if (settings.AddAuthorizationHeader)
+            {
+                builder.AppendLine("        [Header(\"Authorization\")]");
+                builder.AppendLine("        AuthenticationHeaderValue Authorization { get; set; }");
+                builder.AppendLine();
+            }
             foreach (var method in api.Methods)
             {
                 builder.AppendLine("        /// <summary>");

@@ -65,7 +65,8 @@ namespace RestEaseClientGenerator.VSIX.CustomTool
                     SingleFile = true,
                     Namespace = wszDefaultNamespace,
                     ApiName = apiName,
-                    ArrayType = options.ArrayType
+                    ArrayType = options.ArrayType,
+                    AddAuthorizationHeader = options.AddAuthorizationHeader
                 };
                 var result = _generator.FromStream(File.OpenRead(wszInputFilePath), settings, out var diagnostic);
 

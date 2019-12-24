@@ -7,5 +7,7 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         ArrayType ArrayType { get; set; }
 
         bool FailOnOpenApiErrors { get; set; }
+
+        bool AddAuthorizationHeader { get; set; }
     }
 }

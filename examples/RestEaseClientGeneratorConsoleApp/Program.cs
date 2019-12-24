@@ -33,7 +33,8 @@ namespace RestEaseClientGeneratorConsoleApp
                 SingleFile = true,
                 ArrayType = ArrayType.IEnumerable,
                 Namespace = "RestEaseClientGeneratorConsoleApp.PetStoreJson",
-                ApiName = "PetStoreJson"
+                ApiName = "PetStoreJson",
+                AddAuthorizationHeader = true
             };
             foreach (var file in generator.FromStream(File.OpenRead("petstore.json"), petStoreJsonSettings, out OpenApiDiagnostic diagnosticPetStore1))
             {
@@ -59,7 +60,7 @@ namespace RestEaseClientGeneratorConsoleApp
         {
             var petStoreApi = RestClient.For<IPetStoreApi>("https://petstore.swagger.io/v2");
 
-            var getPetById = await petStoreApi.GetPetByIdAsync(2);
+            var getPetById = await petStoreApi.GetPetByIdAsync(1);
             Console.WriteLine(JsonSerializer.Serialize(getPetById));
 
             var findPetsByTags = await petStoreApi.FindPetsByTagsAsync(new[] { "cat" });

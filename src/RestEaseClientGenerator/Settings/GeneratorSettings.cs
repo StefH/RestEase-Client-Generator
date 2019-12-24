@@ -11,5 +11,7 @@ namespace RestEaseClientGenerator.Settings
         public string Namespace { get; set; }
 
         public string ApiName { get; set; }
+
+        public bool AddAuthorizationHeader { get; set; }
     }
 }
