@@ -104,7 +104,7 @@ namespace RestEaseClientGenerator
                     builder.AppendLine($"        /// {p}");
                 }
                 builder.AppendLine($"        {method.RestEaseAttribute}");
-                builder.AppendLine($"        Task{method.RestEaseMethod.ReturnType} {method.RestEaseMethod.Name}Async({method.RestEaseMethod.Parameters});");
+                builder.AppendLine($"        {method.RestEaseMethod.ReturnType} {method.RestEaseMethod.Name}Async({method.RestEaseMethod.Parameters});");
 
                 if (method != api.Methods.Last())
                 {

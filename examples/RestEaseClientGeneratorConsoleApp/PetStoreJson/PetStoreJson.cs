@@ -17,7 +17,7 @@ namespace RestEaseClientGeneratorConsoleApp.PetStoreJson.Api
         /// </summary>
         /// <param name="petId">ID of pet to return</param>
         [Get("/pet/{petId}")]
-        Task<Pet> GetPetByIdAsync([Path] long petId);
+        Task<Response<Pet>> GetPetByIdAsync([Path] long petId);
 
         /// <summary>
         /// Updates a pet in the store with form data
@@ -38,7 +38,7 @@ namespace RestEaseClientGeneratorConsoleApp.PetStoreJson.Api
         /// </summary>
         /// <param name="petId">ID of pet to update</param>
         [Post("/pet/{petId}/uploadImage")]
-        Task<ApiResponse> UploadFileAsync([Path] long petId);
+        Task<Response<ApiResponse>> UploadFileAsync([Path] long petId);
 
         /// <summary>
         /// Add a new pet to the store
@@ -59,27 +59,27 @@ namespace RestEaseClientGeneratorConsoleApp.PetStoreJson.Api
         /// </summary>
         /// <param name="status">Status values that need to be considered for filter</param>
         [Get("/pet/findByStatus")]
-        Task<IEnumerable<Pet>> FindPetsByStatusAsync([Query] IEnumerable<string> status);
+        Task<Response<IEnumerable<Pet>>> FindPetsByStatusAsync([Query] IEnumerable<string> status);
 
         /// <summary>
         /// Finds Pets by tags
         /// </summary>
         /// <param name="tags">Tags to filter by</param>
         [Get("/pet/findByTags")]
-        Task<IEnumerable<Pet>> FindPetsByTagsAsync([Query] IEnumerable<string> tags);
+        Task<Response<IEnumerable<Pet>>> FindPetsByTagsAsync([Query] IEnumerable<string> tags);
 
         /// <summary>
         /// Returns pet inventories by status
         /// </summary>
         [Get("/store/inventory")]
-        Task<int> GetInventoryAsync();
+        Task<Response<int>> GetInventoryAsync();
 
         /// <summary>
         /// Find purchase order by ID
         /// </summary>
         /// <param name="orderId">ID of pet that needs to be fetched</param>
         [Get("/store/order/{orderId}")]
-        Task<Order> GetOrderByIdAsync([Path] long orderId);
+        Task<Response<Order>> GetOrderByIdAsync([Path] long orderId);
 
         /// <summary>
         /// Delete purchase order by ID
@@ -93,14 +93,14 @@ namespace RestEaseClientGeneratorConsoleApp.PetStoreJson.Api
         /// </summary>
         /// <param name="order"></param>
         [Post("/store/order")]
-        Task<Order> PlaceOrderAsync([Body] Order order);
+        Task<Response<Order>> PlaceOrderAsync([Body] Order order);
 
         /// <summary>
         /// Get user by user name
         /// </summary>
         /// <param name="username">The name that needs to be fetched. Use user1 for testing. </param>
         [Get("/user/{username}")]
-        Task<User> GetUserByNameAsync([Path] string username);
+        Task<Response<User>> GetUserByNameAsync([Path] string username);
 
         /// <summary>
         /// Updated user

@@ -15,5 +15,7 @@ namespace RestEaseClientGenerator.Settings
         public bool AddAuthorizationHeader { get; set; }
 
         public bool UseDateTimeOffset { get; set; }
+
+        public MethodReturnType MethodReturnType { get; set; }
     }
 }
