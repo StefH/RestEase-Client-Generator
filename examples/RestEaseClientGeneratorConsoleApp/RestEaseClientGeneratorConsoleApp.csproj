@@ -21,15 +21,31 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="RestEase" Version="1.4.10" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\src\RestEaseClientGenerator\RestEaseClientGenerator.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="infura.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>infura.yaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
     <None Update="cognitive-services-personalizer.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Generator>RestEaseCodeGenerator</Generator>
     </None>
     <None Update="infura.yaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Generator>RestEaseCodeGenerator</Generator>
+      <LastGenOutput>infura.cs</LastGenOutput>
+      <CustomToolNamespace>InfuraTest</CustomToolNamespace>
     </None>
     <None Update="PetStore.json">
       <!--<Generator>OpenApiCodeGenerator</Generator>
