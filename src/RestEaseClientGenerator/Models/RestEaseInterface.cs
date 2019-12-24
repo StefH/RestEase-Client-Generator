@@ -6,7 +6,7 @@ namespace RestEaseClientGenerator.Models
     {
         public string Name { get; set; }
 
-        public string NameSpace { get; set; }
+        public string Namespace { get; set; }
 
         public ICollection<RestEaseInterfaceMethodDetails> Methods { get; set; }
     }
