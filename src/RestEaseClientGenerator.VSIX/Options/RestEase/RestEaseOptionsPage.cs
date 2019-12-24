@@ -12,7 +12,12 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
 
         [Category(Name)]
         [DisplayName("ArrayType")]
-        [Description("Array type to use. The default is Array ([]).")]
+        [Description("Array type to use. The default is Array '[]'.")]
         public ArrayType ArrayType { get; set; }
+
+        [Category(Name)]
+        [DisplayName("Fail on OpenApi Errors")]
+        [Description("Don't generate the file if errors are detected when parsing the specification file. The default value is 'false'.")]
+        public bool FailOnOpenApiErrors { get; set; }
     }
 }

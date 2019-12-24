@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Text.Json;
 using Microsoft.VisualStudio.Shell.Interop;
 using RestEaseClientGenerator.Settings;
 using RestEaseClientGenerator.VSIX.Extensions;
@@ -29,6 +30,19 @@ namespace RestEaseClientGenerator.VSIX.CustomTool
 
         private readonly IGenerator _generator = new Generator();
 
+        private IRestEaseOptions GetOptions()
+        {
+            try
+            {
+                return _optionsFactory.Create<IRestEaseOptions, RestEaseOptionsPage>();
+            }
+            catch
+            {
+                Trace.WriteLine($"Error getting {nameof(RestEaseOptionsPage)} using default.");
+                return new RestEaseOptionsPage();
+            }
+        }
+
         public int Generate(
             string wszInputFilePath,
             string bstrInputFileContents,
@@ -39,7 +53,7 @@ namespace RestEaseClientGenerator.VSIX.CustomTool
         {
             try
             {
-                var options = _optionsFactory.Create<IRestEaseOptions, RestEaseOptionsPage>();
+                var options = GetOptions();
 
                 pGenerateProgress.Progress(5);
 
@@ -55,10 +69,10 @@ namespace RestEaseClientGenerator.VSIX.CustomTool
                 };
                 var result = _generator.FromStream(File.OpenRead(wszInputFilePath), settings, out var diagnostic);
 
-                if (diagnostic.Errors.Any() || !result.Any())
+                if (options.FailOnOpenApiErrors && diagnostic.Errors.Any())
                 {
-                    var errorMessages = string.Join(" | ", diagnostic.Errors.Select(e => e.Message));
-                    Trace.WriteLine($"OpenApiDiagnostic errors: {errorMessages}");
+                    var errorMessages = string.Join(" | ", diagnostic.Errors.Select(e => JsonSerializer.Serialize(e)));
+                    Trace.WriteLine($"OpenApi Errors: {errorMessages}");
 
                     pcbOutput = 0;
                     return 1;

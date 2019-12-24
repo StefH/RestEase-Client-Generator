@@ -1,6 +1,7 @@
 ﻿using System.CodeDom.Compiler;
 using System.Text.RegularExpressions;
 using RestEaseClientGenerator.Extensions;
+using RestEaseClientGenerator.Types;
 
 namespace RestEaseClientGenerator.Utils
 {
@@ -12,24 +13,39 @@ namespace RestEaseClientGenerator.Utils
         private static readonly CodeDomProvider CodeProvider = CodeDomProvider.CreateProvider("C#");
         private static readonly Regex Regex = new Regex(@"[^\p{Ll}\p{Lu}\p{Lt}\p{Lo}\p{Nd}\p{Nl}\p{Mn}\p{Mc}\p{Cf}\p{Pc}\p{Lm}]");
 
-        public static string CreateValidIdentifier(string identifier, bool applyCamelCase = false)
+        public static string CreateValidIdentifier(string identifier, CasingType casingType = CasingType.None)
         {
-            string camelCasedIdentifier = applyCamelCase ? identifier.ToCamelCase() : identifier;
-            bool isValid = CodeProvider.IsValidIdentifier(camelCasedIdentifier);
+            string casedIdentifier;
+            switch (casingType)
+            {
+                case CasingType.Camel:
+                    casedIdentifier = identifier.ToCamelCase();
+                    break;
+
+                case CasingType.Pascal:
+                    casedIdentifier = identifier.ToPascalCase();
+                    break;
+
+                default:
+                    casedIdentifier = identifier;
+                    break;
+            }
+
+            bool isValid = CodeProvider.IsValidIdentifier(casedIdentifier);
 
             if (!isValid)
             {
                 // File name contains invalid chars, remove them
-                camelCasedIdentifier = Regex.Replace(camelCasedIdentifier, string.Empty);
+                casedIdentifier = Regex.Replace(casedIdentifier, string.Empty);
 
                 // Class name doesn't begin with a letter, insert an underscore
-                if (!char.IsLetter(camelCasedIdentifier, 0))
+                if (!char.IsLetter(casedIdentifier, 0))
                 {
-                    camelCasedIdentifier = camelCasedIdentifier.Insert(0, "_");
+                    casedIdentifier = casedIdentifier.Insert(0, "_");
                 }
             }
 
-            return CodeProvider.CreateValidIdentifier(camelCasedIdentifier.Replace(" ", string.Empty));
+            return CodeProvider.CreateValidIdentifier(casedIdentifier.Replace(" ", string.Empty));
         }
     }
 }

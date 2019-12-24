@@ -18,6 +18,8 @@ namespace RestEaseClientGenerator.Mappers
 
         public RestEaseInterface Map(OpenApiPaths paths)
         {
+            string name = CSharpUtils.CreateValidIdentifier(Settings.ApiName, CasingType.Pascal);
+
             var methods = paths.Select(p => MapPath(p.Key, p.Value)).SelectMany(x => x).ToList();
 
             //var counts = methods
@@ -38,7 +40,7 @@ namespace RestEaseClientGenerator.Mappers
 
             return new RestEaseInterface
             {
-                Name = $"I{Settings.ApiName}Api",
+                Name = $"I{name}Api",
                 Namespace = Settings.Namespace,
                 Methods = methods
             };
