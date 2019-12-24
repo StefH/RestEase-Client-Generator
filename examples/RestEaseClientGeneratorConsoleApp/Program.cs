@@ -1,11 +1,13 @@
 ﻿using System;
-using Microsoft.OpenApi.Readers;
-using RestEaseClientGenerator;
 using System.IO;
 using System.Text.Json;
-using RestEase;
-using RestEaseClientGeneratorConsoleApp.PetStore.Api;
 using System.Threading.Tasks;
+using Microsoft.OpenApi.Readers;
+using RestEase;
+using RestEaseClientGenerator;
+using RestEaseClientGenerator.Settings;
+using RestEaseClientGenerator.Types;
+using RestEaseClientGeneratorConsoleApp.PetStore.Api;
 
 namespace RestEaseClientGeneratorConsoleApp
 {
@@ -15,7 +17,13 @@ namespace RestEaseClientGeneratorConsoleApp
         {
             var generator = new Generator();
 
-            foreach (var file in generator.FromStream(File.OpenRead("petstore.yaml"), "RestEaseClientGeneratorConsoleApp.PetStore", "PetStore", out OpenApiDiagnostic diagnosticPetStore1))
+            var petStoreSettings = new GeneratorSettings
+            {
+                ArrayType = ArrayType.IEnumerable,
+                Namespace = "RestEaseClientGeneratorConsoleApp.PetStore",
+                ApiName = "PetStore"
+            };
+            foreach (var file in generator.FromStream(File.OpenRead("petstore.yaml"), petStoreSettings, out OpenApiDiagnostic diagnosticPetStore1))
             {
                 File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/PetStore/{file.Path}/{file.Name}", file.Content);
             }

@@ -6,6 +6,7 @@ using Microsoft.OpenApi.Readers;
 using RestEaseClientGenerator.Mappers;
 using RestEaseClientGenerator.Models;
 using RestEaseClientGenerator.Settings;
+using RestEaseClientGenerator.Types;
 
 namespace RestEaseClientGenerator
 {
@@ -32,7 +33,7 @@ namespace RestEaseClientGenerator
             {
                 Path = "Api",
                 Name = $"{@interface.Name}.cs",
-                Content = BuildInterface(@interface)
+                Content = BuildInterface(@interface, settings)
             });
 
             var models = new ModelsMapper(settings).Map(openApiDocument.Components.Schemas);
@@ -40,16 +41,21 @@ namespace RestEaseClientGenerator
             {
                 Path = "Models",
                 Name = $"{model.ClassName}.cs",
-                Content = BuildModel(model)
+                Content = BuildModel(model, settings)
             }));
 
             return files;
         }
 
         #region Builders
-        private static string BuildModel(RestEaseModel restEaseModel)
+        private static string BuildModel(RestEaseModel restEaseModel, GeneratorSettings settings)
         {
             var builder = new StringBuilder();
+            if (settings.ArrayType != ArrayType.Array)
+            {
+                builder.AppendLine("using System.Collections.Generic;");
+                builder.AppendLine();
+            }
             builder.AppendLine($"namespace {restEaseModel.Namespace}.Models");
             builder.AppendLine("{");
             builder.AppendLine($"    public class {restEaseModel.ClassName}");
@@ -68,9 +74,13 @@ namespace RestEaseClientGenerator
             return builder.ToString();
         }
 
-        private static string BuildInterface(RestEaseInterface api)
+        private static string BuildInterface(RestEaseInterface api, GeneratorSettings settings)
         {
             var builder = new StringBuilder();
+            if (settings.ArrayType != ArrayType.Array)
+            {
+                builder.AppendLine("using System.Collections.Generic;");
+            }
             builder.AppendLine("using System.Threading.Tasks;");
             builder.AppendLine("using RestEase;");
             builder.AppendLine($"using {api.Namespace}.Models;");

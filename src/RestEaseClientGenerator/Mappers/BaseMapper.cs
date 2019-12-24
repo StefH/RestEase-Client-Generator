@@ -15,6 +15,18 @@ namespace RestEaseClientGenerator.Mappers
             Settings = settings;
         }
 
+        protected string MapArrayType(object value)
+        {
+            switch (Settings.ArrayType)
+            {
+                case ArrayType.IEnumerable:
+                    return $"IEnumerable<{value}>";
+
+                default:
+                    return $"{value}[]";
+            }
+        }
+
         protected object MapSchema(OpenApiSchema schema, string name, bool isNullable, bool pascalCase = true)
         {
             if (schema == null)
@@ -31,13 +43,15 @@ namespace RestEaseClientGenerator.Mappers
                     switch (schema.Items.GetSchemaType())
                     {
                         case SchemaType.Object:
-                            return schema.Items.Reference != null ? $"{schema.Items.Reference.Id}[]{nameCamelCase}" : $"object[]{nameCamelCase}";
+                            return schema.Items.Reference != null ?
+                                $"{MapArrayType(schema.Items.Reference.Id)}{nameCamelCase}" :
+                                $"{MapArrayType("object")}{nameCamelCase}";
 
                         case SchemaType.Unknown:
-                            return $"object[]{nameCamelCase}";
+                            return $"{MapArrayType("object")}{nameCamelCase}";
 
                         default:
-                            return $"{MapSchema(schema.Items, null, schema.Items.Nullable)}[]{nameCamelCase}";
+                            return $"{MapArrayType(MapSchema(schema.Items, null, schema.Items.Nullable))}{nameCamelCase}";
                     }
 
                 case SchemaType.Boolean:

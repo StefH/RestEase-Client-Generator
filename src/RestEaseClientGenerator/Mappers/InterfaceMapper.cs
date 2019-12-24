@@ -74,7 +74,7 @@ namespace RestEaseClientGenerator.Mappers
                 {
                     case SchemaType.Array:
                         string arrayType = requestMediaType.Schema.Items.Reference != null ? requestMediaType.Schema.Items.Reference.Id : MapSchema(requestMediaType.Schema.Items, "", requestMediaType.Schema.Nullable).ToString();
-                        bodyParameter = $"{arrayType}[]";
+                        bodyParameter = MapArrayType(arrayType);
                         break;
 
                     case SchemaType.Object:
@@ -109,7 +109,7 @@ namespace RestEaseClientGenerator.Mappers
                         string arrayType = responseMediaType.Schema.Items.Reference != null ?
                             responseMediaType.Schema.Items.Reference.Id :
                             MapSchema(responseMediaType.Schema.Items, "", responseMediaType.Schema.Nullable).ToString();
-                        returnType = $"<{arrayType}[]>";
+                        returnType = $"<{MapArrayType(arrayType)}>";
                         break;
 
                     case SchemaType.Object:
