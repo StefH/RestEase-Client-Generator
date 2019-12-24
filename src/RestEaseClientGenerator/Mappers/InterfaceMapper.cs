@@ -124,9 +124,9 @@ namespace RestEaseClientGenerator.Mappers
 
             var method = new RestEaseInterfaceMethodDetails
             {
-                Summary = operation.Summary ?? $"{methodRestEaseMethod} (endpoint{path})",
+                Summary = operation.Summary ?? $"{methodRestEaseMethod} ({path})",
                 SummaryParameters = summaryParameters,
-                RestEaseAttribute = $"[{methodRestEaseForAnnotation}(\"{{endpoint}}{path}\")]",
+                RestEaseAttribute = $"[{methodRestEaseForAnnotation}(\"{path}\")]",
                 RestEaseMethod = new RestEaseInterfaceMethod
                 {
                     ReturnType = returnType,

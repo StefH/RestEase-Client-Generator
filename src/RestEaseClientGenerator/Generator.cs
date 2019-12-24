@@ -79,11 +79,6 @@ namespace RestEaseClientGenerator
             builder.AppendLine("{");
             builder.AppendLine($"    public interface {api.Name}");
             builder.AppendLine("    {");
-            builder.AppendLine("        /// <summary>");
-            builder.AppendLine("        /// The endpoint for this Api");
-            builder.AppendLine("        /// </summary>");
-            builder.AppendLine("        [Path(\"endpoint\", UrlEncode = false)]");
-            builder.AppendLine("        string Endpoint { get; set; }");
             builder.AppendLine();
             foreach (var method in api.Methods)
             {

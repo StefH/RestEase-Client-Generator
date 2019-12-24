@@ -10,25 +10,14 @@
     <!--<Compile Remove="PetStoreJson\**\*.cs" />-->
     <!--<Compile Remove="Infura\**\*.cs" />-->
     <!--<Compile Remove="Cog\**\*.cs" />-->
-  
+
     <Folder Include="Cog\Api\" />
-  
     <Folder Include="Cog\Models\" />
-  
-    <Folder Include="Drc\Api\" />
-  
-    <Folder Include="Drc\Models\" />
-  
     <Folder Include="Infura\Api\" />
-  
     <Folder Include="Infura\Models\" />
-  
     <Folder Include="PetStoreJson\Api\" />
-  
     <Folder Include="PetStoreJson\Models\" />
-  
     <Folder Include="PetStore\Api\" />
-  
     <Folder Include="PetStore\Models\" />
   </ItemGroup>
 
@@ -38,9 +27,6 @@
 
   <ItemGroup>
     <None Update="cognitive-services-personalizer.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="drc.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="infura.yaml">
