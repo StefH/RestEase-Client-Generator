@@ -36,6 +36,9 @@ This Visual Studio Extension will automatically add the required nuget packages 
 | - | - |
 | ArrayType | Array type to use. The default is Array '[]'.
 | Fail on OpenApi Errors | Don't generate the file if errors are detected when parsing the specification file. The default value is 'false'.
+| Add Authorization header | Add an Authorization header to the generated interface. The default value is 'false'.
+| Use DateTimeOffset | Use DateTimeOffset instead of DateTime. The default value is 'false'.
+
 
 ### Screenshot
 ![Settings](https://github.com/StefH/RestEase-Client-Generator/raw/master/resources/settings.png)
