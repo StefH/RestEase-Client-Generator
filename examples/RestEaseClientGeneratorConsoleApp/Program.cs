@@ -28,9 +28,16 @@ namespace RestEaseClientGeneratorConsoleApp
                 File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/PetStore/{file.Path}/{file.Name}", file.Content);
             }
 
-            foreach (var file in generator.FromStream(File.OpenRead("petstore.json"), "RestEaseClientGeneratorConsoleApp.PetStoreJson", "PetStoreJson", out OpenApiDiagnostic diagnosticPetStore1))
+            var petStoreJsonSettings = new GeneratorSettings
             {
-                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/PetStoreJson/{file.Path}/{file.Name}", file.Content);
+                SingleFile = true,
+                ArrayType = ArrayType.IEnumerable,
+                Namespace = "RestEaseClientGeneratorConsoleApp.PetStoreJson",
+                ApiName = "PetStoreJson"
+            };
+            foreach (var file in generator.FromStream(File.OpenRead("petstore.json"), petStoreJsonSettings, out OpenApiDiagnostic diagnosticPetStore1))
+            {
+                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/PetStoreJson/{file.Name}", file.Content);
             }
 
             foreach (var file in generator.FromStream(File.OpenRead("infura.yaml"), "RestEaseClientGeneratorConsoleApp.Infura", "Infura", out OpenApiDiagnostic diagnosticPetStore1))

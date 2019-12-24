@@ -29,51 +29,45 @@ namespace RestEaseClientGenerator
             var files = new List<GeneratedFile>();
 
             var @interface = new InterfaceMapper(settings).Map(openApiDocument.Paths);
-            files.Add(new GeneratedFile
+            if (settings.SingleFile)
             {
-                Path = "Api",
-                Name = $"{@interface.Name}.cs",
-                Content = BuildInterface(@interface, settings)
-            });
+                var singleFileBuilder = new StringBuilder(BuildInterface(@interface, settings));
+                singleFileBuilder.AppendLine();
+                var models = new ModelsMapper(settings).Map(openApiDocument.Components.Schemas);
+                foreach (var modelCode in models.Select(m => BuildModel(m, settings)))
+                {
+                    singleFileBuilder.AppendLine(modelCode);
+                }
 
-            var models = new ModelsMapper(settings).Map(openApiDocument.Components.Schemas);
-            files.AddRange(models.Select(model => new GeneratedFile
+                files.Add(new GeneratedFile
+                {
+                    Path = string.Empty,
+                    Name = $"{settings.ApiName}.cs",
+                    Content = singleFileBuilder.ToString()
+                });
+            }
+            else
             {
-                Path = "Models",
-                Name = $"{model.ClassName}.cs",
-                Content = BuildModel(model, settings)
-            }));
+                files.Add(new GeneratedFile
+                {
+                    Path = "Api",
+                    Name = $"{@interface.Name}.cs",
+                    Content = BuildInterface(@interface, settings)
+                });
+
+                var models = new ModelsMapper(settings).Map(openApiDocument.Components.Schemas);
+                files.AddRange(models.Select(model => new GeneratedFile
+                {
+                    Path = "Models",
+                    Name = $"{model.ClassName}.cs",
+                    Content = BuildModel(model, settings)
+                }));
+            }
 
             return files;
         }
 
         #region Builders
-        private static string BuildModel(RestEaseModel restEaseModel, GeneratorSettings settings)
-        {
-            var builder = new StringBuilder();
-            if (settings.ArrayType != ArrayType.Array)
-            {
-                builder.AppendLine("using System.Collections.Generic;");
-                builder.AppendLine();
-            }
-            builder.AppendLine($"namespace {restEaseModel.Namespace}.Models");
-            builder.AppendLine("{");
-            builder.AppendLine($"    public class {restEaseModel.ClassName}");
-            builder.AppendLine("    {");
-            foreach (var property in restEaseModel.Properties)
-            {
-                builder.AppendLine($"        public {property} {{ get; set; }}");
-                if (property != restEaseModel.Properties.Last())
-                {
-                    builder.AppendLine();
-                }
-            }
-            builder.AppendLine("    }");
-            builder.AppendLine("}");
-
-            return builder.ToString();
-        }
-
         private static string BuildInterface(RestEaseInterface api, GeneratorSettings settings)
         {
             var builder = new StringBuilder();
@@ -89,7 +83,6 @@ namespace RestEaseClientGenerator
             builder.AppendLine("{");
             builder.AppendLine($"    public interface {api.Name}");
             builder.AppendLine("    {");
-            builder.AppendLine();
             foreach (var method in api.Methods)
             {
                 builder.AppendLine("        /// <summary>");
@@ -103,6 +96,32 @@ namespace RestEaseClientGenerator
                 builder.AppendLine($"        Task{method.RestEaseMethod.ReturnType} {method.RestEaseMethod.Name}Async({method.RestEaseMethod.Parameters});");
 
                 if (method != api.Methods.Last())
+                {
+                    builder.AppendLine();
+                }
+            }
+            builder.AppendLine("    }");
+            builder.AppendLine("}");
+
+            return builder.ToString();
+        }
+
+        private static string BuildModel(RestEaseModel restEaseModel, GeneratorSettings settings)
+        {
+            var builder = new StringBuilder();
+            if (!settings.SingleFile && settings.ArrayType != ArrayType.Array)
+            {
+                builder.AppendLine("using System.Collections.Generic;");
+                builder.AppendLine();
+            }
+            builder.AppendLine($"namespace {restEaseModel.Namespace}.Models");
+            builder.AppendLine("{");
+            builder.AppendLine($"    public class {restEaseModel.ClassName}");
+            builder.AppendLine("    {");
+            foreach (var property in restEaseModel.Properties)
+            {
+                builder.AppendLine($"        public {property} {{ get; set; }}");
+                if (property != restEaseModel.Properties.Last())
                 {
                     builder.AppendLine();
                 }

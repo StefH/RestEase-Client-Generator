@@ -48,6 +48,7 @@ namespace RestEaseClientGenerator.VSIX.CustomTool
                 Trace.WriteLine("Generating interface and models");
                 var settings = new GeneratorSettings
                 {
+                    SingleFile = true,
                     Namespace = wszDefaultNamespace,
                     ApiName = apiName,
                     ArrayType = options.ArrayType
@@ -64,9 +65,9 @@ namespace RestEaseClientGenerator.VSIX.CustomTool
                 }
 
                 pGenerateProgress.Progress(90);
-                string allCode = string.Join("\r\n", result.Select(x => x.Content));
+                string code = result.First().Content;
 
-                rgbOutputFileContents[0] = allCode.ConvertToIntPtr(out pcbOutput);
+                rgbOutputFileContents[0] = code.ConvertToIntPtr(out pcbOutput);
                 pGenerateProgress.Progress(100);
 
                 Trace.WriteLine("All done");

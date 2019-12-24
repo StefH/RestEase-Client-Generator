@@ -4,8 +4,7 @@ namespace RestEaseClientGenerator.Settings
 {
     public class GeneratorSettings
     {
-        public static GeneratorSettings Default = new GeneratorSettings();
-
+        public bool SingleFile { get; set; }
 
         public ArrayType ArrayType { get; set; }
 

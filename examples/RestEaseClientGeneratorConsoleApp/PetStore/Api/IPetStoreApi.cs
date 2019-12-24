@@ -7,7 +7,6 @@ namespace RestEaseClientGeneratorConsoleApp.PetStore.Api
 {
     public interface IPetStoreApi
     {
-
         /// <summary>
         /// Add a new pet to the store
         /// </summary>
