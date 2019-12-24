@@ -76,7 +76,6 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Options\RestEase\IRestEaseOptions.cs" />
-    <Compile Include="Options\RestEase\SyncMethodOptions.cs" />
     <Compile Include="Options\IOptionsFactory.cs" />
     <Compile Include="Options\OptionsBase.cs" />
     <Compile Include="Options\OptionsFactory.cs" />
