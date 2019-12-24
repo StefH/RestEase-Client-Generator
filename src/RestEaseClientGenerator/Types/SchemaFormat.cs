@@ -14,6 +14,12 @@
 
         DateTime,
 
+        Password,
+
+        Byte,
+
+        Binary,
+
         Undefined
     }
 }

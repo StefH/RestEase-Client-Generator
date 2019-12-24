@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using RestEase;
@@ -40,28 +41,28 @@ namespace RestEaseClientGeneratorConsoleApp.PetStore.Api
         /// </summary>
         /// <param name="petId">ID of pet to return</param>
         [Get("/pet/{petId}")]
-        Task<Pet> GetPetByIdAsync([Path] int petId);
+        Task<Pet> GetPetByIdAsync([Path] long petId);
 
         /// <summary>
         /// Updates a pet in the store with form data
         /// </summary>
         /// <param name="petId">ID of pet that needs to be updated</param>
         [Post("/pet/{petId}")]
-        Task UpdatePetWithFormAsync([Path] int petId);
+        Task UpdatePetWithFormAsync([Path] long petId);
 
         /// <summary>
         /// Deletes a pet
         /// </summary>
         /// <param name="petId">Pet id to delete</param>
         [Delete("/pet/{petId}")]
-        Task DeletePetAsync([Path] int petId);
+        Task DeletePetAsync([Path] long petId);
 
         /// <summary>
         /// uploads an image
         /// </summary>
         /// <param name="petId">ID of pet to update</param>
         [Post("/pet/{petId}/uploadImage")]
-        Task<ApiResponse> UploadFileAsync([Path] int petId);
+        Task<ApiResponse> UploadFileAsync([Path] long petId);
 
         /// <summary>
         /// Returns pet inventories by status
@@ -81,7 +82,7 @@ namespace RestEaseClientGeneratorConsoleApp.PetStore.Api
         /// </summary>
         /// <param name="orderId">ID of pet that needs to be fetched</param>
         [Get("/store/order/{orderId}")]
-        Task<Order> GetOrderByIdAsync([Path] int orderId);
+        Task<Order> GetOrderByIdAsync([Path] long orderId);
 
         /// <summary>
         /// Delete purchase order by ID

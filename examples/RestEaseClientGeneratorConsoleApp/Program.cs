@@ -34,7 +34,8 @@ namespace RestEaseClientGeneratorConsoleApp
                 ArrayType = ArrayType.IEnumerable,
                 Namespace = "RestEaseClientGeneratorConsoleApp.PetStoreJson",
                 ApiName = "PetStoreJson",
-                AddAuthorizationHeader = true
+                AddAuthorizationHeader = true,
+                UseDateTimeOffset = true
             };
             foreach (var file in generator.FromStream(File.OpenRead("petstore.json"), petStoreJsonSettings, out OpenApiDiagnostic diagnosticPetStore1))
             {

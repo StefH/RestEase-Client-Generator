@@ -1,10 +1,11 @@
+using System;
 using System.Collections.Generic;
 
 namespace RestEaseClientGeneratorConsoleApp.PetStore.Models
 {
     public class Pet
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         public Category Category { get; set; }
 

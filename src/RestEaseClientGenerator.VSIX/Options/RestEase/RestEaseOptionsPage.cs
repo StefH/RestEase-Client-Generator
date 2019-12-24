@@ -24,5 +24,10 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         [DisplayName("Add Authorization header")]
         [Description("Add an Authorization header to the generated interface. The default value is 'false'.")]
         public bool AddAuthorizationHeader { get; set; }
+
+        [Category(Name)]
+        [DisplayName("Use DateTimeOffset")]
+        [Description("Use DateTimeOffset instead of DateTime. The default value is 'false'.")]
+        public bool UseDateTimeOffset { get; set; }
     }
 }

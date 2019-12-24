@@ -13,5 +13,7 @@ namespace RestEaseClientGenerator.Settings
         public string ApiName { get; set; }
 
         public bool AddAuthorizationHeader { get; set; }
+
+        public bool UseDateTimeOffset { get; set; }
     }
 }

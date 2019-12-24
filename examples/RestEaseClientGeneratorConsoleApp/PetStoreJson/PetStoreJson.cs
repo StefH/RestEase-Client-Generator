@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -16,28 +17,28 @@ namespace RestEaseClientGeneratorConsoleApp.PetStoreJson.Api
         /// </summary>
         /// <param name="petId">ID of pet to return</param>
         [Get("/pet/{petId}")]
-        Task<Pet> GetPetByIdAsync([Path] int petId);
+        Task<Pet> GetPetByIdAsync([Path] long petId);
 
         /// <summary>
         /// Updates a pet in the store with form data
         /// </summary>
         /// <param name="petId">ID of pet that needs to be updated</param>
         [Post("/pet/{petId}")]
-        Task UpdatePetWithFormAsync([Path] int petId);
+        Task UpdatePetWithFormAsync([Path] long petId);
 
         /// <summary>
         /// Deletes a pet
         /// </summary>
         /// <param name="petId">Pet id to delete</param>
         [Delete("/pet/{petId}")]
-        Task DeletePetAsync([Path] int petId);
+        Task DeletePetAsync([Path] long petId);
 
         /// <summary>
         /// uploads an image
         /// </summary>
         /// <param name="petId">ID of pet to update</param>
         [Post("/pet/{petId}/uploadImage")]
-        Task<ApiResponse> UploadFileAsync([Path] int petId);
+        Task<ApiResponse> UploadFileAsync([Path] long petId);
 
         /// <summary>
         /// Add a new pet to the store
@@ -78,14 +79,14 @@ namespace RestEaseClientGeneratorConsoleApp.PetStoreJson.Api
         /// </summary>
         /// <param name="orderId">ID of pet that needs to be fetched</param>
         [Get("/store/order/{orderId}")]
-        Task<Order> GetOrderByIdAsync([Path] int orderId);
+        Task<Order> GetOrderByIdAsync([Path] long orderId);
 
         /// <summary>
         /// Delete purchase order by ID
         /// </summary>
         /// <param name="orderId">ID of the order that needs to be deleted</param>
         [Delete("/store/order/{orderId}")]
-        Task DeleteOrderAsync([Path] int orderId);
+        Task DeleteOrderAsync([Path] long orderId);
 
         /// <summary>
         /// Place an order for a pet
@@ -157,7 +158,7 @@ namespace RestEaseClientGeneratorConsoleApp.PetStoreJson.Models
 {
     public class Category
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         public string Name { get; set; }
     }
@@ -167,7 +168,7 @@ namespace RestEaseClientGeneratorConsoleApp.PetStoreJson.Models
 {
     public class Pet
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         public Category Category { get; set; }
 
@@ -185,7 +186,7 @@ namespace RestEaseClientGeneratorConsoleApp.PetStoreJson.Models
 {
     public class Tag
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         public string Name { get; set; }
     }
@@ -207,13 +208,13 @@ namespace RestEaseClientGeneratorConsoleApp.PetStoreJson.Models
 {
     public class Order
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
 
-        public int PetId { get; set; }
+        public long PetId { get; set; }
 
         public int Quantity { get; set; }
 
-        public string ShipDate { get; set; }
+        public DateTimeOffset ShipDate { get; set; }
 
         public string Status { get; set; }
 
@@ -225,7 +226,7 @@ namespace RestEaseClientGeneratorConsoleApp.PetStoreJson.Models
 {
     public class User
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         public string Username { get; set; }
 

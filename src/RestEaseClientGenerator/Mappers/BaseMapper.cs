@@ -36,6 +36,8 @@ namespace RestEaseClientGenerator.Mappers
             }
         }
 
+        protected string DateTime => Settings.UseDateTimeOffset ? "DateTimeOffset" : "DateTime";
+
         protected object MapSchema(OpenApiSchema schema, string name, bool isNullable, bool pascalCase = true)
         {
             if (schema == null)
@@ -89,8 +91,15 @@ namespace RestEaseClientGenerator.Mappers
                 case SchemaType.String:
                     switch (schema.GetSchemaFormat())
                     {
+                        case SchemaFormat.Date:
                         case SchemaFormat.DateTime:
-                            return $"DateTime{nullable}{nameCamelCase}";
+                            return $"{DateTime}{nullable}{nameCamelCase}";
+
+                        case SchemaFormat.Byte:
+                            return $"{MapArrayType("byte")}{nullable}{nameCamelCase}";
+
+                        case SchemaFormat.Binary:
+                            return $"object{nameCamelCase}";
 
                         default:
                             return $"string{nameCamelCase}";

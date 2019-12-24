@@ -9,5 +9,7 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         bool FailOnOpenApiErrors { get; set; }
 
         bool AddAuthorizationHeader { get; set; }
+
+        bool UseDateTimeOffset { get; set; }
     }
 }

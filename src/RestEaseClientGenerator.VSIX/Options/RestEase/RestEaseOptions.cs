@@ -18,12 +18,14 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
                 ArrayType = options.ArrayType;
                 FailOnOpenApiErrors = options.FailOnOpenApiErrors;
                 AddAuthorizationHeader = options.AddAuthorizationHeader;
+                UseDateTimeOffset = options.UseDateTimeOffset;
             }
             catch (Exception e)
             {
                 ArrayType = ArrayType.Array;
                 FailOnOpenApiErrors = false;
                 AddAuthorizationHeader = false;
+                UseDateTimeOffset = false;
 
                 Trace.WriteLine(e);
                 Trace.WriteLine(Environment.NewLine);
@@ -31,6 +33,7 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
                 Trace.WriteLine($"{nameof(ArrayType)} = {ArrayType}");
                 Trace.WriteLine($"{nameof(FailOnOpenApiErrors)} = {FailOnOpenApiErrors}");
                 Trace.WriteLine($"{nameof(AddAuthorizationHeader)} = {AddAuthorizationHeader}");
+                Trace.WriteLine($"{nameof(UseDateTimeOffset)} = {UseDateTimeOffset}");
             }
         }
 
@@ -39,5 +42,7 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         public bool FailOnOpenApiErrors { get; set; }
 
         public bool AddAuthorizationHeader { get; set; }
+
+        public bool UseDateTimeOffset { get; set; }
     }
 }
