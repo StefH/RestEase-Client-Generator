@@ -24,8 +24,13 @@ This Visual Studio Extension will automatically add the required nuget packages 
 ## Screenshots
 TODO
 
-## Settings
-TODO
+## Options
+
+| Name | Description |
+| - | - |
+| ArrayType | Array type to use. The default is Array '[]'.
+| Fail on OpenApi Errors | Don't generate the file if errors are detected when parsing the specification file. The default value is 'false'.
+
 
 ## Credits
 - Project source code is based on [REST API Client Code Generator](https://github.com/christianhelle/apiclientcodegen)
