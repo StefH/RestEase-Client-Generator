@@ -17,8 +17,6 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         [Category(General)]
         [DisplayName("ArrayType")]
         [Description("The Array type to use. The default is Array '[]'.")]
-        //[PropertyPageTypeConverter(typeof(EnumDescriptionConverter))]
-        //[TypeConverter(typeof(EnumDescriptionConverter))]
         public ArrayType ArrayType { get; set; }
 
         [Category(General)]
@@ -26,7 +24,7 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         [Description("Don't generate the file if errors are detected when parsing the specification file. The default value is 'false'.")]
         public bool FailOnOpenApiErrors { get; set; }
 
-        [Category(Interface)]
+        [Category(General)]
         [DisplayName("Use DateTimeOffset")]
         [Description("Use DateTimeOffset instead of DateTime. The default value is 'false'.")]
         public bool UseDateTimeOffset { get; set; }
