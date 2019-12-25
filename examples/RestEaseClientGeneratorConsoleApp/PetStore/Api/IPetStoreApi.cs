@@ -27,14 +27,14 @@ namespace RestEaseClientGeneratorConsoleApp.PetStore.Api
         /// </summary>
         /// <param name="status">Status values that need to be considered for filter</param>
         [Get("/pet/findByStatus")]
-        Task<IEnumerable<Pet>> FindPetsByStatusAsync([Query] IEnumerable<string> status);
+        Task<ICollection<Pet>> FindPetsByStatusAsync([Query] ICollection<string> status);
 
         /// <summary>
         /// Finds Pets by tags
         /// </summary>
         /// <param name="tags">Tags to filter by</param>
         [Get("/pet/findByTags")]
-        Task<IEnumerable<Pet>> FindPetsByTagsAsync([Query] IEnumerable<string> tags);
+        Task<ICollection<Pet>> FindPetsByTagsAsync([Query] ICollection<string> tags);
 
         /// <summary>
         /// Find pet by ID
@@ -101,16 +101,16 @@ namespace RestEaseClientGeneratorConsoleApp.PetStore.Api
         /// <summary>
         /// Creates list of users with given input array
         /// </summary>
-        /// <param name="iEnumerableUser"></param>
+        /// <param name="iCollectionUser"></param>
         [Post("/user/createWithArray")]
-        Task CreateUsersWithArrayInputAsync([Body] IEnumerable<User> iEnumerableUser);
+        Task CreateUsersWithArrayInputAsync([Body] ICollection<User> iCollectionUser);
 
         /// <summary>
         /// Creates list of users with given input array
         /// </summary>
-        /// <param name="iEnumerableUser"></param>
+        /// <param name="iCollectionUser"></param>
         [Post("/user/createWithList")]
-        Task CreateUsersWithListInputAsync([Body] IEnumerable<User> iEnumerableUser);
+        Task CreateUsersWithListInputAsync([Body] ICollection<User> iCollectionUser);
 
         /// <summary>
         /// Logs user into the system

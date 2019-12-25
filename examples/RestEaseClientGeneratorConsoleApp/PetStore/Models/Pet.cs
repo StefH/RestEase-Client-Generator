@@ -11,9 +11,9 @@ namespace RestEaseClientGeneratorConsoleApp.PetStore.Models
 
         public string Name { get; set; }
 
-        public IEnumerable<string> PhotoUrls { get; set; }
+        public ICollection<string> PhotoUrls { get; set; }
 
-        public IEnumerable<Tag> Tags { get; set; }
+        public ICollection<Tag> Tags { get; set; }
 
         public string Status { get; set; }
     }

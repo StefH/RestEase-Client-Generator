@@ -96,6 +96,8 @@ namespace RestEaseClientGenerator
             }
             foreach (var method in api.Methods)
             {
+                string asyncPostfix = settings.AppendAsync ? "Async" : string.Empty;
+
                 builder.AppendLine("        /// <summary>");
                 builder.AppendLine($"        /// {method.Summary}");
                 builder.AppendLine("        /// </summary>");
@@ -104,7 +106,7 @@ namespace RestEaseClientGenerator
                     builder.AppendLine($"        /// {p}");
                 }
                 builder.AppendLine($"        {method.RestEaseAttribute}");
-                builder.AppendLine($"        {method.RestEaseMethod.ReturnType} {method.RestEaseMethod.Name}Async({method.RestEaseMethod.Parameters});");
+                builder.AppendLine($"        {method.RestEaseMethod.ReturnType} {method.RestEaseMethod.Name}{asyncPostfix}({method.RestEaseMethod.Parameters});");
 
                 if (method != api.Methods.Last())
                 {

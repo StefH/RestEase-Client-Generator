@@ -19,6 +19,8 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
                 FailOnOpenApiErrors = options.FailOnOpenApiErrors;
                 AddAuthorizationHeader = options.AddAuthorizationHeader;
                 UseDateTimeOffset = options.UseDateTimeOffset;
+                MethodReturnType = options.MethodReturnType;
+                AppendAsync = options.AppendAsync;
             }
             catch (Exception e)
             {
@@ -26,6 +28,8 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
                 FailOnOpenApiErrors = false;
                 AddAuthorizationHeader = false;
                 UseDateTimeOffset = false;
+                MethodReturnType = MethodReturnType.Type;
+                AppendAsync = true;
 
                 Trace.WriteLine(e);
                 Trace.WriteLine(Environment.NewLine);
@@ -34,6 +38,8 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
                 Trace.WriteLine($"{nameof(FailOnOpenApiErrors)} = {FailOnOpenApiErrors}");
                 Trace.WriteLine($"{nameof(AddAuthorizationHeader)} = {AddAuthorizationHeader}");
                 Trace.WriteLine($"{nameof(UseDateTimeOffset)} = {UseDateTimeOffset}");
+                Trace.WriteLine($"{nameof(MethodReturnType)} = {MethodReturnType}");
+                Trace.WriteLine($"{nameof(AppendAsync)} = {AppendAsync}");
             }
         }
 
@@ -44,5 +50,9 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         public bool AddAuthorizationHeader { get; set; }
 
         public bool UseDateTimeOffset { get; set; }
+
+        public MethodReturnType MethodReturnType { get; set; }
+
+        public bool AppendAsync { get; set; }
     }
 }

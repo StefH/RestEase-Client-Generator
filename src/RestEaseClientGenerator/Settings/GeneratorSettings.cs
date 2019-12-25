@@ -17,5 +17,7 @@ namespace RestEaseClientGenerator.Settings
         public bool UseDateTimeOffset { get; set; }
 
         public MethodReturnType MethodReturnType { get; set; }
+
+        public bool AppendAsync { get; set; } = true;
     }
 }

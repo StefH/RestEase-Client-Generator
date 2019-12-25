@@ -67,7 +67,9 @@ namespace RestEaseClientGenerator.VSIX.CustomTool
                     ApiName = apiName,
                     ArrayType = options.ArrayType,
                     AddAuthorizationHeader = options.AddAuthorizationHeader,
-                    UseDateTimeOffset = options.UseDateTimeOffset
+                    UseDateTimeOffset = options.UseDateTimeOffset,
+                    MethodReturnType = options.MethodReturnType,
+                    AppendAsync =  options.AppendAsync
                 };
                 var result = _generator.FromStream(File.OpenRead(wszInputFilePath), settings, out var diagnostic);
 

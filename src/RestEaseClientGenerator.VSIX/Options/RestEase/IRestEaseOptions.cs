@@ -11,5 +11,9 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         bool AddAuthorizationHeader { get; set; }
 
         bool UseDateTimeOffset { get; set; }
+
+        MethodReturnType MethodReturnType { get; set; }
+
+        bool AppendAsync { get; set; }
     }
 }

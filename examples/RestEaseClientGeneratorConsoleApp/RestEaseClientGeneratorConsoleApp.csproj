@@ -29,14 +29,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="infura.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>infura.yaml</DependentUpon>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="cognitive-services-personalizer.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Generator>RestEaseCodeGenerator</Generator>

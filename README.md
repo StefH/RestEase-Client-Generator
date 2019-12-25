@@ -30,15 +30,21 @@ This Visual Studio Extension will automatically add the required nuget packages 
 ### Generate client code for existing .json, .yml or .yaml file
 ![Solution Explorer Context Menus](https://github.com/StefH/RestEase-Client-Generator/raw/master/resources/generate.png)
 
-## Settings
+## Options
 
+### General
 | Name | Description |
 | - | - |
 | ArrayType | Array type to use. The default is Array '[]'.
 | Fail on OpenApi Errors | Don't generate the file if errors are detected when parsing the specification file. The default value is 'false'.
-| Add Authorization header | Add an Authorization header to the generated interface. The default value is 'false'.
 | Use DateTimeOffset | Use DateTimeOffset instead of DateTime. The default value is 'false'.
 
+### Interface
+| Name | Description |
+| - | - |
+| Append Async | Append Async postfix to all methods. The default value is 'true'.
+| Add Authorization header | Add an Authorization header to the generated interface. The default value is 'false'.
+| Method ReturnType | The ReturnType to use for the methods. The default value is 'Type'. For more details see https://github.com/canton7/RestEase#return-types.
 
 ### Screenshot
 ![Settings](https://github.com/StefH/RestEase-Client-Generator/raw/master/resources/settings.png)
