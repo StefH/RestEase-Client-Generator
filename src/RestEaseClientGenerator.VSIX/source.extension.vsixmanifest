@@ -4,7 +4,7 @@
         <Identity Id="7c7becf7-5f28-4b91-bc4c-6491845c6fe3" Version="1.0.1" Language="en-US" Publisher="Stef Heyenrath" />
         <DisplayName>RestEase Client Code Generator</DisplayName>
         <Description xml:space="preserve">Generate a RestEase compatible client based on a Swagger / OpenAPI specification.</Description>
-        <MoreInfo>https://marketplace.visualstudio.com/items?itemName=XXX</MoreInfo>
+        <MoreInfo>https://marketplace.visualstudio.com/items?itemName=StefHeyenrath.RestEaseClientGenerator</MoreInfo>
         <License>LICENSE.txt</License>
         <ReleaseNotes>ReleaseNotes.md</ReleaseNotes>
         <Icon>Resources\Icon.png</Icon>
