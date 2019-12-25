@@ -1,9 +1,10 @@
-﻿using System.ComponentModel;
+﻿// ReSharper disable All
+using RestEaseClientGenerator.Utils;
+using System.ComponentModel;
 
 namespace RestEaseClientGenerator.Types
 {
-    // [TypeConverter(typeof(RestEaseClientGenerator.VSIX.Extensions.))]
-
+    [TypeConverter(typeof(EnumDescriptionConverter))]
     public enum ArrayType
     {
         [Description("[]")]

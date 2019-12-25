@@ -1,6 +1,7 @@
 using Microsoft.VisualStudio.Shell;
 using RestEaseClientGenerator.Types;
-using RestEaseClientGenerator.VSIX.Utils;
+//using RestEaseClientGenerator.VSIX.Types;
+//using RestEaseClientGenerator.VSIX.Utils;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 
@@ -16,7 +17,8 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         [Category(General)]
         [DisplayName("ArrayType")]
         [Description("The Array type to use. The default is Array '[]'.")]
-        [PropertyPageTypeConverter(typeof(EnumDescriptionConverter))]
+        //[PropertyPageTypeConverter(typeof(EnumDescriptionConverter))]
+        //[TypeConverter(typeof(EnumDescriptionConverter))]
         public ArrayType ArrayType { get; set; }
 
         [Category(General)]
@@ -44,7 +46,6 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         [Category(Interface)]
         [DisplayName("Method ReturnType")]
         [Description("The ReturnType to use for the methods. The default value is 'Type'. For more details see https://github.com/canton7/RestEase#return-types.")]
-        [PropertyPageTypeConverter(typeof(EnumDescriptionConverter))]
         public MethodReturnType MethodReturnType { get; set; }
         #endregion
     }

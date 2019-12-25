@@ -1,8 +1,8 @@
-﻿using RestEaseClientGenerator.Extensions;
-using System;
+﻿using System;
 using System.ComponentModel;
+using RestEaseClientGenerator.Extensions;
 
-namespace RestEaseClientGenerator.VSIX.Utils
+namespace RestEaseClientGenerator.Utils
 {
     /// <summary>
     /// EnumConverter supporting System.ComponentModel.DescriptionAttribute

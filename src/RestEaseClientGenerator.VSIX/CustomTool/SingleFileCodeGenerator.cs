@@ -1,15 +1,15 @@
-﻿using System;
+﻿using Microsoft.VisualStudio.Shell.Interop;
+using RestEaseClientGenerator.Settings;
+using RestEaseClientGenerator.VSIX.Extensions;
+using RestEaseClientGenerator.VSIX.Options;
+using RestEaseClientGenerator.VSIX.Options.RestEase;
+using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text.Json;
-using Microsoft.VisualStudio.Shell.Interop;
-using RestEaseClientGenerator.Settings;
-using RestEaseClientGenerator.VSIX.Extensions;
-using RestEaseClientGenerator.VSIX.Options;
-using RestEaseClientGenerator.VSIX.Options.RestEase;
 
 namespace RestEaseClientGenerator.VSIX.CustomTool
 {
