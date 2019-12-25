@@ -62,9 +62,7 @@
     <Compile Include="CustomTool\ProgressReporter.cs" />
     <Compile Include="Extensions\AsyncPackageExtensions.cs" />
     <Compile Include="Extensions\IVsExtensions.cs" />
-    <Compile Include="CustomTool\RestEase\RestEaseCodeGenerator.cs" />
-    <Compile Include="CustomTool\RestEase\RestEaseCSharpCodeGenerator.cs" />
-    <Compile Include="CustomTool\SingleFileCodeGenerator.cs" />
+    <Compile Include="CustomTool\RestEaseCodeGenerator.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\SupportedCodeGeneratorExtensions.cs" />
     <Compile Include="IProgressReporter.cs" />

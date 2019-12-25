@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using RestEaseClientGenerator.VSIX.CustomTool.RestEase;
+using RestEaseClientGenerator.VSIX.CustomTool;
 using RestEaseClientGenerator.VSIX.NuGet;
 
 namespace RestEaseClientGenerator.VSIX.Extensions
@@ -25,9 +25,10 @@ namespace RestEaseClientGenerator.VSIX.Extensions
 
         public static SupportedCodeGenerator GetSupportedCodeGenerator(this Type type)
         {
-
             if (type.IsAssignableFrom(typeof(RestEaseCodeGenerator)))
+            {
                 return SupportedCodeGenerator.RestEase;
+            }
 
             throw new NotSupportedException();
         }
