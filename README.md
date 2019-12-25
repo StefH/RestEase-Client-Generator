@@ -53,3 +53,4 @@ This Visual Studio Extension will automatically add the required nuget packages 
 ## Credits
 - Project source code is based on [REST API Client Code Generator](https://github.com/christianhelle/apiclientcodegen)
 - Code used from https://raw.githubusercontent.com/andeart/CaseConversions/master/CaseConversions/CaseConversion.cs
+- Code used from https://www.codeproject.com/articles/6294/description-enum-typeconverter
