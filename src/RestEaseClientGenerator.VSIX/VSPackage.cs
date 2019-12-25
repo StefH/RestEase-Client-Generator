@@ -33,7 +33,7 @@ namespace RestEaseClientGenerator.VSIX
     [ProvideOptionPage(
         typeof(RestEaseOptionsPage),
         VsixName,
-        RestEaseOptionsPage.Name,
+        "Options",
         0,
         0,
         true)]

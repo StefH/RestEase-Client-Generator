@@ -1,6 +1,6 @@
 ﻿namespace RestEaseClientGenerator.Types
 {
-    public enum SchemaType
+    internal enum SchemaType
     {
         Object,
 

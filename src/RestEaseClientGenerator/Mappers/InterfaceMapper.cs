@@ -102,7 +102,7 @@ namespace RestEaseClientGenerator.Mappers
 
             var response = operation.Responses.First();
 
-            string returnType = "";
+            object returnType = null;
             if (response.Value != null && TryGetOpenApiMediaType(response.Value.Content, out OpenApiMediaType responseMediaType))
             {
                 switch (responseMediaType.Schema?.GetSchemaType())
@@ -111,13 +111,14 @@ namespace RestEaseClientGenerator.Mappers
                         string arrayType = responseMediaType.Schema.Items.Reference != null ?
                             responseMediaType.Schema.Items.Reference.Id :
                             MapSchema(responseMediaType.Schema.Items, "", responseMediaType.Schema.Nullable).ToString();
-                        returnType = $"<{MapArrayType(arrayType)}>";
+
+                        returnType = MapArrayType(arrayType);
                         break;
 
                     case SchemaType.Object:
                         returnType = responseMediaType.Schema.Reference != null ?
-                            $"<{responseMediaType.Schema.Reference.Id}>" :
-                            $"<{MapSchema(responseMediaType.Schema.AdditionalProperties, "", responseMediaType.Schema.AdditionalProperties.Nullable, false)}>";
+                            responseMediaType.Schema.Reference.Id :
+                            MapSchema(responseMediaType.Schema.AdditionalProperties, "", responseMediaType.Schema.AdditionalProperties.Nullable, false);
                         break;
                 }
             }
@@ -131,13 +132,39 @@ namespace RestEaseClientGenerator.Mappers
                 RestEaseAttribute = $"[{methodRestEaseForAnnotation}(\"{path}\")]",
                 RestEaseMethod = new RestEaseInterfaceMethod
                 {
-                    ReturnType = returnType,
+                    ReturnType = MapReturnType(returnType),
                     Name = methodRestEaseMethod,
                     Parameters = string.Join(", ", methodParameterList.Select(mp => mp.Text))
                 }
             };
 
             return method;
+        }
+
+        private string MapReturnType(object returnType)
+        {
+            if (returnType == null)
+            {
+                return "Task";
+            }
+
+            switch (Settings.MethodReturnType)
+            {
+                case MethodReturnType.String:
+                    return "Task<string>";
+
+                case MethodReturnType.HttpResponseMessage:
+                    return "Task<HttpResponseMessage>";
+
+                case MethodReturnType.Response:
+                    return $"Task<Response<{returnType}>>";
+
+                case MethodReturnType.Stream:
+                    return "Task<Stream>";
+
+                default:
+                    return $"Task<{returnType}>";
+            }
         }
 
         private string GenerateNameForMethod(string path, string httpMethodPascalCased)

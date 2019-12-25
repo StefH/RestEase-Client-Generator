@@ -22,10 +22,21 @@ namespace RestEaseClientGenerator.Mappers
                 case ArrayType.IEnumerable:
                     return $"IEnumerable<{value}>";
 
+                case ArrayType.ICollection:
+                    return $"ICollection<{value}>";
+
+                case ArrayType.IList:
+                    return $"IList<{value}>";
+
+                case ArrayType.List:
+                    return $"List<{value}>";
+
                 default:
                     return $"{value}[]";
             }
         }
+
+        protected string DateTime => Settings.UseDateTimeOffset ? "DateTimeOffset" : "DateTime";
 
         protected object MapSchema(OpenApiSchema schema, string name, bool isNullable, bool pascalCase = true)
         {
@@ -80,8 +91,15 @@ namespace RestEaseClientGenerator.Mappers
                 case SchemaType.String:
                     switch (schema.GetSchemaFormat())
                     {
+                        case SchemaFormat.Date:
                         case SchemaFormat.DateTime:
-                            return $"DateTime{nullable}{nameCamelCase}";
+                            return $"{DateTime}{nullable}{nameCamelCase}";
+
+                        case SchemaFormat.Byte:
+                            return $"{MapArrayType("byte")}{nullable}{nameCamelCase}";
+
+                        case SchemaFormat.Binary:
+                            return $"object{nameCamelCase}";
 
                         default:
                             return $"string{nameCamelCase}";

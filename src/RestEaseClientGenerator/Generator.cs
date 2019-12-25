@@ -71,9 +71,14 @@ namespace RestEaseClientGenerator
         private static string BuildInterface(RestEaseInterface api, GeneratorSettings settings)
         {
             var builder = new StringBuilder();
+            builder.AppendLine("using System;");
             if (settings.ArrayType != ArrayType.Array)
             {
                 builder.AppendLine("using System.Collections.Generic;");
+            }
+            if (settings.AddAuthorizationHeader)
+            {
+                builder.AppendLine("using System.Net.Http.Headers;");
             }
             builder.AppendLine("using System.Threading.Tasks;");
             builder.AppendLine("using RestEase;");
@@ -83,8 +88,16 @@ namespace RestEaseClientGenerator
             builder.AppendLine("{");
             builder.AppendLine($"    public interface {api.Name}");
             builder.AppendLine("    {");
+            if (settings.AddAuthorizationHeader)
+            {
+                builder.AppendLine("        [Header(\"Authorization\")]");
+                builder.AppendLine("        AuthenticationHeaderValue Authorization { get; set; }");
+                builder.AppendLine();
+            }
             foreach (var method in api.Methods)
             {
+                string asyncPostfix = settings.AppendAsync ? "Async" : string.Empty;
+
                 builder.AppendLine("        /// <summary>");
                 builder.AppendLine($"        /// {method.Summary}");
                 builder.AppendLine("        /// </summary>");
@@ -93,7 +106,7 @@ namespace RestEaseClientGenerator
                     builder.AppendLine($"        /// {p}");
                 }
                 builder.AppendLine($"        {method.RestEaseAttribute}");
-                builder.AppendLine($"        Task{method.RestEaseMethod.ReturnType} {method.RestEaseMethod.Name}Async({method.RestEaseMethod.Parameters});");
+                builder.AppendLine($"        {method.RestEaseMethod.ReturnType} {method.RestEaseMethod.Name}{asyncPostfix}({method.RestEaseMethod.Parameters});");
 
                 if (method != api.Methods.Last())
                 {
@@ -111,6 +124,7 @@ namespace RestEaseClientGenerator
             var builder = new StringBuilder();
             if (!settings.SingleFile && settings.ArrayType != ArrayType.Array)
             {
+                builder.AppendLine("using System;");
                 builder.AppendLine("using System.Collections.Generic;");
                 builder.AppendLine();
             }

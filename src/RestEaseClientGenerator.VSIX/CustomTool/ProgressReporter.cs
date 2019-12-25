@@ -5,17 +5,17 @@ namespace RestEaseClientGenerator.VSIX.CustomTool
 {
     public class ProgressReporter : IProgressReporter
     {
-        private readonly IVsGeneratorProgress pGenerateProgress;
+        private readonly IVsGeneratorProgress _generateProgress;
 
         public ProgressReporter(IVsGeneratorProgress pGenerateProgress)
         {
-            this.pGenerateProgress = pGenerateProgress;
+            _generateProgress = pGenerateProgress;
         }
 
         public void Progress(uint progress, uint total = 100)
         {
             ThreadHelper.ThrowIfNotOnUIThread();
-            pGenerateProgress.Progress(progress, total);
+            _generateProgress.Progress(progress, total);
         }
     }
 }

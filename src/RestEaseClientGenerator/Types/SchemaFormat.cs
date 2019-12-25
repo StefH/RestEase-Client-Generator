@@ -1,6 +1,6 @@
 ﻿namespace RestEaseClientGenerator.Types
 {
-    public enum SchemaFormat
+    internal enum SchemaFormat
     {
         Float,
 
@@ -13,6 +13,12 @@
         Date,
 
         DateTime,
+
+        Password,
+
+        Byte,
+
+        Binary,
 
         Undefined
     }

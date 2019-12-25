@@ -34,7 +34,7 @@ namespace RestEaseClientGenerator.Extensions
 
         public static SchemaFormat GetSchemaFormat(this OpenApiSchema schema)
         {
-            switch (schema?.Type)
+            switch (schema?.Format)
             {
                 case "float":
                     return SchemaFormat.Float;
@@ -53,6 +53,15 @@ namespace RestEaseClientGenerator.Extensions
 
                 case "date-time":
                     return SchemaFormat.DateTime;
+
+                case "password":
+                    return SchemaFormat.Password;
+
+                case "byte":
+                    return SchemaFormat.Byte;
+
+                case "binary":
+                    return SchemaFormat.Binary;
 
                 default:
                     return SchemaFormat.Undefined;

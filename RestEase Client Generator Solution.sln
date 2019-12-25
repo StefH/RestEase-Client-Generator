@@ -22,7 +22,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "vsix", "vsix", "{01BD8AEA-3
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestEaseClientGenerator.VSIX", "src\RestEaseClientGenerator.VSIX\RestEaseClientGenerator.VSIX.csproj", "{9C54D0EC-F441-4525-806D-BD0688656280}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleAppTest", "..\..\..\source\repos\StefH\RestEase-Client-Generator\examples\ConsoleAppTest\ConsoleAppTest.csproj", "{74F97215-D6C3-4F9F-987F-39DDF5318D35}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleAppTest", "examples\ConsoleAppTest\ConsoleAppTest.csproj", "{74F97215-D6C3-4F9F-987F-39DDF5318D35}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

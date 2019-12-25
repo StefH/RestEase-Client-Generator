@@ -1,13 +1,25 @@
-﻿using System.ComponentModel;
+﻿// ReSharper disable All
+using RestEaseClientGenerator.Utils;
+using System.ComponentModel;
 
 namespace RestEaseClientGenerator.Types
 {
+    [TypeConverter(typeof(EnumDescriptionConverter))]
     public enum ArrayType
     {
-        [Description("stef")]
+        [Description("[]")]
         Array,
 
         [Description("IEnumerable<T>")]
-        IEnumerable
+        IEnumerable,
+
+        [Description("IList<T>")]
+        IList,
+
+        [Description("ICollection<T>")]
+        ICollection,
+
+        [Description("List<T>")]
+        List
     }
 }

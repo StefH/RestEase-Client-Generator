@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using RestEase;
@@ -26,42 +27,42 @@ namespace RestEaseClientGeneratorConsoleApp.PetStore.Api
         /// </summary>
         /// <param name="status">Status values that need to be considered for filter</param>
         [Get("/pet/findByStatus")]
-        Task<IEnumerable<Pet>> FindPetsByStatusAsync([Query] IEnumerable<string> status);
+        Task<ICollection<Pet>> FindPetsByStatusAsync([Query] ICollection<string> status);
 
         /// <summary>
         /// Finds Pets by tags
         /// </summary>
         /// <param name="tags">Tags to filter by</param>
         [Get("/pet/findByTags")]
-        Task<IEnumerable<Pet>> FindPetsByTagsAsync([Query] IEnumerable<string> tags);
+        Task<ICollection<Pet>> FindPetsByTagsAsync([Query] ICollection<string> tags);
 
         /// <summary>
         /// Find pet by ID
         /// </summary>
         /// <param name="petId">ID of pet to return</param>
         [Get("/pet/{petId}")]
-        Task<Pet> GetPetByIdAsync([Path] int petId);
+        Task<Pet> GetPetByIdAsync([Path] long petId);
 
         /// <summary>
         /// Updates a pet in the store with form data
         /// </summary>
         /// <param name="petId">ID of pet that needs to be updated</param>
         [Post("/pet/{petId}")]
-        Task UpdatePetWithFormAsync([Path] int petId);
+        Task UpdatePetWithFormAsync([Path] long petId);
 
         /// <summary>
         /// Deletes a pet
         /// </summary>
         /// <param name="petId">Pet id to delete</param>
         [Delete("/pet/{petId}")]
-        Task DeletePetAsync([Path] int petId);
+        Task DeletePetAsync([Path] long petId);
 
         /// <summary>
         /// uploads an image
         /// </summary>
         /// <param name="petId">ID of pet to update</param>
         [Post("/pet/{petId}/uploadImage")]
-        Task<ApiResponse> UploadFileAsync([Path] int petId);
+        Task<ApiResponse> UploadFileAsync([Path] long petId);
 
         /// <summary>
         /// Returns pet inventories by status
@@ -81,7 +82,7 @@ namespace RestEaseClientGeneratorConsoleApp.PetStore.Api
         /// </summary>
         /// <param name="orderId">ID of pet that needs to be fetched</param>
         [Get("/store/order/{orderId}")]
-        Task<Order> GetOrderByIdAsync([Path] int orderId);
+        Task<Order> GetOrderByIdAsync([Path] long orderId);
 
         /// <summary>
         /// Delete purchase order by ID
@@ -100,16 +101,16 @@ namespace RestEaseClientGeneratorConsoleApp.PetStore.Api
         /// <summary>
         /// Creates list of users with given input array
         /// </summary>
-        /// <param name="iEnumerableUser"></param>
+        /// <param name="iCollectionUser"></param>
         [Post("/user/createWithArray")]
-        Task CreateUsersWithArrayInputAsync([Body] IEnumerable<User> iEnumerableUser);
+        Task CreateUsersWithArrayInputAsync([Body] ICollection<User> iCollectionUser);
 
         /// <summary>
         /// Creates list of users with given input array
         /// </summary>
-        /// <param name="iEnumerableUser"></param>
+        /// <param name="iCollectionUser"></param>
         [Post("/user/createWithList")]
-        Task CreateUsersWithListInputAsync([Body] IEnumerable<User> iEnumerableUser);
+        Task CreateUsersWithListInputAsync([Body] ICollection<User> iCollectionUser);
 
         /// <summary>
         /// Logs user into the system
