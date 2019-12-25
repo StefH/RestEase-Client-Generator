@@ -1,8 +1,8 @@
-using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 using Microsoft.VisualStudio.Shell;
 using RestEaseClientGenerator.Types;
-using RestEaseClientGenerator.Utils;
+using RestEaseClientGenerator.VSIX.Utils;
+using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace RestEaseClientGenerator.VSIX.Options.RestEase
 {

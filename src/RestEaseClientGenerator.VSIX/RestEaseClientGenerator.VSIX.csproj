@@ -81,6 +81,7 @@
     <Compile Include="Options\OptionsFactory.cs" />
     <Compile Include="SupportedCodeGenerator.cs" />
     <Compile Include="SupportedLanguage.cs" />
+    <Compile Include="Utils\EnumDescriptionConverter.cs" />
     <Compile Include="Windows\OutputWindow.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Windows\OutputWindowTraceListener.cs" />
