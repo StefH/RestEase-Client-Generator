@@ -1,11 +1,11 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using RestEaseClientGenerator.VSIX.CustomTool.RestEase;
+using RestEaseClientGenerator.VSIX.CustomTool;
+
 
 namespace RestEaseClientGenerator.VSIX.Commands.CustomTool
 {
     [ExcludeFromCodeCoverage]
-    public class RestEaseCodeGeneratorCustomToolSetter
-        : CustomToolSetter<RestEaseCodeGenerator>
+    public class RestEaseCodeGeneratorCustomToolSetter : CustomToolSetter<RestEaseCodeGenerator>
     {
         public const string Name = nameof(RestEaseCodeGeneratorCustomToolSetter);
 

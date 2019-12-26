@@ -1,11 +1,12 @@
-﻿using Microsoft.VisualStudio.Shell.Interop;
+﻿using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio.Shell.Interop;
+using Microsoft.VisualStudio.TextTemplating.VSHost;
 using RestEaseClientGenerator.Settings;
 using RestEaseClientGenerator.VSIX.Extensions;
 using RestEaseClientGenerator.VSIX.Options;
 using RestEaseClientGenerator.VSIX.Options.RestEase;
 using System;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -13,22 +14,27 @@ using System.Text.Json;
 
 namespace RestEaseClientGenerator.VSIX.CustomTool
 {
-    [ExcludeFromCodeCoverage]
+    [Guid("A2AE3194-0000-44FC-B8C4-B40EB2BF6498")]
     [ComVisible(true)]
-    public abstract class SingleFileCodeGenerator : IVsSingleFileGenerator
+    [ProvideObject(typeof(RestEaseCodeGenerator))]
+    [CodeGeneratorRegistration(typeof(RestEaseCodeGenerator),
+        "RestEase Client Code Generator",
+        ProvideCodeGeneratorAttribute.CSharpProjectGuid,
+        GeneratesDesignTimeSource = true,
+        GeneratorRegKeyName = nameof(RestEaseCodeGenerator))]
+    public class RestEaseCodeGenerator : IVsSingleFileGenerator
     {
-        public SupportedCodeGenerator CodeGenerator { get; }
-
-        protected SingleFileCodeGenerator(SupportedCodeGenerator supportedCodeGenerator)
-        {
-            CodeGenerator = supportedCodeGenerator;
-        }
-
-        public abstract int DefaultExtension(out string pbstrDefaultExtension);
-
         private readonly IOptionsFactory _optionsFactory = new OptionsFactory();
 
         private readonly IGenerator _generator = new Generator();
+
+        public SupportedCodeGenerator CodeGenerator { get; } = SupportedCodeGenerator.RestEase;
+
+        public int DefaultExtension(out string pbstrDefaultExtension)
+        {
+            pbstrDefaultExtension = ".cs";
+            return 0;
+        }
 
         private IRestEaseOptions GetOptions()
         {
@@ -69,7 +75,7 @@ namespace RestEaseClientGenerator.VSIX.CustomTool
                     AddAuthorizationHeader = options.AddAuthorizationHeader,
                     UseDateTimeOffset = options.UseDateTimeOffset,
                     MethodReturnType = options.MethodReturnType,
-                    AppendAsync =  options.AppendAsync
+                    AppendAsync = options.AppendAsync
                 };
                 var result = _generator.FromStream(File.OpenRead(wszInputFilePath), settings, out var diagnostic);
 

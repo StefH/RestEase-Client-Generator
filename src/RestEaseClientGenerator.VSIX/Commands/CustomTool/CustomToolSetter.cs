@@ -11,7 +11,7 @@ using Task = System.Threading.Tasks.Task;
 namespace RestEaseClientGenerator.VSIX.Commands.CustomTool
 {
     [ExcludeFromCodeCoverage]
-    public abstract class CustomToolSetter<T> : ICommandInitializer where T : SingleFileCodeGenerator
+    public abstract class CustomToolSetter<T> : ICommandInitializer where T : RestEaseCodeGenerator
     {
         protected abstract int CommandId { get; }
 
