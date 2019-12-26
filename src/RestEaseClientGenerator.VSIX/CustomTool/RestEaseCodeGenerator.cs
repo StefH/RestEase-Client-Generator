@@ -24,6 +24,10 @@ namespace RestEaseClientGenerator.VSIX.CustomTool
         GeneratorRegKeyName = nameof(RestEaseCodeGenerator))]
     public class RestEaseCodeGenerator : IVsSingleFileGenerator
     {
+        private readonly IOptionsFactory _optionsFactory = new OptionsFactory();
+
+        private readonly IGenerator _generator = new Generator();
+
         public SupportedCodeGenerator CodeGenerator { get; } = SupportedCodeGenerator.RestEase;
 
         public int DefaultExtension(out string pbstrDefaultExtension)
@@ -31,10 +35,6 @@ namespace RestEaseClientGenerator.VSIX.CustomTool
             pbstrDefaultExtension = ".cs";
             return 0;
         }
-
-        private readonly IOptionsFactory _optionsFactory = new OptionsFactory();
-
-        private readonly IGenerator _generator = new Generator();
 
         private IRestEaseOptions GetOptions()
         {

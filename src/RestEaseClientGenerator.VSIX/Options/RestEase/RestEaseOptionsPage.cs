@@ -1,7 +1,5 @@
 using Microsoft.VisualStudio.Shell;
 using RestEaseClientGenerator.Types;
-//using RestEaseClientGenerator.VSIX.Types;
-//using RestEaseClientGenerator.VSIX.Utils;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 
