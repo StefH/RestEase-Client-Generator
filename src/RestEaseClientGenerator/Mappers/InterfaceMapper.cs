@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.OpenApi.Models;
+using RestEaseClientGenerator.Constants;
 using RestEaseClientGenerator.Extensions;
 using RestEaseClientGenerator.Models;
 using RestEaseClientGenerator.Settings;
@@ -60,38 +61,50 @@ namespace RestEaseClientGenerator.Mappers
 
             var pathParameterList = operation.Parameters
                 .Where(p => p.In == ParameterLocation.Path && p.Schema.GetSchemaType() != SchemaType.Object)
-                .Select(p => BuildQueryParameter(p, "Path"))
+                .Select(p => BuildValidParameter(p.Name, p.Schema, p.Required, p.Description, "Path"))
                 .ToList();
 
             var queryParameterList = operation.Parameters
                 .Where(p => p.In == ParameterLocation.Query && p.Schema.GetSchemaType() != SchemaType.Object)
-                .Select(p => BuildQueryParameter(p, "Query"))
+                .Select(p => BuildValidParameter(p.Name, p.Schema, p.Required, p.Description, "Query"))
                 .ToList();
 
             var bodyParameterList = new List<(string Identifier, string Text, string Summary)>();
-            if (operation.RequestBody != null && TryGetOpenApiMediaType(operation.RequestBody.Content, out OpenApiMediaType requestMediaType))
+            if (operation.RequestBody != null)
             {
-                string bodyParameter;
-                switch (requestMediaType.Schema?.GetSchemaType())
+                if (TryGetOpenApiMediaType(operation.RequestBody.Content, SupportedContentTypes.ApplicationJson, out OpenApiMediaType requestMediaTypeJson))
                 {
-                    case SchemaType.Array:
-                        string arrayType = requestMediaType.Schema.Items.Reference != null ? requestMediaType.Schema.Items.Reference.Id : MapSchema(requestMediaType.Schema.Items, "", requestMediaType.Schema.Nullable).ToString();
-                        bodyParameter = MapArrayType(arrayType);
-                        break;
+                    string bodyParameter;
+                    switch (requestMediaTypeJson.Schema?.GetSchemaType())
+                    {
+                        case SchemaType.Array:
+                            string arrayType = requestMediaTypeJson.Schema.Items.Reference != null ? requestMediaTypeJson.Schema.Items.Reference.Id : MapSchema(requestMediaTypeJson.Schema.Items, "", requestMediaTypeJson.Schema.Nullable).ToString();
+                            bodyParameter = MapArrayType(arrayType);
+                            break;
 
-                    case SchemaType.Object:
-                        bodyParameter = requestMediaType.Schema.Reference.Id;
-                        break;
+                        case SchemaType.Object:
+                            bodyParameter = requestMediaTypeJson.Schema.Reference.Id;
+                            break;
 
-                    default:
-                        bodyParameter = "";
-                        break;
+                        default:
+                            bodyParameter = "";
+                            break;
+                    }
+
+                    if (!string.IsNullOrEmpty(bodyParameter))
+                    {
+                        string bodyParameterIdentifierName = bodyParameter.ToCamelCase();
+                        bodyParameterList.Add((bodyParameterIdentifierName, $"[Body] {bodyParameter} {bodyParameterIdentifierName}", requestMediaTypeJson.Schema?.Description));
+                    }
                 }
-
-                if (!string.IsNullOrEmpty(bodyParameter))
+                else if (TryGetOpenApiMediaType(operation.RequestBody.Content, SupportedContentTypes.MultipartFormData, out OpenApiMediaType requestMultipartFormData))
                 {
-                    string bodyParameterIdentifierName = bodyParameter.ToCamelCase();
-                    bodyParameterList.Add((bodyParameterIdentifierName, $"[Body] {bodyParameter} {bodyParameterIdentifierName}", requestMediaType.Schema?.Description));
+                    string httpContentDescription = "Add an extension method to support the exact parameters. See https://github.com/canton7/RestEase#wrapping-other-methods for more info.";
+                    bodyParameterList.Add(("content", "HttpContent content", httpContentDescription)); // requestMultipartFormData.Schema?.Description
+                }
+                else if (TryGetOpenApiMediaType(operation.RequestBody.Content, SupportedContentTypes.ApplicationFormUrlEncoded, out OpenApiMediaType requestFormUrlencoded))
+                {
+                    bodyParameterList.Add(("formData", "[Body(BodySerializationMethod.UrlEncoded)] IDictionary<string, object> formData", requestFormUrlencoded.Schema?.Description));
                 }
             }
 
@@ -103,7 +116,7 @@ namespace RestEaseClientGenerator.Mappers
             var response = operation.Responses.First();
 
             object returnType = null;
-            if (response.Value != null && TryGetOpenApiMediaType(response.Value.Content, out OpenApiMediaType responseMediaType))
+            if (response.Value != null && TryGetOpenApiMediaType(response.Value.Content, SupportedContentTypes.ApplicationJson, out OpenApiMediaType responseMediaType))
             {
                 switch (responseMediaType.Schema?.GetSchemaType())
                 {
@@ -191,46 +204,52 @@ namespace RestEaseClientGenerator.Mappers
             return string.Join("", list);
         }
 
-        private (string Identifier, string Text, string Summary) BuildQueryParameter(OpenApiParameter parameter, string parameterType)
+        private (string Identifier, string Text, string Summary) BuildValidParameter(string identifier, OpenApiSchema schema, bool required, string description, string parameterType, params string[] extraAttributes)
         {
-            string identifier = parameter.Name;
+            var attributes = new List<string>(extraAttributes);
             string validIdentifier = CSharpUtils.CreateValidIdentifier(identifier);
 
             if (identifier != validIdentifier)
             {
+                attributes.Add($"Name = \"{identifier}\"");
+
                 return (
                     validIdentifier,
-                    $"[{parameterType}(Name = \"{identifier}\")] {MapSchema(parameter.Schema, validIdentifier, !parameter.Required, false)}",
-                    parameter.Description
+                    $"[{parameterType}({string.Join(", ", attributes)}] {MapSchema(schema, validIdentifier, !required, false)}",
+                    description
                 );
             }
 
+            string attributesBetweenParentheses = attributes.Count == 0 ? string.Empty : $"({string.Join(", ", attributes)})";
+
             return (
                 identifier,
-                $"[{parameterType}] {MapSchema(parameter.Schema, identifier, !parameter.Required, false)}",
-                parameter.Description
+                $"[{parameterType}{attributesBetweenParentheses}] {MapSchema(schema, identifier, !required, false)}",
+                description
             );
         }
 
-        private bool TryGetOpenApiMediaType(IDictionary<string, OpenApiMediaType> content, out OpenApiMediaType mediaType)
+        private bool TryGetOpenApiMediaType(IDictionary<string, OpenApiMediaType> contentTypes, string contentType, out OpenApiMediaType mediaType)
         {
-            if (content.TryGetValue("application/json", out mediaType))
+            var contentTypesIgnoreCase = new Dictionary<string, OpenApiMediaType>(contentTypes, StringComparer.InvariantCultureIgnoreCase);
+
+            if (contentTypesIgnoreCase.TryGetValue(contentType, out mediaType))
             {
                 return true;
             }
 
-            var jsonKey = content.Keys.FirstOrDefault(key => key.Contains("application/json"));
-            if (jsonKey != null)
+            var key = contentTypesIgnoreCase.Keys.FirstOrDefault(ct => ct.Contains(contentType));
+            if (key != null)
             {
-                mediaType = content[jsonKey];
+                mediaType = contentTypesIgnoreCase[key];
                 return true;
             }
 
-            if (content.Count > 0)
-            {
-                mediaType = content.First().Value;
-                return true;
-            }
+            //if (contentTypesIgnoreCase.Count > 0)
+            //{
+            //    mediaType = contentTypesIgnoreCase.First().Value;
+            //    return true;
+            //}
 
             return false;
         }

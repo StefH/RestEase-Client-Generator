@@ -15,7 +15,6 @@
     <Folder Include="Cog\Models\" />
     <Folder Include="Infura\Api\" />
     <Folder Include="Infura\Models\" />
-    <Folder Include="PetStoreJson\" />
     <Folder Include="PetStore\Api\" />
     <Folder Include="PetStore\Models\" />
   </ItemGroup>

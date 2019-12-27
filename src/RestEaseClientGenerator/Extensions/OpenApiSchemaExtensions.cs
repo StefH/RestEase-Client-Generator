@@ -27,6 +27,9 @@ namespace RestEaseClientGenerator.Extensions
                 case "string":
                     return SchemaType.String;
 
+                case "file":
+                    return SchemaType.File;
+
                 default:
                     return SchemaType.Unknown;
             }

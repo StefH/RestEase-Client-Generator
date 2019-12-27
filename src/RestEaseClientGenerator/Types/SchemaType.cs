@@ -14,6 +14,8 @@
 
         Boolean,
 
+        File,
+
         Unknown
     }
 }

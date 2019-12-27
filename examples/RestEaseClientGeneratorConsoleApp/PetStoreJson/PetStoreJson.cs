@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using RestEase;
@@ -17,14 +18,15 @@ namespace RestEaseClientGeneratorConsoleApp.PetStoreJson.Api
         /// </summary>
         /// <param name="petId">ID of pet to return</param>
         [Get("/pet/{petId}")]
-        Task<Response<Pet>> GetPetByIdAsync([Path] long petId);
+        Task<Pet> GetPetByIdAsync([Path] long petId);
 
         /// <summary>
         /// Updates a pet in the store with form data
         /// </summary>
         /// <param name="petId">ID of pet that needs to be updated</param>
+        /// <param name="formData"></param>
         [Post("/pet/{petId}")]
-        Task UpdatePetWithFormAsync([Path] long petId);
+        Task UpdatePetWithFormAsync([Path] long petId, [Body(BodySerializationMethod.UrlEncoded)] IDictionary<string, object> formData);
 
         /// <summary>
         /// Deletes a pet
@@ -37,8 +39,9 @@ namespace RestEaseClientGeneratorConsoleApp.PetStoreJson.Api
         /// uploads an image
         /// </summary>
         /// <param name="petId">ID of pet to update</param>
+        /// <param name="content">Add an extension method to support the exact parameters. See https://github.com/canton7/RestEase#wrapping-other-methods for more info.</param>
         [Post("/pet/{petId}/uploadImage")]
-        Task<Response<ApiResponse>> UploadFileAsync([Path] long petId);
+        Task<ApiResponse> UploadFileAsync([Path] long petId, HttpContent content);
 
         /// <summary>
         /// Add a new pet to the store
@@ -59,27 +62,27 @@ namespace RestEaseClientGeneratorConsoleApp.PetStoreJson.Api
         /// </summary>
         /// <param name="status">Status values that need to be considered for filter</param>
         [Get("/pet/findByStatus")]
-        Task<Response<IEnumerable<Pet>>> FindPetsByStatusAsync([Query] IEnumerable<string> status);
+        Task<IEnumerable<Pet>> FindPetsByStatusAsync([Query] IEnumerable<string> status);
 
         /// <summary>
         /// Finds Pets by tags
         /// </summary>
         /// <param name="tags">Tags to filter by</param>
         [Get("/pet/findByTags")]
-        Task<Response<IEnumerable<Pet>>> FindPetsByTagsAsync([Query] IEnumerable<string> tags);
+        Task<IEnumerable<Pet>> FindPetsByTagsAsync([Query] IEnumerable<string> tags);
 
         /// <summary>
         /// Returns pet inventories by status
         /// </summary>
         [Get("/store/inventory")]
-        Task<Response<int>> GetInventoryAsync();
+        Task<int> GetInventoryAsync();
 
         /// <summary>
         /// Find purchase order by ID
         /// </summary>
         /// <param name="orderId">ID of pet that needs to be fetched</param>
         [Get("/store/order/{orderId}")]
-        Task<Response<Order>> GetOrderByIdAsync([Path] long orderId);
+        Task<Order> GetOrderByIdAsync([Path] long orderId);
 
         /// <summary>
         /// Delete purchase order by ID
@@ -93,14 +96,14 @@ namespace RestEaseClientGeneratorConsoleApp.PetStoreJson.Api
         /// </summary>
         /// <param name="order"></param>
         [Post("/store/order")]
-        Task<Response<Order>> PlaceOrderAsync([Body] Order order);
+        Task<Order> PlaceOrderAsync([Body] Order order);
 
         /// <summary>
         /// Get user by user name
         /// </summary>
         /// <param name="username">The name that needs to be fetched. Use user1 for testing. </param>
         [Get("/user/{username}")]
-        Task<Response<User>> GetUserByNameAsync([Path] string username);
+        Task<User> GetUserByNameAsync([Path] string username);
 
         /// <summary>
         /// Updated user

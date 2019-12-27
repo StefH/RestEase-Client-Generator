@@ -6,14 +6,14 @@ using RestEaseClientGeneratorConsoleApp.PetStore.Models;
 
 namespace RestEaseClientGeneratorConsoleApp.PetStore.Api
 {
-    public interface IPetStoreApi
-    {
-        /// <summary>
-        /// Add a new pet to the store
-        /// </summary>
-        /// <param name="pet">A pet for sale in the pet store</param>
-        [Post("/pet")]
-        Task AddPetAsync([Body] Pet pet);
+public interface IPetStoreApi
+{
+    /// <summary>
+    /// Add a new pet to the store
+    /// </summary>
+    /// <param name="pet">A pet for sale in the pet store</param>
+    [Post("/pet")]
+    Task AddPetAsync([Body] Pet pet);
 
         /// <summary>
         /// Update an existing pet
