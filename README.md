@@ -48,7 +48,7 @@ paths:
           schema:
             $ref: '#/definitions/Pet'
 ```
-(Full example [file](https://github.com/StefH/RestEase-Client-Generator/blob/master/examples/RestEaseClientGeneratorConsoleApp/petstore.yaml)).
+([Full example](https://github.com/StefH/RestEase-Client-Generator/blob/master/examples/RestEaseClientGeneratorConsoleApp/petstore.yaml)).
 
 ### Generate file 'PetStore.cs'
 Excerpt...
@@ -78,6 +78,7 @@ namespace RestEaseClientGeneratorConsoleApp.PetStoreJson.Models
     }
 }
 ```
+([Full example](https://github.com/StefH/RestEase-Client-Generator/blob/master/examples/RestEaseClientGeneratorConsoleApp/PetStoreJson/PetStoreJson.cs)).
 
 
 ## Screenshots
