@@ -21,6 +21,65 @@ A Visual Studio Extension to generate a [RestEase](https://github.com/canton7/Re
 This Visual Studio Extension will automatically add the required nuget packages that the generated code depends on.
 
 
+## Example
+
+### Input Yaml file 'PetStore.yaml'
+Excerpt...
+``` yml
+paths:
+  /pet:
+    post:
+      tags:
+        - pet
+      summary: Add a new pet to the store
+      description: ''
+      operationId: addPet
+      consumes:
+        - application/json
+        - application/xml
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Pet object that needs to be added to the store
+          required: true
+          schema:
+            $ref: '#/definitions/Pet'
+```
+(Full example [file](https://github.com/StefH/RestEase-Client-Generator/blob/master/examples/RestEaseClientGeneratorConsoleApp/petstore.yaml)).
+
+### Generate file 'PetStore.cs'
+Excerpt...
+``` c#
+namespace RestEaseClientGeneratorConsoleApp.PetStoreJson.Api
+{
+    public interface IPetStoreApi
+    {
+        /// <summary>
+        /// Add a new pet to the store
+        /// </summary>
+        /// <param name="pet">A pet for sale in the pet store</param>
+        [Post("/pet")]
+        Task AddPetAsync([Body] Pet pet);
+
+        // More methods ...
+    }
+}
+
+namespace RestEaseClientGeneratorConsoleApp.PetStoreJson.Models
+{
+    public class Pet
+    {
+        public long Id { get; set; }
+
+        // More properties ...
+    }
+}
+```
+
+
 ## Screenshots
 
 ### Add new specification and generate client code

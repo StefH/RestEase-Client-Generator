@@ -76,6 +76,7 @@ namespace RestEaseClientGenerator
             {
                 builder.AppendLine("using System.Collections.Generic;");
             }
+            builder.AppendLine("using System.Net.Http;");
             if (settings.AddAuthorizationHeader)
             {
                 builder.AppendLine("using System.Net.Http.Headers;");

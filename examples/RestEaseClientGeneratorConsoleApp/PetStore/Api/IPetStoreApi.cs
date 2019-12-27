@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading.Tasks;
 using RestEase;
 using RestEaseClientGeneratorConsoleApp.PetStore.Models;
@@ -47,8 +48,9 @@ namespace RestEaseClientGeneratorConsoleApp.PetStore.Api
         /// Updates a pet in the store with form data
         /// </summary>
         /// <param name="petId">ID of pet that needs to be updated</param>
+        /// <param name="formData"></param>
         [Post("/pet/{petId}")]
-        Task UpdatePetWithFormAsync([Path] long petId);
+        Task UpdatePetWithFormAsync([Path] long petId, [Body(BodySerializationMethod.UrlEncoded)] IDictionary<string, object> formData);
 
         /// <summary>
         /// Deletes a pet
@@ -61,8 +63,9 @@ namespace RestEaseClientGeneratorConsoleApp.PetStore.Api
         /// uploads an image
         /// </summary>
         /// <param name="petId">ID of pet to update</param>
+        /// <param name="content">Add an extension method to support the exact parameters. See https://github.com/canton7/RestEase#wrapping-other-methods for more info.</param>
         [Post("/pet/{petId}/uploadImage")]
-        Task<ApiResponse> UploadFileAsync([Path] long petId);
+        Task<ApiResponse> UploadFileAsync([Path] long petId, HttpContent content);
 
         /// <summary>
         /// Returns pet inventories by status
