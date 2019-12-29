@@ -169,10 +169,7 @@ namespace RestEaseClientGenerator
         {
             var builder = new StringBuilder();
             builder.AppendLine("using System;");
-            if (settings.ArrayType != ArrayType.Array)
-            {
-                builder.AppendLine("using System.Collections.Generic;");
-            }
+            builder.AppendLine("using System.Collections.Generic;");
             builder.AppendLine("using System.Net.Http;");
             if (settings.AddAuthorizationHeader)
             {
@@ -220,12 +217,13 @@ namespace RestEaseClientGenerator
         private static string BuildModel(RestEaseModel restEaseModel, GeneratorSettings settings)
         {
             var builder = new StringBuilder();
-            if (!settings.SingleFile && settings.ArrayType != ArrayType.Array)
+            if (!settings.SingleFile)
             {
                 builder.AppendLine("using System;");
                 builder.AppendLine("using System.Collections.Generic;");
                 builder.AppendLine();
             }
+
             builder.AppendLine($"namespace {restEaseModel.Namespace}.Models");
             builder.AppendLine("{");
             builder.AppendLine($"    public class {restEaseModel.ClassName}");
