@@ -63,6 +63,6 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
 
         public bool AppendAsync { get; set; }
 
-        public bool GenerateMultipartFormDataExtensionMethods { get; set; } = true;
+        public bool GenerateMultipartFormDataExtensionMethods { get; set; }
     }
 }
