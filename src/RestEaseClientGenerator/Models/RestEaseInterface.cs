@@ -9,7 +9,5 @@ namespace RestEaseClientGenerator.Models
         public string Namespace { get; set; }
 
         public ICollection<RestEaseInterfaceMethodDetails> Methods { get; set; }
-
-        public ICollection<RestEaseMultipartFormDataMethod> MultipartFormDataMethods { get; set; }
     }
 }

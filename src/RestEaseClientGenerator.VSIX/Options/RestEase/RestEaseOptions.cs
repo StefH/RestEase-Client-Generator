@@ -21,6 +21,8 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
                 UseDateTimeOffset = options.UseDateTimeOffset;
                 MethodReturnType = options.MethodReturnType;
                 AppendAsync = options.AppendAsync;
+                GenerateMultipartFormDataExtensionMethods = options.GenerateMultipartFormDataExtensionMethods;
+                MultipartFormDataFileType = options.MultipartFormDataFileType;
             }
             catch (Exception e)
             {
@@ -30,6 +32,8 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
                 UseDateTimeOffset = false;
                 MethodReturnType = MethodReturnType.Type;
                 AppendAsync = true;
+                GenerateMultipartFormDataExtensionMethods = true;
+                MultipartFormDataFileType = MultipartFormDataFileType.ByteArray;
 
                 Trace.WriteLine(e);
                 Trace.WriteLine(Environment.NewLine);
@@ -40,10 +44,14 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
                 Trace.WriteLine($"{nameof(UseDateTimeOffset)} = {UseDateTimeOffset}");
                 Trace.WriteLine($"{nameof(MethodReturnType)} = {MethodReturnType}");
                 Trace.WriteLine($"{nameof(AppendAsync)} = {AppendAsync}");
+                Trace.WriteLine($"{nameof(GenerateMultipartFormDataExtensionMethods)} = {GenerateMultipartFormDataExtensionMethods}");
+                Trace.WriteLine($"{nameof(MultipartFormDataFileType)} = {MultipartFormDataFileType}");
             }
         }
 
         public ArrayType ArrayType { get; set; }
+
+        public MultipartFormDataFileType MultipartFormDataFileType { get; set; }
 
         public bool FailOnOpenApiErrors { get; set; }
 
@@ -54,5 +62,7 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         public MethodReturnType MethodReturnType { get; set; }
 
         public bool AppendAsync { get; set; }
+
+        public bool GenerateMultipartFormDataExtensionMethods { get; set; } = true;
     }
 }

@@ -43,6 +43,16 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         [DisplayName("Method ReturnType")]
         [Description("The ReturnType to use for the methods. The default value is 'Type'. For more details see https://github.com/canton7/RestEase#return-types.")]
         public MethodReturnType MethodReturnType { get; set; }
+
+        [Category(Interface)]
+        [DisplayName("MultipartFormData FileType")]
+        [Description("The MultipartFormData FileType to use. The default value is 'byte[]'.")]
+        public MultipartFormDataFileType MultipartFormDataFileType { get; set; }
+
+        [Category(Interface)]
+        [DisplayName("Generate MultipartFormData Extension methods")]
+        [Description("Generate Extension methods for MultipartFormData methods. The default value is 'true'.")]
+        public bool GenerateMultipartFormDataExtensionMethods { get; set; }
         #endregion
     }
 }

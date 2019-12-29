@@ -37,24 +37,25 @@ namespace RestEaseClientGeneratorConsoleApp
                 ApiName = "PetStoreJson",
                 AddAuthorizationHeader = true,
                 UseDateTimeOffset = true,
-                MethodReturnType = MethodReturnType.Type
+                MethodReturnType = MethodReturnType.Type,
+                MultipartFormDataFileType = MultipartFormDataFileType.Stream
             };
             foreach (var file in generator.FromStream(File.OpenRead("petstore.json"), petStoreJsonSettings, out OpenApiDiagnostic diagnosticPetStore1))
             {
                 File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/PetStoreJson/{file.Name}", file.Content);
             }
 
-            foreach (var file in generator.FromStream(File.OpenRead("infura.yaml"), "RestEaseClientGeneratorConsoleApp.Infura", "Infura", out OpenApiDiagnostic diagnosticInfura))
-            {
-                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Infura/{file.Path}/{file.Name}", file.Content);
-            }
+            //foreach (var file in generator.FromStream(File.OpenRead("infura.yaml"), "RestEaseClientGeneratorConsoleApp.Infura", "Infura", out OpenApiDiagnostic diagnosticInfura))
+            //{
+            //    File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Infura/{file.Path}/{file.Name}", file.Content);
+            //}
 
-            OpenApiDiagnostic diagnosticCog;
-            foreach (var file in generator.FromStream(File.OpenRead("cognitive-services-personalizer.json"), "RestEaseClientGeneratorConsoleApp.Cog", "Cog", out diagnosticCog))
-            {
-                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Cog/{file.Path}/{file.Name}", file.Content);
-            }
-            Console.WriteLine(JsonSerializer.Serialize(diagnosticCog));
+            //OpenApiDiagnostic diagnosticCog;
+            //foreach (var file in generator.FromStream(File.OpenRead("cognitive-services-personalizer.json"), "RestEaseClientGeneratorConsoleApp.Cog", "Cog", out diagnosticCog))
+            //{
+            //    File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Cog/{file.Path}/{file.Name}", file.Content);
+            //}
+            //Console.WriteLine(JsonSerializer.Serialize(diagnosticCog));
 
             await PetStore();
         }

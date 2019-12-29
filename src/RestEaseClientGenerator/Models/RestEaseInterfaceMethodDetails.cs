@@ -11,5 +11,9 @@ namespace RestEaseClientGenerator.Models
         public string RestEaseAttribute { get; set; }
 
         public RestEaseInterfaceMethod RestEaseMethod { get; set; }
+
+        public RestEaseInterfaceMethodDetails MultipartFormDataMethodDetails { get; set; }
+
+        public ICollection<RestEaseParameter> MultipartFormDataMethodParameters { get; set; }
     }
 }

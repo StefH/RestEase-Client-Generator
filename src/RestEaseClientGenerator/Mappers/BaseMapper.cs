@@ -36,7 +36,7 @@ namespace RestEaseClientGenerator.Mappers
             }
         }
 
-        protected string DateTime => Settings.UseDateTimeOffset ? "DateTimeOffset" : "DateTime";
+        private string DateTime => Settings.UseDateTimeOffset ? "DateTimeOffset" : "DateTime";
 
         protected object MapSchema(OpenApiSchema schema, string name, bool isNullable, bool pascalCase = true)
         {
@@ -129,6 +129,16 @@ namespace RestEaseClientGenerator.Mappers
                     }
 
                     return list;
+
+                case SchemaType.File:
+                    switch (Settings.MultipartFormDataFileType)
+                    {
+                        case MultipartFormDataFileType.Stream:
+                            return $"System.IO.Stream{nameCamelCase}";
+
+                        default:
+                            return $"byte[]{nameCamelCase}";
+                    }
 
                 default:
                     return null;

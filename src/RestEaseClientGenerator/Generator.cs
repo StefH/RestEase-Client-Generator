@@ -26,48 +26,145 @@ namespace RestEaseClientGenerator
             var reader = new OpenApiStreamReader();
             var openApiDocument = reader.Read(stream, out diagnostic);
 
-            var files = new List<GeneratedFile>();
-
             var @interface = new InterfaceMapper(settings).Map(openApiDocument.Paths);
-            if (settings.SingleFile)
-            {
-                var singleFileBuilder = new StringBuilder(BuildInterface(@interface, settings));
-                singleFileBuilder.AppendLine();
-                var models = new ModelsMapper(settings).Map(openApiDocument.Components.Schemas);
-                foreach (var modelCode in models.Select(m => BuildModel(m, settings)))
-                {
-                    singleFileBuilder.AppendLine(modelCode);
-                }
 
-                files.Add(new GeneratedFile
+            var files = new List<GeneratedFile>
+            {
+                new GeneratedFile
                 {
-                    Path = string.Empty,
-                    Name = $"{settings.ApiName}.cs",
-                    Content = singleFileBuilder.ToString()
-                });
-            }
-            else
+                    Path = "Api", Name = $"{@interface.Name}.cs", Content = BuildInterface(@interface, settings)
+                }
+            };
+
+            var extensions = BuildExtensions(@interface, @interface.Name, settings);
+            if (extensions != null)
             {
                 files.Add(new GeneratedFile
                 {
                     Path = "Api",
-                    Name = $"{@interface.Name}.cs",
-                    Content = BuildInterface(@interface, settings)
+                    Name = $"{new string(@interface.Name.Skip(1).ToArray())}Extensions.cs",
+                    Content = extensions
                 });
+            }
 
-                var models = new ModelsMapper(settings).Map(openApiDocument.Components.Schemas);
-                files.AddRange(models.Select(model => new GeneratedFile
+            var models = new ModelsMapper(settings).Map(openApiDocument.Components.Schemas);
+            files.AddRange(models.Select(model => new GeneratedFile
+            {
+                Path = "Models",
+                Name = $"{model.ClassName}.cs",
+                Content = BuildModel(model, settings)
+            }));
+
+            if (settings.SingleFile)
+            {
+                return new[] { new GeneratedFile
                 {
-                    Path = "Models",
-                    Name = $"{model.ClassName}.cs",
-                    Content = BuildModel(model, settings)
-                }));
+                    Path = string.Empty,
+                    Name = $"{@interface.Name}.cs",
+                    Content = string.Join("\r\n", files.Select(f => f.Content))
+                }};
             }
 
             return files;
         }
 
         #region Builders
+        private static string BuildExtensions(RestEaseInterface api, string apiName, GeneratorSettings settings)
+        {
+            var methods = api.Methods
+                .Where(m => m.MultipartFormDataMethodDetails != null)
+                .ToList();
+
+            if (!methods.Any())
+            {
+                return null;
+            }
+
+            var builder = new StringBuilder();
+            if (!settings.SingleFile)
+            {
+                builder.AppendLine("using System;");
+                builder.AppendLine("using System.Collections.Generic;");
+                builder.AppendLine("using System.Net.Http;");
+                builder.AppendLine("using System.Threading.Tasks;");
+                builder.AppendLine("using RestEase;");
+                builder.AppendLine($"using {api.Namespace}.Models;");
+            }
+
+            builder.AppendLine();
+            builder.AppendLine($"namespace {api.Namespace}.Api");
+            builder.AppendLine("{");
+            builder.AppendLine($"    public static class {new string(apiName.Skip(1).ToArray())}Extensions");
+            builder.AppendLine("    {");
+
+            foreach (var method in methods)
+            {
+                string asyncPostfix = settings.AppendAsync ? "Async" : string.Empty;
+
+                builder.AppendLine("        /// <summary>");
+                builder.AppendLine($"        /// {method.MultipartFormDataMethodDetails.Summary}");
+                builder.AppendLine("        /// </summary>");
+                foreach (var p in method.MultipartFormDataMethodDetails.SummaryParameters)
+                {
+                    builder.AppendLine($"        /// {p}");
+                }
+                builder.AppendLine($"        public static {method.MultipartFormDataMethodDetails.RestEaseMethod.ReturnType} {method.MultipartFormDataMethodDetails.RestEaseMethod.Name}{asyncPostfix}({method.MultipartFormDataMethodDetails.RestEaseMethod.ParametersAsString})");
+                builder.AppendLine("        {");
+                builder.AppendLine("            var content = new MultipartFormDataContent();");
+                builder.AppendLine();
+
+                var formUrlEncodedContentList = new List<string>();
+                foreach (var usedParameter in method.MultipartFormDataMethodParameters)
+                {
+                    switch (usedParameter.SchemaType)
+                    {
+                        case SchemaType.File:
+                            switch (settings.MultipartFormDataFileType)
+                            {
+                                case MultipartFormDataFileType.Stream:
+                                    builder.AppendLine($"            var {usedParameter.Identifier}Content = new StreamContent({usedParameter.Identifier});");
+                                    break;
+
+                                default:
+                                    builder.AppendLine($"            var {usedParameter.Identifier}Content = new ByteArrayContent({usedParameter.Identifier});");
+                                    break;
+                            }
+                            builder.AppendLine($"            content.Add({usedParameter.Identifier}Content);");
+                            builder.AppendLine();
+                            break;
+
+                        default:
+                            formUrlEncodedContentList.Add(usedParameter.Identifier);
+                            break;
+                    }
+                }
+
+                if (formUrlEncodedContentList.Any())
+                {
+                    builder.AppendLine("            var formUrlEncodedContent = new FormUrlEncodedContent(new[] {");
+                    foreach (var formUrlEncodedContent in formUrlEncodedContentList)
+                    {
+                        builder.AppendLine($"                new KeyValuePair<string, string>(\"{formUrlEncodedContent}\", {formUrlEncodedContent}.ToString())");
+                    }
+                    builder.AppendLine("            });");
+                    builder.AppendLine();
+                    builder.AppendLine("            content.Add(formUrlEncodedContent);");
+                }
+
+                builder.AppendLine($"            return api.{method.MultipartFormDataMethodDetails.RestEaseMethod.Name}{asyncPostfix}({string.Join(", ", method.RestEaseMethod.Parameters.Select(p => p.Identifier))});");
+                builder.AppendLine("        }");
+
+                if (method != methods.Last())
+                {
+                    builder.AppendLine();
+                }
+            }
+            builder.AppendLine("    }");
+            builder.AppendLine("}");
+
+            return builder.ToString();
+        }
+
         private static string BuildInterface(RestEaseInterface api, GeneratorSettings settings)
         {
             var builder = new StringBuilder();
@@ -107,7 +204,7 @@ namespace RestEaseClientGenerator
                     builder.AppendLine($"        /// {p}");
                 }
                 builder.AppendLine($"        {method.RestEaseAttribute}");
-                builder.AppendLine($"        {method.RestEaseMethod.ReturnType} {method.RestEaseMethod.Name}{asyncPostfix}({method.RestEaseMethod.Parameters});");
+                builder.AppendLine($"        {method.RestEaseMethod.ReturnType} {method.RestEaseMethod.Name}{asyncPostfix}({method.RestEaseMethod.ParametersAsString});");
 
                 if (method != api.Methods.Last())
                 {

@@ -63,7 +63,7 @@ namespace RestEaseClientGeneratorConsoleApp.PetStore.Api
         /// uploads an image
         /// </summary>
         /// <param name="petId">ID of pet to update</param>
-        /// <param name="content">Add an extension method to support the exact parameters. See https://github.com/canton7/RestEase#wrapping-other-methods for more info.</param>
+        /// <param name="content">An extension method is generated to support the exact parameters.</param>
         [Post("/pet/{petId}/uploadImage")]
         Task<ApiResponse> UploadFileAsync([Path] long petId, HttpContent content);
 
