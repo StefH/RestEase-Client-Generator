@@ -95,7 +95,7 @@ namespace RestEaseClientGeneratorConsoleApp.PetStoreJson.Models
 ### General
 | Name | Description |
 | - | - |
-| ArrayType | Array type to use. The default is Array '[]'.
+| Array Type | Array type to use. The default is Array 'T[]'.
 | Fail on OpenApi Errors | Don't generate the file if errors are detected when parsing the specification file. The default value is 'false'.
 | Use DateTimeOffset | Use DateTimeOffset instead of DateTime. The default value is 'false'.
 
@@ -105,6 +105,8 @@ namespace RestEaseClientGeneratorConsoleApp.PetStoreJson.Models
 | Append Async | Append Async postfix to all methods. The default value is 'true'.
 | Add Authorization header | Add an Authorization header to the generated interface. The default value is 'false'.
 | Method ReturnType | The ReturnType to use for the methods. The default value is 'Type'. For more details see https://github.com/canton7/RestEase#return-types.
+| MultipartFormData FileType | The MultipartFormData FileType to use. The default value is 'byte[]'.
+| Generate MultipartFormData Extension methods | Generate Extension methods for MultipartFormData methods. The default value is 'true'.
 
 ### Screenshot
 ![Settings](https://github.com/StefH/RestEase-Client-Generator/raw/master/resources/settings.png)

@@ -1,6 +1,7 @@
 ﻿using Microsoft.OpenApi.Readers;
 using System.Collections.Generic;
 using System.IO;
+using RestEaseClientGenerator.Models;
 using RestEaseClientGenerator.Settings;
 
 namespace RestEaseClientGenerator

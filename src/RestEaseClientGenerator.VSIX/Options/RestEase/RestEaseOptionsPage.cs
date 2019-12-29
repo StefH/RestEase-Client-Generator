@@ -13,7 +13,7 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
 
         #region General
         [Category(General)]
-        [DisplayName("ArrayType")]
+        [DisplayName("Array Type")]
         [Description("The Array type to use. The default is Array 'T[]'.")]
         public ArrayType ArrayType { get; set; }
 

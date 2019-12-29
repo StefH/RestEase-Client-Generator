@@ -1,4 +1,4 @@
-﻿namespace RestEaseClientGenerator
+﻿namespace RestEaseClientGenerator.Models
 {
     public class GeneratedFile
     {
