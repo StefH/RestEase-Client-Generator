@@ -22,7 +22,17 @@ namespace RestEaseClientGenerator.Mappers
             string name = CSharpUtils.CreateValidIdentifier(Settings.ApiName, CasingType.Pascal);
             string interfaceName = $"I{name}Api";
 
-            var methods = paths.Select(p => MapPath(interfaceName, p.Key, p.Value)).SelectMany(x => x).ToList();
+            var @interface = new RestEaseInterface
+            {
+                Name = interfaceName,
+                Namespace = Settings.Namespace,
+            };
+
+            foreach (var path in paths)
+            {
+                MapPath(@interface, path.Key, path.Value);
+            }
+            //var methods = paths.Select(p => MapPath(interfaceName, p.Key, p.Value)).SelectMany(x => x).ToList();
 
             //var counts = methods
             //    .GroupBy(method => method.RestEaseMethod.Name + method.RestEaseMethod.Parameters)
@@ -40,20 +50,18 @@ namespace RestEaseClientGenerator.Mappers
             //    }
             //}
 
-            return new RestEaseInterface
-            {
-                Name = interfaceName,
-                Namespace = Settings.Namespace,
-                Methods = methods
-            };
+            return @interface;
         }
 
-        private IEnumerable<RestEaseInterfaceMethodDetails> MapPath(string interfaceName, string path, OpenApiPathItem pathItem)
+        private void MapPath(RestEaseInterface @interface, string path, OpenApiPathItem pathItem)
         {
-            return pathItem.Operations.Select(o => MapOperationToMappingModel(interfaceName, path, o.Key.ToString(), o.Value));
+            foreach (var restEaseInterfaceMethodDetails in pathItem.Operations.Select(o => MapOperationToMappingModel(@interface, path, o.Key.ToString(), o.Value)))
+            {
+                @interface.Methods.Add(restEaseInterfaceMethodDetails);
+            }
         }
 
-        private RestEaseInterfaceMethodDetails MapOperationToMappingModel(string interfaceName, string path, string httpMethod, OpenApiOperation operation)
+        private RestEaseInterfaceMethodDetails MapOperationToMappingModel(RestEaseInterface @interface, string path, string httpMethod, OpenApiOperation operation)
         {
             string methodRestEaseForAnnotation = httpMethod.ToPascalCase();
             string methodRestEaseMethod = !string.IsNullOrEmpty(operation.OperationId) ?
@@ -161,9 +169,37 @@ namespace RestEaseClientGenerator.Mappers
                         break;
 
                     case SchemaType.Object:
-                        returnType = responseMediaType.Schema.Reference != null ?
-                            responseMediaType.Schema.Reference.Id :
-                            MapSchema(responseMediaType.Schema.AdditionalProperties, "", responseMediaType.Schema.AdditionalProperties.Nullable, false);
+                        if (responseMediaType.Schema.Reference != null)
+                        {
+                            // Existing defined object
+                            returnType = responseMediaType.Schema.Reference.Id;
+                        }
+                        else if (responseMediaType.Schema.AdditionalProperties != null)
+                        {
+                            // Use AdditionalProperties
+                            returnType = MapSchema(responseMediaType.Schema.AdditionalProperties, null, responseMediaType.Schema.AdditionalProperties.Nullable, false);
+                        }
+                        else
+                        {
+                            // Object is defined `inline`, create a new Model and use that one.
+                            string className = !string.IsNullOrEmpty(responseMediaType.Schema.Title)
+                                ? CSharpUtils.CreateValidIdentifier(responseMediaType.Schema.Title, CasingType.Pascal)
+                                : $"{methodRestEaseMethod.ToPascalCase()}Result";
+
+                            var existingModel = @interface.InlineModels.FirstOrDefault(m => m.ClassName == className);
+                            if (existingModel == null)
+                            {
+                                var newModel = new RestEaseModel
+                                {
+                                    Namespace = Settings.Namespace,
+                                    ClassName = className,
+                                    Properties = MapSchema(responseMediaType.Schema, null, false) as ICollection<string>
+                                };
+                                @interface.InlineModels.Add(newModel);
+                            }
+
+                            returnType = className;
+                        }
                         break;
                 }
             }
@@ -189,8 +225,8 @@ namespace RestEaseClientGenerator.Mappers
                     new RestEaseParameter
                     {
                         Identifier = "api",
-                        IdentifierWithType = $"this {interfaceName} api",
-                        IdentifierWithRestEase = $"this {interfaceName} api",
+                        IdentifierWithType = $"this {@interface.Name} api",
+                        IdentifierWithRestEase = $"this {@interface.Name} api",
                         Summary = "The Api"
                     }
                 };

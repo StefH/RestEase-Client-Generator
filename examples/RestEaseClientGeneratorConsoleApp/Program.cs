@@ -57,6 +57,13 @@ namespace RestEaseClientGeneratorConsoleApp
             }
             Console.WriteLine(JsonSerializer.Serialize(diagnosticCog));
 
+            OpenApiDiagnostic diagnosticSpeech;
+            foreach (var file in generator.FromStream(File.OpenRead("SpeechServices.json"), "RestEaseClientGeneratorConsoleApp.SpeechServices", "SpeechServices", out diagnosticSpeech))
+            {
+                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/SpeechServices/{file.Path}/{file.Name}", file.Content);
+            }
+            // Console.WriteLine(JsonSerializer.Serialize(diagnosticSpeech));
+
             await PetStore();
         }
 

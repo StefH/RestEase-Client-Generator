@@ -15,6 +15,10 @@
     <Folder Include="Cog\Models\" />
     <Folder Include="Infura\Api\" />
     <Folder Include="Infura\Models\" />
+    <Folder Include="SpeechServices\Api\" />
+    <Folder Include="SpeechServices\Extensions\" />
+    <Folder Include="SpeechServices\Models\" />
+    <Folder Include="Speech\" />
     <Folder Include="PetStore\Api\" />
     <Folder Include="PetStore\Models\" />
   </ItemGroup>
@@ -44,6 +48,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="petstore.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SpeechServices.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

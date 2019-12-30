@@ -30,15 +30,25 @@ namespace RestEaseClientGenerator
 
             var files = new List<GeneratedFile>
             {
+                // Add Interface
                 new GeneratedFile
                 {
                     Path = "Api", Name = $"{@interface.Name}.cs", Content = BuildInterface(@interface, settings)
                 }
             };
 
+            // Add Inline Models
+            files.AddRange(@interface.InlineModels.Select(model => new GeneratedFile
+            {
+                Path = "Models",
+                Name = $"{model.ClassName}.cs",
+                Content = BuildModel(model, settings)
+            }));
+
             var extensions = BuildExtensions(@interface, @interface.Name, settings);
             if (extensions != null)
             {
+                // Add ApiExtension
                 files.Add(new GeneratedFile
                 {
                     Path = "Api",
@@ -47,6 +57,7 @@ namespace RestEaseClientGenerator
                 });
             }
 
+            // Add Models
             var models = new ModelsMapper(settings).Map(openApiDocument.Components.Schemas);
             files.AddRange(models.Select(model => new GeneratedFile
             {
@@ -144,7 +155,8 @@ namespace RestEaseClientGenerator
                     builder.AppendLine("            var formUrlEncodedContent = new FormUrlEncodedContent(new[] {");
                     foreach (var formUrlEncodedContent in formUrlEncodedContentList)
                     {
-                        builder.AppendLine($"                new KeyValuePair<string, string>(\"{formUrlEncodedContent}\", {formUrlEncodedContent}.ToString())");
+                        string comma = formUrlEncodedContent != formUrlEncodedContentList.Last() ? "," : string.Empty;
+                        builder.AppendLine($"                new KeyValuePair<string, string>(\"{formUrlEncodedContent}\", {formUrlEncodedContent}.ToString()){comma}");
                     }
                     builder.AppendLine("            });");
                     builder.AppendLine();

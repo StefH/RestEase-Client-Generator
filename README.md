@@ -80,6 +80,12 @@ namespace RestEaseClientGeneratorConsoleApp.PetStoreJson.Models
 ```
 ([Full example](https://github.com/StefH/RestEase-Client-Generator/blob/master/examples/RestEaseClientGeneratorConsoleApp/PetStoreJson/PetStoreJson.cs)).
 
+### Create a Client and call methods
+``` c#
+var petStoreApi = RestClient.For<IPetStoreApi>("https://petstore.swagger.io/v2");
+
+var findPetsByTags = await petStoreApi.FindPetsByTagsAsync(new[] { "cat" });
+```
 
 ## Screenshots
 

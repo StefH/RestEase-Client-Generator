@@ -8,6 +8,8 @@ namespace RestEaseClientGenerator.Models
 
         public string Namespace { get; set; }
 
-        public ICollection<RestEaseInterfaceMethodDetails> Methods { get; set; }
+        public ICollection<RestEaseInterfaceMethodDetails> Methods { get; set; } = new List<RestEaseInterfaceMethodDetails>();
+
+        public ICollection<RestEaseModel> InlineModels { get; set; } = new List<RestEaseModel>();
     }
 }

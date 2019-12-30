@@ -45,7 +45,7 @@ namespace RestEaseClientGenerator.Mappers
                 return null;
             }
 
-            string nameCamelCase = string.IsNullOrEmpty(name) ? "" : $" {(pascalCase ? name.ToPascalCase() : name)}";
+            string nameCamelCase = string.IsNullOrEmpty(name) ? string.Empty : $" {(pascalCase ? name.ToPascalCase() : name)}";
             string nullable = isNullable ? "?" : string.Empty;
 
             switch (schema.GetSchemaType())
