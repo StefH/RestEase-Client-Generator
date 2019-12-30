@@ -16,6 +16,8 @@ namespace RestEaseClientGenerator.Models
 
         public string Summary { get; set; }
 
+        public bool Required { get; set; }
+
         public bool IsSpecial { get; set; }
     }
 }

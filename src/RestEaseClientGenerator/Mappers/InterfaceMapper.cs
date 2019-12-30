@@ -76,6 +76,7 @@ namespace RestEaseClientGenerator.Mappers
             var queryParameterList = operation.Parameters
                 .Where(p => p.In == ParameterLocation.Query && p.Schema.GetSchemaType() != SchemaType.Object)
                 .Select(p => BuildValidParameter(p.Name, p.Schema, p.Required, p.Description, "Query"))
+                .OrderByDescending(p => p.Required)
                 .ToList();
 
             var extensionMethodParameterList = new List<RestEaseParameter>();
@@ -316,6 +317,7 @@ namespace RestEaseClientGenerator.Mappers
 
                 return new RestEaseParameter
                 {
+                    Required = required,
                     Identifier = validIdentifier,
                     SchemaType = schema.GetSchemaType(),
                     SchemaFormat = schema.GetSchemaFormat(),
@@ -330,6 +332,7 @@ namespace RestEaseClientGenerator.Mappers
 
             return new RestEaseParameter
             {
+                Required = required,
                 Identifier = identifier,
                 SchemaType = schema.GetSchemaType(),
                 SchemaFormat = schema.GetSchemaFormat(),

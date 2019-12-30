@@ -6035,6 +6035,14 @@
             "required": false,
             "type": "integer",
             "format": "int32"
+          },
+          {
+            "name": "xyz",
+            "in": "query",
+            "description": "Dummy",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
           }
         ],
         "responses": {
