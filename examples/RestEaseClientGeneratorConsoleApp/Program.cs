@@ -1,15 +1,14 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Text.Json;
-using System.Threading.Tasks;
-using Microsoft.OpenApi.Readers;
+﻿using Microsoft.OpenApi.Readers;
 using RestEase;
 using RestEaseClientGenerator;
 using RestEaseClientGenerator.Settings;
 using RestEaseClientGenerator.Types;
 using RestEaseClientGeneratorConsoleApp.Examples.PetStore.Api;
+using System;
+using System.IO;
+using System.Linq;
+using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace RestEaseClientGeneratorConsoleApp
 {

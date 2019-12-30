@@ -12,7 +12,8 @@
     <!--<Compile Remove="Cog\**\*.cs" />-->
     <Folder Include="Examples\FormRecognizer\Api\" />
     <Folder Include="Examples\FormRecognizer\Models\" />
-    <Folder Include="Examples\SpeechServices\Extensions\" />
+    <Folder Include="Examples\SpeechServices\Api\" />
+    <Folder Include="Examples\SpeechServices\Models\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -26,7 +27,6 @@
   <ItemGroup>
     <None Update="Examples\cognitive-services-personalizer.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Generator>RestEaseCodeGenerator</Generator>
     </None>
     <None Update="Examples\ComputerVision.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -36,13 +36,8 @@
     </None>
     <None Update="Examples\infura.yaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Generator>RestEaseCodeGenerator</Generator>
-      <LastGenOutput>infura.cs</LastGenOutput>
-      <CustomToolNamespace>InfuraTest</CustomToolNamespace>
     </None>
     <None Update="Examples\PetStore.json">
-      <!--<Generator>OpenApiCodeGenerator</Generator>
-      <LastGenOutput>PetStore.cs</LastGenOutput>-->
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Examples\petstore.yaml">
