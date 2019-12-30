@@ -53,6 +53,11 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         [DisplayName("Generate MultipartFormData Extension methods")]
         [Description("Generate Extension methods for MultipartFormData methods. The default value is 'true'.")]
         public bool GenerateMultipartFormDataExtensionMethods { get; set; } = true;
+
+        [Category(Interface)]
+        [DisplayName("Generate FormUrlEncoded Extension methods")]
+        [Description("Generate Extension methods for FormUrlEncoded methods. The default value is 'true'.")]
+        public bool GenerateFormUrlEncodedExtensionMethods { get; set; } = true;
         #endregion
     }
 }

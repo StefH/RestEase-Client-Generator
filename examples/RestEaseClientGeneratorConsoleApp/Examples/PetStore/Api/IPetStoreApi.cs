@@ -48,9 +48,9 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStore.Api
         /// Updates a pet in the store with form data
         /// </summary>
         /// <param name="petId">ID of pet that needs to be updated</param>
-        /// <param name="formData"></param>
+        /// <param name="form">An extension method is generated to support the exact parameters.</param>
         [Post("/pet/{petId}")]
-        Task UpdatePetWithFormAsync([Path] long petId, [Body(BodySerializationMethod.UrlEncoded)] IDictionary<string, object> formData);
+        Task UpdatePetWithFormAsync([Path] long petId, [Body(BodySerializationMethod.UrlEncoded)] IDictionary<string, object> form);
 
         /// <summary>
         /// Deletes a pet

@@ -19,5 +19,7 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         bool AppendAsync { get; set; }
 
         bool GenerateMultipartFormDataExtensionMethods { get; set; }
+
+        bool GenerateFormUrlEncodedExtensionMethods { get; set; }
     }
 }

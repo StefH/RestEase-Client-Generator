@@ -9,13 +9,9 @@ namespace RestEaseClientGenerator.Settings
         #region General
         public ArrayType ArrayType { get; set; }
 
-        public MultipartFormDataFileType MultipartFormDataFileType { get; set; }
-
         public string Namespace { get; set; }
 
         public bool UseDateTimeOffset { get; set; }
-
-        public bool GenerateMultipartFormDataExtensionMethods { get; set; } = true;
         #endregion
 
         #region Interface
@@ -26,6 +22,14 @@ namespace RestEaseClientGenerator.Settings
         public MethodReturnType MethodReturnType { get; set; }
 
         public bool AppendAsync { get; set; } = true;
+
+        public bool GenerateMultipartFormDataExtensionMethods { get; set; } = true;
+
+        public MultipartFormDataFileType MultipartFormDataFileType { get; set; }
+
+        public bool GenerateFormUrlEncodedExtensionMethods { get; set; } = true;
+
+        public SecurityDefinitionType SecurityDefinitionType { get; set; } = SecurityDefinitionType.Header;
         #endregion
     }
 }

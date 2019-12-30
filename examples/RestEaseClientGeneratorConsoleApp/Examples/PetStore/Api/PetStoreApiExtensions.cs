@@ -10,6 +10,24 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStore.Api
     public static class PetStoreApiExtensions
     {
         /// <summary>
+        /// Updates a pet in the store with form data
+        /// </summary>
+        /// <param name="api">The Api</param>
+        /// <param name="petId">ID of pet that needs to be updated</param>
+        /// <param name="name">Updated name of the pet</param>
+        /// <param name="status">Updated status of the pet</param>
+        public static Task UpdatePetWithFormAsync(this IPetStoreApi api, long petId, string name, string status)
+        {
+            var form = new Dictionary<string, object>
+            {
+                { "name", name },
+                { "status", status }
+            };
+
+            return api.UpdatePetWithFormAsync(petId, form);
+        }
+
+        /// <summary>
         /// uploads an image
         /// </summary>
         /// <param name="api">The Api</param>

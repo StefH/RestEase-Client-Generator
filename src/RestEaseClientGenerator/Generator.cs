@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using Microsoft.OpenApi.Readers;
+using RestEaseClientGenerator.Constants;
 using RestEaseClientGenerator.Mappers;
 using RestEaseClientGenerator.Models;
 using RestEaseClientGenerator.Settings;
@@ -26,7 +27,7 @@ namespace RestEaseClientGenerator
             var reader = new OpenApiStreamReader();
             var openApiDocument = reader.Read(stream, out diagnostic);
 
-            var @interface = new InterfaceMapper(settings).Map(openApiDocument.Paths);
+            var @interface = new InterfaceMapper(settings).Map(openApiDocument);
 
             var files = new List<GeneratedFile>
             {
@@ -83,7 +84,7 @@ namespace RestEaseClientGenerator
         private static string BuildExtensions(RestEaseInterface api, string apiName, GeneratorSettings settings)
         {
             var methods = api.Methods
-                .Where(m => m.MultipartFormDataMethodDetails != null)
+                .Where(m => m.ExtensionMethodDetails != null)
                 .ToList();
 
             if (!methods.Any())
@@ -113,57 +114,27 @@ namespace RestEaseClientGenerator
                 string asyncPostfix = settings.AppendAsync ? "Async" : string.Empty;
 
                 builder.AppendLine("        /// <summary>");
-                builder.AppendLine($"        /// {method.MultipartFormDataMethodDetails.Summary}");
+                builder.AppendLine($"        /// {method.ExtensionMethodDetails.Summary}");
                 builder.AppendLine("        /// </summary>");
-                foreach (var p in method.MultipartFormDataMethodDetails.SummaryParameters)
+                foreach (var p in method.ExtensionMethodDetails.SummaryParameters)
                 {
                     builder.AppendLine($"        /// {p}");
                 }
-                builder.AppendLine($"        public static {method.MultipartFormDataMethodDetails.RestEaseMethod.ReturnType} {method.MultipartFormDataMethodDetails.RestEaseMethod.Name}{asyncPostfix}({method.MultipartFormDataMethodDetails.RestEaseMethod.ParametersAsString})");
+                builder.AppendLine($"        public static {method.ExtensionMethodDetails.RestEaseMethod.ReturnType} {method.ExtensionMethodDetails.RestEaseMethod.Name}{asyncPostfix}({method.ExtensionMethodDetails.RestEaseMethod.ParametersAsString})");
                 builder.AppendLine("        {");
-                builder.AppendLine("            var content = new MultipartFormDataContent();");
-                builder.AppendLine();
 
-                var formUrlEncodedContentList = new List<string>();
-                foreach (var usedParameter in method.MultipartFormDataMethodParameters)
+                switch (method.ExtensionMethodContentType)
                 {
-                    switch (usedParameter.SchemaType)
-                    {
-                        case SchemaType.File:
-                            switch (settings.MultipartFormDataFileType)
-                            {
-                                case MultipartFormDataFileType.Stream:
-                                    builder.AppendLine($"            var {usedParameter.Identifier}Content = new StreamContent({usedParameter.Identifier});");
-                                    break;
+                    case SupportedContentTypes.MultipartFormData:
+                        BuildMultipartFormDataExtensionMethodBody(settings, builder, method);
+                        break;
 
-                                default:
-                                    builder.AppendLine($"            var {usedParameter.Identifier}Content = new ByteArrayContent({usedParameter.Identifier});");
-                                    break;
-                            }
-                            builder.AppendLine($"            content.Add({usedParameter.Identifier}Content);");
-                            builder.AppendLine();
-                            break;
-
-                        default:
-                            formUrlEncodedContentList.Add(usedParameter.Identifier);
-                            break;
-                    }
+                    case SupportedContentTypes.ApplicationFormUrlEncoded:
+                        BuildApplicationFormUrlEncodedExtensionMethodBody(settings, builder, method);
+                        break;
                 }
 
-                if (formUrlEncodedContentList.Any())
-                {
-                    builder.AppendLine("            var formUrlEncodedContent = new FormUrlEncodedContent(new[] {");
-                    foreach (var formUrlEncodedContent in formUrlEncodedContentList)
-                    {
-                        string comma = formUrlEncodedContent != formUrlEncodedContentList.Last() ? "," : string.Empty;
-                        builder.AppendLine($"                new KeyValuePair<string, string>(\"{formUrlEncodedContent}\", {formUrlEncodedContent}.ToString()){comma}");
-                    }
-                    builder.AppendLine("            });");
-                    builder.AppendLine();
-                    builder.AppendLine("            content.Add(formUrlEncodedContent);");
-                }
-
-                builder.AppendLine($"            return api.{method.MultipartFormDataMethodDetails.RestEaseMethod.Name}{asyncPostfix}({string.Join(", ", method.RestEaseMethod.Parameters.Select(p => p.Identifier))});");
+                builder.AppendLine($"            return api.{method.ExtensionMethodDetails.RestEaseMethod.Name}{asyncPostfix}({string.Join(", ", method.RestEaseMethod.Parameters.Select(p => p.Identifier))});");
                 builder.AppendLine("        }");
 
                 if (method != methods.Last())
@@ -175,6 +146,69 @@ namespace RestEaseClientGenerator
             builder.AppendLine("}");
 
             return builder.ToString();
+        }
+
+        private static void BuildApplicationFormUrlEncodedExtensionMethodBody(GeneratorSettings settings, StringBuilder builder, RestEaseInterfaceMethodDetails method)
+        {
+            builder.AppendLine("            var form = new Dictionary<string, object>");
+            builder.AppendLine("            {");
+            foreach (var parameter in method.ExtensionMethodParameters)
+            {
+                string comma = parameter != method.ExtensionMethodParameters.Last() ? "," : string.Empty;
+                builder.AppendLine($"                {{ \"{parameter.Identifier}\", {parameter.Identifier} }}{comma}");
+            }
+            builder.AppendLine("            };");
+            builder.AppendLine();
+        }
+
+        private static void BuildMultipartFormDataExtensionMethodBody(GeneratorSettings settings, StringBuilder builder, RestEaseInterfaceMethodDetails method)
+        {
+            builder.AppendLine("            var content = new MultipartFormDataContent();");
+            builder.AppendLine();
+
+            var formUrlEncodedContentList = new List<string>();
+            foreach (var parameter in method.ExtensionMethodParameters)
+            {
+                switch (parameter.SchemaType)
+                {
+                    case SchemaType.File:
+                        switch (settings.MultipartFormDataFileType)
+                        {
+                            case MultipartFormDataFileType.Stream:
+                                builder.AppendLine(
+                                    $"            var {parameter.Identifier}Content = new StreamContent({parameter.Identifier});");
+                                break;
+
+                            default:
+                                builder.AppendLine(
+                                    $"            var {parameter.Identifier}Content = new ByteArrayContent({parameter.Identifier});");
+                                break;
+                        }
+
+                        builder.AppendLine($"            content.Add({parameter.Identifier}Content);");
+                        builder.AppendLine();
+                        break;
+
+                    default:
+                        formUrlEncodedContentList.Add(parameter.Identifier);
+                        break;
+                }
+            }
+
+            if (formUrlEncodedContentList.Any())
+            {
+                builder.AppendLine("            var formUrlEncodedContent = new FormUrlEncodedContent(new[] {");
+                foreach (var formUrlEncodedContent in formUrlEncodedContentList)
+                {
+                    string comma = formUrlEncodedContent != formUrlEncodedContentList.Last() ? "," : string.Empty;
+                    builder.AppendLine(
+                        $"                new KeyValuePair<string, string>(\"{formUrlEncodedContent}\", {formUrlEncodedContent}.ToString()){comma}");
+                }
+
+                builder.AppendLine("            });");
+                builder.AppendLine();
+                builder.AppendLine("            content.Add(formUrlEncodedContent);");
+            }
         }
 
         private static string BuildInterface(RestEaseInterface api, GeneratorSettings settings)

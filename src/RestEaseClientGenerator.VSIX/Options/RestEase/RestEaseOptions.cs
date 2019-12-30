@@ -22,6 +22,7 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
                 MethodReturnType = options.MethodReturnType;
                 AppendAsync = options.AppendAsync;
                 GenerateMultipartFormDataExtensionMethods = options.GenerateMultipartFormDataExtensionMethods;
+                GenerateFormUrlEncodedExtensionMethods = options.GenerateFormUrlEncodedExtensionMethods;
                 MultipartFormDataFileType = options.MultipartFormDataFileType;
             }
             catch (Exception e)
@@ -33,6 +34,7 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
                 MethodReturnType = MethodReturnType.Type;
                 AppendAsync = true;
                 GenerateMultipartFormDataExtensionMethods = true;
+                GenerateFormUrlEncodedExtensionMethods = true;
                 MultipartFormDataFileType = MultipartFormDataFileType.ByteArray;
 
                 Trace.WriteLine(e);
@@ -45,6 +47,7 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
                 Trace.WriteLine($"{nameof(MethodReturnType)} = {MethodReturnType}");
                 Trace.WriteLine($"{nameof(AppendAsync)} = {AppendAsync}");
                 Trace.WriteLine($"{nameof(GenerateMultipartFormDataExtensionMethods)} = {GenerateMultipartFormDataExtensionMethods}");
+                Trace.WriteLine($"{nameof(GenerateFormUrlEncodedExtensionMethods)} = {GenerateFormUrlEncodedExtensionMethods}");
                 Trace.WriteLine($"{nameof(MultipartFormDataFileType)} = {MultipartFormDataFileType}");
             }
         }
@@ -64,5 +67,7 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         public bool AppendAsync { get; set; }
 
         public bool GenerateMultipartFormDataExtensionMethods { get; set; }
+
+        public bool GenerateFormUrlEncodedExtensionMethods { get; set; }
     }
 }

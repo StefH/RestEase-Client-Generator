@@ -76,6 +76,7 @@ namespace RestEaseClientGenerator.VSIX.CustomTool
                     UseDateTimeOffset = options.UseDateTimeOffset,
                     MethodReturnType = options.MethodReturnType,
                     AppendAsync = options.AppendAsync,
+                    GenerateFormUrlEncodedExtensionMethods = options.GenerateFormUrlEncodedExtensionMethods,
                     GenerateMultipartFormDataExtensionMethods = options.GenerateMultipartFormDataExtensionMethods,
                     MultipartFormDataFileType = options.MultipartFormDataFileType
                 };
