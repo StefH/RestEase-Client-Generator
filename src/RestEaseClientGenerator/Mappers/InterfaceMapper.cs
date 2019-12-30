@@ -254,9 +254,15 @@ namespace RestEaseClientGenerator.Mappers
 
         private string MapReturnType(object returnType)
         {
-            if (returnType == null)
+            string returnTypeAsString = returnType as string;
+            if (returnTypeAsString == null)
             {
                 return "Task";
+            }
+
+            if (returnTypeAsString == "Models")
+            {
+                returnTypeAsString = "Models.Models";
             }
 
             switch (Settings.MethodReturnType)
@@ -268,13 +274,13 @@ namespace RestEaseClientGenerator.Mappers
                     return "Task<HttpResponseMessage>";
 
                 case MethodReturnType.Response:
-                    return $"Task<Response<{returnType}>>";
+                    return $"Task<Response<{returnTypeAsString}>>";
 
                 case MethodReturnType.Stream:
                     return "Task<Stream>";
 
                 default:
-                    return $"Task<{returnType}>";
+                    return $"Task<{returnTypeAsString}>";
             }
         }
 

@@ -4,9 +4,9 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using RestEase;
-using RestEaseClientGeneratorConsoleApp.PetStoreJson.Models;
+using RestEaseClientGeneratorConsoleApp.Examples.PetStoreJson.Models;
 
-namespace RestEaseClientGeneratorConsoleApp.PetStoreJson.Api
+namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreJson.Api
 {
     public interface IPetStoreJsonApi
     {
@@ -158,7 +158,7 @@ namespace RestEaseClientGeneratorConsoleApp.PetStoreJson.Api
 }
 
 
-namespace RestEaseClientGeneratorConsoleApp.PetStoreJson.Api
+namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreJson.Api
 {
     public static class PetStoreJsonApiExtensions
     {
@@ -186,7 +186,7 @@ namespace RestEaseClientGeneratorConsoleApp.PetStoreJson.Api
     }
 }
 
-namespace RestEaseClientGeneratorConsoleApp.PetStoreJson.Models
+namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreJson.Models
 {
     public class Category
     {
@@ -196,7 +196,7 @@ namespace RestEaseClientGeneratorConsoleApp.PetStoreJson.Models
     }
 }
 
-namespace RestEaseClientGeneratorConsoleApp.PetStoreJson.Models
+namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreJson.Models
 {
     public class Pet
     {
@@ -214,7 +214,7 @@ namespace RestEaseClientGeneratorConsoleApp.PetStoreJson.Models
     }
 }
 
-namespace RestEaseClientGeneratorConsoleApp.PetStoreJson.Models
+namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreJson.Models
 {
     public class Tag
     {
@@ -224,7 +224,7 @@ namespace RestEaseClientGeneratorConsoleApp.PetStoreJson.Models
     }
 }
 
-namespace RestEaseClientGeneratorConsoleApp.PetStoreJson.Models
+namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreJson.Models
 {
     public class ApiResponse
     {
@@ -236,7 +236,7 @@ namespace RestEaseClientGeneratorConsoleApp.PetStoreJson.Models
     }
 }
 
-namespace RestEaseClientGeneratorConsoleApp.PetStoreJson.Models
+namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreJson.Models
 {
     public class Order
     {
@@ -254,7 +254,7 @@ namespace RestEaseClientGeneratorConsoleApp.PetStoreJson.Models
     }
 }
 
-namespace RestEaseClientGeneratorConsoleApp.PetStoreJson.Models
+namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreJson.Models
 {
     public class User
     {

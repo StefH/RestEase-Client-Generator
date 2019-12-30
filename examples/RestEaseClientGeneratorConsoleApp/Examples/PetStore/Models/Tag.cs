@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace RestEaseClientGeneratorConsoleApp.PetStore.Models
+namespace RestEaseClientGeneratorConsoleApp.Examples.PetStore.Models
 {
     public class Tag
     {
