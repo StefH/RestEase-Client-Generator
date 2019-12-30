@@ -64,7 +64,7 @@ namespace RestEaseClientGenerator.Mappers
         private RestEaseInterfaceMethodDetails MapOperationToMappingModel(RestEaseInterface @interface, string path, string httpMethod, OpenApiOperation operation)
         {
             string methodRestEaseForAnnotation = httpMethod.ToPascalCase();
-            string methodRestEaseMethod = !string.IsNullOrEmpty(operation.OperationId) ?
+            string methodRestEaseMethod = !string.IsNullOrEmpty(operation.OperationId) && char.IsLetter(operation.OperationId[0]) ?
                 operation.OperationId.ToPascalCase() :
                 GenerateNameForMethod(path, methodRestEaseForAnnotation);
 

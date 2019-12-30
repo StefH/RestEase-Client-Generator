@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.OpenApi.Readers;
@@ -66,6 +67,11 @@ namespace RestEaseClientGeneratorConsoleApp
             {
                 File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/FormRecognizer/{file.Path}/{file.Name}", file.Content);
             }
+
+            //foreach (var file in generator.FromStream(File.OpenRead("Examples\\ComputerVision.json"), "RestEaseClientGeneratorConsoleApp.Examples.ComputerVision", "ComputerVision", out var diagnosticComputerVision))
+            //{
+            //    File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/ComputerVision/{file.Path}/{file.Name}", file.Content);
+            //}
 
             await PetStore();
         }
