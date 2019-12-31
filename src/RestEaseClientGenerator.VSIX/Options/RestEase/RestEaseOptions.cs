@@ -24,6 +24,9 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
                 GenerateMultipartFormDataExtensionMethods = options.GenerateMultipartFormDataExtensionMethods;
                 GenerateFormUrlEncodedExtensionMethods = options.GenerateFormUrlEncodedExtensionMethods;
                 MultipartFormDataFileType = options.MultipartFormDataFileType;
+                ApiNamespace = options.ApiNamespace;
+                ModelsNamespace = options.ModelsNamespace;
+                ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified = options.ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified;
             }
             catch (Exception e)
             {
@@ -36,6 +39,9 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
                 GenerateMultipartFormDataExtensionMethods = true;
                 GenerateFormUrlEncodedExtensionMethods = true;
                 MultipartFormDataFileType = MultipartFormDataFileType.ByteArray;
+                ApiNamespace = "Api";
+                ModelsNamespace = "Models";
+                ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified = false;
 
                 Trace.WriteLine(e);
                 Trace.WriteLine(Environment.NewLine);
@@ -49,6 +55,9 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
                 Trace.WriteLine($"{nameof(GenerateMultipartFormDataExtensionMethods)} = {GenerateMultipartFormDataExtensionMethods}");
                 Trace.WriteLine($"{nameof(GenerateFormUrlEncodedExtensionMethods)} = {GenerateFormUrlEncodedExtensionMethods}");
                 Trace.WriteLine($"{nameof(MultipartFormDataFileType)} = {MultipartFormDataFileType}");
+                Trace.WriteLine($"{nameof(ApiNamespace)} = {ApiNamespace}");
+                Trace.WriteLine($"{nameof(ModelsNamespace)} = {ModelsNamespace}");
+                Trace.WriteLine($"{nameof(ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified)} = {ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified}");
             }
         }
 
@@ -69,5 +78,11 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         public bool GenerateMultipartFormDataExtensionMethods { get; set; }
 
         public bool GenerateFormUrlEncodedExtensionMethods { get; set; }
+
+        public string ApiNamespace { get; set; }
+
+        public string ModelsNamespace { get; set; }
+
+        public bool ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified { get; set; };
     }
 }

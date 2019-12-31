@@ -12,6 +12,10 @@ namespace RestEaseClientGenerator.Settings
         public string Namespace { get; set; }
 
         public bool UseDateTimeOffset { get; set; }
+
+        public string ApiNamespace { get; set; } = "Api";
+
+        public string ModelsNamespace { get; set; } = "Models";
         #endregion
 
         #region Interface
@@ -28,6 +32,8 @@ namespace RestEaseClientGenerator.Settings
         public MultipartFormDataFileType MultipartFormDataFileType { get; set; }
 
         public bool GenerateFormUrlEncodedExtensionMethods { get; set; } = true;
+
+        public bool ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified { get; set; } = false;
 
         public SecurityDefinitionType SecurityDefinitionType { get; set; } = SecurityDefinitionType.Header;
         #endregion

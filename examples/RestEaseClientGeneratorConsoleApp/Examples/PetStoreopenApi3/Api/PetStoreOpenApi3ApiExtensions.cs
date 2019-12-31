@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using RestEase;
-using RestEaseClientGeneratorConsoleApp.Examples.PetStore.Models;
+using RestEaseClientGeneratorConsoleApp.Examples.PetStoreOpenApi3.Models;
 
-namespace RestEaseClientGeneratorConsoleApp.Examples.PetStore.Api
+namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreOpenApi3.Api
 {
-    public static class PetStoreApiExtensions
+    public static class PetStoreOpenApi3ApiExtensions
     {
         /// <summary>
         /// Updates a pet in the store with form data
@@ -16,7 +16,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStore.Api
         /// <param name="petId">ID of pet that needs to be updated</param>
         /// <param name="name">Updated name of the pet</param>
         /// <param name="status">Updated status of the pet</param>
-        public static Task<object> UpdatePetWithFormAsync(this IPetStoreApi api, long petId, string name, string status)
+        public static Task UpdatePetWithFormAsync(this IPetStoreOpenApi3Api api, long petId, string name, string status)
         {
             var form = new Dictionary<string, object>
             {
@@ -34,15 +34,13 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStore.Api
         /// <param name="petId">ID of pet to update</param>
         /// <param name="additionalMetadata">Additional data to pass to server</param>
         /// <param name="file">file to upload</param>
-        public static Task<ApiResponse> UploadFileAsync(this IPetStoreApi api, long petId, string additionalMetadata, byte[] file)
+        public static Task<ApiResponse> UploadFileAsync(this IPetStoreOpenApi3Api api, long petId, string additionalMetadata, object file)
         {
             var content = new MultipartFormDataContent();
 
-            var fileContent = new ByteArrayContent(file);
-            content.Add(fileContent);
-
             var formUrlEncodedContent = new FormUrlEncodedContent(new[] {
-                new KeyValuePair<string, string>("additionalMetadata", additionalMetadata.ToString())
+                new KeyValuePair<string, string>("additionalMetadata", additionalMetadata.ToString()),
+                new KeyValuePair<string, string>("file", file.ToString())
             });
 
             content.Add(formUrlEncodedContent);

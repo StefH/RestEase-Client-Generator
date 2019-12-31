@@ -26,6 +26,16 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         [DisplayName("Use DateTimeOffset")]
         [Description("Use DateTimeOffset instead of DateTime. The default value is 'false'.")]
         public bool UseDateTimeOffset { get; set; }
+
+        [Category(General)]
+        [DisplayName("Namespace for the Api")]
+        [Description("Append this namespace for the Api. The default value is 'Api'.")]
+        public string ApiNamespace { get; set; } = "Api";
+
+        [Category(General)]
+        [DisplayName("Namespace for the Models")]
+        [Description("Append this namespace for the Models. The default value is 'Models'.")]
+        public string ModelsNamespace { get; set; } = "Models";
         #endregion
 
         #region Interface
@@ -58,6 +68,12 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         [DisplayName("Generate FormUrlEncoded Extension methods")]
         [Description("Generate Extension methods for FormUrlEncoded methods. The default value is 'true'.")]
         public bool GenerateFormUrlEncodedExtensionMethods { get; set; } = true;
+
+        [Category(Interface)]
+        [DisplayName("Return Object from Method")]
+        [Description("Return Object from Method when Response is defined but no Model is specified. The default value is 'false'.")]
+        public bool ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified { get; set; }
+
         #endregion
     }
 }

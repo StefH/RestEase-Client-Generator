@@ -227,7 +227,10 @@ namespace RestEaseClientGenerator.Mappers
                         break;
 
                     default:
-                        returnType = "object";
+                        if (Settings.ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified)
+                        {
+                            returnType = "object";
+                        }
                         break;
                 }
             }
@@ -322,9 +325,9 @@ namespace RestEaseClientGenerator.Mappers
                 return "Task";
             }
 
-            if (returnTypeAsString == "Models")
+            if (returnTypeAsString == Settings.ModelsNamespace)
             {
-                returnTypeAsString = "Models.Models";
+                returnTypeAsString = $"{Settings.ModelsNamespace}.{Settings.ModelsNamespace}";
             }
 
             switch (Settings.MethodReturnType)

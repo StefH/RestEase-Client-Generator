@@ -36,7 +36,9 @@ namespace RestEaseClientGenerator
                 // Add Interface
                 new GeneratedFile
                 {
-                    Path = "Api", Name = $"{@interface.Name}.cs", Content = BuildInterface(@interface, settings, models.Any())
+                    Path = settings.ApiNamespace,
+                    Name = $"{@interface.Name}.cs",
+                    Content = BuildInterface(@interface, settings, models.Any())
                 }
             };
 
@@ -46,7 +48,7 @@ namespace RestEaseClientGenerator
                 // Add ApiExtension
                 files.Add(new GeneratedFile
                 {
-                    Path = "Api",
+                    Path = settings.ApiNamespace,
                     Name = $"{new string(@interface.Name.Skip(1).ToArray())}Extensions.cs",
                     Content = extensions
                 });
@@ -55,7 +57,7 @@ namespace RestEaseClientGenerator
             // Add Models
             files.AddRange(models.Select(model => new GeneratedFile
             {
-                Path = "Models",
+                Path = settings.ModelsNamespace,
                 Name = $"{model.ClassName}.cs",
                 Content = BuildModel(model, settings)
             }));
@@ -63,7 +65,7 @@ namespace RestEaseClientGenerator
             // Add Inline Models
             files.AddRange(@interface.InlineModels.Select(model => new GeneratedFile
             {
-                Path = "Models",
+                Path = settings.ModelsNamespace,
                 Name = $"{model.ClassName}.cs",
                 Content = BuildModel(model, settings)
             }));
@@ -82,9 +84,9 @@ namespace RestEaseClientGenerator
         }
 
         #region Builders
-        private static string BuildExtensions(RestEaseInterface api, string apiName, GeneratorSettings settings)
+        private static string BuildExtensions(RestEaseInterface @interface, string apiName, GeneratorSettings settings)
         {
-            var methods = api.Methods
+            var methods = @interface.Methods
                 .Where(m => m.ExtensionMethodDetails != null)
                 .ToList();
 
@@ -101,11 +103,11 @@ namespace RestEaseClientGenerator
                 builder.AppendLine("using System.Net.Http;");
                 builder.AppendLine("using System.Threading.Tasks;");
                 builder.AppendLine("using RestEase;");
-                builder.AppendLine($"using {api.Namespace}.Models;");
+                builder.AppendLine($"using {AppendModelsNamespace(@interface.Namespace, settings)};");
             }
 
             builder.AppendLine();
-            builder.AppendLine($"namespace {api.Namespace}.Api");
+            builder.AppendLine($"namespace {AppendApiNamespace(@interface.Namespace, settings)}");
             builder.AppendLine("{");
             builder.AppendLine($"    public static class {new string(apiName.Skip(1).ToArray())}Extensions");
             builder.AppendLine("    {");
@@ -226,10 +228,10 @@ namespace RestEaseClientGenerator
             builder.AppendLine("using RestEase;");
             if (hasModels || @interface.InlineModels.Any())
             {
-                builder.AppendLine($"using {@interface.Namespace}.Models;");
+                builder.AppendLine($"using {AppendModelsNamespace(@interface.Namespace, settings)};");
             }
             builder.AppendLine();
-            builder.AppendLine($"namespace {@interface.Namespace}.Api");
+            builder.AppendLine($"namespace {AppendApiNamespace(@interface.Namespace, settings)}");
             builder.AppendLine("{");
             builder.AppendLine($"    public interface {@interface.Name}");
             builder.AppendLine("    {");
@@ -274,7 +276,7 @@ namespace RestEaseClientGenerator
                 builder.AppendLine();
             }
 
-            builder.AppendLine($"namespace {restEaseModel.Namespace}.Models");
+            builder.AppendLine($"namespace {AppendModelsNamespace(restEaseModel.Namespace, settings)}");
             builder.AppendLine("{");
             builder.AppendLine($"    public class {restEaseModel.ClassName}");
             builder.AppendLine("    {");
@@ -292,5 +294,25 @@ namespace RestEaseClientGenerator
             return builder.ToString();
         }
         #endregion
+
+        private static string AppendModelsNamespace(string input, GeneratorSettings settings)
+        {
+            if (string.IsNullOrEmpty(settings.ModelsNamespace))
+            {
+                return input;
+            }
+
+            return $"{input}.{settings.ModelsNamespace}";
+        }
+
+        private static string AppendApiNamespace(string input, GeneratorSettings settings)
+        {
+            if (string.IsNullOrEmpty(settings.ApiNamespace))
+            {
+                return input;
+            }
+
+            return $"{input}.{settings.ApiNamespace}";
+        }
     }
 }

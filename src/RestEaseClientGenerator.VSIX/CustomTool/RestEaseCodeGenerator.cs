@@ -78,7 +78,10 @@ namespace RestEaseClientGenerator.VSIX.CustomTool
                     AppendAsync = options.AppendAsync,
                     GenerateFormUrlEncodedExtensionMethods = options.GenerateFormUrlEncodedExtensionMethods,
                     GenerateMultipartFormDataExtensionMethods = options.GenerateMultipartFormDataExtensionMethods,
-                    MultipartFormDataFileType = options.MultipartFormDataFileType
+                    MultipartFormDataFileType = options.MultipartFormDataFileType,
+                    ApiNamespace = options.ApiNamespace,
+                    ModelsNamespace = options.ModelsNamespace,
+                    ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified = options.ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified
                 };
                 var result = _generator.FromStream(File.OpenRead(wszInputFilePath), settings, out var diagnostic);
 

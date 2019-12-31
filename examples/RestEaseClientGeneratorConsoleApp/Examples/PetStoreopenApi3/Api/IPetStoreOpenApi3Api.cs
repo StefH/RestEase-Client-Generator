@@ -3,39 +3,39 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using RestEase;
-using RestEaseClientGeneratorConsoleApp.Examples.PetStore.Models;
+using RestEaseClientGeneratorConsoleApp.Examples.PetStoreOpenApi3.Models;
 
-namespace RestEaseClientGeneratorConsoleApp.Examples.PetStore.Api
+namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreOpenApi3.Api
 {
-    public interface IPetStoreApi
+    public interface IPetStoreOpenApi3Api
     {
-        /// <summary>
-        /// Add a new pet to the store
-        /// </summary>
-        /// <param name="pet">A pet for sale in the pet store</param>
-        [Post("/pet")]
-        Task<object> AddPetAsync([Body] Pet pet);
-
         /// <summary>
         /// Update an existing pet
         /// </summary>
-        /// <param name="pet">A pet for sale in the pet store</param>
+        /// <param name="pet"></param>
         [Put("/pet")]
-        Task<object> UpdatePetAsync([Body] Pet pet);
+        Task UpdatePetAsync([Body] Pet pet);
+
+        /// <summary>
+        /// Add a new pet to the store
+        /// </summary>
+        /// <param name="pet"></param>
+        [Post("/pet")]
+        Task AddPetAsync([Body] Pet pet);
 
         /// <summary>
         /// Finds Pets by status
         /// </summary>
         /// <param name="status">Status values that need to be considered for filter</param>
         [Get("/pet/findByStatus")]
-        Task<ICollection<Pet>> FindPetsByStatusAsync([Query] ICollection<string> status);
+        Task<Pet[]> FindPetsByStatusAsync([Query] string[] status);
 
         /// <summary>
         /// Finds Pets by tags
         /// </summary>
         /// <param name="tags">Tags to filter by</param>
         [Get("/pet/findByTags")]
-        Task<ICollection<Pet>> FindPetsByTagsAsync([Query] ICollection<string> tags);
+        Task<Pet[]> FindPetsByTagsAsync([Query] string[] tags);
 
         /// <summary>
         /// Find pet by ID
@@ -50,14 +50,14 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStore.Api
         /// <param name="petId">ID of pet that needs to be updated</param>
         /// <param name="form">An extension method is generated to support the exact parameters.</param>
         [Post("/pet/{petId}")]
-        Task<object> UpdatePetWithFormAsync([Path] long petId, [Body(BodySerializationMethod.UrlEncoded)] IDictionary<string, object> form);
+        Task UpdatePetWithFormAsync([Path] long petId, [Body(BodySerializationMethod.UrlEncoded)] IDictionary<string, object> form);
 
         /// <summary>
         /// Deletes a pet
         /// </summary>
         /// <param name="petId">Pet id to delete</param>
         [Delete("/pet/{petId}")]
-        Task<object> DeletePetAsync([Path] long petId);
+        Task DeletePetAsync([Path] long petId);
 
         /// <summary>
         /// uploads an image
@@ -76,9 +76,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStore.Api
         /// <summary>
         /// Place an order for a pet
         /// </summary>
-        /// <param name="order">An order for a pets from the pet store</param>
         [Post("/store/order")]
-        Task<Order> PlaceOrderAsync([Body] Order order);
+        Task<Order> PlaceOrderAsync();
 
         /// <summary>
         /// Find purchase order by ID
@@ -92,28 +91,25 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStore.Api
         /// </summary>
         /// <param name="orderId">ID of the order that needs to be deleted</param>
         [Delete("/store/order/{orderId}")]
-        Task<object> DeleteOrderAsync([Path] string orderId);
+        Task DeleteOrderAsync([Path] long orderId);
 
         /// <summary>
         /// Create user
         /// </summary>
-        /// <param name="user">A User who is purchasing from the pet store</param>
         [Post("/user")]
-        Task<object> CreateUserAsync([Body] User user);
+        Task CreateUserAsync();
 
         /// <summary>
         /// Creates list of users with given input array
         /// </summary>
-        /// <param name="iCollectionUser"></param>
         [Post("/user/createWithArray")]
-        Task<object> CreateUsersWithArrayInputAsync([Body] ICollection<User> iCollectionUser);
+        Task CreateUsersWithArrayInputAsync();
 
         /// <summary>
         /// Creates list of users with given input array
         /// </summary>
-        /// <param name="iCollectionUser"></param>
         [Post("/user/createWithList")]
-        Task<object> CreateUsersWithListInputAsync([Body] ICollection<User> iCollectionUser);
+        Task CreateUsersWithListInputAsync();
 
         /// <summary>
         /// Logs user into the system
@@ -121,34 +117,33 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStore.Api
         /// <param name="username">The user name for login</param>
         /// <param name="password">The password for login in clear text</param>
         [Get("/user/login")]
-        Task<object> LoginUserAsync([Query] string username, [Query] string password);
+        Task LoginUserAsync([Query] string username, [Query] string password);
 
         /// <summary>
         /// Logs out current logged in user session
         /// </summary>
         [Get("/user/logout")]
-        Task<object> LogoutUserAsync();
+        Task LogoutUserAsync();
 
         /// <summary>
         /// Get user by user name
         /// </summary>
-        /// <param name="username">The name that needs to be fetched. Use user1 for testing.</param>
+        /// <param name="username">The name that needs to be fetched. Use user1 for testing. </param>
         [Get("/user/{username}")]
         Task<User> GetUserByNameAsync([Path] string username);
 
         /// <summary>
         /// Updated user
         /// </summary>
-        /// <param name="username">name that need to be deleted</param>
-        /// <param name="user">A User who is purchasing from the pet store</param>
+        /// <param name="username">name that need to be updated</param>
         [Put("/user/{username}")]
-        Task<object> UpdateUserAsync([Path] string username, [Body] User user);
+        Task UpdateUserAsync([Path] string username);
 
         /// <summary>
         /// Delete user
         /// </summary>
         /// <param name="username">The name that needs to be deleted</param>
         [Delete("/user/{username}")]
-        Task<object> DeleteUserAsync([Path] string username);
+        Task DeleteUserAsync([Path] string username);
     }
 }

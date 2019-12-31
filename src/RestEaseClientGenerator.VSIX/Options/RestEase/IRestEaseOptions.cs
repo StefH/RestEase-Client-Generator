@@ -21,5 +21,11 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         bool GenerateMultipartFormDataExtensionMethods { get; set; }
 
         bool GenerateFormUrlEncodedExtensionMethods { get; set; }
+
+        string ApiNamespace { get; set; }
+
+        string ModelsNamespace { get; set; }
+
+        bool ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified { get; set; }
     }
 }

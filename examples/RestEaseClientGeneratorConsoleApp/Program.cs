@@ -1,14 +1,16 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
-using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.OpenApi.Readers;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using RestEase;
 using RestEaseClientGenerator;
 using RestEaseClientGenerator.Settings;
 using RestEaseClientGenerator.Types;
 using RestEaseClientGeneratorConsoleApp.Examples.PetStore.Api;
+using RestEaseClientGeneratorConsoleApp.Examples.PetStore.Models;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace RestEaseClientGeneratorConsoleApp
 {
@@ -18,54 +20,67 @@ namespace RestEaseClientGeneratorConsoleApp
         {
             var generator = new Generator();
 
-            //var petStoreSettings = new GeneratorSettings
-            //{
-            //    ArrayType = ArrayType.ICollection,
-            //    Namespace = "RestEaseClientGeneratorConsoleApp.Examples.PetStore",
-            //    ApiName = "PetStore"
-            //};
-            //foreach (var file in generator.FromStream(File.OpenRead("Examples\\petstore.yaml"), petStoreSettings, out OpenApiDiagnostic diagnosticPetStore1))
-            //{
-            //    File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/PetStore/{file.Path}/{file.Name}", file.Content);
-            //}
+            var petStoreOpenApi3Settings = new GeneratorSettings
+            {
+                Namespace = "RestEaseClientGeneratorConsoleApp.Examples.PetStoreOpenApi3",
+                ApiName = "PetStoreOpenApi3"
+            };
+            foreach (var file in generator.FromStream(File.OpenRead("Examples\\petstore-openapi3.yml"), petStoreOpenApi3Settings, out OpenApiDiagnostic diagnosticPetStoreOpenApi3))
+            {
+                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/PetStoreOpenApi3/{file.Path}/{file.Name}", file.Content);
+            }
 
-            //var petStoreJsonSettings = new GeneratorSettings
-            //{
-            //    SingleFile = true,
-            //    ArrayType = ArrayType.IEnumerable,
-            //    Namespace = "RestEaseClientGeneratorConsoleApp.Examples.PetStoreJson",
-            //    ApiName = "PetStoreJson",
-            //    AddAuthorizationHeader = true,
-            //    UseDateTimeOffset = true,
-            //    MethodReturnType = MethodReturnType.Type,
-            //    MultipartFormDataFileType = MultipartFormDataFileType.Stream
-            //};
-            //foreach (var file in generator.FromStream(File.OpenRead("Examples\\petstore.json"), petStoreJsonSettings, out OpenApiDiagnostic diagnosticPetStore1))
-            //{
-            //    File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/PetStoreJson/{file.Name}", file.Content);
-            //}
+            var petStoreSettings = new GeneratorSettings
+            {
+                ArrayType = ArrayType.ICollection,
+                Namespace = "RestEaseClientGeneratorConsoleApp.Examples.PetStore",
+                ApiName = "PetStore",
+                ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified = true
+            };
+            foreach (var file in generator.FromStream(File.OpenRead("Examples\\petstore.yaml"), petStoreSettings, out OpenApiDiagnostic diagnosticPetStore1))
+            {
+                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/PetStore/{file.Path}/{file.Name}", file.Content);
+            }
 
-            //foreach (var file in generator.FromStream(File.OpenRead("Examples\\infura.yaml"), "RestEaseClientGeneratorConsoleApp.Examples.Infura", "Infura", out OpenApiDiagnostic diagnosticInfura))
-            //{
-            //    File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Infura/{file.Path}/{file.Name}", file.Content);
-            //}
+            var petStoreJsonSettings = new GeneratorSettings
+            {
+                SingleFile = true,
+                ArrayType = ArrayType.IEnumerable,
+                Namespace = "RestEaseClientGeneratorConsoleApp.Examples.PetStoreJson",
+                ApiName = "PetStoreJson",
+                AddAuthorizationHeader = true,
+                UseDateTimeOffset = true,
+                MethodReturnType = MethodReturnType.Type,
+                MultipartFormDataFileType = MultipartFormDataFileType.Stream,
+                ApiNamespace = "Test123",
+                ModelsNamespace = "Modelz"
+            };
+            foreach (var file in generator.FromStream(File.OpenRead("Examples\\petstore.json"), petStoreJsonSettings, out OpenApiDiagnostic diagnosticPetStore1))
+            {
+                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/PetStoreJson/{file.Name}", file.Content);
+            }
 
-            //OpenApiDiagnostic diagnosticCog;
-            //foreach (var file in generator.FromStream(File.OpenRead("Examples\\cognitive-services-personalizer.json"), "RestEaseClientGeneratorConsoleApp.Examples.Cog", "Cog", out diagnosticCog))
-            //{
-            //    File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Cog/{file.Path}/{file.Name}", file.Content);
-            //}
-            //Console.WriteLine(JsonSerializer.Serialize(diagnosticCog));
+            foreach (var file in generator.FromStream(File.OpenRead("Examples\\infura.yaml"), "RestEaseClientGeneratorConsoleApp.Examples.Infura", "Infura", out OpenApiDiagnostic diagnosticInfura))
+            {
+                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Infura/{file.Path}/{file.Name}", file.Content);
+            }
 
-            //foreach (var file in generator.FromStream(File.OpenRead("Examples\\SpeechServices.json"), "RestEaseClientGeneratorConsoleApp.Examples.SpeechServices", "SpeechServices", out var diagnosticSpeech))
-            //{
-            //    File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/SpeechServices/{file.Path}/{file.Name}", file.Content);
-            //}
+            OpenApiDiagnostic diagnosticCog;
+            foreach (var file in generator.FromStream(File.OpenRead("Examples\\cognitive-services-personalizer.json"), "RestEaseClientGeneratorConsoleApp.Examples.Cog", "Cog", out diagnosticCog))
+            {
+                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Cog/{file.Path}/{file.Name}", file.Content);
+            }
+            Console.WriteLine(JsonSerializer.Serialize(diagnosticCog));
 
-            //foreach (var file in generator.FromStream(File.OpenRead("Examples\\FormRecognizer.json"), "RestEaseClientGeneratorConsoleApp.Examples.FormRecognizer", "FormRecognizer", out var diagnosticFormRecognizer))
-            //{
-            //    File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/FormRecognizer/{file.Path}/{file.Name}", file.Content);
-            //}
+            foreach (var file in generator.FromStream(File.OpenRead("Examples\\SpeechServices.json"), "RestEaseClientGeneratorConsoleApp.Examples.SpeechServices", "SpeechServices", out var diagnosticSpeech))
+            {
+                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/SpeechServices/{file.Path}/{file.Name}", file.Content);
+            }
+
+            foreach (var file in generator.FromStream(File.OpenRead("Examples\\FormRecognizer.json"), "RestEaseClientGeneratorConsoleApp.Examples.FormRecognizer", "FormRecognizer", out var diagnosticFormRecognizer))
+            {
+                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/FormRecognizer/{file.Path}/{file.Name}", file.Content);
+            }
 
             var computerVisionSettings = new GeneratorSettings
             {
@@ -83,7 +98,14 @@ namespace RestEaseClientGeneratorConsoleApp
 
         private static async Task PetStore()
         {
-            var petStoreApi = RestClient.For<IPetStoreApi>("https://petstore.swagger.io/v2");
+            var settings = new JsonSerializerSettings
+            {
+                ContractResolver = new CamelCasePropertyNamesContractResolver()
+            };
+            var petStoreApi = new RestClient("https://petstore.swagger.io/v2")
+            {
+                JsonSerializerSettings = settings
+            }.For<IPetStoreApi>();
 
             var findPetsByTags = await petStoreApi.FindPetsByTagsAsync(new[] { "cat" });
             foreach (var find in findPetsByTags)
@@ -91,7 +113,15 @@ namespace RestEaseClientGeneratorConsoleApp
                 Console.WriteLine(JsonSerializer.Serialize(find));
             }
 
-            var getPetById = await petStoreApi.GetPetByIdAsync(findPetsByTags.First().Id);
+            var addPet = await petStoreApi.AddPetAsync(new Pet
+            {
+                Id = 1000,
+                Name = "Rossa",
+                Status = "Sleepy"
+            });
+            Console.WriteLine(addPet.ToString());
+
+            var getPetById = await petStoreApi.GetPetByIdAsync(1000);
             Console.WriteLine(JsonSerializer.Serialize(getPetById));
         }
     }

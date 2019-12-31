@@ -4,9 +4,9 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using RestEase;
-using RestEaseClientGeneratorConsoleApp.Examples.PetStoreJson.Models;
+using RestEaseClientGeneratorConsoleApp.Examples.PetStoreJson.Modelz;
 
-namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreJson.Api
+namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreJson.Test123
 {
     public interface IPetStoreJsonApi
     {
@@ -158,7 +158,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreJson.Api
 }
 
 
-namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreJson.Api
+namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreJson.Test123
 {
     public static class PetStoreJsonApiExtensions
     {
@@ -204,7 +204,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreJson.Api
     }
 }
 
-namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreJson.Models
+namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreJson.Modelz
 {
     public class Category
     {
@@ -214,7 +214,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreJson.Models
     }
 }
 
-namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreJson.Models
+namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreJson.Modelz
 {
     public class Pet
     {
@@ -232,7 +232,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreJson.Models
     }
 }
 
-namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreJson.Models
+namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreJson.Modelz
 {
     public class Tag
     {
@@ -242,7 +242,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreJson.Models
     }
 }
 
-namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreJson.Models
+namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreJson.Modelz
 {
     public class ApiResponse
     {
@@ -254,7 +254,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreJson.Models
     }
 }
 
-namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreJson.Models
+namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreJson.Modelz
 {
     public class Order
     {
@@ -272,7 +272,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreJson.Models
     }
 }
 
-namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreJson.Models
+namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreJson.Modelz
 {
     public class User
     {
