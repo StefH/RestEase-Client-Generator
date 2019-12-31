@@ -12,6 +12,7 @@
     <!--<Compile Remove="Cog\**\*.cs" />-->
     <Folder Include="Examples\FormRecognizer\Api\" />
     <Folder Include="Examples\FormRecognizer\Models\" />
+    <Folder Include="Examples\ComputerVision\" />
     <Folder Include="Examples\SpeechServices\Api\" />
     <Folder Include="Examples\SpeechServices\Models\" />
   </ItemGroup>

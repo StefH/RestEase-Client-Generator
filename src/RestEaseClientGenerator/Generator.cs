@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.OpenApi.Readers;
 using RestEaseClientGenerator.Constants;
+using RestEaseClientGenerator.Extensions;
 using RestEaseClientGenerator.Mappers;
 using RestEaseClientGenerator.Models;
 using RestEaseClientGenerator.Settings;
@@ -27,6 +28,7 @@ namespace RestEaseClientGenerator
             var reader = new OpenApiStreamReader();
             var openApiDocument = reader.Read(stream, out diagnostic);
 
+            var models = new ModelsMapper(settings).Map(openApiDocument.Components.Schemas).ToList();
             var @interface = new InterfaceMapper(settings).Map(openApiDocument);
 
             var files = new List<GeneratedFile>
@@ -34,17 +36,9 @@ namespace RestEaseClientGenerator
                 // Add Interface
                 new GeneratedFile
                 {
-                    Path = "Api", Name = $"{@interface.Name}.cs", Content = BuildInterface(@interface, settings)
+                    Path = "Api", Name = $"{@interface.Name}.cs", Content = BuildInterface(@interface, settings, models.Any())
                 }
             };
-
-            // Add Inline Models
-            files.AddRange(@interface.InlineModels.Select(model => new GeneratedFile
-            {
-                Path = "Models",
-                Name = $"{model.ClassName}.cs",
-                Content = BuildModel(model, settings)
-            }));
 
             var extensions = BuildExtensions(@interface, @interface.Name, settings);
             if (extensions != null)
@@ -59,8 +53,15 @@ namespace RestEaseClientGenerator
             }
 
             // Add Models
-            var models = new ModelsMapper(settings).Map(openApiDocument.Components.Schemas);
             files.AddRange(models.Select(model => new GeneratedFile
+            {
+                Path = "Models",
+                Name = $"{model.ClassName}.cs",
+                Content = BuildModel(model, settings)
+            }));
+
+            // Add Inline Models
+            files.AddRange(@interface.InlineModels.Select(model => new GeneratedFile
             {
                 Path = "Models",
                 Name = $"{model.ClassName}.cs",
@@ -114,7 +115,7 @@ namespace RestEaseClientGenerator
                 string asyncPostfix = settings.AppendAsync ? "Async" : string.Empty;
 
                 builder.AppendLine("        /// <summary>");
-                builder.AppendLine($"        /// {method.ExtensionMethodDetails.Summary}");
+                builder.AppendLine($"        /// {method.ExtensionMethodDetails.Summary.StripHtml()}");
                 builder.AppendLine("        /// </summary>");
                 foreach (var p in method.ExtensionMethodDetails.SummaryParameters)
                 {
@@ -211,7 +212,7 @@ namespace RestEaseClientGenerator
             }
         }
 
-        private static string BuildInterface(RestEaseInterface api, GeneratorSettings settings)
+        private static string BuildInterface(RestEaseInterface @interface, GeneratorSettings settings, bool hasModels)
         {
             var builder = new StringBuilder();
             builder.AppendLine("using System;");
@@ -223,11 +224,14 @@ namespace RestEaseClientGenerator
             }
             builder.AppendLine("using System.Threading.Tasks;");
             builder.AppendLine("using RestEase;");
-            builder.AppendLine($"using {api.Namespace}.Models;");
+            if (hasModels || @interface.InlineModels.Any())
+            {
+                builder.AppendLine($"using {@interface.Namespace}.Models;");
+            }
             builder.AppendLine();
-            builder.AppendLine($"namespace {api.Namespace}.Api");
+            builder.AppendLine($"namespace {@interface.Namespace}.Api");
             builder.AppendLine("{");
-            builder.AppendLine($"    public interface {api.Name}");
+            builder.AppendLine($"    public interface {@interface.Name}");
             builder.AppendLine("    {");
             if (settings.AddAuthorizationHeader)
             {
@@ -235,12 +239,12 @@ namespace RestEaseClientGenerator
                 builder.AppendLine("        AuthenticationHeaderValue Authorization { get; set; }");
                 builder.AppendLine();
             }
-            foreach (var method in api.Methods)
+            foreach (var method in @interface.Methods)
             {
                 string asyncPostfix = settings.AppendAsync ? "Async" : string.Empty;
 
                 builder.AppendLine("        /// <summary>");
-                builder.AppendLine($"        /// {method.Summary}");
+                builder.AppendLine($"        /// {method.Summary.StripHtml()}");
                 builder.AppendLine("        /// </summary>");
                 foreach (var p in method.SummaryParameters)
                 {
@@ -249,7 +253,7 @@ namespace RestEaseClientGenerator
                 builder.AppendLine($"        {method.RestEaseAttribute}");
                 builder.AppendLine($"        {method.RestEaseMethod.ReturnType} {method.RestEaseMethod.Name}{asyncPostfix}({method.RestEaseMethod.ParametersAsString});");
 
-                if (method != api.Methods.Last())
+                if (method != @interface.Methods.Last())
                 {
                     builder.AppendLine();
                 }

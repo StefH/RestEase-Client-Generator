@@ -225,13 +225,17 @@ namespace RestEaseClientGenerator.Mappers
                             returnType = className;
                         }
                         break;
+
+                    default:
+                        returnType = "object";
+                        break;
                 }
             }
 
             var method = new RestEaseInterfaceMethodDetails
             {
                 Summary = operation.Summary ?? $"{methodRestEaseMethodName} ({path})",
-                SummaryParameters = methodParameterList.Select(mp => $"<param name=\"{mp.Identifier}\">{mp.Summary}</param>").ToList(),
+                SummaryParameters = methodParameterList.Select(mp => $"<param name=\"{mp.Identifier}\">{mp.Summary.StripHtml()}</param>").ToList(),
                 RestEaseAttribute = $"[{methodRestEaseForAnnotation}(\"{path}\")]",
                 RestEaseMethod = new RestEaseInterfaceMethod
                 {
@@ -260,7 +264,7 @@ namespace RestEaseClientGenerator.Mappers
                 method.ExtensionMethodDetails = new RestEaseInterfaceMethodDetails
                 {
                     Summary = operation.Summary ?? $"{methodRestEaseMethodName} ({path})",
-                    SummaryParameters = combinedMethodParameterList.Select(mp => $"<param name=\"{mp.Identifier}\">{mp.Summary}</param>").ToList(),
+                    SummaryParameters = combinedMethodParameterList.Select(mp => $"<param name=\"{mp.Identifier}\">{mp.Summary.StripHtml()}</param>").ToList(),
                     RestEaseMethod = new RestEaseInterfaceMethod
                     {
                         ReturnType = method.RestEaseMethod.ReturnType,
