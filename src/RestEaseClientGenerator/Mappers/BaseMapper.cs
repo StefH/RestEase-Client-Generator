@@ -8,6 +8,8 @@ namespace RestEaseClientGenerator.Mappers
 {
     public abstract class BaseMapper
     {
+        private string DateTime => Settings.UseDateTimeOffset ? "DateTimeOffset" : "DateTime";
+
         protected readonly GeneratorSettings Settings;
 
         protected BaseMapper(GeneratorSettings settings)
@@ -35,8 +37,6 @@ namespace RestEaseClientGenerator.Mappers
                     return $"{value}[]";
             }
         }
-
-        private string DateTime => Settings.UseDateTimeOffset ? "DateTimeOffset" : "DateTime";
 
         protected object MapSchema(OpenApiSchema schema, string name, bool isNullable, bool pascalCase = true)
         {
