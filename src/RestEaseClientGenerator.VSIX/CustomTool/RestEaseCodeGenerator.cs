@@ -79,6 +79,7 @@ namespace RestEaseClientGenerator.VSIX.CustomTool
                     GenerateFormUrlEncodedExtensionMethods = options.GenerateFormUrlEncodedExtensionMethods,
                     GenerateMultipartFormDataExtensionMethods = options.GenerateMultipartFormDataExtensionMethods,
                     MultipartFormDataFileType = options.MultipartFormDataFileType,
+                    ApplicationOctetStreamType = options.ApplicationOctetStreamType,
                     ApiNamespace = options.ApiNamespace,
                     ModelsNamespace = options.ModelsNamespace,
                     ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified = options.ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified

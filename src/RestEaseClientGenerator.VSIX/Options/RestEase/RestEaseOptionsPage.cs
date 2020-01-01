@@ -55,9 +55,14 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         public MethodReturnType MethodReturnType { get; set; }
 
         [Category(Interface)]
-        [DisplayName("MultipartFormData FileType")]
+        [DisplayName("MultipartFormData file type")]
         [Description("The MultipartFormData FileType to use. The default value is 'byte[]'.")]
         public MultipartFormDataFileType MultipartFormDataFileType { get; set; }
+
+        [Category(Interface)]
+        [DisplayName("Application OctetStream type")]
+        [Description("The ApplicationOctetStream Type to use. The default value is 'byte[]'.")]
+        public ApplicationOctetStreamType ApplicationOctetStreamType { get; set; }
 
         [Category(Interface)]
         [DisplayName("Generate MultipartFormData Extension methods")]

@@ -64,9 +64,10 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreOpenApi3.Api
         /// uploads an image
         /// </summary>
         /// <param name="petId">ID of pet to update</param>
+        /// <param name="content">An extension method is generated to support the exact parameters.</param>
         /// <param name="additionalMetadata">Additional Metadata</param>
         [Post("/pet/{petId}/uploadImage")]
-        Task<ApiResponse> UploadFileAsync([Path] long petId, [Query] string additionalMetadata);
+        Task<ApiResponse> UploadFileAsync([Path] long petId, [Body] HttpContent content, [Query] string additionalMetadata);
 
         /// <summary>
         /// Returns pet inventories by status

@@ -27,13 +27,17 @@ namespace RestEaseClientGenerator.Settings
 
         public bool AppendAsync { get; set; } = true;
 
+        public MultipartFormDataFileType MultipartFormDataFileType { get; set; }
+
+        public ApplicationOctetStreamType ApplicationOctetStreamType { get; set; }
+
         public bool GenerateMultipartFormDataExtensionMethods { get; set; } = true;
 
-        public MultipartFormDataFileType MultipartFormDataFileType { get; set; }
+        public bool GenerateApplicationOctetStreamExtensionMethods { get; set; } = true;
 
         public bool GenerateFormUrlEncodedExtensionMethods { get; set; } = true;
 
-        public bool ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified { get; set; } = false;
+        public bool ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified { get; set; }
 
         public SecurityDefinitionType SecurityDefinitionType { get; set; } = SecurityDefinitionType.Header;
         #endregion

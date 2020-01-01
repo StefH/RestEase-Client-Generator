@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
-using Microsoft.OpenApi.Models;
+﻿using Microsoft.OpenApi.Models;
 using RestEaseClientGenerator.Constants;
 using RestEaseClientGenerator.Extensions;
 using RestEaseClientGenerator.Models;
 using RestEaseClientGenerator.Settings;
 using RestEaseClientGenerator.Types;
 using RestEaseClientGenerator.Utils;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace RestEaseClientGenerator.Mappers
 {
@@ -64,6 +64,10 @@ namespace RestEaseClientGenerator.Mappers
 
         private RestEaseInterfaceMethodDetails MapOperationToMappingModel(RestEaseInterface @interface, string path, string httpMethod, OpenApiOperation operation)
         {
+            if (path == "/pet/{petId}/uploadImage")
+            {
+                int x = 0;
+            }
             string methodRestEaseForAnnotation = httpMethod.ToPascalCase();
 
             string methodRestEaseMethodName = GeneratedRestEaseMethodName(path, operation, methodRestEaseForAnnotation);
@@ -83,92 +87,7 @@ namespace RestEaseClientGenerator.Mappers
             string detectedRequestContentType = null;
             if (operation.RequestBody != null)
             {
-                if (TryGetOpenApiMediaType(operation.RequestBody.Content, SupportedContentTypes.ApplicationJson, out OpenApiMediaType requestJson))
-                {
-                    detectedRequestContentType = SupportedContentTypes.ApplicationJson;
-
-                    string bodyParameter;
-                    switch (requestJson.Schema?.GetSchemaType())
-                    {
-                        case SchemaType.Array:
-                            string arrayType = requestJson.Schema.Items.Reference != null ? requestJson.Schema.Items.Reference.Id : MapSchema(requestJson.Schema.Items, "", requestJson.Schema.Nullable).ToString();
-                            bodyParameter = MapArrayType(arrayType);
-                            break;
-
-                        case SchemaType.Object:
-                            bodyParameter = requestJson.Schema.Reference.Id;
-                            break;
-
-                        default:
-                            bodyParameter = "";
-                            break;
-                    }
-
-                    if (!string.IsNullOrEmpty(bodyParameter))
-                    {
-                        string bodyParameterIdentifierName = bodyParameter.ToCamelCase();
-                        bodyParameterList.Add(new RestEaseParameter
-                        {
-                            Required = true,
-                            Identifier = bodyParameterIdentifierName,
-                            IdentifierWithType = $"{bodyParameter} {bodyParameterIdentifierName}",
-                            IdentifierWithRestEase = $"[Body] {bodyParameter} {bodyParameterIdentifierName}",
-                            Summary = requestJson.Schema?.Description
-                        });
-                    }
-                }
-                else if (TryGetOpenApiMediaType(operation.RequestBody.Content, SupportedContentTypes.MultipartFormData, out OpenApiMediaType requestMultipartFormData))
-                {
-                    detectedRequestContentType = SupportedContentTypes.MultipartFormData;
-
-                    string httpContentDescription;
-                    if (!Settings.GenerateMultipartFormDataExtensionMethods)
-                    {
-                        httpContentDescription = "Manually add an extension method to support the exact parameters. See https://github.com/canton7/RestEase#wrapping-other-methods for more info.";
-                    }
-                    else
-                    {
-                        httpContentDescription = "An extension method is generated to support the exact parameters.";
-                        extensionMethodParameterList.AddRange(requestMultipartFormData.Schema.Properties
-                            .Select(p => BuildValidParameter(p.Key, p.Value, p.Value.Nullable, p.Value.Description, string.Empty)));
-                    }
-
-                    bodyParameterList.Add(new RestEaseParameter
-                    {
-                        Required = true,
-                        Identifier = "content",
-                        IdentifierWithType = "HttpContent content",
-                        IdentifierWithRestEase = "HttpContent content",
-                        Summary = httpContentDescription,
-                        IsSpecial = true
-                    });
-                }
-                else if (TryGetOpenApiMediaType(operation.RequestBody.Content, SupportedContentTypes.ApplicationFormUrlEncoded, out OpenApiMediaType requestFormUrlencoded))
-                {
-                    detectedRequestContentType = SupportedContentTypes.ApplicationFormUrlEncoded;
-
-                    string description;
-                    if (!Settings.GenerateMultipartFormDataExtensionMethods)
-                    {
-                        description = "Manually add an extension method to support the exact parameters.";
-                    }
-                    else
-                    {
-                        description = "An extension method is generated to support the exact parameters.";
-                        extensionMethodParameterList.AddRange(requestFormUrlencoded.Schema.Properties
-                            .Select(p => BuildValidParameter(p.Key, p.Value, p.Value.Nullable, p.Value.Description, string.Empty)));
-                    }
-
-                    bodyParameterList.Add(new RestEaseParameter
-                    {
-                        Required = true,
-                        Identifier = "form",
-                        IdentifierWithType = "IDictionary<string, object> form",
-                        IdentifierWithRestEase = "[Body(BodySerializationMethod.UrlEncoded)] IDictionary<string, object> form",
-                        Summary = description,
-                        IsSpecial = true
-                    });
-                }
+                detectedRequestContentType = MapRequest(operation, bodyParameterList, extensionMethodParameterList);
             }
 
             var methodParameterList = pathParameterList
@@ -249,7 +168,7 @@ namespace RestEaseClientGenerator.Mappers
                 }
             };
 
-            if (extensionMethodParameterList.Any())
+            if (detectedRequestContentType != null)
             {
                 var combinedMethodParameterList = new List<RestEaseParameter>
                 {
@@ -281,6 +200,126 @@ namespace RestEaseClientGenerator.Mappers
             }
 
             return method;
+        }
+
+        private string MapRequest(OpenApiOperation operation, ICollection<RestEaseParameter> bodyParameterList, List<RestEaseParameter> extensionMethodParameterList)
+        {
+            string detectedRequestContentType = null;
+
+            if (TryGetOpenApiMediaType(operation.RequestBody.Content, SupportedContentTypes.ApplicationJson, out OpenApiMediaType requestJson))
+            {
+                string bodyParameter;
+                switch (requestJson.Schema?.GetSchemaType())
+                {
+                    case SchemaType.Array:
+                        string arrayType = requestJson.Schema.Items.Reference != null
+                            ? requestJson.Schema.Items.Reference.Id
+                            : MapSchema(requestJson.Schema.Items, "", requestJson.Schema.Nullable).ToString();
+                        bodyParameter = MapArrayType(arrayType);
+                        break;
+
+                    case SchemaType.Object:
+                        bodyParameter = requestJson.Schema.Reference.Id;
+                        break;
+
+                    default:
+                        bodyParameter = string.Empty;
+                        break;
+                }
+
+                if (!string.IsNullOrEmpty(bodyParameter))
+                {
+                    string bodyParameterIdentifierName = bodyParameter.ToCamelCase();
+                    bodyParameterList.Add(new RestEaseParameter
+                    {
+                        Required = true,
+                        Identifier = bodyParameterIdentifierName,
+                        IdentifierWithType = $"{bodyParameter} {bodyParameterIdentifierName}",
+                        IdentifierWithRestEase = $"[Body] {bodyParameter} {bodyParameterIdentifierName}",
+                        Summary = requestJson.Schema?.Description
+                    });
+                }
+            }
+            else if (TryGetOpenApiMediaType(operation.RequestBody.Content, SupportedContentTypes.MultipartFormData, out OpenApiMediaType requestMultipartFormData))
+            {
+                detectedRequestContentType = SupportedContentTypes.MultipartFormData;
+
+                string httpContentDescription;
+                if (!Settings.GenerateMultipartFormDataExtensionMethods)
+                {
+                    httpContentDescription = "Manually add an extension method to support the exact parameters. See https://github.com/canton7/RestEase#wrapping-other-methods for more info.";
+                }
+                else
+                {
+                    httpContentDescription = "An extension method is generated to support the exact parameters.";
+                    extensionMethodParameterList.AddRange(requestMultipartFormData.Schema.Properties.Select(p => BuildValidParameter(p.Key, p.Value, p.Value.Nullable, p.Value.Description, string.Empty)));
+                }
+
+                bodyParameterList.Add(new RestEaseParameter
+                {
+                    Required = true,
+                    Identifier = "content",
+                    IdentifierWithType = "HttpContent content",
+                    IdentifierWithRestEase = "[Body] HttpContent content",
+                    Summary = httpContentDescription,
+                    IsSpecial = true
+                });
+            }
+            else if (TryGetOpenApiMediaType(operation.RequestBody.Content, SupportedContentTypes.ApplicationOctetStream, out OpenApiMediaType requestOctetStream))
+            {
+                detectedRequestContentType = SupportedContentTypes.ApplicationOctetStream;
+
+                string httpContentDescription;
+                if (!Settings.GenerateApplicationOctetStreamExtensionMethods)
+                {
+                    httpContentDescription = "Manually add an extension method to support the exact parameters. See https://github.com/canton7/RestEase#wrapping-other-methods for more info.";
+                }
+                else
+                {
+                    httpContentDescription = "An extension method is generated to support the exact parameters.";
+                    var extensionParameter = BuildValidParameter("file", requestOctetStream.Schema, true, "The content.", null);
+                    extensionMethodParameterList.Add(extensionParameter);
+                    extensionMethodParameterList.AddRange(requestOctetStream.Schema.Properties.Select(p => BuildValidParameter(p.Key, p.Value, p.Value.Nullable, p.Value.Description, string.Empty)));
+                }
+
+                bodyParameterList.Add(new RestEaseParameter
+                {
+                    Required = true,
+                    Identifier = "content",
+                    IdentifierWithType = "HttpContent content",
+                    IdentifierWithRestEase = "[Body] HttpContent content",
+                    Summary = httpContentDescription,
+                    IsSpecial = true
+                });
+            }
+            else if (TryGetOpenApiMediaType(operation.RequestBody.Content, SupportedContentTypes.ApplicationFormUrlEncoded, out OpenApiMediaType requestFormUrlencoded))
+            {
+                detectedRequestContentType = SupportedContentTypes.ApplicationFormUrlEncoded;
+
+                string description;
+                if (!Settings.GenerateMultipartFormDataExtensionMethods)
+                {
+                    description = "Manually add an extension method to support the exact parameters.";
+                }
+                else
+                {
+                    description = "An extension method is generated to support the exact parameters.";
+                    extensionMethodParameterList.AddRange(requestFormUrlencoded.Schema.Properties.Select(p => BuildValidParameter(p.Key, p.Value, p.Value.Nullable, p.Value.Description, string.Empty)));
+                }
+
+                bodyParameterList.Add(new RestEaseParameter
+                {
+                    Required = true,
+                    Identifier = "form",
+                    IdentifierWithType = "IDictionary<string, object> form",
+                    IdentifierWithRestEase = "[Body(BodySerializationMethod.UrlEncoded)] IDictionary<string, object> form",
+                    Summary = description,
+                    IsSpecial = true
+                });
+            }
+
+
+            return detectedRequestContentType;
         }
 
         private string GeneratedRestEaseMethodName(string path, OpenApiOperation operation, string httpMethodPascalCased)

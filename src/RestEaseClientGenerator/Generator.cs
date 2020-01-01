@@ -132,6 +132,10 @@ namespace RestEaseClientGenerator
                         BuildMultipartFormDataExtensionMethodBody(settings, builder, method);
                         break;
 
+                    case SupportedContentTypes.ApplicationOctetStream:
+                        BuildApplicationOctetStreamExtensionMethodBody(settings, builder, method);
+                        break;
+
                     case SupportedContentTypes.ApplicationFormUrlEncoded:
                         BuildApplicationFormUrlEncodedExtensionMethodBody(settings, builder, method);
                         break;
@@ -178,18 +182,75 @@ namespace RestEaseClientGenerator
                         switch (settings.MultipartFormDataFileType)
                         {
                             case MultipartFormDataFileType.Stream:
-                                builder.AppendLine(
-                                    $"            var {parameter.Identifier}Content = new StreamContent({parameter.Identifier});");
+                                builder.AppendLine($"            var {parameter.Identifier}Content = new StreamContent({parameter.Identifier});");
                                 break;
 
                             default:
-                                builder.AppendLine(
-                                    $"            var {parameter.Identifier}Content = new ByteArrayContent({parameter.Identifier});");
+                                builder.AppendLine($"            var {parameter.Identifier}Content = new ByteArrayContent({parameter.Identifier});");
                                 break;
                         }
 
                         builder.AppendLine($"            content.Add({parameter.Identifier}Content);");
                         builder.AppendLine();
+                        break;
+
+                    default:
+                        formUrlEncodedContentList.Add(parameter.Identifier);
+                        break;
+                }
+            }
+
+            if (formUrlEncodedContentList.Any())
+            {
+                builder.AppendLine("            var formUrlEncodedContent = new FormUrlEncodedContent(new[] {");
+                foreach (var formUrlEncodedContent in formUrlEncodedContentList)
+                {
+                    string comma = formUrlEncodedContent != formUrlEncodedContentList.Last() ? "," : string.Empty;
+                    builder.AppendLine(
+                        $"                new KeyValuePair<string, string>(\"{formUrlEncodedContent}\", {formUrlEncodedContent}.ToString()){comma}");
+                }
+
+                builder.AppendLine("            });");
+                builder.AppendLine();
+                builder.AppendLine("            content.Add(formUrlEncodedContent);");
+            }
+        }
+
+        private static void BuildApplicationOctetStreamExtensionMethodBody(GeneratorSettings settings, StringBuilder builder, RestEaseInterfaceMethodDetails method)
+        {
+            builder.AppendLine("            var content = new MultipartFormDataContent();");
+            builder.AppendLine();
+
+            var formUrlEncodedContentList = new List<string>();
+            foreach (var parameter in method.ExtensionMethodParameters)
+            {
+                switch (parameter.SchemaType)
+                {
+                    case SchemaType.String:
+                        switch (parameter.SchemaFormat)
+                        {
+                            case SchemaFormat.Binary:
+                            case SchemaFormat.Byte:
+                                switch (settings.ApplicationOctetStreamType)
+                                {
+                                    case ApplicationOctetStreamType.Stream:
+                                        builder.AppendLine($"            var {parameter.Identifier}Content = new StreamContent({parameter.Identifier});");
+                                        break;
+
+                                    default:
+                                        builder.AppendLine($"            var {parameter.Identifier}Content = new ByteArrayContent({parameter.Identifier});");
+                                        break;
+                                }
+
+                                builder.AppendLine($"            content.Add({parameter.Identifier}Content);");
+                                builder.AppendLine();
+
+                                break;
+
+                            default:
+                                formUrlEncodedContentList.Add(parameter.Identifier);
+                                break;
+                        }
                         break;
 
                     default:

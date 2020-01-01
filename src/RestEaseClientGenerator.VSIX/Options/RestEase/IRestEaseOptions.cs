@@ -8,6 +8,8 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
 
         MultipartFormDataFileType MultipartFormDataFileType { get; set; }
 
+        ApplicationOctetStreamType ApplicationOctetStreamType { get; set; }
+
         bool FailOnOpenApiErrors { get; set; }
 
         bool AddAuthorizationHeader { get; set; }

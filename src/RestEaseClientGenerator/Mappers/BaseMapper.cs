@@ -96,10 +96,15 @@ namespace RestEaseClientGenerator.Mappers
                             return $"{DateTime}{nullable}{nameCamelCase}";
 
                         case SchemaFormat.Byte:
-                            return $"{MapArrayType("byte")}{nullable}{nameCamelCase}";
-
                         case SchemaFormat.Binary:
-                            return $"object{nameCamelCase}";
+                            switch (Settings.ApplicationOctetStreamType)
+                            {
+                                case ApplicationOctetStreamType.Stream:
+                                    return $"System.IO.Stream{nameCamelCase}";
+
+                                default:
+                                    return $"byte[]{nameCamelCase}";
+                            }
 
                         default:
                             return $"string{nameCamelCase}";
