@@ -7,9 +7,9 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreOpenApi3.Models
     {
         public long Id { get; set; }
 
-        public Category Category { get; set; }
-
         public string Name { get; set; }
+
+        public Category Category { get; set; }
 
         public string[] PhotoUrls { get; set; }
 

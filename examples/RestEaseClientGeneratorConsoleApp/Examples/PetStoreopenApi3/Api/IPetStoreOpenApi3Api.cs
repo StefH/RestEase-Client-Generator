@@ -14,21 +14,21 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreOpenApi3.Api
         /// </summary>
         /// <param name="pet"></param>
         [Put("/pet")]
-        Task UpdatePetAsync([Body] Pet pet);
+        Task<Pet> UpdatePetAsync([Body] Pet pet);
 
         /// <summary>
         /// Add a new pet to the store
         /// </summary>
         /// <param name="pet"></param>
         [Post("/pet")]
-        Task AddPetAsync([Body] Pet pet);
+        Task<Pet> AddPetAsync([Body] Pet pet);
 
         /// <summary>
         /// Finds Pets by status
         /// </summary>
         /// <param name="status">Status values that need to be considered for filter</param>
         [Get("/pet/findByStatus")]
-        Task<Pet[]> FindPetsByStatusAsync([Query] string[] status);
+        Task<Pet[]> FindPetsByStatusAsync([Query] string status);
 
         /// <summary>
         /// Finds Pets by tags
@@ -48,9 +48,10 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreOpenApi3.Api
         /// Updates a pet in the store with form data
         /// </summary>
         /// <param name="petId">ID of pet that needs to be updated</param>
-        /// <param name="form">An extension method is generated to support the exact parameters.</param>
+        /// <param name="name">Name of pet that needs to be updated</param>
+        /// <param name="status">Status of pet that needs to be updated</param>
         [Post("/pet/{petId}")]
-        Task UpdatePetWithFormAsync([Path] long petId, [Body(BodySerializationMethod.UrlEncoded)] IDictionary<string, object> form);
+        Task UpdatePetWithFormAsync([Path] long petId, [Query] string name, [Query] string status);
 
         /// <summary>
         /// Deletes a pet
@@ -63,9 +64,9 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreOpenApi3.Api
         /// uploads an image
         /// </summary>
         /// <param name="petId">ID of pet to update</param>
-        /// <param name="content">An extension method is generated to support the exact parameters.</param>
+        /// <param name="additionalMetadata">Additional Metadata</param>
         [Post("/pet/{petId}/uploadImage")]
-        Task<ApiResponse> UploadFileAsync([Path] long petId, HttpContent content);
+        Task<ApiResponse> UploadFileAsync([Path] long petId, [Query] string additionalMetadata);
 
         /// <summary>
         /// Returns pet inventories by status
@@ -76,13 +77,14 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreOpenApi3.Api
         /// <summary>
         /// Place an order for a pet
         /// </summary>
+        /// <param name="order"></param>
         [Post("/store/order")]
-        Task<Order> PlaceOrderAsync();
+        Task<Order> PlaceOrderAsync([Body] Order order);
 
         /// <summary>
         /// Find purchase order by ID
         /// </summary>
-        /// <param name="orderId">ID of pet that needs to be fetched</param>
+        /// <param name="orderId">ID of order that needs to be fetched</param>
         [Get("/store/order/{orderId}")]
         Task<Order> GetOrderByIdAsync([Path] long orderId);
 
@@ -96,20 +98,16 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreOpenApi3.Api
         /// <summary>
         /// Create user
         /// </summary>
+        /// <param name="user"></param>
         [Post("/user")]
-        Task CreateUserAsync();
+        Task<User> CreateUserAsync([Body] User user);
 
         /// <summary>
         /// Creates list of users with given input array
         /// </summary>
-        [Post("/user/createWithArray")]
-        Task CreateUsersWithArrayInputAsync();
-
-        /// <summary>
-        /// Creates list of users with given input array
-        /// </summary>
+        /// <param name="user"></param>
         [Post("/user/createWithList")]
-        Task CreateUsersWithListInputAsync();
+        Task<User> CreateUsersWithListInputAsync([Body] User[] user);
 
         /// <summary>
         /// Logs user into the system
@@ -133,11 +131,12 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreOpenApi3.Api
         Task<User> GetUserByNameAsync([Path] string username);
 
         /// <summary>
-        /// Updated user
+        /// Update user
         /// </summary>
-        /// <param name="username">name that need to be updated</param>
+        /// <param name="username">name that need to be deleted</param>
+        /// <param name="user"></param>
         [Put("/user/{username}")]
-        Task UpdateUserAsync([Path] string username);
+        Task UpdateUserAsync([Path] string username, [Body] User user);
 
         /// <summary>
         /// Delete user

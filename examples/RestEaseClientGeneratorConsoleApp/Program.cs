@@ -1,7 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Threading.Tasks;
-using Microsoft.OpenApi.Readers;
+﻿using Microsoft.OpenApi.Readers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using RestEase;
@@ -10,6 +7,9 @@ using RestEaseClientGenerator.Settings;
 using RestEaseClientGenerator.Types;
 using RestEaseClientGeneratorConsoleApp.Examples.PetStore.Api;
 using RestEaseClientGeneratorConsoleApp.Examples.PetStore.Models;
+using System;
+using System.IO;
+using System.Threading.Tasks;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace RestEaseClientGeneratorConsoleApp
@@ -23,9 +23,11 @@ namespace RestEaseClientGeneratorConsoleApp
             var petStoreOpenApi3Settings = new GeneratorSettings
             {
                 Namespace = "RestEaseClientGeneratorConsoleApp.Examples.PetStoreOpenApi3",
-                ApiName = "PetStoreOpenApi3"
+                ApiName = "PetStoreOpenApi3",
+                GenerateFormUrlEncodedExtensionMethods = true,
+                GenerateMultipartFormDataExtensionMethods = true
             };
-            foreach (var file in generator.FromStream(File.OpenRead("Examples\\petstore-openapi3.yml"), petStoreOpenApi3Settings, out OpenApiDiagnostic diagnosticPetStoreOpenApi3))
+            foreach (var file in generator.FromStream(File.OpenRead("Examples\\petstore-openapi3.json"), petStoreOpenApi3Settings, out OpenApiDiagnostic diagnosticPetStoreOpenApi3))
             {
                 File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/PetStoreOpenApi3/{file.Path}/{file.Name}", file.Content);
             }
@@ -65,12 +67,10 @@ namespace RestEaseClientGeneratorConsoleApp
                 File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Infura/{file.Path}/{file.Name}", file.Content);
             }
 
-            OpenApiDiagnostic diagnosticCog;
-            foreach (var file in generator.FromStream(File.OpenRead("Examples\\cognitive-services-personalizer.json"), "RestEaseClientGeneratorConsoleApp.Examples.Cog", "Cog", out diagnosticCog))
+            foreach (var file in generator.FromStream(File.OpenRead("Examples\\cognitive-services-personalizer.json"), "RestEaseClientGeneratorConsoleApp.Examples.Cog", "Cog", out var diagnosticCog))
             {
                 File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Cog/{file.Path}/{file.Name}", file.Content);
             }
-            Console.WriteLine(JsonSerializer.Serialize(diagnosticCog));
 
             foreach (var file in generator.FromStream(File.OpenRead("Examples\\SpeechServices.json"), "RestEaseClientGeneratorConsoleApp.Examples.SpeechServices", "SpeechServices", out var diagnosticSpeech))
             {
@@ -93,36 +93,9 @@ namespace RestEaseClientGeneratorConsoleApp
                 File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/ComputerVision/{file.Path}/{file.Name}", file.Content);
             }
 
-            await PetStore();
-        }
+            await PetStoreTests.Run();
 
-        private static async Task PetStore()
-        {
-            var settings = new JsonSerializerSettings
-            {
-                ContractResolver = new CamelCasePropertyNamesContractResolver()
-            };
-            var petStoreApi = new RestClient("https://petstore.swagger.io/v2")
-            {
-                JsonSerializerSettings = settings
-            }.For<IPetStoreApi>();
-
-            var findPetsByTags = await petStoreApi.FindPetsByTagsAsync(new[] { "cat" });
-            foreach (var find in findPetsByTags)
-            {
-                Console.WriteLine(JsonSerializer.Serialize(find));
-            }
-
-            var addPet = await petStoreApi.AddPetAsync(new Pet
-            {
-                Id = 1000,
-                Name = "Rossa",
-                Status = "Sleepy"
-            });
-            Console.WriteLine(addPet.ToString());
-
-            var getPetById = await petStoreApi.GetPetByIdAsync(1000);
-            Console.WriteLine(JsonSerializer.Serialize(getPetById));
+            await PetStoreOpenApi3ApiTests.Run();
         }
     }
 }
