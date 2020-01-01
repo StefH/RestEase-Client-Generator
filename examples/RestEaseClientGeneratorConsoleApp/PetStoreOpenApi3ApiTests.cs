@@ -21,7 +21,9 @@ namespace RestEaseClientGeneratorConsoleApp
             {
                 ContractResolver = new CamelCasePropertyNamesContractResolver()
             };
-            var petStoreApi = new RestClient("http://localhost:8080/api/v3") // https://petstore3-7ea5e6b7-1956-45e8-b452-21d94116e2c4.azurewebsites.net/api/v3
+            string urlLocal = "http://localhost:8080/api/v3";
+            string urlAzure = "https://petstore3-7ea5e6b7-1956-45e8-b452-21d94116e2c4.azurewebsites.net/api/v3";
+            var petStoreApi = new RestClient(urlAzure)
             {
                 JsonSerializerSettings = settings
             }.For<IPetStoreOpenApi3Api>();

@@ -64,10 +64,6 @@ namespace RestEaseClientGenerator.Mappers
 
         private RestEaseInterfaceMethodDetails MapOperationToMappingModel(RestEaseInterface @interface, string path, string httpMethod, OpenApiOperation operation)
         {
-            if (path == "/pet/{petId}/uploadImage")
-            {
-                int x = 0;
-            }
             string methodRestEaseForAnnotation = httpMethod.ToPascalCase();
 
             string methodRestEaseMethodName = GeneratedRestEaseMethodName(path, operation, methodRestEaseForAnnotation);
@@ -84,10 +80,10 @@ namespace RestEaseClientGenerator.Mappers
 
             var extensionMethodParameterList = new List<RestEaseParameter>();
             var bodyParameterList = new List<RestEaseParameter>();
-            string detectedRequestContentType = null;
+            (string DetectedRequestContentType, bool IsSpecial) x = (null, false);
             if (operation.RequestBody != null)
             {
-                detectedRequestContentType = MapRequest(operation, bodyParameterList, extensionMethodParameterList);
+                x = MapRequest(operation, bodyParameterList, extensionMethodParameterList);
             }
 
             var methodParameterList = pathParameterList
@@ -156,6 +152,10 @@ namespace RestEaseClientGenerator.Mappers
 
             var method = new RestEaseInterfaceMethodDetails
             {
+                Headers = new List<string>
+                {
+                    $"[Header(\"{HttpKnownHeaderNames.ContentType}\", \"{x.DetectedRequestContentType}\")]"
+                },
                 Summary = operation.Summary ?? $"{methodRestEaseMethodName} ({path})",
                 SummaryParameters = methodParameterList.Select(mp => $"<param name=\"{mp.Identifier}\">{mp.Summary.StripHtml()}</param>").ToList(),
                 RestEaseAttribute = $"[{methodRestEaseForAnnotation}(\"{path}\")]",
@@ -168,7 +168,7 @@ namespace RestEaseClientGenerator.Mappers
                 }
             };
 
-            if (detectedRequestContentType != null)
+            if (x.IsSpecial)
             {
                 var combinedMethodParameterList = new List<RestEaseParameter>
                 {
@@ -196,18 +196,21 @@ namespace RestEaseClientGenerator.Mappers
                     }
                 };
                 method.ExtensionMethodParameters = extensionMethodParameterList;
-                method.ExtensionMethodContentType = detectedRequestContentType;
+                method.ExtensionMethodContentType = x.DetectedRequestContentType;
             }
 
             return method;
         }
 
-        private string MapRequest(OpenApiOperation operation, ICollection<RestEaseParameter> bodyParameterList, List<RestEaseParameter> extensionMethodParameterList)
+        private (string DetectedContentType, bool IsExtension) MapRequest(OpenApiOperation operation, ICollection<RestEaseParameter> bodyParameterList, List<RestEaseParameter> extensionMethodParameterList)
         {
             string detectedRequestContentType = null;
+            bool isExtension = false;
 
             if (TryGetOpenApiMediaType(operation.RequestBody.Content, SupportedContentTypes.ApplicationJson, out OpenApiMediaType requestJson))
             {
+                detectedRequestContentType = SupportedContentTypes.ApplicationJson;
+
                 string bodyParameter;
                 switch (requestJson.Schema?.GetSchemaType())
                 {
@@ -264,6 +267,8 @@ namespace RestEaseClientGenerator.Mappers
                     Summary = httpContentDescription,
                     IsSpecial = true
                 });
+
+                isExtension = true;
             }
             else if (TryGetOpenApiMediaType(operation.RequestBody.Content, SupportedContentTypes.ApplicationOctetStream, out OpenApiMediaType requestOctetStream))
             {
@@ -291,6 +296,8 @@ namespace RestEaseClientGenerator.Mappers
                     Summary = httpContentDescription,
                     IsSpecial = true
                 });
+
+                isExtension = true;
             }
             else if (TryGetOpenApiMediaType(operation.RequestBody.Content, SupportedContentTypes.ApplicationFormUrlEncoded, out OpenApiMediaType requestFormUrlencoded))
             {
@@ -316,10 +323,11 @@ namespace RestEaseClientGenerator.Mappers
                     Summary = description,
                     IsSpecial = true
                 });
+
+                isExtension = true;
             }
 
-
-            return detectedRequestContentType;
+            return (detectedRequestContentType, isExtension);
         }
 
         private string GeneratedRestEaseMethodName(string path, OpenApiOperation operation, string httpMethodPascalCased)

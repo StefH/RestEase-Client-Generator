@@ -8,6 +8,8 @@ namespace RestEaseClientGenerator.Models
 
         public ICollection<string> SummaryParameters { get; set; }
 
+        public ICollection<string> Headers { get; set; }
+
         public string RestEaseAttribute { get; set; }
 
         public RestEaseInterfaceMethod RestEaseMethod { get; set; }

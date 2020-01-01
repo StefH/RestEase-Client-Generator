@@ -101,6 +101,7 @@ namespace RestEaseClientGenerator
                 builder.AppendLine("using System;");
                 builder.AppendLine("using System.Collections.Generic;");
                 builder.AppendLine("using System.Net.Http;");
+                // builder.AppendLine("using System.Net.Http.Headers;");
                 builder.AppendLine("using System.Threading.Tasks;");
                 builder.AppendLine("using RestEase;");
                 builder.AppendLine($"using {AppendModelsNamespace(@interface.Namespace, settings)};");
@@ -179,18 +180,19 @@ namespace RestEaseClientGenerator
                 switch (parameter.SchemaType)
                 {
                     case SchemaType.File:
+                        string identifierName = $"{parameter.Identifier}Content";
                         switch (settings.MultipartFormDataFileType)
                         {
                             case MultipartFormDataFileType.Stream:
-                                builder.AppendLine($"            var {parameter.Identifier}Content = new StreamContent({parameter.Identifier});");
+                                builder.AppendLine($"            var {identifierName} = new StreamContent({parameter.Identifier});");
                                 break;
 
                             default:
-                                builder.AppendLine($"            var {parameter.Identifier}Content = new ByteArrayContent({parameter.Identifier});");
+                                builder.AppendLine($"            var {identifierName} = new ByteArrayContent({parameter.Identifier});");
                                 break;
                         }
 
-                        builder.AppendLine($"            content.Add({parameter.Identifier}Content);");
+                        builder.AppendLine($"            content.Add({identifierName});");
                         builder.AppendLine();
                         break;
 
@@ -231,18 +233,21 @@ namespace RestEaseClientGenerator
                         {
                             case SchemaFormat.Binary:
                             case SchemaFormat.Byte:
+                                string identifierName = $"{parameter.Identifier}Content";
                                 switch (settings.ApplicationOctetStreamType)
                                 {
                                     case ApplicationOctetStreamType.Stream:
-                                        builder.AppendLine($"            var {parameter.Identifier}Content = new StreamContent({parameter.Identifier});");
+                                        builder.AppendLine($"            var {identifierName} = new StreamContent({parameter.Identifier});");
                                         break;
 
                                     default:
-                                        builder.AppendLine($"            var {parameter.Identifier}Content = new ByteArrayContent({parameter.Identifier});");
+                                        builder.AppendLine($"            var {identifierName} = new ByteArrayContent({parameter.Identifier});");
                                         break;
                                 }
 
-                                builder.AppendLine($"            content.Add({parameter.Identifier}Content);");
+                                // builder.AppendLine($"            {identifierName}.Headers.ContentType = new MediaTypeHeaderValue(\"{method.ExtensionMethodContentType}\");");
+
+                                builder.AppendLine($"            content.Add({identifierName});");
                                 builder.AppendLine();
 
                                 break;
