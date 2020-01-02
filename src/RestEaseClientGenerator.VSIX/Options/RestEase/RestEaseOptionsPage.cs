@@ -75,6 +75,11 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         public bool GenerateFormUrlEncodedExtensionMethods { get; set; } = true;
 
         [Category(Interface)]
+        [DisplayName("Generate ApplicationOctetStream Extension methods")]
+        [Description("Generate Extension methods for ApplicationOctetStream methods. The default value is 'true'.")]
+        public bool GenerateApplicationOctetStreamExtensionMethods { get; set; } = true;
+
+        [Category(Interface)]
         [DisplayName("Return Object from Method")]
         [Description("Return Object from Method when Response is defined but no Model is specified. The default value is 'false'.")]
         public bool ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified { get; set; }

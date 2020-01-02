@@ -38,16 +38,16 @@ namespace RestEaseClientGeneratorConsoleApp
 
             //await petStoreApi.DeletePetAsync(1000);
 
-            var addPet = await petStoreApi.AddPetAsync(new Pet
-            {
-                Id = 1000,
-                Name = "Rossa",
-                Category = new Category { Id = 1, Name = "cat" },
-                Tags = new[] { new Tag { Id = 1, Name = "cat" } },
-                Status = "Sleepy",
-                PhotoUrls = new string[] { }
-            });
-            Console.WriteLine("AddPetAsync:" + JsonSerializer.Serialize(addPet));
+            //var addPet = await petStoreApi.AddPetAsync(new Pet
+            //{
+            //    Id = 1000,
+            //    Name = "Rossa",
+            //    Category = new Category { Id = 1, Name = "cat" },
+            //    Tags = new[] { new Tag { Id = 1, Name = "cat" } },
+            //    Status = "Sleepy",
+            //    PhotoUrls = new string[] { }
+            //});
+            //Console.WriteLine("AddPetAsync:" + JsonSerializer.Serialize(addPet));
 
             var getPetById = await petStoreApi.GetPetByIdAsync(1000);
             Console.WriteLine("GetPetByIdAsync:" + JsonSerializer.Serialize(getPetById));
@@ -55,10 +55,9 @@ namespace RestEaseClientGeneratorConsoleApp
             //var uploadFile = await petStoreApi.UploadFileAsync(1000, "rossa", Encoding.UTF8.GetBytes("Poes"));
             //Console.WriteLine("UploadFileAsync:" + uploadFile.ToString());
 
-            var stream = File.OpenRead("Examples\\petstore-openapi3.json");
-
-            var uploadFile = await petStoreApi.UploadFileAsync(1000, "rossa", stream);
-            Console.WriteLine("UploadFileAsync:" + uploadFile.ToString());
+            //var stream = File.OpenRead("Examples\\petstore-openapi3.json");
+            //var uploadFile = await petStoreApi.UploadFileAsync(1000, "rossa", stream);
+            //Console.WriteLine("UploadFileAsync:" + uploadFile.ToString());
         }
     }
 }

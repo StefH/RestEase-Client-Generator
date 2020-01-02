@@ -25,7 +25,7 @@ namespace RestEaseClientGeneratorConsoleApp
             var findPetsByTags = await petStoreApi.FindPetsByTagsAsync(new[] { "cat" });
             foreach (var find in findPetsByTags)
             {
-                Console.WriteLine(System.Text.Json.JsonSerializer.Serialize(find));
+                // Console.WriteLine(System.Text.Json.JsonSerializer.Serialize(find));
             }
 
             var addPet = await petStoreApi.AddPetAsync(new Pet
@@ -34,10 +34,10 @@ namespace RestEaseClientGeneratorConsoleApp
                 Name = "Rossa",
                 Status = "Sleepy"
             });
-            Console.WriteLine(addPet.ToString());
+            // Console.WriteLine(addPet.ToString());
 
             var getPetById = await petStoreApi.GetPetByIdAsync(1000);
-            Console.WriteLine(JsonSerializer.Serialize(getPetById));
+            // Console.WriteLine(JsonSerializer.Serialize(getPetById));
         }
     }
 }
