@@ -104,6 +104,8 @@ var findPetsByTags = await petStoreApi.FindPetsByTagsAsync(new[] { "cat" });
 | Array Type | Array type to use. The default is Array 'T[]'.
 | Fail on OpenApi Errors | Don't generate the file if errors are detected when parsing the specification file. The default value is 'false'.
 | Use DateTimeOffset | Use DateTimeOffset instead of DateTime. The default value is 'false'.
+| Namespace for the Api | Append this namespace for the Api. The default value is 'Api'.
+| Namespace for the Models | Append this namespace for the Models. The default value is 'Models'.
 
 ### Interface
 | Name | Description |
@@ -112,7 +114,11 @@ var findPetsByTags = await petStoreApi.FindPetsByTagsAsync(new[] { "cat" });
 | Add Authorization header | Add an Authorization header to the generated interface. The default value is 'false'.
 | Method ReturnType | The ReturnType to use for the methods. The default value is 'Type'. For more details see https://github.com/canton7/RestEase#return-types.
 | MultipartFormData FileType | The MultipartFormData FileType to use. The default value is 'byte[]'.
+| ApplicationOctetStreamType | The ApplicationOctetStream Type to use. The default value is 'byte[]'.
 | Generate MultipartFormData Extension methods | Generate Extension methods for MultipartFormData methods. The default value is 'true'.
+| Generate FormUrlEncoded Extension methods | Generate Extension methods for FormUrlEncoded methods. The default value is 'true'.
+| Generate ApplicationOctetStream Extension methods | Generate Extension methods for ApplicationOctetStream methods. The default value is 'true'.
+| Return Object from Method | Return Object from Method when Response is defined but no Model is specified. The default value is 'false'.
 
 ### Screenshot
 ![Settings](https://github.com/StefH/RestEase-Client-Generator/raw/master/resources/settings.png)
