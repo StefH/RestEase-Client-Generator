@@ -23,6 +23,7 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
                 AppendAsync = options.AppendAsync;
                 GenerateMultipartFormDataExtensionMethods = options.GenerateMultipartFormDataExtensionMethods;
                 GenerateFormUrlEncodedExtensionMethods = options.GenerateFormUrlEncodedExtensionMethods;
+                GenerateApplicationOctetStreamExtensionMethods = options.GenerateApplicationOctetStreamExtensionMethods;
                 MultipartFormDataFileType = options.MultipartFormDataFileType;
                 ApplicationOctetStreamType = options.ApplicationOctetStreamType;
                 ApiNamespace = options.ApiNamespace;
@@ -39,6 +40,7 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
                 AppendAsync = true;
                 GenerateMultipartFormDataExtensionMethods = true;
                 GenerateFormUrlEncodedExtensionMethods = true;
+                GenerateApplicationOctetStreamExtensionMethods = true;
                 MultipartFormDataFileType = MultipartFormDataFileType.ByteArray;
                 ApplicationOctetStreamType = ApplicationOctetStreamType.ByteArray;
                 ApiNamespace = "Api";
@@ -56,6 +58,7 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
                 Trace.WriteLine($"{nameof(AppendAsync)} = {AppendAsync}");
                 Trace.WriteLine($"{nameof(GenerateMultipartFormDataExtensionMethods)} = {GenerateMultipartFormDataExtensionMethods}");
                 Trace.WriteLine($"{nameof(GenerateFormUrlEncodedExtensionMethods)} = {GenerateFormUrlEncodedExtensionMethods}");
+                Trace.WriteLine($"{nameof(GenerateApplicationOctetStreamExtensionMethods)} = {GenerateApplicationOctetStreamExtensionMethods}");
                 Trace.WriteLine($"{nameof(MultipartFormDataFileType)} = {MultipartFormDataFileType}");
                 Trace.WriteLine($"{nameof(ApplicationOctetStreamType)} = {ApplicationOctetStreamType}");
                 Trace.WriteLine($"{nameof(ApiNamespace)} = {ApiNamespace}");
