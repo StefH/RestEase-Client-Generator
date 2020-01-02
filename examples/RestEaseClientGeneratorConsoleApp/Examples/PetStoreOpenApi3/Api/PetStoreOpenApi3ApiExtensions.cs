@@ -20,13 +20,11 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreOpenApi3.Api
         public static Task<ApiResponse> UploadFileAsync(this IPetStoreOpenApi3Api api, long petId, string additionalMetadata, byte[] file)
         {
             var content = new MultipartFormDataContent();
-            content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
 
             var fileContent = new ByteArrayContent(file);
-            //fileContent.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
-            //content.Add(fileContent);
+            content.Add(fileContent);
 
-            return api.UploadFileAsync(petId, fileContent, additionalMetadata);
+            return api.UploadFileAsync(petId, content, additionalMetadata);
         }
     }
 }

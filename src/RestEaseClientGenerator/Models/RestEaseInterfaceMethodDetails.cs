@@ -6,9 +6,9 @@ namespace RestEaseClientGenerator.Models
     {
         public string Summary { get; set; }
 
-        public ICollection<string> SummaryParameters { get; set; }
+        public ICollection<string> SummaryParameters { get; set; } = new List<string>();
 
-        public ICollection<string> Headers { get; set; }
+        public ICollection<string> Headers { get; set; } = new List<string>();
 
         public string RestEaseAttribute { get; set; }
 

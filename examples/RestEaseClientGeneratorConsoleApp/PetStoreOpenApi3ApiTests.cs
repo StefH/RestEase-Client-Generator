@@ -23,6 +23,7 @@ namespace RestEaseClientGeneratorConsoleApp
             };
             string urlLocal = "http://localhost:8080/api/v3";
             string urlAzure = "https://petstore3-7ea5e6b7-1956-45e8-b452-21d94116e2c4.azurewebsites.net/api/v3";
+            string urlPostman = "https://postman-echo.com/post";
             var petStoreApi = new RestClient(urlAzure)
             {
                 JsonSerializerSettings = settings
@@ -34,21 +35,26 @@ namespace RestEaseClientGeneratorConsoleApp
             //    Console.WriteLine("FindPetsByTagsAsync:" + JsonSerializer.Serialize(find));
             //}
 
-            //var addPet = await petStoreApi.AddPetAsync(new Pet
-            //{
-            //    Id = 1000,
-            //    Name = "Rossa",
-            //    Category = new Category { Id = 1, Name = "cat" },
-            //    Tags = new[] { new Tag { Id = 1, Name = "cat" } },
-            //    Status = "Sleepy"
-            //});
-            //Console.WriteLine("AddPetAsync:" + JsonSerializer.Serialize(addPet));
+            //await petStoreApi.DeletePetAsync(1000);
+
+            var addPet = await petStoreApi.AddPetAsync(new Pet
+            {
+                Id = 1000,
+                Name = "Rossa",
+                Category = new Category { Id = 1, Name = "cat" },
+                Tags = new[] { new Tag { Id = 1, Name = "cat" } },
+                Status = "Sleepy",
+                PhotoUrls = new string[] { }
+            });
+            Console.WriteLine("AddPetAsync:" + JsonSerializer.Serialize(addPet));
+
+            var getPetById = await petStoreApi.GetPetByIdAsync(1000);
+            Console.WriteLine("GetPetByIdAsync:" + JsonSerializer.Serialize(getPetById));
 
             var uploadFile = await petStoreApi.UploadFileAsync(1000, "rossa", Encoding.UTF8.GetBytes("Poes"));
-            Console.WriteLine("UploadFileAsync:" + JsonSerializer.Serialize(uploadFile));
+            Console.WriteLine("UploadFileAsync:" + uploadFile.ToString());
 
-            //var getPetById = await petStoreApi.GetPetByIdAsync(1000);
-            //Console.WriteLine("GetPetByIdAsync:" + JsonSerializer.Serialize(getPetById));
+
         }
     }
 }

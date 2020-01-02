@@ -80,10 +80,10 @@ namespace RestEaseClientGenerator.Mappers
 
             var extensionMethodParameterList = new List<RestEaseParameter>();
             var bodyParameterList = new List<RestEaseParameter>();
-            (string DetectedRequestContentType, bool IsSpecial) x = (null, false);
+            (string DetectedRequestContentType, bool IsSpecial) requestInfo = (null, false);
             if (operation.RequestBody != null)
             {
-                x = MapRequest(operation, bodyParameterList, extensionMethodParameterList);
+                requestInfo = MapRequest(operation, bodyParameterList, extensionMethodParameterList);
             }
 
             var methodParameterList = pathParameterList
@@ -152,10 +152,6 @@ namespace RestEaseClientGenerator.Mappers
 
             var method = new RestEaseInterfaceMethodDetails
             {
-                Headers = new List<string>
-                {
-                    $"[Header(\"{HttpKnownHeaderNames.ContentType}\", \"{x.DetectedRequestContentType}\")]"
-                },
                 Summary = operation.Summary ?? $"{methodRestEaseMethodName} ({path})",
                 SummaryParameters = methodParameterList.Select(mp => $"<param name=\"{mp.Identifier}\">{mp.Summary.StripHtml()}</param>").ToList(),
                 RestEaseAttribute = $"[{methodRestEaseForAnnotation}(\"{path}\")]",
@@ -168,7 +164,15 @@ namespace RestEaseClientGenerator.Mappers
                 }
             };
 
-            if (x.IsSpecial)
+            if (!string.IsNullOrEmpty(requestInfo.DetectedRequestContentType))
+            {
+                method.Headers = new List<string>
+                {
+                    $"[Header(\"{HttpKnownHeaderNames.ContentType}\", \"{requestInfo.DetectedRequestContentType}\")]"
+                };
+            }
+
+            if (requestInfo.IsSpecial)
             {
                 var combinedMethodParameterList = new List<RestEaseParameter>
                 {
@@ -196,7 +200,7 @@ namespace RestEaseClientGenerator.Mappers
                     }
                 };
                 method.ExtensionMethodParameters = extensionMethodParameterList;
-                method.ExtensionMethodContentType = x.DetectedRequestContentType;
+                method.ExtensionMethodContentType = requestInfo.DetectedRequestContentType;
             }
 
             return method;
