@@ -1,3 +1,7 @@
+# 1.0.3 (02 January 2020)
+- [#7](https://github.com/StefH/RestEase-Client-Generator/pull/7) - ExtensionMethods, InlineModels, Headers [enhancement] contributed by [StefH](https://github.com/StefH)
+- [#8](https://github.com/StefH/RestEase-Client-Generator/pull/8) - Generate ApplicationOctetStream Extension methods [enhancement] contributed by [StefH](https://github.com/StefH)
+
 # 1.0.2 (27 December 2019)
 - [#6](https://github.com/StefH/RestEase-Client-Generator/pull/6) - Support application/x-www-form-urlencoded contributed by [StefH](https://github.com/StefH)
 - [#5](https://github.com/StefH/RestEase-Client-Generator/issues/5) - formData is not correctly generated [bug]
