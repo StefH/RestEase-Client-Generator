@@ -30,11 +30,17 @@ namespace RestEaseClientGeneratorConsoleApp
                 JsonSerializerSettings = settings
             }.For<IPetStoreOpenApi3Api>();
 
-            //var findPetsByTags = await petStoreApi.FindPetsByTagsAsync(new[] { "cat" });
-            //foreach (var find in findPetsByTags)
-            //{
-            //    Console.WriteLine("FindPetsByTagsAsync:" + JsonSerializer.Serialize(find));
-            //}
+            var findPetsByTags = await petStoreApi.FindPetsByTagsAsync(new[] { "cat" });
+            foreach (var find in findPetsByTags)
+            {
+                Console.WriteLine("FindPetsByTagsAsync:" + JsonSerializer.Serialize(find));
+            }
+
+            var findPetsByStatusAsync = await petStoreApi.FindPetsByStatusAsync("available");
+            foreach (var find in findPetsByStatusAsync)
+            {
+                Console.WriteLine("FindPetsByStatusAsync:" + JsonSerializer.Serialize(find));
+            }
 
             //await petStoreApi.DeletePetAsync(1000);
 
@@ -44,7 +50,7 @@ namespace RestEaseClientGeneratorConsoleApp
             //    Name = "Rossa",
             //    Category = new Category { Id = 1, Name = "cat" },
             //    Tags = new[] { new Tag { Id = 1, Name = "cat" } },
-            //    Status = "Sleepy",
+            //    Status = "available",
             //    PhotoUrls = new string[] { }
             //});
             //Console.WriteLine("AddPetAsync:" + JsonSerializer.Serialize(addPet));
