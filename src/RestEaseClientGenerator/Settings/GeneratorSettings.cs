@@ -7,7 +7,8 @@ namespace RestEaseClientGenerator.Settings
         public bool SingleFile { get; set; }
 
         #region General
-        public ArrayType ArrayType { get; set; }
+
+        public ArrayType ArrayType { get; set; } = ArrayType.Array;
 
         public string Namespace { get; set; }
 
@@ -23,13 +24,13 @@ namespace RestEaseClientGenerator.Settings
 
         public bool AddAuthorizationHeader { get; set; }
 
-        public MethodReturnType MethodReturnType { get; set; }
+        public MethodReturnType MethodReturnType { get; set; } = MethodReturnType.Type;
 
         public bool AppendAsync { get; set; } = true;
 
-        public MultipartFormDataFileType MultipartFormDataFileType { get; set; }
+        public MultipartFormDataFileType MultipartFormDataFileType { get; set; } = MultipartFormDataFileType.ByteArray;
 
-        public ApplicationOctetStreamType ApplicationOctetStreamType { get; set; }
+        public ApplicationOctetStreamType ApplicationOctetStreamType { get; set; } = ApplicationOctetStreamType.ByteArray;
 
         public bool GenerateMultipartFormDataExtensionMethods { get; set; } = true;
 
@@ -38,6 +39,8 @@ namespace RestEaseClientGenerator.Settings
         public bool GenerateFormUrlEncodedExtensionMethods { get; set; } = true;
 
         public bool ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified { get; set; }
+
+        public PreferredContentType PreferredContentType { get; set; } = PreferredContentType.ApplicationJson;
 
         public SecurityDefinitionType SecurityDefinitionType { get; set; } = SecurityDefinitionType.Header;
         #endregion

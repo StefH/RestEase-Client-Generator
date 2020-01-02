@@ -211,10 +211,20 @@ namespace RestEaseClientGenerator.Mappers
             string detectedRequestContentType = null;
             bool isExtension = false;
 
-            if (TryGetOpenApiMediaType(operation.RequestBody.Content, SupportedContentTypes.ApplicationJson, out OpenApiMediaType requestJson))
+            OpenApiMediaType requestJson = null;
+            if (Settings.PreferredContentType == PreferredContentType.ApplicationJson &&
+                TryGetOpenApiMediaType(operation.RequestBody.Content, SupportedContentTypes.ApplicationJson, out requestJson))
             {
                 detectedRequestContentType = SupportedContentTypes.ApplicationJson;
+            }
+            else if (Settings.PreferredContentType == PreferredContentType.ApplicationXml &&
+                TryGetOpenApiMediaType(operation.RequestBody.Content, SupportedContentTypes.ApplicationXml, out requestJson))
+            {
+                detectedRequestContentType = SupportedContentTypes.ApplicationXml;
+            }
 
+            if (detectedRequestContentType != null)
+            {
                 string bodyParameter;
                 switch (requestJson.Schema?.GetSchemaType())
                 {
