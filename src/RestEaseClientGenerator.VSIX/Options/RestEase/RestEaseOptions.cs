@@ -84,6 +84,8 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
 
         public bool GenerateFormUrlEncodedExtensionMethods { get; set; }
 
+        public bool GenerateApplicationOctetStreamExtensionMethods { get; set; }
+
         public string ApiNamespace { get; set; }
 
         public string ModelsNamespace { get; set; }

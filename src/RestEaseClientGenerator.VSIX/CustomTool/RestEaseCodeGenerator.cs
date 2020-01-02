@@ -77,6 +77,7 @@ namespace RestEaseClientGenerator.VSIX.CustomTool
                     MethodReturnType = options.MethodReturnType,
                     AppendAsync = options.AppendAsync,
                     GenerateFormUrlEncodedExtensionMethods = options.GenerateFormUrlEncodedExtensionMethods,
+                    GenerateApplicationOctetStreamExtensionMethods = options.GenerateApplicationOctetStreamExtensionMethods,
                     GenerateMultipartFormDataExtensionMethods = options.GenerateMultipartFormDataExtensionMethods,
                     MultipartFormDataFileType = options.MultipartFormDataFileType,
                     ApplicationOctetStreamType = options.ApplicationOctetStreamType,

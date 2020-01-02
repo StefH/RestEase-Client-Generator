@@ -1,15 +1,9 @@
-﻿using Microsoft.OpenApi.Readers;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
-using RestEase;
+﻿using System.IO;
+using System.Threading.Tasks;
+using Microsoft.OpenApi.Readers;
 using RestEaseClientGenerator;
 using RestEaseClientGenerator.Settings;
 using RestEaseClientGenerator.Types;
-using RestEaseClientGeneratorConsoleApp.Examples.PetStore.Api;
-using RestEaseClientGeneratorConsoleApp.Examples.PetStore.Models;
-using System;
-using System.IO;
-using System.Threading.Tasks;
 
 namespace RestEaseClientGeneratorConsoleApp
 {
