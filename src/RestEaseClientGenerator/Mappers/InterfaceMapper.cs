@@ -1,13 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.OpenApi.Models;
+﻿using Microsoft.OpenApi.Models;
 using RestEaseClientGenerator.Constants;
 using RestEaseClientGenerator.Extensions;
 using RestEaseClientGenerator.Models;
 using RestEaseClientGenerator.Settings;
 using RestEaseClientGenerator.Types;
 using RestEaseClientGenerator.Utils;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace RestEaseClientGenerator.Mappers
 {
@@ -17,11 +18,22 @@ namespace RestEaseClientGenerator.Mappers
         {
         }
 
-        public RestEaseInterface Map(OpenApiPaths paths)
+        public RestEaseInterface Map(OpenApiDocument openApiDocument)
         {
             string name = CSharpUtils.CreateValidIdentifier(Settings.ApiName, CasingType.Pascal);
+            string interfaceName = $"I{name}Api";
 
-            var methods = paths.Select(p => MapPath(p.Key, p.Value)).SelectMany(x => x).ToList();
+            var @interface = new RestEaseInterface
+            {
+                Name = interfaceName,
+                Namespace = Settings.Namespace,
+            };
+
+            foreach (var path in openApiDocument.Paths)
+            {
+                MapPath(@interface, path.Key, path.Value);
+            }
+            //var methods = paths.Select(p => MapPath(interfaceName, p.Key, p.Value)).SelectMany(x => x).ToList();
 
             //var counts = methods
             //    .GroupBy(method => method.RestEaseMethod.Name + method.RestEaseMethod.Parameters)
@@ -39,25 +51,22 @@ namespace RestEaseClientGenerator.Mappers
             //    }
             //}
 
-            return new RestEaseInterface
-            {
-                Name = $"I{name}Api",
-                Namespace = Settings.Namespace,
-                Methods = methods
-            };
+            return @interface;
         }
 
-        private IEnumerable<RestEaseInterfaceMethodDetails> MapPath(string path, OpenApiPathItem pathItem)
+        private void MapPath(RestEaseInterface @interface, string path, OpenApiPathItem pathItem)
         {
-            return pathItem.Operations.Select(o => MapOperationToMappingModel(path, o.Key.ToString(), o.Value));
+            foreach (var restEaseInterfaceMethodDetails in pathItem.Operations.Select(o => MapOperationToMappingModel(@interface, path, o.Key.ToString(), o.Value)))
+            {
+                @interface.Methods.Add(restEaseInterfaceMethodDetails);
+            }
         }
 
-        private RestEaseInterfaceMethodDetails MapOperationToMappingModel(string path, string httpMethod, OpenApiOperation operation)
+        private RestEaseInterfaceMethodDetails MapOperationToMappingModel(RestEaseInterface @interface, string path, string httpMethod, OpenApiOperation operation)
         {
             string methodRestEaseForAnnotation = httpMethod.ToPascalCase();
-            string methodRestEaseMethod = !string.IsNullOrEmpty(operation.OperationId) ?
-                operation.OperationId.ToPascalCase() :
-                GenerateNameForMethod(path, methodRestEaseForAnnotation);
+
+            string methodRestEaseMethodName = GeneratedRestEaseMethodName(path, operation, methodRestEaseForAnnotation);
 
             var pathParameterList = operation.Parameters
                 .Where(p => p.In == ParameterLocation.Path && p.Schema.GetSchemaType() != SchemaType.Object)
@@ -69,96 +78,307 @@ namespace RestEaseClientGenerator.Mappers
                 .Select(p => BuildValidParameter(p.Name, p.Schema, p.Required, p.Description, "Query"))
                 .ToList();
 
-            var bodyParameterList = new List<(string Identifier, string Text, string Summary)>();
+            var extensionMethodParameterList = new List<RestEaseParameter>();
+            var bodyParameterList = new List<RestEaseParameter>();
+            (string DetectedRequestContentType, bool IsSpecial) requestInfo = (null, false);
             if (operation.RequestBody != null)
             {
-                if (TryGetOpenApiMediaType(operation.RequestBody.Content, SupportedContentTypes.ApplicationJson, out OpenApiMediaType requestMediaTypeJson))
-                {
-                    string bodyParameter;
-                    switch (requestMediaTypeJson.Schema?.GetSchemaType())
-                    {
-                        case SchemaType.Array:
-                            string arrayType = requestMediaTypeJson.Schema.Items.Reference != null ? requestMediaTypeJson.Schema.Items.Reference.Id : MapSchema(requestMediaTypeJson.Schema.Items, "", requestMediaTypeJson.Schema.Nullable).ToString();
-                            bodyParameter = MapArrayType(arrayType);
-                            break;
-
-                        case SchemaType.Object:
-                            bodyParameter = requestMediaTypeJson.Schema.Reference.Id;
-                            break;
-
-                        default:
-                            bodyParameter = "";
-                            break;
-                    }
-
-                    if (!string.IsNullOrEmpty(bodyParameter))
-                    {
-                        string bodyParameterIdentifierName = bodyParameter.ToCamelCase();
-                        bodyParameterList.Add((bodyParameterIdentifierName, $"[Body] {bodyParameter} {bodyParameterIdentifierName}", requestMediaTypeJson.Schema?.Description));
-                    }
-                }
-                else if (TryGetOpenApiMediaType(operation.RequestBody.Content, SupportedContentTypes.MultipartFormData, out OpenApiMediaType requestMultipartFormData))
-                {
-                    string httpContentDescription = "Add an extension method to support the exact parameters. See https://github.com/canton7/RestEase#wrapping-other-methods for more info.";
-                    bodyParameterList.Add(("content", "HttpContent content", httpContentDescription)); // requestMultipartFormData.Schema?.Description
-                }
-                else if (TryGetOpenApiMediaType(operation.RequestBody.Content, SupportedContentTypes.ApplicationFormUrlEncoded, out OpenApiMediaType requestFormUrlencoded))
-                {
-                    bodyParameterList.Add(("formData", "[Body(BodySerializationMethod.UrlEncoded)] IDictionary<string, object> formData", requestFormUrlencoded.Schema?.Description));
-                }
+                requestInfo = MapRequest(operation, bodyParameterList, extensionMethodParameterList);
             }
 
             var methodParameterList = pathParameterList
                 .Union(bodyParameterList)
                 .Union(queryParameterList)
+                .OrderByDescending(p => p.Required)
                 .ToList();
 
             var response = operation.Responses.First();
 
             object returnType = null;
-            if (response.Value != null && TryGetOpenApiMediaType(response.Value.Content, SupportedContentTypes.ApplicationJson, out OpenApiMediaType responseMediaType))
+            if (response.Value != null && TryGetOpenApiMediaType(response.Value.Content, SupportedContentTypes.ApplicationJson, out OpenApiMediaType responseJson))
             {
-                switch (responseMediaType.Schema?.GetSchemaType())
+                switch (responseJson.Schema?.GetSchemaType())
                 {
                     case SchemaType.Array:
-                        string arrayType = responseMediaType.Schema.Items.Reference != null ?
-                            responseMediaType.Schema.Items.Reference.Id :
-                            MapSchema(responseMediaType.Schema.Items, "", responseMediaType.Schema.Nullable).ToString();
+                        string arrayType = responseJson.Schema.Items.Reference != null ?
+                            responseJson.Schema.Items.Reference.Id :
+                            MapSchema(responseJson.Schema.Items, null, responseJson.Schema.Nullable).ToString();
 
                         returnType = MapArrayType(arrayType);
                         break;
 
                     case SchemaType.Object:
-                        returnType = responseMediaType.Schema.Reference != null ?
-                            responseMediaType.Schema.Reference.Id :
-                            MapSchema(responseMediaType.Schema.AdditionalProperties, "", responseMediaType.Schema.AdditionalProperties.Nullable, false);
+                        if (responseJson.Schema.Reference != null)
+                        {
+                            // Existing defined object
+                            returnType = responseJson.Schema.Reference.Id;
+                        }
+                        else if (responseJson.Schema.AdditionalProperties != null)
+                        {
+                            // Use AdditionalProperties
+                            returnType = MapSchema(responseJson.Schema.AdditionalProperties, null, responseJson.Schema.AdditionalProperties.Nullable, false);
+                        }
+                        else
+                        {
+                            // Object is defined `inline`, create a new Model and use that one.
+                            string className = !string.IsNullOrEmpty(responseJson.Schema.Title)
+                                ? CSharpUtils.CreateValidIdentifier(responseJson.Schema.Title, CasingType.Pascal)
+                                : $"{methodRestEaseMethodName.ToPascalCase()}Result";
+
+                            var existingModel = @interface.InlineModels.FirstOrDefault(m => m.ClassName == className);
+                            if (existingModel == null)
+                            {
+                                var newModel = new RestEaseModel
+                                {
+                                    Namespace = Settings.Namespace,
+                                    ClassName = className,
+                                    Properties = MapSchema(responseJson.Schema, null, false) as ICollection<string>
+                                };
+                                @interface.InlineModels.Add(newModel);
+                            }
+
+                            returnType = className;
+                        }
+                        break;
+
+                    default:
+                        if (Settings.ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified)
+                        {
+                            returnType = "object";
+                        }
                         break;
                 }
             }
 
-            var summaryParameters = methodParameterList.Select(mp => $"<param name=\"{mp.Identifier}\">{mp.Summary}</param>").ToList();
-
             var method = new RestEaseInterfaceMethodDetails
             {
-                Summary = operation.Summary ?? $"{methodRestEaseMethod} ({path})",
-                SummaryParameters = summaryParameters,
+                Summary = operation.Summary ?? $"{methodRestEaseMethodName} ({path})",
+                SummaryParameters = methodParameterList.Select(mp => $"<param name=\"{mp.Identifier}\">{mp.Summary.StripHtml()}</param>").ToList(),
                 RestEaseAttribute = $"[{methodRestEaseForAnnotation}(\"{path}\")]",
                 RestEaseMethod = new RestEaseInterfaceMethod
                 {
                     ReturnType = MapReturnType(returnType),
-                    Name = methodRestEaseMethod,
-                    Parameters = string.Join(", ", methodParameterList.Select(mp => mp.Text))
+                    Name = methodRestEaseMethodName,
+                    ParametersAsString = string.Join(", ", methodParameterList.Select(mp => mp.IdentifierWithRestEase)),
+                    Parameters = methodParameterList
                 }
             };
+
+            if (!string.IsNullOrEmpty(requestInfo.DetectedRequestContentType))
+            {
+                method.Headers = new List<string>
+                {
+                    $"[Header(\"{HttpKnownHeaderNames.ContentType}\", \"{requestInfo.DetectedRequestContentType}\")]"
+                };
+            }
+
+            if (requestInfo.IsSpecial)
+            {
+                var combinedMethodParameterList = new List<RestEaseParameter>
+                {
+                    new RestEaseParameter
+                    {
+                        Identifier = "api",
+                        IdentifierWithType = $"this {@interface.Name} api",
+                        IdentifierWithRestEase = $"this {@interface.Name} api",
+                        Summary = "The Api"
+                    }
+                };
+                combinedMethodParameterList.AddRange(methodParameterList.Where(p => !p.IsSpecial));
+                combinedMethodParameterList.AddRange(extensionMethodParameterList);
+
+                method.ExtensionMethodDetails = new RestEaseInterfaceMethodDetails
+                {
+                    Summary = operation.Summary ?? $"{methodRestEaseMethodName} ({path})",
+                    SummaryParameters = combinedMethodParameterList.Select(mp => $"<param name=\"{mp.Identifier}\">{mp.Summary.StripHtml()}</param>").ToList(),
+                    RestEaseMethod = new RestEaseInterfaceMethod
+                    {
+                        ReturnType = method.RestEaseMethod.ReturnType,
+                        Name = method.RestEaseMethod.Name,
+                        ParametersAsString = string.Join(", ", combinedMethodParameterList.Select(mp => mp.IdentifierWithType)),
+                        Parameters = combinedMethodParameterList
+                    }
+                };
+                method.ExtensionMethodParameters = extensionMethodParameterList;
+                method.ExtensionMethodContentType = requestInfo.DetectedRequestContentType;
+            }
 
             return method;
         }
 
+        private (string DetectedContentType, bool IsExtension) MapRequest(OpenApiOperation operation, ICollection<RestEaseParameter> bodyParameterList, List<RestEaseParameter> extensionMethodParameterList)
+        {
+            string detectedRequestContentType = null;
+            bool isExtension = false;
+
+            if (TryGetOpenApiMediaType(operation.RequestBody.Content, SupportedContentTypes.ApplicationJson, out OpenApiMediaType requestJson))
+            {
+                detectedRequestContentType = SupportedContentTypes.ApplicationJson;
+
+                string bodyParameter;
+                switch (requestJson.Schema?.GetSchemaType())
+                {
+                    case SchemaType.Array:
+                        string arrayType = requestJson.Schema.Items.Reference != null
+                            ? requestJson.Schema.Items.Reference.Id
+                            : MapSchema(requestJson.Schema.Items, "", requestJson.Schema.Nullable).ToString();
+                        bodyParameter = MapArrayType(arrayType);
+                        break;
+
+                    case SchemaType.Object:
+                        bodyParameter = requestJson.Schema.Reference.Id;
+                        break;
+
+                    default:
+                        bodyParameter = string.Empty;
+                        break;
+                }
+
+                if (!string.IsNullOrEmpty(bodyParameter))
+                {
+                    string bodyParameterIdentifierName = bodyParameter.ToCamelCase();
+                    bodyParameterList.Add(new RestEaseParameter
+                    {
+                        Required = true,
+                        Identifier = bodyParameterIdentifierName,
+                        IdentifierWithType = $"{bodyParameter} {bodyParameterIdentifierName}",
+                        IdentifierWithRestEase = $"[Body] {bodyParameter} {bodyParameterIdentifierName}",
+                        Summary = requestJson.Schema?.Description
+                    });
+                }
+            }
+            else if (TryGetOpenApiMediaType(operation.RequestBody.Content, SupportedContentTypes.MultipartFormData, out OpenApiMediaType requestMultipartFormData))
+            {
+                detectedRequestContentType = SupportedContentTypes.MultipartFormData;
+
+                string httpContentDescription;
+                if (!Settings.GenerateMultipartFormDataExtensionMethods)
+                {
+                    httpContentDescription = "Manually add an extension method to support the exact parameters. See https://github.com/canton7/RestEase#wrapping-other-methods for more info.";
+                }
+                else
+                {
+                    httpContentDescription = "An extension method is generated to support the exact parameters.";
+                    extensionMethodParameterList.AddRange(requestMultipartFormData.Schema.Properties.Select(p => BuildValidParameter(p.Key, p.Value, p.Value.Nullable, p.Value.Description, string.Empty)));
+                }
+
+                bodyParameterList.Add(new RestEaseParameter
+                {
+                    Required = true,
+                    Identifier = "content",
+                    IdentifierWithType = "HttpContent content",
+                    IdentifierWithRestEase = "[Body] HttpContent content",
+                    Summary = httpContentDescription,
+                    IsSpecial = true
+                });
+
+                isExtension = true;
+            }
+            else if (TryGetOpenApiMediaType(operation.RequestBody.Content, SupportedContentTypes.ApplicationOctetStream, out OpenApiMediaType requestOctetStream))
+            {
+                detectedRequestContentType = SupportedContentTypes.ApplicationOctetStream;
+
+                string httpContentDescription;
+                if (!Settings.GenerateApplicationOctetStreamExtensionMethods)
+                {
+                    httpContentDescription = "Manually add an extension method to support the exact parameters. See https://github.com/canton7/RestEase#wrapping-other-methods for more info.";
+                }
+                else
+                {
+                    httpContentDescription = "An extension method is generated to support the exact parameters.";
+                    var extensionParameter = BuildValidParameter("file", requestOctetStream.Schema, true, "The content.", null);
+                    extensionMethodParameterList.Add(extensionParameter);
+                    extensionMethodParameterList.AddRange(requestOctetStream.Schema.Properties.Select(p => BuildValidParameter(p.Key, p.Value, p.Value.Nullable, p.Value.Description, string.Empty)));
+                }
+
+                bodyParameterList.Add(new RestEaseParameter
+                {
+                    Required = true,
+                    Identifier = "content",
+                    IdentifierWithType = "HttpContent content",
+                    IdentifierWithRestEase = "[Body] HttpContent content",
+                    Summary = httpContentDescription,
+                    IsSpecial = true
+                });
+
+                isExtension = true;
+            }
+            else if (TryGetOpenApiMediaType(operation.RequestBody.Content, SupportedContentTypes.ApplicationFormUrlEncoded, out OpenApiMediaType requestFormUrlencoded))
+            {
+                detectedRequestContentType = SupportedContentTypes.ApplicationFormUrlEncoded;
+
+                string description;
+                if (!Settings.GenerateMultipartFormDataExtensionMethods)
+                {
+                    description = "Manually add an extension method to support the exact parameters.";
+                }
+                else
+                {
+                    description = "An extension method is generated to support the exact parameters.";
+                    extensionMethodParameterList.AddRange(requestFormUrlencoded.Schema.Properties.Select(p => BuildValidParameter(p.Key, p.Value, p.Value.Nullable, p.Value.Description, string.Empty)));
+                }
+
+                bodyParameterList.Add(new RestEaseParameter
+                {
+                    Required = true,
+                    Identifier = "form",
+                    IdentifierWithType = "IDictionary<string, object> form",
+                    IdentifierWithRestEase = "[Body(BodySerializationMethod.UrlEncoded)] IDictionary<string, object> form",
+                    Summary = description,
+                    IsSpecial = true
+                });
+
+                isExtension = true;
+            }
+
+            return (detectedRequestContentType, isExtension);
+        }
+
+        private string GeneratedRestEaseMethodName(string path, OpenApiOperation operation, string httpMethodPascalCased)
+        {
+            string methodRestEaseMethod;
+            if (!string.IsNullOrEmpty(operation.OperationId) && char.IsLetter(operation.OperationId[0]))
+            {
+                methodRestEaseMethod = operation.OperationId.ToPascalCase();
+            }
+            else
+            {
+                var list = new List<string> { httpMethodPascalCased };
+
+                bool byFound = false;
+                foreach (string part in path.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    if (part.StartsWith("{"))
+                    {
+                        var text = part.Split(new[] { '{', '}' }, StringSplitOptions.RemoveEmptyEntries)[0].ToPascalCase();
+
+                        list.Add(byFound ? $"By{text}" : $"And{text}");
+
+                        byFound = true;
+                    }
+                    else
+                    {
+                        list.Add(part.ToPascalCase());
+                    }
+                }
+
+                methodRestEaseMethod = string.Join("", list);
+            }
+
+            return Regex.Replace(methodRestEaseMethod, @"Async$", string.Empty);
+        }
+
         private string MapReturnType(object returnType)
         {
-            if (returnType == null)
+            string returnTypeAsString = returnType as string;
+            if (returnTypeAsString == null)
             {
                 return "Task";
+            }
+
+            if (returnTypeAsString == Settings.ModelsNamespace)
+            {
+                returnTypeAsString = $"{Settings.ModelsNamespace}.{Settings.ModelsNamespace}";
             }
 
             switch (Settings.MethodReturnType)
@@ -170,63 +390,54 @@ namespace RestEaseClientGenerator.Mappers
                     return "Task<HttpResponseMessage>";
 
                 case MethodReturnType.Response:
-                    return $"Task<Response<{returnType}>>";
+                    return $"Task<Response<{returnTypeAsString}>>";
 
                 case MethodReturnType.Stream:
                     return "Task<Stream>";
 
                 default:
-                    return $"Task<{returnType}>";
+                    return $"Task<{returnTypeAsString}>";
             }
         }
 
-        private string GenerateNameForMethod(string path, string httpMethodPascalCased)
+        private RestEaseParameter BuildValidParameter(string identifier, OpenApiSchema schema, bool required, string description, string parameterType, params string[] extraAttributes)
         {
-            var list = new List<string> { httpMethodPascalCased };
-
-            bool byFound = false;
-            foreach (string part in path.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries))
-            {
-                if (part.StartsWith("{"))
-                {
-                    var text = part.Split(new[] { '{', '}' }, StringSplitOptions.RemoveEmptyEntries)[0].ToPascalCase();
-
-                    list.Add(byFound ? $"By{text}" : $"And{text}");
-
-                    byFound = true;
-                }
-                else
-                {
-                    list.Add(part.ToPascalCase());
-                }
-            }
-
-            return string.Join("", list);
-        }
-
-        private (string Identifier, string Text, string Summary) BuildValidParameter(string identifier, OpenApiSchema schema, bool required, string description, string parameterType, params string[] extraAttributes)
-        {
-            var attributes = new List<string>(extraAttributes);
+            var attributes = new List<string>();
             string validIdentifier = CSharpUtils.CreateValidIdentifier(identifier);
 
+            object paramWithType;
             if (identifier != validIdentifier)
             {
                 attributes.Add($"Name = \"{identifier}\"");
+                attributes.AddRange(extraAttributes);
 
-                return (
-                    validIdentifier,
-                    $"[{parameterType}({string.Join(", ", attributes)}] {MapSchema(schema, validIdentifier, !required, false)}",
-                    description
-                );
+                paramWithType = MapSchema(schema, validIdentifier, !required, false);
+
+                return new RestEaseParameter
+                {
+                    Required = required,
+                    Identifier = validIdentifier,
+                    SchemaType = schema.GetSchemaType(),
+                    SchemaFormat = schema.GetSchemaFormat(),
+                    IdentifierWithType = $"{paramWithType}",
+                    IdentifierWithRestEase = $"[{parameterType}({string.Join(", ", attributes)})] {paramWithType}",
+                    Summary = description
+                };
             }
 
-            string attributesBetweenParentheses = attributes.Count == 0 ? string.Empty : $"({string.Join(", ", attributes)})";
+            string extraAttributesBetweenParentheses = extraAttributes.Length == 0 ? string.Empty : $"({string.Join(", ", extraAttributes)})";
+            paramWithType = MapSchema(schema, identifier, !required, false);
 
-            return (
-                identifier,
-                $"[{parameterType}{attributesBetweenParentheses}] {MapSchema(schema, identifier, !required, false)}",
-                description
-            );
+            return new RestEaseParameter
+            {
+                Required = required,
+                Identifier = identifier,
+                SchemaType = schema.GetSchemaType(),
+                SchemaFormat = schema.GetSchemaFormat(),
+                IdentifierWithType = $"{paramWithType}",
+                IdentifierWithRestEase = $"[{parameterType}{extraAttributesBetweenParentheses}] {paramWithType}",
+                Summary = description
+            };
         }
 
         private bool TryGetOpenApiMediaType(IDictionary<string, OpenApiMediaType> contentTypes, string contentType, out OpenApiMediaType mediaType)

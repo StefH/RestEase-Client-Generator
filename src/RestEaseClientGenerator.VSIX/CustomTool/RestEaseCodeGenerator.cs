@@ -75,7 +75,14 @@ namespace RestEaseClientGenerator.VSIX.CustomTool
                     AddAuthorizationHeader = options.AddAuthorizationHeader,
                     UseDateTimeOffset = options.UseDateTimeOffset,
                     MethodReturnType = options.MethodReturnType,
-                    AppendAsync = options.AppendAsync
+                    AppendAsync = options.AppendAsync,
+                    GenerateFormUrlEncodedExtensionMethods = options.GenerateFormUrlEncodedExtensionMethods,
+                    GenerateMultipartFormDataExtensionMethods = options.GenerateMultipartFormDataExtensionMethods,
+                    MultipartFormDataFileType = options.MultipartFormDataFileType,
+                    ApplicationOctetStreamType = options.ApplicationOctetStreamType,
+                    ApiNamespace = options.ApiNamespace,
+                    ModelsNamespace = options.ModelsNamespace,
+                    ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified = options.ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified
                 };
                 var result = _generator.FromStream(File.OpenRead(wszInputFilePath), settings, out var diagnostic);
 

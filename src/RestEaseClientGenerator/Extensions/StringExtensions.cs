@@ -3,10 +3,17 @@
 namespace RestEaseClientGenerator.Extensions
 {
     /// <summary>
-    /// Copied from https://raw.githubusercontent.com/andeart/CaseConversions/master/CaseConversions/CaseConversion.cs
+    /// Some code copied from https://raw.githubusercontent.com/andeart/CaseConversions/master/CaseConversions/CaseConversion.cs
     /// </summary>
-    internal static class CaseConversionExtensions
+    internal static class StringExtensions
     {
+        public static string StripHtml(this string text)
+        {
+            return text == null ?
+                null : 
+                Regex.Replace(text, "<.*?>|\r\n|\r|\n", string.Empty);
+        }
+
         /// <summary>
         /// Converts text to camelCase.
         /// </summary>

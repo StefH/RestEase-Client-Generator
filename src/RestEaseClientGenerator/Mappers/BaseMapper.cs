@@ -8,6 +8,8 @@ namespace RestEaseClientGenerator.Mappers
 {
     public abstract class BaseMapper
     {
+        private string DateTime => Settings.UseDateTimeOffset ? "DateTimeOffset" : "DateTime";
+
         protected readonly GeneratorSettings Settings;
 
         protected BaseMapper(GeneratorSettings settings)
@@ -36,8 +38,6 @@ namespace RestEaseClientGenerator.Mappers
             }
         }
 
-        protected string DateTime => Settings.UseDateTimeOffset ? "DateTimeOffset" : "DateTime";
-
         protected object MapSchema(OpenApiSchema schema, string name, bool isNullable, bool pascalCase = true)
         {
             if (schema == null)
@@ -45,7 +45,7 @@ namespace RestEaseClientGenerator.Mappers
                 return null;
             }
 
-            string nameCamelCase = string.IsNullOrEmpty(name) ? "" : $" {(pascalCase ? name.ToPascalCase() : name)}";
+            string nameCamelCase = string.IsNullOrEmpty(name) ? string.Empty : $" {(pascalCase ? name.ToPascalCase() : name)}";
             string nullable = isNullable ? "?" : string.Empty;
 
             switch (schema.GetSchemaType())
@@ -96,10 +96,15 @@ namespace RestEaseClientGenerator.Mappers
                             return $"{DateTime}{nullable}{nameCamelCase}";
 
                         case SchemaFormat.Byte:
-                            return $"{MapArrayType("byte")}{nullable}{nameCamelCase}";
-
                         case SchemaFormat.Binary:
-                            return $"object{nameCamelCase}";
+                            switch (Settings.ApplicationOctetStreamType)
+                            {
+                                case ApplicationOctetStreamType.Stream:
+                                    return $"System.IO.Stream{nameCamelCase}";
+
+                                default:
+                                    return $"byte[]{nameCamelCase}";
+                            }
 
                         default:
                             return $"string{nameCamelCase}";
@@ -129,6 +134,16 @@ namespace RestEaseClientGenerator.Mappers
                     }
 
                     return list;
+
+                case SchemaType.File:
+                    switch (Settings.MultipartFormDataFileType)
+                    {
+                        case MultipartFormDataFileType.Stream:
+                            return $"System.IO.Stream{nameCamelCase}";
+
+                        default:
+                            return $"byte[]{nameCamelCase}";
+                    }
 
                 default:
                     return null;

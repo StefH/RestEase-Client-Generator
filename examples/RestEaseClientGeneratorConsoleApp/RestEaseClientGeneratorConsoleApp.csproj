@@ -10,13 +10,11 @@
     <!--<Compile Remove="PetStoreJson\**\*.cs" />-->
     <!--<Compile Remove="Infura\**\*.cs" />-->
     <!--<Compile Remove="Cog\**\*.cs" />-->
-
-    <Folder Include="Cog\Api\" />
-    <Folder Include="Cog\Models\" />
-    <Folder Include="Infura\Api\" />
-    <Folder Include="Infura\Models\" />
-    <Folder Include="PetStore\Api\" />
-    <Folder Include="PetStore\Models\" />
+    <Folder Include="Examples\ComputerVision\" />
+    <Folder Include="Examples\FormRecognizer\Api\" />
+    <Folder Include="Examples\FormRecognizer\Models\" />
+    <Folder Include="Examples\SpeechServices\Api\" />
+    <Folder Include="Examples\SpeechServices\Models\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -28,22 +26,28 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="cognitive-services-personalizer.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Generator>RestEaseCodeGenerator</Generator>
-    </None>
-    <None Update="infura.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Generator>RestEaseCodeGenerator</Generator>
-      <LastGenOutput>infura.cs</LastGenOutput>
-      <CustomToolNamespace>InfuraTest</CustomToolNamespace>
-    </None>
-    <None Update="PetStore.json">
-      <!--<Generator>OpenApiCodeGenerator</Generator>
-      <LastGenOutput>PetStore.cs</LastGenOutput>-->
+    <None Update="Examples\cognitive-services-personalizer.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="petstore.yaml">
+    <None Update="Examples\ComputerVision.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\FormRecognizer.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\infura.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\petstore-openapi3.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\PetStore.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\petstore.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\SpeechServices.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

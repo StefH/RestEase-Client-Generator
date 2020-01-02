@@ -6,6 +6,10 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
     {
         ArrayType ArrayType { get; set; }
 
+        MultipartFormDataFileType MultipartFormDataFileType { get; set; }
+
+        ApplicationOctetStreamType ApplicationOctetStreamType { get; set; }
+
         bool FailOnOpenApiErrors { get; set; }
 
         bool AddAuthorizationHeader { get; set; }
@@ -15,5 +19,15 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         MethodReturnType MethodReturnType { get; set; }
 
         bool AppendAsync { get; set; }
+
+        bool GenerateMultipartFormDataExtensionMethods { get; set; }
+
+        bool GenerateFormUrlEncodedExtensionMethods { get; set; }
+
+        string ApiNamespace { get; set; }
+
+        string ModelsNamespace { get; set; }
+
+        bool ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified { get; set; }
     }
 }

@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 
-namespace RestEaseClientGeneratorConsoleApp.PetStore.Models
+namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreOpenApi3.Models
 {
-    public class Tag
+    public class Category
     {
         public long Id { get; set; }
 

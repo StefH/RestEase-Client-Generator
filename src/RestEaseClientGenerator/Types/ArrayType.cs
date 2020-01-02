@@ -7,7 +7,7 @@ namespace RestEaseClientGenerator.Types
     [TypeConverter(typeof(EnumDescriptionConverter))]
     public enum ArrayType
     {
-        [Description("[]")]
+        [Description("T[]")]
         Array,
 
         [Description("IEnumerable<T>")]

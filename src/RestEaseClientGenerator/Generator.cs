@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using Microsoft.OpenApi.Readers;
+using RestEaseClientGenerator.Builders;
 using RestEaseClientGenerator.Mappers;
 using RestEaseClientGenerator.Models;
 using RestEaseClientGenerator.Settings;
-using RestEaseClientGenerator.Types;
 
 namespace RestEaseClientGenerator
 {
@@ -26,126 +25,60 @@ namespace RestEaseClientGenerator
             var reader = new OpenApiStreamReader();
             var openApiDocument = reader.Read(stream, out diagnostic);
 
-            var files = new List<GeneratedFile>();
+            var models = new ModelsMapper(settings).Map(openApiDocument.Components.Schemas).ToList();
+            var @interface = new InterfaceMapper(settings).Map(openApiDocument);
 
-            var @interface = new InterfaceMapper(settings).Map(openApiDocument.Paths);
-            if (settings.SingleFile)
+            var files = new List<GeneratedFile>
             {
-                var singleFileBuilder = new StringBuilder(BuildInterface(@interface, settings));
-                singleFileBuilder.AppendLine();
-                var models = new ModelsMapper(settings).Map(openApiDocument.Components.Schemas);
-                foreach (var modelCode in models.Select(m => BuildModel(m, settings)))
+                // Add Interface
+                new GeneratedFile
                 {
-                    singleFileBuilder.AppendLine(modelCode);
+                    Path = settings.ApiNamespace,
+                    Name = $"{@interface.Name}.cs",
+                    Content = new InterfaceBuilder(settings).Build(@interface, models.Any())
                 }
+            };
 
+            var extensions = new ExtensionMethodsBuilder(settings).Build(@interface, @interface.Name);
+            if (extensions != null)
+            {
+                // Add ApiExtension
                 files.Add(new GeneratedFile
                 {
-                    Path = string.Empty,
-                    Name = $"{settings.ApiName}.cs",
-                    Content = singleFileBuilder.ToString()
+                    Path = settings.ApiNamespace,
+                    Name = $"{new string(@interface.Name.Skip(1).ToArray())}Extensions.cs",
+                    Content = extensions
                 });
             }
-            else
-            {
-                files.Add(new GeneratedFile
-                {
-                    Path = "Api",
-                    Name = $"{@interface.Name}.cs",
-                    Content = BuildInterface(@interface, settings)
-                });
 
-                var models = new ModelsMapper(settings).Map(openApiDocument.Components.Schemas);
-                files.AddRange(models.Select(model => new GeneratedFile
+            // Add Models
+            var modelBuilder = new ModelBuilder(settings);
+            files.AddRange(models.Select(model => new GeneratedFile
+            {
+                Path = settings.ModelsNamespace,
+                Name = $"{model.ClassName}.cs",
+                Content = modelBuilder.Build(model)
+            }));
+
+            // Add Inline Models
+            files.AddRange(@interface.InlineModels.Select(model => new GeneratedFile
+            {
+                Path = settings.ModelsNamespace,
+                Name = $"{model.ClassName}.cs",
+                Content = modelBuilder.Build(model)
+            }));
+
+            if (settings.SingleFile)
+            {
+                return new[] { new GeneratedFile
                 {
-                    Path = "Models",
-                    Name = $"{model.ClassName}.cs",
-                    Content = BuildModel(model, settings)
-                }));
+                    Path = string.Empty,
+                    Name = $"{@interface.Name}.cs",
+                    Content = string.Join("\r\n", files.Select(f => f.Content))
+                }};
             }
 
             return files;
         }
-
-        #region Builders
-        private static string BuildInterface(RestEaseInterface api, GeneratorSettings settings)
-        {
-            var builder = new StringBuilder();
-            builder.AppendLine("using System;");
-            if (settings.ArrayType != ArrayType.Array)
-            {
-                builder.AppendLine("using System.Collections.Generic;");
-            }
-            builder.AppendLine("using System.Net.Http;");
-            if (settings.AddAuthorizationHeader)
-            {
-                builder.AppendLine("using System.Net.Http.Headers;");
-            }
-            builder.AppendLine("using System.Threading.Tasks;");
-            builder.AppendLine("using RestEase;");
-            builder.AppendLine($"using {api.Namespace}.Models;");
-            builder.AppendLine();
-            builder.AppendLine($"namespace {api.Namespace}.Api");
-            builder.AppendLine("{");
-            builder.AppendLine($"    public interface {api.Name}");
-            builder.AppendLine("    {");
-            if (settings.AddAuthorizationHeader)
-            {
-                builder.AppendLine("        [Header(\"Authorization\")]");
-                builder.AppendLine("        AuthenticationHeaderValue Authorization { get; set; }");
-                builder.AppendLine();
-            }
-            foreach (var method in api.Methods)
-            {
-                string asyncPostfix = settings.AppendAsync ? "Async" : string.Empty;
-
-                builder.AppendLine("        /// <summary>");
-                builder.AppendLine($"        /// {method.Summary}");
-                builder.AppendLine("        /// </summary>");
-                foreach (var p in method.SummaryParameters)
-                {
-                    builder.AppendLine($"        /// {p}");
-                }
-                builder.AppendLine($"        {method.RestEaseAttribute}");
-                builder.AppendLine($"        {method.RestEaseMethod.ReturnType} {method.RestEaseMethod.Name}{asyncPostfix}({method.RestEaseMethod.Parameters});");
-
-                if (method != api.Methods.Last())
-                {
-                    builder.AppendLine();
-                }
-            }
-            builder.AppendLine("    }");
-            builder.AppendLine("}");
-
-            return builder.ToString();
-        }
-
-        private static string BuildModel(RestEaseModel restEaseModel, GeneratorSettings settings)
-        {
-            var builder = new StringBuilder();
-            if (!settings.SingleFile && settings.ArrayType != ArrayType.Array)
-            {
-                builder.AppendLine("using System;");
-                builder.AppendLine("using System.Collections.Generic;");
-                builder.AppendLine();
-            }
-            builder.AppendLine($"namespace {restEaseModel.Namespace}.Models");
-            builder.AppendLine("{");
-            builder.AppendLine($"    public class {restEaseModel.ClassName}");
-            builder.AppendLine("    {");
-            foreach (var property in restEaseModel.Properties)
-            {
-                builder.AppendLine($"        public {property} {{ get; set; }}");
-                if (property != restEaseModel.Properties.Last())
-                {
-                    builder.AppendLine();
-                }
-            }
-            builder.AppendLine("    }");
-            builder.AppendLine("}");
-
-            return builder.ToString();
-        }
-        #endregion
     }
 }
