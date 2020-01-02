@@ -14,6 +14,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStore.Api
         /// </summary>
         /// <param name="pet">A pet for sale in the pet store</param>
         [Post("/pet")]
+        [Header("Content-Type", "application/json")]
         Task<object> AddPetAsync([Body] Pet pet);
 
         /// <summary>
@@ -21,6 +22,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStore.Api
         /// </summary>
         /// <param name="pet">A pet for sale in the pet store</param>
         [Put("/pet")]
+        [Header("Content-Type", "application/json")]
         Task<object> UpdatePetAsync([Body] Pet pet);
 
         /// <summary>
@@ -50,6 +52,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStore.Api
         /// <param name="petId">ID of pet that needs to be updated</param>
         /// <param name="form">An extension method is generated to support the exact parameters.</param>
         [Post("/pet/{petId}")]
+        [Header("Content-Type", "application/x-www-form-urlencoded")]
         Task<object> UpdatePetWithFormAsync([Path] long petId, [Body(BodySerializationMethod.UrlEncoded)] IDictionary<string, object> form);
 
         /// <summary>
@@ -65,7 +68,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStore.Api
         /// <param name="petId">ID of pet to update</param>
         /// <param name="content">An extension method is generated to support the exact parameters.</param>
         [Post("/pet/{petId}/uploadImage")]
-        Task<ApiResponse> UploadFileAsync([Path] long petId, HttpContent content);
+        [Header("Content-Type", "multipart/form-data")]
+        Task<ApiResponse> UploadFileAsync([Path] long petId, [Body] HttpContent content);
 
         /// <summary>
         /// Returns pet inventories by status
@@ -78,6 +82,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStore.Api
         /// </summary>
         /// <param name="order">An order for a pets from the pet store</param>
         [Post("/store/order")]
+        [Header("Content-Type", "application/json")]
         Task<Order> PlaceOrderAsync([Body] Order order);
 
         /// <summary>
@@ -99,6 +104,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStore.Api
         /// </summary>
         /// <param name="user">A User who is purchasing from the pet store</param>
         [Post("/user")]
+        [Header("Content-Type", "application/json")]
         Task<object> CreateUserAsync([Body] User user);
 
         /// <summary>
@@ -106,6 +112,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStore.Api
         /// </summary>
         /// <param name="iCollectionUser"></param>
         [Post("/user/createWithArray")]
+        [Header("Content-Type", "application/json")]
         Task<object> CreateUsersWithArrayInputAsync([Body] ICollection<User> iCollectionUser);
 
         /// <summary>
@@ -113,6 +120,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStore.Api
         /// </summary>
         /// <param name="iCollectionUser"></param>
         [Post("/user/createWithList")]
+        [Header("Content-Type", "application/json")]
         Task<object> CreateUsersWithListInputAsync([Body] ICollection<User> iCollectionUser);
 
         /// <summary>
@@ -142,6 +150,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStore.Api
         /// <param name="username">name that need to be deleted</param>
         /// <param name="user">A User who is purchasing from the pet store</param>
         [Put("/user/{username}")]
+        [Header("Content-Type", "application/json")]
         Task<object> UpdateUserAsync([Path] string username, [Body] User user);
 
         /// <summary>
