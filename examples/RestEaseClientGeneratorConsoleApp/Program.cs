@@ -25,7 +25,8 @@ namespace RestEaseClientGeneratorConsoleApp
                 ApiName = "PetStoreOpenApi3",
                 GenerateFormUrlEncodedExtensionMethods = true,
                 GenerateMultipartFormDataExtensionMethods = true,
-                GenerateApplicationOctetStreamExtensionMethods = true
+                GenerateApplicationOctetStreamExtensionMethods = true,
+                ApplicationOctetStreamType = ApplicationOctetStreamType.Stream
             };
             foreach (var file in generator.FromStream(File.OpenRead("Examples\\petstore-openapi3.json"), petStoreOpenApi3Settings, out OpenApiDiagnostic diagnosticPetStoreOpenApi3))
             {

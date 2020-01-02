@@ -4,6 +4,7 @@ using RestEase;
 using RestEaseClientGeneratorConsoleApp.Examples.PetStoreOpenApi3.Api;
 using RestEaseClientGeneratorConsoleApp.Examples.PetStoreOpenApi3.Models;
 using System;
+using System.IO;
 using System.Text;
 using System.Text.Unicode;
 using System.Threading.Tasks;
@@ -51,10 +52,13 @@ namespace RestEaseClientGeneratorConsoleApp
             var getPetById = await petStoreApi.GetPetByIdAsync(1000);
             Console.WriteLine("GetPetByIdAsync:" + JsonSerializer.Serialize(getPetById));
 
-            var uploadFile = await petStoreApi.UploadFileAsync(1000, "rossa", Encoding.UTF8.GetBytes("Poes"));
+            //var uploadFile = await petStoreApi.UploadFileAsync(1000, "rossa", Encoding.UTF8.GetBytes("Poes"));
+            //Console.WriteLine("UploadFileAsync:" + uploadFile.ToString());
+
+            var stream = File.OpenRead("Examples\\petstore-openapi3.json");
+
+            var uploadFile = await petStoreApi.UploadFileAsync(1000, "rossa", stream);
             Console.WriteLine("UploadFileAsync:" + uploadFile.ToString());
-
-
         }
     }
 }
