@@ -24,7 +24,7 @@
 
 //        public RequestDetails Map(KeyValuePair<string, OpenApiMediaType> detected)
 //        {
-//            if (detected.Key == SupportedContentTypes.MultipartFormData)
+//            if (detected.Key == SupportedContentType.MultipartFormData)
 //            {
 //                string httpContentDescription;
 //                if (!_settings.GenerateMultipartFormDataExtensionMethods)

@@ -1,19 +1,18 @@
 ﻿using RestEaseClientGenerator.Utils;
 using System.ComponentModel;
-using RestEaseClientGenerator.Constants;
 
 namespace RestEaseClientGenerator.Types
 {
     [TypeConverter(typeof(EnumDescriptionConverter))]
     public enum PreferredContentType
     {
-        [Description(SupportedContentTypes.ApplicationJson)]
+        [Description("application/json")]
         ApplicationJson,
 
-        [Description(SupportedContentTypes.ApplicationXml)]
+        [Description("application/xml")]
         ApplicationXml,
 
-        //[Description(SupportedContentTypes.ApplicationFormUrlEncoded)]
+        //[Description("")]
         //FormUrlencoded
     }
 }

@@ -18,8 +18,6 @@ namespace RestEaseClientGeneratorConsoleApp
                 File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Drc/{file.Path}/{file.Name}", file.Content);
             }
 
-            return;
-
             var petStoreOpenApi3Settings = new GeneratorSettings
             {
                 Namespace = "RestEaseClientGeneratorConsoleApp.Examples.PetStoreOpenApi302",

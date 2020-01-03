@@ -62,15 +62,15 @@ namespace RestEaseClientGenerator.Builders
 
                 switch (method.ExtensionMethodContentType)
                 {
-                    case SupportedContentTypes.MultipartFormData:
+                    case SupportedContentType.MultipartFormData:
                         BuildMultipartFormDataExtensionMethodBody(Settings, builder, method);
                         break;
 
-                    case SupportedContentTypes.ApplicationOctetStream:
+                    case SupportedContentType.ApplicationOctetStream:
                         BuildApplicationOctetStreamExtensionMethodBody(Settings, builder, method);
                         break;
 
-                    case SupportedContentTypes.ApplicationFormUrlEncoded:
+                    case SupportedContentType.ApplicationFormUrlEncoded:
                         BuildApplicationFormUrlEncodedExtensionMethodBody(Settings, builder, method);
                         break;
                 }

@@ -12,18 +12,18 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStore.Api
         /// <summary>
         /// Add a new pet to the store
         /// </summary>
-        /// <param name="pet">A pet for sale in the pet store</param>
+        /// <param name="content">A pet for sale in the pet store</param>
         [Post("/pet")]
         [Header("Content-Type", "application/json")]
-        Task<object> AddPetAsync([Body] Pet pet);
+        Task<object> AddPetAsync([Body] Pet content);
 
         /// <summary>
         /// Update an existing pet
         /// </summary>
-        /// <param name="pet">A pet for sale in the pet store</param>
+        /// <param name="content">A pet for sale in the pet store</param>
         [Put("/pet")]
         [Header("Content-Type", "application/json")]
-        Task<object> UpdatePetAsync([Body] Pet pet);
+        Task<object> UpdatePetAsync([Body] Pet content);
 
         /// <summary>
         /// Finds Pets by status
@@ -80,10 +80,10 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStore.Api
         /// <summary>
         /// Place an order for a pet
         /// </summary>
-        /// <param name="order">An order for a pets from the pet store</param>
+        /// <param name="content">An order for a pets from the pet store</param>
         [Post("/store/order")]
         [Header("Content-Type", "application/json")]
-        Task<Order> PlaceOrderAsync([Body] Order order);
+        Task<Order> PlaceOrderAsync([Body] Order content);
 
         /// <summary>
         /// Find purchase order by ID
@@ -102,26 +102,26 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStore.Api
         /// <summary>
         /// Create user
         /// </summary>
-        /// <param name="user">A User who is purchasing from the pet store</param>
+        /// <param name="content">A User who is purchasing from the pet store</param>
         [Post("/user")]
         [Header("Content-Type", "application/json")]
-        Task<object> CreateUserAsync([Body] User user);
+        Task<object> CreateUserAsync([Body] User content);
 
         /// <summary>
         /// Creates list of users with given input array
         /// </summary>
-        /// <param name="iCollectionUser"></param>
+        /// <param name="content">List of user object</param>
         [Post("/user/createWithArray")]
         [Header("Content-Type", "application/json")]
-        Task<object> CreateUsersWithArrayInputAsync([Body] ICollection<User> iCollectionUser);
+        Task<object> CreateUsersWithArrayInputAsync([Body] ICollection<User> content);
 
         /// <summary>
         /// Creates list of users with given input array
         /// </summary>
-        /// <param name="iCollectionUser"></param>
+        /// <param name="content">List of user object</param>
         [Post("/user/createWithList")]
         [Header("Content-Type", "application/json")]
-        Task<object> CreateUsersWithListInputAsync([Body] ICollection<User> iCollectionUser);
+        Task<object> CreateUsersWithListInputAsync([Body] ICollection<User> content);
 
         /// <summary>
         /// Logs user into the system
@@ -148,10 +148,10 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStore.Api
         /// Updated user
         /// </summary>
         /// <param name="username">name that need to be deleted</param>
-        /// <param name="user">A User who is purchasing from the pet store</param>
+        /// <param name="content">A User who is purchasing from the pet store</param>
         [Put("/user/{username}")]
         [Header("Content-Type", "application/json")]
-        Task<object> UpdateUserAsync([Path] string username, [Body] User user);
+        Task<object> UpdateUserAsync([Path] string username, [Body] User content);
 
         /// <summary>
         /// Delete user

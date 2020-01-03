@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using RestEaseClientGenerator.Types;
 
 namespace RestEaseClientGenerator.Models.Internal
 {
@@ -16,7 +17,7 @@ namespace RestEaseClientGenerator.Models.Internal
 
         public RestEaseInterfaceMethodDetails ExtensionMethodDetails { get; set; }
 
-        public string ExtensionMethodContentType { get; set; }
+        public SupportedContentType? ExtensionMethodContentType { get; set; }
 
         public ICollection<RestEaseParameter> ExtensionMethodParameters { get; set; }
     }

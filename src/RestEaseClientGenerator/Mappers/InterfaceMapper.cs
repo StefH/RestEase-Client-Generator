@@ -64,11 +64,6 @@ namespace RestEaseClientGenerator.Mappers
 
         private RestEaseInterfaceMethodDetails MapOperationToMappingModel(RestEaseInterface @interface, string path, string httpMethod, OpenApiOperation operation)
         {
-            if (path == "/Business/LargeRequest")
-            {
-                int y = 9;
-            }
-
             string methodRestEaseForAnnotation = httpMethod.ToPascalCase();
 
             string methodRestEaseMethodName = GeneratedRestEaseMethodName(path, operation, methodRestEaseForAnnotation);
@@ -94,14 +89,10 @@ namespace RestEaseClientGenerator.Mappers
             var headers = new List<string>();
             if (requestDetails != null)
             {
-                if (!string.IsNullOrEmpty(requestDetails.DetectedContentType))
+                if (requestDetails.DetectedContentType != null)
                 {
-                    headers.Add($"[Header(\"{HttpKnownHeaderNames.ContentType}\", \"{requestDetails.DetectedContentType}\")]");
+                    headers.Add($"[Header(\"{HttpKnownHeaderNames.ContentType}\", \"{requestDetails.DetectedContentType.GetDescription()}\")]");
                 }
-                //else if (requestDetails.ContentTypes.Count == 1)
-                //{
-                //    headers.Add($"[Header(\"{HttpKnownHeaderNames.ContentType}\", \"{requestDetails.ContentTypes.First()}\")]");
-                //}
                 else if (requestDetails.ContentTypes.Count > 1)
                 {
                     headerParameterList.Add(new RestEaseParameter
@@ -128,7 +119,7 @@ namespace RestEaseClientGenerator.Mappers
             var response = operation.Responses.First();
 
             object returnType = null;
-            if (response.Value != null && TryGetOpenApiMediaType(response.Value.Content, SupportedContentTypes.ApplicationJson, out OpenApiMediaType responseJson, out var _))
+            if (response.Value != null && TryGetOpenApiMediaType(response.Value.Content, SupportedContentType.ApplicationJson, out OpenApiMediaType responseJson, out var _))
             {
                 switch (responseJson.Schema?.GetSchemaType())
                 {
@@ -232,9 +223,9 @@ namespace RestEaseClientGenerator.Mappers
             return method;
         }
 
-        private RequestDetails MapRequestDetails(KeyValuePair<string, OpenApiMediaType> detected, ICollection<RestEaseParameter> bodyParameterList, List<RestEaseParameter> extensionMethodParameterList)
+        private RequestDetails MapRequestDetails(MediaTypeInfo detected, ICollection<RestEaseParameter> bodyParameterList, List<RestEaseParameter> extensionMethodParameterList, string bodyParameterDescription)
         {
-            if (detected.Key == SupportedContentTypes.MultipartFormData)
+            if (detected.Key == SupportedContentType.MultipartFormData)
             {
                 string httpContentDescription;
                 if (!Settings.GenerateMultipartFormDataExtensionMethods)
@@ -264,7 +255,7 @@ namespace RestEaseClientGenerator.Mappers
                 };
             }
 
-            if (detected.Key == SupportedContentTypes.ApplicationOctetStream)
+            if (detected.Key == SupportedContentType.ApplicationOctetStream)
             {
                 string httpContentDescription;
                 if (!Settings.GenerateApplicationOctetStreamExtensionMethods)
@@ -296,7 +287,7 @@ namespace RestEaseClientGenerator.Mappers
                 };
             }
 
-            if (detected.Key == SupportedContentTypes.ApplicationFormUrlEncoded)
+            if (detected.Key == SupportedContentType.ApplicationFormUrlEncoded)
             {
                 string description;
                 if (!Settings.GenerateFormUrlEncodedExtensionMethods)
@@ -326,152 +317,91 @@ namespace RestEaseClientGenerator.Mappers
                 };
             }
 
-            string bodyParameter = null;
-            switch (detected.Value.Schema?.GetSchemaType())
+            if (detected.Key == SupportedContentType.ApplicationJson || detected.Key == SupportedContentType.ApplicationXml)
             {
-                case SchemaType.Array:
-                    string arrayType = detected.Value.Schema.Items.Reference != null
-                        ? CSharpUtils.CreateValidIdentifier(detected.Value.Schema.Items.Reference.Id)
-                        : MapSchema(detected.Value.Schema.Items, null, false).ToString();
-                    bodyParameter = MapArrayType(arrayType);
-                    break;
-
-                case SchemaType.Object:
-                    bodyParameter = CSharpUtils.CreateValidIdentifier(detected.Value.Schema?.Reference.Id);
-                    break;
-            }
-
-            if (!string.IsNullOrEmpty(bodyParameter))
-            {
-                string bodyParameterIdentifierName = "content";
-                bodyParameterList.Add(new RestEaseParameter
+                string bodyParameter = null;
+                switch (detected.Value.Schema?.GetSchemaType())
                 {
-                    Required = true,
-                    Identifier = bodyParameterIdentifierName,
-                    IdentifierWithType = $"{bodyParameter} {bodyParameterIdentifierName}",
-                    IdentifierWithRestEase = $"[Body] {bodyParameter} {bodyParameterIdentifierName}",
-                    Summary = detected.Value.Schema?.Description // ?? operation.RequestBody.Description
-                });
+                    case SchemaType.Array:
+                        string arrayType = detected.Value.Schema.Items.Reference != null
+                            ? CSharpUtils.CreateValidIdentifier(detected.Value.Schema.Items.Reference.Id)
+                            : MapSchema(detected.Value.Schema.Items, null, false).ToString();
+                        bodyParameter = MapArrayType(arrayType);
+                        break;
+
+                    case SchemaType.Object:
+                        bodyParameter = CSharpUtils.CreateValidIdentifier(detected.Value.Schema?.Reference.Id);
+                        break;
+                }
+
+                if (!string.IsNullOrEmpty(bodyParameter))
+                {
+                    string bodyParameterIdentifierName = "content";
+                    bodyParameterList.Add(new RestEaseParameter
+                    {
+                        Required = true,
+                        Identifier = bodyParameterIdentifierName,
+                        IdentifierWithType = $"{bodyParameter} {bodyParameterIdentifierName}",
+                        IdentifierWithRestEase = $"[Body] {bodyParameter} {bodyParameterIdentifierName}",
+                        Summary = detected.Value.Schema?.Description ?? bodyParameterDescription
+                    });
+                }
+
+                return new RequestDetails
+                {
+                    DetectedContentType = detected.Key
+                };
             }
 
-            return new RequestDetails
-            {
-                DetectedContentType = detected.Key
-            };
+            return null;
         }
 
         private RequestDetails MapRequest(OpenApiOperation operation, ICollection<RestEaseParameter> bodyParameterList, List<RestEaseParameter> extensionMethodParameterList)
         {
-            var supportedOpenApiMediaTypes = new Dictionary<string, OpenApiMediaType>();
-            var detected = new KeyValuePair<string, OpenApiMediaType>();
+            MediaTypeInfo detected = null;
 
-            if (TryGetOpenApiMediaType(operation.RequestBody.Content, SupportedContentTypes.ApplicationJson, out var json, out var detectedJson))
+            var supportedMediaTypeInfoList = new List<MediaTypeInfo>();
+            foreach (SupportedContentType key in Enum.GetValues(typeof(SupportedContentType)))
             {
-                supportedOpenApiMediaTypes.Add(detectedJson, json);
+                if (TryGetOpenApiMediaType(operation.RequestBody.Content, key, out var mediaType, out var detectedContentType))
+                {
+                    supportedMediaTypeInfoList.Add(new MediaTypeInfo { Key = key, Value = mediaType, ContentType = detectedContentType });
+                }
             }
 
-            if (TryGetOpenApiMediaType(operation.RequestBody.Content, SupportedContentTypes.ApplicationXml, out var xml, out var detectedXml))
-            {
-                supportedOpenApiMediaTypes.Add(detectedXml, xml);
-            }
-
-            if (TryGetOpenApiMediaType(operation.RequestBody.Content, SupportedContentTypes.MultipartFormData, out var multipartFormData, out var detectedMultipartForm))
-            {
-                supportedOpenApiMediaTypes.Add(detectedMultipartForm, multipartFormData);
-            }
-
-            if (TryGetOpenApiMediaType(operation.RequestBody.Content, SupportedContentTypes.ApplicationOctetStream, out var octetStream, out var detectedOctetStream))
-            {
-                supportedOpenApiMediaTypes.Add(detectedOctetStream, octetStream);
-            }
-
-            if (TryGetOpenApiMediaType(operation.RequestBody.Content, SupportedContentTypes.ApplicationFormUrlEncoded, out var formUrlencoded, out var detectedFormUrl))
-            {
-                supportedOpenApiMediaTypes.Add(detectedFormUrl, formUrlencoded);
-            }
-
-            if (supportedOpenApiMediaTypes.Count == 0)
+            if (supportedMediaTypeInfoList.Count == 0)
             {
                 return null;
             }
 
-            if (operation.RequestBody.Content.Count == 1 && supportedOpenApiMediaTypes.Count == 1)
+            if (operation.RequestBody.Content.Count == 1 && supportedMediaTypeInfoList.Count == 1)
             {
-                detected = supportedOpenApiMediaTypes.First();
+                detected = supportedMediaTypeInfoList.First();
             }
-            else if (operation.RequestBody.Content.Count == supportedOpenApiMediaTypes.Count)
+            else if (operation.RequestBody.Content.Count == supportedMediaTypeInfoList.Count)
             {
-                if (Settings.PreferredContentType == PreferredContentType.ApplicationXml && xml != null)
+                if (Settings.PreferredContentType == PreferredContentType.ApplicationXml && supportedMediaTypeInfoList.Any(sc => sc.Key == SupportedContentType.ApplicationXml))
                 {
-                    detected = new KeyValuePair<string, OpenApiMediaType>(detectedXml, xml);
+                    detected = supportedMediaTypeInfoList.First(sc => sc.Key == SupportedContentType.ApplicationXml);
                 }
-                //else if (Settings.PreferredContentType == PreferredContentType.FormUrlencoded && formUrlencoded != null)
-                //{
-                //    detected = formUrlencoded;
-                //}
                 else
                 {
-                    detected = new KeyValuePair<string, OpenApiMediaType>(detectedJson, json);
+                    detected = supportedMediaTypeInfoList.First(sc => sc.Key == SupportedContentType.ApplicationJson);
                 }
             }
 
-            RequestDetails requestDetails;
-            if (string.IsNullOrEmpty(detected.Key))
+            if (detected == null)
             {
-                detected = supportedOpenApiMediaTypes.First();
+                detected = supportedMediaTypeInfoList.First();
 
-                requestDetails = MapRequestDetails(detected, bodyParameterList, extensionMethodParameterList);
+                var requestDetails = MapRequestDetails(detected, bodyParameterList, extensionMethodParameterList, operation.RequestBody.Description);
                 requestDetails.ContentTypes = operation.RequestBody.Content.Keys;
                 requestDetails.DetectedContentType = null;
 
                 return requestDetails;
             }
 
-            return MapRequestDetails(detected, bodyParameterList, extensionMethodParameterList);
-            
-            //if (requestDetails == null)
-            //{
-            //    requestDetails = new RequestDetails();
-
-            //    detected = supportedOpenApiMediaTypes.First();
-            //    requestDetails.ContentTypes = operation.RequestBody.Content.Keys;
-
-            //    requestDetails = MapRequestDetails(detected, bodyParameterList, extensionMethodParameterList);
-            //}
-            //else
-            //{
-            //    requestDetails.DetectedContentType = supportedOpenApiMediaTypes.First(s => s.Value == detected).Key;
-            //}
-
-            //string bodyParameter = null;
-            //switch (detected.Schema?.GetSchemaType())
-            //{
-            //    case SchemaType.Array:
-            //        string arrayType = detected.Schema.Items.Reference != null
-            //            ? CSharpUtils.CreateValidIdentifier(detected.Schema.Items.Reference.Id)
-            //            : MapSchema(detected.Schema.Items, null, false).ToString();
-            //        bodyParameter = MapArrayType(arrayType);
-            //        break;
-
-            //    case SchemaType.Object:
-            //        bodyParameter = CSharpUtils.CreateValidIdentifier(detected.Schema.Reference.Id);
-            //        break;
-            //}
-
-            //if (!string.IsNullOrEmpty(bodyParameter))
-            //{
-            //    string bodyParameterIdentifierName = "content";
-            //    bodyParameterList.Add(new RestEaseParameter
-            //    {
-            //        Required = true,
-            //        Identifier = bodyParameterIdentifierName,
-            //        IdentifierWithType = $"{bodyParameter} {bodyParameterIdentifierName}",
-            //        IdentifierWithRestEase = $"[Body] {bodyParameter} {bodyParameterIdentifierName}",
-            //        Summary = detected?.Schema?.Description ?? operation.RequestBody.Description
-            //    });
-            //}
-
-            //return requestDetails;
+            return MapRequestDetails(detected, bodyParameterList, extensionMethodParameterList, operation.RequestBody.Description);
         }
 
         private string GeneratedRestEaseMethodName(string path, OpenApiOperation operation, string httpMethodPascalCased)
@@ -543,7 +473,7 @@ namespace RestEaseClientGenerator.Mappers
         private RestEaseParameter BuildValidParameter(string identifier, OpenApiSchema schema, bool required, string description, string parameterType, params string[] extraAttributes)
         {
             var attributes = new List<string>();
-            string validIdentifier = CSharpUtils.CreateValidIdentifier(identifier);
+            string validIdentifier = CSharpUtils.CreateValidIdentifier(identifier, CasingType.Camel);
 
             object paramWithType;
             if (identifier != validIdentifier)
@@ -580,17 +510,18 @@ namespace RestEaseClientGenerator.Mappers
             };
         }
 
-        private bool TryGetOpenApiMediaType(IDictionary<string, OpenApiMediaType> contentTypes, string contentType, out OpenApiMediaType mediaType, out string detectedContentType)
+        private bool TryGetOpenApiMediaType(IDictionary<string, OpenApiMediaType> contentTypes, SupportedContentType contentType, out OpenApiMediaType mediaType, out string detectedContentType)
         {
             var contentTypesIgnoreCase = new Dictionary<string, OpenApiMediaType>(contentTypes, StringComparer.InvariantCultureIgnoreCase);
 
-            if (contentTypesIgnoreCase.TryGetValue(contentType, out mediaType))
+            string contentDescription = contentType.GetDescription();
+            if (contentTypesIgnoreCase.TryGetValue(contentDescription, out mediaType))
             {
-                detectedContentType = contentType;
+                detectedContentType = contentDescription;
                 return true;
             }
 
-            var key = contentTypesIgnoreCase.Keys.FirstOrDefault(ct => ct.Contains(contentType));
+            var key = contentTypesIgnoreCase.Keys.FirstOrDefault(ct => ct.Contains(contentDescription));
             if (key != null)
             {
                 mediaType = contentTypesIgnoreCase[key];

@@ -21,18 +21,18 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.FormRecognizer.Api
         /// Analyze Layout
         /// </summary>
         /// <param name="contentType">The Content-Type</param>
-        /// <param name="sourcePath">Url to source data.</param>
+        /// <param name="content">Url to source data.</param>
         [Post("/layout/analyze")]
-        Task<AnalyzeOperationResult> AnalyzeLayoutAsync([Header("Content-Type")] string contentType, [Body] SourcePath sourcePath);
+        Task<AnalyzeOperationResult> AnalyzeLayoutAsync([Header("Content-Type")] string contentType, [Body] SourcePath content);
 
         /// <summary>
         /// Analyze Receipt
         /// </summary>
         /// <param name="contentType">The Content-Type</param>
-        /// <param name="sourcePath">Url to source data.</param>
+        /// <param name="content">Url to source data.</param>
         /// <param name="includeTextDetails">Include text lines and element references in the result.  Default: false.</param>
         [Post("/prebuilt/receipt/analyze")]
-        Task<AnalyzeOperationResult> AnalyzeReceiptAsync([Header("Content-Type")] string contentType, [Body] SourcePath sourcePath, [Query] bool? includeTextDetails);
+        Task<AnalyzeOperationResult> AnalyzeReceiptAsync([Header("Content-Type")] string contentType, [Body] SourcePath content, [Query] bool? includeTextDetails);
 
         /// <summary>
         /// Get Analyze Receipt Result
@@ -73,19 +73,19 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.FormRecognizer.Api
         /// <summary>
         /// Train Custom Model
         /// </summary>
-        /// <param name="trainRequest">Request parameter to train a new custom model.</param>
+        /// <param name="content">Request parameter to train a new custom model.</param>
         [Post("/custom/models")]
         [Header("Content-Type", "application/json")]
-        Task TrainCustomModelAsync([Body] TrainRequest trainRequest);
+        Task TrainCustomModelAsync([Body] TrainRequest content);
 
         /// <summary>
         /// Analyze Form
         /// </summary>
         /// <param name="modelId">Format - uuid. Model identifier.</param>
         /// <param name="contentType">The Content-Type</param>
-        /// <param name="sourcePath">Url to source data.</param>
+        /// <param name="content">Url to source data.</param>
         /// <param name="includeTextDetails">Include text lines and element references in the result.  Default: false.</param>
         [Post("/custom/models/{modelId}/analyze")]
-        Task<AnalyzeOperationResult> AnalyzeWithCustomFormAsync([Path] string modelId, [Header("Content-Type")] string contentType, [Body] SourcePath sourcePath, [Query] bool? includeTextDetails);
+        Task<AnalyzeOperationResult> AnalyzeWithCustomFormAsync([Path] string modelId, [Header("Content-Type")] string contentType, [Body] SourcePath content, [Query] bool? includeTextDetails);
     }
 }
