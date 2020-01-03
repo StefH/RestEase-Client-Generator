@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using RestEase;
-using RestEaseClientGeneratorConsoleApp.Examples.PetStoreOpenApi3.Models;
+using RestEaseClientGeneratorConsoleApp.Examples.PetStoreOpenApi302.Models;
 
-namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreOpenApi3.Api
+namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreOpenApi302.Api
 {
     public static class PetStoreOpenApi3ApiExtensions
     {

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreOpenApi3.Models
+namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreOpenApi302.Models
 {
     public class Customer
     {

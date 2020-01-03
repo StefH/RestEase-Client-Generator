@@ -11,6 +11,9 @@ namespace RestEaseClientGenerator.Types
         ApplicationJson,
 
         [Description(SupportedContentTypes.ApplicationXml)]
-        ApplicationXml
+        ApplicationXml,
+
+        //[Description(SupportedContentTypes.ApplicationFormUrlEncoded)]
+        //FormUrlencoded
     }
 }
