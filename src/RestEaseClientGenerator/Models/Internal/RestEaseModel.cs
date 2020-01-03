@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace RestEaseClientGenerator.Models
+namespace RestEaseClientGenerator.Models.Internal
 {
     internal class RestEaseModel
     {

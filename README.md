@@ -119,6 +119,7 @@ var findPetsByTags = await petStoreApi.FindPetsByTagsAsync(new[] { "cat" });
 | Generate FormUrlEncoded Extension methods | Generate Extension methods for FormUrlEncoded methods. The default value is 'true'.
 | Generate ApplicationOctetStream Extension methods | Generate Extension methods for ApplicationOctetStream methods. The default value is 'true'.
 | Return Object from Method | Return Object from Method when Response is defined but no Model is specified. The default value is 'false'.
+| Preferred Content-Type | Preferred Content-Type to use when multiple are found. The default value is 'application/json'.
 
 ### Screenshot
 ![Settings](https://github.com/StefH/RestEase-Client-Generator/raw/master/resources/settings.png)

@@ -2,6 +2,8 @@ using Microsoft.VisualStudio.Shell;
 using RestEaseClientGenerator.Types;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
+using RestEaseClientGenerator.Constants;
+using RestEaseClientGenerator.Extensions;
 
 namespace RestEaseClientGenerator.VSIX.Options.RestEase
 {
@@ -84,6 +86,10 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         [Description("Return Object from Method when Response is defined but no Model is specified. The default value is 'false'.")]
         public bool ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified { get; set; }
 
+        [Category(Interface)]
+        [DisplayName("Preferred Content-Type")]
+        [Description("Preferred Content-Type to use when multiple are found. The default value is 'application/json'.")]
+        public PreferredContentType PreferredContentType { get; set; }
         #endregion
     }
 }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using RestEaseClientGenerator.Constants;
 using RestEaseClientGenerator.Extensions;
 using RestEaseClientGenerator.Models;
+using RestEaseClientGenerator.Models.Internal;
 using RestEaseClientGenerator.Settings;
 using RestEaseClientGenerator.Types;
 

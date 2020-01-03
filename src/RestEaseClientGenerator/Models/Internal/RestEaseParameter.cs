@@ -1,6 +1,6 @@
 ﻿using RestEaseClientGenerator.Types;
 
-namespace RestEaseClientGenerator.Models
+namespace RestEaseClientGenerator.Models.Internal
 {
     internal class RestEaseParameter
     {

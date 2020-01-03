@@ -12,7 +12,7 @@ namespace RestEaseClientGenerator.Types
         [Description("Header")]
         Header,
 
-        [Description("Header")]
+        [Description("Query")]
         Query
     }
 }

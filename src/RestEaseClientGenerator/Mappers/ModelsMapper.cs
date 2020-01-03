@@ -3,6 +3,7 @@ using System.Linq;
 using Microsoft.OpenApi.Models;
 using RestEaseClientGenerator.Extensions;
 using RestEaseClientGenerator.Models;
+using RestEaseClientGenerator.Models.Internal;
 using RestEaseClientGenerator.Settings;
 using RestEaseClientGenerator.Types;
 

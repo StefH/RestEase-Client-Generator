@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Text;
 using RestEaseClientGenerator.Models;
+using RestEaseClientGenerator.Models.Internal;
 using RestEaseClientGenerator.Settings;
 
 namespace RestEaseClientGenerator.Builders

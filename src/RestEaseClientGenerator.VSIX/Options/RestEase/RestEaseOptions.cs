@@ -29,6 +29,7 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
                 ApiNamespace = options.ApiNamespace;
                 ModelsNamespace = options.ModelsNamespace;
                 ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified = options.ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified;
+                PreferredContentType = options.PreferredContentType;
             }
             catch (Exception e)
             {
@@ -46,6 +47,7 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
                 ApiNamespace = "Api";
                 ModelsNamespace = "Models";
                 ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified = false;
+                PreferredContentType = PreferredContentType.ApplicationJson;
 
                 Trace.WriteLine(e);
                 Trace.WriteLine(Environment.NewLine);
@@ -64,6 +66,7 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
                 Trace.WriteLine($"{nameof(ApiNamespace)} = {ApiNamespace}");
                 Trace.WriteLine($"{nameof(ModelsNamespace)} = {ModelsNamespace}");
                 Trace.WriteLine($"{nameof(ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified)} = {ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified}");
+                Trace.WriteLine($"{nameof(PreferredContentType)} = {PreferredContentType}");
             }
         }
 
@@ -94,5 +97,7 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         public string ModelsNamespace { get; set; }
 
         public bool ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified { get; set; }
+
+        public PreferredContentType PreferredContentType { get; set; }
     }
 }
