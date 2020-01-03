@@ -13,6 +13,13 @@ namespace RestEaseClientGeneratorConsoleApp
         {
             var generator = new Generator();
 
+            foreach (var file in generator.FromStream(File.OpenRead("Examples\\drc-new.json"), "RestEaseClientGeneratorConsoleApp.Examples.Drc", "Drc", out var diagnosticFormRecognizer))
+            {
+                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Drc/{file.Path}/{file.Name}", file.Content);
+            }
+
+            return;
+
             var petStoreOpenApi3Settings = new GeneratorSettings
             {
                 Namespace = "RestEaseClientGeneratorConsoleApp.Examples.PetStoreOpenApi302",

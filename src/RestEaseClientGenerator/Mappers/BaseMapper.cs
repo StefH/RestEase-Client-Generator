@@ -3,6 +3,7 @@ using Microsoft.OpenApi.Models;
 using RestEaseClientGenerator.Extensions;
 using RestEaseClientGenerator.Settings;
 using RestEaseClientGenerator.Types;
+using RestEaseClientGenerator.Utils;
 
 namespace RestEaseClientGenerator.Mappers
 {
@@ -55,7 +56,7 @@ namespace RestEaseClientGenerator.Mappers
                     {
                         case SchemaType.Object:
                             return schema.Items.Reference != null ?
-                                $"{MapArrayType(schema.Items.Reference.Id)}{nameCamelCase}" :
+                                $"{MapArrayType(CSharpUtils.CreateValidIdentifier(schema.Items.Reference.Id))}{nameCamelCase}" :
                                 $"{MapArrayType("object")}{nameCamelCase}";
 
                         case SchemaType.Unknown:
@@ -119,7 +120,7 @@ namespace RestEaseClientGenerator.Mappers
                         if (openApiSchema.GetSchemaType() == SchemaType.Object)
                         {
                             string objectName = pascalCase ? schemaProperty.Key.ToPascalCase() : schemaProperty.Key;
-                            string objectType = openApiSchema.Reference != null ? openApiSchema.Reference.Id.ToPascalCase().Replace(" ", "") : "object";
+                            string objectType = openApiSchema.Reference != null ? CSharpUtils.CreateValidIdentifier(openApiSchema.Reference.Id.Replace(" ", ""), CasingType.Pascal) : "object";
 
                             list.Add($"{objectType} {objectName}");
                         }
