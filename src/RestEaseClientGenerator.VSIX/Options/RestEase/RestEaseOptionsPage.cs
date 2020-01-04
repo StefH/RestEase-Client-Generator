@@ -2,8 +2,6 @@ using Microsoft.VisualStudio.Shell;
 using RestEaseClientGenerator.Types;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
-using RestEaseClientGenerator.Constants;
-using RestEaseClientGenerator.Extensions;
 
 namespace RestEaseClientGenerator.VSIX.Options.RestEase
 {
@@ -57,12 +55,12 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         public MethodReturnType MethodReturnType { get; set; }
 
         [Category(Interface)]
-        [DisplayName("multipart/form-data FileType")]
+        [DisplayName("Type for multipart/form-data")]
         [Description("The MultipartFormData FileType to use. The default value is 'byte[]'.")]
         public MultipartFormDataFileType MultipartFormDataFileType { get; set; }
 
         [Category(Interface)]
-        [DisplayName("application/octet-stream Type")]
+        [DisplayName("Type for application/octet-stream")]
         [Description("The ApplicationOctetStream Type to use. The default value is 'byte[]'.")]
         public ApplicationOctetStreamType ApplicationOctetStreamType { get; set; }
 
