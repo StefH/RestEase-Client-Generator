@@ -13,10 +13,10 @@ namespace RestEaseClientGeneratorConsoleApp
         {
             var generator = new Generator();
 
-            foreach (var file in generator.FromStream(File.OpenRead("Examples\\drc-new.json"), "RestEaseClientGeneratorConsoleApp.Examples.Drc", "Drc", out var diagnosticFormRecognizer))
-            {
-                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Drc/{file.Path}/{file.Name}", file.Content);
-            }
+            //foreach (var file in generator.FromStream(File.OpenRead("Examples\\drc-new.json"), "RestEaseClientGeneratorConsoleApp.Examples.Drc", "Drc", true, out var diagnosticFormRecognizer))
+            //{
+            //    File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Drc/{file.Path}/{file.Name}", file.Content);
+            //}
 
             var petStoreOpenApi3Settings = new GeneratorSettings
             {
@@ -63,22 +63,22 @@ namespace RestEaseClientGeneratorConsoleApp
                 File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/PetStoreJson/{file.Name}", file.Content);
             }
 
-            foreach (var file in generator.FromStream(File.OpenRead("Examples\\infura.yaml"), "RestEaseClientGeneratorConsoleApp.Examples.Infura", "Infura", out OpenApiDiagnostic diagnosticInfura))
+            foreach (var file in generator.FromStream(File.OpenRead("Examples\\infura.yaml"), "RestEaseClientGeneratorConsoleApp.Examples.Infura", "Infura", false, out OpenApiDiagnostic diagnosticInfura))
             {
                 File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Infura/{file.Path}/{file.Name}", file.Content);
             }
 
-            foreach (var file in generator.FromStream(File.OpenRead("Examples\\cognitive-services-personalizer.json"), "RestEaseClientGeneratorConsoleApp.Examples.Cog", "Cog", out var diagnosticCog))
+            foreach (var file in generator.FromStream(File.OpenRead("Examples\\cognitive-services-personalizer.json"), "RestEaseClientGeneratorConsoleApp.Examples.Cog", "Cog", false, out var diagnosticCog))
             {
                 File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Cog/{file.Path}/{file.Name}", file.Content);
             }
 
-            foreach (var file in generator.FromStream(File.OpenRead("Examples\\SpeechServices.json"), "RestEaseClientGeneratorConsoleApp.Examples.SpeechServices", "SpeechServices", out var diagnosticSpeech))
+            foreach (var file in generator.FromStream(File.OpenRead("Examples\\SpeechServices.json"), "RestEaseClientGeneratorConsoleApp.Examples.SpeechServices", "SpeechServices", false, out var diagnosticSpeech))
             {
                 File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/SpeechServices/{file.Path}/{file.Name}", file.Content);
             }
 
-            foreach (var file in generator.FromStream(File.OpenRead("Examples\\FormRecognizer.json"), "RestEaseClientGeneratorConsoleApp.Examples.FormRecognizer", "FormRecognizer", out var diagnosticFormRecognizer))
+            foreach (var file in generator.FromStream(File.OpenRead("Examples\\FormRecognizer.json"), "RestEaseClientGeneratorConsoleApp.Examples.FormRecognizer", "FormRecognizer", false, out var diagnosticFormRecognizer))
             {
                 File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/FormRecognizer/{file.Path}/{file.Name}", file.Content);
             }

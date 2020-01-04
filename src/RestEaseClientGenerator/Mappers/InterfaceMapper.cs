@@ -125,7 +125,7 @@ namespace RestEaseClientGenerator.Mappers
                 {
                     case SchemaType.Array:
                         string arrayType = responseJson.Schema.Items.Reference != null ?
-                            CSharpUtils.CreateValidIdentifier(responseJson.Schema.Items.Reference.Id) :
+                            MakeValidModelName(responseJson.Schema.Items.Reference.Id) :
                             MapSchema(responseJson.Schema.Items, null, false).ToString();
 
                         returnType = MapArrayType(arrayType);
@@ -135,7 +135,7 @@ namespace RestEaseClientGenerator.Mappers
                         if (responseJson.Schema.Reference != null)
                         {
                             // Existing defined object
-                            returnType = CSharpUtils.CreateValidIdentifier(responseJson.Schema.Reference.Id);
+                            returnType = MakeValidModelName(responseJson.Schema.Reference.Id);
                         }
                         else if (responseJson.Schema.AdditionalProperties != null)
                         {
@@ -324,13 +324,13 @@ namespace RestEaseClientGenerator.Mappers
                 {
                     case SchemaType.Array:
                         string arrayType = detected.Value.Schema.Items.Reference != null
-                            ? CSharpUtils.CreateValidIdentifier(detected.Value.Schema.Items.Reference.Id)
+                            ? MakeValidModelName(detected.Value.Schema.Items.Reference.Id)
                             : MapSchema(detected.Value.Schema.Items, null, false).ToString();
                         bodyParameter = MapArrayType(arrayType);
                         break;
 
                     case SchemaType.Object:
-                        bodyParameter = CSharpUtils.CreateValidIdentifier(detected.Value.Schema?.Reference.Id);
+                        bodyParameter = MakeValidModelName(detected.Value.Schema?.Reference.Id);
                         break;
                 }
 

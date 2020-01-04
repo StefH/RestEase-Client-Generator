@@ -108,7 +108,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreJson.Test123
         /// </summary>
         /// <param name="username">The name that needs to be fetched. Use user1 for testing. </param>
         [Get("/user/{username}")]
-        Task<XUser> GetUserByNameAsync([Path] string username);
+        Task<User> GetUserByNameAsync([Path] string username);
 
         /// <summary>
         /// Updated user
@@ -117,7 +117,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreJson.Test123
         /// <param name="content">Updated user object</param>
         [Put("/user/{username}")]
         [Header("Content-Type", "application/json")]
-        Task UpdateUserAsync([Path] string username, [Body] XUser content);
+        Task UpdateUserAsync([Path] string username, [Body] User content);
 
         /// <summary>
         /// Delete user
@@ -146,7 +146,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreJson.Test123
         /// <param name="content">Created user object</param>
         [Post("/user")]
         [Header("Content-Type", "application/json")]
-        Task CreateUserAsync([Body] XUser content);
+        Task CreateUserAsync([Body] User content);
 
         /// <summary>
         /// Creates list of users with given input array
@@ -154,7 +154,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreJson.Test123
         /// <param name="content">List of user object</param>
         [Post("/user/createWithArray")]
         [Header("Content-Type", "application/json")]
-        Task CreateUsersWithArrayInputAsync([Body] IEnumerable<XUser> content);
+        Task CreateUsersWithArrayInputAsync([Body] IEnumerable<User> content);
 
         /// <summary>
         /// Creates list of users with given input array
@@ -162,7 +162,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreJson.Test123
         /// <param name="content">List of user object</param>
         [Post("/user/createWithList")]
         [Header("Content-Type", "application/json")]
-        Task CreateUsersWithListInputAsync([Body] IEnumerable<XUser> content);
+        Task CreateUsersWithListInputAsync([Body] IEnumerable<User> content);
     }
 }
 
@@ -283,7 +283,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreJson.Modelz
 
 namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreJson.Modelz
 {
-    public class XUser
+    public class User
     {
         public long Id { get; set; }
 

@@ -1,4 +1,6 @@
 ﻿using System.Text.RegularExpressions;
+using RestEaseClientGenerator.Types;
+using RestEaseClientGenerator.Utils;
 
 namespace RestEaseClientGenerator.Extensions
 {
@@ -7,10 +9,15 @@ namespace RestEaseClientGenerator.Extensions
     /// </summary>
     internal static class StringExtensions
     {
+        public static string ToValidIdentifier(this string value, CasingType casingType)
+        {
+            return CSharpUtils.CreateValidIdentifier(value, casingType);
+        }
+
         public static string StripHtml(this string text)
         {
             return text == null ?
-                null : 
+                null :
                 Regex.Replace(text, "<.*?>|\r\n|\r|\n", string.Empty);
         }
 
