@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Microsoft.OpenApi.Models;
 using RestEaseClientGenerator.Extensions;
 using RestEaseClientGenerator.Settings;
 using RestEaseClientGenerator.Types;
+using RestEaseClientGenerator.Utils;
 
 namespace RestEaseClientGenerator.Mappers
 {
@@ -15,6 +17,13 @@ namespace RestEaseClientGenerator.Mappers
         protected BaseMapper(GeneratorSettings settings)
         {
             Settings = settings;
+        }
+
+        protected string MakeValidModelName(string name)
+        {
+            string last = name.Replace(" ", "").Split('.').Last();
+
+            return last.ToValidIdentifier(CasingType.Pascal);
         }
 
         protected string MapArrayType(object value)
@@ -55,7 +64,7 @@ namespace RestEaseClientGenerator.Mappers
                     {
                         case SchemaType.Object:
                             return schema.Items.Reference != null ?
-                                $"{MapArrayType(schema.Items.Reference.Id)}{nameCamelCase}" :
+                                $"{MapArrayType(MakeValidModelName(schema.Items.Reference.Id))}{nameCamelCase}" :
                                 $"{MapArrayType("object")}{nameCamelCase}";
 
                         case SchemaType.Unknown:
@@ -119,7 +128,7 @@ namespace RestEaseClientGenerator.Mappers
                         if (openApiSchema.GetSchemaType() == SchemaType.Object)
                         {
                             string objectName = pascalCase ? schemaProperty.Key.ToPascalCase() : schemaProperty.Key;
-                            string objectType = openApiSchema.Reference != null ? openApiSchema.Reference.Id.ToPascalCase().Replace(" ", "") : "object";
+                            string objectType = openApiSchema.Reference != null ? MakeValidModelName(openApiSchema.Reference.Id) : "object";
 
                             list.Add($"{objectType} {objectName}");
                         }

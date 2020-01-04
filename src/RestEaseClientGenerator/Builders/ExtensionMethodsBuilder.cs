@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using RestEaseClientGenerator.Constants;
 using RestEaseClientGenerator.Extensions;
 using RestEaseClientGenerator.Models;
+using RestEaseClientGenerator.Models.Internal;
 using RestEaseClientGenerator.Settings;
 using RestEaseClientGenerator.Types;
 
@@ -61,15 +62,15 @@ namespace RestEaseClientGenerator.Builders
 
                 switch (method.ExtensionMethodContentType)
                 {
-                    case SupportedContentTypes.MultipartFormData:
+                    case SupportedContentType.MultipartFormData:
                         BuildMultipartFormDataExtensionMethodBody(Settings, builder, method);
                         break;
 
-                    case SupportedContentTypes.ApplicationOctetStream:
+                    case SupportedContentType.ApplicationOctetStream:
                         BuildApplicationOctetStreamExtensionMethodBody(Settings, builder, method);
                         break;
 
-                    case SupportedContentTypes.ApplicationFormUrlEncoded:
+                    case SupportedContentType.ApplicationFormUrlEncoded:
                         BuildApplicationFormUrlEncodedExtensionMethodBody(Settings, builder, method);
                         break;
                 }

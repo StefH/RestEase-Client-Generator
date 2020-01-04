@@ -11,7 +11,7 @@ namespace RestEaseClientGenerator
 {
     public class Generator : IGenerator
     {
-        public ICollection<GeneratedFile> FromStream(Stream stream, string clientNamespace, string apiName, out OpenApiDiagnostic diagnostic)
+        public ICollection<GeneratedFile> FromStream(Stream stream, string clientNamespace, string apiName, bool singleFile, out OpenApiDiagnostic diagnostic)
         {
             return FromStream(stream, new GeneratorSettings
             {

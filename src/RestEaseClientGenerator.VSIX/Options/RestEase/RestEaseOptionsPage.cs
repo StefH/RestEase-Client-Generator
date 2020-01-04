@@ -55,12 +55,12 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         public MethodReturnType MethodReturnType { get; set; }
 
         [Category(Interface)]
-        [DisplayName("multipart/form-data FileType")]
+        [DisplayName("Type for multipart/form-data")]
         [Description("The MultipartFormData FileType to use. The default value is 'byte[]'.")]
         public MultipartFormDataFileType MultipartFormDataFileType { get; set; }
 
         [Category(Interface)]
-        [DisplayName("application/octet-stream Type")]
+        [DisplayName("Type for application/octet-stream")]
         [Description("The ApplicationOctetStream Type to use. The default value is 'byte[]'.")]
         public ApplicationOctetStreamType ApplicationOctetStreamType { get; set; }
 
@@ -84,6 +84,10 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         [Description("Return Object from Method when Response is defined but no Model is specified. The default value is 'false'.")]
         public bool ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified { get; set; }
 
+        [Category(Interface)]
+        [DisplayName("Preferred Content-Type")]
+        [Description("Preferred Content-Type to use when multiple are found. The default value is 'application/json'.")]
+        public PreferredContentType PreferredContentType { get; set; }
         #endregion
     }
 }

@@ -83,7 +83,8 @@ namespace RestEaseClientGenerator.VSIX.CustomTool
                     ApplicationOctetStreamType = options.ApplicationOctetStreamType,
                     ApiNamespace = options.ApiNamespace,
                     ModelsNamespace = options.ModelsNamespace,
-                    ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified = options.ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified
+                    ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified = options.ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified,
+                    PreferredContentType = options.PreferredContentType
                 };
                 var result = _generator.FromStream(File.OpenRead(wszInputFilePath), settings, out var diagnostic);
 

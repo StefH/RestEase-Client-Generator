@@ -113,12 +113,13 @@ var findPetsByTags = await petStoreApi.FindPetsByTagsAsync(new[] { "cat" });
 | Append Async | Append Async postfix to all methods. The default value is 'true'.
 | Add Authorization header | Add an Authorization header to the generated interface. The default value is 'false'.
 | Method ReturnType | The ReturnType to use for the methods. The default value is 'Type'. For more details see https://github.com/canton7/RestEase#return-types.
-| multipart/form-data FileType | The MultipartFormData FileType to use. The default value is 'byte[]'.
-| application/octet-stream Type | The ApplicationOctetStream Type to use. The default value is 'byte[]'.
+| Type for multipart/form-data | The MultipartFormData FileType to use. The default value is 'byte[]'.
+| Type for application/octet-stream | The ApplicationOctetStream Type to use. The default value is 'byte[]'.
 | Generate MultipartFormData Extension methods | Generate Extension methods for MultipartFormData methods. The default value is 'true'.
 | Generate FormUrlEncoded Extension methods | Generate Extension methods for FormUrlEncoded methods. The default value is 'true'.
 | Generate ApplicationOctetStream Extension methods | Generate Extension methods for ApplicationOctetStream methods. The default value is 'true'.
 | Return Object from Method | Return Object from Method when Response is defined but no Model is specified. The default value is 'false'.
+| Preferred Content-Type | Preferred Content-Type to use when multiple are found. The default value is 'application/json'.
 
 ### Screenshot
 ![Settings](https://github.com/StefH/RestEase-Client-Generator/raw/master/resources/settings.png)

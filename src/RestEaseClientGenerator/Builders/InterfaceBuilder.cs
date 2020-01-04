@@ -2,6 +2,7 @@
 using System.Text;
 using RestEaseClientGenerator.Extensions;
 using RestEaseClientGenerator.Models;
+using RestEaseClientGenerator.Models.Internal;
 using RestEaseClientGenerator.Settings;
 
 namespace RestEaseClientGenerator.Builders

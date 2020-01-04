@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using RestEase;
-using RestEaseClientGeneratorConsoleApp.Examples.PetStoreOpenApi3.Api;
-using RestEaseClientGeneratorConsoleApp.Examples.PetStoreOpenApi3.Models;
+using RestEaseClientGeneratorConsoleApp.Examples.PetStoreOpenApi302.Api;
+using RestEaseClientGeneratorConsoleApp.Examples.PetStoreOpenApi302.Models;
 using System;
 using System.IO;
 using System.Text;

@@ -31,5 +31,7 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         string ModelsNamespace { get; set; }
 
         bool ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified { get; set; }
+
+        PreferredContentType PreferredContentType { get; set; }
     }
 }
