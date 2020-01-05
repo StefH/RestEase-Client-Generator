@@ -84,7 +84,8 @@ namespace RestEaseClientGenerator.VSIX.CustomTool
                     ApiNamespace = options.ApiNamespace,
                     ModelsNamespace = options.ModelsNamespace,
                     ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified = options.ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified,
-                    PreferredContentType = options.PreferredContentType
+                    PreferredContentType = options.PreferredContentType,
+                    ForceContentTypeToApplicationJson = options.ForceContentTypeToApplicationJson
                 };
                 var result = _generator.FromStream(File.OpenRead(wszInputFilePath), settings, out var diagnostic);
 

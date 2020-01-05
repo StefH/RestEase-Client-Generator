@@ -40,7 +40,9 @@ namespace RestEaseClientGenerator.Settings
 
         public bool ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified { get; set; }
 
-        public PreferredContentType PreferredContentType { get; set; } = PreferredContentType.ApplicationJson;
+        public ContentType PreferredContentType { get; set; } = ContentType.ApplicationJson;
+
+        public bool ForceContentTypeToApplicationJson { get; set; }
 
         public SecurityDefinitionType SecurityDefinitionType { get; set; } = SecurityDefinitionType.Header;
         #endregion
