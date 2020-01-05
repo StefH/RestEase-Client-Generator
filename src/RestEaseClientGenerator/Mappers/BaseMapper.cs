@@ -4,7 +4,6 @@ using Microsoft.OpenApi.Models;
 using RestEaseClientGenerator.Extensions;
 using RestEaseClientGenerator.Settings;
 using RestEaseClientGenerator.Types;
-using RestEaseClientGenerator.Utils;
 
 namespace RestEaseClientGenerator.Mappers
 {

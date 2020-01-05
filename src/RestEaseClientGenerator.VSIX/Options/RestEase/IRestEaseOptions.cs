@@ -32,6 +32,8 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
 
         bool ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified { get; set; }
 
-        PreferredContentType PreferredContentType { get; set; }
+        ContentType PreferredContentType { get; set; }
+
+        bool ForceContentTypeToApplicationJson { get; set; }
     }
 }

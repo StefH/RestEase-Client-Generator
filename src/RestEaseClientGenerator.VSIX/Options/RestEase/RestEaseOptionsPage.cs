@@ -19,12 +19,12 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
 
         [Category(General)]
         [DisplayName("Fail on OpenApi Errors")]
-        [Description("Don't generate the file if errors are detected when parsing the specification file. The default value is 'false'.")]
+        [Description("Don't generate the file if errors are detected when parsing the specification file. The default value is 'False'.")]
         public bool FailOnOpenApiErrors { get; set; }
 
         [Category(General)]
         [DisplayName("Use DateTimeOffset")]
-        [Description("Use DateTimeOffset instead of DateTime. The default value is 'false'.")]
+        [Description("Use DateTimeOffset instead of DateTime. The default value is 'False'.")]
         public bool UseDateTimeOffset { get; set; }
 
         [Category(General)]
@@ -41,12 +41,12 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         #region Interface
         [Category(Interface)]
         [DisplayName("Add Authorization header")]
-        [Description("Add an Authorization header to the generated interface. The default value is 'false'.")]
+        [Description("Add an Authorization header to the generated interface. The default value is 'False'.")]
         public bool AddAuthorizationHeader { get; set; }
 
         [Category(Interface)]
         [DisplayName("Append Async")]
-        [Description("Append Async postfix to all methods. The default value is 'true'.")]
+        [Description("Append Async postfix to all methods. The default value is 'True'.")]
         public bool AppendAsync { get; set; } = true;
 
         [Category(Interface)]
@@ -66,28 +66,33 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
 
         [Category(Interface)]
         [DisplayName("Generate MultipartFormData Extension methods")]
-        [Description("Generate Extension methods for MultipartFormData methods. The default value is 'true'.")]
+        [Description("Generate Extension methods for MultipartFormData methods. The default value is 'True'.")]
         public bool GenerateMultipartFormDataExtensionMethods { get; set; } = true;
 
         [Category(Interface)]
         [DisplayName("Generate FormUrlEncoded Extension methods")]
-        [Description("Generate Extension methods for FormUrlEncoded methods. The default value is 'true'.")]
+        [Description("Generate Extension methods for FormUrlEncoded methods. The default value is 'True'.")]
         public bool GenerateFormUrlEncodedExtensionMethods { get; set; } = true;
 
         [Category(Interface)]
         [DisplayName("Generate ApplicationOctetStream Extension methods")]
-        [Description("Generate Extension methods for ApplicationOctetStream methods. The default value is 'true'.")]
+        [Description("Generate Extension methods for ApplicationOctetStream methods. The default value is 'True'.")]
         public bool GenerateApplicationOctetStreamExtensionMethods { get; set; } = true;
 
         [Category(Interface)]
         [DisplayName("Return Object from Method")]
-        [Description("Return Object from Method when Response is defined but no Model is specified. The default value is 'false'.")]
+        [Description("Return Object from Method when Response is defined but no Model is specified. The default value is 'False'.")]
         public bool ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified { get; set; }
 
         [Category(Interface)]
         [DisplayName("Preferred Content-Type")]
-        [Description("Preferred Content-Type to use when multiple are found. The default value is 'application/json'.")]
-        public PreferredContentType PreferredContentType { get; set; }
+        [Description("Preferred Content-Type to use when both 'application/json' and 'application/xml' are defined. The default value is 'application/json'.")]
+        public ContentType PreferredContentType { get; set; }
+
+        [Category(Interface)]
+        [DisplayName("Force Content-Type to 'application/json'")]
+        [Description("Always use Content-Type 'application/json', also when multiple Content-Types are are defined. The default value is 'False'.")]
+        public bool ForceContentTypeToApplicationJson { get; set; }
         #endregion
     }
 }

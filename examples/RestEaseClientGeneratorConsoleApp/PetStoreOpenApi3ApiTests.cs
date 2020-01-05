@@ -24,7 +24,7 @@ namespace RestEaseClientGeneratorConsoleApp
             };
             string urlLocal = "http://localhost:8080/api/v3";
             string urlAzure = "https://petstore3-7ea5e6b7-1956-45e8-b452-21d94116e2c4.azurewebsites.net/api/v3";
-            string urlPostman = "https://postman-echo.com/post";
+            // string urlPostman = "https://postman-echo.com/post";
             var petStoreApi = new RestClient(urlAzure)
             {
                 JsonSerializerSettings = settings
@@ -42,18 +42,18 @@ namespace RestEaseClientGeneratorConsoleApp
                 Console.WriteLine("FindPetsByStatusAsync:" + JsonSerializer.Serialize(find));
             }
 
-            //await petStoreApi.DeletePetAsync(1000);
+            await petStoreApi.DeletePetAsync(1000);
 
-            //var addPet = await petStoreApi.AddPetAsync(new Pet
-            //{
-            //    Id = 1000,
-            //    Name = "Rossa",
-            //    Category = new Category { Id = 1, Name = "cat" },
-            //    Tags = new[] { new Tag { Id = 1, Name = "cat" } },
-            //    Status = "available",
-            //    PhotoUrls = new string[] { }
-            //});
-            //Console.WriteLine("AddPetAsync:" + JsonSerializer.Serialize(addPet));
+            var addPet = await petStoreApi.AddPetAsync(new Pet
+            {
+                Id = 1000,
+                Name = "Rossa",
+                Category = new Category { Id = 1, Name = "cat" },
+                Tags = new[] { new Tag { Id = 1, Name = "cat" } },
+                Status = "available",
+                PhotoUrls = new string[] { }
+            });
+            Console.WriteLine("AddPetAsync:" + JsonSerializer.Serialize(addPet));
 
             var getPetById = await petStoreApi.GetPetByIdAsync(1000);
             Console.WriteLine("GetPetByIdAsync:" + JsonSerializer.Serialize(getPetById));

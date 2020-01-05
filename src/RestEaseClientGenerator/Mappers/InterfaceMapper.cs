@@ -380,7 +380,7 @@ namespace RestEaseClientGenerator.Mappers
             }
             else if (operation.RequestBody.Content.Count == supportedMediaTypeInfoList.Count)
             {
-                if (Settings.PreferredContentType == PreferredContentType.ApplicationXml && supportedMediaTypeInfoList.Any(sc => sc.Key == SupportedContentType.ApplicationXml))
+                if (Settings.PreferredContentType == ContentType.ApplicationXml && supportedMediaTypeInfoList.Any(sc => sc.Key == SupportedContentType.ApplicationXml))
                 {
                     detected = supportedMediaTypeInfoList.First(sc => sc.Key == SupportedContentType.ApplicationXml);
                 }
@@ -392,13 +392,28 @@ namespace RestEaseClientGenerator.Mappers
 
             if (detected == null)
             {
-                detected = supportedMediaTypeInfoList.First();
+                if (Settings.ForceContentTypeToApplicationJson)
+                {
+                    detected =
+                        supportedMediaTypeInfoList.FirstOrDefault(m => m.Key == SupportedContentType.ApplicationJson) ??
+                        supportedMediaTypeInfoList.First();
 
-                var requestDetails = MapRequestDetails(detected, bodyParameterList, extensionMethodParameterList, operation.RequestBody.Description);
-                requestDetails.ContentTypes = operation.RequestBody.Content.Keys;
-                requestDetails.DetectedContentType = null;
+                    var requestDetails = MapRequestDetails(detected, bodyParameterList, extensionMethodParameterList, operation.RequestBody.Description);
+                    requestDetails.ContentTypes = new List<string>();
+                    requestDetails.DetectedContentType = SupportedContentType.ApplicationJson;
 
-                return requestDetails;
+                    return requestDetails;
+                }
+                else
+                {
+                    detected = supportedMediaTypeInfoList.First();
+
+                    var requestDetails = MapRequestDetails(detected, bodyParameterList, extensionMethodParameterList, operation.RequestBody.Description);
+                    requestDetails.ContentTypes = operation.RequestBody.Content.Keys;
+                    requestDetails.DetectedContentType = null;
+
+                    return requestDetails;
+                }
             }
 
             return MapRequestDetails(detected, bodyParameterList, extensionMethodParameterList, operation.RequestBody.Description);

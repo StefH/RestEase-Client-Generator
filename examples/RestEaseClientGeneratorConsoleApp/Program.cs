@@ -26,7 +26,7 @@ namespace RestEaseClientGeneratorConsoleApp
                 GenerateMultipartFormDataExtensionMethods = true,
                 GenerateApplicationOctetStreamExtensionMethods = true,
                 ApplicationOctetStreamType = ApplicationOctetStreamType.ByteArray,
-                PreferredContentType = PreferredContentType.ApplicationJson
+                PreferredContentType = ContentType.ApplicationJson
             };
             foreach (var file in generator.FromStream(File.OpenRead("Examples\\petstore-openapi3.json"), petStoreOpenApi3Settings, out OpenApiDiagnostic diagnosticPetStoreOpenApi3))
             {
@@ -68,7 +68,13 @@ namespace RestEaseClientGeneratorConsoleApp
                 File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Infura/{file.Path}/{file.Name}", file.Content);
             }
 
-            foreach (var file in generator.FromStream(File.OpenRead("Examples\\cognitive-services-personalizer.json"), "RestEaseClientGeneratorConsoleApp.Examples.Cog", "Cog", false, out var diagnosticCog))
+            var cogSettings = new GeneratorSettings
+            {
+                Namespace = "RestEaseClientGeneratorConsoleApp.Examples.Cog",
+                ApiName = "Cog",
+                ForceContentTypeToApplicationJson = true
+            };
+            foreach (var file in generator.FromStream(File.OpenRead("Examples\\cognitive-services-personalizer.json"), cogSettings, out var diagnosticCog))
             {
                 File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Cog/{file.Path}/{file.Name}", file.Content);
             }
