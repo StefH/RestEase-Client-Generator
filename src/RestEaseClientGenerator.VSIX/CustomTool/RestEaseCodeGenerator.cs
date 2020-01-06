@@ -10,7 +10,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text.Json;
+using Newtonsoft.Json;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace RestEaseClientGenerator.VSIX.CustomTool
 {
@@ -36,19 +37,6 @@ namespace RestEaseClientGenerator.VSIX.CustomTool
             return 0;
         }
 
-        private IRestEaseOptions GetOptions()
-        {
-            try
-            {
-                return _optionsFactory.Create<IRestEaseOptions, RestEaseOptionsPage>();
-            }
-            catch
-            {
-                Trace.WriteLine($"Error getting {nameof(RestEaseOptionsPage)} using default.");
-                return new RestEaseOptionsPage();
-            }
-        }
-
         public int Generate(
             string wszInputFilePath,
             string bstrInputFileContents,
@@ -59,13 +47,27 @@ namespace RestEaseClientGenerator.VSIX.CustomTool
         {
             try
             {
-                var options = GetOptions();
-
                 pGenerateProgress.Progress(5);
 
-                string apiName = Path.GetFileNameWithoutExtension(wszInputFilePath);
+                var options = GetOptionsFromOptionsPage();
 
-                Trace.WriteLine("Generating interface and models");
+                string baseDirectory = Path.GetDirectoryName(wszInputFilePath);
+                string apiName = Path.GetFileNameWithoutExtension(wszInputFilePath);
+                string optionsPath = Path.Combine(baseDirectory, $"{apiName}.options.json");
+
+                if (File.Exists(optionsPath))
+                {
+                    try
+                    {
+                        var optionsFromFile = JsonConvert.DeserializeObject<RestEaseOptions>(File.ReadAllText(optionsPath));
+                    }
+                    catch
+                    {
+                        Trace.WriteLine($"Unable to read custom options file '{optionsPath}'.");
+                    }
+                }
+
+                Trace.WriteLine("Generating Interface and Models");
                 var settings = new GeneratorSettings
                 {
                     SingleFile = true,
@@ -116,6 +118,19 @@ namespace RestEaseClientGenerator.VSIX.CustomTool
             }
 
             return 0;
+        }
+
+        private IRestEaseOptions GetOptionsFromOptionsPage()
+        {
+            try
+            {
+                return _optionsFactory.Create<IRestEaseOptions, RestEaseOptionsPage>();
+            }
+            catch
+            {
+                Trace.WriteLine($"Error getting {nameof(RestEaseOptionsPage)} using default.");
+                return new RestEaseOptionsPage();
+            }
         }
     }
 }

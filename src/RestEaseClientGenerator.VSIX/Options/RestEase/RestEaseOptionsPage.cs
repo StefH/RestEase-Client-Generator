@@ -1,7 +1,7 @@
-using Microsoft.VisualStudio.Shell;
-using RestEaseClientGenerator.Types;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
+using Microsoft.VisualStudio.Shell;
+using RestEaseClientGenerator.Types;
 
 namespace RestEaseClientGenerator.VSIX.Options.RestEase
 {
@@ -98,7 +98,6 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         [DisplayName("Use OperationId as method name")]
         [Description("Use the OperationId as method name, if valid. The default value is 'True'.")]
         public bool UseOperationIdAsMethodName { get; set; } = true;
-
         #endregion
     }
 }

@@ -1,0 +1,19 @@
+{
+  "ArrayType": "T[]",
+  "FailOnOpenApiErrors": false,
+  "UseDateTimeOffset": false,
+  "ApiNamespace": "Api",
+  "ModelsNamespace": "Models",
+  "AddAuthorizationHeader": false,
+  "AppendAsync": true,
+  "MethodReturnType": "T",
+  "MultipartFormDataFileType": "byte[]",
+  "ApplicationOctetStreamType": "byte[]",
+  "GenerateMultipartFormDataExtensionMethods": true,
+  "GenerateFormUrlEncodedExtensionMethods": true,
+  "GenerateApplicationOctetStreamExtensionMethods": true,
+  "ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified": false,
+  "PreferredContentType": "application/json",
+  "ForceContentTypeToApplicationJson": false,
+  "UseOperationIdAsMethodName": true
+}

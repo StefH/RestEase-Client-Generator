@@ -55,7 +55,7 @@ namespace RestEaseClientGeneratorConsoleApp
             });
             Console.WriteLine("AddPetAsync:" + JsonSerializer.Serialize(addPet));
 
-            var getPetById = await petStoreApi.GetPetByIdAsync(1000);
+            var getPetById = await petStoreApi.GetPetByPetIdAsync(1000);
             Console.WriteLine("GetPetByIdAsync:" + JsonSerializer.Serialize(getPetById));
 
             //var uploadFile = await petStoreApi.UploadFileAsync(1000, "rossa", Encoding.UTF8.GetBytes("Poes"));

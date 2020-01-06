@@ -1,5 +1,7 @@
 using System;
 using System.Diagnostics;
+using Newtonsoft.Json;
+using RestEaseClientGenerator.Json;
 using RestEaseClientGenerator.Types;
 
 namespace RestEaseClientGenerator.VSIX.Options.RestEase
@@ -76,10 +78,13 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
             }
         }
 
+        [JsonConverter(typeof(DescriptionEnumConverter))]
         public ArrayType ArrayType { get; set; }
 
+        [JsonConverter(typeof(DescriptionEnumConverter))]
         public MultipartFormDataFileType MultipartFormDataFileType { get; set; }
 
+        [JsonConverter(typeof(DescriptionEnumConverter))]
         public ApplicationOctetStreamType ApplicationOctetStreamType { get; set; }
 
         public bool FailOnOpenApiErrors { get; set; }
@@ -88,6 +93,7 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
 
         public bool UseDateTimeOffset { get; set; }
 
+        [JsonConverter(typeof(DescriptionEnumConverter))]
         public MethodReturnType MethodReturnType { get; set; }
 
         public bool AppendAsync { get; set; }
@@ -104,6 +110,7 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
 
         public bool ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified { get; set; }
 
+        [JsonConverter(typeof(DescriptionEnumConverter))]
         public ContentType PreferredContentType { get; set; }
 
         public bool ForceContentTypeToApplicationJson { get; set; }
