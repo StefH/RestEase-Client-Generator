@@ -6,11 +6,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <!--<Compile Remove="PetStore\**\*.cs" />-->
-    <!--<Compile Remove="PetStoreJson\**\*.cs" />-->
     <!--<Compile Remove="Infura\**\*.cs" />-->
     <!--<Compile Remove="Cog\**\*.cs" />-->
     <Folder Include="Examples\ComputerVision\" />
+    <Folder Include="Examples\Drc\Api\" />
+    <Folder Include="Examples\Drc\Models\" />
     <Folder Include="Examples\SpeechServices\Api\" />
     <Folder Include="Examples\SpeechServices\Models\" />
   </ItemGroup>

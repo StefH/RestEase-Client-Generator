@@ -44,7 +44,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreOpenApi302.Api
         /// </summary>
         /// <param name="petId">ID of pet to return</param>
         [Get("/pet/{petId}")]
-        Task<Pet> GetPetByIdAsync([Path] long petId);
+        Task<Pet> GetPetByPetIdAsync([Path] long petId);
 
         /// <summary>
         /// Updates a pet in the store with form data

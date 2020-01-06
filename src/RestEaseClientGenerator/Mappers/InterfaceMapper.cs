@@ -422,24 +422,24 @@ namespace RestEaseClientGenerator.Mappers
         private string GeneratedRestEaseMethodName(string path, OpenApiOperation operation, string httpMethodPascalCased)
         {
             string methodRestEaseMethod;
-            if (!string.IsNullOrEmpty(operation.OperationId) && char.IsLetter(operation.OperationId[0]))
+            if (Settings.UseOperationIdAsMethodName && !string.IsNullOrEmpty(operation.OperationId) && char.IsLetter(operation.OperationId[0]))
             {
-                methodRestEaseMethod = operation.OperationId.ToPascalCase();
+                methodRestEaseMethod = operation.OperationId.ToValidIdentifier(CasingType.Pascal);
             }
             else
             {
                 var list = new List<string> { httpMethodPascalCased };
 
-                bool byFound = false;
+                bool isFirst = true;
                 foreach (string part in path.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries))
                 {
                     if (part.StartsWith("{"))
                     {
                         var text = part.Split(new[] { '{', '}' }, StringSplitOptions.RemoveEmptyEntries)[0].ToPascalCase();
 
-                        list.Add(byFound ? $"By{text}" : $"And{text}");
+                        list.Add(isFirst ? $"By{text}" : $"And{text}");
 
-                        byFound = true;
+                        isFirst = false;
                     }
                     else
                     {

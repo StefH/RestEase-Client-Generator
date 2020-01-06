@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace RestEaseClientGeneratorConsoleApp.Examples.SpeechServices.Models
 {
-    public class GetSupportedLocalesForModelsResult
+    public class GetApiSpeechtotextV20ModelsLocalesResult
     {
         public string[] None { get; set; }
 
