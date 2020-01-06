@@ -53,7 +53,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.ComputerVision.Api
         /// </summary>
         /// <param name="operationId">Id of the text operation returned in the response of the Recognize Text interface.</param>
         [Get("/textOperations/{operationId}")]
-        Task GetTextOperationsAndOperationIdAsync([Path] string operationId);
+        Task GetTextOperationsByOperationIdAsync([Path] string operationId);
 
         /// <summary>
         /// Get Thumbnail
@@ -85,7 +85,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.ComputerVision.Api
         /// </summary>
         /// <param name="operationId">Id of read operation returned in the response of the Batch Read File interface.</param>
         [Get("/read/operations/{operationId}")]
-        Task GetReadOperationsAndOperationIdAsync([Path] string operationId);
+        Task GetReadOperationsByOperationIdAsync([Path] string operationId);
 
         /// <summary>
         /// Recognize Domain Specific Content
@@ -94,7 +94,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.ComputerVision.Api
         /// <param name="language">A string indicating the language in which to return analysis results, if supported. If this parameter is not specified, the default value is &quot;en&quot;.Possible language values:en - English, Default.es - Spanish.ja - Japanese.pt - Portuguese.zh - Simplified Chinese.</param>
         [Post("/models/{model}/analyze")]
         [Header("Content-Type", "application/json")]
-        Task PostModelsAndModelAnalyzeAsync([Path] string model, [Query] string language);
+        Task PostModelsByModelAnalyzeAsync([Path] string model, [Query] string language);
 
         /// <summary>
         /// Recognize Text

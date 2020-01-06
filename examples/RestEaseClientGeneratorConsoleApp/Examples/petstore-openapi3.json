@@ -185,7 +185,7 @@
 				"tags": [ "pet" ],
 				"summary": "Find pet by ID",
 				"description": "Returns a single pet",
-				"operationId": "getPetById",
+				//"operationId": "getPetById",
 				"parameters": [
 					{
 						"name": "petId",

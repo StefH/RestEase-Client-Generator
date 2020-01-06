@@ -31,6 +31,7 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
                 ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified = options.ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified;
                 PreferredContentType = options.PreferredContentType;
                 ForceContentTypeToApplicationJson = options.ForceContentTypeToApplicationJson;
+                UseOperationIdAsMethodName = options.UseOperationIdAsMethodName;
             }
             catch (Exception e)
             {
@@ -50,6 +51,7 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
                 ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified = false;
                 PreferredContentType = ContentType.ApplicationJson;
                 ForceContentTypeToApplicationJson = false;
+                UseOperationIdAsMethodName = true;
 
                 Trace.WriteLine(e);
                 Trace.WriteLine(Environment.NewLine);
@@ -70,6 +72,7 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
                 Trace.WriteLine($"{nameof(ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified)} = {ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified}");
                 Trace.WriteLine($"{nameof(PreferredContentType)} = {PreferredContentType}");
                 Trace.WriteLine($"{nameof(ForceContentTypeToApplicationJson)} = {ForceContentTypeToApplicationJson}");
+                Trace.WriteLine($"{nameof(UseOperationIdAsMethodName)} = {UseOperationIdAsMethodName}");
             }
         }
 
@@ -104,5 +107,7 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         public ContentType PreferredContentType { get; set; }
 
         public bool ForceContentTypeToApplicationJson { get; set; }
+
+        public bool UseOperationIdAsMethodName { get; set; }
     }
 }

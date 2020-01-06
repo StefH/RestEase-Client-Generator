@@ -44,6 +44,8 @@ namespace RestEaseClientGenerator.Settings
 
         public bool ForceContentTypeToApplicationJson { get; set; }
 
+        public bool UseOperationIdAsMethodName { get; set; } = true;
+
         public SecurityDefinitionType SecurityDefinitionType { get; set; } = SecurityDefinitionType.Header;
         #endregion
     }

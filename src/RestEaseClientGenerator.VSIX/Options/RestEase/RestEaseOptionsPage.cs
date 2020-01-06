@@ -93,6 +93,12 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         [DisplayName("Force Content-Type to 'application/json'")]
         [Description("Always use Content-Type 'application/json', also when multiple Content-Types are are defined. The default value is 'False'.")]
         public bool ForceContentTypeToApplicationJson { get; set; }
+
+        [Category(Interface)]
+        [DisplayName("Use OperationId as method name")]
+        [Description("Use the OperationId as method name, if valid. The default value is 'True'.")]
+        public bool UseOperationIdAsMethodName { get; set; } = true;
+
         #endregion
     }
 }

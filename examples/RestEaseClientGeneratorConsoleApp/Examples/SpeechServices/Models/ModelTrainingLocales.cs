@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 
-namespace RestEaseClientGeneratorConsoleApp.Examples.SpeechServices.Models
+namespace RestEaseClientGeneratorConsoleApp.SpeechServices.Models
 {
-    public class GetSupportedLocalesForModelsResult
+    public class ModelTrainingLocales
     {
         public string[] None { get; set; }
 

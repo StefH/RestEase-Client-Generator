@@ -98,33 +98,7 @@ var findPetsByTags = await petStoreApi.FindPetsByTagsAsync(new[] { "cat" });
 
 ## Options
 
-### General
-| Name | Description |
-| - | - |
-| Array Type | Array type to use. The default is Array 'T[]'.
-| Fail on OpenApi Errors | Don't generate the file if errors are detected when parsing the specification file. The default value is 'False'.
-| Use DateTimeOffset | Use DateTimeOffset instead of DateTime. The default value is 'False'.
-| Namespace for the Api | Append this namespace for the Api. The default value is 'Api'.
-| Namespace for the Models | Append this namespace for the Models. The default value is 'Models'.
-
-### Interface
-| Name | Description |
-| - | - |
-| Append Async | Append Async postfix to all methods. The default value is 'True'.
-| Add Authorization header | Add an Authorization header to the generated interface. The default value is 'False'.
-| Method ReturnType | The ReturnType to use for the methods. The default value is 'Type'. For more details see https://github.com/canton7/RestEase#return-types.
-| Type for multipart/form-data | The MultipartFormData FileType to use. The default value is 'byte[]'.
-| Type for application/octet-stream | The ApplicationOctetStream Type to use. The default value is 'byte[]'.
-| Generate MultipartFormData Extension methods | Generate Extension methods for MultipartFormData methods. The default value is 'True'.
-| Generate FormUrlEncoded Extension methods | Generate Extension methods for FormUrlEncoded methods. The default value is 'True'.
-| Generate ApplicationOctetStream Extension methods | Generate Extension methods for ApplicationOctetStream methods. The default value is 'True'.
-| Return Object from Method | Return Object from Method when Response is defined but no Model is specified. The default value is 'False'.
-| Preferred Content-Type | Preferred Content-Type to use when both 'application/json' and 'application/xml' are defined. The default value is 'application/json'.
-| Force Content-Type to 'application/json' | Always use Content-Type 'application/json', also when multiple Content-Types are are defined. The default value is 'False'.
-
-### Screenshot
-![Settings](https://github.com/StefH/RestEase-Client-Generator/raw/master/resources/settings.png)
-
+See https://github.com/StefH/RestEase-Client-Generator/wiki/Options
 
 ## Credits
 - Project source code is based on [REST API Client Code Generator](https://github.com/christianhelle/apiclientcodegen)

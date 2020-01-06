@@ -13,7 +13,14 @@ namespace RestEaseClientGeneratorConsoleApp
         {
             var generator = new Generator();
 
-            //foreach (var file in generator.FromStream(File.OpenRead("Examples\\drc-new.json"), "RestEaseClientGeneratorConsoleApp.Examples.Drc", "Drc", true, out var diagnosticFormRecognizer))
+            //var drcSettings = new GeneratorSettings
+            //{
+            //    Namespace = "RestEaseClientGeneratorConsoleApp.Examples.Drc",
+            //    ApiName = "Drc",
+            //    ForceContentTypeToApplicationJson = true,
+            //    UseOperationIdAsMethodName = false
+            //};
+            //foreach (var file in generator.FromStream(File.OpenRead("Examples\\drc.json"), drcSettings, out var diagnosticFormRecognizer))
             //{
             //    File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Drc/{file.Path}/{file.Name}", file.Content);
             //}
