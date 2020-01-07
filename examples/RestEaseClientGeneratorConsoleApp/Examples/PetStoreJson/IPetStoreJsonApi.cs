@@ -10,9 +10,6 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreJson.Test123
 {
     public interface IPetStoreJsonApi
     {
-        [Header("Authorization")]
-        AuthenticationHeaderValue Authorization { get; set; }
-
         /// <summary>
         /// Find pet by ID
         /// </summary>

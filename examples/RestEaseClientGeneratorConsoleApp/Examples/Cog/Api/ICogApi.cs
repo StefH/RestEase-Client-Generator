@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using RestEase;
 using RestEaseClientGeneratorConsoleApp.Examples.Cog.Models;
@@ -9,6 +10,9 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Cog.Api
 {
     public interface ICogApi
     {
+        [Header("Ocp-Apim-Subscription-Key")]
+        string OcpApimSubscriptionKey { get; set; }
+
         /// <summary>
         /// Report reward to allocate to the top ranked action for the specified event.
         /// </summary>

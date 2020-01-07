@@ -1,9 +1,9 @@
 ﻿using System.Linq;
 using System.Text;
 using RestEaseClientGenerator.Extensions;
-using RestEaseClientGenerator.Models;
 using RestEaseClientGenerator.Models.Internal;
 using RestEaseClientGenerator.Settings;
+using RestEaseClientGenerator.Types;
 
 namespace RestEaseClientGenerator.Builders
 {
@@ -13,16 +13,13 @@ namespace RestEaseClientGenerator.Builders
         {
         }
 
-        public string Build(RestEaseInterface @interface, bool hasModels)
+        public string Build(RestEaseInterface @interface, RestEaseSecurity security, bool hasModels)
         {
             var builder = new StringBuilder();
             builder.AppendLine("using System;");
             builder.AppendLine("using System.Collections.Generic;");
             builder.AppendLine("using System.Net.Http;");
-            if (Settings.AddAuthorizationHeader)
-            {
-                builder.AppendLine("using System.Net.Http.Headers;");
-            }
+            builder.AppendLine("using System.Net.Http.Headers;");
             builder.AppendLine("using System.Threading.Tasks;");
             builder.AppendLine("using RestEase;");
             if (hasModels || @interface.InlineModels.Any())
@@ -34,11 +31,19 @@ namespace RestEaseClientGenerator.Builders
             builder.AppendLine("{");
             builder.AppendLine($"    public interface {@interface.Name}");
             builder.AppendLine("    {");
-            if (Settings.AddAuthorizationHeader)
+
+            if (security != null && Settings.PreferredSecurityDefinitionType != SecurityDefinitionType.None)
             {
-                builder.AppendLine("        [Header(\"Authorization\")]");
-                builder.AppendLine("        AuthenticationHeaderValue Authorization { get; set; }");
-                builder.AppendLine();
+                var header = security.Definitions.FirstOrDefault(sd => sd.Type == SecurityDefinitionType.Header);
+                // var query = security.Definitions.FirstOrDefault(sd => sd.Type == SecurityDefinitionType.Query);
+
+                if (header != null &&
+                    (Settings.PreferredSecurityDefinitionType == SecurityDefinitionType.Automatic || Settings.PreferredSecurityDefinitionType == SecurityDefinitionType.Header))
+                {
+                    builder.AppendLine($"        [Header(\"{header.Name}\")]");
+                    builder.AppendLine($"        string {header.IdentifierName} {{ get; set; }}");
+                    builder.AppendLine();
+                }
             }
 
             foreach (var method in @interface.Methods)

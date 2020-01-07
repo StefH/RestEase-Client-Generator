@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using RestEase;
 
@@ -8,6 +9,9 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.ComputerVision.Api
 {
     public interface IComputerVisionApi
     {
+        [Header("Ocp-Apim-Subscription-Key")]
+        string OcpApimSubscriptionKey { get; set; }
+
         /// <summary>
         /// Analyze Image
         /// </summary>

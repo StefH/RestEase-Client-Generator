@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using RestEase;
 using RestEaseClientGeneratorConsoleApp.Examples.FormRecognizer.Models;
@@ -9,6 +10,9 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.FormRecognizer.Api
 {
     public interface IFormRecognizerApi
     {
+        [Header("Ocp-Apim-Subscription-Key")]
+        string OcpApimSubscriptionKey { get; set; }
+
         /// <summary>
         /// Get Analyze Form Result
         /// </summary>

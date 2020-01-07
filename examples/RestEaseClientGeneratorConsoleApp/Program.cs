@@ -58,7 +58,6 @@ namespace RestEaseClientGeneratorConsoleApp
                 ArrayType = ArrayType.IEnumerable,
                 Namespace = "RestEaseClientGeneratorConsoleApp.Examples.PetStoreJson",
                 ApiName = "PetStoreJson",
-                AddAuthorizationHeader = true,
                 UseDateTimeOffset = true,
                 MethodReturnType = MethodReturnType.Type,
                 MultipartFormDataFileType = MultipartFormDataFileType.Stream,
@@ -107,9 +106,9 @@ namespace RestEaseClientGeneratorConsoleApp
                 File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/ComputerVision/{file.Path}/{file.Name}", file.Content);
             }
 
-            await PetStoreTests.Run();
+            //await PetStoreTests.Run();
 
-            await PetStoreOpenApi3ApiTests.Run();
+            //await PetStoreOpenApi3ApiTests.Run();
         }
     }
 }

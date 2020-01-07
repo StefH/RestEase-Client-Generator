@@ -9,6 +9,12 @@ namespace RestEaseClientGenerator.Types
         [Description("None")]
         None,
 
+        [Description("Automatic")]
+        Automatic,
+
+        [Description("Fixed")]
+        Fixed,
+
         [Description("Header")]
         Header,
 

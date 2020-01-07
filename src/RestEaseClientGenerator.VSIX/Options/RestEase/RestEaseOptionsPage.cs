@@ -45,11 +45,6 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
 
         #region Interface
         [Category(Interface)]
-        [DisplayName("Add Authorization header")]
-        [Description("Add an Authorization header to the generated interface. The default value is 'False'.")]
-        public bool AddAuthorizationHeader { get; set; }
-
-        [Category(Interface)]
         [DisplayName("Append Async")]
         [Description("Append Async postfix to all methods. The default value is 'True'.")]
         public bool AppendAsync { get; set; } = true;
@@ -103,6 +98,11 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         [DisplayName("Use OperationId as method name")]
         [Description("Use the OperationId as method name, if valid. The default value is 'True'.")]
         public bool UseOperationIdAsMethodName { get; set; } = true;
+
+        [Category(Interface)]
+        [DisplayName("Preferred SecurityDefinition")]
+        [Description("Preferred SecurityDefinition type to add to the interface. The default value is 'Automatic'.")]
+        public SecurityDefinitionType PreferredSecurityDefinitionType { get; set; } = SecurityDefinitionType.Automatic;
         #endregion
 
         #region MergeWith
@@ -136,11 +136,6 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
             if (options.FailOnOpenApiErrors.HasValue)
             {
                 FailOnOpenApiErrors = options.FailOnOpenApiErrors.Value;
-            }
-
-            if (options.AddAuthorizationHeader.HasValue)
-            {
-                AddAuthorizationHeader = options.AddAuthorizationHeader.Value;
             }
 
             if (options.UseDateTimeOffset.HasValue)
@@ -188,14 +183,19 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
                 ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified = options.ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified.Value;
             }
 
-            if (options.ForceContentTypeToApplicationJson != null)
+            if (options.ForceContentTypeToApplicationJson.HasValue)
             {
                 ForceContentTypeToApplicationJson = options.ForceContentTypeToApplicationJson.Value;
             }
 
-            if (options.UseOperationIdAsMethodName != null)
+            if (options.UseOperationIdAsMethodName.HasValue)
             {
                 UseOperationIdAsMethodName = options.UseOperationIdAsMethodName.Value;
+            }
+
+            if (options.PreferredSecurityDefinitionType.HasValue)
+            {
+                PreferredSecurityDefinitionType = options.PreferredSecurityDefinitionType.Value;
             }
         }
         #endregion

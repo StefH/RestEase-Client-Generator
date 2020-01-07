@@ -27,6 +27,7 @@ namespace RestEaseClientGenerator
 
             var models = new ModelsMapper(settings).Map(openApiDocument.Components.Schemas).ToList();
             var @interface = new InterfaceMapper(settings).Map(openApiDocument);
+            var security =  new SecurityMapper(settings).Map(openApiDocument);
 
             var files = new List<GeneratedFile>
             {
@@ -35,7 +36,7 @@ namespace RestEaseClientGenerator
                 {
                     Path = settings.ApiNamespace,
                     Name = $"{@interface.Name}.cs",
-                    Content = new InterfaceBuilder(settings).Build(@interface, models.Any())
+                    Content = new InterfaceBuilder(settings).Build(@interface, security, models.Any())
                 }
             };
 
