@@ -5,7 +5,7 @@ using RestEaseClientGenerator.Extensions;
 namespace RestEaseClientGenerator.Json
 {
     /// <summary>
-    /// Base don https://stackoverflow.com/questions/59403305/deserializing-enum-from-descriptionattribute-using-custom-json-net-jsonconverter
+    /// Based on https://stackoverflow.com/questions/59403305/deserializing-enum-from-descriptionattribute-using-custom-json-net-jsonconverter
     /// </summary>
     public class DescriptionEnumConverter : JsonConverter
     {
