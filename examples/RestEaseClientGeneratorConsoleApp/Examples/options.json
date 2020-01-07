@@ -1,0 +1,19 @@
+{ /*Use this file to overrule the RestEase Client Generator Options*/
+  "AddAuthorizationHeader": false,
+  "ApiNamespace": "Api",
+  "AppendAsync": true,
+  "ApplicationOctetStreamType": "byte[]" /*Possible values are: 'byte[]', 'Stream'*/,
+  "ArrayType": "T[]" /*Possible values are: 'T[]', 'IEnumerable<T>', 'IList<T>', 'ICollection<T>', 'List<T>'*/,
+  "FailOnOpenApiErrors": false,
+  "ForceContentTypeToApplicationJson": false,
+  "GenerateApplicationOctetStreamExtensionMethods": true,
+  "GenerateFormUrlEncodedExtensionMethods": true,
+  "GenerateMultipartFormDataExtensionMethods": true,
+  "MethodReturnType": "T" /*Possible values are: 'T', 'string', 'HttpResponseMessage', 'Response<T>', 'Stream'*/,
+  "ModelsNamespace": "Models",
+  "MultipartFormDataFileType": "byte[]" /*Possible values are: 'byte[]', 'Stream'*/,
+  "PreferredContentType": "application/json" /*Possible values are: 'application/json', 'application/xml'*/,
+  "ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified": false,
+  "UseDateTimeOffset": false,
+  "UseOperationIdAsMethodName": true
+}

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Reflection;
+using RestEaseClientGenerator.Utils;
 
 namespace RestEaseClientGenerator.Extensions
 {
@@ -9,7 +10,7 @@ namespace RestEaseClientGenerator.Extensions
         /// <summary>
         /// Gets Enum Value's Description Attribute
         /// </summary>
-        /// <param name="value">The value you want the description attribute for</param>
+        /// <param name="value">The type you want the description attribute for</param>
         /// <returns>The description, if any, else it's .ToString()</returns>
         public static string GetDescription(this Enum value)
         {
@@ -20,28 +21,28 @@ namespace RestEaseClientGenerator.Extensions
         }
 
         /// <summary>
-        /// Gets the description for certain named value in an Enumeration
+        /// Gets the description for certain named type in an Enumeration
         /// </summary>
-        /// <param name="value">The type of the Enumeration</param>
-        /// <param name="name">The name of the Enumeration value</param>
+        /// <param name="type">The type of the Enumeration</param>
+        /// <param name="name">The name of the Enumeration type</param>
         /// <returns>The description, if any, else the passed name</returns>
-        public static string GetDescription(Type value, string name)
+        public static string GetDescription(Type type, string name)
         {
-            var fieldInfo = value.GetField(name);
+            var fieldInfo = TypeHelper.GetNonNullableType(type).GetField(name);
             var attribute = fieldInfo.GetCustomAttribute<DescriptionAttribute>(false);
 
             return attribute != null ? attribute.Description : name;
         }
 
         /// <summary>
-        /// Gets the value of an Enum, based on it's Description Attribute or named value
+        /// Gets the type of an Enum, based on it's Description Attribute or named type
         /// </summary>
-        /// <param name="value">The Enum type</param>
+        /// <param name="type">The Enum type</param>
         /// <param name="description">The description or name of the element</param>
-        /// <returns>The value, or the passed in description, if it was not found</returns>
-        public static object GetEnumByDescription(Type value, string description)
+        /// <returns>The type, or the passed in description, if it was not found</returns>
+        public static object GetEnumByDescription(Type type, string description)
         {
-            foreach (var fieldInfo in value.GetFields())
+            foreach (var fieldInfo in TypeHelper.GetNonNullableType(type).GetFields())
             {
                 var attribute = fieldInfo.GetCustomAttribute<DescriptionAttribute>(false);
                 if (attribute != null)

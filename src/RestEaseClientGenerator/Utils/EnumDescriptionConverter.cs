@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Globalization;
 using RestEaseClientGenerator.Extensions;
 
 namespace RestEaseClientGenerator.Utils
@@ -17,7 +18,7 @@ namespace RestEaseClientGenerator.Utils
             _enumType = type;
         }
 
-        public override object ConvertTo(ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value, Type destinationType)
+        public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
             if (value is Enum @enum && destinationType == typeof(string))
             {
@@ -32,7 +33,7 @@ namespace RestEaseClientGenerator.Utils
             return base.ConvertTo(context, culture, value, destinationType);
         }
 
-        public override object ConvertFrom(ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value)
+        public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
             if (value is string @string)
             {

@@ -1,7 +1,7 @@
-using Microsoft.VisualStudio.Shell;
-using RestEaseClientGenerator.Types;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
+using Microsoft.VisualStudio.Shell;
+using RestEaseClientGenerator.Types;
 
 namespace RestEaseClientGenerator.VSIX.Options.RestEase
 {
@@ -36,6 +36,11 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         [DisplayName("Namespace for the Models")]
         [Description("Append this namespace for the Models. The default value is 'Models'.")]
         public string ModelsNamespace { get; set; } = "Models";
+
+        [Category(General)]
+        [DisplayName("Use .RestEaseOptions file")]
+        [Description("Read and write .RestEaseOptions file which can be used to overwrite some Visual Studio global RestEase options. The default value is 'True'.")]
+        public bool UseUserOptions { get; set; } = true;
         #endregion
 
         #region Interface
@@ -98,7 +103,101 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         [DisplayName("Use OperationId as method name")]
         [Description("Use the OperationId as method name, if valid. The default value is 'True'.")]
         public bool UseOperationIdAsMethodName { get; set; } = true;
+        #endregion
 
+        #region MergeWith
+        public void MergeWith(RestEaseUserOptions options)
+        {
+            if (options.ArrayType.HasValue)
+            {
+                ArrayType = options.ArrayType.Value;
+            }
+
+            if (options.MethodReturnType.HasValue)
+            {
+                MethodReturnType = options.MethodReturnType.Value;
+            }
+
+            if (options.PreferredContentType.HasValue)
+            {
+                PreferredContentType = options.PreferredContentType.Value;
+            }
+
+            if (options.MultipartFormDataFileType.HasValue)
+            {
+                MultipartFormDataFileType = options.MultipartFormDataFileType.Value;
+            }
+
+            if (options.ApplicationOctetStreamType.HasValue)
+            {
+                ApplicationOctetStreamType = options.ApplicationOctetStreamType.Value;
+            }
+
+            if (options.FailOnOpenApiErrors.HasValue)
+            {
+                FailOnOpenApiErrors = options.FailOnOpenApiErrors.Value;
+            }
+
+            if (options.AddAuthorizationHeader.HasValue)
+            {
+                AddAuthorizationHeader = options.AddAuthorizationHeader.Value;
+            }
+
+            if (options.UseDateTimeOffset.HasValue)
+            {
+                UseDateTimeOffset = options.UseDateTimeOffset.Value;
+            }
+
+            if (options.AppendAsync.HasValue)
+            {
+                AppendAsync = options.AppendAsync.Value;
+            }
+
+            if (options.GenerateMultipartFormDataExtensionMethods.HasValue)
+            {
+                GenerateMultipartFormDataExtensionMethods = options.GenerateMultipartFormDataExtensionMethods.Value;
+            }
+
+            if (options.GenerateFormUrlEncodedExtensionMethods.HasValue)
+            {
+                GenerateFormUrlEncodedExtensionMethods = options.GenerateFormUrlEncodedExtensionMethods.Value;
+            }
+
+            if (options.GenerateMultipartFormDataExtensionMethods.HasValue)
+            {
+                GenerateMultipartFormDataExtensionMethods = options.GenerateMultipartFormDataExtensionMethods.Value;
+            }
+
+            if (options.PreferredContentType.HasValue)
+            {
+                PreferredContentType = options.PreferredContentType.Value;
+            }
+
+            if (options.ApiNamespace != null)
+            {
+                ApiNamespace = options.ApiNamespace;
+            }
+
+            if (options.ModelsNamespace != null)
+            {
+                ModelsNamespace = options.ModelsNamespace;
+            }
+
+            if (options.ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified.HasValue)
+            {
+                ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified = options.ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified.Value;
+            }
+
+            if (options.ForceContentTypeToApplicationJson != null)
+            {
+                ForceContentTypeToApplicationJson = options.ForceContentTypeToApplicationJson.Value;
+            }
+
+            if (options.UseOperationIdAsMethodName != null)
+            {
+                UseOperationIdAsMethodName = options.UseOperationIdAsMethodName.Value;
+            }
+        }
         #endregion
     }
 }

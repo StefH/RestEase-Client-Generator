@@ -1,5 +1,7 @@
 using System;
 using System.Diagnostics;
+using Newtonsoft.Json;
+using RestEaseClientGenerator.Json;
 using RestEaseClientGenerator.Types;
 
 namespace RestEaseClientGenerator.VSIX.Options.RestEase
@@ -32,6 +34,7 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
                 PreferredContentType = options.PreferredContentType;
                 ForceContentTypeToApplicationJson = options.ForceContentTypeToApplicationJson;
                 UseOperationIdAsMethodName = options.UseOperationIdAsMethodName;
+                UseUserOptions = options.UseUserOptions;
             }
             catch (Exception e)
             {
@@ -73,13 +76,17 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
                 Trace.WriteLine($"{nameof(PreferredContentType)} = {PreferredContentType}");
                 Trace.WriteLine($"{nameof(ForceContentTypeToApplicationJson)} = {ForceContentTypeToApplicationJson}");
                 Trace.WriteLine($"{nameof(UseOperationIdAsMethodName)} = {UseOperationIdAsMethodName}");
+                Trace.WriteLine($"{nameof(UseUserOptions)} = {UseUserOptions}");
             }
         }
 
+        [JsonConverter(typeof(DescriptionEnumConverter))]
         public ArrayType ArrayType { get; set; }
 
+        [JsonConverter(typeof(DescriptionEnumConverter))]
         public MultipartFormDataFileType MultipartFormDataFileType { get; set; }
 
+        [JsonConverter(typeof(DescriptionEnumConverter))]
         public ApplicationOctetStreamType ApplicationOctetStreamType { get; set; }
 
         public bool FailOnOpenApiErrors { get; set; }
@@ -88,6 +95,7 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
 
         public bool UseDateTimeOffset { get; set; }
 
+        [JsonConverter(typeof(DescriptionEnumConverter))]
         public MethodReturnType MethodReturnType { get; set; }
 
         public bool AppendAsync { get; set; }
@@ -104,10 +112,13 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
 
         public bool ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified { get; set; }
 
+        [JsonConverter(typeof(DescriptionEnumConverter))]
         public ContentType PreferredContentType { get; set; }
 
         public bool ForceContentTypeToApplicationJson { get; set; }
 
         public bool UseOperationIdAsMethodName { get; set; }
+        
+        public bool UseUserOptions { get; set; }
     }
 }

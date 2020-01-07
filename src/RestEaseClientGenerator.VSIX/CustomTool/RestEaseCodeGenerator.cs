@@ -1,16 +1,17 @@
-﻿using Microsoft.VisualStudio.Shell;
-using Microsoft.VisualStudio.Shell.Interop;
-using Microsoft.VisualStudio.TextTemplating.VSHost;
-using RestEaseClientGenerator.Settings;
-using RestEaseClientGenerator.VSIX.Extensions;
-using RestEaseClientGenerator.VSIX.Options;
-using RestEaseClientGenerator.VSIX.Options.RestEase;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text.Json;
+using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio.Shell.Interop;
+using Microsoft.VisualStudio.TextTemplating.VSHost;
+using Newtonsoft.Json;
+using RestEaseClientGenerator.Settings;
+using RestEaseClientGenerator.VSIX.Extensions;
+using RestEaseClientGenerator.VSIX.Options;
+using RestEaseClientGenerator.VSIX.Options.RestEase;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace RestEaseClientGenerator.VSIX.CustomTool
 {
@@ -36,19 +37,6 @@ namespace RestEaseClientGenerator.VSIX.CustomTool
             return 0;
         }
 
-        private IRestEaseOptions GetOptions()
-        {
-            try
-            {
-                return _optionsFactory.Create<IRestEaseOptions, RestEaseOptionsPage>();
-            }
-            catch
-            {
-                Trace.WriteLine($"Error getting {nameof(RestEaseOptionsPage)} using default.");
-                return new RestEaseOptionsPage();
-            }
-        }
-
         public int Generate(
             string wszInputFilePath,
             string bstrInputFileContents,
@@ -59,13 +47,44 @@ namespace RestEaseClientGenerator.VSIX.CustomTool
         {
             try
             {
-                var options = GetOptions();
-
                 pGenerateProgress.Progress(5);
 
-                string apiName = Path.GetFileNameWithoutExtension(wszInputFilePath);
+                var options = GetOptionsFromOptionsPage();
 
-                Trace.WriteLine("Generating interface and models");
+                string baseDirectory = Path.GetDirectoryName(wszInputFilePath);
+                string apiName = Path.GetFileNameWithoutExtension(wszInputFilePath);
+                
+                if (options.UseUserOptions)
+                {
+                    string optionsPath = Path.Combine(baseDirectory, $"{apiName}.RestEaseOptions");
+
+                    if (!File.Exists(optionsPath))
+                    {
+                        try
+                        {
+                            string json = _optionsFactory.Serialize(options);
+                            File.WriteAllText(optionsPath, json);
+                        }
+                        catch
+                        {
+                            Trace.WriteLine($"Unable to write custom settings file '{optionsPath}'.");
+                        }
+                    }
+                    else
+                    {
+                        try
+                        {
+                            var userSettings = JsonConvert.DeserializeObject<RestEaseUserOptions>(File.ReadAllText(optionsPath));
+                            options.MergeWith(userSettings);
+                        }
+                        catch
+                        {
+                            Trace.WriteLine($"Unable to read custom settings file '{optionsPath}'.");
+                        }
+                    }
+                }
+
+                Trace.WriteLine("Generating Interface and Models");
                 var settings = new GeneratorSettings
                 {
                     SingleFile = true,
@@ -116,6 +135,19 @@ namespace RestEaseClientGenerator.VSIX.CustomTool
             }
 
             return 0;
+        }
+
+        private RestEaseOptionsPage GetOptionsFromOptionsPage()
+        {
+            try
+            {
+                return (RestEaseOptionsPage) _optionsFactory.Create<RestEaseOptionsPage>();
+            }
+            catch
+            {
+                Trace.WriteLine($"Error getting {nameof(RestEaseOptionsPage)} using default.");
+                return new RestEaseOptionsPage();
+            }
         }
     }
 }
