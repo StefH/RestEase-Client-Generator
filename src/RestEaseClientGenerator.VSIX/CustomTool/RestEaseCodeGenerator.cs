@@ -1,16 +1,16 @@
-﻿using Microsoft.VisualStudio.Shell;
-using Microsoft.VisualStudio.Shell.Interop;
-using Microsoft.VisualStudio.TextTemplating.VSHost;
-using RestEaseClientGenerator.Settings;
-using RestEaseClientGenerator.VSIX.Extensions;
-using RestEaseClientGenerator.VSIX.Options;
-using RestEaseClientGenerator.VSIX.Options.RestEase;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio.Shell.Interop;
+using Microsoft.VisualStudio.TextTemplating.VSHost;
 using Newtonsoft.Json;
+using RestEaseClientGenerator.Settings;
+using RestEaseClientGenerator.VSIX.Extensions;
+using RestEaseClientGenerator.VSIX.Options;
+using RestEaseClientGenerator.VSIX.Options.RestEase;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace RestEaseClientGenerator.VSIX.CustomTool
@@ -53,17 +53,34 @@ namespace RestEaseClientGenerator.VSIX.CustomTool
 
                 string baseDirectory = Path.GetDirectoryName(wszInputFilePath);
                 string apiName = Path.GetFileNameWithoutExtension(wszInputFilePath);
-                string optionsPath = Path.Combine(baseDirectory, $"{apiName}.options.json");
-
-                if (File.Exists(optionsPath))
+                
+                if (options.UseUserOptions)
                 {
-                    try
+                    string optionsPath = Path.Combine(baseDirectory, $"{apiName}.RestEaseOptions");
+
+                    if (!File.Exists(optionsPath))
                     {
-                        var optionsFromFile = JsonConvert.DeserializeObject<RestEaseOptions>(File.ReadAllText(optionsPath));
+                        try
+                        {
+                            string json = _optionsFactory.Serialize(options);
+                            File.WriteAllText(optionsPath, json);
+                        }
+                        catch
+                        {
+                            Trace.WriteLine($"Unable to write custom settings file '{optionsPath}'.");
+                        }
                     }
-                    catch
+                    else
                     {
-                        Trace.WriteLine($"Unable to read custom options file '{optionsPath}'.");
+                        try
+                        {
+                            var userSettings = JsonConvert.DeserializeObject<RestEaseUserOptions>(File.ReadAllText(optionsPath));
+                            options.MergeWith(userSettings);
+                        }
+                        catch
+                        {
+                            Trace.WriteLine($"Unable to read custom settings file '{optionsPath}'.");
+                        }
                     }
                 }
 
@@ -120,11 +137,11 @@ namespace RestEaseClientGenerator.VSIX.CustomTool
             return 0;
         }
 
-        private IRestEaseOptions GetOptionsFromOptionsPage()
+        private RestEaseOptionsPage GetOptionsFromOptionsPage()
         {
             try
             {
-                return _optionsFactory.Create<IRestEaseOptions, RestEaseOptionsPage>();
+                return (RestEaseOptionsPage) _optionsFactory.Create<RestEaseOptionsPage>();
             }
             catch
             {

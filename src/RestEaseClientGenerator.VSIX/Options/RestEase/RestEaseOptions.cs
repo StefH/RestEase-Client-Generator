@@ -34,6 +34,7 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
                 PreferredContentType = options.PreferredContentType;
                 ForceContentTypeToApplicationJson = options.ForceContentTypeToApplicationJson;
                 UseOperationIdAsMethodName = options.UseOperationIdAsMethodName;
+                UseUserOptions = options.UseUserOptions;
             }
             catch (Exception e)
             {
@@ -75,6 +76,7 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
                 Trace.WriteLine($"{nameof(PreferredContentType)} = {PreferredContentType}");
                 Trace.WriteLine($"{nameof(ForceContentTypeToApplicationJson)} = {ForceContentTypeToApplicationJson}");
                 Trace.WriteLine($"{nameof(UseOperationIdAsMethodName)} = {UseOperationIdAsMethodName}");
+                Trace.WriteLine($"{nameof(UseUserOptions)} = {UseUserOptions}");
             }
         }
 
@@ -116,5 +118,7 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         public bool ForceContentTypeToApplicationJson { get; set; }
 
         public bool UseOperationIdAsMethodName { get; set; }
+        
+        public bool UseUserOptions { get; set; }
     }
 }

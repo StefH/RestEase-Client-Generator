@@ -1,7 +1,13 @@
-﻿namespace RestEaseClientGenerator.VSIX.Options
+﻿using RestEaseClientGenerator.VSIX.Options.RestEase;
+
+namespace RestEaseClientGenerator.VSIX.Options
 {
     public interface IOptionsFactory
     {
-        TOptions Create<TOptions, TDialogPage>() where TOptions : class;
+        IRestEaseOptions Create<TDialogPage>();
+
+        IRestEaseOptions Deserialize(string value);
+
+        string Serialize(IRestEaseOptions options);
     }
 }

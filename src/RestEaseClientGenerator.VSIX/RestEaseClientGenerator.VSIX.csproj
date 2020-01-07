@@ -69,6 +69,7 @@
     <Compile Include="NuGet\PackageDependencies.cs" />
     <Compile Include="NuGet\PackageDependency.cs" />
     <Compile Include="NuGet\PackageDependencyListProvider.cs" />
+    <Compile Include="Options\RestEase\RestEaseUserOptions.cs" />
     <Compile Include="Options\RestEase\RestEaseOptions.cs" />
     <Compile Include="Options\RestEase\RestEaseOptionsPage.cs">
       <SubType>Component</SubType>
@@ -143,6 +144,7 @@
       <DependentUpon>VsPackage.cs</DependentUpon>
       <MergeWithCTO>true</MergeWithCTO>
       <ManifestResourceName>VSPackage</ManifestResourceName>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
