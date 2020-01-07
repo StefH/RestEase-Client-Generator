@@ -8,8 +8,14 @@ using RestEaseClientGeneratorConsoleApp.Examples.PetStoreJson.Modelz;
 
 namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreJson.Test123
 {
+     /// <summary>
+     /// This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.
+     /// </summary>
     public interface IPetStoreJsonApi
     {
+        [Header("api_key")]
+        string ApiKey { get; set; }
+
         /// <summary>
         /// Find pet by ID
         /// </summary>

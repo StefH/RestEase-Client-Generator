@@ -29,6 +29,9 @@ namespace RestEaseClientGenerator.Builders
             builder.AppendLine();
             builder.AppendLine($"namespace {AppendApiNamespace(@interface.Namespace)}");
             builder.AppendLine("{");
+            builder.AppendLine("     /// <summary>");
+            builder.AppendLine($"     /// {@interface.Summary.StripHtml()}");
+            builder.AppendLine("     /// </summary>");
             builder.AppendLine($"    public interface {@interface.Name}");
             builder.AppendLine("    {");
 

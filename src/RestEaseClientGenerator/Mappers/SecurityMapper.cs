@@ -16,44 +16,65 @@ namespace RestEaseClientGenerator.Mappers
 
         public RestEaseSecurity Map(OpenApiDocument openApiDocument)
         {
-            if (openApiDocument.SecurityRequirements != null)
+            if (openApiDocument.SecurityRequirements != null && openApiDocument.SecurityRequirements.Any())
             {
-                var restEaseSecurity = new RestEaseSecurity
-                {
-                    Definitions = new List<RestEaseSecurityDefinition>(),
-                    SecurityVersionType = SecurityVersionType.Swagger2
-                };
+                return MapSwaggerVersion2(openApiDocument);
+            }
 
-                var openApiSecuritySchemes = openApiDocument.SecurityRequirements
-                    .Select(sr => sr.Keys.FirstOrDefault())
-                    .Where(k => k != null);
-
-                foreach (var openApiSecurityScheme in openApiSecuritySchemes)
+            if (openApiDocument.Components.SecuritySchemes != null)
+            {
+                if (openApiDocument.Components.SecuritySchemes.TryGetValue("api_key", out var openApiSecurityScheme))
                 {
-                    var restEaseSecurityDefinition = new RestEaseSecurityDefinition
+                    return new RestEaseSecurity
                     {
-                        Name = openApiSecurityScheme.Name,
-                        IdentifierName = openApiSecurityScheme.Name.ToValidIdentifier(CasingType.Pascal)
+                        Definitions = Map(new[] { openApiSecurityScheme }),
+                        SecurityVersionType = SecurityVersionType.OpenApi3
                     };
-
-                    switch (openApiSecurityScheme.In)
-                    {
-                        case ParameterLocation.Header:
-                            restEaseSecurityDefinition.Type = SecurityDefinitionType.Header;
-                            break;
-
-                        case ParameterLocation.Query:
-                            restEaseSecurityDefinition.Type = SecurityDefinitionType.Query;
-                            break;
-                    }
-
-                    restEaseSecurity.Definitions.Add(restEaseSecurityDefinition);
                 }
-
-                return restEaseSecurity;
             }
 
             return null;
+        }
+
+        private RestEaseSecurity MapSwaggerVersion2(OpenApiDocument openApiDocument)
+        {
+            var openApiSecuritySchemes = openApiDocument.SecurityRequirements
+                .Select(sr => sr.Keys.FirstOrDefault())
+                .Where(k => k != null);
+
+            return new RestEaseSecurity
+            {
+                Definitions = Map(openApiSecuritySchemes),
+                SecurityVersionType = SecurityVersionType.Swagger2
+            };
+        }
+
+        private ICollection<RestEaseSecurityDefinition> Map(IEnumerable<OpenApiSecurityScheme> openApiSecuritySchemes)
+        {
+            var definitions = new List<RestEaseSecurityDefinition>();
+            foreach (var openApiSecurityScheme in openApiSecuritySchemes)
+            {
+                var restEaseSecurityDefinition = new RestEaseSecurityDefinition
+                {
+                    Name = openApiSecurityScheme.Name,
+                    IdentifierName = openApiSecurityScheme.Name.ToValidIdentifier(CasingType.Pascal)
+                };
+
+                switch (openApiSecurityScheme.In)
+                {
+                    case ParameterLocation.Header:
+                        restEaseSecurityDefinition.Type = SecurityDefinitionType.Header;
+                        break;
+
+                    case ParameterLocation.Query:
+                        restEaseSecurityDefinition.Type = SecurityDefinitionType.Query;
+                        break;
+                }
+
+                definitions.Add(restEaseSecurityDefinition);
+            }
+
+            return definitions;
         }
     }
 }
