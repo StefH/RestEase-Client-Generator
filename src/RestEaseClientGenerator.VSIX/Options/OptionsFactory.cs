@@ -21,11 +21,15 @@ namespace RestEaseClientGenerator.VSIX.Options
         public string Serialize(IRestEaseOptions options)
         {
             var stringBuilder = new StringBuilder();
+            //stringBuilder.AppendLine("{");
+            //stringBuilder.AppendLine("  /**/");
+
             using (var t = new JsonTextWriter(new StringWriter(stringBuilder)))
             {
                 t.Formatting = Formatting.Indented;
 
                 t.WriteStartObject();
+                t.WriteComment("Use this file to overrule the RestEase Client Generator Options");
 
                 t.WritePropertyName(nameof(options.AddAuthorizationHeader));
                 t.WriteValue(options.AddAuthorizationHeader);
@@ -36,9 +40,13 @@ namespace RestEaseClientGenerator.VSIX.Options
                 t.WritePropertyName(nameof(options.AppendAsync));
                 t.WriteValue(options.AppendAsync);
 
-                WriteEnumComment<ApplicationOctetStreamType>(t);
                 t.WritePropertyName(nameof(options.ApplicationOctetStreamType));
                 t.WriteValue(options.ApplicationOctetStreamType.GetDescription());
+                WriteEnumComment<ApplicationOctetStreamType>(t);
+
+                t.WritePropertyName(nameof(options.ArrayType));
+                t.WriteValue(options.ArrayType.GetDescription());
+                WriteEnumComment<ArrayType>(t);
 
                 t.WritePropertyName(nameof(options.FailOnOpenApiErrors));
                 t.WriteValue(options.FailOnOpenApiErrors);
@@ -55,20 +63,20 @@ namespace RestEaseClientGenerator.VSIX.Options
                 t.WritePropertyName(nameof(options.GenerateMultipartFormDataExtensionMethods));
                 t.WriteValue(options.GenerateMultipartFormDataExtensionMethods);
 
-                WriteEnumComment<MethodReturnType>(t);
                 t.WritePropertyName(nameof(options.MethodReturnType));
                 t.WriteValue(options.MethodReturnType.GetDescription());
+                WriteEnumComment<MethodReturnType>(t);
 
                 t.WritePropertyName(nameof(options.ModelsNamespace));
                 t.WriteValue(options.ModelsNamespace);
 
-                WriteEnumComment<MultipartFormDataFileType>(t);
                 t.WritePropertyName(nameof(options.MultipartFormDataFileType));
                 t.WriteValue(options.MultipartFormDataFileType.GetDescription());
+                WriteEnumComment<MultipartFormDataFileType>(t);
 
-                WriteEnumComment<ContentType>(t);
                 t.WritePropertyName(nameof(options.PreferredContentType));
                 t.WriteValue(options.PreferredContentType.GetDescription());
+                WriteEnumComment<ContentType>(t);
 
                 t.WritePropertyName(nameof(options.ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified));
                 t.WriteValue(options.ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified);
@@ -93,14 +101,7 @@ namespace RestEaseClientGenerator.VSIX.Options
                 descriptions.Add($"'{value.GetDescription()}'");
             }
 
-            WriteComment(writer, $"Possible values are: {string.Join(", ", descriptions)}");
-        }
-
-        private void WriteComment(JsonTextWriter writer, string comment)
-        {
-            string indent = new string(' ', writer.Indentation);
-
-            writer.WriteRaw($"\r\n{indent}/* {comment} */");
+            writer.WriteComment($"Possible values are: {string.Join(", ", descriptions)}");
         }
     }
 }

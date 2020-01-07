@@ -105,6 +105,7 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         public bool UseOperationIdAsMethodName { get; set; } = true;
         #endregion
 
+        #region MergeWith
         public void MergeWith(RestEaseUserOptions options)
         {
             if (options.ArrayType.HasValue)
@@ -197,5 +198,6 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
                 UseOperationIdAsMethodName = options.UseOperationIdAsMethodName.Value;
             }
         }
+        #endregion
     }
 }
