@@ -1,16 +1,20 @@
 {
   "AddAuthorizationHeader": false,
   "ApiNamespace": "Api",
-  "AppendAsync": true,
+  "AppendAsync": true
+  /* Possible values are: 'byte[]', 'Stream' */,
   "ApplicationOctetStreamType": "byte[]",
   "FailOnOpenApiErrors": false,
   "ForceContentTypeToApplicationJson": false,
   "GenerateApplicationOctetStreamExtensionMethods": true,
   "GenerateFormUrlEncodedExtensionMethods": true,
-  "GenerateMultipartFormDataExtensionMethods": true,
+  "GenerateMultipartFormDataExtensionMethods": true
+  /* Possible values are: 'T', 'string', 'HttpResponseMessage', 'Response<T>', 'Stream' */,
   "MethodReturnType": "T",
-  "ModelsNamespace": "Models",
-  "MultipartFormDataFileType": "byte[]",
+  "ModelsNamespace": "Models"
+  /* Possible values are: 'byte[]', 'Stream' */,
+  "MultipartFormDataFileType": "byte[]"
+  /* Possible values are: 'application/json', 'application/xml' */,
   "PreferredContentType": "application/json",
   "ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified": false,
   "UseDateTimeOffset": false,
