@@ -66,8 +66,9 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStore.Api
         /// Deletes a pet
         /// </summary>
         /// <param name="petId">Pet id to delete</param>
+        /// <param name="apiKey"></param>
         [Delete("/pet/{petId}")]
-        Task<object> DeletePetAsync([Path] long petId);
+        Task<object> DeletePetAsync([Path] long petId, [Header("api_key")] string apiKey);
 
         /// <summary>
         /// uploads an image

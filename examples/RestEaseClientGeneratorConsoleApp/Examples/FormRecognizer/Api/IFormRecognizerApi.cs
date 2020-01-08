@@ -88,11 +88,11 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.FormRecognizer.Api
         /// <summary>
         /// Analyze Form
         /// </summary>
-        /// <param name="modelId">Format - uuid. Model identifier.</param>
         /// <param name="contentType">The Content-Type</param>
+        /// <param name="modelId">Format - uuid. Model identifier.</param>
         /// <param name="content">Url to source data.</param>
         /// <param name="includeTextDetails">Include text lines and element references in the result.  Default: false.</param>
         [Post("/custom/models/{modelId}/analyze")]
-        Task<AnalyzeOperationResult> AnalyzeWithCustomFormAsync([Path] string modelId, [Header("Content-Type")] string contentType, [Body] SourcePath content, [Query] bool? includeTextDetails);
+        Task<AnalyzeOperationResult> AnalyzeWithCustomFormAsync([Header("Content-Type")] string contentType, [Path] string modelId, [Body] SourcePath content, [Query] bool? includeTextDetails);
     }
 }
