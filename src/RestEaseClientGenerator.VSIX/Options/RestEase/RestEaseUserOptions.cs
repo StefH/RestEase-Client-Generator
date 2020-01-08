@@ -17,8 +17,6 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
 
         public bool? FailOnOpenApiErrors { get; set; }
 
-        public bool? AddAuthorizationHeader { get; set; }
-
         public bool? UseDateTimeOffset { get; set; }
 
         [JsonConverter(typeof(DescriptionEnumConverter))]
@@ -44,7 +42,10 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         public bool? ForceContentTypeToApplicationJson { get; set; }
 
         public bool? UseOperationIdAsMethodName { get; set; }
-        
+
+        [JsonConverter(typeof(DescriptionEnumConverter))]
+        public SecurityDefinitionType? PreferredSecurityDefinitionType { get; set; }
+
         // public bool UseUserOptions { get; set; }
     }
 }

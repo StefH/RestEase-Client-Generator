@@ -1,12 +1,16 @@
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using RestEase;
 using RestEaseClientGeneratorConsoleApp.Examples.SpeechServices.Models;
 
 namespace RestEaseClientGeneratorConsoleApp.Examples.SpeechServices.Api
 {
+     /// <summary>
+     /// Speech Services API v2.0.
+     /// </summary>
     public interface ISpeechServicesApi
     {
         /// <summary>

@@ -22,7 +22,7 @@ namespace RestEaseClientGenerator.Settings
         #region Interface
         public string ApiName { get; set; }
 
-        public bool AddAuthorizationHeader { get; set; }
+        // public bool AddAuthorizationHeader { get; set; }
 
         public MethodReturnType MethodReturnType { get; set; } = MethodReturnType.Type;
 
@@ -46,7 +46,7 @@ namespace RestEaseClientGenerator.Settings
 
         public bool UseOperationIdAsMethodName { get; set; } = true;
 
-        public SecurityDefinitionType SecurityDefinitionType { get; set; } = SecurityDefinitionType.Header;
+        public SecurityDefinitionType PreferredSecurityDefinitionType { get; set; } = SecurityDefinitionType.Automatic;
         #endregion
     }
 }

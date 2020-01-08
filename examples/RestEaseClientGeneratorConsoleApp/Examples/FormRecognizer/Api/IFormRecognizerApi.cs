@@ -1,14 +1,21 @@
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using RestEase;
 using RestEaseClientGeneratorConsoleApp.Examples.FormRecognizer.Models;
 
 namespace RestEaseClientGeneratorConsoleApp.Examples.FormRecognizer.Api
 {
+     /// <summary>
+     /// Form Recognizer extracts information from forms and images into structured data.  It includes the following options:* Custom - Extracts information from forms (PDFs and images) into structured data based on a model created from a set of representative training forms. Form Recognizer learns the structure of your forms to intelligently extract text and data. It ingests text from forms, applies machine learning technology to identify keys, tables, and fields, and then outputs structured data that includes the relationships within the original file.* Prebuilt Receipt - Detects and extracts data from receipts using optical character recognition (OCR) and our receipt model, enabling you to easily extract structured data from receipts such as merchant name, merchant phone number, transaction date, transaction total, and more.* Layout - Extracts text and table structure from documents using optical character recognition (OCR).This API is currently available in:* West Europe - westeurope.api.cognitive.microsoft.com* West US 2 - westus2.api.cognitive.microsoft.com
+     /// </summary>
     public interface IFormRecognizerApi
     {
+        [Header("Ocp-Apim-Subscription-Key")]
+        string OcpApimSubscriptionKey { get; set; }
+
         /// <summary>
         /// Get Analyze Form Result
         /// </summary>

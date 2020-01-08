@@ -19,7 +19,6 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
 
                 ArrayType = options.ArrayType;
                 FailOnOpenApiErrors = options.FailOnOpenApiErrors;
-                AddAuthorizationHeader = options.AddAuthorizationHeader;
                 UseDateTimeOffset = options.UseDateTimeOffset;
                 MethodReturnType = options.MethodReturnType;
                 AppendAsync = options.AppendAsync;
@@ -34,13 +33,13 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
                 PreferredContentType = options.PreferredContentType;
                 ForceContentTypeToApplicationJson = options.ForceContentTypeToApplicationJson;
                 UseOperationIdAsMethodName = options.UseOperationIdAsMethodName;
+                PreferredSecurityDefinitionType = options.PreferredSecurityDefinitionType;
                 UseUserOptions = options.UseUserOptions;
             }
             catch (Exception e)
             {
                 ArrayType = ArrayType.Array;
                 FailOnOpenApiErrors = false;
-                AddAuthorizationHeader = false;
                 UseDateTimeOffset = false;
                 MethodReturnType = MethodReturnType.Type;
                 AppendAsync = true;
@@ -55,13 +54,14 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
                 PreferredContentType = ContentType.ApplicationJson;
                 ForceContentTypeToApplicationJson = false;
                 UseOperationIdAsMethodName = true;
+                UseUserOptions = true;
+                PreferredSecurityDefinitionType = SecurityDefinitionType.Automatic;
 
                 Trace.WriteLine(e);
                 Trace.WriteLine(Environment.NewLine);
                 Trace.WriteLine("Error reading RestEase user options. Reverting to default values");
                 Trace.WriteLine($"{nameof(ArrayType)} = {ArrayType}");
                 Trace.WriteLine($"{nameof(FailOnOpenApiErrors)} = {FailOnOpenApiErrors}");
-                Trace.WriteLine($"{nameof(AddAuthorizationHeader)} = {AddAuthorizationHeader}");
                 Trace.WriteLine($"{nameof(UseDateTimeOffset)} = {UseDateTimeOffset}");
                 Trace.WriteLine($"{nameof(MethodReturnType)} = {MethodReturnType}");
                 Trace.WriteLine($"{nameof(AppendAsync)} = {AppendAsync}");
@@ -77,6 +77,7 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
                 Trace.WriteLine($"{nameof(ForceContentTypeToApplicationJson)} = {ForceContentTypeToApplicationJson}");
                 Trace.WriteLine($"{nameof(UseOperationIdAsMethodName)} = {UseOperationIdAsMethodName}");
                 Trace.WriteLine($"{nameof(UseUserOptions)} = {UseUserOptions}");
+                Trace.WriteLine($"{nameof(PreferredSecurityDefinitionType)} = {PreferredSecurityDefinitionType}");
             }
         }
 
@@ -90,8 +91,6 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         public ApplicationOctetStreamType ApplicationOctetStreamType { get; set; }
 
         public bool FailOnOpenApiErrors { get; set; }
-
-        public bool AddAuthorizationHeader { get; set; }
 
         public bool UseDateTimeOffset { get; set; }
 
@@ -118,7 +117,10 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         public bool ForceContentTypeToApplicationJson { get; set; }
 
         public bool UseOperationIdAsMethodName { get; set; }
-        
+
+        [JsonConverter(typeof(DescriptionEnumConverter))]
+        public SecurityDefinitionType PreferredSecurityDefinitionType { get; set; }
+
         public bool UseUserOptions { get; set; }
     }
 }

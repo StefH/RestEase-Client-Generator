@@ -91,7 +91,6 @@ namespace RestEaseClientGenerator.VSIX.CustomTool
                     Namespace = wszDefaultNamespace,
                     ApiName = apiName,
                     ArrayType = options.ArrayType,
-                    AddAuthorizationHeader = options.AddAuthorizationHeader,
                     UseDateTimeOffset = options.UseDateTimeOffset,
                     MethodReturnType = options.MethodReturnType,
                     AppendAsync = options.AppendAsync,
@@ -105,7 +104,8 @@ namespace RestEaseClientGenerator.VSIX.CustomTool
                     ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified = options.ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified,
                     PreferredContentType = options.PreferredContentType,
                     ForceContentTypeToApplicationJson = options.ForceContentTypeToApplicationJson,
-                    UseOperationIdAsMethodName = options.UseOperationIdAsMethodName
+                    UseOperationIdAsMethodName = options.UseOperationIdAsMethodName,
+                    PreferredSecurityDefinitionType = options.PreferredSecurityDefinitionType
                 };
                 var result = _generator.FromStream(File.OpenRead(wszInputFilePath), settings, out var diagnostic);
 

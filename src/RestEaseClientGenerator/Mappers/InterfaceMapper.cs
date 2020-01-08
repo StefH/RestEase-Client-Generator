@@ -27,6 +27,7 @@ namespace RestEaseClientGenerator.Mappers
             {
                 Name = interfaceName,
                 Namespace = Settings.Namespace,
+                Summary = openApiDocument.Info?.Description ?? name
             };
 
             foreach (var path in openApiDocument.Paths)
