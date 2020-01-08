@@ -69,19 +69,23 @@ namespace RestEaseClientGenerator.Mappers
 
             string methodRestEaseMethodName = GeneratedRestEaseMethodName(path, operation, methodRestEaseForAnnotation);
 
+            var headerParameterList = operation.Parameters
+                .Where(p => p.In == ParameterLocation.Header && p.Schema.GetSchemaType() != SchemaType.Object)
+                .Select(p => BuildValidParameter(p.Name, p.Schema, p.Required, p.Description, p.In))
+                .ToList();
+
             var pathParameterList = operation.Parameters
                 .Where(p => p.In == ParameterLocation.Path && p.Schema.GetSchemaType() != SchemaType.Object)
-                .Select(p => BuildValidParameter(p.Name, p.Schema, p.Required, p.Description, "Path"))
+                .Select(p => BuildValidParameter(p.Name, p.Schema, p.Required, p.Description, p.In))
                 .ToList();
 
             var queryParameterList = operation.Parameters
                 .Where(p => p.In == ParameterLocation.Query && p.Schema.GetSchemaType() != SchemaType.Object)
-                .Select(p => BuildValidParameter(p.Name, p.Schema, p.Required, p.Description, "Query"))
+                .Select(p => BuildValidParameter(p.Name, p.Schema, p.Required, p.Description, p.In))
                 .ToList();
 
             var extensionMethodParameterList = new List<RestEaseParameter>();
             var bodyParameterList = new List<RestEaseParameter>();
-            var headerParameterList = new List<RestEaseParameter>();
 
             var requestDetails = operation.RequestBody != null
                 ? MapRequest(operation, bodyParameterList, extensionMethodParameterList)
@@ -110,8 +114,8 @@ namespace RestEaseClientGenerator.Mappers
                 }
             }
 
-            var methodParameterList = pathParameterList
-                .Union(headerParameterList)
+            var methodParameterList = headerParameterList
+                .Union(pathParameterList)
                 .Union(bodyParameterList)
                 .Union(queryParameterList)
                 .OrderByDescending(p => p.Required)
@@ -236,7 +240,7 @@ namespace RestEaseClientGenerator.Mappers
                 else
                 {
                     httpContentDescription = "An extension method is generated to support the exact parameters.";
-                    extensionMethodParameterList.AddRange(detected.Value.Schema.Properties.Select(p => BuildValidParameter(p.Key, p.Value, p.Value.Nullable, p.Value.Description, string.Empty)));
+                    extensionMethodParameterList.AddRange(detected.Value.Schema.Properties.Select(p => BuildValidParameter(p.Key, p.Value, p.Value.Nullable, p.Value.Description, null)));
                 }
 
                 bodyParameterList.Add(new RestEaseParameter
@@ -268,7 +272,7 @@ namespace RestEaseClientGenerator.Mappers
                     httpContentDescription = "An extension method is generated to support the exact parameters.";
                     var extensionParameter = BuildValidParameter("file", detected.Value.Schema, true, "The content.", null);
                     extensionMethodParameterList.Add(extensionParameter);
-                    extensionMethodParameterList.AddRange(detected.Value.Schema.Properties.Select(p => BuildValidParameter(p.Key, p.Value, p.Value.Nullable, p.Value.Description, string.Empty)));
+                    extensionMethodParameterList.AddRange(detected.Value.Schema.Properties.Select(p => BuildValidParameter(p.Key, p.Value, p.Value.Nullable, p.Value.Description, null)));
                 }
 
                 bodyParameterList.Add(new RestEaseParameter
@@ -298,7 +302,7 @@ namespace RestEaseClientGenerator.Mappers
                 else
                 {
                     description = "An extension method is generated to support the exact parameters.";
-                    extensionMethodParameterList.AddRange(detected.Value.Schema.Properties.Select(p => BuildValidParameter(p.Key, p.Value, p.Value.Nullable, p.Value.Description, string.Empty)));
+                    extensionMethodParameterList.AddRange(detected.Value.Schema.Properties.Select(p => BuildValidParameter(p.Key, p.Value, p.Value.Nullable, p.Value.Description, null)));
                 }
 
                 bodyParameterList.Add(new RestEaseParameter
@@ -486,18 +490,32 @@ namespace RestEaseClientGenerator.Mappers
             }
         }
 
-        private RestEaseParameter BuildValidParameter(string identifier, OpenApiSchema schema, bool required, string description, string parameterType, params string[] extraAttributes)
+        private RestEaseParameter BuildValidParameter(string identifier, OpenApiSchema schema, bool required, string description, ParameterLocation? parameterLocation, params string[] extraAttributes)
         {
             var attributes = new List<string>();
             string validIdentifier = CSharpUtils.CreateValidIdentifier(identifier, CasingType.Camel);
 
-            object paramWithType;
+            string restEaseParameterAnnotation = parameterLocation != null ? parameterLocation.ToString() : string.Empty;
+
+            if (parameterLocation == ParameterLocation.Header)
+            {
+                attributes.Add($"\"{identifier}\"");
+            }
+
+            object identifierWithType;
             if (identifier != validIdentifier)
             {
-                attributes.Add($"Name = \"{identifier}\"");
+                switch (parameterLocation)
+                {
+                    case ParameterLocation.Path:
+                    case ParameterLocation.Query:
+                        attributes.Add($"Name = \"{identifier}\"");
+                        break;
+                }
+
                 attributes.AddRange(extraAttributes);
 
-                paramWithType = MapSchema(schema, validIdentifier, !required, false);
+                identifierWithType = MapSchema(schema, validIdentifier, !required, false);
 
                 return new RestEaseParameter
                 {
@@ -505,14 +523,14 @@ namespace RestEaseClientGenerator.Mappers
                     Identifier = validIdentifier,
                     SchemaType = schema.GetSchemaType(),
                     SchemaFormat = schema.GetSchemaFormat(),
-                    IdentifierWithType = $"{paramWithType}",
-                    IdentifierWithRestEase = $"[{parameterType}({string.Join(", ", attributes)})] {paramWithType}",
+                    IdentifierWithType = $"{identifierWithType}",
+                    IdentifierWithRestEase = $"[{restEaseParameterAnnotation}({string.Join(", ", attributes)})] {identifierWithType}",
                     Summary = description
                 };
             }
 
             string extraAttributesBetweenParentheses = extraAttributes.Length == 0 ? string.Empty : $"({string.Join(", ", extraAttributes)})";
-            paramWithType = MapSchema(schema, identifier, !required, false);
+            identifierWithType = MapSchema(schema, identifier, !required, false);
 
             return new RestEaseParameter
             {
@@ -520,8 +538,8 @@ namespace RestEaseClientGenerator.Mappers
                 Identifier = identifier,
                 SchemaType = schema.GetSchemaType(),
                 SchemaFormat = schema.GetSchemaFormat(),
-                IdentifierWithType = $"{paramWithType}",
-                IdentifierWithRestEase = $"[{parameterType}{extraAttributesBetweenParentheses}] {paramWithType}",
+                IdentifierWithType = $"{identifierWithType}",
+                IdentifierWithRestEase = $"[{restEaseParameterAnnotation}{extraAttributesBetweenParentheses}] {identifierWithType}",
                 Summary = description
             };
         }

@@ -42,7 +42,7 @@ namespace RestEaseClientGeneratorConsoleApp
                 Console.WriteLine("FindPetsByStatusAsync:" + JsonSerializer.Serialize(find));
             }
 
-            await petStoreApi.DeletePetAsync(1000);
+            // await petStoreApi.DeletePetAsync(1000);
 
             var addPet = await petStoreApi.AddPetAsync(new Pet
             {
