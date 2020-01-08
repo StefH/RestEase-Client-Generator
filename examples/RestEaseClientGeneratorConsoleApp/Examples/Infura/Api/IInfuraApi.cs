@@ -8,9 +8,9 @@ using RestEaseClientGeneratorConsoleApp.Examples.Infura.Models;
 
 namespace RestEaseClientGeneratorConsoleApp.Examples.Infura.Api
 {
-     /// <summary>
-     /// APIs for the Ethereum community by the Infura team, a project of ConsenSys
-     /// </summary>
+    /// <summary>
+    /// APIs for the Ethereum community by the Infura team, a project of ConsenSys
+    /// </summary>
     public interface IInfuraApi
     {
         /// <summary>

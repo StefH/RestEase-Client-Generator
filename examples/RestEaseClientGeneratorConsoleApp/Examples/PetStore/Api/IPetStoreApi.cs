@@ -8,9 +8,9 @@ using RestEaseClientGeneratorConsoleApp.Examples.PetStore.Models;
 
 namespace RestEaseClientGeneratorConsoleApp.Examples.PetStore.Api
 {
-     /// <summary>
-     /// This is a sample server Petstore server. Copied from https://github.com/swagger-api/swagger-codegen/blob/master/modules/swagger-codegen/src/test/resources/2_0/petstore.yaml.
-     /// </summary>
+    /// <summary>
+    /// This is a sample server Petstore server. Copied from https://github.com/swagger-api/swagger-codegen/blob/master/modules/swagger-codegen/src/test/resources/2_0/petstore.yaml.
+    /// </summary>
     public interface IPetStoreApi
     {
         [Header("api_key")]

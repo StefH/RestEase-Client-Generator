@@ -8,9 +8,9 @@ using RestEaseClientGeneratorConsoleApp.Examples.SpeechServices.Models;
 
 namespace RestEaseClientGeneratorConsoleApp.Examples.SpeechServices.Api
 {
-     /// <summary>
-     /// Speech Services API v2.0.
-     /// </summary>
+    /// <summary>
+    /// Speech Services API v2.0.
+    /// </summary>
     public interface ISpeechServicesApi
     {
         /// <summary>

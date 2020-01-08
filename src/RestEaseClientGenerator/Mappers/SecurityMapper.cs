@@ -23,14 +23,21 @@ namespace RestEaseClientGenerator.Mappers
 
             if (openApiDocument.Components.SecuritySchemes != null)
             {
-                if (openApiDocument.Components.SecuritySchemes.TryGetValue("api_key", out var openApiSecurityScheme))
+                return MapOpenApiVersion3(openApiDocument);
+            }
+
+            return null;
+        }
+
+        private RestEaseSecurity MapOpenApiVersion3(OpenApiDocument openApiDocument)
+        {
+            if (openApiDocument.Components.SecuritySchemes.TryGetValue("api_key", out var openApiSecurityScheme))
+            {
+                return new RestEaseSecurity
                 {
-                    return new RestEaseSecurity
-                    {
-                        Definitions = Map(new[] { openApiSecurityScheme }),
-                        SecurityVersionType = SecurityVersionType.OpenApi3
-                    };
-                }
+                    Definitions = Map(new[] { openApiSecurityScheme }),
+                    SecurityVersionType = SecurityVersionType.OpenApi3
+                };
             }
 
             return null;
