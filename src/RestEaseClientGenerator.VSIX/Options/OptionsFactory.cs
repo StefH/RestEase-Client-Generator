@@ -21,73 +21,68 @@ namespace RestEaseClientGenerator.VSIX.Options
         public string Serialize(IRestEaseOptions options)
         {
             var stringBuilder = new StringBuilder();
-            //stringBuilder.AppendLine("{");
-            //stringBuilder.AppendLine("  /**/");
 
-            using (var t = new JsonTextWriter(new StringWriter(stringBuilder)))
+            using (var textWriter = new JsonTextWriter(new StringWriter(stringBuilder)))
             {
-                t.Formatting = Formatting.Indented;
+                textWriter.Formatting = Formatting.Indented;
 
-                t.WriteStartObject();
-                t.WriteComment("Use this file to overrule the RestEase Client Generator Options");
+                textWriter.WriteStartObject();
+                textWriter.WriteComment("Use this file to overrule the RestEase Client Generator Options");
 
-                t.WritePropertyName(nameof(options.AddAuthorizationHeader));
-                t.WriteValue(options.AddAuthorizationHeader);
+                textWriter.WritePropertyName(nameof(options.ApiNamespace));
+                textWriter.WriteValue(options.ApiNamespace);
 
-                t.WritePropertyName(nameof(options.ApiNamespace));
-                t.WriteValue(options.ApiNamespace);
+                textWriter.WritePropertyName(nameof(options.AppendAsync));
+                textWriter.WriteValue(options.AppendAsync);
 
-                t.WritePropertyName(nameof(options.AppendAsync));
-                t.WriteValue(options.AppendAsync);
+                textWriter.WritePropertyName(nameof(options.ApplicationOctetStreamType));
+                textWriter.WriteValue(options.ApplicationOctetStreamType.GetDescription());
+                WriteEnumComment<ApplicationOctetStreamType>(textWriter);
 
-                t.WritePropertyName(nameof(options.ApplicationOctetStreamType));
-                t.WriteValue(options.ApplicationOctetStreamType.GetDescription());
-                WriteEnumComment<ApplicationOctetStreamType>(t);
+                textWriter.WritePropertyName(nameof(options.ArrayType));
+                textWriter.WriteValue(options.ArrayType.GetDescription());
+                WriteEnumComment<ArrayType>(textWriter);
 
-                t.WritePropertyName(nameof(options.ArrayType));
-                t.WriteValue(options.ArrayType.GetDescription());
-                WriteEnumComment<ArrayType>(t);
+                textWriter.WritePropertyName(nameof(options.FailOnOpenApiErrors));
+                textWriter.WriteValue(options.FailOnOpenApiErrors);
 
-                t.WritePropertyName(nameof(options.FailOnOpenApiErrors));
-                t.WriteValue(options.FailOnOpenApiErrors);
+                textWriter.WritePropertyName(nameof(options.ForceContentTypeToApplicationJson));
+                textWriter.WriteValue(options.ForceContentTypeToApplicationJson);
 
-                t.WritePropertyName(nameof(options.ForceContentTypeToApplicationJson));
-                t.WriteValue(options.ForceContentTypeToApplicationJson);
+                textWriter.WritePropertyName(nameof(options.GenerateApplicationOctetStreamExtensionMethods));
+                textWriter.WriteValue(options.GenerateApplicationOctetStreamExtensionMethods);
 
-                t.WritePropertyName(nameof(options.GenerateApplicationOctetStreamExtensionMethods));
-                t.WriteValue(options.GenerateApplicationOctetStreamExtensionMethods);
+                textWriter.WritePropertyName(nameof(options.GenerateFormUrlEncodedExtensionMethods));
+                textWriter.WriteValue(options.GenerateFormUrlEncodedExtensionMethods);
 
-                t.WritePropertyName(nameof(options.GenerateFormUrlEncodedExtensionMethods));
-                t.WriteValue(options.GenerateFormUrlEncodedExtensionMethods);
+                textWriter.WritePropertyName(nameof(options.GenerateMultipartFormDataExtensionMethods));
+                textWriter.WriteValue(options.GenerateMultipartFormDataExtensionMethods);
 
-                t.WritePropertyName(nameof(options.GenerateMultipartFormDataExtensionMethods));
-                t.WriteValue(options.GenerateMultipartFormDataExtensionMethods);
+                textWriter.WritePropertyName(nameof(options.MethodReturnType));
+                textWriter.WriteValue(options.MethodReturnType.GetDescription());
+                WriteEnumComment<MethodReturnType>(textWriter);
 
-                t.WritePropertyName(nameof(options.MethodReturnType));
-                t.WriteValue(options.MethodReturnType.GetDescription());
-                WriteEnumComment<MethodReturnType>(t);
+                textWriter.WritePropertyName(nameof(options.ModelsNamespace));
+                textWriter.WriteValue(options.ModelsNamespace);
 
-                t.WritePropertyName(nameof(options.ModelsNamespace));
-                t.WriteValue(options.ModelsNamespace);
+                textWriter.WritePropertyName(nameof(options.MultipartFormDataFileType));
+                textWriter.WriteValue(options.MultipartFormDataFileType.GetDescription());
+                WriteEnumComment<MultipartFormDataFileType>(textWriter);
 
-                t.WritePropertyName(nameof(options.MultipartFormDataFileType));
-                t.WriteValue(options.MultipartFormDataFileType.GetDescription());
-                WriteEnumComment<MultipartFormDataFileType>(t);
+                textWriter.WritePropertyName(nameof(options.PreferredContentType));
+                textWriter.WriteValue(options.PreferredContentType.GetDescription());
+                WriteEnumComment<ContentType>(textWriter);
 
-                t.WritePropertyName(nameof(options.PreferredContentType));
-                t.WriteValue(options.PreferredContentType.GetDescription());
-                WriteEnumComment<ContentType>(t);
+                textWriter.WritePropertyName(nameof(options.ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified));
+                textWriter.WriteValue(options.ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified);
 
-                t.WritePropertyName(nameof(options.ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified));
-                t.WriteValue(options.ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified);
+                textWriter.WritePropertyName(nameof(options.UseDateTimeOffset));
+                textWriter.WriteValue(options.UseDateTimeOffset);
 
-                t.WritePropertyName(nameof(options.UseDateTimeOffset));
-                t.WriteValue(options.UseDateTimeOffset);
+                textWriter.WritePropertyName(nameof(options.UseOperationIdAsMethodName));
+                textWriter.WriteValue(options.UseOperationIdAsMethodName);
 
-                t.WritePropertyName(nameof(options.UseOperationIdAsMethodName));
-                t.WriteValue(options.UseOperationIdAsMethodName);
-
-                t.WriteEndObject();
+                textWriter.WriteEndObject();
             }
 
             return stringBuilder.ToString();
