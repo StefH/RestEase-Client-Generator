@@ -55,7 +55,9 @@ namespace RestEaseClientGenerator.Mappers
             }
 
             string nameCamelCase = string.IsNullOrEmpty(name) ? string.Empty : $" {(pascalCase ? name.ToPascalCase() : name)}";
-            string nullable = isNullable ? "?" : string.Empty;
+
+            bool nullableForOpenApi20 = openApiSpecVersion == OpenApiSpecVersion.OpenApi2_0 && Settings.GeneratePrimitivePropertiesAsNullableForOpenApi20;
+            string nullable = nullableForOpenApi20 || isNullable ? "?" : string.Empty;
 
             switch (schema.GetSchemaType())
             {

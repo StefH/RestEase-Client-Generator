@@ -36,6 +36,7 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
                 PreferredSecurityDefinitionType = options.PreferredSecurityDefinitionType;
                 UseUserOptions = options.UseUserOptions;
                 MakeNonRequiredParametersOptional = options.MakeNonRequiredParametersOptional;
+                GeneratePrimitivePropertiesAsNullableForOpenApi20 = options.GeneratePrimitivePropertiesAsNullableForOpenApi20;
             }
             catch (Exception e)
             {
@@ -58,6 +59,7 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
                 UseUserOptions = true;
                 PreferredSecurityDefinitionType = SecurityDefinitionType.Automatic;
                 MakeNonRequiredParametersOptional = true;
+                GeneratePrimitivePropertiesAsNullableForOpenApi20 = true;
 
                 Trace.WriteLine(e);
                 Trace.WriteLine(Environment.NewLine);
@@ -81,6 +83,7 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
                 Trace.WriteLine($"{nameof(UseUserOptions)} = {UseUserOptions}");
                 Trace.WriteLine($"{nameof(PreferredSecurityDefinitionType)} = {PreferredSecurityDefinitionType}");
                 Trace.WriteLine($"{nameof(MakeNonRequiredParametersOptional)} = {MakeNonRequiredParametersOptional}");
+                Trace.WriteLine($"{nameof(GeneratePrimitivePropertiesAsNullableForOpenApi20)} = {GeneratePrimitivePropertiesAsNullableForOpenApi20}");
             }
         }
 
@@ -127,5 +130,7 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         public bool UseUserOptions { get; set; }
 
         public bool MakeNonRequiredParametersOptional { get; set; }
+
+        public bool GeneratePrimitivePropertiesAsNullableForOpenApi20 { get; set; }
     }
 }

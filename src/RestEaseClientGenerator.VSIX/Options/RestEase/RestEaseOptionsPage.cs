@@ -10,6 +10,7 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
     {
         private const string General = "General";
         private const string Interface = "Interface";
+        private const string Models = "Models";
 
         #region General
         [Category(General)]
@@ -110,6 +111,13 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         public bool MakeNonRequiredParametersOptional { get; set; } = true;
         #endregion
 
+        #region Models
+        [Category(Models)]
+        [DisplayName("Generate properties as nullable for OpenApi 2.0")]
+        [Description("Generate (primitive) properties as nullable for OpenApi 2.0, The default value is 'False'.")]
+        public bool GeneratePrimitivePropertiesAsNullableForOpenApi20 { get; set; } = false;
+        #endregion
+
         #region MergeWith
         public void MergeWith(RestEaseUserOptions options)
         {
@@ -206,6 +214,11 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
             if (options.MakeNonRequiredParametersOptional.HasValue)
             {
                 MakeNonRequiredParametersOptional = options.MakeNonRequiredParametersOptional.Value;
+            }
+
+            if (options.GeneratePrimitivePropertiesAsNullableForOpenApi20.HasValue)
+            {
+                GeneratePrimitivePropertiesAsNullableForOpenApi20 = options.GeneratePrimitivePropertiesAsNullableForOpenApi20.Value;
             }
         }
         #endregion

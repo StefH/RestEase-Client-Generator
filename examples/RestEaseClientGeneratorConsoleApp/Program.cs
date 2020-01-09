@@ -16,8 +16,6 @@ namespace RestEaseClientGeneratorConsoleApp
             var reader = new OpenApiStreamReader();
             var openApiDocument = reader.Read(File.OpenRead("Examples\\dummy.json"), out var diagnosticX);
 
-            // -		n	{Microsoft.OpenApi.Any.OpenApiBoolean}	Microsoft.OpenApi.Interfaces.IOpenApiExtension {Microsoft.OpenApi.Any.OpenApiBoolean}
-
             var n = openApiDocument.Components.Schemas["X"].Properties["employeeNumber"].Extensions["x-nullable"] as OpenApiBoolean;
             var v = n?.Value;
 
@@ -35,36 +33,33 @@ namespace RestEaseClientGeneratorConsoleApp
             //    File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Drc/{file.Path}/{file.Name}", file.Content);
             //}
 
-            
-
-            //var petStoreOpenApi3Settings = new GeneratorSettings
-            //{
-            //    Namespace = "RestEaseClientGeneratorConsoleApp.Examples.PetStoreOpenApi302",
-            //    ApiName = "PetStoreOpenApi3",
-            //    GenerateFormUrlEncodedExtensionMethods = true,
-            //    GenerateMultipartFormDataExtensionMethods = true,
-            //    GenerateApplicationOctetStreamExtensionMethods = true,
-            //    ApplicationOctetStreamType = ApplicationOctetStreamType.ByteArray,
-            //    PreferredContentType = ContentType.ApplicationJson
-            //};
-            //foreach (var file in generator.FromStream(File.OpenRead("Examples\\petstore-openapi3.json"), petStoreOpenApi3Settings, out OpenApiDiagnostic diagnosticPetStoreOpenApi3))
-            //{
-            //    File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/PetStoreOpenApi302/{file.Path}/{file.Name}", file.Content);
-            //}
+            var petStoreOpenApi3Settings = new GeneratorSettings
+            {
+                Namespace = "RestEaseClientGeneratorConsoleApp.Examples.PetStoreOpenApi302",
+                ApiName = "PetStoreOpenApi3",
+                GenerateFormUrlEncodedExtensionMethods = true,
+                GenerateMultipartFormDataExtensionMethods = true,
+                GenerateApplicationOctetStreamExtensionMethods = true,
+                ApplicationOctetStreamType = ApplicationOctetStreamType.ByteArray,
+                PreferredContentType = ContentType.ApplicationJson
+            };
+            foreach (var file in generator.FromStream(File.OpenRead("Examples\\petstore-openapi3.json"), petStoreOpenApi3Settings, out OpenApiDiagnostic diagnosticPetStoreOpenApi3))
+            {
+                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/PetStoreOpenApi302/{file.Path}/{file.Name}", file.Content);
+            }
 
             var petStoreSettings = new GeneratorSettings
             {
                 ArrayType = ArrayType.ICollection,
                 Namespace = "RestEaseClientGeneratorConsoleApp.Examples.PetStore",
                 ApiName = "PetStore",
+                GeneratePrimitivePropertiesAsNullableForOpenApi20 = true,
                 ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified = true
             };
             foreach (var file in generator.FromStream(File.OpenRead("Examples\\petstore.yaml"), petStoreSettings, out OpenApiDiagnostic diagnosticPetStore1))
             {
                 File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/PetStore/{file.Path}/{file.Name}", file.Content);
             }
-
-            return;
 
             var petStoreJsonSettings = new GeneratorSettings
             {
@@ -120,9 +115,9 @@ namespace RestEaseClientGeneratorConsoleApp
                 File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/ComputerVision/{file.Path}/{file.Name}", file.Content);
             }
 
-            //await PetStoreTests.Run();
+            await PetStoreTests.Run();
 
-            //await PetStoreOpenApi3ApiTests.Run();
+            await PetStoreOpenApi3ApiTests.Run();
         }
     }
 }

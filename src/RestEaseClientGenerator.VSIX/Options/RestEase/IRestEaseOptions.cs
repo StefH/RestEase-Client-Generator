@@ -41,5 +41,7 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         bool UseUserOptions { get; set; }
 
         bool MakeNonRequiredParametersOptional { get; set; }
+
+        bool GeneratePrimitivePropertiesAsNullableForOpenApi20 { get; set; }
     }
 }
