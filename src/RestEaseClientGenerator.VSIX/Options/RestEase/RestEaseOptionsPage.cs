@@ -103,6 +103,11 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         [DisplayName("Preferred SecurityDefinition")]
         [Description("Preferred SecurityDefinition type to add to the interface. The default value is 'Automatic'.")]
         public SecurityDefinitionType PreferredSecurityDefinitionType { get; set; } = SecurityDefinitionType.Automatic;
+
+        [Category(Interface)]
+        [DisplayName("Make NonRequired parameters optional")]
+        [Description("Append '= null' to opional parameters in the interface methods. The default value is 'True'.")]
+        public bool MakeNonRequiredParametersOptional { get; set; } = true;
         #endregion
 
         #region MergeWith
@@ -196,6 +201,11 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
             if (options.PreferredSecurityDefinitionType.HasValue)
             {
                 PreferredSecurityDefinitionType = options.PreferredSecurityDefinitionType.Value;
+            }
+
+            if (options.MakeNonRequiredParametersOptional.HasValue)
+            {
+                MakeNonRequiredParametersOptional = options.MakeNonRequiredParametersOptional.Value;
             }
         }
         #endregion

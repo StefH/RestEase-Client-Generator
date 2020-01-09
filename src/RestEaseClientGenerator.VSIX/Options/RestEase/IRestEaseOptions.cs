@@ -39,5 +39,7 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         SecurityDefinitionType PreferredSecurityDefinitionType { get; set; }
 
         bool UseUserOptions { get; set; }
+
+        bool MakeNonRequiredParametersOptional { get; set; }
     }
 }

@@ -7,7 +7,6 @@ namespace RestEaseClientGenerator.Settings
         public bool SingleFile { get; set; }
 
         #region General
-
         public ArrayType ArrayType { get; set; } = ArrayType.Array;
 
         public string Namespace { get; set; }
@@ -47,6 +46,8 @@ namespace RestEaseClientGenerator.Settings
         public bool UseOperationIdAsMethodName { get; set; } = true;
 
         public SecurityDefinitionType PreferredSecurityDefinitionType { get; set; } = SecurityDefinitionType.Automatic;
+
+        public bool MakeNonRequiredParametersOptional { get; set; } = true;
         #endregion
     }
 }

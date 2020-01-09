@@ -52,11 +52,8 @@ namespace RestEaseClientGenerator.VSIX.Options
                 textWriter.WritePropertyName(nameof(options.GenerateApplicationOctetStreamExtensionMethods));
                 textWriter.WriteValue(options.GenerateApplicationOctetStreamExtensionMethods);
 
-                textWriter.WritePropertyName(nameof(options.GenerateFormUrlEncodedExtensionMethods));
-                textWriter.WriteValue(options.GenerateFormUrlEncodedExtensionMethods);
-
-                textWriter.WritePropertyName(nameof(options.GenerateMultipartFormDataExtensionMethods));
-                textWriter.WriteValue(options.GenerateMultipartFormDataExtensionMethods);
+                textWriter.WritePropertyName(nameof(options.MakeNonRequiredParametersOptional));
+                textWriter.WriteValue(options.MakeNonRequiredParametersOptional);
 
                 textWriter.WritePropertyName(nameof(options.MethodReturnType));
                 textWriter.WriteValue(options.MethodReturnType.GetDescription());
@@ -72,6 +69,10 @@ namespace RestEaseClientGenerator.VSIX.Options
                 textWriter.WritePropertyName(nameof(options.PreferredContentType));
                 textWriter.WriteValue(options.PreferredContentType.GetDescription());
                 WriteEnumComment<ContentType>(textWriter);
+
+                textWriter.WritePropertyName(nameof(options.PreferredSecurityDefinitionType));
+                textWriter.WriteValue(options.PreferredSecurityDefinitionType.GetDescription());
+                WriteEnumComment<SecurityDefinitionType>(textWriter);
 
                 textWriter.WritePropertyName(nameof(options.ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified));
                 textWriter.WriteValue(options.ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified);

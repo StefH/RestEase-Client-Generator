@@ -1,5 +1,7 @@
 ﻿using System.IO;
 using System.Threading.Tasks;
+using Microsoft.OpenApi;
+using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Readers;
 using RestEaseClientGenerator;
 using RestEaseClientGenerator.Settings;
@@ -11,6 +13,14 @@ namespace RestEaseClientGeneratorConsoleApp
     {
         static async Task Main(string[] args)
         {
+            var reader = new OpenApiStreamReader();
+            var openApiDocument = reader.Read(File.OpenRead("Examples\\dummy.json"), out var diagnosticX);
+
+            // -		n	{Microsoft.OpenApi.Any.OpenApiBoolean}	Microsoft.OpenApi.Interfaces.IOpenApiExtension {Microsoft.OpenApi.Any.OpenApiBoolean}
+
+            var n = openApiDocument.Components.Schemas["X"].Properties["employeeNumber"].Extensions["x-nullable"] as OpenApiBoolean;
+            var v = n?.Value;
+
             var generator = new Generator();
 
             //var drcSettings = new GeneratorSettings
@@ -24,6 +34,8 @@ namespace RestEaseClientGeneratorConsoleApp
             //{
             //    File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Drc/{file.Path}/{file.Name}", file.Content);
             //}
+
+            return;
 
             var petStoreOpenApi3Settings = new GeneratorSettings
             {

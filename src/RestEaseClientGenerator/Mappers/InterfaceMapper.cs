@@ -496,6 +496,7 @@ namespace RestEaseClientGenerator.Mappers
             string validIdentifier = CSharpUtils.CreateValidIdentifier(identifier, CasingType.Camel);
 
             string restEaseParameterAnnotation = parameterLocation != null ? parameterLocation.ToString() : string.Empty;
+            string isNullPostfix = !required && Settings.MakeNonRequiredParametersOptional ? " = null" : string.Empty;
 
             if (parameterLocation == ParameterLocation.Header)
             {
@@ -524,7 +525,7 @@ namespace RestEaseClientGenerator.Mappers
                     SchemaType = schema.GetSchemaType(),
                     SchemaFormat = schema.GetSchemaFormat(),
                     IdentifierWithType = $"{identifierWithType}",
-                    IdentifierWithRestEase = $"[{restEaseParameterAnnotation}({string.Join(", ", attributes)})] {identifierWithType}",
+                    IdentifierWithRestEase = $"[{restEaseParameterAnnotation}({string.Join(", ", attributes)})] {identifierWithType}{isNullPostfix}",
                     Summary = description
                 };
             }
@@ -539,7 +540,7 @@ namespace RestEaseClientGenerator.Mappers
                 SchemaType = schema.GetSchemaType(),
                 SchemaFormat = schema.GetSchemaFormat(),
                 IdentifierWithType = $"{identifierWithType}",
-                IdentifierWithRestEase = $"[{restEaseParameterAnnotation}{extraAttributesBetweenParentheses}] {identifierWithType}",
+                IdentifierWithRestEase = $"[{restEaseParameterAnnotation}{extraAttributesBetweenParentheses}] {identifierWithType}{isNullPostfix}",
                 Summary = description
             };
         }

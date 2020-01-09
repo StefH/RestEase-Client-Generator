@@ -37,14 +37,14 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreOpenApi302.Api
         /// </summary>
         /// <param name="status">Status values that need to be considered for filter</param>
         [Get("/pet/findByStatus")]
-        Task<Pet[]> FindPetsByStatusAsync([Query] string status);
+        Task<Pet[]> FindPetsByStatusAsync([Query] string status = null);
 
         /// <summary>
         /// Finds Pets by tags
         /// </summary>
         /// <param name="tags">Tags to filter by</param>
         [Get("/pet/findByTags")]
-        Task<Pet[]> FindPetsByTagsAsync([Query] string[] tags);
+        Task<Pet[]> FindPetsByTagsAsync([Query] string[] tags = null);
 
         /// <summary>
         /// Find pet by ID
@@ -60,7 +60,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreOpenApi302.Api
         /// <param name="name">Name of pet that needs to be updated</param>
         /// <param name="status">Status of pet that needs to be updated</param>
         [Post("/pet/{petId}")]
-        Task UpdatePetWithFormAsync([Path] long petId, [Query] string name, [Query] string status);
+        Task UpdatePetWithFormAsync([Path] long petId, [Query] string name = null, [Query] string status = null);
 
         /// <summary>
         /// Deletes a pet
@@ -68,7 +68,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreOpenApi302.Api
         /// <param name="petId">Pet id to delete</param>
         /// <param name="apiKey"></param>
         [Delete("/pet/{petId}")]
-        Task DeletePetAsync([Path] long petId, [Header("api_key")] string apiKey);
+        Task DeletePetAsync([Path] long petId, [Header("api_key")] string apiKey = null);
 
         /// <summary>
         /// uploads an image
@@ -78,7 +78,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreOpenApi302.Api
         /// <param name="additionalMetadata">Additional Metadata</param>
         [Post("/pet/{petId}/uploadImage")]
         [Header("Content-Type", "application/octet-stream")]
-        Task<ApiResponse> UploadFileAsync([Path] long petId, [Body] HttpContent content, [Query] string additionalMetadata);
+        Task<ApiResponse> UploadFileAsync([Path] long petId, [Body] HttpContent content, [Query] string additionalMetadata = null);
 
         /// <summary>
         /// Returns pet inventories by status
@@ -130,7 +130,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreOpenApi302.Api
         /// <param name="username">The user name for login</param>
         /// <param name="password">The password for login in clear text</param>
         [Get("/user/login")]
-        Task LoginUserAsync([Query] string username, [Query] string password);
+        Task LoginUserAsync([Query] string username = null, [Query] string password = null);
 
         /// <summary>
         /// Logs out current logged in user session

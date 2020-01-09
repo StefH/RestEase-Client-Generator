@@ -35,6 +35,7 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
                 UseOperationIdAsMethodName = options.UseOperationIdAsMethodName;
                 PreferredSecurityDefinitionType = options.PreferredSecurityDefinitionType;
                 UseUserOptions = options.UseUserOptions;
+                MakeNonRequiredParametersOptional = options.MakeNonRequiredParametersOptional;
             }
             catch (Exception e)
             {
@@ -56,6 +57,7 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
                 UseOperationIdAsMethodName = true;
                 UseUserOptions = true;
                 PreferredSecurityDefinitionType = SecurityDefinitionType.Automatic;
+                MakeNonRequiredParametersOptional = true;
 
                 Trace.WriteLine(e);
                 Trace.WriteLine(Environment.NewLine);
@@ -78,6 +80,7 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
                 Trace.WriteLine($"{nameof(UseOperationIdAsMethodName)} = {UseOperationIdAsMethodName}");
                 Trace.WriteLine($"{nameof(UseUserOptions)} = {UseUserOptions}");
                 Trace.WriteLine($"{nameof(PreferredSecurityDefinitionType)} = {PreferredSecurityDefinitionType}");
+                Trace.WriteLine($"{nameof(MakeNonRequiredParametersOptional)} = {MakeNonRequiredParametersOptional}");
             }
         }
 
@@ -122,5 +125,7 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         public SecurityDefinitionType PreferredSecurityDefinitionType { get; set; }
 
         public bool UseUserOptions { get; set; }
+
+        public bool MakeNonRequiredParametersOptional { get; set; }
     }
 }
