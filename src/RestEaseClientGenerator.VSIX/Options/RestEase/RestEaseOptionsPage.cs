@@ -1,11 +1,10 @@
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
+using AutoMapper;
 using Microsoft.VisualStudio.Shell;
 using RestEaseClientGenerator.Types;
 
 namespace RestEaseClientGenerator.VSIX.Options.RestEase
 {
-    [ExcludeFromCodeCoverage]
     public class RestEaseOptionsPage : DialogPage, IRestEaseOptions
     {
         private const string General = "General";
@@ -114,112 +113,25 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         #region Models
         [Category(Models)]
         [DisplayName("Generate properties as nullable for OpenApi 2.0")]
-        [Description("Generate (primitive) properties as nullable for OpenApi 2.0, The default value is 'False'.")]
+        [Description("Generate all (primitive) properties as nullable for OpenApi 2.0, the default value is 'False'.")]
         public bool GeneratePrimitivePropertiesAsNullableForOpenApi20 { get; set; } = false;
         #endregion
 
         #region MergeWith
+        private Mapper CreateAutoMapper()
+        {
+            var config = new MapperConfiguration(cfg => {
+                cfg.CreateMap<RestEaseUserOptions, RestEaseOptionsPage>();
+            });
+
+            return new Mapper(config);
+        }
+
         public void MergeWith(RestEaseUserOptions options)
         {
-            if (options.ArrayType.HasValue)
-            {
-                ArrayType = options.ArrayType.Value;
-            }
-
-            if (options.MethodReturnType.HasValue)
-            {
-                MethodReturnType = options.MethodReturnType.Value;
-            }
-
-            if (options.PreferredContentType.HasValue)
-            {
-                PreferredContentType = options.PreferredContentType.Value;
-            }
-
-            if (options.MultipartFormDataFileType.HasValue)
-            {
-                MultipartFormDataFileType = options.MultipartFormDataFileType.Value;
-            }
-
-            if (options.ApplicationOctetStreamType.HasValue)
-            {
-                ApplicationOctetStreamType = options.ApplicationOctetStreamType.Value;
-            }
-
-            if (options.FailOnOpenApiErrors.HasValue)
-            {
-                FailOnOpenApiErrors = options.FailOnOpenApiErrors.Value;
-            }
-
-            if (options.UseDateTimeOffset.HasValue)
-            {
-                UseDateTimeOffset = options.UseDateTimeOffset.Value;
-            }
-
-            if (options.AppendAsync.HasValue)
-            {
-                AppendAsync = options.AppendAsync.Value;
-            }
-
-            if (options.GenerateMultipartFormDataExtensionMethods.HasValue)
-            {
-                GenerateMultipartFormDataExtensionMethods = options.GenerateMultipartFormDataExtensionMethods.Value;
-            }
-
-            if (options.GenerateFormUrlEncodedExtensionMethods.HasValue)
-            {
-                GenerateFormUrlEncodedExtensionMethods = options.GenerateFormUrlEncodedExtensionMethods.Value;
-            }
-
-            if (options.GenerateMultipartFormDataExtensionMethods.HasValue)
-            {
-                GenerateMultipartFormDataExtensionMethods = options.GenerateMultipartFormDataExtensionMethods.Value;
-            }
-
-            if (options.PreferredContentType.HasValue)
-            {
-                PreferredContentType = options.PreferredContentType.Value;
-            }
-
-            if (options.ApiNamespace != null)
-            {
-                ApiNamespace = options.ApiNamespace;
-            }
-
-            if (options.ModelsNamespace != null)
-            {
-                ModelsNamespace = options.ModelsNamespace;
-            }
-
-            if (options.ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified.HasValue)
-            {
-                ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified = options.ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified.Value;
-            }
-
-            if (options.ForceContentTypeToApplicationJson.HasValue)
-            {
-                ForceContentTypeToApplicationJson = options.ForceContentTypeToApplicationJson.Value;
-            }
-
-            if (options.UseOperationIdAsMethodName.HasValue)
-            {
-                UseOperationIdAsMethodName = options.UseOperationIdAsMethodName.Value;
-            }
-
-            if (options.PreferredSecurityDefinitionType.HasValue)
-            {
-                PreferredSecurityDefinitionType = options.PreferredSecurityDefinitionType.Value;
-            }
-
-            if (options.MakeNonRequiredParametersOptional.HasValue)
-            {
-                MakeNonRequiredParametersOptional = options.MakeNonRequiredParametersOptional.Value;
-            }
-
-            if (options.GeneratePrimitivePropertiesAsNullableForOpenApi20.HasValue)
-            {
-                GeneratePrimitivePropertiesAsNullableForOpenApi20 = options.GeneratePrimitivePropertiesAsNullableForOpenApi20.Value;
-            }
+            bool useUserOptions = UseUserOptions;
+            AutoMapperUtils.Instance.Mapper.Map(options, this);
+            UseUserOptions = useUserOptions;
         }
         #endregion
     }

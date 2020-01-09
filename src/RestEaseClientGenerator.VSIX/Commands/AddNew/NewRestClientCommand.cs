@@ -20,7 +20,7 @@ namespace RestEaseClientGenerator.VSIX.Commands.AddNew
         protected virtual int CommandId { get; } = 0x100;
         protected abstract SupportedCodeGenerator CodeGenerator { get; }
 
-        public Task InitializeAsync(AsyncPackage package, CancellationToken token) 
+        public Task InitializeAsync(AsyncPackage package, CancellationToken token)
             => package.SetupCommandAsync(CommandSet, CommandId, OnExecuteAsync, token);
 
         private async Task OnExecuteAsync(DTE dte, AsyncPackage package)
@@ -42,16 +42,6 @@ namespace RestEaseClientGenerator.VSIX.Commands.AddNew
             var contents = result.OpenApiSpecification;
             var filename = result.OutputFilename + ".json";
 
-            //if (CodeGenerator == SupportedCodeGenerator.NSwagStudio)
-            //{
-            //    var outputNamespace = ProjectExtensions.GetActiveProject(dte)?.GetTopLevelNamespace();
-            //    contents = await NSwagStudioFileHelper.CreateNSwagStudioFileAsync(
-            //        result,
-            //        new NSwagStudioOptions(),
-            //        outputNamespace);
-            //    filename = filename.Replace(".json", ".nswag");
-            //}
-
             var filePath = Path.Combine(folder, filename);
             File.WriteAllText(filePath, contents);
 
@@ -60,19 +50,8 @@ namespace RestEaseClientGenerator.VSIX.Commands.AddNew
             var projectItem = project.AddFileToProject(dte, fileInfo, "None");
             projectItem.Properties.Item("BuildAction").Value = prjBuildAction.prjBuildActionNone;
 
-            //if (CodeGenerator != SupportedCodeGenerator.NSwagStudio)
-            {
-                var customTool = CodeGenerator.GetCustomToolName();
-                projectItem.Properties.Item("CustomTool").Value = customTool;
-            }
-            //else
-            //{
-            //    var generator = new NSwagStudioCodeGenerator(filePath, new CustomPathOptions(), new ProcessLauncher());
-            //    generator.GenerateCode(null);
-            //    dynamic nswag = JsonConvert.DeserializeObject(contents);
-            //    var nswagOutput = nswag.codeGenerators.swaggerToCSharpClient.output.ToString();
-            //    project.AddFileToProject(dte, new FileInfo(Path.Combine(folder, nswagOutput)));
-            //}
+            var customTool = CodeGenerator.GetCustomToolName();
+            projectItem.Properties.Item("CustomTool").Value = customTool;
 
             await project.InstallMissingPackagesAsync(package, CodeGenerator);
         }

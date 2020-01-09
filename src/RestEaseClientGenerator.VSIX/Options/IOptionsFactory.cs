@@ -6,7 +6,7 @@ namespace RestEaseClientGenerator.VSIX.Options
     {
         IRestEaseOptions Create<TDialogPage>();
 
-        IRestEaseOptions Deserialize(string value);
+        RestEaseUserOptions Deserialize(string value);
 
         string Serialize(IRestEaseOptions options);
     }

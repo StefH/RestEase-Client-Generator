@@ -13,9 +13,9 @@ namespace RestEaseClientGenerator.VSIX.Options
     {
         public IRestEaseOptions Create<TDialogPage>() => VsPackage.Instance.GetDialogPage(typeof(TDialogPage)) as IRestEaseOptions;
 
-        public IRestEaseOptions Deserialize(string value)
+        public RestEaseUserOptions Deserialize(string value)
         {
-            throw new System.NotImplementedException();
+            return JsonConvert.DeserializeObject<RestEaseUserOptions>(value);
         }
 
         public string Serialize(IRestEaseOptions options)
@@ -51,6 +51,15 @@ namespace RestEaseClientGenerator.VSIX.Options
 
                 textWriter.WritePropertyName(nameof(options.GenerateApplicationOctetStreamExtensionMethods));
                 textWriter.WriteValue(options.GenerateApplicationOctetStreamExtensionMethods);
+
+                textWriter.WritePropertyName(nameof(options.GenerateMultipartFormDataExtensionMethods));
+                textWriter.WriteValue(options.GenerateMultipartFormDataExtensionMethods);
+
+                textWriter.WritePropertyName(nameof(options.GenerateFormUrlEncodedExtensionMethods));
+                textWriter.WriteValue(options.GenerateFormUrlEncodedExtensionMethods);
+
+                textWriter.WritePropertyName(nameof(options.GeneratePrimitivePropertiesAsNullableForOpenApi20));
+                textWriter.WriteValue(options.GeneratePrimitivePropertiesAsNullableForOpenApi20);
 
                 textWriter.WritePropertyName(nameof(options.MakeNonRequiredParametersOptional));
                 textWriter.WriteValue(options.MakeNonRequiredParametersOptional);
