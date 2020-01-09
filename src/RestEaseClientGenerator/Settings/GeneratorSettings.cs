@@ -18,6 +18,10 @@ namespace RestEaseClientGenerator.Settings
         public string ModelsNamespace { get; set; } = "Models";
         #endregion
 
+        #region Models
+        public bool GeneratePrimitivePropertiesAsNullableForOpenApi20 { get; set; } = true;
+        #endregion
+
         #region Interface
         public string ApiName { get; set; }
 

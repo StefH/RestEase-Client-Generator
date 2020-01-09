@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Microsoft.OpenApi;
 using Microsoft.OpenApi.Models;
 using RestEaseClientGenerator.Extensions;
 using RestEaseClientGenerator.Settings;
@@ -46,7 +47,7 @@ namespace RestEaseClientGenerator.Mappers
             }
         }
 
-        protected object MapSchema(OpenApiSchema schema, string name, bool isNullable, bool pascalCase = true)
+        protected object MapSchema(OpenApiSchema schema, string name, bool isNullable, bool pascalCase, OpenApiSpecVersion? openApiSpecVersion)
         {
             if (schema == null)
             {
@@ -70,7 +71,7 @@ namespace RestEaseClientGenerator.Mappers
                             return $"{MapArrayType("object")}{nameCamelCase}";
 
                         default:
-                            return $"{MapArrayType(MapSchema(schema.Items, null, schema.Items.Nullable))}{nameCamelCase}";
+                            return $"{MapArrayType(MapSchema(schema.Items, null, schema.Items.Nullable, true, openApiSpecVersion))}{nameCamelCase}";
                     }
 
                 case SchemaType.Boolean:
@@ -133,7 +134,7 @@ namespace RestEaseClientGenerator.Mappers
                         }
                         else
                         {
-                            var property = MapSchema(openApiSchema, schemaProperty.Key, openApiSchema.Nullable);
+                            var property = MapSchema(openApiSchema, schemaProperty.Key, openApiSchema.Nullable, true, openApiSpecVersion);
                             if (property != null && property is string propertyAsString)
                             {
                                 list.Add(propertyAsString);

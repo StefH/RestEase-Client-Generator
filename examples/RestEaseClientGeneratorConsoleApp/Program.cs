@@ -35,22 +35,22 @@ namespace RestEaseClientGeneratorConsoleApp
             //    File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Drc/{file.Path}/{file.Name}", file.Content);
             //}
 
-            return;
+            
 
-            var petStoreOpenApi3Settings = new GeneratorSettings
-            {
-                Namespace = "RestEaseClientGeneratorConsoleApp.Examples.PetStoreOpenApi302",
-                ApiName = "PetStoreOpenApi3",
-                GenerateFormUrlEncodedExtensionMethods = true,
-                GenerateMultipartFormDataExtensionMethods = true,
-                GenerateApplicationOctetStreamExtensionMethods = true,
-                ApplicationOctetStreamType = ApplicationOctetStreamType.ByteArray,
-                PreferredContentType = ContentType.ApplicationJson
-            };
-            foreach (var file in generator.FromStream(File.OpenRead("Examples\\petstore-openapi3.json"), petStoreOpenApi3Settings, out OpenApiDiagnostic diagnosticPetStoreOpenApi3))
-            {
-                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/PetStoreOpenApi302/{file.Path}/{file.Name}", file.Content);
-            }
+            //var petStoreOpenApi3Settings = new GeneratorSettings
+            //{
+            //    Namespace = "RestEaseClientGeneratorConsoleApp.Examples.PetStoreOpenApi302",
+            //    ApiName = "PetStoreOpenApi3",
+            //    GenerateFormUrlEncodedExtensionMethods = true,
+            //    GenerateMultipartFormDataExtensionMethods = true,
+            //    GenerateApplicationOctetStreamExtensionMethods = true,
+            //    ApplicationOctetStreamType = ApplicationOctetStreamType.ByteArray,
+            //    PreferredContentType = ContentType.ApplicationJson
+            //};
+            //foreach (var file in generator.FromStream(File.OpenRead("Examples\\petstore-openapi3.json"), petStoreOpenApi3Settings, out OpenApiDiagnostic diagnosticPetStoreOpenApi3))
+            //{
+            //    File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/PetStoreOpenApi302/{file.Path}/{file.Name}", file.Content);
+            //}
 
             var petStoreSettings = new GeneratorSettings
             {
@@ -63,6 +63,8 @@ namespace RestEaseClientGeneratorConsoleApp
             {
                 File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/PetStore/{file.Path}/{file.Name}", file.Content);
             }
+
+            return;
 
             var petStoreJsonSettings = new GeneratorSettings
             {
