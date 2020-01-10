@@ -20,6 +20,8 @@ namespace RestEaseClientGenerator.Settings
 
         #region Models
         public bool GeneratePrimitivePropertiesAsNullableForOpenApi20 { get; set; } = false;
+
+        public bool SupportExtensionXNullable { get; set; } = false;
         #endregion
 
         #region Interface

@@ -115,18 +115,14 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         [DisplayName("Generate properties as nullable for OpenApi 2.0")]
         [Description("Generate all (primitive) properties as nullable for OpenApi 2.0, the default value is 'False'.")]
         public bool GeneratePrimitivePropertiesAsNullableForOpenApi20 { get; set; } = false;
+
+        [Category(Models)]
+        [DisplayName("Support 'x-nullable'")]
+        [Description("Support vendor extension 'x-nullable' to indicate a property as nullable for OpenApi 2.0, the default value is 'False'.")]
+        public bool SupportExtensionXNullable { get; set; }
         #endregion
 
         #region MergeWith
-        private Mapper CreateAutoMapper()
-        {
-            var config = new MapperConfiguration(cfg => {
-                cfg.CreateMap<RestEaseUserOptions, RestEaseOptionsPage>();
-            });
-
-            return new Mapper(config);
-        }
-
         public void MergeWith(RestEaseUserOptions options)
         {
             bool useUserOptions = UseUserOptions;

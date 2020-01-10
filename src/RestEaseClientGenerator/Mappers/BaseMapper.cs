@@ -136,7 +136,9 @@ namespace RestEaseClientGenerator.Mappers
                         }
                         else
                         {
-                            var property = MapSchema(openApiSchema, schemaProperty.Key, openApiSchema.Nullable, true, openApiSpecVersion);
+                            bool propertyIsNullable = openApiSchema.Nullable ||
+                                                       Settings.SupportExtensionXNullable && openApiSchema.TryGetXNullable(out bool x) && x;
+                            var property = MapSchema(openApiSchema, schemaProperty.Key, propertyIsNullable, true, openApiSpecVersion);
                             if (property != null && property is string propertyAsString)
                             {
                                 list.Add(propertyAsString);

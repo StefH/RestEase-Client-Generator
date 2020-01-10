@@ -14,10 +14,6 @@ namespace RestEaseClientGeneratorConsoleApp
         static async Task Main(string[] args)
         {
             var reader = new OpenApiStreamReader();
-            var openApiDocument = reader.Read(File.OpenRead("Examples\\dummy.json"), out var diagnosticX);
-
-            var n = openApiDocument.Components.Schemas["X"].Properties["employeeNumber"].Extensions["x-nullable"] as OpenApiBoolean;
-            var v = n?.Value;
 
             var generator = new Generator();
 
@@ -53,7 +49,7 @@ namespace RestEaseClientGeneratorConsoleApp
                 ArrayType = ArrayType.ICollection,
                 Namespace = "RestEaseClientGeneratorConsoleApp.Examples.PetStore",
                 ApiName = "PetStore",
-                GeneratePrimitivePropertiesAsNullableForOpenApi20 = true,
+                SupportExtensionXNullable = true,
                 ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified = true
             };
             foreach (var file in generator.FromStream(File.OpenRead("Examples\\petstore.yaml"), petStoreSettings, out OpenApiDiagnostic diagnosticPetStore1))

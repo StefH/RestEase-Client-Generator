@@ -86,6 +86,9 @@ namespace RestEaseClientGenerator.VSIX.Options
                 textWriter.WritePropertyName(nameof(options.ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified));
                 textWriter.WriteValue(options.ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified);
 
+                textWriter.WritePropertyName(nameof(options.SupportExtensionXNullable));
+                textWriter.WriteValue(options.SupportExtensionXNullable);
+
                 textWriter.WritePropertyName(nameof(options.UseDateTimeOffset));
                 textWriter.WriteValue(options.UseDateTimeOffset);
 

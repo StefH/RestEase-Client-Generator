@@ -5,7 +5,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStore.Models
 {
     public class User
     {
-        public long? Id { get; set; }
+        public long Id { get; set; }
 
         public string Username { get; set; }
 
@@ -19,6 +19,6 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStore.Models
 
         public string Phone { get; set; }
 
-        public int? UserStatus { get; set; }
+        public int UserStatus { get; set; }
     }
 }
