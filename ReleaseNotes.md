@@ -1,3 +1,11 @@
+# 1.0.5 (15 January 2020)
+- [#10](https://github.com/StefH/RestEase-Client-Generator/pull/10) - Add option to force Content-Type to 'application/json' [enhancement] contributed by [StefH](https://github.com/StefH)
+- [#11](https://github.com/StefH/RestEase-Client-Generator/pull/11) - Fix Method Naming [bug] contributed by [StefH](https://github.com/StefH)
+- [#12](https://github.com/StefH/RestEase-Client-Generator/pull/12) - Add User Options file [enhancement] contributed by [StefH](https://github.com/StefH)
+- [#13](https://github.com/StefH/RestEase-Client-Generator/pull/13) - Support for Security in Header [enhancement] contributed by [StefH](https://github.com/StefH)
+- [#14](https://github.com/StefH/RestEase-Client-Generator/pull/14) - Add support for Headers in RestEase methods [enhancement] contributed by [StefH](https://github.com/StefH)
+- [#15](https://github.com/StefH/RestEase-Client-Generator/pull/15) - Support optional parameters + Generate Primitive Properties As Nullable For OpenApi20 + Support extension 'x-nullable' [enhancement] contributed by [StefH](https://github.com/StefH)
+
 # 1.0.4 (04 January 2020)
 - [#9](https://github.com/StefH/RestEase-Client-Generator/pull/9) - Support multiple Content-Types and fix Model names [enhancement] contributed by [StefH](https://github.com/StefH)
 
