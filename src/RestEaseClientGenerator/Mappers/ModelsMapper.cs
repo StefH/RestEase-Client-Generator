@@ -5,13 +5,17 @@ using RestEaseClientGenerator.Settings;
 using RestEaseClientGenerator.Types;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.OpenApi;
 
 namespace RestEaseClientGenerator.Mappers
 {
     internal class ModelsMapper : BaseMapper
     {
-        public ModelsMapper(GeneratorSettings settings) : base(settings)
+        private readonly OpenApiSpecVersion _openApiSpecVersion;
+
+        public ModelsMapper(GeneratorSettings settings, OpenApiSpecVersion openApiSpecVersion) : base(settings)
         {
+            _openApiSpecVersion = openApiSpecVersion;
         }
 
         public IEnumerable<RestEaseModel> Map(IDictionary<string, OpenApiSchema> schemas)
@@ -20,7 +24,7 @@ namespace RestEaseClientGenerator.Mappers
             {
                 Namespace = Settings.Namespace,
                 ClassName = MakeValidModelName(x.Key),
-                Properties = MapSchema(x.Value, x.Key, x.Value.Nullable) as ICollection<string>
+                Properties = MapSchema(x.Value, x.Key, x.Value.Nullable, true, _openApiSpecVersion) as ICollection<string>
             });
         }
     }

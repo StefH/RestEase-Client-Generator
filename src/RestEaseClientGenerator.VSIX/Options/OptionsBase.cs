@@ -1,9 +1,7 @@
-using System.Diagnostics.CodeAnalysis;
 using Microsoft.VisualStudio.Shell;
 
 namespace RestEaseClientGenerator.VSIX.Options
 {
-    [ExcludeFromCodeCoverage]
     public abstract class OptionsBase<TOptionsInterface, TOptionsPage>
         where TOptionsInterface : class
         where TOptionsPage : DialogPage

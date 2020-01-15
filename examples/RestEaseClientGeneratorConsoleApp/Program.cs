@@ -1,5 +1,7 @@
 ﻿using System.IO;
 using System.Threading.Tasks;
+using Microsoft.OpenApi;
+using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Readers;
 using RestEaseClientGenerator;
 using RestEaseClientGenerator.Settings;
@@ -11,6 +13,8 @@ namespace RestEaseClientGeneratorConsoleApp
     {
         static async Task Main(string[] args)
         {
+            var reader = new OpenApiStreamReader();
+
             var generator = new Generator();
 
             //var drcSettings = new GeneratorSettings
@@ -45,6 +49,7 @@ namespace RestEaseClientGeneratorConsoleApp
                 ArrayType = ArrayType.ICollection,
                 Namespace = "RestEaseClientGeneratorConsoleApp.Examples.PetStore",
                 ApiName = "PetStore",
+                SupportExtensionXNullable = true,
                 ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified = true
             };
             foreach (var file in generator.FromStream(File.OpenRead("Examples\\petstore.yaml"), petStoreSettings, out OpenApiDiagnostic diagnosticPetStore1))
@@ -106,9 +111,9 @@ namespace RestEaseClientGeneratorConsoleApp
                 File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/ComputerVision/{file.Path}/{file.Name}", file.Content);
             }
 
-            //await PetStoreTests.Run();
+            await PetStoreTests.Run();
 
-            //await PetStoreOpenApi3ApiTests.Run();
+            await PetStoreOpenApi3ApiTests.Run();
         }
     }
 }

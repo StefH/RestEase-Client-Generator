@@ -662,6 +662,10 @@ definitions:
       id:
         type: integer
         format: int64
+      id2:
+        type: integer
+        format: int64
+        x-nullable: true
       category:
         $ref: '#/definitions/Category'
       name:

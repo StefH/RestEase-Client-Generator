@@ -40,26 +40,26 @@ namespace RestEaseClientGenerator.VSIX
 
     public sealed class VsPackage : AsyncPackage
     {
-        public const string VsixName = "RestEase Client Code Generator";
+        private const string VsixName = "RestEase Client Code Generator";
 
-        private readonly ICommandInitializer[] commands = {
+        private readonly ICommandInitializer[] _commands = {
             new RestEaseCodeGeneratorCustomToolSetter(),
             new NewRestEaseClientCommand()
         };
 
         public static AsyncPackage Instance { get; private set; }
 
-        protected override async Task InitializeAsync(
-            CancellationToken cancellationToken,
-            IProgress<ServiceProgressData> progress)
+        protected override async Task InitializeAsync(CancellationToken cancellationToken, IProgress<ServiceProgressData> progress)
         {
             await JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
             await base.InitializeAsync(cancellationToken, progress);
             OutputWindow.Initialize(this, VsixName);
             Instance = this;
 
-            foreach (var command in commands)
+            foreach (var command in _commands)
+            {
                 await command.InitializeAsync(this, cancellationToken);
+            }
         }
     }
 }

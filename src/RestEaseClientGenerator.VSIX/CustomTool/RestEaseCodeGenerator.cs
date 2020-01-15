@@ -53,7 +53,7 @@ namespace RestEaseClientGenerator.VSIX.CustomTool
 
                 string baseDirectory = Path.GetDirectoryName(wszInputFilePath);
                 string apiName = Path.GetFileNameWithoutExtension(wszInputFilePath);
-                
+
                 if (options.UseUserOptions)
                 {
                     string optionsPath = Path.Combine(baseDirectory, $"{apiName}.RestEaseOptions");
@@ -74,8 +74,8 @@ namespace RestEaseClientGenerator.VSIX.CustomTool
                     {
                         try
                         {
-                            var userSettings = JsonConvert.DeserializeObject<RestEaseUserOptions>(File.ReadAllText(optionsPath));
-                            options.MergeWith(userSettings);
+                            var restEaseUserOptions = _optionsFactory.Deserialize(File.ReadAllText(optionsPath));
+                            options.MergeWith(restEaseUserOptions);
                         }
                         catch
                         {
@@ -85,28 +85,34 @@ namespace RestEaseClientGenerator.VSIX.CustomTool
                 }
 
                 Trace.WriteLine("Generating Interface and Models");
-                var settings = new GeneratorSettings
-                {
-                    SingleFile = true,
-                    Namespace = wszDefaultNamespace,
-                    ApiName = apiName,
-                    ArrayType = options.ArrayType,
-                    UseDateTimeOffset = options.UseDateTimeOffset,
-                    MethodReturnType = options.MethodReturnType,
-                    AppendAsync = options.AppendAsync,
-                    GenerateFormUrlEncodedExtensionMethods = options.GenerateFormUrlEncodedExtensionMethods,
-                    GenerateApplicationOctetStreamExtensionMethods = options.GenerateApplicationOctetStreamExtensionMethods,
-                    GenerateMultipartFormDataExtensionMethods = options.GenerateMultipartFormDataExtensionMethods,
-                    MultipartFormDataFileType = options.MultipartFormDataFileType,
-                    ApplicationOctetStreamType = options.ApplicationOctetStreamType,
-                    ApiNamespace = options.ApiNamespace,
-                    ModelsNamespace = options.ModelsNamespace,
-                    ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified = options.ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified,
-                    PreferredContentType = options.PreferredContentType,
-                    ForceContentTypeToApplicationJson = options.ForceContentTypeToApplicationJson,
-                    UseOperationIdAsMethodName = options.UseOperationIdAsMethodName,
-                    PreferredSecurityDefinitionType = options.PreferredSecurityDefinitionType
-                };
+                var settings = AutoMapperUtils.Instance.Mapper.Map<GeneratorSettings>(options);
+                settings.SingleFile = true;
+                settings.Namespace = wszDefaultNamespace;
+                settings.ApiName = apiName;
+
+                //var settings = new GeneratorSettings
+                //{
+                //    SingleFile = true,
+                //    Namespace = wszDefaultNamespace,
+                //    ApiName = apiName,
+                //    ArrayType = options.ArrayType,
+                //    UseDateTimeOffset = options.UseDateTimeOffset,
+                //    MethodReturnType = options.MethodReturnType,
+                //    AppendAsync = options.AppendAsync,
+                //    GenerateFormUrlEncodedExtensionMethods = options.GenerateFormUrlEncodedExtensionMethods,
+                //    GenerateApplicationOctetStreamExtensionMethods = options.GenerateApplicationOctetStreamExtensionMethods,
+                //    GenerateMultipartFormDataExtensionMethods = options.GenerateMultipartFormDataExtensionMethods,
+                //    MultipartFormDataFileType = options.MultipartFormDataFileType,
+                //    ApplicationOctetStreamType = options.ApplicationOctetStreamType,
+                //    ApiNamespace = options.ApiNamespace,
+                //    ModelsNamespace = options.ModelsNamespace,
+                //    ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified = options.ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified,
+                //    PreferredContentType = options.PreferredContentType,
+                //    ForceContentTypeToApplicationJson = options.ForceContentTypeToApplicationJson,
+                //    UseOperationIdAsMethodName = options.UseOperationIdAsMethodName,
+                //    PreferredSecurityDefinitionType = options.PreferredSecurityDefinitionType,
+                //    GeneratePrimitivePropertiesAsNullableForOpenApi20 = options.GeneratePrimitivePropertiesAsNullableForOpenApi20
+                //};
                 var result = _generator.FromStream(File.OpenRead(wszInputFilePath), settings, out var diagnostic);
 
                 if (options.FailOnOpenApiErrors && diagnostic.Errors.Any())
@@ -141,7 +147,7 @@ namespace RestEaseClientGenerator.VSIX.CustomTool
         {
             try
             {
-                return (RestEaseOptionsPage) _optionsFactory.Create<RestEaseOptionsPage>();
+                return (RestEaseOptionsPage)_optionsFactory.Create<RestEaseOptionsPage>();
             }
             catch
             {

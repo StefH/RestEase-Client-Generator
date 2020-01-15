@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Microsoft.OpenApi;
 using Microsoft.OpenApi.Models;
 using RestEaseClientGenerator.Extensions;
 using RestEaseClientGenerator.Settings;
@@ -46,7 +47,7 @@ namespace RestEaseClientGenerator.Mappers
             }
         }
 
-        protected object MapSchema(OpenApiSchema schema, string name, bool isNullable, bool pascalCase = true)
+        protected object MapSchema(OpenApiSchema schema, string name, bool isNullable, bool pascalCase, OpenApiSpecVersion? openApiSpecVersion)
         {
             if (schema == null)
             {
@@ -54,7 +55,9 @@ namespace RestEaseClientGenerator.Mappers
             }
 
             string nameCamelCase = string.IsNullOrEmpty(name) ? string.Empty : $" {(pascalCase ? name.ToPascalCase() : name)}";
-            string nullable = isNullable ? "?" : string.Empty;
+
+            bool nullableForOpenApi20 = openApiSpecVersion == OpenApiSpecVersion.OpenApi2_0 && Settings.GeneratePrimitivePropertiesAsNullableForOpenApi20;
+            string nullable = nullableForOpenApi20 || isNullable ? "?" : string.Empty;
 
             switch (schema.GetSchemaType())
             {
@@ -70,7 +73,7 @@ namespace RestEaseClientGenerator.Mappers
                             return $"{MapArrayType("object")}{nameCamelCase}";
 
                         default:
-                            return $"{MapArrayType(MapSchema(schema.Items, null, schema.Items.Nullable))}{nameCamelCase}";
+                            return $"{MapArrayType(MapSchema(schema.Items, null, schema.Items.Nullable, true, openApiSpecVersion))}{nameCamelCase}";
                     }
 
                 case SchemaType.Boolean:
@@ -133,7 +136,9 @@ namespace RestEaseClientGenerator.Mappers
                         }
                         else
                         {
-                            var property = MapSchema(openApiSchema, schemaProperty.Key, openApiSchema.Nullable);
+                            bool propertyIsNullable = openApiSchema.Nullable ||
+                                                       Settings.SupportExtensionXNullable && openApiSchema.TryGetXNullable(out bool x) && x;
+                            var property = MapSchema(openApiSchema, schemaProperty.Key, propertyIsNullable, true, openApiSpecVersion);
                             if (property != null && property is string propertyAsString)
                             {
                                 list.Add(propertyAsString);

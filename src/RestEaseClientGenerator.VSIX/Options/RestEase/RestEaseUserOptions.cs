@@ -46,6 +46,10 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         [JsonConverter(typeof(DescriptionEnumConverter))]
         public SecurityDefinitionType? PreferredSecurityDefinitionType { get; set; }
 
-        // public bool UseUserOptions { get; set; }
+        public bool? MakeNonRequiredParametersOptional { get; set; }
+
+        public bool? GeneratePrimitivePropertiesAsNullableForOpenApi20 { get; set; }
+
+        public bool? SupportExtensionXNullable { get; set; }
     }
 }

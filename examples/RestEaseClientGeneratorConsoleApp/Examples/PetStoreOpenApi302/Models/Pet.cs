@@ -7,6 +7,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreOpenApi302.Models
     {
         public long Id { get; set; }
 
+        public long? Optional { get; set; }
+
         public string Name { get; set; }
 
         public Category Category { get; set; }

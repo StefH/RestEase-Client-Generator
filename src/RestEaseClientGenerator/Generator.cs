@@ -25,7 +25,7 @@ namespace RestEaseClientGenerator
             var reader = new OpenApiStreamReader();
             var openApiDocument = reader.Read(stream, out diagnostic);
 
-            var models = new ModelsMapper(settings).Map(openApiDocument.Components.Schemas).ToList();
+            var models = new ModelsMapper(settings, diagnostic.SpecificationVersion).Map(openApiDocument.Components.Schemas).ToList();
             var @interface = new InterfaceMapper(settings).Map(openApiDocument);
             var security =  new SecurityMapper(settings).Map(openApiDocument);
 
