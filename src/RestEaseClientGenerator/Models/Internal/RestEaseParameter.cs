@@ -1,10 +1,15 @@
-﻿using RestEaseClientGenerator.Types;
+﻿using Microsoft.OpenApi.Models;
+using RestEaseClientGenerator.Types;
 
 namespace RestEaseClientGenerator.Models.Internal
 {
     internal class RestEaseParameter
     {
+        public ParameterLocation? ParameterLocation { get; set; }
+
         public string Identifier { get; set; }
+
+        public string ValidIdentifier { get; set; }
 
         public string IdentifierWithType { get; set; }
 

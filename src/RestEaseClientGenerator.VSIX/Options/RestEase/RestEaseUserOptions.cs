@@ -51,5 +51,7 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         public bool? GeneratePrimitivePropertiesAsNullableForOpenApi20 { get; set; }
 
         public bool? SupportExtensionXNullable { get; set; }
+
+        public bool? DefineAllMethodHeadersOnInterface { get; set; }
     }
 }

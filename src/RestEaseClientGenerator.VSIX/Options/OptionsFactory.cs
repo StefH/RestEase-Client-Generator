@@ -43,6 +43,9 @@ namespace RestEaseClientGenerator.VSIX.Options
                 textWriter.WriteValue(options.ArrayType.GetDescription());
                 WriteEnumComment<ArrayType>(textWriter);
 
+                textWriter.WritePropertyName(nameof(options.DefineAllMethodHeadersOnInterface));
+                textWriter.WriteValue(options.DefineAllMethodHeadersOnInterface);
+
                 textWriter.WritePropertyName(nameof(options.FailOnOpenApiErrors));
                 textWriter.WriteValue(options.FailOnOpenApiErrors);
 

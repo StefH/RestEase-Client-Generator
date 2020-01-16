@@ -52,6 +52,27 @@ namespace RestEaseClientGenerator.Mappers
             //    }
             //}
 
+            // Select all common optional and mandatory headers from all methods
+            if (Settings.DefineAllMethodHeadersOnInterface)
+            {
+                @interface.VariableInterfaceHeaders = @interface.Methods
+                    .SelectMany(m => m.RestEaseMethod.Parameters.Where(p => p.ParameterLocation == ParameterLocation.Header))
+                    //.Select(p => new { p.Identifier, p })
+                    .Distinct()
+                    .ToList();
+
+                foreach (var vih in @interface.VariableInterfaceHeaders)
+                {
+                    
+                }
+
+                //    .Select(h => new RestEaseVariableInterfaceHeader
+                //{
+                //    Header = $"[Header(\"{h.Identifier}\")",
+                //    Parameter = h.p
+                //}).ToList();
+            }
+
             return @interface;
         }
 
@@ -104,7 +125,7 @@ namespace RestEaseClientGenerator.Mappers
                     {
                         Required = true,
                         Summary = "The Content-Type",
-                        Identifier = "contentType",
+                        ValidIdentifier = "contentType",
                         IdentifierWithRestEase = $"[Header(\"{HttpKnownHeaderNames.ContentType}\")] string contentType",
                         IdentifierWithType = "string contentType",
                         IsSpecial = false,
@@ -183,7 +204,7 @@ namespace RestEaseClientGenerator.Mappers
             {
                 Headers = headers,
                 Summary = operation.Summary ?? $"{methodRestEaseMethodName} ({path})",
-                SummaryParameters = methodParameterList.Select(mp => $"<param name=\"{mp.Identifier}\">{mp.Summary.StripHtml()}</param>").ToList(),
+                SummaryParameters = methodParameterList.Select(mp => $"<param name=\"{mp.ValidIdentifier}\">{mp.Summary.StripHtml()}</param>").ToList(),
                 RestEaseAttribute = $"[{methodRestEaseForAnnotation}(\"{path}\")]",
                 RestEaseMethod = new RestEaseInterfaceMethod
                 {
@@ -200,7 +221,7 @@ namespace RestEaseClientGenerator.Mappers
                 {
                     new RestEaseParameter
                     {
-                        Identifier = "api",
+                        ValidIdentifier = "api",
                         IdentifierWithType = $"this {@interface.Name} api",
                         IdentifierWithRestEase = $"this {@interface.Name} api",
                         Summary = "The Api"
@@ -212,7 +233,7 @@ namespace RestEaseClientGenerator.Mappers
                 method.ExtensionMethodDetails = new RestEaseInterfaceMethodDetails
                 {
                     Summary = operation.Summary ?? $"{methodRestEaseMethodName} ({path})",
-                    SummaryParameters = combinedMethodParameterList.Select(mp => $"<param name=\"{mp.Identifier}\">{mp.Summary.StripHtml()}</param>").ToList(),
+                    SummaryParameters = combinedMethodParameterList.Select(mp => $"<param name=\"{mp.ValidIdentifier}\">{mp.Summary.StripHtml()}</param>").ToList(),
                     RestEaseMethod = new RestEaseInterfaceMethod
                     {
                         ReturnType = method.RestEaseMethod.ReturnType,
@@ -246,7 +267,7 @@ namespace RestEaseClientGenerator.Mappers
                 bodyParameterList.Add(new RestEaseParameter
                 {
                     Required = true,
-                    Identifier = "content",
+                    ValidIdentifier = "content",
                     IdentifierWithType = "HttpContent content",
                     IdentifierWithRestEase = "[Body] HttpContent content",
                     Summary = httpContentDescription,
@@ -278,7 +299,7 @@ namespace RestEaseClientGenerator.Mappers
                 bodyParameterList.Add(new RestEaseParameter
                 {
                     Required = true,
-                    Identifier = "content",
+                    ValidIdentifier = "content",
                     IdentifierWithType = "HttpContent content",
                     IdentifierWithRestEase = "[Body] HttpContent content",
                     Summary = httpContentDescription,
@@ -308,7 +329,7 @@ namespace RestEaseClientGenerator.Mappers
                 bodyParameterList.Add(new RestEaseParameter
                 {
                     Required = true,
-                    Identifier = "form",
+                    ValidIdentifier = "form",
                     IdentifierWithType = "IDictionary<string, object> form",
                     IdentifierWithRestEase = "[Body(BodySerializationMethod.UrlEncoded)] IDictionary<string, object> form",
                     Summary = description,
@@ -345,7 +366,7 @@ namespace RestEaseClientGenerator.Mappers
                     bodyParameterList.Add(new RestEaseParameter
                     {
                         Required = true,
-                        Identifier = bodyParameterIdentifierName,
+                        ValidIdentifier = bodyParameterIdentifierName,
                         IdentifierWithType = $"{bodyParameter} {bodyParameterIdentifierName}",
                         IdentifierWithRestEase = $"[Body] {bodyParameter} {bodyParameterIdentifierName}",
                         Summary = detected.Value.Schema?.Description ?? bodyParameterDescription
@@ -520,8 +541,10 @@ namespace RestEaseClientGenerator.Mappers
 
                 return new RestEaseParameter
                 {
+                    ParameterLocation = parameterLocation,
                     Required = required,
-                    Identifier = validIdentifier,
+                    Identifier = identifier,
+                    ValidIdentifier = validIdentifier,
                     SchemaType = schema.GetSchemaType(),
                     SchemaFormat = schema.GetSchemaFormat(),
                     IdentifierWithType = $"{identifierWithType}",
@@ -535,8 +558,10 @@ namespace RestEaseClientGenerator.Mappers
 
             return new RestEaseParameter
             {
+                ParameterLocation = parameterLocation,
                 Required = required,
                 Identifier = identifier,
+                ValidIdentifier = identifier,
                 SchemaType = schema.GetSchemaType(),
                 SchemaFormat = schema.GetSchemaFormat(),
                 IdentifierWithType = $"{identifierWithType}",

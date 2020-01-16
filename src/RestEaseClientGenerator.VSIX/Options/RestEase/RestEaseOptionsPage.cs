@@ -108,6 +108,11 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         [DisplayName("Make NonRequired parameters optional")]
         [Description("Append '= null' to opional parameters in the interface methods. The default value is 'True'.")]
         public bool MakeNonRequiredParametersOptional { get; set; } = true;
+
+        [Category(Models)]
+        [DisplayName("Define headers interface")]
+        [Description("Define all method-headers on the interface. The default value is 'False'.")]
+        public bool DefineAllMethodHeadersOnInterface { get; set; } = false;
         #endregion
 
         #region Models
@@ -119,7 +124,7 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         [Category(Models)]
         [DisplayName("Support 'x-nullable'")]
         [Description("Support vendor extension 'x-nullable' to indicate a property as nullable for OpenApi 2.0, the default value is 'False'.")]
-        public bool SupportExtensionXNullable { get; set; }
+        public bool SupportExtensionXNullable { get; set; } = false;
         #endregion
 
         #region MergeWith

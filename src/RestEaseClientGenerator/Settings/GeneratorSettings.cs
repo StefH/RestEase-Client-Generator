@@ -54,6 +54,10 @@ namespace RestEaseClientGenerator.Settings
         public SecurityDefinitionType PreferredSecurityDefinitionType { get; set; } = SecurityDefinitionType.Automatic;
 
         public bool MakeNonRequiredParametersOptional { get; set; } = true;
+
+        public bool DefineAllMethodHeadersOnInterface { get; set; } = false;
+
+        public bool DefineCommonMethodHeadersOnInterface { get; set; } = false;
         #endregion
     }
 }
