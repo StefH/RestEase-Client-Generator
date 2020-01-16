@@ -57,20 +57,16 @@ namespace RestEaseClientGenerator.Mappers
             {
                 @interface.VariableInterfaceHeaders = @interface.Methods
                     .SelectMany(m => m.RestEaseMethod.Parameters.Where(p => p.ParameterLocation == ParameterLocation.Header))
-                    //.Select(p => new { p.Identifier, p })
                     .Distinct()
                     .ToList();
 
                 foreach (var vih in @interface.VariableInterfaceHeaders)
                 {
-                    
+                    foreach (var method in @interface.Methods)
+                    {
+                        method.RestEaseMethod.Parameters = method.RestEaseMethod.Parameters.Where(p => p != vih).ToList();
+                    }
                 }
-
-                //    .Select(h => new RestEaseVariableInterfaceHeader
-                //{
-                //    Header = $"[Header(\"{h.Identifier}\")",
-                //    Parameter = h.p
-                //}).ToList();
             }
 
             return @interface;

@@ -49,12 +49,8 @@ namespace RestEaseClientGenerator.Builders
                     {
                         headers.Add(header.IdentifierName, header.Name);
                     }
-                    //builder.AppendLine($"        [Header(\"{header.Name}\")]");
-                    //builder.AppendLine($"        string {header.IdentifierName} {{ get; set; }}");
-                    //builder.AppendLine();
                 }
             }
-
             foreach (var header in @interface.VariableInterfaceHeaders)
             {
                 string key = header.ValidIdentifier.ToPascalCase();
@@ -62,9 +58,6 @@ namespace RestEaseClientGenerator.Builders
                 {
                     headers.Add(key, header.Identifier);
                 }
-                //builder.AppendLine($"        [Header(\"{header.Identifier}\")]");
-                //builder.AppendLine($"        string {header.ValidIdentifier} {{ get; set; }}");
-                //builder.AppendLine();
             }
 
             foreach (var header in headers)
