@@ -189,7 +189,7 @@ namespace RestEaseClientGenerator.Mappers
                 {
                     ReturnType = MapReturnType(returnType),
                     Name = methodRestEaseMethodName,
-                    ParametersAsString = string.Join(", ", methodParameterList.Select(mp => mp.IdentifierWithRestEase)),
+                    // ParametersAsString = string.Join(", ", methodParameterList.Select(mp => mp.IdentifierWithRestEase)),
                     Parameters = methodParameterList
                 }
             };
@@ -217,7 +217,7 @@ namespace RestEaseClientGenerator.Mappers
                     {
                         ReturnType = method.RestEaseMethod.ReturnType,
                         Name = method.RestEaseMethod.Name,
-                        ParametersAsString = string.Join(", ", combinedMethodParameterList.Select(mp => mp.IdentifierWithType)),
+                        // ParametersAsString = string.Join(", ", combinedMethodParameterList.Select(mp => mp.IdentifierWithType)),
                         Parameters = combinedMethodParameterList
                     }
                 };

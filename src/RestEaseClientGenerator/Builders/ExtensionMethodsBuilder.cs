@@ -57,7 +57,9 @@ namespace RestEaseClientGenerator.Builders
                 {
                     builder.AppendLine($"        /// {p}");
                 }
-                builder.AppendLine($"        public static {method.ExtensionMethodDetails.RestEaseMethod.ReturnType} {method.ExtensionMethodDetails.RestEaseMethod.Name}{asyncPostfix}({method.ExtensionMethodDetails.RestEaseMethod.ParametersAsString})");
+
+                string paramsAsString = string.Join(", ", method.ExtensionMethodDetails.RestEaseMethod.Parameters.Select(mp => mp.IdentifierWithType));
+                builder.AppendLine($"        public static {method.ExtensionMethodDetails.RestEaseMethod.ReturnType} {method.ExtensionMethodDetails.RestEaseMethod.Name}{asyncPostfix}({paramsAsString})");
                 builder.AppendLine("        {");
 
                 switch (method.ExtensionMethodContentType)

@@ -67,7 +67,8 @@ namespace RestEaseClientGenerator.Builders
                     builder.AppendLine($"        {header}");
                 }
 
-                builder.AppendLine($"        {method.RestEaseMethod.ReturnType} {method.RestEaseMethod.Name}{asyncPostfix}({method.RestEaseMethod.ParametersAsString});");
+                string paramsAsString = string.Join(", ", method.RestEaseMethod.Parameters.Select(mp => mp.IdentifierWithRestEase));
+                builder.AppendLine($"        {method.RestEaseMethod.ReturnType} {method.RestEaseMethod.Name}{asyncPostfix}({paramsAsString});");
 
                 if (method != @interface.Methods.Last())
                 {
