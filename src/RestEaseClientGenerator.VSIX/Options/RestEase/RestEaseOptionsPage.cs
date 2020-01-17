@@ -1,5 +1,4 @@
 using System.ComponentModel;
-using AutoMapper;
 using Microsoft.VisualStudio.Shell;
 using RestEaseClientGenerator.Types;
 
@@ -106,7 +105,7 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
 
         [Category(Interface)]
         [DisplayName("Make NonRequired parameters optional")]
-        [Description("Append '= null' to opional parameters in the interface methods. The default value is 'True'.")]
+        [Description("Append '= null' to optional parameters in the interface methods. The default value is 'True'.")]
         public bool MakeNonRequiredParametersOptional { get; set; } = true;
 
         [Category(Models)]

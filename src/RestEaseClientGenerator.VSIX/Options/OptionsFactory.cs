@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
+using System.Linq;
+using System.Reflection;
 using System.Text;
 using Newtonsoft.Json;
 using RestEaseClientGenerator.Extensions;
-using RestEaseClientGenerator.Types;
 using RestEaseClientGenerator.VSIX.Options.RestEase;
 
 namespace RestEaseClientGenerator.VSIX.Options
@@ -29,74 +31,29 @@ namespace RestEaseClientGenerator.VSIX.Options
                 textWriter.WriteStartObject();
                 textWriter.WriteComment("Use this file to overrule the RestEase Client Generator Options");
 
-                textWriter.WritePropertyName(nameof(options.ApiNamespace));
-                textWriter.WriteValue(options.ApiNamespace);
+                var properties = typeof(RestEaseOptionsPage)
+                    .GetProperties(BindingFlags.Instance | BindingFlags.Public)
+                    .Select(p => new { Property = p, Comment = p.GetCustomAttribute<DescriptionAttribute>()?.Description })
+                    .Where(p => p.Property.Name != "UseUserOptions" && !string.IsNullOrEmpty(p.Comment))
+                    .OrderBy(p => p.Property.Name)
+                    .ToArray();
 
-                textWriter.WritePropertyName(nameof(options.AppendAsync));
-                textWriter.WriteValue(options.AppendAsync);
+                foreach (var property in properties)
+                {
+                    textWriter.WritePropertyName(property.Property.Name);
 
-                textWriter.WritePropertyName(nameof(options.ApplicationOctetStreamType));
-                textWriter.WriteValue(options.ApplicationOctetStreamType.GetDescription());
-                WriteEnumComment<ApplicationOctetStreamType>(textWriter);
-
-                textWriter.WritePropertyName(nameof(options.ArrayType));
-                textWriter.WriteValue(options.ArrayType.GetDescription());
-                WriteEnumComment<ArrayType>(textWriter);
-
-                textWriter.WritePropertyName(nameof(options.DefineAllMethodHeadersOnInterface));
-                textWriter.WriteValue(options.DefineAllMethodHeadersOnInterface);
-
-                textWriter.WritePropertyName(nameof(options.FailOnOpenApiErrors));
-                textWriter.WriteValue(options.FailOnOpenApiErrors);
-
-                textWriter.WritePropertyName(nameof(options.ForceContentTypeToApplicationJson));
-                textWriter.WriteValue(options.ForceContentTypeToApplicationJson);
-
-                textWriter.WritePropertyName(nameof(options.GenerateApplicationOctetStreamExtensionMethods));
-                textWriter.WriteValue(options.GenerateApplicationOctetStreamExtensionMethods);
-
-                textWriter.WritePropertyName(nameof(options.GenerateMultipartFormDataExtensionMethods));
-                textWriter.WriteValue(options.GenerateMultipartFormDataExtensionMethods);
-
-                textWriter.WritePropertyName(nameof(options.GenerateFormUrlEncodedExtensionMethods));
-                textWriter.WriteValue(options.GenerateFormUrlEncodedExtensionMethods);
-
-                textWriter.WritePropertyName(nameof(options.GeneratePrimitivePropertiesAsNullableForOpenApi20));
-                textWriter.WriteValue(options.GeneratePrimitivePropertiesAsNullableForOpenApi20);
-
-                textWriter.WritePropertyName(nameof(options.MakeNonRequiredParametersOptional));
-                textWriter.WriteValue(options.MakeNonRequiredParametersOptional);
-
-                textWriter.WritePropertyName(nameof(options.MethodReturnType));
-                textWriter.WriteValue(options.MethodReturnType.GetDescription());
-                WriteEnumComment<MethodReturnType>(textWriter);
-
-                textWriter.WritePropertyName(nameof(options.ModelsNamespace));
-                textWriter.WriteValue(options.ModelsNamespace);
-
-                textWriter.WritePropertyName(nameof(options.MultipartFormDataFileType));
-                textWriter.WriteValue(options.MultipartFormDataFileType.GetDescription());
-                WriteEnumComment<MultipartFormDataFileType>(textWriter);
-
-                textWriter.WritePropertyName(nameof(options.PreferredContentType));
-                textWriter.WriteValue(options.PreferredContentType.GetDescription());
-                WriteEnumComment<ContentType>(textWriter);
-
-                textWriter.WritePropertyName(nameof(options.PreferredSecurityDefinitionType));
-                textWriter.WriteValue(options.PreferredSecurityDefinitionType.GetDescription());
-                WriteEnumComment<SecurityDefinitionType>(textWriter);
-
-                textWriter.WritePropertyName(nameof(options.ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified));
-                textWriter.WriteValue(options.ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified);
-
-                textWriter.WritePropertyName(nameof(options.SupportExtensionXNullable));
-                textWriter.WriteValue(options.SupportExtensionXNullable);
-
-                textWriter.WritePropertyName(nameof(options.UseDateTimeOffset));
-                textWriter.WriteValue(options.UseDateTimeOffset);
-
-                textWriter.WritePropertyName(nameof(options.UseOperationIdAsMethodName));
-                textWriter.WriteValue(options.UseOperationIdAsMethodName);
+                    var value = property.Property.GetValue(options);
+                    if (value is Enum @enum)
+                    {
+                        textWriter.WriteValue(@enum.GetDescription());
+                        textWriter.WriteComment($"{property.Comment} {GetEnumComment(value.GetType())}");
+                    }
+                    else
+                    {
+                        textWriter.WriteValue(value);
+                        textWriter.WriteComment(property.Comment);
+                    }
+                }
 
                 textWriter.WriteEndObject();
             }
@@ -106,13 +63,23 @@ namespace RestEaseClientGenerator.VSIX.Options
 
         private void WriteEnumComment<T>(JsonTextWriter writer)
         {
+            WriteEnumComment(typeof(T), writer);
+        }
+
+        private void WriteEnumComment(Type type, JsonTextWriter writer)
+        {
+            writer.WriteComment(GetEnumComment(type));
+        }
+
+        private string GetEnumComment(Type type)
+        {
             var descriptions = new List<string>();
-            foreach (Enum value in Enum.GetValues(typeof(T)))
+            foreach (Enum value in Enum.GetValues(type))
             {
                 descriptions.Add($"'{value.GetDescription()}'");
             }
 
-            writer.WriteComment($"Possible values are: {string.Join(", ", descriptions)}");
+            return $"Possible values are: {string.Join(", ", descriptions)}.";
         }
     }
 }
