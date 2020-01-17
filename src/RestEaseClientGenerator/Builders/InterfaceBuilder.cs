@@ -19,6 +19,7 @@ namespace RestEaseClientGenerator.Builders
             var builder = new StringBuilder();
             builder.AppendLine("using System;");
             builder.AppendLine("using System.Collections.Generic;");
+            builder.AppendLine("using System.IO;");
             builder.AppendLine("using System.Net.Http;");
             builder.AppendLine("using System.Net.Http.Headers;");
             builder.AppendLine("using System.Threading.Tasks;");

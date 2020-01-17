@@ -56,7 +56,7 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
 
         [Category(Interface)]
         [DisplayName("Method ReturnType")]
-        [Description("The ReturnType to use for the methods. The default value is 'Type'. For more details see https://github.com/canton7/RestEase#return-types.")]
+        [Description("The ReturnType to use for the methods. The default value is 'T'. For more details see https://github.com/canton7/RestEase#return-types.")]
         public MethodReturnType MethodReturnType { get; set; }
 
         [Category(Interface)]
