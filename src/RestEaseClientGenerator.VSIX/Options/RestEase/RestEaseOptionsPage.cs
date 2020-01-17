@@ -11,6 +11,12 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         private const string Models = "Models";
 
         #region General
+
+        [Category(General)]
+        [DisplayName("Generate option")]
+        [Description("Define what should be generated. The default value is 'Api and Models'.")]
+        public GenerationType GenerationType { get; set; } = GenerationType.Both;
+
         [Category(General)]
         [DisplayName("Array Type")]
         [Description("The Array type to use. The default is Array 'T[]'.")]

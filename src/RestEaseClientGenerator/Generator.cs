@@ -6,6 +6,7 @@ using RestEaseClientGenerator.Builders;
 using RestEaseClientGenerator.Mappers;
 using RestEaseClientGenerator.Models;
 using RestEaseClientGenerator.Settings;
+using RestEaseClientGenerator.Types;
 
 namespace RestEaseClientGenerator
 {
@@ -27,47 +28,52 @@ namespace RestEaseClientGenerator
 
             var models = new ModelsMapper(settings, diagnostic.SpecificationVersion).Map(openApiDocument.Components.Schemas).ToList();
             var @interface = new InterfaceMapper(settings).Map(openApiDocument);
-            var security =  new SecurityMapper(settings).Map(openApiDocument);
+            var security = new SecurityMapper(settings).Map(openApiDocument);
 
-            var files = new List<GeneratedFile>
+            var files = new List<GeneratedFile>();
+
+            if (settings.GenerationType.HasFlag(GenerationType.Api))
             {
                 // Add Interface
-                new GeneratedFile
+                files.Add(new GeneratedFile
                 {
                     Path = settings.ApiNamespace,
                     Name = $"{@interface.Name}.cs",
                     Content = new InterfaceBuilder(settings).Build(@interface, security, models.Any())
-                }
-            };
-
-            var extensions = new ExtensionMethodsBuilder(settings).Build(@interface, @interface.Name);
-            if (extensions != null)
-            {
-                // Add ApiExtension
-                files.Add(new GeneratedFile
-                {
-                    Path = settings.ApiNamespace,
-                    Name = $"{new string(@interface.Name.Skip(1).ToArray())}Extensions.cs",
-                    Content = extensions
                 });
+
+                var extensions = new ExtensionMethodsBuilder(settings).Build(@interface, @interface.Name);
+                if (extensions != null)
+                {
+                    // Add ApiExtension
+                    files.Add(new GeneratedFile
+                    {
+                        Path = settings.ApiNamespace,
+                        Name = $"{new string(@interface.Name.Skip(1).ToArray())}Extensions.cs",
+                        Content = extensions
+                    });
+                }
             }
 
-            // Add Models
-            var modelBuilder = new ModelBuilder(settings);
-            files.AddRange(models.Select(model => new GeneratedFile
+            if (settings.GenerationType.HasFlag(GenerationType.Models))
             {
-                Path = settings.ModelsNamespace,
-                Name = $"{model.ClassName}.cs",
-                Content = modelBuilder.Build(model)
-            }));
+                // Add Models
+                var modelBuilder = new ModelBuilder(settings);
+                files.AddRange(models.Select(model => new GeneratedFile
+                {
+                    Path = settings.ModelsNamespace,
+                    Name = $"{model.ClassName}.cs",
+                    Content = modelBuilder.Build(model)
+                }));
 
-            // Add Inline Models
-            files.AddRange(@interface.InlineModels.Select(model => new GeneratedFile
-            {
-                Path = settings.ModelsNamespace,
-                Name = $"{model.ClassName}.cs",
-                Content = modelBuilder.Build(model)
-            }));
+                // Add Inline Models
+                files.AddRange(@interface.InlineModels.Select(model => new GeneratedFile
+                {
+                    Path = settings.ModelsNamespace,
+                    Name = $"{model.ClassName}.cs",
+                    Content = modelBuilder.Build(model)
+                }));
+            }
 
             if (settings.SingleFile)
             {
