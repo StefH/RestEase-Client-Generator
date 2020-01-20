@@ -11,6 +11,8 @@
     <Folder Include="Examples\ComputerVision\" />
     <Folder Include="Examples\Drc\Api\" />
     <Folder Include="Examples\Drc\Models\" />
+    <Folder Include="Examples\FormRecognizerV2\Api\" />
+    <Folder Include="Examples\FormRecognizerV2\Models\" />
     <Folder Include="Examples\SpeechServices\Api\" />
     <Folder Include="Examples\SpeechServices\Models\" />
   </ItemGroup>
@@ -37,6 +39,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Examples\FormRecognizer.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\FormRecognizerV2.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Examples\infura.yaml">
