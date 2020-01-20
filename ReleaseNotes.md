@@ -1,3 +1,8 @@
+# 1.0.6 (20 January 2020)
+- [#16](https://github.com/StefH/RestEase-Client-Generator/pull/16) - DefineAllMethodHeadersOnInterface and GenerationType [enhancement] contributed by [StefH](https://github.com/StefH)
+- [#17](https://github.com/StefH/RestEase-Client-Generator/pull/17) - Add dictionary support for properties [bug] contributed by [apollo2030](https://github.com/apollo2030)
+- [#18](https://github.com/StefH/RestEase-Client-Generator/pull/18) - Add option to update UserSetting file with new options (with default value) [enhancement] contributed by [StefH](https://github.com/StefH)
+
 # 1.0.5 (15 January 2020)
 - [#10](https://github.com/StefH/RestEase-Client-Generator/pull/10) - Add option to force Content-Type to 'application/json' [enhancement] contributed by [StefH](https://github.com/StefH)
 - [#11](https://github.com/StefH/RestEase-Client-Generator/pull/11) - Fix Method Naming [bug] contributed by [StefH](https://github.com/StefH)
