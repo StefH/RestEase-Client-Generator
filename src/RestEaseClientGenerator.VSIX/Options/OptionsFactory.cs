@@ -13,11 +13,18 @@ namespace RestEaseClientGenerator.VSIX.Options
 {
     public class OptionsFactory : IOptionsFactory
     {
+        private readonly JsonSerializerSettings _deserializeSettings = new JsonSerializerSettings
+        {
+            NullValueHandling = NullValueHandling.Include,
+            MissingMemberHandling = MissingMemberHandling.Ignore
+        };
+
         public IRestEaseOptions Create<TDialogPage>() => VsPackage.Instance.GetDialogPage(typeof(TDialogPage)) as IRestEaseOptions;
 
         public RestEaseUserOptions Deserialize(string value)
         {
-            return JsonConvert.DeserializeObject<RestEaseUserOptions>(value);
+            var x =  JsonConvert.DeserializeObject<RestEaseUserOptions>(value, _deserializeSettings);
+            return x;
         }
 
         public string Serialize(IRestEaseOptions options)

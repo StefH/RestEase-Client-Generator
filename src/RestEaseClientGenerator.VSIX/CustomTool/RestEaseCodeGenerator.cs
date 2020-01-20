@@ -11,7 +11,6 @@ using RestEaseClientGenerator.Settings;
 using RestEaseClientGenerator.VSIX.Extensions;
 using RestEaseClientGenerator.VSIX.Options;
 using RestEaseClientGenerator.VSIX.Options.RestEase;
-using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace RestEaseClientGenerator.VSIX.CustomTool
 {
@@ -81,6 +80,16 @@ namespace RestEaseClientGenerator.VSIX.CustomTool
                         {
                             Trace.WriteLine($"Unable to read custom settings file '{optionsPath}'.");
                         }
+
+                        try
+                        {
+                            string json = _optionsFactory.Serialize(options);
+                            File.WriteAllText(optionsPath, json);
+                        }
+                        catch
+                        {
+                            Trace.WriteLine($"Unable to update custom settings file '{optionsPath}'.");
+                        }
                     }
                 }
 
@@ -90,34 +99,11 @@ namespace RestEaseClientGenerator.VSIX.CustomTool
                 settings.Namespace = wszDefaultNamespace;
                 settings.ApiName = apiName;
 
-                //var settings = new GeneratorSettings
-                //{
-                //    SingleFile = true,
-                //    Namespace = wszDefaultNamespace,
-                //    ApiName = apiName,
-                //    ArrayType = options.ArrayType,
-                //    UseDateTimeOffset = options.UseDateTimeOffset,
-                //    MethodReturnType = options.MethodReturnType,
-                //    AppendAsync = options.AppendAsync,
-                //    GenerateFormUrlEncodedExtensionMethods = options.GenerateFormUrlEncodedExtensionMethods,
-                //    GenerateApplicationOctetStreamExtensionMethods = options.GenerateApplicationOctetStreamExtensionMethods,
-                //    GenerateMultipartFormDataExtensionMethods = options.GenerateMultipartFormDataExtensionMethods,
-                //    MultipartFormDataFileType = options.MultipartFormDataFileType,
-                //    ApplicationOctetStreamType = options.ApplicationOctetStreamType,
-                //    ApiNamespace = options.ApiNamespace,
-                //    ModelsNamespace = options.ModelsNamespace,
-                //    ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified = options.ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified,
-                //    PreferredContentType = options.PreferredContentType,
-                //    ForceContentTypeToApplicationJson = options.ForceContentTypeToApplicationJson,
-                //    UseOperationIdAsMethodName = options.UseOperationIdAsMethodName,
-                //    PreferredSecurityDefinitionType = options.PreferredSecurityDefinitionType,
-                //    GeneratePrimitivePropertiesAsNullableForOpenApi20 = options.GeneratePrimitivePropertiesAsNullableForOpenApi20
-                //};
                 var result = _generator.FromStream(File.OpenRead(wszInputFilePath), settings, out var diagnostic);
 
                 if (options.FailOnOpenApiErrors && diagnostic.Errors.Any())
                 {
-                    var errorMessages = string.Join(" | ", diagnostic.Errors.Select(e => JsonSerializer.Serialize(e)));
+                    var errorMessages = string.Join(" | ", diagnostic.Errors.Select(e => JsonConvert.SerializeObject(e)));
                     Trace.WriteLine($"OpenApi Errors: {errorMessages}");
 
                     pcbOutput = 0;

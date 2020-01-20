@@ -56,5 +56,7 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
 
         [JsonConverter(typeof(DescriptionEnumConverter))]
         public GenerationType? GenerationType { get; set; }
+
+        public bool? UpdateUserOptionsWithNewOptions { get; set; }
     }
 }
