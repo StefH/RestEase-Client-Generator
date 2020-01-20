@@ -130,7 +130,16 @@ namespace RestEaseClientGenerator.Mappers
                         if (openApiSchema.GetSchemaType() == SchemaType.Object)
                         {
                             string objectName = pascalCase ? schemaProperty.Key.ToPascalCase() : schemaProperty.Key;
-                            string objectType = openApiSchema.Reference != null ? MakeValidModelName(openApiSchema.Reference.Id) : "object";
+                            string objectType = "object";
+
+                            if (openApiSchema.AdditionalProperties?.Reference?.Id != null)
+                            {
+                                objectType = $"Dictionary<string, {MakeValidModelName(openApiSchema.AdditionalProperties.Reference.Id)}>";
+                            }
+                            else if (openApiSchema.Reference != null)
+                            {
+                                objectType = MakeValidModelName(openApiSchema.Reference.Id);
+                            }
 
                             list.Add($"{objectType} {objectName}");
                         }

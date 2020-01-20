@@ -86,6 +86,12 @@ namespace RestEaseClientGeneratorConsoleApp
                 ApiName = "Cog",
                 ForceContentTypeToApplicationJson = true
             };
+
+            foreach (var file in generator.FromStream(File.OpenRead("Examples\\FormRecognizerV2.json"), "RestEaseClientGeneratorConsoleApp.Examples.FormRecognizer.V2", "FormRecognizerV2", false, out var diagnosticFormRecognizer))
+            {
+                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/FormRecognizerV2/{file.Path}/{file.Name}", file.Content);
+            }
+
             foreach (var file in generator.FromStream(File.OpenRead("Examples\\cognitive-services-personalizer.json"), cogSettings, out var diagnosticCog))
             {
                 File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Cog/{file.Path}/{file.Name}", file.Content);
