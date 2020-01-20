@@ -46,6 +46,11 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         [DisplayName("Use .RestEaseOptions file")]
         [Description("Read and write .RestEaseOptions file which can be used to overwrite some Visual Studio global RestEase options. The default value is 'True'.")]
         public bool UseUserOptions { get; set; } = true;
+
+        [Category(General)]
+        [DisplayName("Update .RestEaseOptions file with new options")]
+        [Description("Update the .RestEaseOptions file when new options are added to the Visual Studio global RestEase options. The default value is 'True'.")]
+        public bool UpdateUserOptionsWithNewOptions { get; set; } = true;
         #endregion
 
         #region Interface
