@@ -6,7 +6,7 @@ namespace RestEaseClientGenerator.Types
 {
     [TypeConverter(typeof(EnumDescriptionConverter))]
     [Flags]
-    public enum GenerationType : int
+    public enum GenerationType
     {
         [Description("Api")]
         Api = 1,

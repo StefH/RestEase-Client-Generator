@@ -47,5 +47,7 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         bool SupportExtensionXNullable { get; set; }
 
         bool DefineAllMethodHeadersOnInterface { get; set; }
+
+        bool UpdateUserOptionsWithNewOptions { get; set; }
     }
 }
