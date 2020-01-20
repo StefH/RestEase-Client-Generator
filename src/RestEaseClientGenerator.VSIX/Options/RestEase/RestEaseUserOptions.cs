@@ -54,6 +54,7 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
 
         public bool? DefineAllMethodHeadersOnInterface { get; set; }
 
+        [JsonConverter(typeof(DescriptionEnumConverter))]
         public GenerationType? GenerationType { get; set; }
     }
 }
