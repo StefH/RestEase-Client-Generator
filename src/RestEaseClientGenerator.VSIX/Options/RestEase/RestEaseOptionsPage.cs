@@ -1,5 +1,4 @@
 using System.ComponentModel;
-using AutoMapper;
 using Microsoft.VisualStudio.Shell;
 using RestEaseClientGenerator.Types;
 
@@ -12,6 +11,12 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         private const string Models = "Models";
 
         #region General
+
+        [Category(General)]
+        [DisplayName("Generate option")]
+        [Description("Define what should be generated. The default value is 'Api and Models'.")]
+        public GenerationType GenerationType { get; set; } = GenerationType.Both;
+
         [Category(General)]
         [DisplayName("Array Type")]
         [Description("The Array type to use. The default is Array 'T[]'.")]
@@ -51,7 +56,7 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
 
         [Category(Interface)]
         [DisplayName("Method ReturnType")]
-        [Description("The ReturnType to use for the methods. The default value is 'Type'. For more details see https://github.com/canton7/RestEase#return-types.")]
+        [Description("The ReturnType to use for the methods. The default value is 'T'. For more details see https://github.com/canton7/RestEase#return-types.")]
         public MethodReturnType MethodReturnType { get; set; }
 
         [Category(Interface)]
@@ -106,8 +111,13 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
 
         [Category(Interface)]
         [DisplayName("Make NonRequired parameters optional")]
-        [Description("Append '= null' to opional parameters in the interface methods. The default value is 'True'.")]
+        [Description("Append '= null' to optional parameters in the interface methods. The default value is 'True'.")]
         public bool MakeNonRequiredParametersOptional { get; set; } = true;
+
+        [Category(Models)]
+        [DisplayName("Define headers interface")]
+        [Description("Define all method-headers on the interface. The default value is 'False'.")]
+        public bool DefineAllMethodHeadersOnInterface { get; set; } = false;
         #endregion
 
         #region Models
@@ -119,7 +129,7 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         [Category(Models)]
         [DisplayName("Support 'x-nullable'")]
         [Description("Support vendor extension 'x-nullable' to indicate a property as nullable for OpenApi 2.0, the default value is 'False'.")]
-        public bool SupportExtensionXNullable { get; set; }
+        public bool SupportExtensionXNullable { get; set; } = false;
         #endregion
 
         #region MergeWith

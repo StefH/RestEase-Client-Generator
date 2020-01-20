@@ -37,7 +37,8 @@ namespace RestEaseClientGeneratorConsoleApp
                 GenerateMultipartFormDataExtensionMethods = true,
                 GenerateApplicationOctetStreamExtensionMethods = true,
                 ApplicationOctetStreamType = ApplicationOctetStreamType.ByteArray,
-                PreferredContentType = ContentType.ApplicationJson
+                PreferredContentType = ContentType.ApplicationJson,
+                DefineAllMethodHeadersOnInterface = true
             };
             foreach (var file in generator.FromStream(File.OpenRead("Examples\\petstore-openapi3.json"), petStoreOpenApi3Settings, out OpenApiDiagnostic diagnosticPetStoreOpenApi3))
             {

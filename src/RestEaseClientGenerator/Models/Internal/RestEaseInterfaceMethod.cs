@@ -8,7 +8,7 @@ namespace RestEaseClientGenerator.Models.Internal
 
         public string Name { get; set; }
 
-        public string ParametersAsString { get; set; }
+        // public string ParametersAsString { get; set; }
 
         public ICollection<RestEaseParameter> Parameters { get; set; }
     }

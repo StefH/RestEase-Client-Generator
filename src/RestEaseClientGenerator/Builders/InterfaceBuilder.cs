@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using RestEaseClientGenerator.Extensions;
 using RestEaseClientGenerator.Models.Internal;
@@ -18,6 +19,7 @@ namespace RestEaseClientGenerator.Builders
             var builder = new StringBuilder();
             builder.AppendLine("using System;");
             builder.AppendLine("using System.Collections.Generic;");
+            builder.AppendLine("using System.IO;");
             builder.AppendLine("using System.Net.Http;");
             builder.AppendLine("using System.Net.Http.Headers;");
             builder.AppendLine("using System.Threading.Tasks;");
@@ -35,6 +37,7 @@ namespace RestEaseClientGenerator.Builders
             builder.AppendLine($"    public interface {@interface.Name}");
             builder.AppendLine("    {");
 
+            var headers = new Dictionary<string, string>();
             if (security != null && Settings.PreferredSecurityDefinitionType != SecurityDefinitionType.None)
             {
                 var header = security.Definitions.FirstOrDefault(sd => sd.Type == SecurityDefinitionType.Header);
@@ -43,10 +46,26 @@ namespace RestEaseClientGenerator.Builders
                 if (header != null &&
                     (Settings.PreferredSecurityDefinitionType == SecurityDefinitionType.Automatic || Settings.PreferredSecurityDefinitionType == SecurityDefinitionType.Header))
                 {
-                    builder.AppendLine($"        [Header(\"{header.Name}\")]");
-                    builder.AppendLine($"        string {header.IdentifierName} {{ get; set; }}");
-                    builder.AppendLine();
+                    if (!headers.ContainsKey(header.IdentifierName))
+                    {
+                        headers.Add(header.IdentifierName, header.Name);
+                    }
                 }
+            }
+            foreach (var header in @interface.VariableInterfaceHeaders)
+            {
+                string key = header.ValidIdentifier.ToPascalCase();
+                if (!headers.ContainsKey(key))
+                {
+                    headers.Add(key, header.Identifier);
+                }
+            }
+
+            foreach (var header in headers)
+            {
+                builder.AppendLine($"        [Header(\"{header.Value}\")]");
+                builder.AppendLine($"        string {header.Key} {{ get; set; }}");
+                builder.AppendLine();
             }
 
             foreach (var method in @interface.Methods)
@@ -67,7 +86,8 @@ namespace RestEaseClientGenerator.Builders
                     builder.AppendLine($"        {header}");
                 }
 
-                builder.AppendLine($"        {method.RestEaseMethod.ReturnType} {method.RestEaseMethod.Name}{asyncPostfix}({method.RestEaseMethod.ParametersAsString});");
+                string paramsAsString = string.Join(", ", method.RestEaseMethod.Parameters.Select(mp => mp.IdentifierWithRestEase));
+                builder.AppendLine($"        {method.RestEaseMethod.ReturnType} {method.RestEaseMethod.Name}{asyncPostfix}({paramsAsString});");
 
                 if (method != @interface.Methods.Last())
                 {

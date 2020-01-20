@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using RestEaseClientGenerator.Constants;
 using RestEaseClientGenerator.Extensions;
-using RestEaseClientGenerator.Models;
 using RestEaseClientGenerator.Models.Internal;
 using RestEaseClientGenerator.Settings;
 using RestEaseClientGenerator.Types;
@@ -57,7 +53,9 @@ namespace RestEaseClientGenerator.Builders
                 {
                     builder.AppendLine($"        /// {p}");
                 }
-                builder.AppendLine($"        public static {method.ExtensionMethodDetails.RestEaseMethod.ReturnType} {method.ExtensionMethodDetails.RestEaseMethod.Name}{asyncPostfix}({method.ExtensionMethodDetails.RestEaseMethod.ParametersAsString})");
+
+                string paramsAsString = string.Join(", ", method.ExtensionMethodDetails.RestEaseMethod.Parameters.Select(mp => mp.IdentifierWithType));
+                builder.AppendLine($"        public static {method.ExtensionMethodDetails.RestEaseMethod.ReturnType} {method.ExtensionMethodDetails.RestEaseMethod.Name}{asyncPostfix}({paramsAsString})");
                 builder.AppendLine("        {");
 
                 switch (method.ExtensionMethodContentType)
@@ -75,7 +73,7 @@ namespace RestEaseClientGenerator.Builders
                         break;
                 }
 
-                builder.AppendLine($"            return api.{method.ExtensionMethodDetails.RestEaseMethod.Name}{asyncPostfix}({string.Join(", ", method.RestEaseMethod.Parameters.Select(p => p.Identifier))});");
+                builder.AppendLine($"            return api.{method.ExtensionMethodDetails.RestEaseMethod.Name}{asyncPostfix}({string.Join(", ", method.RestEaseMethod.Parameters.Select(p => p.ValidIdentifier))});");
                 builder.AppendLine("        }");
 
                 if (method != methods.Last())
@@ -96,7 +94,7 @@ namespace RestEaseClientGenerator.Builders
             foreach (var parameter in method.ExtensionMethodParameters)
             {
                 string comma = parameter != method.ExtensionMethodParameters.Last() ? "," : string.Empty;
-                builder.AppendLine($"                {{ \"{parameter.Identifier}\", {parameter.Identifier} }}{comma}");
+                builder.AppendLine($"                {{ \"{parameter.ValidIdentifier}\", {parameter.ValidIdentifier} }}{comma}");
             }
             builder.AppendLine("            };");
             builder.AppendLine();
@@ -113,15 +111,15 @@ namespace RestEaseClientGenerator.Builders
                 switch (parameter.SchemaType)
                 {
                     case SchemaType.File:
-                        string identifierName = $"{parameter.Identifier}Content";
+                        string identifierName = $"{parameter.ValidIdentifier}Content";
                         switch (settings.MultipartFormDataFileType)
                         {
                             case MultipartFormDataFileType.Stream:
-                                builder.AppendLine($"            var {identifierName} = new StreamContent({parameter.Identifier});");
+                                builder.AppendLine($"            var {identifierName} = new StreamContent({parameter.ValidIdentifier});");
                                 break;
 
                             default:
-                                builder.AppendLine($"            var {identifierName} = new ByteArrayContent({parameter.Identifier});");
+                                builder.AppendLine($"            var {identifierName} = new ByteArrayContent({parameter.ValidIdentifier});");
                                 break;
                         }
 
@@ -130,7 +128,7 @@ namespace RestEaseClientGenerator.Builders
                         break;
 
                     default:
-                        formUrlEncodedContentList.Add(parameter.Identifier);
+                        formUrlEncodedContentList.Add(parameter.ValidIdentifier);
                         break;
                 }
             }
@@ -166,15 +164,15 @@ namespace RestEaseClientGenerator.Builders
                         {
                             case SchemaFormat.Binary:
                             case SchemaFormat.Byte:
-                                string identifierName = $"{parameter.Identifier}Content";
+                                string identifierName = $"{parameter.ValidIdentifier}Content";
                                 switch (settings.ApplicationOctetStreamType)
                                 {
                                     case ApplicationOctetStreamType.Stream:
-                                        builder.AppendLine($"            var {identifierName} = new StreamContent({parameter.Identifier});");
+                                        builder.AppendLine($"            var {identifierName} = new StreamContent({parameter.ValidIdentifier});");
                                         break;
 
                                     default:
-                                        builder.AppendLine($"            var {identifierName} = new ByteArrayContent({parameter.Identifier});");
+                                        builder.AppendLine($"            var {identifierName} = new ByteArrayContent({parameter.ValidIdentifier});");
                                         break;
                                 }
 
@@ -184,13 +182,13 @@ namespace RestEaseClientGenerator.Builders
                                 break;
 
                             default:
-                                formUrlEncodedContentList.Add(parameter.Identifier);
+                                formUrlEncodedContentList.Add(parameter.ValidIdentifier);
                                 break;
                         }
                         break;
 
                     default:
-                        formUrlEncodedContentList.Add(parameter.Identifier);
+                        formUrlEncodedContentList.Add(parameter.ValidIdentifier);
                         break;
                 }
             }

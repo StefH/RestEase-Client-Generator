@@ -16,6 +16,8 @@ namespace RestEaseClientGenerator.Settings
         public string ApiNamespace { get; set; } = "Api";
 
         public string ModelsNamespace { get; set; } = "Models";
+
+        public GenerationType GenerationType { get; set; } = GenerationType.Both;
         #endregion
 
         #region Models
@@ -54,6 +56,10 @@ namespace RestEaseClientGenerator.Settings
         public SecurityDefinitionType PreferredSecurityDefinitionType { get; set; } = SecurityDefinitionType.Automatic;
 
         public bool MakeNonRequiredParametersOptional { get; set; } = true;
+
+        public bool DefineAllMethodHeadersOnInterface { get; set; } = false;
+
+        public bool DefineCommonMethodHeadersOnInterface { get; set; } = false;
         #endregion
     }
 }
