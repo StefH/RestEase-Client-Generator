@@ -21,7 +21,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.FormRecognizer.Models
 
         public FieldValue[] ValueArray { get; set; }
 
-        public object ValueObject { get; set; }
+        public Dictionary<string, FieldValue> ValueObject { get; set; }
 
         public string Text { get; set; }
 
