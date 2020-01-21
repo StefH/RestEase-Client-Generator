@@ -120,7 +120,7 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         public bool MakeNonRequiredParametersOptional { get; set; } = true;
 
         [Category(Models)]
-        [DisplayName("Define headers interface")]
+        [DisplayName("Define headers on interface")]
         [Description("Define all method-headers on the interface. The default value is 'False'.")]
         public bool DefineAllMethodHeadersOnInterface { get; set; } = false;
         #endregion

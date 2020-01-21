@@ -26,7 +26,7 @@ namespace RestEaseClientGenerator.VSIX
 
                 cfg.CreateMap<int?, int>().ConvertUsing((sourceValue, destinationValue) => sourceValue ?? destinationValue);
                 cfg.CreateMap<bool?, bool>().ConvertUsing((sourceValue, destinationValue) => sourceValue ?? destinationValue);
-                cfg.CreateMap<string, string>().ConvertUsing((sourceValue, destinationValue) => !string.IsNullOrEmpty(sourceValue) ? sourceValue : destinationValue);
+                cfg.CreateMap<string, string>().ConvertUsing((sourceValue, destinationValue) => sourceValue ?? destinationValue);
             });
 
             config.AssertConfigurationIsValid();
