@@ -14,8 +14,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.FormRecognizer.V2.Api
     /// </summary>
     public interface IFormRecognizerV2Api
     {
-        [Header("Ocp-Apim-Subscription-Key")]
-        string OcpApimSubscriptionKey { get; set; }
+        [Query("subscription-key")]
+        string SubscriptionKey { get; set; }
 
         /// <summary>
         /// Get Analyze Form Result

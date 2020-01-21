@@ -52,19 +52,42 @@ namespace RestEaseClientGenerator.Mappers
             //    }
             //}
 
+            var security = new SecurityMapper(Settings).Map(openApiDocument);
+            if (security != null && Settings.PreferredSecurityDefinitionType != SecurityDefinitionType.None)
+            {
+                var header = security.Definitions.FirstOrDefault(sd => sd.Type == SecurityDefinitionType.Header);
+                var query = security.Definitions.FirstOrDefault(sd => sd.Type == SecurityDefinitionType.Query);
+
+                if (header != null &&
+                    (Settings.PreferredSecurityDefinitionType == SecurityDefinitionType.Automatic || Settings.PreferredSecurityDefinitionType == SecurityDefinitionType.Header))
+                {
+                    @interface.VariableHeaders.Add(new RestEaseInterfaceHeader { ValidIdentifier = header.IdentifierName, Name = header.Name });
+                }
+                else if (query != null &&
+                    (Settings.PreferredSecurityDefinitionType == SecurityDefinitionType.Automatic || Settings.PreferredSecurityDefinitionType == SecurityDefinitionType.Query))
+                {
+                    @interface.ConstantQueryParameters.Add(new RestEaseInterfaceQueryParameter { Name = query.Name, ValidIdentifier = query.IdentifierName });
+                }
+            }
+
             // Select all common optional and mandatory headers from all methods
             if (Settings.DefineAllMethodHeadersOnInterface)
             {
-                @interface.VariableInterfaceHeaders = @interface.Methods
+                var im = @interface.Methods
                     .SelectMany(m => m.RestEaseMethod.Parameters.Where(p => p.ParameterLocation == ParameterLocation.Header))
                     .Distinct()
                     .ToList();
 
-                foreach (var vih in @interface.VariableInterfaceHeaders)
+                foreach (var vih in im)
                 {
                     foreach (var method in @interface.Methods)
                     {
                         method.RestEaseMethod.Parameters = method.RestEaseMethod.Parameters.Where(p => p != vih).ToList();
+                    }
+
+                    if (@interface.VariableHeaders.All(v => v.Name != vih.Identifier))
+                    {
+                        @interface.VariableHeaders.Add(new RestEaseInterfaceHeader { Name = vih.Identifier, ValidIdentifier = vih.ValidIdentifier });
                     }
                 }
             }

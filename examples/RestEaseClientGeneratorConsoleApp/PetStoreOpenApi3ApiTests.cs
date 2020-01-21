@@ -24,7 +24,7 @@ namespace RestEaseClientGeneratorConsoleApp
             };
             string urlLocal = "http://localhost:8080/api/v3";
             string urlAzure = "https://petstore3-7ea5e6b7-1956-45e8-b452-21d94116e2c4.azurewebsites.net/api/v3";
-            // string urlPostman = "https://postman-echo.com/post";
+            //string urlPostman = "https://postman-echo.com/get";
             var petStoreApi = new RestClient(urlAzure)
             {
                 JsonSerializerSettings = settings

@@ -10,7 +10,9 @@ namespace RestEaseClientGenerator.Models.Internal
 
         public string Summary { get; set; }
 
-        public ICollection<RestEaseParameter> VariableInterfaceHeaders { get; set; } = new List<RestEaseParameter>();
+        public List<RestEaseInterfaceHeader> VariableHeaders { get; set; } = new List<RestEaseInterfaceHeader>();
+
+        public List<RestEaseInterfaceQueryParameter> ConstantQueryParameters { get; set; } = new List<RestEaseInterfaceQueryParameter>();
 
         public ICollection<RestEaseInterfaceMethodDetails> Methods { get; set; } = new List<RestEaseInterfaceMethodDetails>();
 
