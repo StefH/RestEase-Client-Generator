@@ -119,10 +119,15 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         [Description("Append '= null' to optional parameters in the interface methods. The default value is 'True'.")]
         public bool MakeNonRequiredParametersOptional { get; set; } = true;
 
-        [Category(Models)]
+        [Category(Interface)]
         [DisplayName("Define headers on interface")]
         [Description("Define all method-headers on the interface. The default value is 'False'.")]
         public bool DefineAllMethodHeadersOnInterface { get; set; } = false;
+
+        [Category(Interface)]
+        [DisplayName("Move shared query parameters to interface")]
+        [Description("Move all shared method query parameters to the interface. The default value is 'False'.")]
+        public bool MoveSharedMethodQueryParametersToInterface { get; set; } = false;
         #endregion
 
         #region Models

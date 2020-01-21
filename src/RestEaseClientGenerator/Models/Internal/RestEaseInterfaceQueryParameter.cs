@@ -2,7 +2,7 @@
 {
     internal class RestEaseInterfaceQueryParameter
     {
-        public string ValidIdentifier { get; set; }
+        public string ValidIdentifierWithType { get; set; }
 
         public string Name { get; set; }
     }

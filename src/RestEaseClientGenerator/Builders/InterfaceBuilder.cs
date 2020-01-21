@@ -45,7 +45,7 @@ namespace RestEaseClientGenerator.Builders
             foreach (var query in @interface.ConstantQueryParameters)
             {
                 builder.AppendLine($"        [Query(\"{query.Name}\")]");
-                builder.AppendLine($"        string {query.ValidIdentifier} {{ get; set; }}");
+                builder.AppendLine($"        {query.ValidIdentifierWithType} {{ get; set; }}");
                 builder.AppendLine();
             }
 

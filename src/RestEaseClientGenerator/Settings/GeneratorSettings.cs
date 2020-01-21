@@ -59,7 +59,7 @@ namespace RestEaseClientGenerator.Settings
 
         public bool DefineAllMethodHeadersOnInterface { get; set; } = false;
 
-        public bool DefineCommonMethodHeadersOnInterface { get; set; } = false;
+        public bool MoveSharedMethodQueryParametersToInterface { get; set; } = false;
         #endregion
     }
 }

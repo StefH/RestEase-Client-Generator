@@ -49,5 +49,7 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         bool DefineAllMethodHeadersOnInterface { get; set; }
 
         bool UpdateUserOptionsWithNewOptions { get; set; }
+
+        bool MoveSharedMethodQueryParametersToInterface { get; set; }
     }
 }
