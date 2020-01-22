@@ -59,6 +59,6 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
 
         public bool? UpdateUserOptionsWithNewOptions { get; set; }
 
-        public bool? MoveSharedMethodQueryParametersToInterface { get; set; }
+        public bool? DefineSharedMethodQueryParametersOnInterface { get; set; }
     }
 }

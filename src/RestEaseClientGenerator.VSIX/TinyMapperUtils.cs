@@ -15,7 +15,7 @@ namespace RestEaseClientGenerator.VSIX
                 // config.Ignore(x => x.?);
             });
 
-            TinyMapper.Bind<IRestEaseOptions, GeneratorSettings>(config =>
+            TinyMapper.Bind<RestEaseOptionsPage, GeneratorSettings>(config =>
             {
                 // config.Ignore(x => x.?);
             });

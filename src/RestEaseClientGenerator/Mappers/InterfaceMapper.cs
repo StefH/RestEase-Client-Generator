@@ -96,7 +96,7 @@ namespace RestEaseClientGenerator.Mappers
                 }
             }
 
-            if (Settings.MoveSharedMethodQueryParametersToInterface)
+            if (Settings.DefineSharedMethodQueryParametersOnInterface)
             {
                 var groupings = @interface.Methods
                     .SelectMany(md => md.RestEaseMethod.Parameters.Where(p => p.ParameterLocation == ParameterLocation.Query))
