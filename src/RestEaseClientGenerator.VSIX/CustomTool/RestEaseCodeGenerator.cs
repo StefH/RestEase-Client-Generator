@@ -94,7 +94,7 @@ namespace RestEaseClientGenerator.VSIX.CustomTool
                 }
 
                 Trace.WriteLine("Generating Interface and Models");
-                var settings = AutoMapperUtils.Instance.Mapper.Map<GeneratorSettings>(options);
+                var settings = TinyMapperUtils.Instance.Map<GeneratorSettings>(options);
                 settings.SingleFile = true;
                 settings.Namespace = wszDefaultNamespace;
                 settings.ApiName = apiName;
@@ -103,7 +103,7 @@ namespace RestEaseClientGenerator.VSIX.CustomTool
 
                 if (options.FailOnOpenApiErrors && diagnostic.Errors.Any())
                 {
-                    var errorMessages = string.Join(" | ", diagnostic.Errors.Select(e => JsonConvert.SerializeObject(e)));
+                    var errorMessages = string.Join(" | ", diagnostic.Errors.Select(JsonConvert.SerializeObject));
                     Trace.WriteLine($"OpenApi Errors: {errorMessages}");
 
                     pcbOutput = 0;

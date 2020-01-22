@@ -23,8 +23,7 @@ namespace RestEaseClientGenerator.VSIX.Options
 
         public RestEaseUserOptions Deserialize(string value)
         {
-            var x =  JsonConvert.DeserializeObject<RestEaseUserOptions>(value, _deserializeSettings);
-            return x;
+            return JsonConvert.DeserializeObject<RestEaseUserOptions>(value, _deserializeSettings);
         }
 
         public string Serialize(IRestEaseOptions options)

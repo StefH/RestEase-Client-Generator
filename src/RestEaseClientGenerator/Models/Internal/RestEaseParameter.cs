@@ -11,6 +11,8 @@ namespace RestEaseClientGenerator.Models.Internal
 
         public string ValidIdentifier { get; set; }
 
+        public string IdentifierWithTypePascalCase { get; set; }
+
         public string IdentifierWithType { get; set; }
 
         public SchemaType SchemaType { get; set; }

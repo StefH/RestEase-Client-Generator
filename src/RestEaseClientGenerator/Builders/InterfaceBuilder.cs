@@ -1,10 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Text;
 using RestEaseClientGenerator.Extensions;
 using RestEaseClientGenerator.Models.Internal;
 using RestEaseClientGenerator.Settings;
-using RestEaseClientGenerator.Types;
 
 namespace RestEaseClientGenerator.Builders
 {
@@ -14,7 +12,7 @@ namespace RestEaseClientGenerator.Builders
         {
         }
 
-        public string Build(RestEaseInterface @interface, RestEaseSecurity security, bool hasModels)
+        public string Build(RestEaseInterface @interface, bool hasModels)
         {
             var builder = new StringBuilder();
             builder.AppendLine("using System;");
@@ -37,34 +35,17 @@ namespace RestEaseClientGenerator.Builders
             builder.AppendLine($"    public interface {@interface.Name}");
             builder.AppendLine("    {");
 
-            var headers = new Dictionary<string, string>();
-            if (security != null && Settings.PreferredSecurityDefinitionType != SecurityDefinitionType.None)
+            foreach (var header in @interface.VariableHeaders)
             {
-                var header = security.Definitions.FirstOrDefault(sd => sd.Type == SecurityDefinitionType.Header);
-                // var query = security.Definitions.FirstOrDefault(sd => sd.Type == SecurityDefinitionType.Query);
-
-                if (header != null &&
-                    (Settings.PreferredSecurityDefinitionType == SecurityDefinitionType.Automatic || Settings.PreferredSecurityDefinitionType == SecurityDefinitionType.Header))
-                {
-                    if (!headers.ContainsKey(header.IdentifierName))
-                    {
-                        headers.Add(header.IdentifierName, header.Name);
-                    }
-                }
-            }
-            foreach (var header in @interface.VariableInterfaceHeaders)
-            {
-                string key = header.ValidIdentifier.ToPascalCase();
-                if (!headers.ContainsKey(key))
-                {
-                    headers.Add(key, header.Identifier);
-                }
+                builder.AppendLine($"        [Header(\"{header.Name}\")]");
+                builder.AppendLine($"        string {header.ValidIdentifier} {{ get; set; }}");
+                builder.AppendLine();
             }
 
-            foreach (var header in headers)
+            foreach (var query in @interface.ConstantQueryParameters)
             {
-                builder.AppendLine($"        [Header(\"{header.Value}\")]");
-                builder.AppendLine($"        string {header.Key} {{ get; set; }}");
+                builder.AppendLine($"        [Query(\"{query.Name}\")]");
+                builder.AppendLine($"        {query.IdentifierWithType} {{ get; set; }}");
                 builder.AppendLine();
             }
 
@@ -75,9 +56,9 @@ namespace RestEaseClientGenerator.Builders
                 builder.AppendLine("        /// <summary>");
                 builder.AppendLine($"        /// {method.Summary.StripHtml()}");
                 builder.AppendLine("        /// </summary>");
-                foreach (var p in method.SummaryParameters)
+                foreach (var sp in method.SummaryParameters)
                 {
-                    builder.AppendLine($"        /// {p}");
+                    builder.AppendLine($"        /// <param name=\"{sp.ValidIdentifier}\">{sp.Summary.StripHtml()}</param>");
                 }
                 builder.AppendLine($"        {method.RestEaseAttribute}");
 

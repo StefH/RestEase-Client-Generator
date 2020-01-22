@@ -11,7 +11,6 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         private const string Models = "Models";
 
         #region General
-
         [Category(General)]
         [DisplayName("Generate option")]
         [Description("Define what should be generated. The default value is 'Api and Models'.")]
@@ -19,7 +18,7 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
 
         [Category(General)]
         [DisplayName("Array Type")]
-        [Description("The Array type to use. The default is Array 'T[]'.")]
+        [Description("The Array type to use. The default is 'T[]'.")]
         public ArrayType ArrayType { get; set; }
 
         [Category(General)]
@@ -119,10 +118,15 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         [Description("Append '= null' to optional parameters in the interface methods. The default value is 'True'.")]
         public bool MakeNonRequiredParametersOptional { get; set; } = true;
 
-        [Category(Models)]
+        [Category(Interface)]
         [DisplayName("Define headers on interface")]
         [Description("Define all method-headers on the interface. The default value is 'False'.")]
         public bool DefineAllMethodHeadersOnInterface { get; set; } = false;
+
+        [Category(Interface)]
+        [DisplayName("Define shared query parameters on interface")]
+        [Description("Define all shared method query parameters on the interface. The default value is 'True'.")]
+        public bool DefineSharedMethodQueryParametersOnInterface { get; set; } = true;
         #endregion
 
         #region Models
@@ -137,12 +141,10 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         public bool SupportExtensionXNullable { get; set; } = false;
         #endregion
 
-        #region MergeWith
+        #region MergeWith : RestEaseUserOptions
         public void MergeWith(RestEaseUserOptions options)
         {
-            bool useUserOptions = UseUserOptions;
-            AutoMapperUtils.Instance.Mapper.Map(options, this);
-            UseUserOptions = useUserOptions;
+            TinyMapperUtils.Instance.Map(options, this);
         }
         #endregion
     }
