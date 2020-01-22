@@ -29,6 +29,20 @@ namespace RestEaseClientGeneratorConsoleApp
             //    File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Drc/{file.Path}/{file.Name}", file.Content);
             //}
 
+            var sharedQueryParamsWithExtensionMethodSettings = new GeneratorSettings
+            {
+                SingleFile = false,
+                Namespace = "RestEaseClientGeneratorConsoleApp.Examples.SharedQuery",
+                ApiName = "SharedQuery",
+                GenerateFormUrlEncodedExtensionMethods = true,
+                GenerateMultipartFormDataExtensionMethods = true,
+                GenerateApplicationOctetStreamExtensionMethods = true
+            };
+            foreach (var file in generator.FromStream(File.OpenRead("Examples\\SharedQueryParamsWithExtensionMethod.json"), sharedQueryParamsWithExtensionMethodSettings, out OpenApiDiagnostic sharedDiag))
+            {
+                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/SharedQuery/{file.Path}/{file.Name}", file.Content);
+            }
+
             var petStoreOpenApi3Settings = new GeneratorSettings
             {
                 Namespace = "RestEaseClientGeneratorConsoleApp.Examples.PetStoreOpenApi302",

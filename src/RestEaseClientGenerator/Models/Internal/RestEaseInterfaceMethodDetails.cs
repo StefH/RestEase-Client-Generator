@@ -7,7 +7,7 @@ namespace RestEaseClientGenerator.Models.Internal
     {
         public string Summary { get; set; }
 
-        public ICollection<string> SummaryParameters { get; set; } = new List<string>();
+        public ICollection<RestEaseSummaryParameter> SummaryParameters { get; set; } = new List<RestEaseSummaryParameter>();
 
         public ICollection<string> Headers { get; set; } = new List<string>();
 

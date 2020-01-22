@@ -118,10 +118,16 @@ namespace RestEaseClientGenerator.Mappers
                                 });
                             }
 
-                            // For all method: remove this shared query parameter
+                            // For all method: remove this shared query parameters from parameters and from summary and update extension methods
                             foreach (var method in @interface.Methods)
                             {
                                 method.RestEaseMethod.Parameters = method.RestEaseMethod.Parameters.Where(p => p.IdentifierWithRestEase != parameter.IdentifierWithRestEase).ToList();
+                                method.SummaryParameters = method.SummaryParameters.Where(p => p.IdentifierWithRestEase != parameter.IdentifierWithRestEase).ToList();
+                                if (method.ExtensionMethodDetails != null)
+                                {
+                                    method.ExtensionMethodDetails.RestEaseMethod.Parameters = method.ExtensionMethodDetails.RestEaseMethod.Parameters.Where(p => p.IdentifierWithRestEase != parameter.IdentifierWithRestEase).ToList();
+                                    method.ExtensionMethodDetails.SummaryParameters = method.ExtensionMethodDetails.SummaryParameters.Where(p => p.IdentifierWithRestEase != parameter.IdentifierWithRestEase).ToList();
+                                }
                             }
                         }
                     }
@@ -260,7 +266,12 @@ namespace RestEaseClientGenerator.Mappers
             {
                 Headers = headers,
                 Summary = operation.Summary ?? $"{methodRestEaseMethodName} ({path})",
-                SummaryParameters = methodParameterList.Select(mp => $"<param name=\"{mp.ValidIdentifier}\">{mp.Summary.StripHtml()}</param>").ToList(),
+                SummaryParameters = methodParameterList.Select(mp => new RestEaseSummaryParameter
+                {
+                    ValidIdentifier = mp.ValidIdentifier,
+                    IdentifierWithRestEase = mp.IdentifierWithRestEase,
+                    Summary = mp.Summary
+                }).ToList(),
                 RestEaseAttribute = $"[{methodRestEaseForAnnotation}(\"{path}\")]",
                 RestEaseMethod = new RestEaseInterfaceMethod
                 {
@@ -289,12 +300,16 @@ namespace RestEaseClientGenerator.Mappers
                 method.ExtensionMethodDetails = new RestEaseInterfaceMethodDetails
                 {
                     Summary = operation.Summary ?? $"{methodRestEaseMethodName} ({path})",
-                    SummaryParameters = combinedMethodParameterList.Select(mp => $"<param name=\"{mp.ValidIdentifier}\">{mp.Summary.StripHtml()}</param>").ToList(),
+                    SummaryParameters = combinedMethodParameterList.Select(mp => new RestEaseSummaryParameter
+                    {
+                        ValidIdentifier = mp.ValidIdentifier,
+                        IdentifierWithRestEase = mp.IdentifierWithRestEase,
+                        Summary = mp.Summary
+                    }).ToList(),
                     RestEaseMethod = new RestEaseInterfaceMethod
                     {
                         ReturnType = method.RestEaseMethod.ReturnType,
                         Name = method.RestEaseMethod.Name,
-                        // ParametersAsString = string.Join(", ", combinedMethodParameterList.Select(mp => mp.IdentifierWithType)),
                         Parameters = combinedMethodParameterList
                     }
                 };

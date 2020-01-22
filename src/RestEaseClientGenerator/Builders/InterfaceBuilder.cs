@@ -56,9 +56,9 @@ namespace RestEaseClientGenerator.Builders
                 builder.AppendLine("        /// <summary>");
                 builder.AppendLine($"        /// {method.Summary.StripHtml()}");
                 builder.AppendLine("        /// </summary>");
-                foreach (var p in method.SummaryParameters)
+                foreach (var sp in method.SummaryParameters)
                 {
-                    builder.AppendLine($"        /// {p}");
+                    builder.AppendLine($"        /// <param name=\"{sp.ValidIdentifier}\">{sp.Summary.StripHtml()}</param>");
                 }
                 builder.AppendLine($"        {method.RestEaseAttribute}");
 
