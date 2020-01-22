@@ -11,7 +11,6 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         private const string Models = "Models";
 
         #region General
-
         [Category(General)]
         [DisplayName("Generate option")]
         [Description("Define what should be generated. The default value is 'Api and Models'.")]
@@ -142,12 +141,10 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         public bool SupportExtensionXNullable { get; set; } = false;
         #endregion
 
-        #region MergeWith
+        #region MergeWith : RestEaseUserOptions
         public void MergeWith(RestEaseUserOptions options)
         {
-            bool useUserOptions = UseUserOptions;
             TinyMapperUtils.Instance.Map(options, this);
-            UseUserOptions = useUserOptions;
         }
         #endregion
     }

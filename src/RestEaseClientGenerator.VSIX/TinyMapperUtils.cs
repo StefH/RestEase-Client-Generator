@@ -4,7 +4,7 @@ using RestEaseClientGenerator.VSIX.Options.RestEase;
 
 namespace RestEaseClientGenerator.VSIX
 {
-    public sealed class TinyMapperUtils
+    internal sealed class TinyMapperUtils
     {
         public static TinyMapperUtils Instance { get; } = new TinyMapperUtils();
 
@@ -17,7 +17,7 @@ namespace RestEaseClientGenerator.VSIX
 
             TinyMapper.Bind<IRestEaseOptions, GeneratorSettings>(config =>
             {
-                // config.Ignore(x => x.si);
+                // config.Ignore(x => x.?);
             });
         }
 
