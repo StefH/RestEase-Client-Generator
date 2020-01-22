@@ -61,15 +61,15 @@ namespace RestEaseClientGenerator.Builders
                 switch (method.ExtensionMethodContentType)
                 {
                     case SupportedContentType.MultipartFormData:
-                        BuildMultipartFormDataExtensionMethodBody(Settings, builder, method);
+                        BuildMultipartFormDataExtensionMethodBody(builder, method);
                         break;
 
                     case SupportedContentType.ApplicationOctetStream:
-                        BuildApplicationOctetStreamExtensionMethodBody(Settings, builder, method);
+                        BuildApplicationOctetStreamExtensionMethodBody(builder, method);
                         break;
 
                     case SupportedContentType.ApplicationFormUrlEncoded:
-                        BuildApplicationFormUrlEncodedExtensionMethodBody(Settings, builder, method);
+                        BuildApplicationFormUrlEncodedExtensionMethodBody(builder, method);
                         break;
                 }
 
@@ -87,7 +87,7 @@ namespace RestEaseClientGenerator.Builders
             return builder.ToString();
         }
 
-        private static void BuildApplicationFormUrlEncodedExtensionMethodBody(GeneratorSettings settings, StringBuilder builder, RestEaseInterfaceMethodDetails method)
+        private void BuildApplicationFormUrlEncodedExtensionMethodBody(StringBuilder builder, RestEaseInterfaceMethodDetails method)
         {
             builder.AppendLine("            var form = new Dictionary<string, object>");
             builder.AppendLine("            {");
@@ -100,7 +100,7 @@ namespace RestEaseClientGenerator.Builders
             builder.AppendLine();
         }
 
-        private static void BuildMultipartFormDataExtensionMethodBody(GeneratorSettings settings, StringBuilder builder, RestEaseInterfaceMethodDetails method)
+        private void BuildMultipartFormDataExtensionMethodBody(StringBuilder builder, RestEaseInterfaceMethodDetails method)
         {
             builder.AppendLine("            var content = new MultipartFormDataContent();");
             builder.AppendLine();
@@ -112,7 +112,7 @@ namespace RestEaseClientGenerator.Builders
                 {
                     case SchemaType.File:
                         string identifierName = $"{parameter.ValidIdentifier}Content";
-                        switch (settings.MultipartFormDataFileType)
+                        switch (Settings.MultipartFormDataFileType)
                         {
                             case MultipartFormDataFileType.Stream:
                                 builder.AppendLine($"            var {identifierName} = new StreamContent({parameter.ValidIdentifier});");
@@ -149,7 +149,7 @@ namespace RestEaseClientGenerator.Builders
             }
         }
 
-        private static void BuildApplicationOctetStreamExtensionMethodBody(GeneratorSettings settings, StringBuilder builder, RestEaseInterfaceMethodDetails method)
+        private void BuildApplicationOctetStreamExtensionMethodBody(StringBuilder builder, RestEaseInterfaceMethodDetails method)
         {
             builder.AppendLine("            var content = new MultipartFormDataContent();");
             builder.AppendLine();
@@ -165,7 +165,7 @@ namespace RestEaseClientGenerator.Builders
                             case SchemaFormat.Binary:
                             case SchemaFormat.Byte:
                                 string identifierName = $"{parameter.ValidIdentifier}Content";
-                                switch (settings.ApplicationOctetStreamType)
+                                switch (Settings.ApplicationOctetStreamType)
                                 {
                                     case ApplicationOctetStreamType.Stream:
                                         builder.AppendLine($"            var {identifierName} = new StreamContent({parameter.ValidIdentifier});");
