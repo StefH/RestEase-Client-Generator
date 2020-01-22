@@ -51,5 +51,7 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         bool UpdateUserOptionsWithNewOptions { get; set; }
 
         bool MoveSharedMethodQueryParametersToInterface { get; set; }
+
+        GenerationType GenerationType { get; set; }
     }
 }

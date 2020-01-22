@@ -146,7 +146,7 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         public void MergeWith(RestEaseUserOptions options)
         {
             bool useUserOptions = UseUserOptions;
-            AutoMapperUtils.Instance.Mapper.Map(options, this);
+            TinyMapperUtils.Instance.Map(options, this);
             UseUserOptions = useUserOptions;
         }
         #endregion

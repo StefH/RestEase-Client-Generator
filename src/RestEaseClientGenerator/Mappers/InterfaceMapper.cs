@@ -66,7 +66,11 @@ namespace RestEaseClientGenerator.Mappers
                 else if (query != null &&
                     (Settings.PreferredSecurityDefinitionType == SecurityDefinitionType.Automatic || Settings.PreferredSecurityDefinitionType == SecurityDefinitionType.Query))
                 {
-                    @interface.ConstantQueryParameters.Add(new RestEaseInterfaceQueryParameter { Name = query.Name, ValidIdentifierWithType = $"string {query.IdentifierName}" });
+                    @interface.ConstantQueryParameters.Add(new RestEaseInterfaceQueryParameter
+                    {
+                        Name = query.Name,
+                        IdentifierWithType = $"string {query.IdentifierName}"
+                    });
                 }
             }
 
@@ -94,19 +98,34 @@ namespace RestEaseClientGenerator.Mappers
 
             if (Settings.MoveSharedMethodQueryParametersToInterface)
             {
-                var queryParameters = @interface.Methods
-                    .SelectMany(x => x.RestEaseMethod.Parameters.Where(p => p.ParameterLocation == ParameterLocation.Query))
-                    .Distinct().ToList();
+                var groupings = @interface.Methods
+                    .SelectMany(md => md.RestEaseMethod.Parameters.Where(p => p.ParameterLocation == ParameterLocation.Query))
+                    .GroupBy(x => x.IdentifierWithRestEase)
+                    .ToList();
 
-                // var sharedMethodQueryParameters = new List<RestEaseParameter>();
-                foreach (var query in queryParameters)
+                foreach (var grouping in groupings)
                 {
-                    if (@interface.Methods.Any(m => m.RestEaseMethod.Parameters.Contains(query)))
+                    foreach (var parameter in grouping)
                     {
-                        @interface.ConstantQueryParameters.Add(new RestEaseInterfaceQueryParameter { Name = query.IdentifierWithType, ValidIdentifierWithType = query.ValidIdentifier });
+                        if (@interface.Methods.All(m => m.RestEaseMethod.Parameters.Select(p => p.IdentifierWithRestEase).Contains(grouping.Key)))
+                        {
+                            if (!@interface.ConstantQueryParameters.Select(cqp => cqp.Name).Contains(parameter.Identifier.ToPascalCase()))
+                            {
+                                @interface.ConstantQueryParameters.Add(new RestEaseInterfaceQueryParameter
+                                {
+                                    Name = parameter.Identifier,
+                                    IdentifierWithType = parameter.IdentifierWithTypePascalCase
+                                });
+                            }
+
+                            // For all method: remove this shared query parameter
+                            foreach (var method in @interface.Methods)
+                            {
+                                method.RestEaseMethod.Parameters = method.RestEaseMethod.Parameters.Where(p => p.IdentifierWithRestEase != parameter.IdentifierWithRestEase).ToList();
+                            }
+                        }
                     }
                 }
-
             }
 
             return @interface;
@@ -164,6 +183,7 @@ namespace RestEaseClientGenerator.Mappers
                         ValidIdentifier = "contentType",
                         IdentifierWithRestEase = $"[Header(\"{HttpKnownHeaderNames.ContentType}\")] string contentType",
                         IdentifierWithType = "string contentType",
+                        IdentifierWithTypePascalCase = "string ContentType",
                         IsSpecial = false,
                         SchemaFormat = SchemaFormat.Undefined,
                         SchemaType = SchemaType.String
@@ -246,7 +266,6 @@ namespace RestEaseClientGenerator.Mappers
                 {
                     ReturnType = MapReturnType(returnType),
                     Name = methodRestEaseMethodName,
-                    // ParametersAsString = string.Join(", ", methodParameterList.Select(mp => mp.IdentifierWithRestEase)),
                     Parameters = methodParameterList
                 }
             };
@@ -258,6 +277,7 @@ namespace RestEaseClientGenerator.Mappers
                     new RestEaseParameter
                     {
                         ValidIdentifier = "api",
+                        IdentifierWithTypePascalCase = null,
                         IdentifierWithType = $"this {@interface.Name} api",
                         IdentifierWithRestEase = $"this {@interface.Name} api",
                         Summary = "The Api"
@@ -305,6 +325,7 @@ namespace RestEaseClientGenerator.Mappers
                     Required = true,
                     ValidIdentifier = "content",
                     IdentifierWithType = "HttpContent content",
+                    IdentifierWithTypePascalCase = "HttpContent Content",
                     IdentifierWithRestEase = "[Body] HttpContent content",
                     Summary = httpContentDescription,
                     IsSpecial = true
@@ -337,6 +358,7 @@ namespace RestEaseClientGenerator.Mappers
                     Required = true,
                     ValidIdentifier = "content",
                     IdentifierWithType = "HttpContent content",
+                    IdentifierWithTypePascalCase = "HttpContent Content",
                     IdentifierWithRestEase = "[Body] HttpContent content",
                     Summary = httpContentDescription,
                     IsSpecial = true
@@ -367,6 +389,7 @@ namespace RestEaseClientGenerator.Mappers
                     Required = true,
                     ValidIdentifier = "form",
                     IdentifierWithType = "IDictionary<string, object> form",
+                    IdentifierWithTypePascalCase = "IDictionary<string, object> Form",
                     IdentifierWithRestEase = "[Body(BodySerializationMethod.UrlEncoded)] IDictionary<string, object> form",
                     Summary = description,
                     IsSpecial = true
@@ -404,6 +427,7 @@ namespace RestEaseClientGenerator.Mappers
                         Required = true,
                         ValidIdentifier = bodyParameterIdentifierName,
                         IdentifierWithType = $"{bodyParameter} {bodyParameterIdentifierName}",
+                        IdentifierWithTypePascalCase = $"{bodyParameter} {bodyParameterIdentifierName.ToPascalCase()}",
                         IdentifierWithRestEase = $"[Body] {bodyParameter} {bodyParameterIdentifierName}",
                         Summary = detected.Value.Schema?.Description ?? bodyParameterDescription
                     });
@@ -584,6 +608,7 @@ namespace RestEaseClientGenerator.Mappers
                     SchemaType = schema.GetSchemaType(),
                     SchemaFormat = schema.GetSchemaFormat(),
                     IdentifierWithType = $"{identifierWithType}",
+                    IdentifierWithTypePascalCase = $"{MapSchema(schema, validIdentifier, !required, true, null)}",
                     IdentifierWithRestEase = $"[{restEaseParameterAnnotation}({string.Join(", ", attributes)})] {identifierWithType}{isNullPostfix}",
                     Summary = description
                 };
@@ -601,6 +626,7 @@ namespace RestEaseClientGenerator.Mappers
                 SchemaType = schema.GetSchemaType(),
                 SchemaFormat = schema.GetSchemaFormat(),
                 IdentifierWithType = $"{identifierWithType}",
+                IdentifierWithTypePascalCase = $"{MapSchema(schema, identifier, !required, true, null)}",
                 IdentifierWithRestEase = $"[{restEaseParameterAnnotation}{extraAttributesBetweenParentheses}] {identifierWithType}{isNullPostfix}",
                 Summary = description
             };
