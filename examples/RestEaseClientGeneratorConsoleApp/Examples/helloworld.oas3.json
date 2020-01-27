@@ -1,0 +1,41 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Hello world",
+    "version": "undefined"
+  },
+  "servers": [],
+  "paths": {
+    "/helloworld": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Hello world"
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/{\n  \"title\": \"Hello world Response\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"message\": {\n      \"type\": \"string\"\n    }\n  }\n}\n"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "GET_helloworld"
+      }
+    }
+  },
+  "components": {
+    "schemas": {},
+    "responses": {},
+    "parameters": {},
+    "examples": {},
+    "requestBodies": {},
+    "headers": {},
+    "securitySchemes": {},
+    "links": {},
+    "callbacks": {}
+  }
+}

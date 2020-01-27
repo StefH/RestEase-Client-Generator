@@ -140,10 +140,11 @@ namespace RestEaseClientGeneratorConsoleApp
                 File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/ComputerVision/{file.Path}/{file.Name}", file.Content);
             }
 
-            foreach (var file in generator.FromStream(File.OpenRead("Examples\\helloworld.raml"), "RestEaseClientGeneratorConsoleApp.Examples.HelloWorldRaml", "HelloWorldRaml", false, out var diagnosticFormRecognizer))
-            {
-                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/HelloWorldRaml/{file.Path}/{file.Name}", file.Content);
-            }
+            // https://medium.com/raml-api/oas-raml-converter-quick-start-3a20664fa94a
+            //foreach (var file in generator.FromStream(File.OpenRead("Examples\\helloworld.raml"), "RestEaseClientGeneratorConsoleApp.Examples.HelloWorldRaml", "HelloWorldRaml", false, out var diagnosticFormRecognizer))
+            //{
+            //    File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/HelloWorldRaml/{file.Path}/{file.Name}", file.Content);
+            //}
 
             await PetStoreTests.Run();
 
