@@ -1,0 +1,642 @@
+﻿#%RAML 0.8
+title: AccuWeather API
+version: v1
+baseUri: http://{apiDomain}.accuweather.com
+baseUriParameters: 
+  apiDomain: 
+    description: |
+      The sub-domain at which the API is accessible. Use apidev.accuweather.com for development purposes only and api.accuweather.com for production purposes only
+    enum: [ api , apidev ]
+securitySchemes:
+  - api_key: !include securitySchemes/api_key.raml
+schemas:
+  - alerts: !include schemas/alerts-schema.json
+  - alarms: !include schemas/alarms-schema.json
+  - images: !include schemas/images-schema.json
+  - postalcodes: !include schemas/postalcodes-schema.json
+  - adminAreas: !include schemas/adminAreas-schema.json
+  - adminArea: !include schemas/adminArea-schema.json
+  - cityListAutocomplete: !include schemas/cityListAutocomplete-schema.json
+  - city: !include schemas/city-schema.json
+  - cities: !include schemas/cities-schema.json
+  - regions: !include schemas/regions-schema.json
+  - locations: !include schemas/locations-schema.json
+  - countries: !include schemas/countries-schema.json
+  - country: !include schemas/country-schema.json
+  - poi: !include schemas/poi-schema.json
+  - forecast: !include schemas/forecast-schema.json
+  - dailyforecasts: !include schemas/dailyforecasts-schema.json
+  - translation_groups: !include schemas/translation_groups-schema.json
+  - translationGroup: !include schemas/translationGroup-schema.json
+  - climoRecords: !include schemas/climoRecords-schema.json
+  - currentCondition: !include schemas/currentCondition-schema.json
+  - indicesList: !include schemas/indicesList-schema.json
+  - indice: !include schemas/indice-schema.json
+  - indiceGroups: !include schemas/indiceGroups-schema.json
+  - indexListInGroup: !include schemas/indexListInGroup-schema.json
+  - indexInfo: !include schemas/indexInfo-schema.json
+  - indexGroups: !include schemas/indexGroups-schema.json
+  - dailyIndices: !include schemas/dailyIndices-schema.json
+  - topcities: !include schemas/topcities-schema.json
+  - cityNeighbors: !include schemas/cityNeighbors-schema.json
+  - currentConditionsTopCities: !include schemas/currentConditionsTopCities-schema.json
+  - allLanguages: !include schemas/allLanguages-schema.json
+  - phrase: !include schemas/phrase-schema.json
+  - UFDBPhrase: !include schemas/UFDBPhrase-schema.json
+  - searchTerms: !include schemas/searchTerms-schema.json
+  - listSpecificLanguages: !include schemas/listSpecificLanguages-schema.json
+  - listSpecificPhrases: !include schemas/listSpecificPhrases-schema.json
+resourceTypes:
+  - accessibleResource: !include resourceTypes/accessibleResource.raml
+traits:
+  - hasLanguage: !include traits/hasLanguage.raml
+  - hasAlias: !include traits/hasAlias.raml
+  - pageable: !include traits/pageable.raml
+  - canBeDetailed: !include traits/canBeDetailed.raml
+  - textQuery: !include traits/textQuery.raml
+securedBy: [ api_key ]
+/alerts/{version}/{locationKey}{mediaTypeExtension}: 
+  displayName: Alerts By LocationKey
+  type: accessibleResource
+  is: [ hasLanguage , canBeDetailed ]
+  uriParameters: 
+    locationKey: 
+      displayName: locationKey
+      description: Unique ID used to search for a specific location
+      required: true
+    version: 
+      displayName: version
+      description: Version of the API
+      required: true
+  get: 
+    description: Alerts by LocationKey
+    responses: 
+      200: 
+        body: 
+          application/xml: 
+          application/json: 
+            schema: alerts
+            example: !include examples/alerts-example.json
+/alarms/{version}/{period}/{locationKey}{mediaTypeExtension}: 
+  displayName: Weather Alarms By Location Key
+  type: accessibleResource
+  is: [ hasLanguage ]
+  uriParameters: 
+    period: 
+      displayName: period
+      required: true
+      enum: 
+        - 10day
+        - 25day
+        - 5day
+        - 15day
+        - 1day
+  get: 
+    description: "Period's Weather Alarms by Location Key "
+    responses: 
+      200: 
+        body: 
+          application/xml: 
+          application/json: 
+            schema: alarms
+            example: !include examples/alarms-example.json
+/imagery/{version}/maps/radsat/{resolution}{mediaTypeExtension}: 
+  displayName: Radar and Satellite Images by LocationKey
+  type: accessibleResource
+  is: [ hasLanguage ]
+  uriParameters: 
+    resolution: 
+      displayName: resolution
+      required: true
+      enum: 
+        - 480x480
+        - 1024x1024
+        - 640x480
+  get: 
+    description: Radar and Satellite Images by LocationKey
+    responses: 
+      200: 
+        body: 
+          application/xml: 
+          application/json: 
+            schema: images
+            example: !include examples/images-example.json
+/locations/{version}: 
+  /adminareas: 
+    /{countryCode}{mediaTypeExtension}: 
+      displayName: Administrative Areas List
+      type: accessibleResource
+      is: [ hasLanguage , pageable ]
+      get: 
+        description: Administrative Areas List
+        responses: 
+          200: 
+            body: 
+              application/xml: 
+              application/json: 
+                schema: adminAreas
+                example: !include examples/adminAreas-example.json
+    /{countryCode}/search{mediaTypeExtension}: 
+      displayName: Administrative Areas Search
+      type: accessibleResource
+      is: [ hasLanguage , textQuery ]
+      get: 
+        description: Administrative Areas Search
+        responses: 
+          200: 
+            body: 
+              application/xml: 
+              application/json: 
+                schema: adminArea
+                example: !include examples/adminArea-example.json
+  /{locationKey}{mediaTypeExtension}: 
+    displayName: Location Key Searching
+    type: accessibleResource
+    is: [ hasLanguage , canBeDetailed ]
+    get: 
+      description: Location Key Searching
+      responses: 
+        200: 
+          body: 
+            application/xml: 
+            application/json: 
+              schema: city
+              example: !include examples/city-example.json
+  /poi/{countryCode}/{adminCode}/search{mediaTypeExtension}: 
+    displayName: Points of Interest Searching
+    type: accessibleResource
+    get: 
+      is: [ hasLanguage , canBeDetailed , textQuery ]
+      description: Points of Interest Searching
+      queryParameters: 
+        type: 
+          description: poi type
+          example: type={poi type}
+      responses: 
+        200: 
+          body: 
+            application/xml: 
+            application/json: 
+              schema: poi
+              example: !include examples/poi-example.json
+  /cities: 
+    /geoposition/search{mediaTypeExtension}: 
+      displayName: GeoPosition (Latitude and Longitude) Searching
+      type: accessibleResource
+      is: [ hasLanguage , canBeDetailed , textQuery ]
+      get: 
+        description: GeoPosition (Latitude and Longitude) Searching
+        responses: 
+          200: 
+            body: 
+              application/xml: 
+              application/json: 
+                schema: city
+                example: !include examples/city-example.json
+    /ipaddress{mediaTypeExtension}: 
+      displayName: IP Address Searching
+      type: accessibleResource
+      is: [ hasLanguage , canBeDetailed , textQuery ]
+      get: 
+        description: IP Address Searching
+        responses: 
+          200: 
+            body: 
+              application/xml: 
+              application/json: 
+                schema: city
+                example: !include examples/city-example.json
+    /{countryCode}/{adminCode}/search{mediaTypeExtension}: 
+      displayName: City Searching
+      type: accessibleResource
+      is: [ hasLanguage , canBeDetailed , textQuery , pageable , hasAlias ]
+      get: 
+        description: City Searching
+        responses: 
+          200: 
+            body: 
+              application/xml: 
+              application/json: 
+                schema: cities
+                example: !include examples/cities-example.json
+    /autocomplete{mediaTypeExtension}: 
+      displayName: Autocomplete
+      type: accessibleResource
+      is: [ hasLanguage , textQuery ]
+      get: 
+        description: Autocomplete
+        responses: 
+          200: 
+            body: 
+              application/xml: 
+              application/json: 
+                schema: cityListAutocomplete
+                example: !include examples/cityListAutocomplete-example.json
+    /neighbors/{cityID}{mediaTypeExtension}: 
+      type: accessibleResource
+      is: [ hasLanguage , canBeDetailed ]
+      get: 
+        description: City Neighbors
+        responses: 
+          200: 
+            body: 
+              application/json: 
+                schema: cityNeighbors
+                example: !include examples/cityNeighbors-example.json
+  /postalcodes/{countryCode}/search{mediaTypeExtension}: 
+    displayName: Postal Code Searching
+    type: accessibleResource
+    is: [ hasLanguage , canBeDetailed , textQuery ]
+    get: 
+      description: Postal Code Searching
+      responses: 
+        200: 
+          body: 
+            application/xml: 
+            application/json: 
+              schema: postalcodes
+              example: !include examples/postalcodes-example.json
+  /countries: 
+    /search{mediaTypeExtension}: 
+      displayName: Countries Search
+      type: accessibleResource
+      is: [ hasLanguage ]
+      get: 
+        description: Countries Search
+        responses: 
+          200: 
+            body: 
+              application/xml: 
+              application/json: 
+                schema: country
+                example: !include examples/country-example.json
+    /{regionCode}{mediaTypeExtension}: 
+      displayName: Countries List
+      type: accessibleResource
+      is: [ hasLanguage ]
+      uriParameters: 
+        regionCode: 
+          displayName: regionCode
+          description: Below are the available regions and their corresponding region_code for use with the API.  While each country will only have one primary region listed, any country that spans more than one region will be returned for every region the country falls within.  For example, the country of Russia will be returned in both the Europe and Asia lists.
+          required: true
+          enum: 
+            - ASI
+            - EUR
+            - ARC
+            - MEA
+            - OCN
+            - AFR
+            - SAM
+            - CAC
+            - NAM
+            - ANT
+      get: 
+        description: Countries List
+        responses: 
+          200: 
+            body: 
+              application/xml: 
+              application/json: 
+                schema: countries
+                example: !include examples/countries-example.json
+  /{countryCode}/{adminCode}/search.{mediaTypeExtension}: 
+    displayName: City Searching
+    type: accessibleResource
+    get: 
+      is: [ hasLanguage , canBeDetailed , textQuery , pageable , hasAlias ]
+      description: Text Searching
+      responses: 
+        200: 
+          body: 
+            application/xml: 
+            application/json: 
+              schema: locations
+              example: !include examples/locations-example.json
+  /regions/{regionCode}{mediaTypeExtension}: 
+    displayName: Regions List
+    type: accessibleResource
+    is: [ hasLanguage ]
+    get: 
+      description: Regions List
+      responses: 
+        200: 
+          body: 
+            application/xml: 
+            application/json: 
+              schema: regions
+              example: !include examples/regions-example.json
+  /topcities{mediaTypeExtension}: 
+    type: accessibleResource
+    is: [ hasLanguage , canBeDetailed ]
+    get: 
+      description: Top City List
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: topcities
+              example: !include examples/topcities-example.json
+/forecasts/{version}: 
+  /hourly/{period}/{locationKey}{mediaTypeExtension}: 
+    displayName: Hourly forecasts by location key
+    type: accessibleResource
+    uriParameters: 
+      period: 
+        displayName: period
+        required: true
+        enum: 
+          - 12hour
+          - 1hour
+          - 72hour
+          - 240hour
+          - 120hour
+          - 24hour
+    get: 
+      is: [ hasLanguage , canBeDetailed ]
+      description: Hourly Forecasts by Location Key
+      queryParameters: 
+        metric: 
+          description: true or false
+          example: metric={true or false}
+      responses: 
+        200: 
+          body: 
+            application/xml: 
+            application/json: 
+              schema: forecast
+              example: !include examples/forecast-example.json
+  /daily/{period}/{locationKey}{mediaTypeExtension}: 
+    displayName: Daily forecasts by location key
+    type: accessibleResource
+    uriParameters: 
+      period: 
+        displayName: period
+        required: true
+        enum: 
+          - 10day
+          - 25day
+          - 5day
+          - 15day
+          - 1day
+    get: 
+      is: [ hasLanguage , canBeDetailed ]
+      description: Daily Forecasts by Location Key
+      queryParameters: 
+        metric: 
+          description: true or false
+          example: metric={true or false}
+      responses: 
+        200: 
+          body: 
+            application/xml: 
+            application/json: 
+              schema: dailyforecasts
+              example: !include examples/dailyforecasts-example.json
+/translations/{version}: 
+  /groups{mediaTypeExtension}: 
+    displayName: List of Available Translation Groups
+    type: accessibleResource
+    get: 
+      description: List of Available Translation Groups
+      responses: 
+        200: 
+          body: 
+            application/xml: 
+            application/json: 
+              schema: translation_groups
+              example: !include examples/translation_groups-example.json
+    /{groupID}{mediaTypeExtension}: 
+      displayName: List of Translations for a Specific Group
+      type: accessibleResource
+      is: [ hasLanguage ]
+      uriParameters: 
+        groupID: 
+          displayName: groupID
+          description: Id of the particular group that translations are provided for
+          required: true
+      get: 
+        description: List of Translations for a Specific Group
+        responses: 
+          200: 
+            body: 
+              application/xml: 
+              application/json: 
+                schema: translationGroup
+                example: !include examples/translationGroup-example.json
+  /languages/{mediaTypeExtension}: 
+    type: accessibleResource
+    get: 
+      description: List all Languages
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: allLanguages
+              example: !include examples/allLanguages-example.json
+  /phrase/{phraseCode}{mediaTypeExtension}: 
+    type: accessibleResource
+    is: [ hasLanguage ]
+    get: 
+      description: Translation of a Specific Phrase for a Specific Language
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: phrase
+              example: !include examples/phrase-example.json
+  /ufdbtranslation/{mediaTypeExtension}: 
+    type: accessibleResource
+    is: [ hasLanguage ]
+    get: 
+      description: Translation of UFDB Phrase for a Specific Language By Phrase Code
+      queryParameters: 
+        phrase: 
+          description: phraseToTranslate
+          example: phraseToTranslate=Variable cloudiness
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: UFDBPhrase
+              example: !include examples/UFDBPhrase-example.json
+  /find/{mediaTypeExtension}: 
+    type: accessibleResource
+    is: [ textQuery ]
+    get: 
+      description: List of Phrases matching a search term
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: searchTerms
+              example: !include examples/searchTerms-example.json
+  /byLanguage/{language}{mediaTypeExtension}: 
+    type: accessibleResource
+    get: 
+      description: List of Translations for a Specific Language
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: listSpecificLanguages
+              example: !include examples/listSpecificLanguages-example.json
+  /byPhrase/{phrase}{mediaTypeExtension}: 
+    type: accessibleResource
+    get: 
+      description: List of Translations for a Specific Phrase
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: listSpecificPhrases
+              example: !include examples/listSpecificPhrases-example.json
+/climo/{version}/{kind}/{year}/{month}/{dd}/{locationKey}{mediaTypeExtension}: 
+  displayName: Climo date  by location key
+  type: accessibleResource
+  uriParameters: 
+    dd: 
+      displayName: dd
+      description: Desired day of the climatology data
+    month: 
+      displayName: month
+      description: Desired month of the climatology data
+      required: true
+    year: 
+      displayName: year
+      description: Desired year of the climatology data
+      required: true
+    kind: 
+      displayName: kind
+      required: true
+      enum: 
+        - normals
+        - actuals
+        - records
+  get: 
+    description: Climo For Month or Day By Location Key
+    responses: 
+      200: 
+        body: 
+          application/xml: 
+          application/json: 
+            schema: climoRecords
+            example: !include examples/climoRecords-example.json
+/currentconditions/{version}: 
+  /{locationKey}{mediaTypeExtension}: 
+    displayName: Current Conditions By LocationKey
+    type: accessibleResource
+    is: [ hasLanguage , canBeDetailed ]
+    get: 
+      description: Current Conditions by LocationKey
+      responses: 
+        200: 
+          body: 
+            application/xml: 
+            application/json: 
+              schema: currentCondition
+              example: !include examples/currentCondition-example.json
+  /{locationKey}/historical{mediaTypeExtension}: 
+    displayName: Historical Current Conditions By LocationKey
+    type: accessibleResource
+    is: [ hasLanguage , canBeDetailed ]
+    get: 
+      description: Historical Current Conditions by LocationKey
+      responses: 
+        200: 
+          body: 
+            application/xml: 
+            application/json: 
+              schema: currentCondition
+              example: !include examples/currentCondition-example.json
+  /topcities/{group}{mediaTypeExtension}: 
+    type: accessibleResource
+    description: ""
+    get: 
+      description: Current Conditions for Top Cities
+      responses: 
+        200: 
+          body: 
+            application/json: 
+              schema: currentConditionsTopCities
+              example: !include examples/currentConditionsTopCities-example.json
+/indices/{version}: 
+  /daily{mediaTypeExtension}: 
+    displayName: Metadata List of Daily Indices
+    type: accessibleResource
+    is: [ hasLanguage ]
+    get: 
+      description: Metadata List of Daily Indices
+      responses: 
+        200: 
+          body: 
+            application/xml: 
+            application/json: 
+              schema: indicesList
+              example: !include examples/indicesList-example.json
+  /daily: 
+    /{period}/{locationKey}/{index_id_or_groups}/{group_id}{mediaTypeExtension}: 
+      displayName: Daily Indices By LocationKey for a period
+      type: accessibleResource
+      is: [ hasLanguage , canBeDetailed ]
+      uriParameters: 
+        group_id: 
+          displayName: group_id
+          description: Numeric id used to identify a group of related indices
+        period: 
+          displayName: period
+          required: true
+          enum: 
+            - 10day
+            - 5day
+            - 15day
+      get: 
+        description: Daily Indices By LocationKey for period
+        responses: 
+          200: 
+            body: 
+              application/xml: 
+              application/json: 
+                schema: dailyIndices
+                example: !include examples/dailyIndices-example.json
+    /groups{mediaTypeExtension}: 
+      displayName: Metadata List of a Index Groups
+      type: accessibleResource
+      is: [ hasLanguage ]
+      get: 
+        description: Metadata List of a Index Groups
+        responses: 
+          200: 
+            body: 
+              application/xml: 
+              application/json: 
+                schema: indexGroups
+                example: !include examples/indexGroups-example.json
+    /groups/{group_id}{mediaTypeExtension}: 
+      displayName: Metadata List of a Indices in a Specific Group
+      type: accessibleResource
+      is: [ hasLanguage ]
+      get: 
+        description: Metadata List of a Indices in a Specific Group
+        responses: 
+          200: 
+            body: 
+              application/xml: 
+              application/json: 
+                schema: indexListInGroup
+                example: !include examples/indexListInGroup-example.json
+    /{index_id}{mediaTypeExtension}: 
+      displayName: Metadata of a Specific Index
+      type: accessibleResource
+      is: [ hasLanguage ]
+      get: 
+        description: Metadata of a Specific Index
+        responses: 
+          200: 
+            body: 
+              application/xml: 
+              application/json: 
+                schema: indexInfo
+                example: !include examples/indexInfo-example.json
+documentation: 
+  - title: Headline
+    content: !include docs/headline.md
