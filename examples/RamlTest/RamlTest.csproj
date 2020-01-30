@@ -12,6 +12,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\RamlConverter\RamlConverter.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="MediaWiki.raml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net461;netstandard2.0</TargetFrameworks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\RestEaseClientGenerator\Extensions\EnumExtensions.cs" Link="Extensions\EnumExtensions.cs" />
+    <Compile Include="..\RestEaseClientGenerator\Types\SupportedContentType.cs" Link="Types\SupportedContentType.cs" />
+    <Compile Include="..\RestEaseClientGenerator\Utils\TypeHelper.cs" Link="Utils\TypeHelper.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.OpenApi.Readers" Version="1.1.4" />
+    <PackageReference Include="SharpYaml" Version="1.6.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Utils\" />
+    <Folder Include="Types\" />
+  </ItemGroup>
+
+</Project>
