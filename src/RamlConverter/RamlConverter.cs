@@ -2,19 +2,27 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Microsoft.OpenApi.Extensions;
 using Microsoft.OpenApi.Models;
-using RamlConverter.Extensions;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+using Raml.Parser.Expressions;
+using RamlToOpenApiConverter.Extensions;
+using RamlToOpenApiConverter.Models;
 using RestEaseClientGenerator.Extensions;
 using RestEaseClientGenerator.Types;
 using SharpYaml.Serialization;
-using EnumExtensions = RestEaseClientGenerator.Extensions.EnumExtensions;
 
-namespace RamlTest
+namespace RamlToOpenApiConverter
 {
-    public class Converter
+    public class RamlConverter
     {
-        public OpenApiDocument Map(Stream stream)
+        private readonly JsonSerializerSettings s = new JsonSerializerSettings
+        {
+            Formatting = Formatting.Indented,
+            ContractResolver = new CamelCasePropertyNamesContractResolver()
+        };
+
+        public OpenApiDocument ConvertToOpenApiDocument(Stream stream)
         {
             var serializer = new Serializer();
 
@@ -77,20 +85,23 @@ namespace RamlTest
         {
             var responses = new OpenApiResponses();
 
-            foreach (var key in values.Keys)
+            foreach (object key in values.Keys)
             {
-                var x = values[key] as IDictionary<object, object>;
                 switch (key)
                 {
                     case int intValue:
-                        var body = x != null && x.ContainsKey("body") ? x["body"] as IDictionary<object, object> : null;
-                        
-                        var response = new OpenApiResponse
+                        var x = values.GetAsDictionary(key);
+                        var body = x?.GetAsDictionary("body");
+                        if (body != null)
                         {
-                            //Description = values.Get("description"),
-                            Content = MapContent(body)
-                        };
-                        responses.Add(intValue.ToString(), response);
+                            var response = new OpenApiResponse
+                            {
+                                //Description = values.Get("description"),
+                                Content = MapContent(body)
+                            };
+                            responses.Add(intValue.ToString(), response);
+                        }
+                        
                         break;
                 }
             }
@@ -105,40 +116,57 @@ namespace RamlTest
                 return null;
             }
 
-            var c = new Dictionary<string, OpenApiMediaType>();
+            var content = new Dictionary<string, OpenApiMediaType>();
 
             foreach (SupportedContentType supportedContentType in Enum.GetValues(typeof(SupportedContentType)))
             {
                 string key = supportedContentType.GetDescription();
                 if (values.ContainsKey(key))
                 {
-                    var x = (IDictionary<object, object>) values[key];
-
-                    if (x.TryGetValue("type", out object o))
+                    var x = values.GetAsDictionary(key);
+                    string typeAsString = x?.Get("type");
+                    if (!string.IsNullOrEmpty(typeAsString))
                     {
-                        c.Add(key, MapMediaType(x));
+                        if (typeAsString.StartsWith("{"))
+                        {
+                            content.Add(key, MapMediaType(typeAsString));
+                        }
                     }
-                    
                 }
             }
 
-
-            return c;
+            return content;
         }
 
-        private OpenApiMediaType MapMediaType(IDictionary<object, object> m)
+        private OpenApiMediaType MapMediaType(string m)
         {
+            var objectType = JsonConvert.DeserializeObject<ObjectType>(m,s);
             return new OpenApiMediaType
             {
-                //Schema = MapSchema()
+                Schema = MapSchema(objectType)
             };
         }
 
-        private OpenApiSchema MapSchema(string x)
+        private OpenApiSchema MapSchema(ObjectType o)
         {
             return new OpenApiSchema
             {
-                
+                Properties = MapProperties(o.Properties)
+            };
+        }
+
+        private IDictionary<string, OpenApiSchema> MapProperties(IDictionary<string, RamlType> properties)
+        {
+            return properties.ToDictionary(property => property.Key, property => MapProperty(property.Value));
+        }
+
+        private OpenApiSchema MapProperty(RamlType property)
+        {
+            return new OpenApiSchema
+            {
+                Type = property.Type,
+                Nullable = !property.Required,
+                Description = property.Description
             };
         }
 

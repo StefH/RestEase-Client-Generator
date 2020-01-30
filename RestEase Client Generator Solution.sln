@@ -27,7 +27,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{3B9DA5C5-E
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RamlTest", "examples\RamlTest\RamlTest.csproj", "{0A6A0B14-58D3-433D-AFE8-D9E8F53D34E7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RamlConverter", "src\RamlConverter\RamlConverter.csproj", "{0AD814D2-832B-4D56-A734-BA059486E775}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RamlToOpenApiConverter", "src\RamlConverter\RamlToOpenApiConverter.csproj", "{0AD814D2-832B-4D56-A734-BA059486E775}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

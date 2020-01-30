@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\RamlConverter\RamlConverter.csproj" />
+    <ProjectReference Include="..\..\src\RamlConverter\RamlToOpenApiConverter.csproj" />
   </ItemGroup>
 
   <ItemGroup>

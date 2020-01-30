@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using RamlToOpenApiConverter;
 
 namespace RamlTest
 {
@@ -7,7 +8,7 @@ namespace RamlTest
     {
         static void Main(string[] args)
         {
-            var doc = new Converter().Map(File.OpenRead("helloworld.raml"));
+            var doc = new RamlConverter().ConvertToOpenApiDocument(File.OpenRead("MediaWiki.raml"));
 
             int y = 0;
         }

@@ -115,6 +115,33 @@ types:
                   pageid: number
                   ns: number
                   title: string
+
+/helloworld: # optional resource
+  get: # HTTP method declaration
+    responses: # declare a response
+      200: # HTTP status code
+        body: # declare content of response
+          application/json: # media type
+            type: | # structural definition of a response (schema or type)
+              {
+                "title": "Hello world Response",
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string"
+                  },
+                  "id": {
+                    "type": "number"
+                  }
+                }
+              }
+            example: | # example of how a response looks
+              {
+                "message": "Hello world"
+              }
+      404:
+        description: Returned if there is no re-indexing task found
+
 /:
   put: 
     is: [ hasWorkflowName ]

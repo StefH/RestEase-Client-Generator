@@ -1,6 +1,22 @@
 ﻿#%RAML 1.0
 title: Hello world # required title
 
+types:
+  NormalizedItem:
+    type: object
+    properties:
+      from: string
+      to: string
+  Pages:
+    type: object
+    properties:
+      [\d]:
+        type: object
+        properties:
+          ns?: number
+          title?: string
+          missing?: string
+
 /helloworld: # optional resource
   get: # HTTP method declaration
     responses: # declare a response
@@ -14,6 +30,9 @@ title: Hello world # required title
                 "properties": {
                   "message": {
                     "type": "string"
+                  },
+                  "id": {
+                    "type": "number"
                   }
                 }
               }
