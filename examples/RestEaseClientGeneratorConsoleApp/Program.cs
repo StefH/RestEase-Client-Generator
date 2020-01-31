@@ -11,18 +11,37 @@ namespace RestEaseClientGeneratorConsoleApp
 {
     class Program
     {
-        static async Task Main(string[] args)
+        static void Main(string[] args)
         {
-            var reader = new OpenApiStreamReader();
+            //var reader = new OpenApiStreamReader();
 
             var generator = new Generator();
 
 
             // https://medium.com/raml-api/oas-raml-converter-quick-start-3a20664fa94a
-            foreach (var file in generator.FromStream(File.OpenRead("Examples\\helloworld.raml"), "RestEaseClientGeneratorConsoleApp.Examples.HelloWorldRaml", "HelloWorldRaml", false, out var diagnosticFormRecognizer))
+            //var ramlSettings = new GeneratorSettings
+            //{
+            //    Namespace = "RestEaseClientGeneratorConsoleApp.Examples.HelloWorldRaml",
+            //    ApiName = "HelloWorldRaml"
+            //};
+            //foreach (var file in generator.FromFile("Examples\\helloworld.raml", ramlSettings, out var diagnosticHW))
+            //{
+            //    File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/HelloWorldRaml/{file.Path}/{file.Name}", file.Content);
+            //}
+
+            var mediaWikiSettings = new GeneratorSettings
             {
-                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/HelloWorldRaml/{file.Path}/{file.Name}", file.Content);
+                Namespace = "RestEaseClientGeneratorConsoleApp.Examples.MediaWikiRaml",
+                ApiName = "MediaWikiRaml"
+            };
+            foreach (var file in generator.FromFile("Examples\\MediaWiki.Raml", mediaWikiSettings, out var diagnosticMM))
+            {
+                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/MediaWikiRaml/{file.Path}/{file.Name}", file.Content);
             }
+
+            return;
+
+            /*
 
             //var drcSettings = new GeneratorSettings
             //{
@@ -150,7 +169,7 @@ namespace RestEaseClientGeneratorConsoleApp
 
             await PetStoreTests.Run();
 
-            await PetStoreOpenApi3ApiTests.Run();
+            await PetStoreOpenApi3ApiTests.Run();*/
         }
     }
 }

@@ -143,6 +143,15 @@ types:
         description: Returned if there is no re-indexing task found
 
 /:
+  put: 
+    is: [ hasWorkflowName ]
+    description: Update the scheme to include the passed mapping. The body is a representation of the workflow mapping. Values not passed are assumed to indicate no change for that field. The passed representation can have its updateDraftIfNeeded flag set to true to indicate that the draft should be created/updated when the actual scheme cannot be edited.
+    body: 
+        application/json: 
+        schema: workflowMappingsReq
+    responses: 
+        401: 
+        description: Returned if there is no user or if the user has not entered a websudo session.
   get:
     description: Title normalization | Missing and invalid titles | Resolving redirects | Exporting pages | Getting a list of page IDs
     queryParameters:

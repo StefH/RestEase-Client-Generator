@@ -7,34 +7,115 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Raml.Parser.Expressions;
 using RamlToOpenApiConverter.Extensions;
-using RamlToOpenApiConverter.Models;
-using RestEaseClientGenerator.Extensions;
-using RestEaseClientGenerator.Types;
 using SharpYaml.Serialization;
 
 namespace RamlToOpenApiConverter
 {
     public class RamlConverter
     {
-        private readonly JsonSerializerSettings s = new JsonSerializerSettings
+        private readonly JsonSerializerSettings _jsonSerializerSettings = new JsonSerializerSettings
         {
             Formatting = Formatting.Indented,
             ContractResolver = new CamelCasePropertyNamesContractResolver()
         };
+
+        private OpenApiDocument _doc;
 
         public OpenApiDocument ConvertToOpenApiDocument(Stream stream)
         {
             var serializer = new Serializer();
 
             var o = serializer.Deserialize<IDictionary<object, object>>(stream);
+            var types = o.GetAsDictionary("types");
 
-            var doc = new OpenApiDocument
+            _doc = new OpenApiDocument
             {
-                Info = MapInfo(o),
-                Paths = MapPaths(o)
+                Components = MapComponents(types),
+                Info = MapInfo(o)
             };
 
-            return doc;
+            _doc.Paths = MapPaths(o);
+
+            return _doc;
+        }
+
+        private OpenApiComponents MapComponents(IDictionary<object, object> types)
+        {
+            var components = new OpenApiComponents
+            {
+                Schemas = new Dictionary<string, OpenApiSchema>()
+            };
+
+            if (types != null)
+            {
+                foreach (var key in types.Keys.OfType<string>())
+                {
+                    var values = types.GetAsDictionary(key);
+                    bool isObject = values?.Get("type") == "object";
+
+                    if (isObject)
+                    {
+                        components.Schemas.Add(key, MapSchema(values.GetAsDictionary("properties")));
+                    }
+                }
+            }
+
+            return components;
+        }
+
+        private OpenApiSchema MapSchema(IDictionary<object, object> properties)
+        {
+            return new OpenApiSchema
+            {
+                Properties = MapProperties(properties)
+            };
+        }
+
+        private IDictionary<string, OpenApiSchema> MapProperties(IDictionary<object, object> properties)
+        {
+            var dictionary = new Dictionary<string, OpenApiSchema>();
+            foreach (var key in properties.Keys.OfType<string>())
+            {
+                OpenApiSchema schema;
+
+                switch (properties[key])
+                {
+                    case string simple:
+                        schema = new OpenApiSchema
+                        {
+                            Type = simple
+                        };
+                        break;
+
+                    case IDictionary<object, object> complex:
+                        bool isObject = complex.Get("type") == "object";
+                        if (isObject)
+                        {
+                            schema = MapSchema(complex.GetAsDictionary("properties"));
+                        }
+                        else
+                        {
+                            // TODO ?
+                            schema = new OpenApiSchema
+                            {
+                                Reference = new OpenApiReference
+                                {
+                                    Type = ReferenceType.Schema,
+                                    ExternalResource = "definitions",
+                                    Id = key
+                                }
+                            };
+                        }
+                        break;
+
+                    default:
+                        throw new NotSupportedException();
+                }
+
+                dictionary.Add(key, schema);
+            }
+
+            return dictionary;
         }
 
         private OpenApiPaths MapPaths(IDictionary<object, object> o)
@@ -101,7 +182,7 @@ namespace RamlToOpenApiConverter
                             };
                             responses.Add(intValue.ToString(), response);
                         }
-                        
+
                         break;
                 }
             }
@@ -118,9 +199,8 @@ namespace RamlToOpenApiConverter
 
             var content = new Dictionary<string, OpenApiMediaType>();
 
-            foreach (SupportedContentType supportedContentType in Enum.GetValues(typeof(SupportedContentType)))
+            foreach (string key in new[] { "application/json", "application/xml" })
             {
-                string key = supportedContentType.GetDescription();
                 if (values.ContainsKey(key))
                 {
                     var x = values.GetAsDictionary(key);
@@ -129,7 +209,16 @@ namespace RamlToOpenApiConverter
                     {
                         if (typeAsString.StartsWith("{"))
                         {
-                            content.Add(key, MapMediaType(typeAsString));
+                            content.Add(key, MapMediaTypeFromJson(typeAsString));
+                        }
+                        else
+                        {
+                            var objects = typeAsString
+                                .Split(new[] { '|' }, StringSplitOptions.RemoveEmptyEntries)
+                                .Select(o => o.Trim());
+
+                            // TODO
+                            int a = 0;
                         }
                     }
                 }
@@ -138,9 +227,9 @@ namespace RamlToOpenApiConverter
             return content;
         }
 
-        private OpenApiMediaType MapMediaType(string m)
+        private OpenApiMediaType MapMediaTypeFromJson(string json)
         {
-            var objectType = JsonConvert.DeserializeObject<ObjectType>(m,s);
+            var objectType = JsonConvert.DeserializeObject<ObjectType>(json, _jsonSerializerSettings);
             return new OpenApiMediaType
             {
                 Schema = MapSchema(objectType)

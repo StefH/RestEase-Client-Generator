@@ -12,7 +12,7 @@ namespace RamlToOpenApiConverter.Extensions
 
         public static T Get<T>(this IDictionary<object, object> d, object key)
         {
-            return d.ContainsKey(key) ? (T) Convert.ChangeType(d[key], typeof(T)): default;
+            return d.ContainsKey(key) ? (T)Convert.ChangeType(d[key], typeof(T)) : default(T);
         }
 
         public static IDictionary<object, object> GetAsDictionary(this IDictionary<object, object> d, object key)

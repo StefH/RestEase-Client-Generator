@@ -1,7 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Microsoft.OpenApi;
+using Microsoft.OpenApi.Models;
 using Microsoft.OpenApi.Readers;
+using RamlToOpenApiConverter;
 using RestEaseClientGenerator.Builders;
 using RestEaseClientGenerator.Mappers;
 using RestEaseClientGenerator.Models;
@@ -12,22 +16,27 @@ namespace RestEaseClientGenerator
 {
     public class Generator : IGenerator
     {
-        public ICollection<GeneratedFile> FromStream(Stream stream, string clientNamespace, string apiName, bool singleFile, out OpenApiDiagnostic diagnostic)
+        public ICollection<GeneratedFile> FromFile(string path, GeneratorSettings settings, out OpenApiDiagnostic diagnostic)
         {
-            return FromStream(stream, new GeneratorSettings
+            OpenApiDocument document;
+            if (Path.GetExtension(path).EndsWith("raml",StringComparison.OrdinalIgnoreCase))
             {
-                Namespace = clientNamespace,
-                ApiName = apiName
-            }, out diagnostic);
+                diagnostic = new OpenApiDiagnostic();
+                document = new RamlConverter().ConvertToOpenApiDocument(File.OpenRead(path));
+            }
+            else
+            {
+                var reader = new OpenApiStreamReader();
+                document = reader.Read(File.OpenRead(path), out diagnostic);
+            }
+
+            return FromDocument(document, settings, diagnostic.SpecificationVersion);
         }
 
-        public ICollection<GeneratedFile> FromStream(Stream stream, GeneratorSettings settings, out OpenApiDiagnostic diagnostic)
+        public ICollection<GeneratedFile> FromDocument(OpenApiDocument document, GeneratorSettings settings, OpenApiSpecVersion openApiSpecVersion = OpenApiSpecVersion.OpenApi2_0)
         {
-            var reader = new OpenApiStreamReader();
-            var openApiDocument = reader.Read(stream, out diagnostic);
-
-            var models = new ModelsMapper(settings, diagnostic.SpecificationVersion).Map(openApiDocument.Components.Schemas).ToList();
-            var @interface = new InterfaceMapper(settings).Map(openApiDocument);
+            var models = new ModelsMapper(settings, openApiSpecVersion).Map(document.Components.Schemas).ToList();
+            var @interface = new InterfaceMapper(settings).Map(document);
 
             var files = new List<GeneratedFile>();
 

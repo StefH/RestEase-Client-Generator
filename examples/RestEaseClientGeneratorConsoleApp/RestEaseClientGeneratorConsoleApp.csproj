@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,6 +13,10 @@
     <Folder Include="Examples\Drc\Models\" />
     <Folder Include="Examples\FormRecognizerV2\Api\" />
     <Folder Include="Examples\FormRecognizerV2\Models\" />
+    <Folder Include="Examples\HelloWorldRaml\Api\" />
+    <Folder Include="Examples\HelloWorldRaml\Models\" />
+    <Folder Include="Examples\MediaWikiRaml\Api\" />
+    <Folder Include="Examples\MediaWikiRaml\Models\" />
     <Folder Include="Examples\SharedQuery\Api\" />
     <Folder Include="Examples\SharedQuery\Models\" />
     <Folder Include="Examples\SpeechServices\Api\" />
@@ -56,6 +60,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Examples\infura.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\MediaWiki.raml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Examples\SharedQueryParamsWithExtensionMethod.json">

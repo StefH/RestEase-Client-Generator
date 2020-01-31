@@ -5,9 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="..\RestEaseClientGenerator\Extensions\EnumExtensions.cs" Link="Extensions\EnumExtensions.cs" />
-    <Compile Include="..\RestEaseClientGenerator\Types\SupportedContentType.cs" Link="Types\SupportedContentType.cs" />
-    <Compile Include="..\RestEaseClientGenerator\Utils\TypeHelper.cs" Link="Utils\TypeHelper.cs" />
+    <Compile Remove="Types\**" />
+    <Compile Remove="Utils\**" />
+    <EmbeddedResource Remove="Types\**" />
+    <EmbeddedResource Remove="Utils\**" />
+    <None Remove="Types\**" />
+    <None Remove="Utils\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -15,11 +18,6 @@
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="Raml.Parser.Model" Version="1.0.7" />
     <PackageReference Include="SharpYaml" Version="1.6.5" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Utils\" />
-    <Folder Include="Types\" />
   </ItemGroup>
 
 </Project>
