@@ -15,20 +15,20 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MediaWiki.Api
     public interface IMediaWikiApi
     {
         /// <summary>
-        /// GETHelloworld (/helloworld)
+        /// GetHelloworld (/helloworld)
         /// </summary>
         [Get("/helloworld")]
-        Task GETHelloworldAsync();
+        Task GetHelloworldAsync();
 
         /// <summary>
-        /// PUTRoot (/)
+        /// Put (/)
         /// </summary>
         [Put("/")]
         [Header("Content-Type", "application/json")]
-        Task PUTRootAsync();
+        Task PutAsync();
 
         /// <summary>
-        /// GETRoot (/)
+        /// Get (/)
         /// </summary>
         /// <param name="action"></param>
         /// <param name="titles"></param>
@@ -38,6 +38,6 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MediaWiki.Api
         /// <param name="export"></param>
         /// <param name="indexpageids"></param>
         [Get("/")]
-        Task GETRootAsync([Query] string action, [Query] string titles, [Query] string format, [Query] string redirects, [Query] string generator, [Query] string export, [Query] string indexpageids);
+        Task<GetOneOfResult> GetAsync([Query] string action, [Query] string titles, [Query] string format, [Query] string redirects, [Query] string generator, [Query] string export, [Query] string indexpageids);
     }
 }

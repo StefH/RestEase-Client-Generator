@@ -209,69 +209,7 @@ namespace RestEaseClientGenerator.Mappers
             object returnType = null;
             if (response.Value != null && TryGetOpenApiMediaType(response.Value.Content, SupportedContentType.ApplicationJson, out OpenApiMediaType responseJson, out var _))
             {
-                var schema = responseJson.Schema;
-                switch (schema?.GetSchemaType())
-                {
-                    case SchemaType.Array:
-                        string arrayType = schema.Items.Reference != null ?
-                            MakeValidModelName(schema.Items.Reference.Id) :
-                            MapSchema(schema.Items, null, false, true, null).ToString();
-
-                        returnType = MapArrayType(arrayType);
-                        break;
-
-                    case SchemaType.Object:
-                        if (schema.Reference != null)
-                        {
-                            // Existing defined object
-                            returnType = MakeValidModelName(schema.Reference.Id);
-                        }
-                        else if (schema.AdditionalProperties != null)
-                        {
-                            // Use AdditionalProperties
-                            returnType = MapSchema(schema.AdditionalProperties, null, schema.AdditionalProperties.Nullable, false, null);
-                        }
-                        else
-                        {
-                            // Object is defined `inline`, create a new Model and use that one.
-                            string className = !string.IsNullOrEmpty(schema.Title)
-                                ? CSharpUtils.CreateValidIdentifier(schema.Title, CasingType.Pascal)
-                                : $"{methodRestEaseMethodName.ToPascalCase()}Result";
-
-                            var existingModel = @interface.InlineModels.FirstOrDefault(m => m.ClassName == className);
-                            if (existingModel == null)
-                            {
-                                var newModel = new RestEaseModel
-                                {
-                                    Namespace = Settings.Namespace,
-                                    ClassName = className,
-                                    Properties = MapSchema(schema, null, false, true, null) as ICollection<string>
-                                };
-                                @interface.InlineModels.Add(newModel);
-                            }
-
-                            returnType = className;
-                        }
-                        break;
-
-                    default:
-                        if (schema != null)
-                        {
-                            if (schema.OneOf.Any() || schema.AllOf.Any() || schema.AnyOf.Any())
-                            {
-                                foreach (var one in schema.OneOf)
-                                {
-                                    var x = MapSchema(one, null, false, true, null);
-                                    int xxxx = 0;
-                                }
-                            }
-                        }
-                        else if (Settings.ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified)
-                        {
-                            returnType = "object";
-                        }
-                        break;
-                }
+                returnType = GetReturnType(@interface, responseJson.Schema, methodRestEaseMethodName);
             }
 
             var method = new RestEaseInterfaceMethodDetails
@@ -330,6 +268,96 @@ namespace RestEaseClientGenerator.Mappers
             }
 
             return method;
+        }
+
+        private string GetReturnType(RestEaseInterface @interface, OpenApiSchema schema, string methodRestEaseMethodName)
+        {
+            if (schema == null)
+            {
+                return null;
+            }
+
+            switch (schema.GetSchemaType())
+            {
+                case SchemaType.Array:
+                    string arrayType = schema.Items.Reference != null
+                        ? MakeValidModelName(schema.Items.Reference.Id)
+                        : MapSchema(schema.Items, null, false, true, null).ToString();
+
+                    return MapArrayType(arrayType);
+
+                case SchemaType.Object:
+                    if (schema.Reference != null)
+                    {
+                        // Existing defined object
+                        return MakeValidModelName(schema.Reference.Id);
+                    }
+                    else if (schema.AdditionalProperties != null)
+                    {
+                        // Use AdditionalProperties
+                        return MapSchema(schema.AdditionalProperties, null, schema.AdditionalProperties.Nullable, false, null) as string;
+                    }
+                    else
+                    {
+                        // Object is defined `inline`, create a new Model and use that one.
+                        string className = !string.IsNullOrEmpty(schema.Title)
+                            ? CSharpUtils.CreateValidIdentifier(schema.Title, CasingType.Pascal)
+                            : $"{methodRestEaseMethodName.ToPascalCase()}Result";
+
+                        var existingModel = @interface.InlineModels.FirstOrDefault(m => m.ClassName == className);
+                        if (existingModel == null)
+                        {
+                            var newModel = new RestEaseModel
+                            {
+                                Namespace = Settings.Namespace,
+                                ClassName = className,
+                                Properties = MapSchema(schema, null, false, true, null) as ICollection<string>
+                            };
+                            @interface.InlineModels.Add(newModel);
+                        }
+
+                        return className;
+                    }
+
+                default:
+                    if (schema.OneOf.Any() || schema.AnyOf.Any())
+                    {
+                        if (Settings.GenerateAndUseModelForAnyOfOrOneOf)
+                        {
+                            var dummyOpenApiSchema = new OpenApiSchema
+                            {
+                                Type = "object",
+                                Properties = new Dictionary<string, OpenApiSchema>()
+                            };
+
+                            
+                            foreach (var one in schema.OneOf)
+                            {
+                                var type = GetReturnType(@interface, one, null);
+                                dummyOpenApiSchema.Properties.Add(type, one);
+                            }
+
+                            foreach (var one in schema.AnyOf)
+                            {
+                                var type = GetReturnType(@interface, one, null);
+                                dummyOpenApiSchema.Properties.Add(type, one);
+                            }
+
+                            string methodPostFix = schema.OneOf.Any() ? "OneOf" : "AnyOf";
+                            return GetReturnType(@interface, dummyOpenApiSchema, $"{methodRestEaseMethodName}{methodPostFix}");
+                        }
+
+                        return "object";
+                    }
+                    else if (Settings.ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified)
+                    {
+                        return "object";
+                    }
+                    else
+                    {
+                        return null;
+                    }
+            }
         }
 
         private RequestDetails MapRequestDetails(MediaTypeInfo detected, ICollection<RestEaseParameter> bodyParameterList, List<RestEaseParameter> extensionMethodParameterList, string bodyParameterDescription)

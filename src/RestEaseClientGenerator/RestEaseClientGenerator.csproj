@@ -6,8 +6,6 @@
 
   <ItemGroup>
     <Compile Remove="Json\DescriptionEnumConverter`1.cs" />
-    <Compile Remove="Types\ArrayTypeAsClass.cs" />
-    <Compile Remove="Types\ArrayType_org.cs" />
   </ItemGroup>
 
   <ItemGroup>

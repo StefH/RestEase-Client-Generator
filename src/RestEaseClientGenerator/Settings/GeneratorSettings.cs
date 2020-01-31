@@ -60,6 +60,8 @@ namespace RestEaseClientGenerator.Settings
         public bool DefineAllMethodHeadersOnInterface { get; set; } = false;
 
         public bool DefineSharedMethodQueryParametersOnInterface { get; set; } = true;
+
+        public bool GenerateAndUseModelForAnyOfOrOneOf { get; set; } = true;
         #endregion
     }
 }
