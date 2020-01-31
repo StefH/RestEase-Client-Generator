@@ -31,10 +31,22 @@ namespace RestEaseClientGeneratorConsoleApp
 
             var mediaWikiSettings = new GeneratorSettings
             {
+                Namespace = "RestEaseClientGeneratorConsoleApp.Examples.MediaWiki",
+                ApiName = "MediaWiki"
+            };
+            foreach (var file in generator.FromFile("Examples\\MediaWiki.json", mediaWikiSettings, out var diagnosticMM))
+            {
+                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/MediaWiki/{file.Path}/{file.Name}", file.Content);
+            }
+
+            return;
+
+            var mediaWikiRamlSettings = new GeneratorSettings
+            {
                 Namespace = "RestEaseClientGeneratorConsoleApp.Examples.MediaWikiRaml",
                 ApiName = "MediaWikiRaml"
             };
-            foreach (var file in generator.FromFile("Examples\\MediaWiki.Raml", mediaWikiSettings, out var diagnosticMM))
+            foreach (var file in generator.FromFile("Examples\\MediaWiki.Raml", mediaWikiRamlSettings, out var diagnosticMMR))
             {
                 File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/MediaWikiRaml/{file.Path}/{file.Name}", file.Content);
             }

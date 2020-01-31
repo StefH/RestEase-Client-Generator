@@ -1,0 +1,444 @@
+﻿{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "MediaWiki",
+    "version": "v1",
+    "description": "The MediaWiki action API is a web service that provides convenient access to wiki features, data, and meta-data over HTTP, via a URL usually at api.php"
+  },
+  "servers": [
+    {
+      "url": "https://en.wikipedia.org/w/api.php"
+    }
+  ],
+  "paths": {
+    "/helloworld": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Hello world"
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/{\n  \"title\": \"Hello world Response\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"message\": {\n      \"type\": \"string\"\n    },\n    \"id\": {\n      \"type\": \"number\"\n    }\n  }\n}\n"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Returned if there is no re-indexing task found"
+          }
+        },
+        "operationId": "GET_helloworld"
+      }
+    },
+    "/": {
+      "put": {
+        "responses": {
+          "401": {
+            "description": ""
+          },
+          "description": {
+            "description": ""
+          }
+        },
+        "description": "Update the scheme to include the passed mapping. The body is a representation of the workflow mapping. Values not passed are assumed to indicate no change for that field. The passed representation can have its updateDraftIfNeeded flag set to true to indicate that the draft should be created/updated when the actual scheme cannot be edited.",
+        "operationId": "PUT_root",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/workflowMappingsReq"
+              }
+            }
+          },
+          "required": true
+        }
+      },
+      "get": {
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/Normalization"
+                    },
+                    {
+                      "$ref": "#/components/schemas/QueryResult"
+                    },
+                    {
+                      "$ref": "#/components/schemas/RedirectsQuery"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ExportQuery"
+                    },
+                    {
+                      "$ref": "#/components/schemas/PagesLists"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "description": "Title normalization | Missing and invalid titles | Resolving redirects | Exporting pages | Getting a list of page IDs",
+        "operationId": "GET_root",
+        "parameters": [
+          {
+            "name": "action",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "enum": [
+                "query"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "titles",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "enum": [
+                "A|B|C"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "format",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "enum": [
+                "jsonfm"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "redirects",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "generator",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "enum": [
+                "templates"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "export",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "indexpageids",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "NormalizedItem": {
+        "type": "object",
+        "properties": {
+          "from": {
+            "type": "string"
+          },
+          "to": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "from",
+          "to"
+        ]
+      },
+      "Pages": {
+        "type": "object",
+        "properties": {
+          "[\\d]": {
+            "type": "object",
+            "properties": {
+              "ns": {
+                "type": "number"
+              },
+              "title": {
+                "type": "string"
+              },
+              "missing": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "required": [
+          "[\\d]"
+        ]
+      },
+      "Normalization": {
+        "example": {
+          "query": {
+            "normalized": [
+              {
+                "from": "Project:articleA",
+                "to": "Wikipedia:ArticleA"
+              }
+            ],
+            "pages": {
+              "1": {
+                "ns": 4,
+                "title": "Wikipedia:ArticleA",
+                "missing": ""
+              }
+            }
+          }
+        },
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "object",
+            "properties": {
+              "normalized": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/NormalizedItem"
+                }
+              },
+              "pages": {
+                "$ref": "#/components/schemas/Pages"
+              }
+            },
+            "required": [
+              "normalized",
+              "pages"
+            ]
+          }
+        },
+        "required": [
+          "query"
+        ]
+      },
+      "QueryResult": {
+        "example": {
+          "query": {
+            "pages": {
+              "1": {
+                "ns": 4,
+                "title": "Wikipedia:ArticleA",
+                "missing": ""
+              }
+            }
+          }
+        },
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "object",
+            "properties": {
+              "pages": {
+                "$ref": "#/components/schemas/Pages"
+              }
+            },
+            "required": [
+              "pages"
+            ]
+          }
+        },
+        "required": [
+          "query"
+        ]
+      },
+      "Destination": {
+        "type": "object",
+        "properties": {
+          "from": {
+            "type": "string"
+          },
+          "to": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "from",
+          "to"
+        ]
+      },
+      "RedirectsQuery": {
+        "example": {
+          "query": {
+            "redirects": {
+              "from": "Main page",
+              "to": "Main Page"
+            },
+            "pages": {
+              "1": {
+                "ns": 4,
+                "title": "Wikipedia:ArticleA",
+                "missing": ""
+              }
+            }
+          }
+        },
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "object",
+            "properties": {
+              "redirects": {
+                "$ref": "#/components/schemas/Destination"
+              },
+              "pages": {
+                "$ref": "#/components/schemas/Pages"
+              }
+            },
+            "required": [
+              "redirects",
+              "pages"
+            ]
+          }
+        },
+        "required": [
+          "query"
+        ]
+      },
+      "Page": {
+        "example": {
+          "ns": "10",
+          "title": "Template:API Intro",
+          "pageid": "16385"
+        },
+        "type": "object",
+        "properties": {
+          "ns": {
+            "type": "number"
+          },
+          "title": {
+            "type": "string"
+          },
+          "pageid": {
+            "type": "string"
+          }
+        }
+      },
+      "ExportQuery": {
+        "example": {
+          "query": {
+            "pages": {
+              "ns": "10",
+              "title": "Template:API Intro",
+              "pageid": "16385"
+            },
+            "export": null
+          }
+        },
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "object",
+            "properties": {
+              "pages": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Page"
+                }
+              },
+              "export": {
+                "type": "object"
+              }
+            },
+            "required": [
+              "pages",
+              "export"
+            ]
+          }
+        },
+        "required": [
+          "query"
+        ]
+      },
+      "PagesLists": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "object",
+            "properties": {
+              "pageids": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "pages": {
+                "type": "object",
+                "properties": {
+                  "[\\w]": {
+                    "type": "object",
+                    "properties": {
+                      "pageid": {
+                        "type": "number"
+                      },
+                      "ns": {
+                        "type": "number"
+                      },
+                      "title": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "pageid",
+                      "ns",
+                      "title"
+                    ]
+                  }
+                },
+                "required": [
+                  "[\\w]"
+                ]
+              }
+            },
+            "required": [
+              "pageids",
+              "pages"
+            ]
+          }
+        },
+        "required": [
+          "query"
+        ]
+      }
+    },
+    "responses": {},
+    "parameters": {},
+    "examples": {},
+    "requestBodies": {},
+    "headers": {},
+    "securitySchemes": {},
+    "links": {},
+    "callbacks": {}
+  }
+}

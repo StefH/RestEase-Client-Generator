@@ -99,7 +99,7 @@ namespace RestEaseClientGenerator.VSIX.CustomTool
                 settings.Namespace = wszDefaultNamespace;
                 settings.ApiName = apiName;
 
-                var result = _generator.FromStream(File.OpenRead(wszInputFilePath), settings, out var diagnostic);
+                var result = _generator.FromFile(wszInputFilePath, settings, out var diagnostic);
 
                 if (options.FailOnOpenApiErrors && diagnostic.Errors.Any())
                 {

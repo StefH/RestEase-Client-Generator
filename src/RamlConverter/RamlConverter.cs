@@ -30,8 +30,8 @@ namespace RamlToOpenApiConverter
 
             _doc = new OpenApiDocument
             {
-                Components = MapComponents(types),
-                Info = MapInfo(o)
+                Info = MapInfo(o),
+                Components = MapComponents(types)
             };
 
             _doc.Paths = MapPaths(o);
@@ -153,8 +153,6 @@ namespace RamlToOpenApiConverter
 
         private OpenApiOperation MapOperation(IDictionary<object, object> values)
         {
-            //r.Match("200:").Groups["statuscode"].Value
-
             return new OpenApiOperation
             {
                 Description = values.Get("description"),
@@ -177,7 +175,6 @@ namespace RamlToOpenApiConverter
                         {
                             var response = new OpenApiResponse
                             {
-                                //Description = values.Get("description"),
                                 Content = MapContent(body)
                             };
                             responses.Add(intValue.ToString(), response);

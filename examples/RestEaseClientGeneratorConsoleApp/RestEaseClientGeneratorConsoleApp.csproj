@@ -17,6 +17,8 @@
     <Folder Include="Examples\HelloWorldRaml\Models\" />
     <Folder Include="Examples\MediaWikiRaml\Api\" />
     <Folder Include="Examples\MediaWikiRaml\Models\" />
+    <Folder Include="Examples\MediaWiki\Api\" />
+    <Folder Include="Examples\MediaWiki\Models\" />
     <Folder Include="Examples\SharedQuery\Api\" />
     <Folder Include="Examples\SharedQuery\Models\" />
     <Folder Include="Examples\SpeechServices\Api\" />
@@ -60,6 +62,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Examples\infura.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\MediaWiki.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Examples\MediaWiki.raml">

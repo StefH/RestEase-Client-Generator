@@ -254,7 +254,18 @@ namespace RestEaseClientGenerator.Mappers
                         break;
 
                     default:
-                        if (Settings.ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified)
+                        if (responseJson.Schema != null)
+                        {
+                            if (responseJson.Schema.OneOf.Any() || responseJson.Schema.AllOf.Any() || responseJson.Schema.AnyOf.Any())
+                            {
+                                foreach (var one in responseJson.Schema.OneOf)
+                                {
+                                    var x = MapSchema(one, null, false, true, null);
+                                    int xxxx = 0;
+                                }
+                            }
+                        }
+                        else if (Settings.ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified)
                         {
                             returnType = "object";
                         }

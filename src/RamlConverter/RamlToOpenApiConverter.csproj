@@ -20,4 +20,8 @@
     <PackageReference Include="SharpYaml" Version="1.6.5" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
+
 </Project>
