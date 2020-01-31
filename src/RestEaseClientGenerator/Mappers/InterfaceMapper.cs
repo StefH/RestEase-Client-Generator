@@ -209,32 +209,33 @@ namespace RestEaseClientGenerator.Mappers
             object returnType = null;
             if (response.Value != null && TryGetOpenApiMediaType(response.Value.Content, SupportedContentType.ApplicationJson, out OpenApiMediaType responseJson, out var _))
             {
-                switch (responseJson.Schema?.GetSchemaType())
+                var schema = responseJson.Schema;
+                switch (schema?.GetSchemaType())
                 {
                     case SchemaType.Array:
-                        string arrayType = responseJson.Schema.Items.Reference != null ?
-                            MakeValidModelName(responseJson.Schema.Items.Reference.Id) :
-                            MapSchema(responseJson.Schema.Items, null, false, true, null).ToString();
+                        string arrayType = schema.Items.Reference != null ?
+                            MakeValidModelName(schema.Items.Reference.Id) :
+                            MapSchema(schema.Items, null, false, true, null).ToString();
 
                         returnType = MapArrayType(arrayType);
                         break;
 
                     case SchemaType.Object:
-                        if (responseJson.Schema.Reference != null)
+                        if (schema.Reference != null)
                         {
                             // Existing defined object
-                            returnType = MakeValidModelName(responseJson.Schema.Reference.Id);
+                            returnType = MakeValidModelName(schema.Reference.Id);
                         }
-                        else if (responseJson.Schema.AdditionalProperties != null)
+                        else if (schema.AdditionalProperties != null)
                         {
                             // Use AdditionalProperties
-                            returnType = MapSchema(responseJson.Schema.AdditionalProperties, null, responseJson.Schema.AdditionalProperties.Nullable, false, null);
+                            returnType = MapSchema(schema.AdditionalProperties, null, schema.AdditionalProperties.Nullable, false, null);
                         }
                         else
                         {
                             // Object is defined `inline`, create a new Model and use that one.
-                            string className = !string.IsNullOrEmpty(responseJson.Schema.Title)
-                                ? CSharpUtils.CreateValidIdentifier(responseJson.Schema.Title, CasingType.Pascal)
+                            string className = !string.IsNullOrEmpty(schema.Title)
+                                ? CSharpUtils.CreateValidIdentifier(schema.Title, CasingType.Pascal)
                                 : $"{methodRestEaseMethodName.ToPascalCase()}Result";
 
                             var existingModel = @interface.InlineModels.FirstOrDefault(m => m.ClassName == className);
@@ -244,7 +245,7 @@ namespace RestEaseClientGenerator.Mappers
                                 {
                                     Namespace = Settings.Namespace,
                                     ClassName = className,
-                                    Properties = MapSchema(responseJson.Schema, null, false, true, null) as ICollection<string>
+                                    Properties = MapSchema(schema, null, false, true, null) as ICollection<string>
                                 };
                                 @interface.InlineModels.Add(newModel);
                             }
@@ -254,11 +255,11 @@ namespace RestEaseClientGenerator.Mappers
                         break;
 
                     default:
-                        if (responseJson.Schema != null)
+                        if (schema != null)
                         {
-                            if (responseJson.Schema.OneOf.Any() || responseJson.Schema.AllOf.Any() || responseJson.Schema.AnyOf.Any())
+                            if (schema.OneOf.Any() || schema.AllOf.Any() || schema.AnyOf.Any())
                             {
-                                foreach (var one in responseJson.Schema.OneOf)
+                                foreach (var one in schema.OneOf)
                                 {
                                     var x = MapSchema(one, null, false, true, null);
                                     int xxxx = 0;
