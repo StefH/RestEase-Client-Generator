@@ -18,12 +18,6 @@ namespace RamlToOpenApiConverter.Extensions
             }
 
             return ChangeTypeEx<T>(d[key]);
-            //if (Nullable.GetUnderlyingType(typeof(T)) != null)
-            //{
-
-            //}
-
-            //return d.ContainsKey(key) ? (T)Convert.ChangeType(d[key], typeof(T)) : default(T);
         }
 
         public static IDictionary<object, object> GetAsDictionary(this IDictionary<object, object> d, object key)
@@ -36,7 +30,7 @@ namespace RamlToOpenApiConverter.Extensions
             return null;
         }
 
-        public static T ChangeTypeEx<T>(object obj)
+        private static T ChangeTypeEx<T>(object obj)
         {
             Type type = typeof(T);
 

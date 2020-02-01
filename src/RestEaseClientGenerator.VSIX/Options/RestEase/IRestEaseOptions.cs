@@ -53,5 +53,7 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         bool DefineSharedMethodQueryParametersOnInterface { get; set; }
 
         GenerationType GenerationType { get; set; }
+
+        bool GenerateAndUseModelForAnyOfOrOneOf { get; set; }
     }
 }

@@ -32,7 +32,8 @@ namespace RestEaseClientGeneratorConsoleApp
             var wpSettings = new GeneratorSettings
             {
                 Namespace = "RestEaseClientGeneratorConsoleApp.Examples.wpraml",
-                ApiName = "wpraml"
+                ApiName = "wpraml",
+                DefineSharedMethodQueryParametersOnInterface = true
             };
             foreach (var file in generator.FromFile("Examples\\wp.raml", wpSettings, out var diagnosticWPR))
             {

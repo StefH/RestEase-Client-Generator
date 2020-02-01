@@ -127,6 +127,11 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         [DisplayName("Define shared query parameters on interface")]
         [Description("Define all shared method query parameters on the interface. The default value is 'True'.")]
         public bool DefineSharedMethodQueryParametersOnInterface { get; set; } = true;
+
+        [Category(Interface)]
+        [DisplayName("Generate and use model for 'AnyOf' and 'OneOf'")]
+        [Description("Generate and use model for 'AnyOf' and 'OneOf' return types. The default value is 'True'.")]
+        public bool GenerateAndUseModelForAnyOfOrOneOf { get; set; } = true;
         #endregion
 
         #region Models

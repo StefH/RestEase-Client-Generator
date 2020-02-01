@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>net461;netstandard2.0</TargetFrameworks>
@@ -16,12 +16,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.OpenApi.Readers" Version="1.1.4" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-    <!--<PackageReference Include="Raml.Parser.Model" Version="1.0.7" />-->
     <PackageReference Include="SharpYaml" Version="1.6.5" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Models\" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">
