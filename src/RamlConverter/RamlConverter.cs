@@ -157,8 +157,36 @@ namespace RamlToOpenApiConverter
             return new OpenApiOperation
             {
                 Description = values.Get("description"),
-                Responses = MapResponses(values["responses"] as IDictionary<object, object>)
+                Responses = MapResponses(values.GetAsDictionary("responses")),
+                Parameters = MapParameters(values),
             };
+        }
+
+        private IList<OpenApiParameter> MapParameters(IDictionary<object, object> values)
+        {
+            var parameters = new List<OpenApiParameter>();
+            var queryParameters = values.GetAsDictionary("queryParameters");
+            if (queryParameters != null)
+            {
+                foreach (string key in queryParameters.Keys.OfType<string>())
+                {
+                    var parameterDetails = queryParameters.GetAsDictionary(key);
+
+                    // TODO only string?
+                    parameters.Add(new OpenApiParameter
+                    {
+                        In = ParameterLocation.Query,
+                        Name = key,
+                        Required = parameterDetails?.Get<bool>("required") ?? false,
+                        Schema = new OpenApiSchema
+                        {
+                            Type = "string"
+                        }
+                    });
+                }
+            }
+
+            return parameters;
         }
 
         private OpenApiResponses MapResponses(IDictionary<object, object> values)

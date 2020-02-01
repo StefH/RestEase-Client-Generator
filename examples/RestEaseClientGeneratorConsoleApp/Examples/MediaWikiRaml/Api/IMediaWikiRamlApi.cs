@@ -29,7 +29,14 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MediaWikiRaml.Api
         /// <summary>
         /// Get (/)
         /// </summary>
+        /// <param name="action"></param>
+        /// <param name="titles"></param>
+        /// <param name="format"></param>
+        /// <param name="redirects"></param>
+        /// <param name="generator"></param>
+        /// <param name="export"></param>
+        /// <param name="indexpageids"></param>
         [Get("/")]
-        Task<GetAnyOfResult> GetAsync();
+        Task<GetAnyOfResult> GetAsync([Query] string action, [Query] string titles, [Query] string format = null, [Query] string redirects = null, [Query] string generator = null, [Query] string export = null, [Query] string indexpageids = null);
     }
 }
