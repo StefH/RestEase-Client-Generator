@@ -57,7 +57,6 @@ namespace RamlToOpenApiConverter
 
             return (new OpenApiPathItem
             {
-                Description = values.Get("description"),
                 Parameters = MapParameters(values),
                 Operations = operations
             }, parent);
@@ -119,19 +118,24 @@ namespace RamlToOpenApiConverter
 
             foreach (int key in values.Keys.OfType<int>())
             {
-                var responses = values.GetAsDictionary(key);
-                var body = responses?.GetAsDictionary("body");
+                var response = values.GetAsDictionary(key);
+                var body = response?.GetAsDictionary("body");
+                string description = response?.Get("description");
                 if (body != null)
                 {
-                    var response = new OpenApiResponse
+                    var openApiResponse = new OpenApiResponse
                     {
+                        Description = description,
                         Content = MapContent(body)
                     };
-                    openApiResponses.Add(key.ToString(), response);
+                    openApiResponses.Add(key.ToString(), openApiResponse);
                 }
                 else
                 {
-                    openApiResponses.Add(key.ToString(), new OpenApiResponse());
+                    openApiResponses.Add(key.ToString(), new OpenApiResponse
+                    {
+                        Description = description
+                    });
                 }
             }
 

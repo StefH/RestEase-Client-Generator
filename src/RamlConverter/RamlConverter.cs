@@ -33,7 +33,7 @@ namespace RamlToOpenApiConverter
             _doc.Paths = MapPaths(resultDictionary);
 
             // Check if valid
-            _doc.Serialize(OpenApiSpecVersion.OpenApi3_0, OpenApiFormat.Json);
+            var text = _doc.Serialize(OpenApiSpecVersion.OpenApi3_0, OpenApiFormat.Json);
 
             return _doc;
         }
