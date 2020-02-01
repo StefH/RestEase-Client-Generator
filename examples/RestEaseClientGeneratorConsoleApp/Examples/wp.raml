@@ -1,8 +1,8 @@
 #%RAML 1.0
-title: LoyalisWerknemersPortaal API
+title: test API
 version: v1.00
 protocols: [ HTTPS ]
-baseUri: https://mijnportaal.loyalis.nl/api
+baseUri: https://wp.nl/api
 mediaType: application/json
 
 types:
@@ -14,7 +14,7 @@ types:
     maxLength: 255
 
   Aanmaakdatum:
-    description: Datum van de registratie van het document in Placet (Let op deze is UTC)
+    description: ???
     type: datetime
 
   Achternaam:
@@ -29,11 +29,11 @@ types:
     pattern: "[Bb]earer .+\\..+\\..+"
 
   BevatAlleenSemiCollectiefBetalingWerkgever:
-    description: Klant bevat alleen werkgevers die semi-collectief betaling werkgevers als regelement hebben.
+    description: ???
     type: boolean
 
   Beschrijvingreglementtype:
-    description: De officiele bescrijving van de reglement type dat vanuit de server komt.
+    description: ???
     type: string
 
   Brutojaarsalaris:
@@ -45,7 +45,7 @@ types:
     required: false
 
   Datumpoststuk:
-    description: Kenmerk "DatumPoststuk" wat verplicht is binnen Loyalis (Let op deze is UTC)
+    description: ???
     type: datetime
 
   Dekking:
@@ -79,7 +79,7 @@ types:
     maxLength: 240
 
   HeeftMachtiging:
-    description: De klant heeft een machtiging. Verschillende gegevens zoals werkgevers en persoon worden aangeleverd door GPS.
+    description: ???
     type: boolean
 
   Huisnummer:
@@ -159,7 +159,7 @@ types:
     maxLength: 7
 
   Productstatus:
-    description: De status van een product (20, 35, 36 of 40)
+    description: ???
     type: integer
 
   Reglementtype:

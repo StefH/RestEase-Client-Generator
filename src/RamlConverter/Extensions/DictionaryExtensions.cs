@@ -12,7 +12,18 @@ namespace RamlToOpenApiConverter.Extensions
 
         public static T Get<T>(this IDictionary<object, object> d, object key)
         {
-            return d.ContainsKey(key) ? (T)Convert.ChangeType(d[key], typeof(T)) : default(T);
+            if (!d.ContainsKey(key))
+            {
+                return default(T);
+            }
+
+            return ChangeTypeEx<T>(d[key]);
+            //if (Nullable.GetUnderlyingType(typeof(T)) != null)
+            //{
+
+            //}
+
+            //return d.ContainsKey(key) ? (T)Convert.ChangeType(d[key], typeof(T)) : default(T);
         }
 
         public static IDictionary<object, object> GetAsDictionary(this IDictionary<object, object> d, object key)
@@ -23,6 +34,23 @@ namespace RamlToOpenApiConverter.Extensions
             }
 
             return null;
+        }
+
+        public static T ChangeTypeEx<T>(object obj)
+        {
+            Type type = typeof(T);
+
+            if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
+            {
+                // get the T in ?T
+                var typeArgument = type.GetGenericArguments()[0];
+                obj = Convert.ChangeType(obj, typeArgument);
+                // get the Nullable<T>(T) constructor
+                var ctor = type.GetConstructor(new[] { typeArgument });
+                return (T)ctor.Invoke(new[] { obj });
+            }
+
+            return (T)Convert.ChangeType(obj, type);
         }
     }
 }

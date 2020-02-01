@@ -12,7 +12,7 @@ using SharpYaml.Serialization;
 
 namespace RamlToOpenApiConverter
 {
-    public class RamlConverter
+    public partial class RamlConverter
     {
         private readonly JsonSerializerSettings _jsonSerializerSettings = new JsonSerializerSettings
         {
@@ -21,103 +21,25 @@ namespace RamlToOpenApiConverter
         };
 
         private OpenApiDocument _doc;
+        private IDictionary<object, object> _types;
 
         public OpenApiDocument ConvertToOpenApiDocument(Stream stream)
         {
             var serializer = new Serializer();
 
-            var o = serializer.Deserialize<IDictionary<object, object>>(stream);
-            var types = o.GetAsDictionary("types");
+            var resultDictionary = serializer.Deserialize<IDictionary<object, object>>(stream);
+
+            _types = resultDictionary.GetAsDictionary("types");
 
             _doc = new OpenApiDocument
             {
-                Info = MapInfo(o),
-                Components = MapComponents(types)
+                Info = MapInfo(resultDictionary),
+                Components = MapComponents(_types)
             };
 
-            _doc.Paths = MapPaths(o);
+            _doc.Paths = MapPaths(resultDictionary);
 
             return _doc;
-        }
-
-        private OpenApiComponents MapComponents(IDictionary<object, object> types)
-        {
-            var components = new OpenApiComponents
-            {
-                Schemas = new Dictionary<string, OpenApiSchema>()
-            };
-
-            if (types != null)
-            {
-                foreach (var key in types.Keys.OfType<string>())
-                {
-                    var values = types.GetAsDictionary(key);
-                    bool isObject = values?.Get("type") == "object";
-
-                    if (isObject)
-                    {
-                        components.Schemas.Add(key, MapSchema(values.GetAsDictionary("properties")));
-                    }
-                }
-            }
-
-            return components;
-        }
-
-        private OpenApiSchema MapSchema(IDictionary<object, object> properties)
-        {
-            return new OpenApiSchema
-            {
-                Type = "object",
-                Properties = MapProperties(properties)
-            };
-        }
-
-        private IDictionary<string, OpenApiSchema> MapProperties(IDictionary<object, object> properties)
-        {
-            var dictionary = new Dictionary<string, OpenApiSchema>();
-            foreach (var key in properties.Keys.OfType<string>())
-            {
-                OpenApiSchema schema;
-
-                switch (properties[key])
-                {
-                    case string simple:
-                        schema = new OpenApiSchema
-                        {
-                            Type = simple
-                        };
-                        break;
-
-                    case IDictionary<object, object> complex:
-                        bool isObject = complex.Get("type") == "object";
-                        if (isObject)
-                        {
-                            schema = MapSchema(complex.GetAsDictionary("properties"));
-                        }
-                        else
-                        {
-                            // TODO ?
-                            schema = new OpenApiSchema
-                            {
-                                Reference = new OpenApiReference
-                                {
-                                    Type = ReferenceType.Schema,
-                                    ExternalResource = "definitions",
-                                    Id = key
-                                }
-                            };
-                        }
-                        break;
-
-                    default:
-                        throw new NotSupportedException();
-                }
-
-                dictionary.Add(key, schema);
-            }
-
-            return dictionary;
         }
 
         private OpenApiPaths MapPaths(IDictionary<object, object> o)
