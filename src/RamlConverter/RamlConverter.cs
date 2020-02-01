@@ -179,6 +179,10 @@ namespace RamlToOpenApiConverter
                             };
                             responses.Add(intValue.ToString(), response);
                         }
+                        else
+                        {
+                            responses.Add(intValue.ToString(), new OpenApiResponse());
+                        }
 
                         break;
                 }
@@ -204,24 +208,48 @@ namespace RamlToOpenApiConverter
                     string typeAsString = x?.Get("type");
                     if (!string.IsNullOrEmpty(typeAsString))
                     {
+                        OpenApiSchema openApiSchema;
                         if (typeAsString.StartsWith("{"))
                         {
-                            content.Add(key, MapMediaTypeFromJson(typeAsString));
+                            var objectType = JsonConvert.DeserializeObject<ObjectType>(typeAsString, _jsonSerializerSettings);
+                            openApiSchema = MapSchema(objectType);
                         }
                         else
                         {
-                            var objects = typeAsString
+                            var referenceSchemas = typeAsString
                                 .Split(new[] { '|' }, StringSplitOptions.RemoveEmptyEntries)
-                                .Select(o => o.Trim());
+                                .Select(o => CreateOpenApiReferenceSchema(o.Trim()))
+                                .ToList();
 
-                            // TODO
-                            int a = 0;
+                            if (referenceSchemas.Count == 1)
+                            {
+                                openApiSchema = referenceSchemas.Single();
+                            }
+                            else
+                            {
+                                openApiSchema = new OpenApiSchema
+                                {
+                                    AnyOf = referenceSchemas
+                                };
+                            }
                         }
+
+                        var openApiMediaType = new OpenApiMediaType { Schema = openApiSchema };
+                        content.Add(key, openApiMediaType);
                     }
                 }
             }
 
             return content;
+        }
+
+        private OpenApiSchema CreateOpenApiReferenceSchema(string referenceId)
+        {
+            return new OpenApiSchema
+            {
+                Type = "object",
+                Reference = new OpenApiReference { Id = referenceId }
+            };
         }
 
         private OpenApiMediaType MapMediaTypeFromJson(string json)

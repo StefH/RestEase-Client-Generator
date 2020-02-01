@@ -330,7 +330,6 @@ namespace RestEaseClientGenerator.Mappers
                                 Properties = new Dictionary<string, OpenApiSchema>()
                             };
 
-                            
                             foreach (var one in schema.OneOf)
                             {
                                 var type = GetReturnType(@interface, one, null);
