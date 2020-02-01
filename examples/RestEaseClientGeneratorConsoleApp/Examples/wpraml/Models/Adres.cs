@@ -5,11 +5,11 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.wpraml.Models
 {
     public class Adres
     {
-        public double Huisnummer { get; set; }
+        public double? Huisnummer { get; set; }
 
         public string Huisnummertoevoeging { get; set; }
 
-        public int Landcode { get; set; }
+        public int? Landcode { get; set; }
 
         public string Postcode { get; set; }
 

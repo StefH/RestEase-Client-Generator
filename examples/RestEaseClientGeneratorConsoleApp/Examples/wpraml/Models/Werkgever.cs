@@ -9,9 +9,9 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.wpraml.Models
 
         public string Beschrijvingreglementtype { get; set; }
 
-        public float Brutojaarsalaris { get; set; }
+        public float? Brutojaarsalaris { get; set; }
 
-        public float Parttimepercentage { get; set; }
+        public float? Parttimepercentage { get; set; }
 
         public string Plaats { get; set; }
 
