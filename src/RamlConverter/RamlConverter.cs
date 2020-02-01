@@ -67,6 +67,7 @@ namespace RamlToOpenApiConverter
         {
             return new OpenApiSchema
             {
+                Type = "object",
                 Properties = MapProperties(properties)
             };
         }
