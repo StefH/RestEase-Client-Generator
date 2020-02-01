@@ -1,0 +1,987 @@
+#%RAML 1.0
+title: LoyalisWerknemersPortaal API
+version: v1.00
+protocols: [ HTTPS ]
+baseUri: https://mijnportaal.loyalis.nl/api
+mediaType: application/json
+
+types:
+  # Simple types
+  Aanhef:
+    description: Aanhef
+    type: string
+    minLength: 1
+    maxLength: 255
+
+  Aanmaakdatum:
+    description: Datum van de registratie van het document in Placet (Let op deze is UTC)
+    type: datetime
+
+  Achternaam:
+    description: Achternaam
+    type: string
+    minLength: 1
+    maxLength: 100
+
+  Authorizationheader:
+    description: Authorizationheader
+    type: string
+    pattern: "[Bb]earer .+\\..+\\..+"
+
+  BevatAlleenSemiCollectiefBetalingWerkgever:
+    description: Klant bevat alleen werkgevers die semi-collectief betaling werkgevers als regelement hebben.
+    type: boolean
+
+  Beschrijvingreglementtype:
+    description: De officiele bescrijving van de reglement type dat vanuit de server komt.
+    type: string
+
+  Brutojaarsalaris:
+    description: Brutojaarsalaris
+    type: number
+    minimum: 1200.00
+    maximum: 9000000.00
+    format: float
+    required: false
+
+  Datumpoststuk:
+    description: Kenmerk "DatumPoststuk" wat verplicht is binnen Loyalis (Let op deze is UTC)
+    type: datetime
+
+  Dekking:
+    type: string
+    description: De soorten dekking
+    enum: [ "Gedeeltelijk", "Volledig", "Compleet", "Bodem" ]
+
+  Dienstverleningsdocument:
+    type: string
+    description: de soorten dienstverleningsdocumenten
+    enum: [ "Politie", "Individueel", "ViaWerkgever" ]
+
+  Documenttype:
+    description: Documenttype
+    type: string
+
+  Emailadres:
+    description: Emailadres
+    type: string
+    minLength: 0
+    maxLength: 50
+
+  Geboortedatum:
+    description: Geboortedatum (Let op deze is UTC)
+    type: datetime
+
+  Gebruikersnaam:
+    description: Gebruikersnaam
+    type: string
+    minLength: 1
+    maxLength: 240
+
+  HeeftMachtiging:
+    description: De klant heeft een machtiging. Verschillende gegevens zoals werkgevers en persoon worden aangeleverd door GPS.
+    type: boolean
+
+  Huisnummer:
+    description: Huisnummer
+    type: number
+    format: int64
+    minimum: 1
+    maximum: 9999999999
+
+  Huisnummertoevoeging:
+    description: Huisnummertoevoeging
+    type: string
+    minLength: 0
+    maxLength: 4
+    example: "-12a"
+
+  IBAN:
+    description: IBAN
+    type: string
+    minLength: 0
+    maxLength: 34
+    pattern: "^$|^[a-zA-Z]{2}[0-9]{2}[a-zA-Z0-9]{4}[0-9]{7}([a-zA-Z0-9]?){0,16}$"
+    example: "NL20INGB0001234567"
+
+  Jaar:
+    description: Jaar
+    type: integer
+
+  Klantnummer:
+    description: Loyalis klantnummer
+    type: integer
+    minimum: 1
+    maximum: 999999999
+
+  Landcode:
+    description: De naam van het land waarin het vestigings- cq het correpondentieadres gelegen is. (Volgens RIVG, Tabel 34)
+    type: integer
+    minimum: 0
+    maximum: 9999
+
+  Maand:
+    description: Maand
+    type: integer
+    minimum: 1
+    maximum: 12
+
+  Naam:
+    description: Documentnaam binnen Placet
+    type: string
+
+  Parttimepercentage:
+    description: ParttimePercentage
+    type: number
+    minimum: 1
+    maximum: 150
+    format: float
+    required: false
+
+  Placetdocumentnummer:
+    description: uniek document id binnen Placet
+    type: integer
+
+  Polisnummer:
+    description: Het polisnummer
+    type: integer
+
+  Polisvoorwaardentype:
+    type: string
+    description: De types polisvoorwaarden
+    enum: [ "Algemeen", "Bouw", "Zorg", "PPFAPG", "Militairen", "OverheidOnderwijsEnergieEnNutsbedrijven" ]
+
+  Postcode:
+    description: Nederlandse postcode
+    pattern: "^[1-9][0-9]{3}[ ]?(?!SA|SD|SS)[A-Z]{2}$"
+    type: string
+    minLength: 0
+    maxLength: 7
+
+  Productstatus:
+    description: De status van een product (20, 35, 36 of 40)
+    type: integer
+
+  Reglementtype:
+    type: string
+    description: De types reglementen
+    enum: [ "Zuiver Collectief", "Semi-Collectief", "Individueel" ]
+
+  Straat:
+    description: Straat
+    type: string
+    minLength: 0
+    maxLength: 100
+
+  Straatbuitenland:
+    description: Straatbuitenland
+    type: string
+    minLength: 0
+    maxLength: 100
+
+  Telefoonnummer:
+    description: Telefoonnummer (vast of mobiel)
+    pattern: "^((\\+[1-9]\\d{7,11})|\\d{10,14})?$"
+    type: string
+    maxLength: 14
+
+  Voornaam:
+    description: Voornaam
+    type: string
+    minLength: 1
+    maxLength: 100
+
+  Wachtwoord:
+    description: Wachtwoord
+    type: string
+    minLength: 1
+    maxLength: 50
+
+  Werkgevernaam:
+    description: Werkgevernaam
+    type: string
+    minLength: 1
+    maxLength: 100
+
+  Werkgeverplaats:
+    description: Werkgeverplaats
+    type: string
+    minLength: 1
+    maxLength: 100
+
+  Woonplaats:
+    description: Woonplaats
+    type: string
+    minLength: 0
+    maxLength: 100
+
+  Woonplaatsbuitenland:
+    description: Woonplaatsbuitenland
+    type: string
+    minLength: 0
+    maxLength: 100
+
+  # Complex types
+  Adres:
+    description: Adres van een Loyalis klant
+    type: object
+    properties:
+      huisnummer:
+        type: Huisnummer
+        required: false
+      huisnummertoevoeging:
+        type: Huisnummertoevoeging
+        required: false
+      landcode:
+        type: Landcode
+        required: true
+      postcode:
+        type: Postcode
+        required: false
+      straat:
+        type: Straat
+        required: false
+      straatbuitenland:
+        type: Straatbuitenland
+        required: false
+      woonplaats:
+        type: Woonplaats
+        required: false
+      woonplaatsbuitenland:
+        type: Woonplaatsbuitenland
+        required: false
+
+  AdresGegevens:
+    description: AdresGegevens (woon en post) van een Loyalis klant
+    type: object
+    properties:
+      klantnummer:
+        type: Klantnummer
+        required: false
+      woonadres:
+        type: Adres
+        required: true
+      postadres:
+        type: Adres
+        required: false
+
+  BankGegevens:
+    description: BankGegevens van een Loyalis klant
+    type: object
+    properties:
+      klantnummer:
+        type: Klantnummer
+        required: true
+      excassoIBAN:
+        type: IBAN
+        required: false
+      incassoIBAN:
+        type: IBAN
+        required: false
+
+    example:
+      klantnummer: 123456789
+      excassoIBAN: "BE68539007547034"
+      incassoIBAN: "NL63BLGW0017307465"
+
+  Document:
+    description: Document van een klant in Placet
+    type: object
+    properties:
+      aanmaakdatum:
+        type: Aanmaakdatum
+        required: true
+      datumpoststuk:
+        type: Datumpoststuk
+        required: true
+      documenttype:
+        type: Documenttype
+        required: true
+      jaar:
+        type: Jaar
+        required: true
+      maand:
+        type: Maand
+        required: true
+      naam:
+        type: Naam
+        required: false
+      placetdocumentnummer:
+        type: Placetdocumentnummer
+        required: true
+    example:
+      aanmaakdatum: "2017-11-30T11:53:45Z"
+      datumpoststuk: "2017-01-14T00:00:00Z"
+      documenttype: "UIT42"
+      jaar: 2017
+      maand: 1
+      naam: "Testdocument"
+      placetdocumentnummer: 132456798
+
+  InlogGegevens:
+      description: Inloggegevens van een Loyalis klant
+      type: object
+      properties:
+        gebruikersnaam:
+          type: Gebruikersnaam
+          required: true
+        wachtwoord:
+          type: Wachtwoord
+          required: true
+
+  LoginTokenResponse:
+      description: JWT Token used for authorisation
+      type: object
+      properties:
+        token_type:
+          type: string
+          required: true
+        access_token:
+          type: string
+          required: true
+
+      example:
+          token_type: "bearer"
+          access_token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJrbGFudG51bW1lciI6MTU5MDk2NiwiZ2VicnVpa2Vyc25hYW0iOiJMYXVyYSIsImFjY291bnRzdGF0dXMiOiJBY3RpZWYiLCJleHBpcmUiOjIzMzYzMzYzNjZ9.iwoyaECWrB-JHcFZKPn-VyRUH06fimbWFbL2rAVvQnw"
+
+  MuterenBankGegevens:
+    description: Mutatie van een bank account (incasso of excasso) van een Loyalis klant
+    type: object
+    properties:
+      iban:
+        type: IBAN
+        required: true
+    example:
+      iban: "NL09KNAB0721521924"
+
+  MuterenPersoonsGegevens:
+    description: PersoonsGegevens mutatie van een Loyalis klant
+    type: object
+    properties:
+      emailadres:
+        type: Emailadres
+        required: true
+      mobielnummer:
+        type: Telefoonnummer
+        required: false
+      telefoonnummer:
+        type: Telefoonnummer
+        required: false
+    example:
+      emailadres: "gewijzigde.email@loyalis.nl"
+      mobielnummer: "0612345678"
+      telefoonnummer: "0455799222"
+
+  PersoonsGegevens:
+    description: PersoonsGegevens van een Loyalis klant
+    type: object
+    properties:
+      aanhef:
+        type: Aanhef
+        required: true
+      achternaam:
+        type: Achternaam
+        required: true
+      emailadres:
+        type: Emailadres
+        required: false
+      geboortedatum:
+        type: Geboortedatum
+        required: true
+      heeftMachtiging:
+        type: HeeftMachtiging
+        required: true
+      klantnummer:
+        required: true
+        type: Klantnummer
+      mobielnummer:
+        type: Telefoonnummer
+        required: false
+      telefoonnummer:
+        type: Telefoonnummer
+        required: false
+      voornaam:
+        type: Voornaam
+        required: true
+
+    example:
+      klantnummer: 123456789
+      aanhef: "mevrouw van de Test"
+      voornaam: "Gebruiker"
+      achternaam: "van de Test"
+      geboortedatum: "1967-01-14T00:00:00Z"
+      telefoonnummer: "0455799222"
+      mobielnummer: "0612345678"
+      emailadres: "gebruiker.van.de.test@loyalis.nl"
+      heeftMachtiging: true
+
+  Product:
+    description: Product van een klant
+    type: object
+    properties:
+      begindatum:
+        type: datetime
+        description: De begindatum (DatumToetreding) van de polis (Let op deze is UTC)
+        required: true
+      dekking:
+        type: Dekking
+        description: De dekking.
+        required: true
+      dienstverleningsdocument:
+        type: Dienstverleningsdocument
+        description: Het Dienstverleningsdocument
+        required: true
+      einddatum:
+        type: datetime
+        description: De einddatum (DatumPensioenRegulier) van de polis, kan leeg zijn. (Let op deze is UTC)
+        required: false
+      naam:
+        type: string
+        description: De naam
+        required: true
+      polisnummer:
+        type: Polisnummer
+        required: true
+      polisvoorwaardentype:
+        type: Polisvoorwaardentype
+        description: De polisvoorwaarden
+        required: true
+      reglementtype:
+        type: Reglementtype
+        description: Het reglementtype
+        required: true
+      status:
+        type: Productstatus
+        required: true
+      werkgevernaam:
+        type: Werkgevernaam
+        required: false
+
+    example:
+      begindatum: "2005-11-01T00:00:00Z"
+      dekking: "Compleet"
+      dienstverleningsdocument: "Individueel"
+      einddatum: "2037-05-21T00:00:00Z"
+      naam: "SC AOV OenO (e) RWE Generation NL Personeel BV"
+      polisnummer: 700521026
+      polisvoorwaardentype: "PPFAPG"
+      reglementtype: "Individueel"
+      status: 20
+      werkgevernaam: "Loyalis"
+
+  Werkgever:
+    description: Gegevens van de werkgever
+    type: object
+    properties:
+      naam:
+        type: Werkgevernaam
+        required: false
+      beschrijvingreglementtype:
+        type: Beschrijvingreglementtype
+        required: false
+      brutojaarsalaris:
+        type: Brutojaarsalaris
+        required: false
+      parttimepercentage:
+        type: Parttimepercentage
+        required: false
+      plaats:
+        type: Werkgeverplaats
+        required: false
+      reglementtype:
+        type: Reglementtype
+        required: false
+
+    example:
+      naam: "Test Werkgever"
+      beschrijvingreglementtype: "Semi-collectief betaling werkgever"
+      brutojaarsalaris: 50000.00
+      parttimepercentage: 50
+      plaats: "Test plaats"
+      reglementtype: "Semi-Collectief"
+
+  WerkgeversGegevens:
+    description: Lijst van Werkgevers van een Loyalis klant
+    type: object
+    properties:
+      bevatlleenSemiCollectiefBetalingWerkgever:
+        type: BevatAlleenSemiCollectiefBetalingWerkgever
+        required: false
+      klantnummer:
+        type: Klantnummer
+        required: true
+      werkgevers:
+        type: Werkgever[]
+        required: false
+
+# Methods
+/adresgegevens:
+  /{klantnummer}:
+    description: AdresGegevens van een Loyalis klant
+    uriParameters:
+      klantnummer:
+        type: Klantnummer
+        required: true
+    get:
+      headers:
+        Authorization:
+          required: true
+          type: Authorizationheader
+      responses:
+        200:
+          description: AdresGegevens van een Loyalis klant
+          body:
+            application/json:
+              type: AdresGegevens
+              example: |
+                {
+                  "klantnummer": 123456789,
+                  "woonadres":
+                    {
+                      "huisnummer": 42,
+                      "huisnummertoevoeging": "123a",
+                      "landcode": 6030,
+                      "postcode": "1234 AA",
+                      "straat": "Straat",
+                      "woonplaats": "Amsterdam"
+                    },
+                  "postadres":
+                    {
+                      "straatbuitenland": "Main Road 12",
+                      "woonplaatsbuitenland": "New York",
+                      "landcode": 6014
+                    }
+                }
+        400:
+          description: Input parameters zijn fout
+        401:
+          description: Verificatie van de aanmeldgegevens is mislukt
+        403:
+          description: Het uitvoeren van deze actie is niet toegestaan
+        503:
+          description: Algemene serverfout
+    patch:
+        headers:
+          Authorization:
+            required: true
+            type: Authorizationheader
+        body:
+          application/json:
+            type: AdresGegevens
+            example: |
+              {
+                "woonadres":
+                  {
+                    "huisnummer": 42,
+                    "huisnummertoevoeging": "new",
+                    "landcode": 6030,
+                    "postcode": "1234 AA",
+                    "straat": "NewStraat",
+                    "woonplaats": "NewAmsterdam"
+                  },
+                "postadres":
+                  {
+                    "straatbuitenland": "Strasse 1",
+                    "woonplaatsbuitenland": "Aachen",
+                    "landcode": 6029
+                  }
+              }
+        responses:
+          200:
+            description: Gewijzigde adresgegevens van een Loyalis klant
+            body:
+              application/json:
+                type: AdresGegevens
+                example: |
+                  {
+                    "klantnummer": 123456789,
+                    "woonadres":
+                      {
+                        "huisnummer": 42,
+                        "huisnummertoevoeging": "new",
+                        "landcode": 6030,
+                        "postcode": "1234 AA",
+                        "straat": "NewStraat",
+                        "woonplaats": "NewAmsterdam"
+                      },
+                    "postadres":
+                      {
+                        "straatbuitenland": "Strasse 1",
+                        "woonplaatsbuitenland": "Aachen",
+                        "landcode": 6029
+                      }
+                  }
+          400:
+            description: Foutieve aanvraag
+          401:
+            description: Verificatie van de aanmeldgegevens is mislukt
+          403:
+            description: Het uitvoeren van deze actie is niet toegestaan
+          404:
+            description: Niet gevonden
+          500:
+            description: Interne server fout
+          503:
+            description: Algemene serverfout
+
+/klanten/{klantnummer}/bankgegevens:
+    description: BankGegevens van een Loyalis klant
+    uriParameters:
+      klantnummer:
+        type: Klantnummer
+        required: true
+    get:
+      headers:
+        Authorization:
+          required: true
+          type: Authorizationheader
+      responses:
+        200:
+          description: BankGegevens van een Loyalis klant
+          body:
+            application/json:
+              type: BankGegevens
+              example: |
+                {
+                  "klantnummer": 123456789,
+                  "excassoIBAN": "NL79INSI0264638875",
+                  "incassoIBAN": "NL44AEGO0632824557"
+                }
+        400:
+          description: Input parameters zijn fout
+        401:
+          description: Verificatie van de aanmeldgegevens is mislukt
+        403:
+          description: Het uitvoeren van deze actie is niet toegestaan
+        503:
+          description: Algemene serverfout
+
+    /excasso:
+        description: Excasso gegevens van de Loyalis klant
+        patch:
+            headers:
+              Authorization:
+                required: true
+                type: Authorizationheader
+            body:
+              application/json:
+                type: MuterenBankGegevens
+                example: |
+                  {
+                    "iban": "NL09KNAB0721521924"
+                  }
+            responses:
+              200:
+                body:
+                  application/json:
+                    type: BankGegevens
+                    example: |
+                      {
+                        "klantnummer": 123456789,
+                        "excassoIBAN": "NL09KNAB0721521924",
+                        "incassoIBAN": "NL44AEGO0632824557"
+                      }
+              400:
+                description: Input parameters zijn fout
+              401:
+                description: Verificatie van de aanmeldgegevens is mislukt
+              403:
+                description: Het uitvoeren van deze actie is niet toegestaan
+              404:
+                description: Bankgegevens van Loyalis klant niet gevonden in Lifetime
+              503:
+                description: Algemene serverfout
+
+/klanten/{klantnummer}/documenten:
+  description: Documenten van een Loyalis klant uit Placet
+  uriParameters:
+    klantnummer:
+      type: Klantnummer
+      required: true
+  get:
+    headers:
+      Authorization:
+        required: true
+        type: Authorizationheader
+    responses:
+      200:
+        description: Documenten van een Loyalis klant
+        body:
+          application/json:
+            type: Document[]
+            example: |
+                [
+                  {
+                    "aanmaakdatum": "2017-01-14T00:00:00Z",
+                    "datumpoststuk": "2017-01-14T00:00:00Z",
+                    "documenttype": "UIT42",
+                    "jaar": 2017,
+                    "maand": 1,
+                    "naam": "Testdocument",
+                    "placetdocumentnummer": 132456798
+                  },
+                  {
+                    "aanmaakdatum": "2017-01-14T00:00:00Z",
+                    "datumpoststuk": "2017-01-14T00:00:00Z",
+                    "documenttype": "UIT42",
+                    "jaar": 2017,
+                    "maand": 1,
+                    "naam": "Testdocument",
+                    "placetdocumentnummer": 132456798
+                  }
+                ]
+      400:
+        description: Input parameters zijn fout
+      401:
+        description: Verificatie van de aanmeldgegevens is mislukt
+      403:
+        description: Het uitvoeren van deze actie is niet toegestaan
+      404:
+        description: Documenten van Loyalis klant niet gevonden in Placet
+      503:
+        description: Algemene serverfout
+
+/klanten/{klantnummer}/documenten/{placetdocumentnummer}:
+  description: Inhoud van het document van een Loyalis klant uit Placet
+  uriParameters:
+    klantnummer:
+      type: Klantnummer
+      required: true
+    placetdocumentnummer:
+      type: Placetdocumentnummer
+      required: true
+  get:
+    headers:
+      Authorization:
+        required: true
+        type: Authorizationheader
+    responses:
+      200:
+        description: Document van een Loyalis klant
+        body:
+          application/octet-stream:
+            type: file
+            example: |
+                test.pdf
+      400:
+        description: Input parameters zijn fout
+      401:
+        description: Verificatie van de aanmeldgegevens is mislukt
+      403:
+        description: Het uitvoeren van deze actie is niet toegestaan
+      404:
+        description: Document van Loyalis klant niet gevonden in Placet
+      503:
+        description: Algemene serverfout
+
+/klanten/{klantnummer}/producten:
+  description: Producten van een Loyalis klant
+  uriParameters:
+    klantnummer:
+      type: Klantnummer
+      required: true
+  get:
+    headers:
+      Authorization:
+        required: true
+        type: Authorizationheader
+    responses:
+      200:
+        description: Producten van een Loyalis klant, gesorteerd op polisnummer.
+        body:
+          application/json:
+            type: Product[]
+            example: |
+                [
+                  {
+                    "begindatum": "2005-11-01T00:00:00Z",
+                    "dekking": "Compleet",
+                    "dienstverleningsdocument": "Individueel",
+                    "einddatum": "2037-05-21T00:00:00Z",
+                    "naam": "SC AOV OenO (e) RWE Generation NL Personeel BV",
+                    "polisnummer": 700521026,
+                    "polisvoorwaardentype": "PPFAPG",
+                    "reglementtype": "Semi-Collectief",
+                    "status": 36,
+                    "werkgevernaam": "RWE Generation NL Personeel BV"
+                  },
+                  {
+                    "begindatum": "2017-01-01T00:00:00Z",
+                    "dekking": "Gedeeltelijk",
+                    "dienstverleningsdocument": "Individueel",
+                    "einddatum": "2037-05-21T00:00:00Z",
+                    "naam": "SC AOV OenO (e) Essent NV",
+                    "polisnummer": 700521041,
+                    "polisvoorwaardentype": "PPFAPG",
+                    "reglementtype": "Semi-Collectief",
+                    "status": 20,
+                    "werkgevernaam": "Essent NV"
+                  }
+                ]
+      400:
+        description: Input parameters zijn fout
+      401:
+        description: Verificatie van de aanmeldgegevens is mislukt
+      403:
+        description: Het uitvoeren van deze actie is niet toegestaan
+      404:
+        description: Producten van Loyalis klant niet gevonden
+      503:
+        description: Algemene serverfout
+
+
+/login:
+  description: Inloggen van een Loyalis klant
+  post:
+    description: Inloggen van een Loyalis klant
+    body:
+      application/json:
+        type: InlogGegevens
+        example: |
+          {
+            "gebruikersnaam": "gebruiker.van.de.test@loyalis.nl",
+            "wachtwoord": "LOY1234!"
+          }
+    responses:
+      200:
+        body:
+          application/json:
+            type: LoginTokenResponse
+            example: |
+              {
+                "token_type": "bearer",
+                "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJrbGFudG51bW1lciI6MTU5MDk2NiwiZ2VicnVpa2Vyc25hYW0iOiJMYXVyYSIsImFjY291bnRzdGF0dXMiOiJBY3RpZWYiLCJleHBpcmUiOjIzMzYzMzYzNjZ9.iwoyaECWrB-JHcFZKPn-VyRUH06fimbWFbL2rAVvQnw"
+              }
+      400:
+        description: Input parameters zijn fout
+      401:
+        description: Inloggegevens zijn incorrect
+      503:
+        description: Algemene serverfout
+
+/klanten/{klantnummer}/persoonsgegevens:
+  description: PersoonsGegevens van een Loyalis klant
+  uriParameters:
+    klantnummer:
+      type: Klantnummer
+      required: true
+  get:
+    headers:
+      Authorization:
+        required: true
+        type: Authorizationheader
+    responses:
+      200:
+        description: PersoonsGegevens van een Loyalis klant
+        body:
+          application/json:
+            type: PersoonsGegevens
+            example: |
+              {
+                "klantnummer": 123456789,
+                "aanhef": "mevrouw Test",
+                "voornaam": "Gebruiker",
+                "achternaam": "Test",
+                "geboortedatum": "1967-01-14T00:00:00Z",
+                "telefoonnummer": "0455799222",
+                "mobielnummer": "0612345678",
+                "emailadres": "gebruiker.van.de.test@loyalis.nl",
+                "heeftMachtiging": true
+              }
+      400:
+        description: Input parameters zijn fout
+      401:
+        description: Verificatie van de aanmeldgegevens is mislukt
+      403:
+        description: Het uitvoeren van deze actie is niet toegestaan
+      503:
+        description: Algemene serverfout
+  patch:
+      description: PersoonsGegevens bijwerken van een Loyalis klant
+      headers:
+        Authorization:
+          required: true
+          type: Authorizationheader
+      body:
+        application/json:
+          type: MuterenPersoonsGegevens
+          example: |
+            {
+              "emailadres": "gewijzigde@email.nl",
+              "mobielnummer": "0612345678",
+              "telefoonnummer": "0455799222"
+            }
+      responses:
+        200:
+          body:
+            application/json:
+              type: PersoonsGegevens
+              example: |
+                {
+                  "klantnummer": 123456789,
+                  "aanhef": "mevrouw Test",
+                  "voornaam": "Gebruiker",
+                  "achternaam": "Test",
+                  "geboortedatum": "1967-01-14T00:00:00Z",
+                  "telefoonnummer": "0455799222",
+                  "mobielnummer": "0612345678",
+                  "emailadres": "gewijzigde@email.nl",
+                  "heeftMachtiging": true
+                }
+        400:
+          description: Input parameters zijn fout
+        401:
+          description: Verificatie van de aanmeldgegevens is mislukt
+        403:
+          description: Het uitvoeren van deze actie is niet toegestaan
+        404:
+          description: Persoonsgegevens van Loyalis klant niet gevonden in Lifetime
+        503:
+          description: Algemene serverfout
+
+/werkgeversgegevens:
+  /{klantnummer}:
+    description: Lijst van werkgevers van een Loyalis klant
+    uriParameters:
+      klantnummer:
+        type: Klantnummer
+        required: true
+    get:
+      headers:
+        Authorization:
+          required: true
+          type: Authorizationheader
+      responses:
+        200:
+          description: WerkgeversGegevens van een Loyalis klant
+          body:
+            application/json:
+              type: WerkgeversGegevens
+              example: |
+                {
+                  "klantnummer": 123456789,
+                  "werkgevers": [
+                    {
+                      "naam": "Werkgever 1",
+                      "plaats": "Testplaats 1",
+                      "brutojaarsalaris": 1234.45,
+                      "parttimepercentage": 45
+                    },
+                    {
+                      "naam": "Werkgever 2",
+                      "plaats": "Testplaats 2",
+                      "brutojaarsalaris": 1234.45,
+                      "parttimepercentage": 45
+                    }
+                  ]
+                }
+        400:
+          description: Input parameters zijn fout
+        401:
+          description: Verificatie van de aanmeldgegevens is mislukt
+        403:
+          description: Het uitvoeren van deze actie is niet toegestaan
+        404:
+          description: WerkgeversGegevens van Loyalis klant niet gevonden in Lifetime
+        503:
+          description: Algemene serverfout

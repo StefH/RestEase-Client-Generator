@@ -23,6 +23,8 @@
     <Folder Include="Examples\SharedQuery\Models\" />
     <Folder Include="Examples\SpeechServices\Api\" />
     <Folder Include="Examples\SpeechServices\Models\" />
+    <Folder Include="Examples\wpraml\Api\" />
+    <Folder Include="Examples\wpraml\Models\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -84,6 +86,9 @@
     </None>
     <None Update="Examples\SpeechServices.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\wp.raml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 

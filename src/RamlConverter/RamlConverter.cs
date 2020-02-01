@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Microsoft.OpenApi.Extensions;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -125,31 +126,43 @@ namespace RamlToOpenApiConverter
 
             foreach (var key in o.Keys.OfType<string>().Where(k => k.StartsWith("/")))
             {
-                paths.Add(key, MapPathItem(o[key] as IDictionary<object, object>));
+                var pathItem = MapPathItem(key, new List<OpenApiParameter>(), o.GetAsDictionary(key));
+                paths.Add(pathItem.AdjustedPath, pathItem.Item);
             }
 
             return paths;
         }
 
-        private OpenApiPathItem MapPathItem(IDictionary<object, object> values)
+        private (OpenApiPathItem Item, string AdjustedPath) MapPathItem(string parent, IList<OpenApiParameter> parentParameters, IDictionary<object, object> values)
         {
-            return new OpenApiPathItem
-            {
-                Description = values.Get("description"),
-                Parameters = new List<OpenApiParameter>(),
-                Operations = MapOperations(values)
-            };
-        }
+            var operations = new Dictionary<OperationType, OpenApiOperation>();
 
-        private IDictionary<OperationType, OpenApiOperation> MapOperations(IDictionary<object, object> operations)
-        {
-            var map = new Dictionary<OperationType, OpenApiOperation>();
-            foreach (var key in operations.Keys.OfType<string>())
+            foreach (string key in values.Keys.OfType<string>())
             {
-                map.Add(MapOperationType(key), MapOperation(operations[key] as IDictionary<object, object>));
+                if (key.StartsWith("/"))
+                {
+                    var d = values.GetAsDictionary(key);
+                    return MapPathItem($"{parent}{key}", MapParameters(d), d);
+                }
+
+                if (TryMapOperationType(key, out OperationType operationType))
+                {
+                    var operation = MapOperation(values.GetAsDictionary(key));
+                    foreach (var parameter in parentParameters)
+                    {
+                        operation.Parameters.Add(parameter);
+                    }
+
+                    operations.Add(operationType, operation);
+                }
             }
 
-            return map;
+            return (new OpenApiPathItem
+            {
+                Description = values.Get("description"),
+                Parameters = MapParameters(values),
+                Operations = operations
+            }, parent);
         }
 
         private OpenApiOperation MapOperation(IDictionary<object, object> values)
@@ -165,59 +178,66 @@ namespace RamlToOpenApiConverter
         private IList<OpenApiParameter> MapParameters(IDictionary<object, object> values)
         {
             var parameters = new List<OpenApiParameter>();
-            var queryParameters = values.GetAsDictionary("queryParameters");
-            if (queryParameters != null)
-            {
-                foreach (string key in queryParameters.Keys.OfType<string>())
-                {
-                    var parameterDetails = queryParameters.GetAsDictionary(key);
 
-                    // TODO only string?
-                    parameters.Add(new OpenApiParameter
-                    {
-                        In = ParameterLocation.Query,
-                        Name = key,
-                        Required = parameterDetails?.Get<bool>("required") ?? false,
-                        Schema = new OpenApiSchema
-                        {
-                            Type = "string"
-                        }
-                    });
-                }
-            }
+            parameters.AddRange(MapParameters(values.GetAsDictionary("queryParameters"), ParameterLocation.Query));
+            parameters.AddRange(MapParameters(values.GetAsDictionary("uriParameters"), ParameterLocation.Path));
+            parameters.AddRange(MapParameters(values.GetAsDictionary("headers"), ParameterLocation.Header));
 
             return parameters;
         }
 
+        private IList<OpenApiParameter> MapParameters(IDictionary<object, object> parameters, ParameterLocation parameterLocation)
+        {
+            var openApiParameters = new List<OpenApiParameter>();
+
+            if (parameters == null)
+            {
+                return openApiParameters;
+            }
+
+            foreach (string key in parameters.Keys.OfType<string>())
+            {
+                var parameterDetails = parameters.GetAsDictionary(key);
+
+                // TODO only string?
+                openApiParameters.Add(new OpenApiParameter
+                {
+                    In = parameterLocation,
+                    Name = key,
+                    Required = parameterDetails?.Get<bool>("required") ?? false,
+                    Schema = new OpenApiSchema
+                    {
+                        Type = "string"
+                    }
+                });
+            }
+
+            return openApiParameters;
+        }
+
         private OpenApiResponses MapResponses(IDictionary<object, object> values)
         {
-            var responses = new OpenApiResponses();
+            var openApiResponses = new OpenApiResponses();
 
-            foreach (object key in values.Keys)
+            foreach (int key in values.Keys.OfType<int>())
             {
-                switch (key)
+                var responses = values.GetAsDictionary(key);
+                var body = responses?.GetAsDictionary("body");
+                if (body != null)
                 {
-                    case int intValue:
-                        var x = values.GetAsDictionary(key);
-                        var body = x?.GetAsDictionary("body");
-                        if (body != null)
-                        {
-                            var response = new OpenApiResponse
-                            {
-                                Content = MapContent(body)
-                            };
-                            responses.Add(intValue.ToString(), response);
-                        }
-                        else
-                        {
-                            responses.Add(intValue.ToString(), new OpenApiResponse());
-                        }
-
-                        break;
+                    var response = new OpenApiResponse
+                    {
+                        Content = MapContent(body)
+                    };
+                    openApiResponses.Add(key.ToString(), response);
+                }
+                else
+                {
+                    openApiResponses.Add(key.ToString(), new OpenApiResponse());
                 }
             }
 
-            return responses;
+            return openApiResponses;
         }
 
         private IDictionary<string, OpenApiMediaType> MapContent(IDictionary<object, object> values)
@@ -247,7 +267,7 @@ namespace RamlToOpenApiConverter
                         {
                             var referenceSchemas = typeAsString
                                 .Split(new[] { '|' }, StringSplitOptions.RemoveEmptyEntries)
-                                .Select(o => CreateOpenApiReferenceSchema(o.Trim()))
+                                .Select(o => CreateDummyOpenApiReferenceSchema(o.Trim()))
                                 .ToList();
 
                             if (referenceSchemas.Count == 1)
@@ -272,21 +292,12 @@ namespace RamlToOpenApiConverter
             return content;
         }
 
-        private OpenApiSchema CreateOpenApiReferenceSchema(string referenceId)
+        private OpenApiSchema CreateDummyOpenApiReferenceSchema(string referenceId)
         {
             return new OpenApiSchema
             {
                 Type = "object",
                 Reference = new OpenApiReference { Id = referenceId }
-            };
-        }
-
-        private OpenApiMediaType MapMediaTypeFromJson(string json)
-        {
-            var objectType = JsonConvert.DeserializeObject<ObjectType>(json, _jsonSerializerSettings);
-            return new OpenApiMediaType
-            {
-                Schema = MapSchema(objectType)
             };
         }
 
@@ -313,42 +324,19 @@ namespace RamlToOpenApiConverter
             };
         }
 
-        private OperationType MapOperationType(string value)
+        private bool TryMapOperationType(string value, out OperationType operationType)
         {
-            switch (value)
+            foreach (OperationType @enum in Enum.GetValues(typeof(OperationType)))
             {
-                case "get":
-                    return OperationType.Get;
-
-                case "put":
-                    return OperationType.Put;
-
-                case "post":
-                    return OperationType.Post;
-
-                case "delete":
-                    return OperationType.Delete;
-
-                case "options":
-                    return OperationType.Options;
-
-                case "head":
-                    return OperationType.Head;
-
-                case "patch":
-                    return OperationType.Patch;
-
-                case "trace":
-                    return OperationType.Trace;
-
+                if (@enum.GetDisplayName().Equals(value, StringComparison.OrdinalIgnoreCase))
+                {
+                    operationType = @enum;
+                    return true;
+                }
             }
 
-            throw new NotSupportedException();
-        }
-
-        private OpenApiInfo MapQ(IDictionary<object, object> o)
-        {
-            return null;
+            operationType = OperationType.Get;
+            return false;
         }
 
         private OpenApiInfo MapInfo(IDictionary<object, object> o)

@@ -29,6 +29,16 @@ namespace RestEaseClientGeneratorConsoleApp
             //    File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/HelloWorldRaml/{file.Path}/{file.Name}", file.Content);
             //}
 
+            var wpSettings = new GeneratorSettings
+            {
+                Namespace = "RestEaseClientGeneratorConsoleApp.Examples.wpraml",
+                ApiName = "wpraml"
+            };
+            foreach (var file in generator.FromFile("Examples\\wp.raml", wpSettings, out var diagnosticWPR))
+            {
+                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/wpraml/{file.Path}/{file.Name}", file.Content);
+            }
+
             var mediaWikiSettings = new GeneratorSettings
             {
                 Namespace = "RestEaseClientGeneratorConsoleApp.Examples.MediaWiki",
@@ -49,6 +59,8 @@ namespace RestEaseClientGeneratorConsoleApp
             {
                 File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/MediaWikiRaml/{file.Path}/{file.Name}", file.Content);
             }
+
+           
 
             return;
 
