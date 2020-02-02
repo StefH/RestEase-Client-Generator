@@ -29,6 +29,10 @@ namespace RamlToOpenApiConverter
             File.WriteAllText(outputPath, contents);
         }
 
+        /// <summary>
+        /// Converts the input RAML stream to an Open API Specification document.
+        /// </summary>
+        /// <param name="stream">The stream to the RAML.</param>
         public OpenApiDocument ConvertToOpenApiDocument(Stream stream)
         {
             var serializer = new Serializer();
@@ -38,7 +42,7 @@ namespace RamlToOpenApiConverter
             // Step 1 - Get all types
             _types = result.GetAsDictionary("types");
 
-            // Step 2 - Get Info and Components
+            // Step 2 - Get Info, Servers and Components
             _doc = new OpenApiDocument
             {
                 Info = MapInfo(result),

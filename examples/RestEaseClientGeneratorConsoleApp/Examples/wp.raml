@@ -109,7 +109,7 @@ types:
     type: integer
 
   Klantnummer:
-    description: Loyalis klantnummer
+    description: ??? klantnummer
     type: integer
     minimum: 1
     maximum: 999999999
@@ -149,7 +149,7 @@ types:
   Polisvoorwaardentype:
     type: string
     description: De types polisvoorwaarden
-    enum: [ "Algemeen", "Bouw", "Zorg", "PPFAPG", "Militairen", "OverheidOnderwijsEnergieEnNutsbedrijven" ]
+    enum: [ "Algemeen", "Bouw", "Zorg", "PPF???", "Militairen", "OverheidOnderwijsEnergieEnNutsbedrijven" ]
 
   Postcode:
     description: Nederlandse postcode
@@ -223,7 +223,7 @@ types:
 
   # Complex types
   Adres:
-    description: Adres van een Loyalis klant
+    description: Adres van een ??? klant
     type: object
     properties:
       huisnummer:
@@ -252,7 +252,7 @@ types:
         required: false
 
   AdresGegevens:
-    description: AdresGegevens (woon en post) van een Loyalis klant
+    description: AdresGegevens (woon en post) van een ??? klant
     type: object
     properties:
       klantnummer:
@@ -266,7 +266,7 @@ types:
         required: false
 
   BankGegevens:
-    description: BankGegevens van een Loyalis klant
+    description: BankGegevens van een ??? klant
     type: object
     properties:
       klantnummer:
@@ -345,7 +345,7 @@ types:
           access_token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJrbGFudG51bW1lciI6MTU5MDk2NiwiZ2VicnVpa2Vyc25hYW0iOiJMYXVyYSIsImFjY291bnRzdGF0dXMiOiJBY3RpZWYiLCJleHBpcmUiOjIzMzYzMzYzNjZ9.iwoyaECWrB-JHcFZKPn-VyRUH06fimbWFbL2rAVvQnw"
 
   MuterenBankGegevens:
-    description: Mutatie van een bank account (incasso of excasso) van een Loyalis klant
+    description: Mutatie van een bank account (incasso of excasso) van een ??? klant
     type: object
     properties:
       iban:
@@ -355,7 +355,7 @@ types:
       iban: "NL09KNAB0721521924"
 
   MuterenPersoonsGegevens:
-    description: PersoonsGegevens mutatie van een Loyalis klant
+    description: PersoonsGegevens mutatie van een ??? klant
     type: object
     properties:
       emailadres:
@@ -368,12 +368,12 @@ types:
         type: Telefoonnummer
         required: false
     example:
-      emailadres: "gewijzigde.email@loyalis.nl"
+      emailadres: "gewijzigde.email@???.nl"
       mobielnummer: "0612345678"
       telefoonnummer: "0455799222"
 
   PersoonsGegevens:
-    description: PersoonsGegevens van een Loyalis klant
+    description: PersoonsGegevens van een ??? klant
     type: object
     properties:
       aanhef:
@@ -412,7 +412,7 @@ types:
       geboortedatum: "1967-01-14T00:00:00Z"
       telefoonnummer: "0455799222"
       mobielnummer: "0612345678"
-      emailadres: "gebruiker.van.de.test@loyalis.nl"
+      emailadres: "gebruiker.van.de.test@???.nl"
       heeftMachtiging: true
 
   Product:
@@ -464,10 +464,10 @@ types:
       einddatum: "2037-05-21T00:00:00Z"
       naam: "SC AOV OenO (e) RWE Generation NL Personeel BV"
       polisnummer: 700521026
-      polisvoorwaardentype: "PPFAPG"
+      polisvoorwaardentype: "PPF???"
       reglementtype: "Individueel"
       status: 20
-      werkgevernaam: "Loyalis"
+      werkgevernaam: "???"
 
   Werkgever:
     description: Gegevens van de werkgever
@@ -501,7 +501,7 @@ types:
       reglementtype: "Semi-Collectief"
 
   WerkgeversGegevens:
-    description: Lijst van Werkgevers van een Loyalis klant
+    description: Lijst van Werkgevers van een ??? klant
     type: object
     properties:
       bevatlleenSemiCollectiefBetalingWerkgever:
@@ -517,7 +517,7 @@ types:
 # Methods
 /adresgegevens:
   /{klantnummer}:
-    description: AdresGegevens van een Loyalis klant
+    description: AdresGegevens van een ??? klant
     uriParameters:
       klantnummer:
         type: Klantnummer
@@ -529,7 +529,7 @@ types:
           type: Authorizationheader
       responses:
         200:
-          description: AdresGegevens van een Loyalis klant
+          description: AdresGegevens van een ??? klant
           body:
             application/json:
               type: AdresGegevens
@@ -588,7 +588,7 @@ types:
               }
         responses:
           200:
-            description: Gewijzigde adresgegevens van een Loyalis klant
+            description: Gewijzigde adresgegevens van een ??? klant
             body:
               application/json:
                 type: AdresGegevens
@@ -625,7 +625,7 @@ types:
             description: Algemene serverfout
 
 /klanten/{klantnummer}/bankgegevens:
-    description: BankGegevens van een Loyalis klant
+    description: BankGegevens van een ??? klant
     uriParameters:
       klantnummer:
         type: Klantnummer
@@ -637,7 +637,7 @@ types:
           type: Authorizationheader
       responses:
         200:
-          description: BankGegevens van een Loyalis klant
+          description: BankGegevens van een ??? klant
           body:
             application/json:
               type: BankGegevens
@@ -657,7 +657,7 @@ types:
           description: Algemene serverfout
 
     /excasso:
-        description: Excasso gegevens van de Loyalis klant
+        description: Excasso gegevens van de ??? klant
         patch:
             headers:
               Authorization:
@@ -688,12 +688,12 @@ types:
               403:
                 description: Het uitvoeren van deze actie is niet toegestaan
               404:
-                description: Bankgegevens van Loyalis klant niet gevonden in Lifetime
+                description: Bankgegevens van ??? klant niet gevonden in Lifetime
               503:
                 description: Algemene serverfout
 
 /klanten/{klantnummer}/documenten:
-  description: Documenten van een Loyalis klant uit Placet
+  description: Documenten van een ??? klant uit Placet
   uriParameters:
     klantnummer:
       type: Klantnummer
@@ -705,7 +705,7 @@ types:
         type: Authorizationheader
     responses:
       200:
-        description: Documenten van een Loyalis klant
+        description: Documenten van een ??? klant
         body:
           application/json:
             type: Document[]
@@ -737,12 +737,12 @@ types:
       403:
         description: Het uitvoeren van deze actie is niet toegestaan
       404:
-        description: Documenten van Loyalis klant niet gevonden in Placet
+        description: Documenten van ??? klant niet gevonden in Placet
       503:
         description: Algemene serverfout
 
 /klanten/{klantnummer}/documenten/{placetdocumentnummer}:
-  description: Inhoud van het document van een Loyalis klant uit Placet
+  description: Inhoud van het document van een ??? klant uit Placet
   uriParameters:
     klantnummer:
       type: Klantnummer
@@ -757,7 +757,7 @@ types:
         type: Authorizationheader
     responses:
       200:
-        description: Document van een Loyalis klant
+        description: Document van een ??? klant
         body:
           application/octet-stream:
             type: file
@@ -770,12 +770,12 @@ types:
       403:
         description: Het uitvoeren van deze actie is niet toegestaan
       404:
-        description: Document van Loyalis klant niet gevonden in Placet
+        description: Document van ??? klant niet gevonden in Placet
       503:
         description: Algemene serverfout
 
 /klanten/{klantnummer}/producten:
-  description: Producten van een Loyalis klant
+  description: Producten van een ??? klant
   uriParameters:
     klantnummer:
       type: Klantnummer
@@ -787,7 +787,7 @@ types:
         type: Authorizationheader
     responses:
       200:
-        description: Producten van een Loyalis klant, gesorteerd op polisnummer.
+        description: Producten van een ??? klant, gesorteerd op polisnummer.
         body:
           application/json:
             type: Product[]
@@ -800,7 +800,7 @@ types:
                     "einddatum": "2037-05-21T00:00:00Z",
                     "naam": "SC AOV OenO (e) RWE Generation NL Personeel BV",
                     "polisnummer": 700521026,
-                    "polisvoorwaardentype": "PPFAPG",
+                    "polisvoorwaardentype": "PPF???",
                     "reglementtype": "Semi-Collectief",
                     "status": 36,
                     "werkgevernaam": "RWE Generation NL Personeel BV"
@@ -812,7 +812,7 @@ types:
                     "einddatum": "2037-05-21T00:00:00Z",
                     "naam": "SC AOV OenO (e) Essent NV",
                     "polisnummer": 700521041,
-                    "polisvoorwaardentype": "PPFAPG",
+                    "polisvoorwaardentype": "PPF???",
                     "reglementtype": "Semi-Collectief",
                     "status": 20,
                     "werkgevernaam": "Essent NV"
@@ -825,21 +825,21 @@ types:
       403:
         description: Het uitvoeren van deze actie is niet toegestaan
       404:
-        description: Producten van Loyalis klant niet gevonden
+        description: Producten van ??? klant niet gevonden
       503:
         description: Algemene serverfout
 
 
 /login:
-  description: Inloggen van een Loyalis klant
+  description: Inloggen van een ??? klant
   post:
-    description: Inloggen van een Loyalis klant
+    description: Inloggen van een ??? klant
     body:
       application/json:
         type: InlogGegevens
         example: |
           {
-            "gebruikersnaam": "gebruiker.van.de.test@loyalis.nl",
+            "gebruikersnaam": "gebruiker.van.de.test@???.nl",
             "wachtwoord": "LOY1234!"
           }
     responses:
@@ -860,7 +860,7 @@ types:
         description: Algemene serverfout
 
 /klanten/{klantnummer}/persoonsgegevens:
-  description: PersoonsGegevens van een Loyalis klant
+  description: PersoonsGegevens van een ??? klant
   uriParameters:
     klantnummer:
       type: Klantnummer
@@ -872,7 +872,7 @@ types:
         type: Authorizationheader
     responses:
       200:
-        description: PersoonsGegevens van een Loyalis klant
+        description: PersoonsGegevens van een ??? klant
         body:
           application/json:
             type: PersoonsGegevens
@@ -885,7 +885,7 @@ types:
                 "geboortedatum": "1967-01-14T00:00:00Z",
                 "telefoonnummer": "0455799222",
                 "mobielnummer": "0612345678",
-                "emailadres": "gebruiker.van.de.test@loyalis.nl",
+                "emailadres": "gebruiker.van.de.test@???.nl",
                 "heeftMachtiging": true
               }
       400:
@@ -897,7 +897,7 @@ types:
       503:
         description: Algemene serverfout
   patch:
-      description: PersoonsGegevens bijwerken van een Loyalis klant
+      description: PersoonsGegevens bijwerken van een ??? klant
       headers:
         Authorization:
           required: true
@@ -935,13 +935,13 @@ types:
         403:
           description: Het uitvoeren van deze actie is niet toegestaan
         404:
-          description: Persoonsgegevens van Loyalis klant niet gevonden in Lifetime
+          description: Persoonsgegevens van ??? klant niet gevonden in Lifetime
         503:
           description: Algemene serverfout
 
 /werkgeversgegevens:
   /{klantnummer}:
-    description: Lijst van werkgevers van een Loyalis klant
+    description: Lijst van werkgevers van een ??? klant
     uriParameters:
       klantnummer:
         type: Klantnummer
@@ -953,7 +953,7 @@ types:
           type: Authorizationheader
       responses:
         200:
-          description: WerkgeversGegevens van een Loyalis klant
+          description: WerkgeversGegevens van een ??? klant
           body:
             application/json:
               type: WerkgeversGegevens
@@ -982,6 +982,6 @@ types:
         403:
           description: Het uitvoeren van deze actie is niet toegestaan
         404:
-          description: WerkgeversGegevens van Loyalis klant niet gevonden in Lifetime
+          description: WerkgeversGegevens van ??? klant niet gevonden in Lifetime
         503:
           description: Algemene serverfout

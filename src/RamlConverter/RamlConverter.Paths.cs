@@ -29,29 +29,42 @@ namespace RamlToOpenApiConverter
 
             foreach (var key in o.Keys.OfType<string>().Where(k => k.StartsWith("/")))
             {
-                var pathItem = MapPathItem(key, new List<OpenApiParameter>(), o.GetAsDictionary(key));
-                paths.Add(pathItem.AdjustedPath, pathItem.Item);
+                var pathItems = MapPathItems(key, new List<OpenApiParameter>(), o.GetAsDictionary(key));
+                foreach (var pathItem in pathItems)
+                {
+                    paths.Add(pathItem.AdjustedPath, pathItem.Item);
+                }
             }
 
             return paths;
         }
 
-        private (OpenApiPathItem Item, string AdjustedPath) MapPathItem(string parent, IList<OpenApiParameter> parentParameters, IDictionary<object, object> values)
+        private ICollection<(OpenApiPathItem Item, string AdjustedPath)> MapPathItems(string parent, IList<OpenApiParameter> parentParameters, IDictionary<object, object> values)
         {
+            var items = new List<(OpenApiPathItem Item, string AdjustedPath)>();
+
+            // Fetch all parameters from this path
+            var parameters = MapParameters(values);
+
+            // And add parameters from parent
+            foreach (var parameter in parentParameters)
+            {
+                parameters.Add(parameter);
+            }
+
             var operations = new Dictionary<OperationType, OpenApiOperation>();
 
-            foreach (string key in values.Keys.OfType<string>())
+            // Loop all keys which do not start with a '/'
+            foreach (string key in values.Keys.OfType<string>().Where(k => !k.StartsWith("/")))
             {
-                if (key.StartsWith("/"))
-                {
-                    var d = values.GetAsDictionary(key);
-                    return MapPathItem($"{parent}{key}", MapParameters(d), d);
-                }
-
+                // And try to match operations
                 if (TryMapOperationType(key, out OperationType operationType))
                 {
-                    var operation = MapOperation(values.GetAsDictionary(key));
-                    foreach (var parameter in parentParameters)
+                    var operationValues = values.GetAsDictionary(key);
+                    var operation = MapOperation(operationValues);
+
+                    // Add parameters from the path to this operation
+                    foreach (var parameter in parameters)
                     {
                         operation.Parameters.Add(parameter);
                     }
@@ -60,11 +73,27 @@ namespace RamlToOpenApiConverter
                 }
             }
 
-            return (new OpenApiPathItem
+            // Operations found on this level from the PathItem, add these to a new PathItem
+            if (operations.Any())
             {
-                Parameters = MapParameters(values),
-                Operations = operations
-            }, parent);
+                var singleItem = new OpenApiPathItem
+                {
+                    Operations = operations
+                };
+
+                items.Add((singleItem, parent));
+            }
+
+            // Now check 1 level deeper (loop all keys which do start with a '/')
+            foreach (string key in values.Keys.OfType<string>().Where(k => k.StartsWith("/")))
+            {
+                var d = values.GetAsDictionary(key);
+                string newPath = $"{parent}{key}";
+                var mapItems = MapPathItems(newPath, parameters, d);
+                items.AddRange(mapItems);
+            }
+
+            return items;
         }
 
         private OpenApiOperation MapOperation(IDictionary<object, object> values)
