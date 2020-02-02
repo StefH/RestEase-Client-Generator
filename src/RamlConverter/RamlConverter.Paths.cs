@@ -72,8 +72,9 @@ namespace RamlToOpenApiConverter
             return new OpenApiOperation
             {
                 Description = values.Get("description"),
-                Responses = MapResponses(values.GetAsDictionary("responses")),
                 Parameters = MapParameters(values),
+                Responses = MapResponses(values.GetAsDictionary("responses")),
+                RequestBody = MapRequest(values.GetAsDictionary("body")),
             };
         }
 
@@ -145,6 +146,21 @@ namespace RamlToOpenApiConverter
             }
 
             return openApiResponses;
+        }
+
+        private OpenApiRequestBody MapRequest(IDictionary<object, object> values)
+        {
+            if (values == null)
+            {
+                return null;
+            }
+
+            var requestBody = new OpenApiRequestBody
+            {
+                Content = MapContents(values)
+            };
+
+            return requestBody;
         }
 
         private IDictionary<string, OpenApiMediaType> MapContents(IDictionary<object, object> values)

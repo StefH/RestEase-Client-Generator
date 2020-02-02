@@ -24,6 +24,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MediaWikiRaml.Api
         /// Put (/)
         /// </summary>
         [Put("/")]
+        [Header("Content-Type", "application/json")]
         Task PutAsync();
 
         /// <summary>
