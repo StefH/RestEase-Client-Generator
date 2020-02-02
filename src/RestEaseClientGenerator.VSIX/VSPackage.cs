@@ -20,9 +20,9 @@ namespace RestEaseClientGenerator.VSIX
     [ProvideUIContextRule(
         "A3381E62-0000-436F-824E-5F0097387C11",
         "UI Context",
-        "json | yml | yaml",
-        new[] { "json", "yml", "yaml" },
-        new[] { "HierSingleSelectionName:.json$", "HierSingleSelectionName:.yml$", "HierSingleSelectionName:.yaml$" })]
+        "json | yml | yaml | raml",
+        new[] { "json", "yml", "yaml", "raml" },
+        new[] { "HierSingleSelectionName:.json$", "HierSingleSelectionName:.yml$", "HierSingleSelectionName:.yaml$", "HierSingleSelectionName:.raml" })]
     //[ProvideOptionPage(
     //    typeof(GeneralOptionPage),
     //    VsixName,

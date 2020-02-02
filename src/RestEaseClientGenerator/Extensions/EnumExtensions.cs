@@ -5,7 +5,7 @@ using RestEaseClientGenerator.Utils;
 
 namespace RestEaseClientGenerator.Extensions
 {
-    internal static class EnumExtensions
+    public static class EnumExtensions
     {
         /// <summary>
         /// Gets Enum Value's Description Attribute

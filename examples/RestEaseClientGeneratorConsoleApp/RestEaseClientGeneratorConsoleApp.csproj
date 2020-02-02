@@ -32,6 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\RamlToOpenApiConverter\src\RamlToOpenApiConverter\RamlToOpenApiConverter.csproj" />
     <ProjectReference Include="..\..\src\RestEaseClientGenerator\RestEaseClientGenerator.csproj" />
   </ItemGroup>
 
