@@ -1,8 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
+using Microsoft.OpenApi;
+using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Extensions;
 using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi.Readers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Raml.Parser.Expressions;
@@ -126,7 +131,7 @@ namespace RamlToOpenApiConverter
                     var openApiResponse = new OpenApiResponse
                     {
                         Description = description,
-                        Content = MapContent(body)
+                        Content = MapContents(body)
                     };
                     openApiResponses.Add(key.ToString(), openApiResponse);
                 }
@@ -142,7 +147,7 @@ namespace RamlToOpenApiConverter
             return openApiResponses;
         }
 
-        private IDictionary<string, OpenApiMediaType> MapContent(IDictionary<object, object> values)
+        private IDictionary<string, OpenApiMediaType> MapContents(IDictionary<object, object> values)
         {
             if (values == null)
             {
@@ -155,43 +160,53 @@ namespace RamlToOpenApiConverter
             {
                 if (values.ContainsKey(key))
                 {
-                    var x = values.GetAsDictionary(key);
-                    string typeAsString = x?.Get("type");
-                    if (!string.IsNullOrEmpty(typeAsString))
+                    var items = values.GetAsDictionary(key); // Body and Example
+                    string type = items?.Get("type");
+                    string exampleAsJson = items?.Get("example");
+
+                    var openApiMediaType = new OpenApiMediaType
                     {
-                        OpenApiSchema openApiSchema;
-                        if (typeAsString.StartsWith("{"))
-                        {
-                            var objectType = JsonConvert.DeserializeObject<ObjectType>(typeAsString, _jsonSerializerSettings);
-                            openApiSchema = MapSchema(objectType);
-                        }
-                        else
-                        {
-                            var referenceSchemas = typeAsString
-                                .Split(new[] { '|' }, StringSplitOptions.RemoveEmptyEntries)
-                                .Select(o => CreateDummyOpenApiReferenceSchema(o.Trim()))
-                                .ToList();
+                        Schema = !string.IsNullOrEmpty(type) ? MapMediaTypeSchema(type) : null,
+                        Example = !string.IsNullOrEmpty(exampleAsJson) ? MapExample(exampleAsJson) : null,
+                    };
 
-                            if (referenceSchemas.Count == 1)
-                            {
-                                openApiSchema = referenceSchemas.Single();
-                            }
-                            else
-                            {
-                                openApiSchema = new OpenApiSchema
-                                {
-                                    AnyOf = referenceSchemas
-                                };
-                            }
-                        }
-
-                        var openApiMediaType = new OpenApiMediaType { Schema = openApiSchema };
-                        content.Add(key, openApiMediaType);
-                    }
+                    content.Add(key, openApiMediaType);
                 }
             }
 
             return content;
+        }
+
+        private IOpenApiAny MapExample(string exampleAsJson)
+        {
+            var stringAsStream = new MemoryStream(Encoding.UTF8.GetBytes(exampleAsJson));
+
+            var reader = new OpenApiStreamReader();
+            return reader.ReadFragment<IOpenApiAny>(stringAsStream, OpenApiSpecVersion.OpenApi3_0, out var _);
+        }
+
+        private OpenApiSchema MapMediaTypeSchema(string typeAsString)
+        {
+            if (typeAsString.StartsWith("{"))
+            {
+                var objectType = JsonConvert.DeserializeObject<ObjectType>(typeAsString, _jsonSerializerSettings);
+                return MapSchema(objectType);
+            }
+
+            var referenceSchemas = typeAsString
+                .Split(new[] { '|' }, StringSplitOptions.RemoveEmptyEntries)
+                .Select(o => CreateDummyOpenApiReferenceSchema(o.Trim()))
+                .ToList();
+
+            if (referenceSchemas.Count == 1)
+            {
+                return referenceSchemas.Single();
+            }
+
+            return new OpenApiSchema
+            {
+                AnyOf = referenceSchemas
+            };
         }
 
         private OpenApiSchema CreateDummyOpenApiReferenceSchema(string referenceId)
