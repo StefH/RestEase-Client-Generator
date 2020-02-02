@@ -17,20 +17,21 @@ namespace RamlToOpenApiConverter
         {
             var serializer = new Serializer();
 
-            var resultDictionary = serializer.Deserialize<IDictionary<object, object>>(stream);
+            var result = serializer.Deserialize<IDictionary<object, object>>(stream);
 
             // Step 1 - Get all types
-            _types = resultDictionary.GetAsDictionary("types");
+            _types = result.GetAsDictionary("types");
 
             // Step 2 - Get Info and Components
             _doc = new OpenApiDocument
             {
-                Info = MapInfo(resultDictionary),
+                Info = MapInfo(result),
+                Servers = MapServers(result),
                 Components = MapComponents(_types)
             };
 
             // Step 3 - Get Paths
-            _doc.Paths = MapPaths(resultDictionary);
+            _doc.Paths = MapPaths(result);
 
             // Check if valid
             var text = _doc.Serialize(OpenApiSpecVersion.OpenApi3_0, OpenApiFormat.Json);
