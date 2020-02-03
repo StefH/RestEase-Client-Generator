@@ -22,7 +22,7 @@ namespace RestEaseClientGenerator
             if (Path.GetExtension(path).EndsWith("raml",StringComparison.OrdinalIgnoreCase))
             {
                 diagnostic = new OpenApiDiagnostic();
-                document = new RamlConverter().ConvertToOpenApiDocument(File.OpenRead(path));
+                document = new RamlConverter().ConvertToOpenApiDocument(path);
             }
             else
             {

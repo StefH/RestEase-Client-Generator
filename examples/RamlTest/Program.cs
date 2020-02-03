@@ -8,7 +8,7 @@ namespace RamlTest
     {
         static void Main(string[] args)
         {
-            var doc = new RamlConverter().ConvertToOpenApiDocument(File.OpenRead("MediaWiki.raml"));
+            var doc = new RamlConverter().ConvertToOpenApiDocument("MediaWiki.raml");
 
             int y = 0;
         }

@@ -18,14 +18,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MediaWikiRaml.Api
         /// GetHelloworld (/helloworld)
         /// </summary>
         [Get("/helloworld")]
-        Task GetHelloworldAsync();
-
-        /// <summary>
-        /// Put (/)
-        /// </summary>
-        [Put("/")]
-        [Header("Content-Type", "application/json")]
-        Task PutAsync();
+        Task<GetHelloworldResult> GetHelloworldAsync();
 
         /// <summary>
         /// Get (/)
