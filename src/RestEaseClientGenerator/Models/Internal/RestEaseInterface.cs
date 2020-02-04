@@ -17,5 +17,7 @@ namespace RestEaseClientGenerator.Models.Internal
         public ICollection<RestEaseInterfaceMethodDetails> Methods { get; set; } = new List<RestEaseInterfaceMethodDetails>();
 
         public ICollection<RestEaseModel> InlineModels { get; set; } = new List<RestEaseModel>();
+
+        public ICollection<RestEaseEnum> InlineEnums { get; set; } = new List<RestEaseEnum>();
     }
 }

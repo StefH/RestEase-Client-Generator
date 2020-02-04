@@ -17,6 +17,25 @@ namespace RestEaseClientGeneratorConsoleApp
 
             var generator = new Generator();
 
+            var petStoreOpenApi3Settings = new GeneratorSettings
+            {
+                Namespace = "RestEaseClientGeneratorConsoleApp.Examples.PetStoreOpenApi302",
+                ApiName = "PetStoreOpenApi3",
+                GenerateFormUrlEncodedExtensionMethods = true,
+                GenerateMultipartFormDataExtensionMethods = true,
+                GenerateApplicationOctetStreamExtensionMethods = true,
+                ApplicationOctetStreamType = ApplicationOctetStreamType.ByteArray,
+                PreferredContentType = ContentType.ApplicationJson,
+                DefineAllMethodHeadersOnInterface = true,
+                MethodReturnType = MethodReturnType.Type
+            };
+            foreach (var file in generator.FromFile("Examples\\petstore-openapi3.json", petStoreOpenApi3Settings, out OpenApiDiagnostic diagnosticPetStoreOpenApi3))
+            {
+                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/PetStoreOpenApi302/{file.Path}/{file.Name}", file.Content);
+            }
+
+            return;
+
 
             // https://medium.com/raml-api/oas-raml-converter-quick-start-3a20664fa94a
             //var ramlSettings = new GeneratorSettings

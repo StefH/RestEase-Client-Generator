@@ -656,6 +656,12 @@
               "wrapped": true
             },
             "items": { "$ref": "#/components/schemas/Address" }
+          },
+          "status": {
+            "type": "string",
+            "description": "Status2",
+            "example": "approved",
+            "enum": [ "placed", "approved", "delivered", "xyz" ]
           }
         },
         "xml": { "name": "customer" }

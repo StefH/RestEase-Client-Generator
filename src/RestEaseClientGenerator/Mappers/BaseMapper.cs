@@ -1,8 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Microsoft.OpenApi;
+using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
 using RestEaseClientGenerator.Extensions;
+using RestEaseClientGenerator.Models.Internal;
 using RestEaseClientGenerator.Settings;
 using RestEaseClientGenerator.Types;
 
@@ -11,6 +14,8 @@ namespace RestEaseClientGenerator.Mappers
     public abstract class BaseMapper
     {
         private string DateTime => Settings.UseDateTimeOffset ? "DateTimeOffset" : "DateTime";
+
+        protected readonly IList<RestEaseEnum> Enums = new List<RestEaseEnum>();
 
         protected readonly GeneratorSettings Settings;
 
@@ -118,6 +123,46 @@ namespace RestEaseClientGenerator.Mappers
                             }
 
                         default:
+                            if (schema.Enum != null && schema.Enum.Any())
+                            {
+                                string enumName = name.ToPascalCase();
+                                var enumValues = schema.Enum.OfType<OpenApiString>().Select(s => s.Value).ToList();
+
+                                var existingEnum = Enums.FirstOrDefault(e => e.EnumName == enumName);
+                                if (existingEnum == null)
+                                {
+                                    var newEnum = new RestEaseEnum
+                                    {
+                                        Namespace = Settings.Namespace,
+                                        EnumName = enumName,
+                                        Values = enumValues
+                                    };
+
+                                    Enums.Add(newEnum);
+                                }
+                                else
+                                {
+                                    if (!existingEnum.Values.SequenceEqual(enumValues))
+                                    {
+                                        // Same name but different values => create new name
+                                        var match = Regex.Match(enumName, @"\d+$");
+                                        int counter = (match.Success ? int.Parse(match.Value) : 0) + 1;
+                                        enumName = $"{enumName}{counter}";
+
+                                        var newEnum = new RestEaseEnum
+                                        {
+                                            Namespace = Settings.Namespace,
+                                            EnumName = enumName,
+                                            Values = enumValues
+                                        };
+
+                                        Enums.Add(newEnum);
+                                    }
+                                }
+
+                                return $"{enumName}{nameCamelCase}";
+                            }
+
                             return $"string{nameCamelCase}";
                     }
 
