@@ -5,13 +5,13 @@ using RestEaseClientGenerator.Settings;
 
 namespace RestEaseClientGenerator.Builders
 {
-    internal class ModelBuilder : BaseBuilder
+    internal class EnumBuilder : BaseBuilder
     {
-        public ModelBuilder(GeneratorSettings settings) : base(settings)
+        public EnumBuilder(GeneratorSettings settings) : base(settings)
         {
         }
 
-        public string Build(RestEaseModel restEaseModel)
+        public string Build(RestEaseEnum restEaseEnum)
         {
             var builder = new StringBuilder();
             if (!Settings.SingleFile)
@@ -21,15 +21,16 @@ namespace RestEaseClientGenerator.Builders
                 builder.AppendLine();
             }
 
-            builder.AppendLine($"namespace {AppendModelsNamespace(restEaseModel.Namespace)}");
+            builder.AppendLine($"namespace {AppendModelsNamespace(restEaseEnum.Namespace)}");
             builder.AppendLine("{");
-            builder.AppendLine($"    public class {restEaseModel.ClassName}");
+            builder.AppendLine($"    public enum {restEaseEnum.EnumName}");
             builder.AppendLine("    {");
-            foreach (var property in restEaseModel.Properties)
+            foreach (string enumValue in restEaseEnum.Values)
             {
-                builder.AppendLine($"        public {property} {{ get; set; }}");
-                if (property != restEaseModel.Properties.Last())
+                builder.AppendLine($"        {enumValue}");
+                if (enumValue != restEaseEnum.Values.Last())
                 {
+                    builder.Append(",");
                     builder.AppendLine();
                 }
             }

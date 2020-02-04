@@ -134,6 +134,8 @@ namespace RestEaseClientGenerator.Mappers
                 }
             }
 
+            @interface.InlineEnums = Enums;
+
             return @interface;
         }
 

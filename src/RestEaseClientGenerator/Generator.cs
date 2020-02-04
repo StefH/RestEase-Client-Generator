@@ -81,6 +81,15 @@ namespace RestEaseClientGenerator
                     Name = $"{model.ClassName}.cs",
                     Content = modelBuilder.Build(model)
                 }));
+
+                // Add Inline Enums
+                var enumBuilder = new EnumBuilder(settings);
+                files.AddRange(@interface.InlineEnums.Select(@enum => new GeneratedFile
+                {
+                    Path = settings.ModelsNamespace,
+                    Name = $"{@enum.EnumName}.cs",
+                    Content = enumBuilder.Build(@enum)
+                }));
             }
 
             if (settings.SingleFile)
