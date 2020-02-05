@@ -3,14 +3,14 @@
 [![Rating](https://vsmarketplacebadge.apphb.com/rating-star/StefHeyenrath.RestEaseClientGenerator.svg)](https://marketplace.visualstudio.com/items?itemName=StefHeyenrath.RestEaseClientGenerator)
 
 # RestEase Client Generator
-A Visual Studio Extension to generate a [RestEase](https://github.com/canton7/RestEase) compatible client (Interface & Models) based on a [Swagger / OpenApi](https://swagger.io/specification/) specification.
+A Visual Studio Extension to generate a [RestEase](https://github.com/canton7/RestEase) compatible client (Interface & Models) based on a [Swagger / OpenApi](https://swagger.io/specification/) or [RAML](https://raml.org/) specification.
 
 
 ## Features
 - Supports Visual Studio 2017 and 2019
 - Add New RestEase API Client to a project from an OpenAPI specification URL (e.g https://petstore.swagger.io/v2/swagger.json)
 - Define custom namespace for the generated file
-- Auto-updating of generated code file when changes are made to the specification file (.json, .yml or .yaml)
+- Auto-updating of generated code file when changes are made to the specification file (.json, .yml, .yaml, .raml)
 
 
 ### Custom Tools
