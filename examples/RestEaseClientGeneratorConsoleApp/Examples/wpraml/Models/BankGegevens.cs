@@ -5,7 +5,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.wpraml.Models
 {
     public class BankGegevens
     {
-        public int Klantnummer { get; set; }
+        public int? Klantnummer { get; set; }
 
         public string ExcassoIBAN { get; set; }
 
