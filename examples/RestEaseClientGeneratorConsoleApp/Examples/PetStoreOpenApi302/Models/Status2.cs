@@ -3,12 +3,12 @@ using System.Collections.Generic;
 
 namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreOpenApi302.Models
 {
-    public enum Status
+    public enum Status2
     {
-        placed
+        available
 ,
-        approved
+        pending
 ,
-        delivered
+        sold
     }
 }

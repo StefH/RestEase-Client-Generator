@@ -17,6 +17,6 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreOpenApi302.Models
 
         public Tag[] Tags { get; set; }
 
-        public string Status { get; set; }
+        public Status2 Status { get; set; }
     }
 }

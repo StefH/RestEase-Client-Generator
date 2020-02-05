@@ -8,8 +8,8 @@ namespace RestEaseClientGenerator.Models.Internal
 
         public string EnumName { get; set; }
 
-        public ICollection<string> Values { get; set; }
+        public string BaseName { get; set; }
 
-        public string RawValue { get; set; }
+        public ICollection<string> Values { get; set; }
     }
 }

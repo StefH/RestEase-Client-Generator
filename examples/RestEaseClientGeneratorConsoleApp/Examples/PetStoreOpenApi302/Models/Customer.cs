@@ -10,5 +10,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreOpenApi302.Models
         public string Username { get; set; }
 
         public Address[] Address { get; set; }
+
+        public Status1 Status { get; set; }
     }
 }
