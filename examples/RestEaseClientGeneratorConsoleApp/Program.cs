@@ -16,15 +16,15 @@ namespace RestEaseClientGeneratorConsoleApp
             var generator = new Generator();
 
             // https://medium.com/raml-api/oas-raml-converter-quick-start-3a20664fa94a
-            //var ramlSettings = new GeneratorSettings
-            //{
-            //    Namespace = "RestEaseClientGeneratorConsoleApp.Examples.HelloWorldRaml",
-            //    ApiName = "HelloWorldRaml"
-            //};
-            //foreach (var file in generator.FromFile("Examples\\helloworld.raml", ramlSettings, out var diagnosticHW))
-            //{
-            //    File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/HelloWorldRaml/{file.Path}/{file.Name}", file.Content);
-            //}
+            var ramlSettings = new GeneratorSettings
+            {
+                Namespace = "RestEaseClientGeneratorConsoleApp.Examples.HelloWorldRaml",
+                ApiName = "HelloWorldRaml"
+            };
+            foreach (var file in generator.FromFile("Examples\\helloworld.raml", ramlSettings, out var diagnosticHW))
+            {
+                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/HelloWorldRaml/{file.Path}/{file.Name}", file.Content);
+            }
 
             var wpSettings = new GeneratorSettings
             {
@@ -37,8 +37,6 @@ namespace RestEaseClientGeneratorConsoleApp
                 File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/wpraml/{file.Path}/{file.Name}", file.Content);
             }
 
-            return;
-            
             var petStoreOpenApi3Settings = new GeneratorSettings
             {
                 Namespace = "RestEaseClientGeneratorConsoleApp.Examples.PetStoreOpenApi302",
@@ -55,10 +53,6 @@ namespace RestEaseClientGeneratorConsoleApp
             {
                 File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/PetStoreOpenApi302/{file.Path}/{file.Name}", file.Content);
             }
-
-            
-
-            
 
             var mediaWikiSettings = new GeneratorSettings
             {
@@ -133,15 +127,21 @@ namespace RestEaseClientGeneratorConsoleApp
                 ApiNamespace = "Test123",
                 ModelsNamespace = "Modelz"
             };
+
             foreach (var file in generator.FromFile("Examples\\petstore.json", petStoreJsonSettings, out OpenApiDiagnostic diagnosticPetStore1))
             {
                 File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/PetStoreJson/{file.Name}", file.Content);
             }
 
-            //foreach (var file in generator.FromFile("Examples\\infura.yaml", "RestEaseClientGeneratorConsoleApp.Examples.Infura", "Infura", false, out OpenApiDiagnostic diagnosticInfura))
-            //{
-            //    File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Infura/{file.Path}/{file.Name}", file.Content);
-            //}
+            var iSettings = new GeneratorSettings
+            {
+                Namespace = "RestEaseClientGeneratorConsoleApp.Examples.Infura",
+                ApiName = "Infura"
+            };
+            foreach (var file in generator.FromFile("Examples\\infura.yaml", iSettings, out OpenApiDiagnostic diagnosticInfura))
+            {
+                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Infura/{file.Path}/{file.Name}", file.Content);
+            }
 
             var cogSettings = new GeneratorSettings
             {
@@ -155,15 +155,25 @@ namespace RestEaseClientGeneratorConsoleApp
                 File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Cog/{file.Path}/{file.Name}", file.Content);
             }
 
-            //foreach (var file in generator.FromFile("Examples\\SpeechServices.json", "RestEaseClientGeneratorConsoleApp.Examples.SpeechServices", "SpeechServices", false, out var diagnosticSpeech))
-            //{
-            //    File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/SpeechServices/{file.Path}/{file.Name}", file.Content);
-            //}
+            var spSettings = new GeneratorSettings
+            {
+                Namespace = "RestEaseClientGeneratorConsoleApp.Examples.SpeechServices",
+                ApiName = "SpeechServices"
+            };
+            foreach (var file in generator.FromFile("Examples\\SpeechServices.json", spSettings, out var diagnosticSpeech))
+            {
+                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/SpeechServices/{file.Path}/{file.Name}", file.Content);
+            }
 
-            //foreach (var file in generator.FromFile(File.OpenRead("Examples\\FormRecognizer.json"), "RestEaseClientGeneratorConsoleApp.Examples.FormRecognizer", "FormRecognizer", false, out var diagnosticFormRecognizer))
-            //{
-            //    File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/FormRecognizer/{file.Path}/{file.Name}", file.Content);
-            //}
+            var frSettings = new GeneratorSettings
+            {
+                Namespace = "RestEaseClientGeneratorConsoleApp.Examples.FormRecognizer",
+                ApiName = "FormRecognizer"
+            };
+            foreach (var file in generator.FromFile("Examples\\FormRecognizer.json", frSettings, out var diagnosticFormRecognizer))
+            {
+                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/FormRecognizer/{file.Path}/{file.Name}", file.Content);
+            }
 
             var formSettings = new GeneratorSettings
             {
@@ -188,10 +198,9 @@ namespace RestEaseClientGeneratorConsoleApp
                 File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/ComputerVision/{file.Path}/{file.Name}", file.Content);
             }
 
+            PetStoreTests.Run();
 
-            //PetStoreTests.Run();
-
-            //PetStoreOpenApi3ApiTests.Run();
+            PetStoreOpenApi3ApiTests.Run();
         }
     }
 }
