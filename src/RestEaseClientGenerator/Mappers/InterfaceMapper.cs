@@ -643,7 +643,7 @@ namespace RestEaseClientGenerator.Mappers
                 attributes.Add($"\"{identifier}\"");
             }
 
-            object identifierWithType;
+            string identifierWithType;
             if (identifier != validIdentifier)
             {
                 switch (parameterLocation)
@@ -656,7 +656,7 @@ namespace RestEaseClientGenerator.Mappers
 
                 attributes.AddRange(extraAttributes);
 
-                identifierWithType = _schemaMapper.MapSchema(schema, validIdentifier, !required, false, null);
+                identifierWithType = $"{_schemaMapper.MapSchema(schema, validIdentifier, !required, false, null)}";
 
                 return new RestEaseParameter
                 {
@@ -674,7 +674,7 @@ namespace RestEaseClientGenerator.Mappers
             }
 
             string extraAttributesBetweenParentheses = extraAttributes.Length == 0 ? string.Empty : $"({string.Join(", ", extraAttributes)})";
-            identifierWithType = _schemaMapper.MapSchema(schema, identifier, !required, false, null);
+            identifierWithType = $"{_schemaMapper.MapSchema(schema, identifier, !required, false, null)}";
 
             return new RestEaseParameter
             {

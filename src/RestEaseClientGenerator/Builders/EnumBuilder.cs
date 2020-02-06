@@ -25,15 +25,7 @@ namespace RestEaseClientGenerator.Builders
             builder.AppendLine("{");
             builder.AppendLine($"    public enum {restEaseEnum.EnumName}");
             builder.AppendLine("    {");
-            foreach (string enumValue in restEaseEnum.Values)
-            {
-                builder.AppendLine($"        {enumValue}");
-                if (enumValue != restEaseEnum.Values.Last())
-                {
-                    builder.Append(",");
-                    builder.AppendLine();
-                }
-            }
+            builder.AppendLine(string.Join(",\n", restEaseEnum.Values.Select(enumValue => $"        {enumValue}")));
             builder.AppendLine("    }");
             builder.AppendLine("}");
 

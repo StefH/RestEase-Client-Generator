@@ -31,6 +31,6 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MediaWiki.Api
         /// <param name="export"></param>
         /// <param name="indexpageids"></param>
         [Get("/")]
-        Task<GetOneOfResult> GetAsync([Query] Action action, [Query] Titles titles, [Query] Format format, [Query] string redirects, [Query] Generator generator, [Query] string export, [Query] string indexpageids);
+        Task<GetOneOfResult> GetAsync([Query] Models.Action action, [Query] Titles titles, [Query] Format format, [Query] string redirects, [Query] Generator generator, [Query] string export, [Query] string indexpageids);
     }
 }

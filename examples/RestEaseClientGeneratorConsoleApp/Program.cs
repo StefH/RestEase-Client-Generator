@@ -16,16 +16,16 @@ namespace RestEaseClientGeneratorConsoleApp
             var generator = new Generator();
 
             // https://medium.com/raml-api/oas-raml-converter-quick-start-3a20664fa94a
-            var mediaWikiSettings = new GeneratorSettings
-            {
-                Namespace = "RestEaseClientGeneratorConsoleApp.Examples.MediaWiki",
-                ApiName = "MediaWiki",
-                UseOperationIdAsMethodName = false
-            };
-            foreach (var file in generator.FromFile("Examples\\MediaWiki.json", mediaWikiSettings, out var diagnosticMM))
-            {
-                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/MediaWiki/{file.Path}/{file.Name}", file.Content);
-            }
+            //var mediaWikiSettings = new GeneratorSettings
+            //{
+            //    Namespace = "RestEaseClientGeneratorConsoleApp.Examples.MediaWiki",
+            //    ApiName = "MediaWiki",
+            //    UseOperationIdAsMethodName = false
+            //};
+            //foreach (var file in generator.FromFile("Examples\\MediaWiki.json", mediaWikiSettings, out var diagnosticMM))
+            //{
+            //    File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/MediaWiki/{file.Path}/{file.Name}", file.Content);
+            //}
 
             return;
 
