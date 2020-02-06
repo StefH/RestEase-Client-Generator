@@ -15,6 +15,23 @@ namespace RestEaseClientGeneratorConsoleApp
         {
             var generator = new Generator();
 
+            // TODO : null array from enums
+            var petStoreSettings = new GeneratorSettings
+            {
+                ArrayType = ArrayType.ICollection,
+                Namespace = "RestEaseClientGeneratorConsoleApp.Examples.PetStore",
+                ApiName = "PetStore",
+                SupportExtensionXNullable = true,
+                ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified = true
+            };
+            foreach (var file in generator.FromFile("Examples\\petstore.yaml", petStoreSettings, out OpenApiDiagnostic diagnosticPetStore1))
+            {
+                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/PetStore/{file.Path}/{file.Name}", file.Content);
+            }
+            return;
+            ;
+
+            // TODO : `Action`
             // https://medium.com/raml-api/oas-raml-converter-quick-start-3a20664fa94a
             //var mediaWikiSettings = new GeneratorSettings
             //{
@@ -27,7 +44,7 @@ namespace RestEaseClientGeneratorConsoleApp
             //    File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/MediaWiki/{file.Path}/{file.Name}", file.Content);
             //}
 
-            return;
+            //return;
 
             var ramlSettings = new GeneratorSettings
             {
@@ -68,16 +85,16 @@ namespace RestEaseClientGeneratorConsoleApp
             }
 
             
-
-            var mediaWikiRamlSettings = new GeneratorSettings
-            {
-                Namespace = "RestEaseClientGeneratorConsoleApp.Examples.MediaWikiRaml",
-                ApiName = "MediaWikiRaml"
-            };
-            foreach (var file in generator.FromFile("Examples\\MediaWiki.Raml", mediaWikiRamlSettings, out var diagnosticMMR))
-            {
-                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/MediaWikiRaml/{file.Path}/{file.Name}", file.Content);
-            }
+            // TODO : missing query params
+            //var mediaWikiRamlSettings = new GeneratorSettings
+            //{
+            //    Namespace = "RestEaseClientGeneratorConsoleApp.Examples.MediaWikiRaml",
+            //    ApiName = "MediaWikiRaml"
+            //};
+            //foreach (var file in generator.FromFile("Examples\\MediaWiki.Raml", mediaWikiRamlSettings, out var diagnosticMMR))
+            //{
+            //    File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/MediaWikiRaml/{file.Path}/{file.Name}", file.Content);
+            //}
 
 
             //var drcSettings = new GeneratorSettings
@@ -106,18 +123,7 @@ namespace RestEaseClientGeneratorConsoleApp
                 File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/SharedQuery/{file.Path}/{file.Name}", file.Content);
             }
 
-            var petStoreSettings = new GeneratorSettings
-            {
-                ArrayType = ArrayType.ICollection,
-                Namespace = "RestEaseClientGeneratorConsoleApp.Examples.PetStore",
-                ApiName = "PetStore",
-                SupportExtensionXNullable = true,
-                ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified = true
-            };
-            foreach (var file in generator.FromFile("Examples\\petstore.yaml", petStoreSettings, out OpenApiDiagnostic diagnosticPetStore1))
-            {
-                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/PetStore/{file.Path}/{file.Name}", file.Content);
-            }
+           
 
             var petStoreJsonSettings = new GeneratorSettings
             {
@@ -131,7 +137,6 @@ namespace RestEaseClientGeneratorConsoleApp
                 ApiNamespace = "Test123",
                 ModelsNamespace = "Modelz"
             };
-
             foreach (var file in generator.FromFile("Examples\\petstore.json", petStoreJsonSettings, out OpenApiDiagnostic diagnosticPetStore1))
             {
                 File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/PetStoreJson/{file.Name}", file.Content);
