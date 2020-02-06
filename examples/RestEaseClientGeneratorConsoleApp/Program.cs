@@ -15,19 +15,18 @@ namespace RestEaseClientGeneratorConsoleApp
         {
             var generator = new Generator();
 
-            // TODO : missing query params
-            var mediaWikiRamlSettings = new GeneratorSettings
-            {
-                Namespace = "RestEaseClientGeneratorConsoleApp.Examples.MediaWikiRaml",
-                ApiName = "MediaWikiRaml"
-            };
-            foreach (var file in generator.FromFile("Examples\\MediaWiki.Raml", mediaWikiRamlSettings, out var diagnosticMMR))
-            {
-                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/MediaWikiRaml/{file.Path}/{file.Name}", file.Content);
-            }
+            // TODO : `Action`
+            //var mediaWikiRamlSettings = new GeneratorSettings
+            //{
+            //    Namespace = "RestEaseClientGeneratorConsoleApp.Examples.MediaWikiRaml",
+            //    ApiName = "MediaWikiRaml"
+            //};
+            //foreach (var file in generator.FromFile("Examples\\MediaWiki.Raml", mediaWikiRamlSettings, out var diagnosticMMR))
+            //{
+            //    File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/MediaWikiRaml/{file.Path}/{file.Name}", file.Content);
+            //}
 
 
-            return;
             // TODO : null array from enums
             //var petStoreSettings = new GeneratorSettings
             //{
@@ -64,6 +63,8 @@ namespace RestEaseClientGeneratorConsoleApp
             {
                 File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/HelloWorldRaml/{file.Path}/{file.Name}", file.Content);
             }
+
+            return;
 
             var wpSettings = new GeneratorSettings
             {

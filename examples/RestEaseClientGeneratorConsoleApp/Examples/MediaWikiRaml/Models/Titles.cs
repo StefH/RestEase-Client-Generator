@@ -5,10 +5,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MediaWikiRaml.Models
 {
     public enum Titles
     {
-        A
-,
-        B
-,
+        A,
+        B,
         C
     }
 }

@@ -5,7 +5,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MediaWikiRaml.Models
 {
     public class Page
     {
-        public double Ns { get; set; }
+        public int? Ns { get; set; }
 
         public string Title { get; set; }
 

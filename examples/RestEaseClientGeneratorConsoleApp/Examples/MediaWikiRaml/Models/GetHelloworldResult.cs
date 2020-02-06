@@ -7,6 +7,6 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MediaWikiRaml.Models
     {
         public string Message { get; set; }
 
-        public double Id { get; set; }
+        public int? Id { get; set; }
     }
 }
