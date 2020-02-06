@@ -7,7 +7,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.SpeechServices.Models
     {
         public string Id { get; set; }
 
-        public string DataImportKind { get; set; }
+        public DataImportKind DataImportKind { get; set; }
 
         public string Name { get; set; }
 
@@ -19,7 +19,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.SpeechServices.Models
 
         public DateTime LastActionDateTime { get; set; }
 
-        public string Status { get; set; }
+        public Status Status { get; set; }
 
         public DateTime CreatedDateTime { get; set; }
     }

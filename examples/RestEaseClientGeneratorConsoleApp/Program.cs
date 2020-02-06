@@ -15,22 +15,33 @@ namespace RestEaseClientGeneratorConsoleApp
         {
             var generator = new Generator();
 
-            // TODO : null array from enums
-            var petStoreSettings = new GeneratorSettings
+            // TODO : missing query params
+            var mediaWikiRamlSettings = new GeneratorSettings
             {
-                ArrayType = ArrayType.ICollection,
-                Namespace = "RestEaseClientGeneratorConsoleApp.Examples.PetStore",
-                ApiName = "PetStore",
-                SupportExtensionXNullable = true,
-                ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified = true
+                Namespace = "RestEaseClientGeneratorConsoleApp.Examples.MediaWikiRaml",
+                ApiName = "MediaWikiRaml"
             };
-            foreach (var file in generator.FromFile("Examples\\petstore.yaml", petStoreSettings, out OpenApiDiagnostic diagnosticPetStore1))
+            foreach (var file in generator.FromFile("Examples\\MediaWiki.Raml", mediaWikiRamlSettings, out var diagnosticMMR))
             {
-                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/PetStore/{file.Path}/{file.Name}", file.Content);
+                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/MediaWikiRaml/{file.Path}/{file.Name}", file.Content);
             }
-            return;
-            ;
 
+
+            return;
+            // TODO : null array from enums
+            //var petStoreSettings = new GeneratorSettings
+            //{
+            //    ArrayType = ArrayType.ICollection,
+            //    Namespace = "RestEaseClientGeneratorConsoleApp.Examples.PetStore",
+            //    ApiName = "PetStore",
+            //    SupportExtensionXNullable = true,
+            //    ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified = true
+            //};
+            //foreach (var file in generator.FromFile("Examples\\petstore.yaml", petStoreSettings, out OpenApiDiagnostic diagnosticPetStore1))
+            //{
+            //    File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/PetStore/{file.Path}/{file.Name}", file.Content);
+            //}
+            
             // TODO : `Action`
             // https://medium.com/raml-api/oas-raml-converter-quick-start-3a20664fa94a
             //var mediaWikiSettings = new GeneratorSettings
@@ -43,8 +54,6 @@ namespace RestEaseClientGeneratorConsoleApp
             //{
             //    File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/MediaWiki/{file.Path}/{file.Name}", file.Content);
             //}
-
-            //return;
 
             var ramlSettings = new GeneratorSettings
             {
@@ -85,16 +94,7 @@ namespace RestEaseClientGeneratorConsoleApp
             }
 
             
-            // TODO : missing query params
-            //var mediaWikiRamlSettings = new GeneratorSettings
-            //{
-            //    Namespace = "RestEaseClientGeneratorConsoleApp.Examples.MediaWikiRaml",
-            //    ApiName = "MediaWikiRaml"
-            //};
-            //foreach (var file in generator.FromFile("Examples\\MediaWiki.Raml", mediaWikiRamlSettings, out var diagnosticMMR))
-            //{
-            //    File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/MediaWikiRaml/{file.Path}/{file.Name}", file.Content);
-            //}
+            
 
 
             //var drcSettings = new GeneratorSettings
@@ -122,9 +122,7 @@ namespace RestEaseClientGeneratorConsoleApp
             {
                 File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/SharedQuery/{file.Path}/{file.Name}", file.Content);
             }
-
-           
-
+            
             var petStoreJsonSettings = new GeneratorSettings
             {
                 SingleFile = true,
@@ -142,15 +140,16 @@ namespace RestEaseClientGeneratorConsoleApp
                 File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/PetStoreJson/{file.Name}", file.Content);
             }
 
-            var iSettings = new GeneratorSettings
-            {
-                Namespace = "RestEaseClientGeneratorConsoleApp.Examples.Infura",
-                ApiName = "Infura"
-            };
-            foreach (var file in generator.FromFile("Examples\\infura.yaml", iSettings, out OpenApiDiagnostic diagnosticInfura))
-            {
-                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Infura/{file.Path}/{file.Name}", file.Content);
-            }
+            // TODO : errors enums
+            //var iSettings = new GeneratorSettings
+            //{
+            //    Namespace = "RestEaseClientGeneratorConsoleApp.Examples.Infura",
+            //    ApiName = "Infura"
+            //};
+            //foreach (var file in generator.FromFile("Examples\\infura.yaml", iSettings, out OpenApiDiagnostic diagnosticInfura))
+            //{
+            //    File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Infura/{file.Path}/{file.Name}", file.Content);
+            //}
 
             var cogSettings = new GeneratorSettings
             {
@@ -164,37 +163,29 @@ namespace RestEaseClientGeneratorConsoleApp
                 File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Cog/{file.Path}/{file.Name}", file.Content);
             }
 
-            var spSettings = new GeneratorSettings
-            {
-                Namespace = "RestEaseClientGeneratorConsoleApp.Examples.SpeechServices",
-                ApiName = "SpeechServices"
-            };
-            foreach (var file in generator.FromFile("Examples\\SpeechServices.json", spSettings, out var diagnosticSpeech))
-            {
-                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/SpeechServices/{file.Path}/{file.Name}", file.Content);
-            }
+            // TODO : Events
+            //var spSettings = new GeneratorSettings
+            //{
+            //    Namespace = "RestEaseClientGeneratorConsoleApp.Examples.SpeechServices",
+            //    ApiName = "SpeechServices"
+            //};
+            //foreach (var file in generator.FromFile("Examples\\SpeechServices.json", spSettings, out var diagnosticSpeech))
+            //{
+            //    File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/SpeechServices/{file.Path}/{file.Name}", file.Content);
+            //}
 
-            var frSettings = new GeneratorSettings
-            {
-                Namespace = "RestEaseClientGeneratorConsoleApp.Examples.FormRecognizer",
-                ApiName = "FormRecognizer"
-            };
-            foreach (var file in generator.FromFile("Examples\\FormRecognizer.json", frSettings, out var diagnosticFormRecognizer))
-            {
-                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/FormRecognizer/{file.Path}/{file.Name}", file.Content);
-            }
-
-            var formSettings = new GeneratorSettings
-            {
-                Namespace = "RestEaseClientGeneratorConsoleApp.Examples.FormRecognizer.V2",
-                ApiName = "FormRecognizerV2",
-                SupportExtensionXNullable = true,
-                PreferredSecurityDefinitionType = SecurityDefinitionType.Query
-            };
-            foreach (var file in generator.FromFile("Examples\\FormRecognizerV2.json", formSettings, out var diagnosticFormRecognizerV2))
-            {
-                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/FormRecognizerV2/{file.Path}/{file.Name}", file.Content);
-            }
+            // TODO : Errors enums
+            //var formSettings = new GeneratorSettings
+            //{
+            //    Namespace = "RestEaseClientGeneratorConsoleApp.Examples.FormRecognizer.V2",
+            //    ApiName = "FormRecognizerV2",
+            //    SupportExtensionXNullable = true,
+            //    PreferredSecurityDefinitionType = SecurityDefinitionType.Query
+            //};
+            //foreach (var file in generator.FromFile("Examples\\FormRecognizerV2.json", formSettings, out var diagnosticFormRecognizerV2))
+            //{
+            //    File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/FormRecognizerV2/{file.Path}/{file.Name}", file.Content);
+            //}
 
             var computerVisionSettings = new GeneratorSettings
             {

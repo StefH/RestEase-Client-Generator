@@ -5,7 +5,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.SpeechServices.Models
 {
     public class HealthStatusResponse
     {
-        public string Status { get; set; }
+        public Status1 Status { get; set; }
 
         public string Message { get; set; }
 

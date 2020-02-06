@@ -5,10 +5,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreOpenApi302.Models
 {
     public enum Status
     {
-        placed
-,
-        approved
-,
+        placed,
+        approved,
         delivered
     }
 }

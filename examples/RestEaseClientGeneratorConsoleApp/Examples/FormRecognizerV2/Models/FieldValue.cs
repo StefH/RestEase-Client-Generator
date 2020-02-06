@@ -5,7 +5,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.FormRecognizer.V2.Models
 {
     public class FieldValue
     {
-        public string Type { get; set; }
+        public Type Type { get; set; }
 
         public string ValueString { get; set; }
 

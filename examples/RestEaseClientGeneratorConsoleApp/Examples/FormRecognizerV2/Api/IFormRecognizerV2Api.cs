@@ -40,7 +40,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.FormRecognizer.V2.Api
         /// <param name="content">Url to source data.</param>
         /// <param name="includeTextDetails">Include text lines and element references in the result.  Default: false.</param>
         [Post("/prebuilt/receipt/analyze")]
-        Task<AnalyzeOperationResult> AnalyzeReceiptAsync([Header("Content-Type")] string contentType, [Body] SourcePath content, [Query] bool? includeTextDetails = null);
+        Task<AnalyzeOperationResult> AnalyzeReceiptAsync([Header("Content-Type")] string contentType, [Body] SourcePath content, [Query] bool? includeTextDetails);
 
         /// <summary>
         /// Get Analyze Receipt Result
@@ -55,7 +55,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.FormRecognizer.V2.Api
         /// <param name="modelId">Format - uuid. Model identifier.</param>
         /// <param name="includeKeys">Include list of extracted keys in model information.</param>
         [Get("/custom/models/{modelId}")]
-        Task<Model> GetCustomModelAsync([Path] string modelId, [Query] bool? includeKeys = null);
+        Task<Model> GetCustomModelAsync([Path] string modelId, [Query] bool? includeKeys);
 
         /// <summary>
         /// Delete Custom Model
@@ -76,7 +76,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.FormRecognizer.V2.Api
         /// </summary>
         /// <param name="op">Specify whether to return summary or full list of models.</param>
         [Get("/custom/models")]
-        Task<Models.Models> GetCustomModelsAsync([Query] string op = null);
+        Task<Models.Models> GetCustomModelsAsync([Query] Op op);
 
         /// <summary>
         /// Train Custom Model
@@ -94,6 +94,6 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.FormRecognizer.V2.Api
         /// <param name="content">Url to source data.</param>
         /// <param name="includeTextDetails">Include text lines and element references in the result.  Default: false.</param>
         [Post("/custom/models/{modelId}/analyze")]
-        Task<AnalyzeOperationResult> AnalyzeWithCustomFormAsync([Header("Content-Type")] string contentType, [Path] string modelId, [Body] SourcePath content, [Query] bool? includeTextDetails = null);
+        Task<AnalyzeOperationResult> AnalyzeWithCustomFormAsync([Header("Content-Type")] string contentType, [Path] string modelId, [Body] SourcePath content, [Query] bool? includeTextDetails);
     }
 }

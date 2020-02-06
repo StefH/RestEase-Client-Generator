@@ -9,6 +9,6 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.SpeechServices.Models
 
         public ModelIdentity Model { get; set; }
 
-        public string VoiceTestKind { get; set; }
+        public VoiceTestKind VoiceTestKind { get; set; }
     }
 }
