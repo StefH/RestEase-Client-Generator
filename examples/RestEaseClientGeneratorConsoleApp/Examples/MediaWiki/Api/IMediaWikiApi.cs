@@ -21,13 +21,6 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MediaWiki.Api
         Task GetHelloworldAsync();
 
         /// <summary>
-        /// Put (/)
-        /// </summary>
-        [Put("/")]
-        [Header("Content-Type", "application/json")]
-        Task PutAsync();
-
-        /// <summary>
         /// Get (/)
         /// </summary>
         /// <param name="action"></param>
@@ -38,6 +31,6 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MediaWiki.Api
         /// <param name="export"></param>
         /// <param name="indexpageids"></param>
         [Get("/")]
-        Task<GetOneOfResult> GetAsync([Query] string action, [Query] string titles, [Query] string format, [Query] string redirects, [Query] string generator, [Query] string export, [Query] string indexpageids);
+        Task<GetOneOfResult> GetAsync([Query] Action action, [Query] Titles titles, [Query] Format format, [Query] string redirects, [Query] Generator generator, [Query] string export, [Query] string indexpageids);
     }
 }

@@ -93,7 +93,7 @@ namespace RestEaseClientGenerator.Mappers
                             {
                                 string enumName = name.ToPascalCase();
                                 string basename = enumName;
-                                var enumValues = schema.Enum.OfType<OpenApiString>().Select(s => s.Value).ToList();
+                                var enumValues = schema.Enum.OfType<OpenApiString>().SelectMany(str => str.Value.Split('|').Select(x => x.Trim())).ToList();
 
                                 var existingEnums = Enums.Where(e => e.BaseName == enumName).ToList();
                                 if (!existingEnums.Any())

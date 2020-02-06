@@ -35,28 +35,6 @@
       }
     },
     "/": {
-      "put": {
-        "responses": {
-          "401": {
-            "description": ""
-          },
-          "description": {
-            "description": ""
-          }
-        },
-        "description": "Update the scheme to include the passed mapping. The body is a representation of the workflow mapping. Values not passed are assumed to indicate no change for that field. The passed representation can have its updateDraftIfNeeded flag set to true to indicate that the draft should be created/updated when the actual scheme cannot be edited.",
-        "operationId": "PUT_root",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/workflowMappingsReq"
-              }
-            }
-          },
-          "required": true
-        }
-      },
       "get": {
         "responses": {
           "200": {
@@ -81,6 +59,16 @@
                       "$ref": "#/components/schemas/PagesLists"
                     }
                   ]
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Normalization"
                 }
               }
             }
