@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.OpenApi;
 using Microsoft.OpenApi.Any;
@@ -103,7 +104,7 @@ namespace RestEaseClientGenerator.Mappers
                             {
                                 string enumName = name.ToPascalCase();
                                 string basename = enumName;
-                                var enumValues = schema.Enum.OfType<OpenApiString>().SelectMany(str => str.Value.Split('|').Select(x => x.Trim())).ToList();
+                                var enumValues = schema.Enum.OfType<OpenApiString>().SelectMany(str => str.Value.Split(new[] { '|' }, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim())).ToList();
 
                                 var existingEnums = Enums.Where(e => e.BaseName == enumName).ToList();
                                 if (!existingEnums.Any())

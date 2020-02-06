@@ -15,6 +15,20 @@ namespace RestEaseClientGeneratorConsoleApp
         {
             var generator = new Generator();
 
+            // TODO : VisualFeatures ????
+            var computerVisionSettings = new GeneratorSettings
+            {
+                SingleFile = true,
+                Namespace = "RestEaseClientGeneratorConsoleApp.Examples.ComputerVision",
+                ApiName = "ComputerVision"
+            };
+            foreach (var file in generator.FromFile("Examples\\ComputerVision.json", computerVisionSettings, out var diagnosticComputerVision))
+            {
+                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/ComputerVision/{file.Path}/{file.Name}", file.Content);
+            }
+
+            return;
+
             // TODO : `Action`
             //var mediaWikiRamlSettings = new GeneratorSettings
             //{
@@ -26,21 +40,6 @@ namespace RestEaseClientGeneratorConsoleApp
             //    File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/MediaWikiRaml/{file.Path}/{file.Name}", file.Content);
             //}
 
-
-            // TODO : null array from enums
-            //var petStoreSettings = new GeneratorSettings
-            //{
-            //    ArrayType = ArrayType.ICollection,
-            //    Namespace = "RestEaseClientGeneratorConsoleApp.Examples.PetStore",
-            //    ApiName = "PetStore",
-            //    SupportExtensionXNullable = true,
-            //    ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified = true
-            //};
-            //foreach (var file in generator.FromFile("Examples\\petstore.yaml", petStoreSettings, out OpenApiDiagnostic diagnosticPetStore1))
-            //{
-            //    File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/PetStore/{file.Path}/{file.Name}", file.Content);
-            //}
-            
             // TODO : `Action`
             // https://medium.com/raml-api/oas-raml-converter-quick-start-3a20664fa94a
             //var mediaWikiSettings = new GeneratorSettings
@@ -54,6 +53,30 @@ namespace RestEaseClientGeneratorConsoleApp
             //    File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/MediaWiki/{file.Path}/{file.Name}", file.Content);
             //}
 
+            // TODO : errors enums
+            //var iSettings = new GeneratorSettings
+            //{
+            //    Namespace = "RestEaseClientGeneratorConsoleApp.Examples.Infura",
+            //    ApiName = "Infura"
+            //};
+            //foreach (var file in generator.FromFile("Examples\\infura.yaml", iSettings, out OpenApiDiagnostic diagnosticInfura))
+            //{
+            //    File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Infura/{file.Path}/{file.Name}", file.Content);
+            //}
+
+            var petStoreSettings = new GeneratorSettings
+            {
+                ArrayType = ArrayType.ICollection,
+                Namespace = "RestEaseClientGeneratorConsoleApp.Examples.PetStore",
+                ApiName = "PetStore",
+                SupportExtensionXNullable = true,
+                ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified = true
+            };
+            foreach (var file in generator.FromFile("Examples\\petstore.yaml", petStoreSettings, out OpenApiDiagnostic diagnosticPetStore1))
+            {
+                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/PetStore/{file.Path}/{file.Name}", file.Content);
+            }
+
             var ramlSettings = new GeneratorSettings
             {
                 Namespace = "RestEaseClientGeneratorConsoleApp.Examples.HelloWorldRaml",
@@ -63,8 +86,6 @@ namespace RestEaseClientGeneratorConsoleApp
             {
                 File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/HelloWorldRaml/{file.Path}/{file.Name}", file.Content);
             }
-
-            return;
 
             var wpSettings = new GeneratorSettings
             {
@@ -76,6 +97,8 @@ namespace RestEaseClientGeneratorConsoleApp
             {
                 File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/wpraml/{file.Path}/{file.Name}", file.Content);
             }
+
+            
 
             var petStoreOpenApi3Settings = new GeneratorSettings
             {
@@ -93,11 +116,7 @@ namespace RestEaseClientGeneratorConsoleApp
             {
                 File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/PetStoreOpenApi302/{file.Path}/{file.Name}", file.Content);
             }
-
             
-            
-
-
             //var drcSettings = new GeneratorSettings
             //{
             //    Namespace = "RestEaseClientGeneratorConsoleApp.Examples.Drc",
@@ -123,7 +142,7 @@ namespace RestEaseClientGeneratorConsoleApp
             {
                 File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/SharedQuery/{file.Path}/{file.Name}", file.Content);
             }
-            
+
             var petStoreJsonSettings = new GeneratorSettings
             {
                 SingleFile = true,
@@ -141,24 +160,12 @@ namespace RestEaseClientGeneratorConsoleApp
                 File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/PetStoreJson/{file.Name}", file.Content);
             }
 
-            // TODO : errors enums
-            //var iSettings = new GeneratorSettings
-            //{
-            //    Namespace = "RestEaseClientGeneratorConsoleApp.Examples.Infura",
-            //    ApiName = "Infura"
-            //};
-            //foreach (var file in generator.FromFile("Examples\\infura.yaml", iSettings, out OpenApiDiagnostic diagnosticInfura))
-            //{
-            //    File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Infura/{file.Path}/{file.Name}", file.Content);
-            //}
-
             var cogSettings = new GeneratorSettings
             {
                 Namespace = "RestEaseClientGeneratorConsoleApp.Examples.Cog",
                 ApiName = "Cog",
                 ForceContentTypeToApplicationJson = true
             };
-
             foreach (var file in generator.FromFile("Examples\\cognitive-services-personalizer.json", cogSettings, out var diagnosticCog))
             {
                 File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Cog/{file.Path}/{file.Name}", file.Content);
@@ -188,20 +195,9 @@ namespace RestEaseClientGeneratorConsoleApp
             //    File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/FormRecognizerV2/{file.Path}/{file.Name}", file.Content);
             //}
 
-            var computerVisionSettings = new GeneratorSettings
-            {
-                SingleFile = true,
-                Namespace = "RestEaseClientGeneratorConsoleApp.Examples.ComputerVision",
-                ApiName = "ComputerVision"
-            };
-            foreach (var file in generator.FromFile("Examples\\ComputerVision.json", computerVisionSettings, out var diagnosticComputerVision))
-            {
-                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/ComputerVision/{file.Path}/{file.Name}", file.Content);
-            }
+            //PetStoreTests.Run();
 
-            PetStoreTests.Run();
-
-            PetStoreOpenApi3ApiTests.Run();
+            //PetStoreOpenApi3ApiTests.Run();
         }
     }
 }
