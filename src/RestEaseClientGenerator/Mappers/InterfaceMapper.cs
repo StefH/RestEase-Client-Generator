@@ -275,10 +275,10 @@ namespace RestEaseClientGenerator.Mappers
 
         private string GetReturnType(RestEaseInterface @interface, OpenApiSchema schema, string methodRestEaseMethodName)
         {
-            if (schema == null)
-            {
-                return null;
-            }
+            //if (schema == null)
+            //{
+            //    return null;
+            //}
 
             switch (schema.GetSchemaType())
             {
@@ -323,7 +323,7 @@ namespace RestEaseClientGenerator.Mappers
                     }
 
                 default:
-                    if (schema.OneOf.Any() || schema.AnyOf.Any())
+                    if (schema?.OneOf.Any() == true || schema?.AnyOf.Any() == true)
                     {
                         if (Settings.GenerateAndUseModelForAnyOfOrOneOf)
                         {

@@ -28,12 +28,12 @@ namespace RestEaseClientGeneratorConsoleApp
                 // Console.WriteLine(System.Text.Json.JsonSerializer.Serialize(find));
             }
 
-            var addPet = await petStoreApi.AddPetAsync(new Pet
-            {
-                Id = 1000,
-                Name = "Rossa",
-                Status = "Sleepy"
-            });
+            //var addPet = await petStoreApi.AddPetAsync(new Pet
+            //{
+            //    Id = 1000,
+            //    Name = "Rossa",
+            //    Status = Status1.available
+            //});
             // Console.WriteLine(addPet.ToString());
 
             var getPetById = await petStoreApi.GetPetByIdAsync(1000);

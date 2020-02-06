@@ -43,6 +43,16 @@ namespace RestEaseClientGenerator.Mappers
                         case SchemaType.Unknown:
                             return $"{MapArrayType("object")}{nameCamelCase}";
 
+                        case SchemaType.String:
+                            if (schema.Items.Enum != null && schema.Items.Enum.Any())
+                            {
+                                return $"{MapArrayType(MakeValidModelName(name))}{nameCamelCase}";
+                            }
+                            else
+                            {
+                                return $"{MapArrayType(MapSchema(schema.Items, null, schema.Items.Nullable, true, openApiSpecVersion))}{nameCamelCase}";
+                            }
+
                         default:
                             return $"{MapArrayType(MapSchema(schema.Items, null, schema.Items.Nullable, true, openApiSpecVersion))}{nameCamelCase}";
                     }
