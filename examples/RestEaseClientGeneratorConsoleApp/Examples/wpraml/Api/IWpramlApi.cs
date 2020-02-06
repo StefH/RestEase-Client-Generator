@@ -20,17 +20,17 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.wpraml.Api
         /// <param name="authorization"></param>
         /// <param name="klantnummer"></param>
         [Get("/adresgegevens/{klantnummer}")]
-        Task<AdresGegevens> GetAdresgegevensByKlantnummerAsync([Header("Authorization")] string authorization, [Path] string klantnummer);
+        Task<AdresGegevens> GetAdresgegevensByKlantnummerAsync([Header("Authorization")] string authorization, [Path] int? klantnummer);
 
         /// <summary>
         /// PatchAdresgegevensByKlantnummer (/adresgegevens/{klantnummer})
         /// </summary>
+        /// <param name="content"></param>
         /// <param name="authorization"></param>
         /// <param name="klantnummer"></param>
-        /// <param name="content"></param>
         [Patch("/adresgegevens/{klantnummer}")]
         [Header("Content-Type", "application/json")]
-        Task<AdresGegevens> PatchAdresgegevensByKlantnummerAsync([Header("Authorization")] string authorization, [Path] string klantnummer, [Body] AdresGegevens content);
+        Task<AdresGegevens> PatchAdresgegevensByKlantnummerAsync([Body] AdresGegevens content, [Header("Authorization")] string authorization, [Path] int? klantnummer);
 
         /// <summary>
         /// GetKlantenByKlantnummerBankgegevens (/klanten/{klantnummer}/bankgegevens)
@@ -38,17 +38,17 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.wpraml.Api
         /// <param name="authorization"></param>
         /// <param name="klantnummer"></param>
         [Get("/klanten/{klantnummer}/bankgegevens")]
-        Task<BankGegevens> GetKlantenByKlantnummerBankgegevensAsync([Header("Authorization")] string authorization, [Path] string klantnummer);
+        Task<BankGegevens> GetKlantenByKlantnummerBankgegevensAsync([Header("Authorization")] string authorization, [Path] int? klantnummer);
 
         /// <summary>
         /// PatchKlantenByKlantnummerBankgegevensExcasso (/klanten/{klantnummer}/bankgegevens/excasso)
         /// </summary>
+        /// <param name="content"></param>
         /// <param name="authorization"></param>
         /// <param name="klantnummer"></param>
-        /// <param name="content"></param>
         [Patch("/klanten/{klantnummer}/bankgegevens/excasso")]
         [Header("Content-Type", "application/json")]
-        Task<BankGegevens> PatchKlantenByKlantnummerBankgegevensExcassoAsync([Header("Authorization")] string authorization, [Path] string klantnummer, [Body] MuterenBankGegevens content);
+        Task<BankGegevens> PatchKlantenByKlantnummerBankgegevensExcassoAsync([Body] MuterenBankGegevens content, [Header("Authorization")] string authorization, [Path] int? klantnummer);
 
         /// <summary>
         /// GetKlantenByKlantnummerDocumenten (/klanten/{klantnummer}/documenten)
@@ -56,7 +56,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.wpraml.Api
         /// <param name="authorization"></param>
         /// <param name="klantnummer"></param>
         [Get("/klanten/{klantnummer}/documenten")]
-        Task<Document> GetKlantenByKlantnummerDocumentenAsync([Header("Authorization")] string authorization, [Path] string klantnummer);
+        Task<Document> GetKlantenByKlantnummerDocumentenAsync([Header("Authorization")] string authorization, [Path] int? klantnummer);
 
         /// <summary>
         /// GetKlantenByKlantnummerDocumentenAndPlacetdocumentnummer (/klanten/{klantnummer}/documenten/{placetdocumentnummer})
@@ -65,7 +65,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.wpraml.Api
         /// <param name="klantnummer"></param>
         /// <param name="placetdocumentnummer"></param>
         [Get("/klanten/{klantnummer}/documenten/{placetdocumentnummer}")]
-        Task GetKlantenByKlantnummerDocumentenAndPlacetdocumentnummerAsync([Header("Authorization")] string authorization, [Path] string klantnummer, [Path] string placetdocumentnummer);
+        Task GetKlantenByKlantnummerDocumentenAndPlacetdocumentnummerAsync([Header("Authorization")] string authorization, [Path] int? klantnummer, [Path] int? placetdocumentnummer);
 
         /// <summary>
         /// GetKlantenByKlantnummerProducten (/klanten/{klantnummer}/producten)
@@ -73,7 +73,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.wpraml.Api
         /// <param name="authorization"></param>
         /// <param name="klantnummer"></param>
         [Get("/klanten/{klantnummer}/producten")]
-        Task<Product> GetKlantenByKlantnummerProductenAsync([Header("Authorization")] string authorization, [Path] string klantnummer);
+        Task<Product> GetKlantenByKlantnummerProductenAsync([Header("Authorization")] string authorization, [Path] int? klantnummer);
 
         /// <summary>
         /// PostLogin (/login)
@@ -89,17 +89,17 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.wpraml.Api
         /// <param name="authorization"></param>
         /// <param name="klantnummer"></param>
         [Get("/klanten/{klantnummer}/persoonsgegevens")]
-        Task<PersoonsGegevens> GetKlantenByKlantnummerPersoonsgegevensAsync([Header("Authorization")] string authorization, [Path] string klantnummer);
+        Task<PersoonsGegevens> GetKlantenByKlantnummerPersoonsgegevensAsync([Header("Authorization")] string authorization, [Path] int? klantnummer);
 
         /// <summary>
         /// PatchKlantenByKlantnummerPersoonsgegevens (/klanten/{klantnummer}/persoonsgegevens)
         /// </summary>
+        /// <param name="content"></param>
         /// <param name="authorization"></param>
         /// <param name="klantnummer"></param>
-        /// <param name="content"></param>
         [Patch("/klanten/{klantnummer}/persoonsgegevens")]
         [Header("Content-Type", "application/json")]
-        Task<PersoonsGegevens> PatchKlantenByKlantnummerPersoonsgegevensAsync([Header("Authorization")] string authorization, [Path] string klantnummer, [Body] MuterenPersoonsGegevens content);
+        Task<PersoonsGegevens> PatchKlantenByKlantnummerPersoonsgegevensAsync([Body] MuterenPersoonsGegevens content, [Header("Authorization")] string authorization, [Path] int? klantnummer);
 
         /// <summary>
         /// GetWerkgeversgegevensByKlantnummer (/werkgeversgegevens/{klantnummer})
@@ -107,6 +107,6 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.wpraml.Api
         /// <param name="authorization"></param>
         /// <param name="klantnummer"></param>
         [Get("/werkgeversgegevens/{klantnummer}")]
-        Task<WerkgeversGegevens> GetWerkgeversgegevensByKlantnummerAsync([Header("Authorization")] string authorization, [Path] string klantnummer);
+        Task<WerkgeversGegevens> GetWerkgeversgegevensByKlantnummerAsync([Header("Authorization")] string authorization, [Path] int? klantnummer);
     }
 }

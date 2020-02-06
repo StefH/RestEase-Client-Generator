@@ -5,8 +5,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.wpraml.Models
 {
     public class WerkgeversGegevens
     {
-        public bool BevatlleenSemiCollectiefBetalingWerkgever { get; set; }
+        public bool? BevatlleenSemiCollectiefBetalingWerkgever { get; set; }
 
-        public int Klantnummer { get; set; }
+        public int? Klantnummer { get; set; }
     }
 }

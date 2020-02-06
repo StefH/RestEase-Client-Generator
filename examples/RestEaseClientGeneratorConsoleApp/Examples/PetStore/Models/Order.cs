@@ -13,7 +13,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStore.Models
 
         public DateTime ShipDate { get; set; }
 
-        public string Status { get; set; }
+        public Status Status { get; set; }
 
         public bool Complete { get; set; }
     }

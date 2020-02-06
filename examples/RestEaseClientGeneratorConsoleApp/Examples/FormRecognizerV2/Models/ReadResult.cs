@@ -13,9 +13,9 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.FormRecognizer.V2.Models
 
         public double Height { get; set; }
 
-        public string Unit { get; set; }
+        public Unit Unit { get; set; }
 
-        public string Language { get; set; }
+        public Language Language { get; set; }
 
         public TextLine[] Lines { get; set; }
     }

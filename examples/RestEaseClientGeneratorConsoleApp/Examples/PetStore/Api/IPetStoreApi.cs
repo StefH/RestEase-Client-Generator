@@ -38,7 +38,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStore.Api
         /// </summary>
         /// <param name="status">Status values that need to be considered for filter</param>
         [Get("/pet/findByStatus")]
-        Task<ICollection<Pet>> FindPetsByStatusAsync([Query] ICollection<string> status);
+        Task<ICollection<Pet>> FindPetsByStatusAsync([Query] ICollection<Status> status);
 
         /// <summary>
         /// Finds Pets by tags
@@ -69,7 +69,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStore.Api
         /// <param name="petId">Pet id to delete</param>
         /// <param name="apiKey"></param>
         [Delete("/pet/{petId}")]
-        Task<object> DeletePetAsync([Path] long petId, [Header("api_key")] string apiKey = null);
+        Task<object> DeletePetAsync([Path] long petId, [Header("api_key")] string apiKey);
 
         /// <summary>
         /// uploads an image

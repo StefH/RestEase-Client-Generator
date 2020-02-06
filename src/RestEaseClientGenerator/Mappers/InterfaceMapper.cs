@@ -14,8 +14,11 @@ namespace RestEaseClientGenerator.Mappers
 {
     internal class InterfaceMapper : BaseMapper
     {
-        public InterfaceMapper(GeneratorSettings settings) : base(settings)
+        private readonly SchemaMapper _schemaMapper;
+
+        public InterfaceMapper(GeneratorSettings settings, SchemaMapper schemaMapper) : base(settings)
         {
+            _schemaMapper = schemaMapper;
         }
 
         public RestEaseInterface Map(OpenApiDocument openApiDocument)
@@ -272,17 +275,17 @@ namespace RestEaseClientGenerator.Mappers
 
         private string GetReturnType(RestEaseInterface @interface, OpenApiSchema schema, string methodRestEaseMethodName)
         {
-            if (schema == null)
-            {
-                return null;
-            }
+            //if (schema == null)
+            //{
+            //    return null;
+            //}
 
             switch (schema.GetSchemaType())
             {
                 case SchemaType.Array:
                     string arrayType = schema.Items.Reference != null
                         ? MakeValidModelName(schema.Items.Reference.Id)
-                        : MapSchema(schema.Items, null, false, true, null).ToString();
+                        : _schemaMapper.MapSchema(schema.Items, null, false, true, null).ToString();
 
                     return MapArrayType(arrayType);
 
@@ -295,7 +298,7 @@ namespace RestEaseClientGenerator.Mappers
                     else if (schema.AdditionalProperties != null)
                     {
                         // Use AdditionalProperties
-                        return MapSchema(schema.AdditionalProperties, null, schema.AdditionalProperties.Nullable, false, null) as string;
+                        return _schemaMapper.MapSchema(schema.AdditionalProperties, null, schema.AdditionalProperties.Nullable, false, null) as string;
                     }
                     else
                     {
@@ -311,7 +314,7 @@ namespace RestEaseClientGenerator.Mappers
                             {
                                 Namespace = Settings.Namespace,
                                 ClassName = className,
-                                Properties = MapSchema(schema, null, false, true, null) as ICollection<string>
+                                Properties = _schemaMapper.MapSchema(schema, null, false, true, null) as ICollection<string>
                             };
                             @interface.InlineModels.Add(newModel);
                         }
@@ -320,7 +323,7 @@ namespace RestEaseClientGenerator.Mappers
                     }
 
                 default:
-                    if (schema.OneOf.Any() || schema.AnyOf.Any())
+                    if (schema?.OneOf.Any() == true || schema?.AnyOf.Any() == true)
                     {
                         if (Settings.GenerateAndUseModelForAnyOfOrOneOf)
                         {
@@ -464,7 +467,7 @@ namespace RestEaseClientGenerator.Mappers
                     case SchemaType.Array:
                         string arrayType = detected.Value.Schema.Items.Reference != null
                             ? MakeValidModelName(detected.Value.Schema.Items.Reference.Id)
-                            : MapSchema(detected.Value.Schema.Items, null, false, true, null).ToString();
+                            : _schemaMapper.MapSchema(detected.Value.Schema.Items, null, false, true, null).ToString();
                         bodyParameter = MapArrayType(arrayType);
                         break;
 
@@ -631,14 +634,16 @@ namespace RestEaseClientGenerator.Mappers
             string validIdentifier = CSharpUtils.CreateValidIdentifier(identifier, CasingType.Camel);
 
             string restEaseParameterAnnotation = parameterLocation != null ? parameterLocation.ToString() : string.Empty;
-            string isNullPostfix = !required && Settings.MakeNonRequiredParametersOptional ? " = null" : string.Empty;
+
+            bool canBeNull = schema.Enum == null;
+            string isNullPostfix = !required && canBeNull && Settings.MakeNonRequiredParametersOptional ? " = null" : string.Empty;
 
             if (parameterLocation == ParameterLocation.Header)
             {
                 attributes.Add($"\"{identifier}\"");
             }
 
-            object identifierWithType;
+            string identifierWithType;
             if (identifier != validIdentifier)
             {
                 switch (parameterLocation)
@@ -651,7 +656,7 @@ namespace RestEaseClientGenerator.Mappers
 
                 attributes.AddRange(extraAttributes);
 
-                identifierWithType = MapSchema(schema, validIdentifier, !required, false, null);
+                identifierWithType = $"{_schemaMapper.MapSchema(schema, validIdentifier, !required, false, null)}";
 
                 return new RestEaseParameter
                 {
@@ -662,14 +667,14 @@ namespace RestEaseClientGenerator.Mappers
                     SchemaType = schema.GetSchemaType(),
                     SchemaFormat = schema.GetSchemaFormat(),
                     IdentifierWithType = $"{identifierWithType}",
-                    IdentifierWithTypePascalCase = $"{MapSchema(schema, validIdentifier, !required, true, null)}",
+                    IdentifierWithTypePascalCase = $"{_schemaMapper.MapSchema(schema, validIdentifier, !required, true, null)}",
                     IdentifierWithRestEase = $"[{restEaseParameterAnnotation}({string.Join(", ", attributes)})] {identifierWithType}{isNullPostfix}",
                     Summary = description
                 };
             }
 
             string extraAttributesBetweenParentheses = extraAttributes.Length == 0 ? string.Empty : $"({string.Join(", ", extraAttributes)})";
-            identifierWithType = MapSchema(schema, identifier, !required, false, null);
+            identifierWithType = $"{_schemaMapper.MapSchema(schema, identifier, !required, false, null)}";
 
             return new RestEaseParameter
             {
@@ -680,7 +685,7 @@ namespace RestEaseClientGenerator.Mappers
                 SchemaType = schema.GetSchemaType(),
                 SchemaFormat = schema.GetSchemaFormat(),
                 IdentifierWithType = $"{identifierWithType}",
-                IdentifierWithTypePascalCase = $"{MapSchema(schema, identifier, !required, true, null)}",
+                IdentifierWithTypePascalCase = $"{_schemaMapper.MapSchema(schema, identifier, !required, true, null)}",
                 IdentifierWithRestEase = $"[{restEaseParameterAnnotation}{extraAttributesBetweenParentheses}] {identifierWithType}{isNullPostfix}",
                 Summary = description
             };

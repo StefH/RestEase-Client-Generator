@@ -13,7 +13,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.SpeechServices.Models
 
         public Dataset[] Datasets { get; set; }
 
-        public string ModelKind { get; set; }
+        public ModelKind ModelKind { get; set; }
 
         public string Name { get; set; }
 
@@ -25,7 +25,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.SpeechServices.Models
 
         public DateTime LastActionDateTime { get; set; }
 
-        public string Status { get; set; }
+        public Status Status { get; set; }
 
         public DateTime CreatedDateTime { get; set; }
     }

@@ -35,8 +35,9 @@ namespace RestEaseClientGenerator
 
         public ICollection<GeneratedFile> FromDocument(OpenApiDocument document, GeneratorSettings settings, OpenApiSpecVersion openApiSpecVersion = OpenApiSpecVersion.OpenApi2_0)
         {
-            var models = new ModelsMapper(settings, openApiSpecVersion).Map(document.Components.Schemas).ToList();
-            var @interface = new InterfaceMapper(settings).Map(document);
+            var schemaMapper = new SchemaMapper(settings);
+            var models = new ModelsMapper(settings, schemaMapper, openApiSpecVersion).Map(document.Components.Schemas).ToList();
+            var @interface = new InterfaceMapper(settings, schemaMapper).Map(document);
 
             var files = new List<GeneratedFile>();
 
@@ -80,6 +81,15 @@ namespace RestEaseClientGenerator
                     Path = settings.ModelsNamespace,
                     Name = $"{model.ClassName}.cs",
                     Content = modelBuilder.Build(model)
+                }));
+
+                // Add Inline Enums
+                var enumBuilder = new EnumBuilder(settings);
+                files.AddRange(schemaMapper.Enums.Select(@enum => new GeneratedFile
+                {
+                    Path = settings.ModelsNamespace,
+                    Name = $"{@enum.EnumName}.cs",
+                    Content = enumBuilder.Build(@enum)
                 }));
             }
 

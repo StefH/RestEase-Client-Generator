@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using RestEase;
+using RestEaseClientGeneratorConsoleApp.Examples.HelloWorldRaml.Models;
 
 namespace RestEaseClientGeneratorConsoleApp.Examples.HelloWorldRaml.Api
 {
@@ -17,6 +18,6 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.HelloWorldRaml.Api
         /// GetHelloworld (/helloworld)
         /// </summary>
         [Get("/helloworld")]
-        Task GetHelloworldAsync();
+        Task<GetHelloworldResult> GetHelloworldAsync();
     }
 }
