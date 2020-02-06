@@ -18,6 +18,8 @@ namespace RestEaseClientGenerator.Settings
         public string ModelsNamespace { get; set; } = "Models";
 
         public GenerationType GenerationType { get; set; } = GenerationType.Both;
+
+        public EnumType PreferredEnumType { get; set; } = EnumType.String;
         #endregion
 
         #region Models

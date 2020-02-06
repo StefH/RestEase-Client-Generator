@@ -132,6 +132,11 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         [DisplayName("Generate and use model for 'AnyOf' and 'OneOf'")]
         [Description("Generate and use model for 'AnyOf' and 'OneOf' return types. The default value is 'True'.")]
         public bool GenerateAndUseModelForAnyOfOrOneOf { get; set; } = true;
+
+        [Category(Interface)]
+        [DisplayName("Preferred Enum Type to generate.")]
+        [Description("Preferred Enum Type to generate. In case 'enum' is selected, enum classes are generated if needed. The default value is 'string'.")]
+        public EnumType PreferredEnumType { get; set; } = EnumType.String;
         #endregion
 
         #region Models
