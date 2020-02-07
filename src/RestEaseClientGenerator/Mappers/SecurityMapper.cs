@@ -21,7 +21,7 @@ namespace RestEaseClientGenerator.Mappers
                 return MapSwaggerVersion2(openApiDocument);
             }
 
-            if (openApiDocument.Components.SecuritySchemes != null)
+            if (openApiDocument.Components?.SecuritySchemes != null)
             {
                 return MapOpenApiVersion3(openApiDocument);
             }

@@ -15,19 +15,19 @@ namespace RestEaseClientGeneratorConsoleApp
         {
             var generator = new Generator();
 
-            // TODO : VisualFeatures ????
-            var computerVisionSettings = new GeneratorSettings
-            {
-                SingleFile = true,
-                Namespace = "RestEaseClientGeneratorConsoleApp.Examples.ComputerVision",
-                ApiName = "ComputerVision"
-            };
-            foreach (var file in generator.FromFile("Examples\\ComputerVision.json", computerVisionSettings, out var diagnosticComputerVision))
-            {
-                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/ComputerVision/{file.Path}/{file.Name}", file.Content);
-            }
+            // TODO : VisualFeatures + corrupte enums
+            //var computerVisionSettings = new GeneratorSettings
+            //{
+            //    SingleFile = true,
+            //    Namespace = "RestEaseClientGeneratorConsoleApp.Examples.ComputerVision",
+            //    ApiName = "ComputerVision"
+            //};
+            //foreach (var file in generator.FromFile("Examples\\ComputerVision.json", computerVisionSettings, out var diagnosticComputerVision))
+            //{
+            //    File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/ComputerVision/{file.Path}/{file.Name}", file.Content);
+            //}
 
-            return;
+          
 
             // TODO : `Action`
             //var mediaWikiRamlSettings = new GeneratorSettings

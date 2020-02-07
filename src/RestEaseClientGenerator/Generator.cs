@@ -9,6 +9,7 @@ using RamlToOpenApiConverter;
 using RestEaseClientGenerator.Builders;
 using RestEaseClientGenerator.Mappers;
 using RestEaseClientGenerator.Models;
+using RestEaseClientGenerator.Models.Internal;
 using RestEaseClientGenerator.Settings;
 using RestEaseClientGenerator.Types;
 
@@ -36,7 +37,18 @@ namespace RestEaseClientGenerator
         public ICollection<GeneratedFile> FromDocument(OpenApiDocument document, GeneratorSettings settings, OpenApiSpecVersion openApiSpecVersion = OpenApiSpecVersion.OpenApi2_0)
         {
             var schemaMapper = new SchemaMapper(settings);
-            var models = new ModelsMapper(settings, schemaMapper, openApiSpecVersion).Map(document.Components.Schemas).ToList();
+
+            IEnumerable<RestEaseModel> models;
+            if (document.Components?.Schemas != null)
+            {
+                models = new ModelsMapper(settings, schemaMapper, openApiSpecVersion)
+                    .Map(document.Components.Schemas).ToList();
+            }
+            else
+            {
+                models = Enumerable.Empty<RestEaseModel>();
+            }
+
             var @interface = new InterfaceMapper(settings, schemaMapper).Map(document);
 
             var files = new List<GeneratedFile>();
