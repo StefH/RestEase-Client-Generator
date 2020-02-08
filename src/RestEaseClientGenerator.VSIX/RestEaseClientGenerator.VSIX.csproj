@@ -148,6 +148,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\RamlToOpenApiConverter\src\RamlToOpenApiConverter\RamlToOpenApiConverter.csproj">
+      <Project>{d3804228-91f4-1111-9595-39584e5a01ad}</Project>
+      <Name>RamlToOpenApiConverter</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RestEaseClientGenerator\RestEaseClientGenerator.csproj">
       <Project>{cb53c19e-29cc-42ac-ae47-31a54e5d0759}</Project>
       <Name>RestEaseClientGenerator</Name>
