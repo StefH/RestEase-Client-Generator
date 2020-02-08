@@ -11,11 +11,11 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.wpraml.Models
 
         public string Emailadres { get; set; }
 
-        public DateTime? Geboortedatum { get; set; }
+        public DateTime Geboortedatum { get; set; }
 
-        public bool? HeeftMachtiging { get; set; }
+        public bool HeeftMachtiging { get; set; }
 
-        public int? Klantnummer { get; set; }
+        public int Klantnummer { get; set; }
 
         public string Mobielnummer { get; set; }
 

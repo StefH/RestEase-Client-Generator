@@ -5,7 +5,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.FormRecognizer.V2.Models
 {
     public class AnalyzeOperationResult
     {
-        public Status Status { get; set; }
+        public string Status { get; set; }
 
         public DateTime CreatedDateTime { get; set; }
 

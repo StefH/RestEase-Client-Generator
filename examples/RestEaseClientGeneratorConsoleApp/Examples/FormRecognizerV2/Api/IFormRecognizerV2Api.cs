@@ -76,7 +76,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.FormRecognizer.V2.Api
         /// </summary>
         /// <param name="op">Specify whether to return summary or full list of models.</param>
         [Get("/custom/models")]
-        Task<Models.Models> GetCustomModelsAsync([Query] Op op);
+        Task<Models.Models> GetCustomModelsAsync([Query] string op);
 
         /// <summary>
         /// Train Custom Model

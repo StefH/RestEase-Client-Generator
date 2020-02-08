@@ -17,6 +17,6 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStore.Models
 
         public ICollection<Tag> Tags { get; set; }
 
-        public Status1 Status { get; set; }
+        public string Status { get; set; }
     }
 }

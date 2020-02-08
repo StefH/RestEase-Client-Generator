@@ -15,19 +15,17 @@ namespace RestEaseClientGeneratorConsoleApp
         {
             var generator = new Generator();
 
-            // TODO : VisualFeatures + corrupte enums
-            //var computerVisionSettings = new GeneratorSettings
-            //{
-            //    SingleFile = true,
-            //    Namespace = "RestEaseClientGeneratorConsoleApp.Examples.ComputerVision",
-            //    ApiName = "ComputerVision"
-            //};
-            //foreach (var file in generator.FromFile("Examples\\ComputerVision.json", computerVisionSettings, out var diagnosticComputerVision))
-            //{
-            //    File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/ComputerVision/{file.Path}/{file.Name}", file.Content);
-            //}
-
-          
+            // Corrupte enums
+            var computerVisionSettings = new GeneratorSettings
+            {
+                SingleFile = true,
+                Namespace = "RestEaseClientGeneratorConsoleApp.Examples.ComputerVision",
+                ApiName = "ComputerVision"
+            };
+            foreach (var file in generator.FromFile("Examples\\ComputerVision.json", computerVisionSettings, out var diagnosticComputerVision))
+            {
+                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/ComputerVision/{file.Path}/{file.Name}", file.Content);
+            }
 
             // TODO : `Action`
             //var mediaWikiRamlSettings = new GeneratorSettings
@@ -53,16 +51,16 @@ namespace RestEaseClientGeneratorConsoleApp
             //    File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/MediaWiki/{file.Path}/{file.Name}", file.Content);
             //}
 
-            // TODO : errors enums
-            //var iSettings = new GeneratorSettings
-            //{
-            //    Namespace = "RestEaseClientGeneratorConsoleApp.Examples.Infura",
-            //    ApiName = "Infura"
-            //};
-            //foreach (var file in generator.FromFile("Examples\\infura.yaml", iSettings, out OpenApiDiagnostic diagnosticInfura))
-            //{
-            //    File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Infura/{file.Path}/{file.Name}", file.Content);
-            //}
+            // rrors enums
+            var iSettings = new GeneratorSettings
+            {
+                Namespace = "RestEaseClientGeneratorConsoleApp.Examples.Infura",
+                ApiName = "Infura"
+            };
+            foreach (var file in generator.FromFile("Examples\\infura.yaml", iSettings, out OpenApiDiagnostic diagnosticInfura))
+            {
+                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Infura/{file.Path}/{file.Name}", file.Content);
+            }
 
             var petStoreSettings = new GeneratorSettings
             {
@@ -98,8 +96,6 @@ namespace RestEaseClientGeneratorConsoleApp
                 File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/wpraml/{file.Path}/{file.Name}", file.Content);
             }
 
-            
-
             var petStoreOpenApi3Settings = new GeneratorSettings
             {
                 Namespace = "RestEaseClientGeneratorConsoleApp.Examples.PetStoreOpenApi302",
@@ -110,7 +106,8 @@ namespace RestEaseClientGeneratorConsoleApp
                 ApplicationOctetStreamType = ApplicationOctetStreamType.ByteArray,
                 PreferredContentType = ContentType.ApplicationJson,
                 DefineAllMethodHeadersOnInterface = true,
-                MethodReturnType = MethodReturnType.Type
+                MethodReturnType = MethodReturnType.Type,
+                PreferredEnumType = EnumType.Enum
             };
             foreach (var file in generator.FromFile("Examples\\petstore-openapi3.json", petStoreOpenApi3Settings, out OpenApiDiagnostic diagnosticPetStoreOpenApi3))
             {
@@ -182,22 +179,22 @@ namespace RestEaseClientGeneratorConsoleApp
             //    File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/SpeechServices/{file.Path}/{file.Name}", file.Content);
             //}
 
-            // TODO : Errors enums
-            //var formSettings = new GeneratorSettings
-            //{
-            //    Namespace = "RestEaseClientGeneratorConsoleApp.Examples.FormRecognizer.V2",
-            //    ApiName = "FormRecognizerV2",
-            //    SupportExtensionXNullable = true,
-            //    PreferredSecurityDefinitionType = SecurityDefinitionType.Query
-            //};
-            //foreach (var file in generator.FromFile("Examples\\FormRecognizerV2.json", formSettings, out var diagnosticFormRecognizerV2))
-            //{
-            //    File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/FormRecognizerV2/{file.Path}/{file.Name}", file.Content);
-            //}
+            // Errors enums
+            var formSettings = new GeneratorSettings
+            {
+                Namespace = "RestEaseClientGeneratorConsoleApp.Examples.FormRecognizer.V2",
+                ApiName = "FormRecognizerV2",
+                SupportExtensionXNullable = true,
+                PreferredSecurityDefinitionType = SecurityDefinitionType.Query
+            };
+            foreach (var file in generator.FromFile("Examples\\FormRecognizerV2.json", formSettings, out var diagnosticFormRecognizerV2))
+            {
+                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/FormRecognizerV2/{file.Path}/{file.Name}", file.Content);
+            }
 
-            //PetStoreTests.Run();
+            // PetStoreTests.Run().GetAwaiter().GetResult();
 
-            //PetStoreOpenApi3ApiTests.Run();
+            PetStoreOpenApi3ApiTests.Run().GetAwaiter().GetResult();
         }
     }
 }

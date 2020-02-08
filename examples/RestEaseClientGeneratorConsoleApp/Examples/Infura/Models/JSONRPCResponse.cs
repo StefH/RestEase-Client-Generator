@@ -5,7 +5,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Infura.Models
 {
     public class JSONRPCResponse
     {
-        public Jsonrpc Jsonrpc { get; set; }
+        public string Jsonrpc { get; set; }
 
         public int Id { get; set; }
 

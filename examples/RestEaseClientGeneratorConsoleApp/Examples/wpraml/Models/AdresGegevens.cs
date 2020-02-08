@@ -5,7 +5,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.wpraml.Models
 {
     public class AdresGegevens
     {
-        public int? Klantnummer { get; set; }
+        public int Klantnummer { get; set; }
 
         public object Woonadres { get; set; }
 

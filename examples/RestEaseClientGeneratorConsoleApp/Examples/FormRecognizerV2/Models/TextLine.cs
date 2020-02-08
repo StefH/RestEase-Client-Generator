@@ -9,7 +9,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.FormRecognizer.V2.Models
 
         public double[] BoundingBox { get; set; }
 
-        public Language Language { get; set; }
+        public string Language { get; set; }
 
         public TextWord[] Words { get; set; }
     }

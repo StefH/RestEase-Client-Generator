@@ -11,6 +11,6 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.FormRecognizer.V2.Models
 
         public string[] Errors { get; set; }
 
-        public Status2 Status { get; set; }
+        public string Status { get; set; }
     }
 }

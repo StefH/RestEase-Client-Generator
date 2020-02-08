@@ -71,7 +71,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreJson.Test123
         /// </summary>
         /// <param name="status">Status values that need to be considered for filter</param>
         [Get("/pet/findByStatus")]
-        Task<IEnumerable<Pet>> FindPetsByStatusAsync([Query] IEnumerable<Status> status);
+        Task<IEnumerable<Pet>> FindPetsByStatusAsync([Query] IEnumerable<string> status);
 
         /// <summary>
         /// Finds Pets by tags
@@ -242,7 +242,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreJson.Modelz
 
         public IEnumerable<Tag> Tags { get; set; }
 
-        public Status Status { get; set; }
+        public string Status { get; set; }
     }
 }
 
@@ -280,7 +280,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreJson.Modelz
 
         public DateTimeOffset ShipDate { get; set; }
 
-        public Status1 Status { get; set; }
+        public string Status { get; set; }
 
         public bool Complete { get; set; }
     }
@@ -305,25 +305,5 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreJson.Modelz
         public string Phone { get; set; }
 
         public int UserStatus { get; set; }
-    }
-}
-
-namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreJson.Modelz
-{
-    public enum Status
-    {
-        available,
-        pending,
-        sold
-    }
-}
-
-namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreJson.Modelz
-{
-    public enum Status1
-    {
-        placed,
-        approved,
-        delivered
     }
 }

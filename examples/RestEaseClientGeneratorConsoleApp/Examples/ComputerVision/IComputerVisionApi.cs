@@ -5,7 +5,6 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using RestEase;
-using RestEaseClientGeneratorConsoleApp.Examples.ComputerVision.Models;
 
 namespace RestEaseClientGeneratorConsoleApp.Examples.ComputerVision.Api
 {
@@ -25,7 +24,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.ComputerVision.Api
         /// <param name="language">A string indicating which language to return. The service will return recognition results in specified language. If this parameter is not specified, the default value is &quot;en&quot;.Supported languages:en - English, Default.es - Spanish.ja - Japanese.pt - Portuguese.zh - Simplified Chinese.</param>
         [Post("/analyze")]
         [Header("Content-Type", "application/json")]
-        Task PostAnalyzeAsync([Query] VisualFeatures visualFeatures, [Query] Details details, [Query] Language language);
+        Task PostAnalyzeAsync([Query] string visualFeatures, [Query] string details, [Query] string language);
 
         /// <summary>
         /// Batch Read File
@@ -41,7 +40,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.ComputerVision.Api
         /// <param name="language">A string indicating the language in which the service will return a description of the image. If this parameter is not specified, the default value is &quot;en&quot;.Supported languages:en - English, Default.es - Spanish.ja - Japanese.pt - Portuguese.zh - Simplified Chinese.</param>
         [Post("/describe")]
         [Header("Content-Type", "application/json")]
-        Task PostDescribeAsync([Query] MaxCandidates maxCandidates, [Query] Language language);
+        Task PostDescribeAsync([Query] string maxCandidates, [Query] string language);
 
         /// <summary>
         /// Detect Objects
@@ -87,7 +86,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.ComputerVision.Api
         /// <param name="detectOrientation">Whether detect the text orientation in the image. With detectOrientation=true the OCR service tries to detect the image orientation and correct it before further processing (e.g. if it's upside-down).</param>
         [Post("/ocr")]
         [Header("Content-Type", "application/json")]
-        Task PostOcrAsync([Query] Language1 language, [Query] bool? detectOrientation);
+        Task PostOcrAsync([Query] string language, [Query] bool? detectOrientation);
 
         /// <summary>
         /// Get Read Operation Result
@@ -103,7 +102,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.ComputerVision.Api
         /// <param name="language">A string indicating the language in which to return analysis results, if supported. If this parameter is not specified, the default value is &quot;en&quot;.Possible language values:en - English, Default.es - Spanish.ja - Japanese.pt - Portuguese.zh - Simplified Chinese.</param>
         [Post("/models/{model}/analyze")]
         [Header("Content-Type", "application/json")]
-        Task PostModelsByModelAnalyzeAsync([Path] string model, [Query] Language language);
+        Task PostModelsByModelAnalyzeAsync([Path] string model, [Query] string language);
 
         /// <summary>
         /// Recognize Text
@@ -111,7 +110,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.ComputerVision.Api
         /// <param name="mode">If this parameter is set to "Printed", printed text recognition is performed. If "Handwritten" is specified, handwriting recognition is performed. (Note: This parameter is case sensitive.) This is a required parameter and cannot be empty.​</param>
         [Post("/recognizeText")]
         [Header("Content-Type", "application/json")]
-        Task PostRecognizeTextAsync([Query] Mode mode);
+        Task PostRecognizeTextAsync([Query] string mode);
 
         /// <summary>
         /// Tag Image
@@ -119,94 +118,6 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.ComputerVision.Api
         /// <param name="language">A string indicating the language in which to return tags. If this parameter is not specified, the default value is &quot;en&quot;.Supported languages:en - English, Default.es - Spanish.ja - Japanese.pt - Portuguese.zh - Simplified Chinese.</param>
         [Post("/tag")]
         [Header("Content-Type", "application/json")]
-        Task PostTagAsync([Query] Language language);
-    }
-}
-
-namespace RestEaseClientGeneratorConsoleApp.Examples.ComputerVision.Models
-{
-    public enum VisualFeatures
-    {
-        Adult,
-        Brands,
-        Categories,
-        Color,
-        Description,
-        Faces,
-        ImageType,
-        Objects,
-        Tags
-    }
-}
-
-namespace RestEaseClientGeneratorConsoleApp.Examples.ComputerVision.Models
-{
-    public enum Details
-    {
-        Celebrities,
-        Landmarks
-    }
-}
-
-namespace RestEaseClientGeneratorConsoleApp.Examples.ComputerVision.Models
-{
-    public enum Language
-    {
-        en,
-        es,
-        ja,
-        pt,
-        zh
-    }
-}
-
-namespace RestEaseClientGeneratorConsoleApp.Examples.ComputerVision.Models
-{
-    public enum MaxCandidates
-    {
-        a1
-    }
-}
-
-namespace RestEaseClientGeneratorConsoleApp.Examples.ComputerVision.Models
-{
-    public enum Language1
-    {
-        unk,
-        zh_Hans,
-        zh_Hant,
-        cs,
-        da,
-        nl,
-        en,
-        fi,
-        fr,
-        de,
-        el,
-        hu,
-        it,
-        ja,
-        ko,
-        nb,
-        pl,
-        pt,
-        ru,
-        es,
-        sv,
-        tr,
-        ar,
-        ro,
-        sr_Cyrl,
-        sr_Latn,
-        sk
-    }
-}
-
-namespace RestEaseClientGeneratorConsoleApp.Examples.ComputerVision.Models
-{
-    public enum Mode
-    {
-        Handwritten,
-        Printed
+        Task PostTagAsync([Query] string language);
     }
 }

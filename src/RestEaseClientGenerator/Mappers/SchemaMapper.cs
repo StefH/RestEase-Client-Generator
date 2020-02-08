@@ -45,7 +45,7 @@ namespace RestEaseClientGenerator.Mappers
                             return $"{MapArrayType("object")}{nameCamelCase}";
 
                         case SchemaType.String:
-                            if (schema.Items.Enum != null && schema.Items.Enum.Any())
+                            if (schema.Items.Enum != null && schema.Items.Enum.Any() && Settings.PreferredEnumType == EnumType.Enum)
                             {
                                 return $"{MapArrayType(MakeValidModelName(name))}{nameCamelCase}";
                             }
@@ -102,47 +102,21 @@ namespace RestEaseClientGenerator.Mappers
                         default:
                             if (schema.Enum != null && schema.Enum.Any())
                             {
-                                string enumName = name.ToPascalCase();
-                                string basename = enumName;
-                                var enumValues = schema.Enum.OfType<OpenApiString>().SelectMany(str => str.Value.Split(new[] { '|' }, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim())).ToList();
-
-                                var existingEnums = Enums.Where(e => e.BaseName == enumName).ToList();
-                                if (!existingEnums.Any())
+                                switch (Settings.PreferredEnumType)
                                 {
-                                    var newEnum = new RestEaseEnum
-                                    {
-                                        Namespace = Settings.Namespace,
-                                        BaseName = enumName,
-                                        EnumName = enumName,
-                                        Values = enumValues
-                                    };
+                                    case EnumType.Enum:
+                                        return MapEnumSchema(schema, name, nameCamelCase, nullable);
 
-                                    Enums.Add(newEnum);
-                                }
-                                else
-                                {
-                                    var allExistingEnumsWithSameValues = existingEnums
-                                        .Where(existingEnum => existingEnum.Values.SequenceEqual(enumValues))
-                                        .ToList();
-                                    if (!allExistingEnumsWithSameValues.Any())
-                                    {
-                                        int matchingCount = existingEnums.Count;
+                                    case EnumType.Integer:
+                                        return $"int{nullable}{nameCamelCase}";
 
-                                        enumName = $"{enumName}{matchingCount}";
+                                    case EnumType.Object:
+                                        return $"object{nameCamelCase}";
 
-                                        var newEnum = new RestEaseEnum
-                                        {
-                                            Namespace = Settings.Namespace,
-                                            BaseName = basename,
-                                            EnumName = enumName,
-                                            Values = enumValues
-                                        };
-
-                                        Enums.Add(newEnum);
-                                    }
+                                    default:
+                                        return $"string{nameCamelCase}";
                                 }
 
-                                return $"{enumName}{nameCamelCase}";
                             }
 
                             return $"string{nameCamelCase}";
@@ -197,6 +171,56 @@ namespace RestEaseClientGenerator.Mappers
                 default:
                     return null;
             }
+        }
+
+        private string MapEnumSchema(OpenApiSchema schema, string name, string nameCamelCase, string nullable)
+        {
+            string enumName = name.ToPascalCase();
+            string basename = enumName;
+            var enumValues = schema.Enum.OfType<OpenApiString>().SelectMany(str =>
+                str.Value.Split(new[] { '|' }, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim())).ToList();
+
+            var existingEnums = Enums.Where(e => e.BaseName == enumName).ToList();
+            if (!existingEnums.Any())
+            {
+                var newEnum = new RestEaseEnum
+                {
+                    Namespace = Settings.Namespace,
+                    BaseName = enumName,
+                    EnumName = enumName,
+                    Values = enumValues
+                };
+
+                Enums.Add(newEnum);
+            }
+            else
+            {
+                var existingEnumWithSameValues = existingEnums
+                    .SingleOrDefault(existingEnum => existingEnum.Values.SequenceEqual(enumValues));
+                
+                if (existingEnumWithSameValues == null)
+                {
+                    int matchingCount = existingEnums.Count;
+
+                    enumName = $"{enumName}{matchingCount}";
+
+                    var newEnum = new RestEaseEnum
+                    {
+                        Namespace = Settings.Namespace,
+                        BaseName = basename,
+                        EnumName = enumName,
+                        Values = enumValues
+                    };
+
+                    Enums.Add(newEnum);
+                }
+                else
+                {
+                    enumName = existingEnumWithSameValues.EnumName;
+                }
+            }
+
+            return $"{enumName}{nullable}{nameCamelCase}";
         }
     }
 }

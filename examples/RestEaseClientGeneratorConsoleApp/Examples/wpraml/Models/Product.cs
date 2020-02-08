@@ -11,17 +11,17 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.wpraml.Models
 
         public string Dienstverleningsdocument { get; set; }
 
-        public DateTime? Einddatum { get; set; }
+        public DateTime Einddatum { get; set; }
 
         public string Naam { get; set; }
 
-        public int? Polisnummer { get; set; }
+        public int Polisnummer { get; set; }
 
         public string Polisvoorwaardentype { get; set; }
 
         public string Reglementtype { get; set; }
 
-        public int? Status { get; set; }
+        public int Status { get; set; }
 
         public string Werkgevernaam { get; set; }
     }

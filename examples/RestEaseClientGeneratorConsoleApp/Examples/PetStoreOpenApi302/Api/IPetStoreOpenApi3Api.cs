@@ -38,7 +38,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreOpenApi302.Api
         /// </summary>
         /// <param name="status">Status values that need to be considered for filter</param>
         [Get("/pet/findByStatus")]
-        Task<Pet[]> FindPetsByStatusAsync([Query] Status status);
+        Task<Pet[]> FindPetsByStatusAsync([Query] Status2? status);
 
         /// <summary>
         /// Finds Pets by tags

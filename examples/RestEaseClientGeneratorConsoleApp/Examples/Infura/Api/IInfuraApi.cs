@@ -19,7 +19,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Infura.Api
         /// </summary>
         /// <param name="network">Ethereum network in lowercase</param>
         [Get("/v1/jsonrpc/{network}/methods")]
-        Task<MethodsResponse> GetV1JsonrpcByNetworkMethodsAsync([Path] Network network);
+        Task<MethodsResponse> GetV1JsonrpcByNetworkMethodsAsync([Path] string network);
 
         /// <summary>
         /// GetV1JsonrpcByNetworkAndMethod (/v1/jsonrpc/{network}/{method})
@@ -28,7 +28,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Infura.Api
         /// <param name="method">JSON-RPC method. Use the `/v1/jsonrpc/{network}/methods` endpoint to get the list of permitted methods.</param>
         /// <param name="_params">This is the `params` field that would normally be part of the JSON-RPC POST body. Use the exact same format. If it's omitted, it will default to an empty array.</param>
         [Get("/v1/jsonrpc/{network}/{method}")]
-        Task<JSONRPCResponse> GetV1JsonrpcByNetworkAndMethodAsync([Path] Network network, [Path] string method, [Query(Name = "params")] string[] _params);
+        Task<JSONRPCResponse> GetV1JsonrpcByNetworkAndMethodAsync([Path] string network, [Path] string method, [Query(Name = "params")] string[] _params);
 
         /// <summary>
         /// PostV1JsonrpcByNetwork (/v1/jsonrpc/{network})
@@ -37,7 +37,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Infura.Api
         /// <param name="content">Regular JSON-RPC payload (POST body)</param>
         [Post("/v1/jsonrpc/{network}")]
         [Header("Content-Type", "application/json")]
-        Task<JSONRPCResponse> PostV1JsonrpcByNetworkAsync([Path] Network network, [Body] JSONRPCRequest content);
+        Task<JSONRPCResponse> PostV1JsonrpcByNetworkAsync([Path] string network, [Body] JSONRPCRequest content);
 
         /// <summary>
         /// GetV1TickerSymbols (/v1/ticker/symbols)
