@@ -5,7 +5,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.SpeechServices.Models
 {
     public class DatasetDefinition
     {
-        public string DataImportKind { get; set; }
+        public DataImportKind1 DataImportKind { get; set; }
 
         public string Name { get; set; }
 

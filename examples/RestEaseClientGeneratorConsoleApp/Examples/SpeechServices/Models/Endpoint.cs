@@ -11,11 +11,11 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.SpeechServices.Models
 
         public object EndpointUrls { get; set; }
 
-        public string EndpointKind { get; set; }
+        public EndpointKind EndpointKind { get; set; }
 
         public DateTime LastActionDateTime { get; set; }
 
-        public string Status { get; set; }
+        public Status Status { get; set; }
 
         public DateTime CreatedDateTime { get; set; }
 

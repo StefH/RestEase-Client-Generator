@@ -10,6 +10,7 @@ namespace RestEaseClientGenerator.Builders
         public ModelBuilder(GeneratorSettings settings) : base(settings)
         {
         }
+
         public string Build(RestEaseModel restEaseModel)
         {
             var builder = new StringBuilder();

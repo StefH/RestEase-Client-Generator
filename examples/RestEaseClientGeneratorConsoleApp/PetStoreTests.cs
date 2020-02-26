@@ -1,11 +1,10 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using RestEase;
 using RestEaseClientGeneratorConsoleApp.Examples.PetStore.Api;
 using RestEaseClientGeneratorConsoleApp.Examples.PetStore.Models;
-using System;
-using System.Threading.Tasks;
-using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace RestEaseClientGeneratorConsoleApp
 {
@@ -25,19 +24,19 @@ namespace RestEaseClientGeneratorConsoleApp
             var findPetsByTags = await petStoreApi.FindPetsByTagsAsync(new[] { "cat" });
             foreach (var find in findPetsByTags)
             {
-                // Console.WriteLine(System.Text.Json.JsonSerializer.Serialize(find));
+                Console.WriteLine(JsonConvert.SerializeObject(find));
             }
 
             var addPet = await petStoreApi.AddPetAsync(new Pet
             {
                 Id = 1000,
                 Name = "Rossa",
-                Status = "Sleepy"
+                Status = "available"
             });
-            // Console.WriteLine(addPet.ToString());
+            Console.WriteLine(addPet.ToString());
 
             var getPetById = await petStoreApi.GetPetByIdAsync(1000);
-            // Console.WriteLine(JsonSerializer.Serialize(getPetById));
+            Console.WriteLine(JsonConvert.SerializeObject(getPetById));
         }
     }
 }

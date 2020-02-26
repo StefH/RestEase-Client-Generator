@@ -9,7 +9,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.SpeechServices.Models
 
         public bool Active { get; set; }
 
-        public string[] Events { get; set; }
+        public long[] Events { get; set; }
 
         public string Name { get; set; }
 

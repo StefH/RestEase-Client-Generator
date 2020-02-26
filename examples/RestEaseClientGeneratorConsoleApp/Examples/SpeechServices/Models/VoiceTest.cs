@@ -13,12 +13,12 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.SpeechServices.Models
 
         public DateTime LastActionDateTime { get; set; }
 
-        public string Status { get; set; }
+        public Status Status { get; set; }
 
         public DateTime CreatedDateTime { get; set; }
 
         public Model Model { get; set; }
 
-        public string VoiceTestKind { get; set; }
+        public VoiceTestKind VoiceTestKind { get; set; }
     }
 }

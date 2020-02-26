@@ -28,7 +28,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Infura.Api
         /// <param name="method">JSON-RPC method. Use the `/v1/jsonrpc/{network}/methods` endpoint to get the list of permitted methods.</param>
         /// <param name="_params">This is the `params` field that would normally be part of the JSON-RPC POST body. Use the exact same format. If it's omitted, it will default to an empty array.</param>
         [Get("/v1/jsonrpc/{network}/{method}")]
-        Task<JSONRPCResponse> GetV1JsonrpcByNetworkAndMethodAsync([Path] string network, [Path] string method, [Query(Name = "params")] string[] _params = null);
+        Task<JSONRPCResponse> GetV1JsonrpcByNetworkAndMethodAsync([Path] string network, [Path] string method, [Query(Name = "params")] string[] _params);
 
         /// <summary>
         /// PostV1JsonrpcByNetwork (/v1/jsonrpc/{network})

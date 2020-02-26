@@ -255,7 +255,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.SpeechServices.Api
         /// <param name="skip">Number of transcriptions that will be skipped.</param>
         /// <param name="take">Number of transcriptions that will be included after skipping.</param>
         [Get("/api/speechtotext/v2.0/transcriptions")]
-        Task<Transcription[]> GetTranscriptionsAsync([Query] int xyz, [Query] int? skip = null, [Query] int? take = null);
+        Task<Transcription[]> GetTranscriptionsAsync([Query] int xyz, [Query] int? skip, [Query] int? take);
 
         /// <summary>
         /// Creates a new transcription.

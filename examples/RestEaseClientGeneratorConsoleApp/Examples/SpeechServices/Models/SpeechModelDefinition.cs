@@ -11,7 +11,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.SpeechServices.Models
 
         public DatasetIdentity[] Datasets { get; set; }
 
-        public string ModelKind { get; set; }
+        public ModelKind ModelKind { get; set; }
 
         public string Name { get; set; }
 

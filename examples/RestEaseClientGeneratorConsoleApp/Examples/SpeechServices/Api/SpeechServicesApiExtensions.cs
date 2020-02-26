@@ -21,7 +21,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.SpeechServices.Api
         /// <param name="audiodata">A zip file containing the audio data (this and the audio archive file for acoustic data imports).</param>
         /// <param name="transcriptions">A text file containing the transcriptions for the audio data (this and the transcriptions file for acoustic data imports).</param>
         /// <param name="languagedata">A text file containing the language or pronunciation data (only this file for language data imports).</param>
-        public static Task UploadDatasetAsync(this ISpeechServicesApi api, string name, string description, string locale, string dataImportKind, string properties, byte[] audiodata, byte[] transcriptions, byte[] languagedata)
+        public static Task UploadDatasetAsync(this ISpeechServicesApi api, string name, string description, string locale, DataImportKind2 dataImportKind, string properties, byte[] audiodata, byte[] transcriptions, byte[] languagedata)
         {
             var content = new MultipartFormDataContent();
 
@@ -58,7 +58,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.SpeechServices.Api
         /// <param name="properties">Optional properties of this data import (json serialized object with key/values, where all values must be strings)</param>
         /// <param name="audiodata">A zip file containing the audio data.</param>
         /// <param name="transcriptions">The transcriptions text file of the audio data.</param>
-        public static Task UploadVoiceDatasetAsync(this ISpeechServicesApi api, string projectId, string name, string description, string locale, string dataImportKind, string properties, byte[] audiodata, byte[] transcriptions)
+        public static Task UploadVoiceDatasetAsync(this ISpeechServicesApi api, string projectId, string name, string description, string locale, DataImportKind dataImportKind, string properties, byte[] audiodata, byte[] transcriptions)
         {
             var content = new MultipartFormDataContent();
 

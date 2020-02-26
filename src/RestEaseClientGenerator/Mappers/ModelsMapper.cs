@@ -11,10 +11,12 @@ namespace RestEaseClientGenerator.Mappers
 {
     internal class ModelsMapper : BaseMapper
     {
+        private readonly SchemaMapper _schemaMapper;
         private readonly OpenApiSpecVersion _openApiSpecVersion;
 
-        public ModelsMapper(GeneratorSettings settings, OpenApiSpecVersion openApiSpecVersion) : base(settings)
+        public ModelsMapper(GeneratorSettings settings, SchemaMapper schemaMapper, OpenApiSpecVersion openApiSpecVersion) : base(settings)
         {
+            _schemaMapper = schemaMapper;
             _openApiSpecVersion = openApiSpecVersion;
         }
 
@@ -24,7 +26,7 @@ namespace RestEaseClientGenerator.Mappers
             {
                 Namespace = Settings.Namespace,
                 ClassName = MakeValidModelName(x.Key),
-                Properties = MapSchema(x.Value, x.Key, x.Value.Nullable, true, _openApiSpecVersion) as ICollection<string>
+                Properties = _schemaMapper.MapSchema(x.Value, x.Key, x.Value.Nullable, true, _openApiSpecVersion) as ICollection<string>
             });
         }
     }

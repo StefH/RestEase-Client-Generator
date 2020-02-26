@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,10 +13,18 @@
     <Folder Include="Examples\Drc\Models\" />
     <Folder Include="Examples\FormRecognizerV2\Api\" />
     <Folder Include="Examples\FormRecognizerV2\Models\" />
+    <Folder Include="Examples\HelloWorldRaml\Api\" />
+    <Folder Include="Examples\HelloWorldRaml\Models\" />
+    <Folder Include="Examples\MediaWikiRaml\Api\" />
+    <Folder Include="Examples\MediaWikiRaml\Models\" />
+    <Folder Include="Examples\MediaWiki\Api\" />
+    <Folder Include="Examples\MediaWiki\Models\" />
     <Folder Include="Examples\SharedQuery\Api\" />
     <Folder Include="Examples\SharedQuery\Models\" />
     <Folder Include="Examples\SpeechServices\Api\" />
     <Folder Include="Examples\SpeechServices\Models\" />
+    <Folder Include="Examples\wpraml\Api\" />
+    <Folder Include="Examples\wpraml\Models\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,6 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\RamlToOpenApiConverter\src\RamlToOpenApiConverter\RamlToOpenApiConverter.csproj" />
     <ProjectReference Include="..\..\src\RestEaseClientGenerator\RestEaseClientGenerator.csproj" />
   </ItemGroup>
 
@@ -40,13 +49,25 @@
     <None Update="Examples\drc.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Examples\FormRecognizer.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Update="Examples\FormRecognizerV2.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Examples\helloworld.oas2.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\helloworld.oas3.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\helloworld.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Examples\infura.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\MediaWiki.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\MediaWiki.raml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Examples\SharedQueryParamsWithExtensionMethod.json">
@@ -63,6 +84,9 @@
     </None>
     <None Update="Examples\SpeechServices.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\wp.raml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 

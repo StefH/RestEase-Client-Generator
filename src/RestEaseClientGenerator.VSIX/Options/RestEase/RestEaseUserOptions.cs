@@ -60,5 +60,10 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         public bool? UpdateUserOptionsWithNewOptions { get; set; }
 
         public bool? DefineSharedMethodQueryParametersOnInterface { get; set; }
+
+        public bool? GenerateAndUseModelForAnyOfOrOneOf { get; set; }
+
+        [JsonConverter(typeof(DescriptionEnumConverter))]
+        public EnumType? PreferredEnumType { get; set; }
     }
 }
