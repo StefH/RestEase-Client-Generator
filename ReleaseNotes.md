@@ -1,4 +1,4 @@
-# 1.0.7 (26 February 2020)
+# 1.0.7 (29 February 2020)
 - [#19](https://github.com/StefH/RestEase-Client-Generator/pull/19) - DefineSharedMethodQueryParametersOnInterface [enhancement] contributed by [StefH](https://github.com/StefH)
 - [#20](https://github.com/StefH/RestEase-Client-Generator/pull/20) - Add RAML + update Enum support contributed by [StefH](https://github.com/StefH)
 
