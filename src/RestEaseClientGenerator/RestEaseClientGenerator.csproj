@@ -6,13 +6,15 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.OpenApi.Readers" Version="1.1.4" />
+    <PackageReference Include="RamlToOpenApiConverter" Version="0.0.4" />
     <PackageReference Include="RestEase" Version="1.4.10" />
+    <!--<PackageReference Include="SharpYaml" Version="1.6.6" />-->
     <PackageReference Include="System.CodeDom" Version="4.7.0" />
     <PackageReference Include="System.ValueTuple" Version="4.5.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\RamlToOpenApiConverter\src\RamlToOpenApiConverter\RamlToOpenApiConverter.csproj" />
+    <!--<ProjectReference Include="..\..\..\RamlToOpenApiConverter\src\RamlToOpenApiConverter\RamlToOpenApiConverter.csproj" />-->
   </ItemGroup>
 
 </Project>
