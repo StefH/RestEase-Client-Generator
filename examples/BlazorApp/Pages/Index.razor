@@ -1,39 +1,57 @@
 ﻿@page "/"
-
 @using System.IO;
 @using System.Text
-@inject IFileReaderService fileReaderService;
+@using Microsoft.OpenApi.Readers
+@using RestEaseClientGenerator.Settings
+@using RestEaseClientGenerator.Types
+
+@inject IFileReaderService FileReaderService
+@inject IRestEaseCodeGenerator CodeGenerator
+
 
 <h1>Hello, world!</h1>
 
-<input type="file" @ref=inputTypeFileElement /><button @onclick=ReadFile>Read file</button>
-
-<input @bind="Text" />
+<div class="row">
+    <input type="file" @ref=InputTypeFileElement /><button @onclick=ReadFile>Read file and Generate</button>
+</div>
+<div class="row">
+    <label for="@FileName">FileName</label>
+    <input @bind="FileName" />
+</div>
+<div class="row">
+    <input @bind="Contents" />
+</div>
 
 @functions {
-
-    string Text;
-    ElementReference inputTypeFileElement;
+    string FileName;
+    string Contents;
+    ElementReference InputTypeFileElement;
 
     public async Task ReadFile()
     {
-        foreach (IFileReference file in await fileReaderService.CreateReference(inputTypeFileElement).EnumerateFilesAsync())
+        foreach (IFileReference file in await FileReaderService.CreateReference(InputTypeFileElement).EnumerateFilesAsync())
         {
-            // Read into buffer and act (uses less memory)
-            //await using (Stream stream = await file.OpenReadAsync()) {
-            //    // Do (async) stuff with stream...
-            //    await stream.ReadAsync(buffer, ...);
-            //    // The following will fail. Only async read is allowed.
-            //    stream.Read(buffer, ...)
-            //}
-
             var fileInfo = await file.ReadFileInfoAsync();
 
-            // Read into memory and act
-            using (MemoryStream memoryStream = await file.CreateMemoryStreamAsync(4096))
+            await using var memoryStream = await file.CreateMemoryStreamAsync();
+            FileName = fileInfo.Name;
+
+            var petStoreOpenApi3Settings = new GeneratorSettings
             {
-                Text = Encoding.UTF8.GetString(memoryStream.ToArray());
-            }
+                SingleFile = true,
+                Namespace = "RestEaseClientGeneratorConsoleApp.Examples.PetStoreOpenApi302",
+                ApiName = "PetStoreOpenApi3",
+                GenerateFormUrlEncodedExtensionMethods = true,
+                GenerateMultipartFormDataExtensionMethods = true,
+                GenerateApplicationOctetStreamExtensionMethods = true,
+                ApplicationOctetStreamType = ApplicationOctetStreamType.ByteArray,
+                PreferredContentType = ContentType.ApplicationJson,
+                DefineAllMethodHeadersOnInterface = true,
+                MethodReturnType = MethodReturnType.Type,
+                PreferredEnumType = EnumType.Enum
+            };
+            var result = CodeGenerator.GenerateFromStream(memoryStream, petStoreOpenApi3Settings, out OpenApiDiagnostic diagnostic);
+            Contents = result.First().Content;
         }
     }
 }
