@@ -29,7 +29,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RamlTest", "examples\RamlTe
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "blazor", "blazor", "{4C16C3C8-4F12-44F2-9F16-1A6DF06A2DC2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorApp", "examples\BlazorApp\BlazorApp.csproj", "{166CFEB8-939A-4E8B-AACB-B0369B719B23}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorApp", "examples\BlazorApp\BlazorApp.csproj", "{166CFEB8-939A-4E8B-AACB-B0369B719B23}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

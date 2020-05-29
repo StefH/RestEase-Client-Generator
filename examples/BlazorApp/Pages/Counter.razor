@@ -1,16 +1,51 @@
 ﻿@page "/counter"
 
-<h1>Counter</h1>
+<Container Fluid="true">
+    <Alert Color="Color.Primary" Visible="true">
+        Suspendisse vel quam malesuada, aliquet sem sit amet, fringilla elit. Morbi tempor tincidunt tempor. Etiam id turpis viverra, vulputate sapien nec, varius sem. Curabitur ullamcorper fringilla eleifend. In ut eros hendrerit est consequat posuere et at velit.
+    </Alert>
+</Container>
 
-<p>Current count: @currentCount</p>
 
-<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+<Row>
+    <Column ColumnSize="ColumnSize.Is12">
+        <Alert Color="Color.Primary" Visible="true">
+            Is12
+        </Alert>
+    </Column>
+</Row>
+<Row>
+    <Column ColumnSize="ColumnSize.Is8">
+        <Alert Color="Color.Primary" Visible="true">
+            Is8
+        </Alert>
+    </Column>
+    <Column ColumnSize="ColumnSize.Is4">
+        <Alert Color="Color.Secondary" Visible="true">
+            Is4
+        </Alert>
+    </Column>
+</Row>
 
-@code {
-    private int currentCount = 0;
 
-    private void IncrementCount()
-    {
-        currentCount++;
-    }
-}
+<Container Fluid="true">
+    <Row>
+        <Column ColumnSize="ColumnSize.Is12">
+            <Alert Color="Color.Primary" Visible="true">
+                Is12
+            </Alert>
+        </Column>
+    </Row>
+    <Row>
+        <Column ColumnSize="ColumnSize.Is8">
+            <Alert Color="Color.Primary" Visible="true">
+                Is8
+            </Alert>
+        </Column>
+        <Column ColumnSize="ColumnSize.Is4">
+            <Alert Color="Color.Secondary" Visible="true">
+                Is4
+            </Alert>
+        </Column>
+    </Row>
+</Container>

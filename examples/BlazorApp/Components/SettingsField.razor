@@ -1,0 +1,17 @@
+﻿@typeparam TValue
+
+@using System.CodeDom
+@using System.Linq.Expressions
+
+    <Field Horizontal="true">
+        <FieldLabel ColumnSize="ColumnSize.Is1">@GetLabelText()</FieldLabel>
+        @switch (GetPropertyType())
+        {
+            //case bool b:
+
+                
+        }
+        <FieldBody ColumnSize="ColumnSize.Is10">
+            @*<Check TValue="bool" @bind-Checked="@Settings.SingleFile"></Check>*@
+        </FieldBody>
+    </Field>

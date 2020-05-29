@@ -1,57 +1,76 @@
 ﻿@page "/"
-@using System.IO;
-@using System.Text
-@using Microsoft.OpenApi.Readers
 @using RestEaseClientGenerator.Settings
-@using RestEaseClientGenerator.Types
-
-@inject IFileReaderService FileReaderService
-@inject IRestEaseCodeGenerator CodeGenerator
 
 
-<h1>Hello, world!</h1>
+<EditForm Model="@Settings">
+    <Row Margin="Margin.Is1">
+        <Column>
+            <Card Margin="Margin.Is4.OnY">
+                <CardHeader>
+                    <CardTitle>abc</CardTitle>
+                </CardHeader>
+                <CardBody>
+                    <CardText>a nice txt...</CardText>
+                </CardBody>
+                <CardBody>
+                    <Field Horizontal="true">
+                        <FieldLabel ColumnSize="ColumnSize.Is1">Input file</FieldLabel>
+                        <FieldBody ColumnSize="ColumnSize.Is4">
+                            <FileEdit Changed="@InputFileChanged" Multiple="false" />
+                        </FieldBody>
+                    </Field>
 
-<div class="row">
-    <input type="file" @ref=InputTypeFileElement /><button @onclick=ReadFile>Read file and Generate</button>
-</div>
-<div class="row">
-    <label for="@FileName">FileName</label>
-    <input @bind="FileName" />
-</div>
-<div class="row">
-    <input @bind="Contents" />
-</div>
+                    <Field Horizontal="true">
+                        <FieldLabel ColumnSize="ColumnSize.Is1">@nameof(Settings.SingleFile)</FieldLabel>
+                        <FieldBody ColumnSize="ColumnSize.Is10">
+                            <Check TValue="bool" @bind-Checked="@Settings.SingleFile"></Check>
+                        </FieldBody>
+                    </Field>
 
-@functions {
-    string FileName;
-    string Contents;
-    ElementReference InputTypeFileElement;
+                    <Field Horizontal="true">
+                        <FieldLabel ColumnSize="ColumnSize.Is1">@nameof(Settings.Namespace)</FieldLabel>
+                        <FieldBody ColumnSize="ColumnSize.Is10">
+                            <Tooltip Text="Hello tooltip" Placement="Placement.Right">
+                            <TextEdit @bind-Text="@Settings.Namespace" />
+                            </Tooltip>
+                        </FieldBody>
+                    </Field>
 
-    public async Task ReadFile()
-    {
-        foreach (IFileReference file in await FileReaderService.CreateReference(InputTypeFileElement).EnumerateFilesAsync())
-        {
-            var fileInfo = await file.ReadFileInfoAsync();
+                    <Field Horizontal="true">
 
-            await using var memoryStream = await file.CreateMemoryStreamAsync();
-            FileName = fileInfo.Name;
+                        <FieldBody ColumnSize="ColumnSize.Is10">
+                            <Button Color="Color.Primary" Disabled="@(!_uploadComplete)" Clicked="@GenerateAndDownloadFile">Generate and Download</Button>
+                        </FieldBody>
+                    </Field>
+                </CardBody>
+            </Card>
+        </Column>
 
-            var petStoreOpenApi3Settings = new GeneratorSettings
-            {
-                SingleFile = true,
-                Namespace = "RestEaseClientGeneratorConsoleApp.Examples.PetStoreOpenApi302",
-                ApiName = "PetStoreOpenApi3",
-                GenerateFormUrlEncodedExtensionMethods = true,
-                GenerateMultipartFormDataExtensionMethods = true,
-                GenerateApplicationOctetStreamExtensionMethods = true,
-                ApplicationOctetStreamType = ApplicationOctetStreamType.ByteArray,
-                PreferredContentType = ContentType.ApplicationJson,
-                DefineAllMethodHeadersOnInterface = true,
-                MethodReturnType = MethodReturnType.Type,
-                PreferredEnumType = EnumType.Enum
-            };
-            var result = CodeGenerator.GenerateFromStream(memoryStream, petStoreOpenApi3Settings, out OpenApiDiagnostic diagnostic);
-            Contents = result.First().Content;
-        }
-    }
-}
+        @*<Column ColumnSize="ColumnSize.Is3">
+                <FileEdit Changed="@InputFileChanged" Multiple="false" />
+            </Column>*@
+    </Row>
+</EditForm>
+@*<Row Margin="Margin.Is1">
+        <Column ColumnSize="ColumnSize.Is12">
+            <Check TValue="bool" @bind-Checked="@Settings.SingleFile">@nameof(Settings.SingleFile)</Check>
+        </Column>
+        <Column ColumnSize="ColumnSize.Is2">
+            <Button Color="Color.Primary" Disabled="@(!_uploadComplete)" Clicked="@GenerateAndDownloadFile">Generate and Download</Button>
+        </Column>
+    </Row>*@
+
+@*<Row Margin="Margin.Is1">
+        <Column ColumnSize="ColumnSize.Is2">
+            <input @bind="_fileName" />
+        </Column>
+    </Row>*@
+
+@*<Row Margin="Margin.Is1">
+        <Column ColumnSize="ColumnSize.Is12">
+            <BlazoredTextEditor @ref="@QuillHtml" ReadOnly="true">
+                <EditorContent>
+                </EditorContent>
+            </BlazoredTextEditor>
+        </Column>
+    </Row>*@
