@@ -1,3 +1,5 @@
+using System;
+using System.Net.Http;
 using System.Threading.Tasks;
 using BlazorApp.Services;
 using BlazorDownloadFile;
@@ -16,16 +18,19 @@ namespace BlazorApp
         {
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
-            // 3rd Party
             builder.Services
                 .AddBlazorise(options =>
                 {
                     options.ChangeTextOnKeyPress = true;
                 })
                 .AddBootstrapProviders()
-                .AddFontAwesomeIcons();
+                .AddFontAwesomeIcons()
+                .AddBlazorDownloadFile();
 
-            builder.Services.AddBlazorDownloadFile();
+            builder.Services.AddSingleton(new HttpClient
+            {
+                BaseAddress = new Uri(builder.HostEnvironment.BaseAddress)
+            });
 
             // Own Services
             builder.Services.AddSingleton<IGenerator, Generator>();
