@@ -4,7 +4,7 @@
     <Column>
         <Card Margin="Margin.Is4.OnY">
             <CardHeader>
-                <CardTitle>abc</CardTitle>
+                <CardTitle>Generator Settings</CardTitle>
             </CardHeader>
             <CardBody>
                 <CardText>a nice txt...</CardText>
@@ -17,9 +17,9 @@
                     </FieldBody>
                 </Field>
 
-                <CheckField Value="@Settings.SingleFile" For="@(() => Settings.SingleFile)"></CheckField>
-                <SelectField Value="@Settings.ArrayType" For="@(() => Settings.ArrayType)"></SelectField>
-                <TextEditField Value="@Settings.Namespace" For="@(() => Settings.Namespace)"></TextEditField>
+                <CheckField @bind-Value="@Settings.SingleFile" For="@(() => Settings.SingleFile)"></CheckField>
+                <SelectField @bind-Value="@Settings.ArrayType" For="@(() => Settings.ArrayType)"></SelectField>
+                <TextEditField @bind-Value="@Settings.Namespace" For="@(() => Settings.Namespace)"></TextEditField>
 
                 <Field Horizontal="true">
                     <FieldBody ColumnSize="ColumnSize.Is10">

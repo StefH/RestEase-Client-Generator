@@ -3,7 +3,6 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using BlazorDownloadFile;
-using Blazored.TextEditor;
 using Blazorise;
 using Microsoft.AspNetCore.Components;
 using Microsoft.OpenApi.Readers;
@@ -31,8 +30,6 @@ namespace RestEaseClientGeneratorBlazorApp.Pages
         private string _fileName;
         private Stream _inputStream;
 
-        BlazoredTextEditor QuillHtml { get; set; }
-
         async Task GenerateAndDownloadFile()
         {
             Settings.ApiName = Path.GetFileNameWithoutExtension(_fileName);
@@ -53,7 +50,6 @@ namespace RestEaseClientGeneratorBlazorApp.Pages
         async Task InputFileChanged(FileChangedEventArgs e)
         {
             _uploadComplete = false;
-            //Result = null;
             _inputStream?.Dispose();
 
             try
@@ -66,10 +62,6 @@ namespace RestEaseClientGeneratorBlazorApp.Pages
 
                 await file.WriteToStreamAsync(_inputStream);
                 _inputStream.Seek(0, SeekOrigin.Begin);
-
-
-                //await QuillHtml.LoadHTMLContent(Contents);
-                //StateHasChanged();
 
                 _uploadComplete = true;
             }

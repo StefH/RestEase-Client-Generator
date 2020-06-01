@@ -8,8 +8,26 @@ namespace RestEaseClientGeneratorBlazorApp.Components
 {
     public abstract class BaseField<TValue> : ComponentBase
     {
+        private TValue _value;
+
         [Parameter]
-        public TValue Value { get; set; }
+        public TValue Value
+        {
+            get => _value;
+
+            set
+            {
+                if (Equals(_value, value))
+                {
+                    return;
+                }
+                _value = value;
+                ValueChanged.InvokeAsync(value);
+            }
+        }
+
+        [Parameter]
+        public EventCallback<TValue> ValueChanged { get; set; }
 
         [Parameter]
         public Expression<Func<TValue>> For { get; set; }
