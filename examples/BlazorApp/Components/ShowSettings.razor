@@ -1,0 +1,17 @@
+﻿@using RestEaseClientGenerator.Settings
+@*//@typeparam TItem*@
+
+<div>
+    @ShowBoolTemplate(Settings.SingleFile)
+
+</div>
+
+@code {
+
+    [Parameter]
+    public RenderFragment<bool> ShowBoolTemplate { get; set; }
+
+    [Parameter]
+    public GeneratorSettings Settings { get; set; }
+
+}

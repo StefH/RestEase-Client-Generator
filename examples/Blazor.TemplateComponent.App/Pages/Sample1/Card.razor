@@ -1,0 +1,14 @@
+﻿<h3>Card</h3>
+<div class="card text-center">
+    @CardHeader
+    @CardBody
+    @CardFooter
+</div>
+@code {
+    [Parameter]
+    public RenderFragment CardHeader { get; set; }
+    [Parameter]
+    public RenderFragment CardBody { get; set; }
+    [Parameter]
+    public RenderFragment CardFooter { get; set; }
+}

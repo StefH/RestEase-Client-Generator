@@ -1,0 +1,22 @@
+﻿@typeparam TItem
+
+<div>
+    @if ((Items?.Count ?? 0) != 0)
+    {
+        @foreach (var item in Items)
+        {
+            @ShowTemplate(item)
+        }
+    }
+
+</div>
+
+@code {
+
+    [Parameter]
+    public RenderFragment<TItem> ShowTemplate { get; set; }
+
+    [Parameter]
+    public List<TItem> Items { get; set; }
+
+}

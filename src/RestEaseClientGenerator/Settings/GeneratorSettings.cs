@@ -5,7 +5,9 @@ namespace RestEaseClientGenerator.Settings
 {
     public class GeneratorSettings
     {
-        public bool SingleFile { get; set; }
+        [DisplayName("Generate Single .cs file")]
+        [Description("Generate a Single .cs file. The default is 'True'.")]
+        public bool SingleFile { get; set; } = true;
 
         #region General
         [DisplayName("Array Type")]

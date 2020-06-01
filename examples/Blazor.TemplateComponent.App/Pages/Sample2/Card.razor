@@ -1,0 +1,17 @@
+﻿@typeparam TItem
+<div class="card text-center">
+    @CardHeader(Item)
+    @CardBody(Item)
+    @CardFooter
+</div>
+
+@code {
+    [Parameter]
+    public TItem Item { get; set; }
+    [Parameter]
+    public RenderFragment<TItem> CardHeader { get; set; }
+    [Parameter]
+    public RenderFragment<TItem> CardBody { get; set; }
+    [Parameter]
+    public RenderFragment CardFooter { get; set; }
+}

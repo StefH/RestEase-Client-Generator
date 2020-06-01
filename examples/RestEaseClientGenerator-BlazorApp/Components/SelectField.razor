@@ -1,0 +1,36 @@
+﻿@typeparam TEnumValue
+@using RestEaseClientGenerator.Extensions
+@using System.Linq;
+@inherits BaseField<TEnumValue> 
+
+<Field Horizontal="true">
+    <FieldLabel ColumnSize="ColumnSize.Is2">@Label</FieldLabel>
+
+    <FieldBody ColumnSize="ColumnSize.Is2">
+        <Tooltip Text=@Tooltip>
+            <Select TValue="TEnumValue">
+                @foreach (var entry in Values)
+                {
+                    <SelectItem Value="@entry.Key">@entry.Value</SelectItem>
+                }
+            </Select>
+        </Tooltip>
+    </FieldBody>
+</Field>
+
+@code
+{
+    public Dictionary<TEnumValue, string> Values
+    {
+        get
+        {
+            var result = new Dictionary<TEnumValue, string>();
+            foreach (TEnumValue @enum in Enum.GetValues(typeof(TEnumValue)))
+            {
+                result.Add(@enum, (@enum as Enum).GetDescription());
+            }
+
+            return result;
+        }
+    }
+}

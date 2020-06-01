@@ -2,7 +2,7 @@
 @using RestEaseClientGenerator.Settings
 
 
-<EditForm Model="@Settings">
+<EditForm Model="Settings">
     <Row Margin="Margin.Is1">
         <Column>
             <Card Margin="Margin.Is4.OnY">
@@ -20,6 +20,12 @@
                         </FieldBody>
                     </Field>
 
+                    @*<ShowSettings Settings="Settings">
+
+                        </ShowSettings>*@
+
+                    <SettingsField Value="@Settings.SingleFile" For="@(() => Settings.SingleFile)"></SettingsField>
+
                     <Field Horizontal="true">
                         <FieldLabel ColumnSize="ColumnSize.Is1">@nameof(Settings.SingleFile)</FieldLabel>
                         <FieldBody ColumnSize="ColumnSize.Is10">
@@ -30,16 +36,15 @@
                     <Field Horizontal="true">
                         <FieldLabel ColumnSize="ColumnSize.Is1">@nameof(Settings.Namespace)</FieldLabel>
                         <FieldBody ColumnSize="ColumnSize.Is10">
-                            <Tooltip Text="Hello tooltip" Placement="Placement.Right">
-                            <TextEdit @bind-Text="@Settings.Namespace" />
+                            <Tooltip Text="Hello tooltip">
+                                <TextEdit @bind-Text="@Settings.Namespace" />
                             </Tooltip>
                         </FieldBody>
                     </Field>
 
                     <Field Horizontal="true">
-
                         <FieldBody ColumnSize="ColumnSize.Is10">
-                            <Button Color="Color.Primary" Disabled="@(!_uploadComplete)" Clicked="@GenerateAndDownloadFile">Generate and Download</Button>
+                            <Button Color="Color.Primary" Disabled="@(!_uploadComplete)" Clicked=@GenerateAndDownloadFile>Generate and Download</Button>
                         </FieldBody>
                     </Field>
                 </CardBody>
@@ -51,26 +56,4 @@
             </Column>*@
     </Row>
 </EditForm>
-@*<Row Margin="Margin.Is1">
-        <Column ColumnSize="ColumnSize.Is12">
-            <Check TValue="bool" @bind-Checked="@Settings.SingleFile">@nameof(Settings.SingleFile)</Check>
-        </Column>
-        <Column ColumnSize="ColumnSize.Is2">
-            <Button Color="Color.Primary" Disabled="@(!_uploadComplete)" Clicked="@GenerateAndDownloadFile">Generate and Download</Button>
-        </Column>
-    </Row>*@
 
-@*<Row Margin="Margin.Is1">
-        <Column ColumnSize="ColumnSize.Is2">
-            <input @bind="_fileName" />
-        </Column>
-    </Row>*@
-
-@*<Row Margin="Margin.Is1">
-        <Column ColumnSize="ColumnSize.Is12">
-            <BlazoredTextEditor @ref="@QuillHtml" ReadOnly="true">
-                <EditorContent>
-                </EditorContent>
-            </BlazoredTextEditor>
-        </Column>
-    </Row>*@

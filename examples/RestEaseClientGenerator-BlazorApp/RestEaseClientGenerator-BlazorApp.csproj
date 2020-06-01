@@ -1,0 +1,45 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <RazorLangVersion>3.0</RazorLangVersion>
+    <ServiceWorkerAssetsManifest>service-worker-assets.js</ServiceWorkerAssetsManifest>
+    <AssemblyName>RestEaseClientGeneratorBlazorApp</AssemblyName>
+    <RootNamespace>RestEaseClientGeneratorBlazorApp</RootNamespace>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Components\BooleanField - Copy.razor.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Components\BooleanField - Copy.razor" />
+    <Content Remove="Components\CustomInputSelect.razor" />
+    <Content Remove="Components\ShowSettings.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="3.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Build" Version="3.2.0" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="3.2.0" PrivateAssets="all" />
+    <PackageReference Include="System.Net.Http.Json" Version="3.2.0" />
+
+    <PackageReference Include="BlazorDownloadFile" Version="1.0.7" />
+    <PackageReference Include="Blazored.FluentValidation" Version="1.3.0" />
+    <PackageReference Include="Blazored.TextEditor" Version="1.0.3" />
+    <PackageReference Include="Blazorise.Bootstrap" Version="0.9.0.3" />
+    <PackageReference Include="Blazorise.Icons.FontAwesome" Version="0.9.0.3" />
+
+    <PackageReference Include="RamlToOpenApiConverter" Version="0.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\RestEaseClientGenerator\RestEaseClientGenerator.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ServiceWorker Include="wwwroot\service-worker.js" PublishedContent="wwwroot\service-worker.published.js" />
+  </ItemGroup>
+
+</Project>

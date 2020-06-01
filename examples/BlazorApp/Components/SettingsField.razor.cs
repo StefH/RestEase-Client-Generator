@@ -1,15 +1,36 @@
 ﻿using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 using System.Linq.Expressions;
 using System.Reflection;
 using Microsoft.AspNetCore.Components;
+using RestEaseClientGenerator.Settings;
 
 namespace BlazorApp.Components
 {
-    public partial class SettingsField<TValue>
+    public partial class SettingsField
     {
         [Parameter]
-        public Expression<Func<TValue>> For { get; set; }
+        public string Id { get; set; }
+
+        [Parameter]
+        public object Value { get; set; }
+
+        public bool ValueAsBool
+        {
+            get => Value as bool? ?? false;
+            set => Value = value; //Convert.ChangeType(value, typeof(TValue));
+        }
+
+        public string ValueAsString
+        {
+            get => Value as string ?? string.Empty;
+            set => Value = value;
+        }
+
+        [Parameter]
+        public Expression<Func<object>> For { get; set; }
 
         private MemberExpression _expression;
 
@@ -19,6 +40,9 @@ namespace BlazorApp.Components
             {
                 throw new InvalidOperationException($"{GetType()} requires a value for the {nameof(For)} parameter.");
             }
+
+            Trace.WriteLine(For.ToString());
+            Trace.WriteLine(For.Body?.ToString());
 
             if (!(For.Body is MemberExpression))
             {
@@ -32,18 +56,21 @@ namespace BlazorApp.Components
         {
             var property = _expression.Member;
 
-            var displayProperty = property.GetCustomAttribute(typeof(DisplayAttribute)) as DisplayAttribute;
+            var displayProperty = property.GetCustomAttribute<DisplayAttribute>();
             return displayProperty?.Name ?? property.Name;
+        }
+
+        private string? GetTooltip()
+        {
+            var property = _expression.Member;
+
+            var displayProperty = property.GetCustomAttribute<DescriptionAttribute>();
+            return displayProperty?.Description;
         }
 
         private Type GetPropertyType()
         {
             return _expression.Type;
-        }
-
-        private object GetValue()
-        {
-            return null;
         }
     }
 }

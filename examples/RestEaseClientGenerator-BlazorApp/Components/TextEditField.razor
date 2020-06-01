@@ -1,0 +1,11 @@
+﻿@inherits BaseField<string>
+
+<Field Horizontal="true">
+    <FieldLabel ColumnSize="ColumnSize.Is2">@Label</FieldLabel>
+
+    <FieldBody ColumnSize="ColumnSize.Is10">
+        <Tooltip Text=@Tooltip>
+            <TextEdit @bind-Text="@Value" />
+        </Tooltip>
+    </FieldBody>
+</Field>
