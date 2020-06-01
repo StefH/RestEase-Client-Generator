@@ -13,13 +13,15 @@ namespace RestEaseClientGeneratorBlazorApp.Services
     internal class RestEaseCodeGenerator : IRestEaseCodeGenerator
     {
         private readonly IGenerator _generator;
+        private readonly IFileZipper _zipper;
 
-        public RestEaseCodeGenerator(IGenerator generator)
+        public RestEaseCodeGenerator(IGenerator generator, IFileZipper zipper)
         {
             _generator = generator;
+            _zipper = zipper;
         }
 
-        public ICollection<GeneratedFile> GenerateFromStream(Stream stream, GeneratorSettings settings, out OpenApiDiagnostic diagnostic)
+        public byte[] GenerateZippedBytesFromInputStream(Stream stream, GeneratorSettings settings, out OpenApiDiagnostic diagnostic)
         {
             var reader = new OpenApiStreamReader();
             var document = reader.Read(stream, out diagnostic);
@@ -31,7 +33,7 @@ namespace RestEaseClientGeneratorBlazorApp.Services
                 Trace.WriteLine($"OpenApi Errors: {errorMessages}");
             }
 
-            return result;
+            return _zipper.Zip(result);
         }
     }
 }

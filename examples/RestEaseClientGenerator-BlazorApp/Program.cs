@@ -35,6 +35,7 @@ namespace RestEaseClientGeneratorBlazorApp
             // Own Services
             builder.Services.AddSingleton<IGenerator, Generator>();
             builder.Services.AddSingleton<IRestEaseCodeGenerator, RestEaseCodeGenerator>();
+            builder.Services.AddSingleton<IFileZipper, FileZipper>();
 
             builder.RootComponents.Add<App>("app");
 

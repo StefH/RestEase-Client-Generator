@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using BlazorDownloadFile;
 using Blazored.TextEditor;
@@ -46,11 +45,9 @@ namespace RestEaseClientGeneratorBlazorApp.Pages
             Settings.MethodReturnType = MethodReturnType.Type;
             Settings.PreferredEnumType = EnumType.Enum;
 
-            var result = CodeGenerator.GenerateFromStream(_inputStream, Settings, out OpenApiDiagnostic diagnostic);
-
-            var first = result.First();
-            string name = first.Name + ".zip";
-            await BlazorDownloadFileService.DownloadFile(name, Encoding.UTF8.GetBytes(first.Content));
+            var bytes = CodeGenerator.GenerateZippedBytesFromInputStream(_inputStream, Settings, out OpenApiDiagnostic diagnostic);
+            string name = _fileName + ".zip";
+            await BlazorDownloadFileService.DownloadFile(name, bytes);
         }
 
         async Task InputFileChanged(FileChangedEventArgs e)

@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using BlazorApp.Services;
 using BlazorDownloadFile;
-using Blazored.TextEditor;
 using Blazorise;
 using Microsoft.AspNetCore.Components;
 using Microsoft.OpenApi.Readers;
@@ -22,7 +21,7 @@ namespace BlazorApp.Pages
         [Inject]
         IBlazorDownloadFileService BlazorDownloadFileService { get; set; }
 
-        private GeneratorSettings Settings = new GeneratorSettings
+        private readonly GeneratorSettings Settings = new GeneratorSettings
         {
             SingleFile = true,
             Namespace = "Examples.PetStoreOpenApi302"
@@ -31,8 +30,6 @@ namespace BlazorApp.Pages
 
         private string _fileName;
         private Stream _inputStream;
-
-        BlazoredTextEditor QuillHtml { get; set; }
 
         async Task GenerateAndDownloadFile()
         {
@@ -56,7 +53,6 @@ namespace BlazorApp.Pages
         async Task InputFileChanged(FileChangedEventArgs e)
         {
             _uploadComplete = false;
-            //Result = null;
             _inputStream?.Dispose();
 
             try
@@ -70,10 +66,6 @@ namespace BlazorApp.Pages
                 await file.WriteToStreamAsync(_inputStream);
                 _inputStream.Seek(0, SeekOrigin.Begin);
 
-
-                //await QuillHtml.LoadHTMLContent(Contents);
-                //StateHasChanged();
-
                 _uploadComplete = true;
             }
             catch (Exception exc)
@@ -82,7 +74,7 @@ namespace BlazorApp.Pages
             }
             finally
             {
-                this.StateHasChanged();
+                StateHasChanged();
             }
         }
     }
