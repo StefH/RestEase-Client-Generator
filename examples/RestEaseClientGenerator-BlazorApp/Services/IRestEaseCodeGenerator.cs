@@ -6,6 +6,6 @@ namespace RestEaseClientGeneratorBlazorApp.Services
 {
     public interface IRestEaseCodeGenerator
     {
-        byte[] GenerateZippedBytesFromInputStream(Stream stream, GeneratorSettings settings, out OpenApiDiagnostic diagnostic);
+        byte[]? GenerateZippedBytesFromInputStream(Stream stream, GeneratorSettings settings, out OpenApiDiagnostic diagnostic);
     }
 }
