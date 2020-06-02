@@ -1,32 +1,64 @@
 ﻿@page "/"
 
-<Row Margin="Margin.Is1">
-    <Column>
-        <Card Margin="Margin.Is4.OnY">
-            <CardHeader>
-                <CardTitle>Generator Settings</CardTitle>
-            </CardHeader>
-            @*<CardBody>
-                <CardText>a nice txt...</CardText>
-            </CardBody>*@
-            <CardBody>
-                <Field Horizontal="true">
-                    <FieldLabel ColumnSize="ColumnSize.Is2">Input file</FieldLabel>
-                    <FieldBody ColumnSize="ColumnSize.Is4">
-                        <FileEdit Changed="@InputFileChanged" Multiple="false" />
-                    </FieldBody>
-                </Field>
+<Card>
+    <CardHeader>
+        <CardTitle>Generator Settings</CardTitle>
+    </CardHeader>
+    <CardBody>
+        <b>General</b>
+        <Field Horizontal="true">
+            <FieldLabel ColumnSize="ColumnSize.Is3">Input file</FieldLabel>
+            <FieldBody ColumnSize="ColumnSize.Is4">
+                <Tooltip Text="Select the Swagger / OpenApi or RAML specification input file.">
+                    <FileEdit Changed="@InputFileChanged" Multiple="false" Filter=".json, .yml, .yaml, .raml" />
+                </Tooltip>
+            </FieldBody>
+        </Field>
 
-                <CheckField @bind-Value="@Settings.SingleFile" For="@(() => Settings.SingleFile)"></CheckField>
-                <SelectField @bind-Value="@Settings.ArrayType" For="@(() => Settings.ArrayType)"></SelectField>
-                <TextEditField @bind-Value="@Settings.Namespace" For="@(() => Settings.Namespace)"></TextEditField>
-
-                <Field Horizontal="true">
-                    <FieldBody ColumnSize="ColumnSize.Is10">
-                        <Button Color="Color.Primary" Disabled="@(!_uploadComplete)" Clicked=@GenerateAndDownloadFile>Generate and Download</Button>
-                    </FieldBody>
-                </Field>
-            </CardBody>
-        </Card>
-    </Column>
-</Row>
+        <CheckField @bind-Value="@Settings.SingleFile" For="@(() => Settings.SingleFile)"></CheckField>
+        <SelectField @bind-Value="@Settings.ArrayType" For="@(() => Settings.ArrayType)"></SelectField>
+        <TextEditField @bind-Value="@Settings.Namespace" For="@(() => Settings.Namespace)"></TextEditField>
+        <TextEditField @bind-Value="@Settings.ApiNamespace" For="@(() => Settings.ApiNamespace)"></TextEditField>
+        <TextEditField @bind-Value="@Settings.ModelsNamespace" For="@(() => Settings.ModelsNamespace)"></TextEditField>
+        <SelectField @bind-Value="@Settings.GenerationType" For="@(() => Settings.GenerationType)"></SelectField>
+        <SelectField @bind-Value="@Settings.PreferredEnumType" For="@(() => Settings.PreferredEnumType)"></SelectField>
+        <CheckField @bind-Value="@Settings.UseDateTimeOffset" For="@(() => Settings.UseDateTimeOffset)"></CheckField>
+    </CardBody>
+    <CardBody>
+        <b>Models</b>
+        <CheckField @bind-Value="@Settings.SupportExtensionXNullable" For="@(() => Settings.SupportExtensionXNullable)"></CheckField>
+        <CheckField @bind-Value="@Settings.GeneratePrimitivePropertiesAsNullableForOpenApi20" For="@(() => Settings.GeneratePrimitivePropertiesAsNullableForOpenApi20)"></CheckField>
+    </CardBody>
+    <CardBody>
+        <b>Interface</b>
+        <SelectField @bind-Value="@Settings.MethodReturnType" For="@(() => Settings.MethodReturnType)"></SelectField>
+        <CheckField @bind-Value="@Settings.AppendAsync" For="@(() => Settings.AppendAsync)"></CheckField>
+        <SelectField @bind-Value="@Settings.MultipartFormDataFileType" For="@(() => Settings.MultipartFormDataFileType)"></SelectField>
+        <SelectField @bind-Value="@Settings.ApplicationOctetStreamType" For="@(() => Settings.ApplicationOctetStreamType)"></SelectField>
+        <CheckField @bind-Value="@Settings.GenerateMultipartFormDataExtensionMethods" For="@(() => Settings.GenerateMultipartFormDataExtensionMethods)"></CheckField>
+        <CheckField @bind-Value="@Settings.GenerateApplicationOctetStreamExtensionMethods" For="@(() => Settings.GenerateApplicationOctetStreamExtensionMethods)"></CheckField>
+        <CheckField @bind-Value="@Settings.GenerateFormUrlEncodedExtensionMethods" For="@(() => Settings.GenerateFormUrlEncodedExtensionMethods)"></CheckField>
+        <CheckField @bind-Value="@Settings.ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified" For="@(() => Settings.ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified)"></CheckField>
+        <SelectField @bind-Value="@Settings.PreferredContentType" For="@(() => Settings.PreferredContentType)"></SelectField>
+        <CheckField @bind-Value="@Settings.ForceContentTypeToApplicationJson" For="@(() => Settings.ForceContentTypeToApplicationJson)"></CheckField>
+        <CheckField @bind-Value="@Settings.UseOperationIdAsMethodName" For="@(() => Settings.UseOperationIdAsMethodName)"></CheckField>
+        <SelectField @bind-Value="@Settings.PreferredSecurityDefinitionType" For="@(() => Settings.PreferredSecurityDefinitionType)"></SelectField>
+        <CheckField @bind-Value="@Settings.MakeNonRequiredParametersOptional" For="@(() => Settings.MakeNonRequiredParametersOptional)"></CheckField>
+        <CheckField @bind-Value="@Settings.DefineAllMethodHeadersOnInterface" For="@(() => Settings.DefineAllMethodHeadersOnInterface)"></CheckField>
+        <CheckField @bind-Value="@Settings.DefineSharedMethodQueryParametersOnInterface" For="@(() => Settings.DefineSharedMethodQueryParametersOnInterface)"></CheckField>
+        <CheckField @bind-Value="@Settings.GenerateAndUseModelForAnyOfOrOneOf" For="@(() => Settings.GenerateAndUseModelForAnyOfOrOneOf)"></CheckField>
+    </CardBody>
+    <CardBody>
+        <b>Generate</b>
+        <Field Horizontal="true">
+            <FieldBody ColumnSize="ColumnSize.Is3">
+                <Button Color="Color.Primary" Disabled="@(!_uploadComplete)" Clicked=@GenerateAndDownloadFile>Generate and Download</Button>
+            </FieldBody>
+        </Field>
+        <Field Horizontal="true">
+            <FieldBody ColumnSize="ColumnSize.Is3">
+                <MemoEdit Rows="5" @bind-Text="@_logMessages"/>
+            </FieldBody>
+        </Field>
+    </CardBody>
+</Card>

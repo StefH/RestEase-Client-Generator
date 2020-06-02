@@ -7,7 +7,7 @@ namespace RestEaseClientGenerator.Extensions
     /// <summary>
     /// Some code copied from https://raw.githubusercontent.com/andeart/CaseConversions/master/CaseConversions/CaseConversion.cs
     /// </summary>
-    internal static class StringExtensions
+    public static class StringExtensions
     {
         public static string ToValidIdentifier(this string value, CasingType casingType)
         {

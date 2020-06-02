@@ -6,8 +6,8 @@ using BlazorDownloadFile;
 using Blazorise;
 using Microsoft.AspNetCore.Components;
 using Microsoft.OpenApi.Readers;
+using RestEaseClientGenerator.Extensions;
 using RestEaseClientGenerator.Settings;
-using RestEaseClientGenerator.Types;
 using RestEaseClientGeneratorBlazorApp.Services;
 
 namespace RestEaseClientGeneratorBlazorApp.Pages
@@ -20,35 +20,38 @@ namespace RestEaseClientGeneratorBlazorApp.Pages
         [Inject]
         IBlazorDownloadFileService BlazorDownloadFileService { get; set; }
 
-        private GeneratorSettings Settings = new GeneratorSettings
+        GeneratorSettings Settings = new GeneratorSettings
         {
             SingleFile = true,
             Namespace = "Examples.PetStoreOpenApi302"
         };
-        private bool _uploadComplete;
+        bool _uploadComplete;
 
-        private string _fileName;
-        private Stream _inputStream;
+        string _fileName;
+        Stream _inputStream;
+        string _logMessages;
 
         async Task GenerateAndDownloadFile()
         {
-            Settings.ApiName = Path.GetFileNameWithoutExtension(_fileName);
-            Settings.GenerateFormUrlEncodedExtensionMethods = true;
-            Settings.GenerateMultipartFormDataExtensionMethods = true;
-            Settings.GenerateApplicationOctetStreamExtensionMethods = true;
-            Settings.ApplicationOctetStreamType = ApplicationOctetStreamType.ByteArray;
-            Settings.PreferredContentType = ContentType.ApplicationJson;
-            Settings.DefineAllMethodHeadersOnInterface = true;
-            Settings.MethodReturnType = MethodReturnType.Type;
-            Settings.PreferredEnumType = EnumType.Enum;
-
             var bytes = CodeGenerator.GenerateZippedBytesFromInputStream(_inputStream, Settings, out OpenApiDiagnostic diagnostic);
+
+            if (diagnostic.Errors.Any())
+            {
+                foreach (var error in diagnostic.Errors)
+                {
+                    _logMessages += $"Error: {error.Message}\r\n";
+                }
+
+                return;
+            }
+
             string name = _fileName + ".zip";
             await BlazorDownloadFileService.DownloadFile(name, bytes);
         }
 
         async Task InputFileChanged(FileChangedEventArgs e)
         {
+            _logMessages = string.Empty;
             _uploadComplete = false;
             _inputStream?.Dispose();
 
@@ -64,14 +67,16 @@ namespace RestEaseClientGeneratorBlazorApp.Pages
                 _inputStream.Seek(0, SeekOrigin.Begin);
 
                 _uploadComplete = true;
+
+                Settings.Namespace = _fileName.ToPascalCase();
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                Console.WriteLine(exc.Message);
+                _logMessages += ex.Message;
             }
             finally
             {
-                this.StateHasChanged();
+                StateHasChanged();
             }
         }
     }
