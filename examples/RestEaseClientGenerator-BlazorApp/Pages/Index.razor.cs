@@ -38,7 +38,7 @@ namespace RestEaseClientGeneratorBlazorApp.Pages
 
             if (diagnostic.Errors.Any())
             {
-                _logMessages = "OpenApiWarnings:\r\n";
+                _logMessages += "OpenApiWarnings:\r\n";
                 foreach (var error in diagnostic.Errors)
                 {
                     _logMessages += $"- {error.Message}\r\n";
@@ -69,7 +69,7 @@ namespace RestEaseClientGeneratorBlazorApp.Pages
 
                 settings.ApiName = fileName.ToPascalCase();
 
-                _logMessages = $"File '{fileName}' uploaded successfully.";
+                _logMessages = $"File '{fileName}' ({file.Size} bytes) uploaded successfully.\r\n";
             }
             catch (Exception ex)
             {
