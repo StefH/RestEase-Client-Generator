@@ -8,7 +8,7 @@
 
     <FieldBody ColumnSize="ColumnSize.Is2">
         <Tooltip Text=@Tooltip>
-            <Select TValue="TEnumValue" @bind-SelectedValue="@Value">
+            <Select Size="Size.Small" TValue="TEnumValue" @bind-SelectedValue="@Value">
                 @foreach (var entry in Values)
                 {
                     <SelectItem Value="@entry.Key">@entry.Value</SelectItem>

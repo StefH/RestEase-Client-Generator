@@ -11,11 +11,10 @@
             <FieldLabel ColumnSize="ColumnSize.Is4">Input file</FieldLabel>
             <FieldBody ColumnSize="ColumnSize.Is4">
                 <Tooltip Text="Select the Swagger / OpenApi specification input file.">
-                    <FileEdit Changed="@InputFileChanged" Multiple="true" Filter=".json, .yml, .yaml" />
+                    <FileEdit Size="Size.Small" Changed="@InputFileChanged" Multiple="true" Filter=".json, .yml, .yaml" />
                 </Tooltip>
             </FieldBody>
         </Field>
-
         <CheckField @bind-Value="@settings.SingleFile" For="@(() => settings.SingleFile)"></CheckField>
         <TextEditField @bind-Value="@settings.ApiName" For="@(() => settings.ApiName)"></TextEditField>
         <TextEditField @bind-Value="@settings.Namespace" For="@(() => settings.Namespace)"></TextEditField>
@@ -62,7 +61,7 @@
                 </Tooltip>
             </FieldBody>
             <FieldBody ColumnSize="ColumnSize.Is8">
-                <MemoEdit Rows="10" @bind-Text="@logMessages" />
+                <MemoEdit Size="Size.Small" Rows="10" ReadOnly="true" @bind-Text="@logMessages" />
             </FieldBody>
         </Field>
     </CardBody>

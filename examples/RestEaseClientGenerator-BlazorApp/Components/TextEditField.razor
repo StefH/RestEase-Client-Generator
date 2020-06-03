@@ -5,7 +5,9 @@
 
     <FieldBody ColumnSize="ColumnSize.Is4">
         <Tooltip Text=@Tooltip>
-            <TextEdit @bind-Text="@Value" />
+            <TextEdit Size="Size.Small" @bind-Text="@Value">
+                @*<FieldHelp>@Tooltip</FieldHelp>*@
+            </TextEdit>
         </Tooltip>
     </FieldBody>
 </Field>

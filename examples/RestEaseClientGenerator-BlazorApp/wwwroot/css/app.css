@@ -181,3 +181,7 @@ app {
         display: block;
     }
 }
+
+body {
+    font-size: 0.8rem;
+}
