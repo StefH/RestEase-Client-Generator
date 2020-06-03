@@ -50,6 +50,8 @@ namespace RestEaseClientGenerator.Settings
         #endregion
 
         #region Interface
+        [DisplayName("Api FileName")]
+        [Description("The base FileName of the generated .cs files.")]
         public string ApiName { get; set; }
 
         // public bool AddAuthorizationHeader { get; set; }
