@@ -1,10 +1,7 @@
-﻿using System;
-using System.Diagnostics;
-using System.IO;
+﻿using System.Diagnostics;
 using System.Linq;
 using Microsoft.OpenApi.Readers;
 using Newtonsoft.Json;
-using RamlToOpenApiConverter;
 using RestEaseClientGenerator;
 using RestEaseClientGenerator.Settings;
 
