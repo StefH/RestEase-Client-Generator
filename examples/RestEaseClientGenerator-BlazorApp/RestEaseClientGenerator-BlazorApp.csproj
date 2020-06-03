@@ -10,16 +10,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Components\BooleanField - Copy.razor.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Remove="Components\BooleanField - Copy.razor" />
-    <Content Remove="Components\CustomInputSelect.razor" />
-    <Content Remove="Components\ShowSettings.razor" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="3.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Build" Version="3.2.0" PrivateAssets="all" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="3.2.0" PrivateAssets="all" />

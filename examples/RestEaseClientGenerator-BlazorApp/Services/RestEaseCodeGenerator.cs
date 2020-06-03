@@ -1,8 +1,10 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using Microsoft.OpenApi.Readers;
 using Newtonsoft.Json;
+using RamlToOpenApiConverter;
 using RestEaseClientGenerator;
 using RestEaseClientGenerator.Settings;
 
@@ -19,10 +21,16 @@ namespace RestEaseClientGeneratorBlazorApp.Services
             _zipper = zipper;
         }
 
-        public byte[]? GenerateZippedBytesFromInputStream(Stream stream, GeneratorSettings settings, out OpenApiDiagnostic diagnostic)
+        public byte[] GenerateZippedBytesFromString(string content, GeneratorSettings settings, out OpenApiDiagnostic diagnostic)
         {
-            var reader = new OpenApiStreamReader();
-            var document = reader.Read(stream, out diagnostic);
+            //if (Path.GetExtension(path).EndsWith("raml", StringComparison.OrdinalIgnoreCase))
+            //{
+            //    diagnostic = new OpenApiDiagnostic();
+            //    document = new RamlConverter().ConvertToOpenApiDocument(path);
+            //}
+
+            var reader = new OpenApiStringReader();
+            var document = reader.Read(content, out diagnostic);
 
             if (diagnostic.Errors.Any())
             {

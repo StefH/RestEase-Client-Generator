@@ -2,15 +2,16 @@
 
 <Card>
     <CardHeader>
-        <CardTitle>Generator Settings</CardTitle>
+        <CardTitle>Settings</CardTitle>
     </CardHeader>
     <CardBody>
         <b>General</b>
+        <hr />
         <Field Horizontal="true">
-            <FieldLabel ColumnSize="ColumnSize.Is3">Input file</FieldLabel>
+            <FieldLabel ColumnSize="ColumnSize.Is4">Input file</FieldLabel>
             <FieldBody ColumnSize="ColumnSize.Is4">
                 <Tooltip Text="Select the Swagger / OpenApi or RAML specification input file.">
-                    <FileEdit Changed="@InputFileChanged" Multiple="false" Filter=".json, .yml, .yaml, .raml" />
+                    <FileEdit Changed="@InputFileChanged" Multiple="true" Filter=".json, .yml, .yaml, .raml" />
                 </Tooltip>
             </FieldBody>
         </Field>
@@ -27,11 +28,13 @@
     </CardBody>
     <CardBody>
         <b>Models</b>
+        <hr />
         <CheckField @bind-Value="@settings.SupportExtensionXNullable" For="@(() => settings.SupportExtensionXNullable)"></CheckField>
         <CheckField @bind-Value="@settings.GeneratePrimitivePropertiesAsNullableForOpenApi20" For="@(() => settings.GeneratePrimitivePropertiesAsNullableForOpenApi20)"></CheckField>
     </CardBody>
     <CardBody>
         <b>Interface</b>
+        <hr />
         <SelectField @bind-Value="@settings.MethodReturnType" For="@(() => settings.MethodReturnType)"></SelectField>
         <CheckField @bind-Value="@settings.AppendAsync" For="@(() => settings.AppendAsync)"></CheckField>
         <SelectField @bind-Value="@settings.MultipartFormDataFileType" For="@(() => settings.MultipartFormDataFileType)"></SelectField>
@@ -51,18 +54,15 @@
     </CardBody>
     <CardBody>
         <b>Generate</b>
+        <hr />
         <Field Horizontal="true">
-            <FieldLabel ColumnSize="ColumnSize.Is3">Execute</FieldLabel>
             <FieldBody ColumnSize="ColumnSize.Is4">
                 <Tooltip Text="Generate the .cs class files and download as .zip">
-                    <Button Color="Color.Primary" Disabled="@(!uploadComplete)" Clicked=@GenerateAndDownloadFile>Generate and Download</Button>
+                    <Button Color="Color.Primary" Disabled="@(!uploadButtonEnabled)" Clicked=@GenerateAndDownloadFile>Generate and Download</Button>
                 </Tooltip>
             </FieldBody>
-        </Field>
-        <Field Horizontal="true">
-            <FieldLabel ColumnSize="ColumnSize.Is3">Messages</FieldLabel>
-            <FieldBody ColumnSize="ColumnSize.Is6">
-                <MemoEdit Rows="10" @bind-Text="@_logMessages" />
+            <FieldBody ColumnSize="ColumnSize.Is8">
+                <MemoEdit Rows="10" @bind-Text="@logMessages" />
             </FieldBody>
         </Field>
     </CardBody>

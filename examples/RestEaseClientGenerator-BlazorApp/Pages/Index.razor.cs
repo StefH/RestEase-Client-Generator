@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.OpenApi.Readers;
 using RestEaseClientGenerator.Extensions;
 using RestEaseClientGenerator.Settings;
+using RestEaseClientGeneratorBlazorApp.Models;
 using RestEaseClientGeneratorBlazorApp.Services;
 
 namespace RestEaseClientGeneratorBlazorApp.Pages
@@ -22,58 +23,77 @@ namespace RestEaseClientGeneratorBlazorApp.Pages
 
         GeneratorSettings settings = new GeneratorSettings
         {
-            Namespace = "Examples"
+            Namespace = "Example"
         };
-        bool uploadComplete;
 
-        string fileName = string.Empty;
-        Stream inputStream;
-        private string _logMessages = string.Empty;
+        bool uploadButtonEnabled;
+        FileModel fileModel = new FileModel();
+        string logMessages = string.Empty;
 
         async Task GenerateAndDownloadFile()
         {
-            inputStream.Seek(0, SeekOrigin.Begin);
+            if (fileModel.Content is null)
+            {
+                return;
+            }
 
-            var bytes = CodeGenerator.GenerateZippedBytesFromInputStream(inputStream, settings, out OpenApiDiagnostic diagnostic);
+            uploadButtonEnabled = false;
+
+            var bytes = CodeGenerator.GenerateZippedBytesFromString(fileModel.Content, settings, out OpenApiDiagnostic diagnostic);
 
             if (diagnostic.Errors.Any())
             {
-                _logMessages += "OpenApiWarnings:\r\n";
+                logMessages += "OpenApiWarnings:\r\n";
                 foreach (var error in diagnostic.Errors)
                 {
-                    _logMessages += $"- {error.Message}\r\n";
+                    logMessages += $"- {error.Message}\r\n";
                 }
             }
 
-            string name = fileName + ".zip";
+            string name = $"{Path.GetFileNameWithoutExtension(fileModel.Name)}.zip";
             await BlazorDownloadFileService.DownloadFile(name, bytes);
+
+            uploadButtonEnabled = true;
         }
 
         async Task InputFileChanged(FileChangedEventArgs e)
         {
-            _logMessages = string.Empty;
-            uploadComplete = false;
-            inputStream?.Dispose();
+            logMessages = string.Empty;
+            uploadButtonEnabled = false;
 
             try
             {
                 var file = e.Files.First();
 
-                fileName = file.Name;
+                // A stream is going to be the destination stream we're writing to.                
+                using (var stream = new MemoryStream())
+                {
+                    // Here we're telling the FileEdit where to write the upload result
+                    await file.WriteToStreamAsync(stream);
 
-                inputStream = new MemoryStream();
+                    // Once we reach this line it means the file is fully uploaded.
+                    // In this case we're going to offset to the beginning of file
+                    // so we can read it.
+                    stream.Seek(0, SeekOrigin.Begin);
 
-                await file.WriteToStreamAsync(inputStream);
+                    // Use the stream reader to read the content of uploaded file,
+                    // in this case we can assume it is a text file.
+                    using (var reader = new StreamReader(stream))
+                    {
+                        fileModel.Content = await reader.ReadToEndAsync();
+                    }
+                }
 
-                uploadComplete = true;
+                uploadButtonEnabled = true;
 
-                settings.ApiName = fileName.ToPascalCase();
+                logMessages = $"File '{file.Name}' ({file.Size} bytes) uploaded successfully.\r\n";
 
-                _logMessages = $"File '{fileName}' ({file.Size} bytes) uploaded successfully.\r\n";
+                fileModel.Name = file.Name;
+                settings.ApiName = fileModel.Name.ToPascalCase();
             }
             catch (Exception ex)
             {
-                _logMessages += ex.Message;
+                logMessages += ex.Message;
             }
             finally
             {
