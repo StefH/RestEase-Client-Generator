@@ -9,9 +9,9 @@ namespace RestEaseClientGeneratorBlazorApp.Models
     public enum SourceType
     {
         [Description("Url")]
-        Url = 1,
+        Url = 0,
 
         [Description("File")]
-        File = 2
+        File = 1
     }
 }

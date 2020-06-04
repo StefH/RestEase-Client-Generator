@@ -6,8 +6,8 @@ namespace RestEaseClientGeneratorBlazorApp.Models
     public class SettingsModel : GeneratorSettings
     {
         [DisplayName("Source")]
-        [Description("The source. The default is 'File'.")]
-        public SourceType Source { get; set; } = SourceType.File;
+        [Description("The source. The default is 'Url'.")]
+        public SourceType Source { get; set; } = SourceType.Url;
 
         [DisplayName("Url")]
         [Description("The OpenAPI Specification Url")]

@@ -56,10 +56,10 @@ namespace RestEaseClientGeneratorBlazorApp.Components
             PropertyName = property.Name;
 
             var displayNameProperty = property.GetCustomAttribute<DisplayNameAttribute>();
-            Label = displayNameProperty?.DisplayName ?? property.Name;
+            Label = displayNameProperty?.DisplayName ?? PropertyName;
 
-            var displayProperty = property.GetCustomAttribute<DescriptionAttribute>();
-            Tooltip = displayProperty?.Description;
+            var descriptionAttribute = property.GetCustomAttribute<DescriptionAttribute>();
+            Tooltip = descriptionAttribute?.Description;
         }
     }
 }

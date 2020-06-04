@@ -29,8 +29,25 @@ namespace RestEaseClientGeneratorBlazorApp.Pages
             Namespace = "Example"
         };
 
+        private bool downloadFromUrlButtonEnabled = true;
         bool uploadButtonEnabled;
         string logMessages = string.Empty;
+
+        async Task DownloadFromUrl()
+        {
+            uploadButtonEnabled = false;
+            downloadFromUrlButtonEnabled = false;
+
+            settings.Content = await HttpClient.GetStringAsync(settings.SourceUrl);
+
+            settings.FileName = Path.GetFileName(settings.SourceUrl);
+            settings.ApiName = settings.FileName.ToPascalCase();
+
+            logMessages = $"File '{settings.FileName}' ({settings.Content.Length} bytes) downloaded successfully.\r\n";
+
+            uploadButtonEnabled = true;
+            downloadFromUrlButtonEnabled = true;
+        }
 
         async Task InputFileChanged(FileChangedEventArgs e)
         {
@@ -79,17 +96,7 @@ namespace RestEaseClientGeneratorBlazorApp.Pages
 
         async Task GenerateAndDownloadFile()
         {
-            if (settings.Source == SourceType.Url)
-            {
-                settings.Content = await HttpClient.GetStringAsync(settings.SourceUrl);
-
-                settings.FileName = Path.GetFileName(settings.SourceUrl);
-                settings.ApiName = settings.FileName.ToPascalCase();
-
-                logMessages = $"File '{settings.FileName}' ({settings.Content.Length} bytes) downloaded successfully.\r\n";
-            }
-
-            if (settings.Source == SourceType.File && settings.Content is null)
+            if (settings.Content is null)
             {
                 return;
             }
