@@ -6,46 +6,55 @@
     </CardHeader>
     <CardBody>
         <b>General</b>
-        <hr />
-        <Field Horizontal="true">
-            <FieldLabel ColumnSize="ColumnSize.Is4">Input file</FieldLabel>
-            <FieldBody ColumnSize="ColumnSize.Is4">
-                <Tooltip Text="Select the Swagger / OpenApi specification input file.">
-                    <FileEdit Size="Size.Small" Changed="@InputFileChanged" Multiple="true" Filter=".json, .yml, .yaml" />
-                </Tooltip>
-            </FieldBody>
-        </Field>
+        <Divider />
+        <RadioGroupEnumField @bind-Value="@settings.Source" For="@(() => settings.Source)"></RadioGroupEnumField>
+        
+        @if (settings.Source == SourceType.File)
+        {
+            <Field Horizontal="true">
+                <FieldLabel ColumnSize="ColumnSize.Is4">Input file</FieldLabel>
+                <FieldBody ColumnSize="ColumnSize.Is4">
+                    <Tooltip Text="Select the Swagger / OpenApi specification input file.">
+                        <FileEdit Size="Size.Small" Changed="@InputFileChanged" Multiple="true" Filter=".json, .yml, .yaml"/>
+                    </Tooltip>
+                </FieldBody>
+            </Field>
+        }
+        else
+        {
+            <TextEditField @bind-Value="@settings.SourceUrl" For="@(() => settings.SourceUrl)"></TextEditField>
+        }
         <CheckField @bind-Value="@settings.SingleFile" For="@(() => settings.SingleFile)"></CheckField>
         <TextEditField @bind-Value="@settings.ApiName" For="@(() => settings.ApiName)"></TextEditField>
         <TextEditField @bind-Value="@settings.Namespace" For="@(() => settings.Namespace)"></TextEditField>
         <TextEditField @bind-Value="@settings.ApiNamespace" For="@(() => settings.ApiNamespace)"></TextEditField>
         <TextEditField @bind-Value="@settings.ModelsNamespace" For="@(() => settings.ModelsNamespace)"></TextEditField>
-        <SelectField @bind-Value="@settings.ArrayType" For="@(() => settings.ArrayType)"></SelectField>
-        <SelectField @bind-Value="@settings.GenerationType" For="@(() => settings.GenerationType)"></SelectField>
-        <SelectField @bind-Value="@settings.PreferredEnumType" For="@(() => settings.PreferredEnumType)"></SelectField>
+        <SelectEnumField @bind-Value="@settings.ArrayType" For="@(() => settings.ArrayType)"></SelectEnumField>
+        <SelectEnumField @bind-Value="@settings.GenerationType" For="@(() => settings.GenerationType)"></SelectEnumField>
+        <SelectEnumField @bind-Value="@settings.PreferredEnumType" For="@(() => settings.PreferredEnumType)"></SelectEnumField>
         <CheckField @bind-Value="@settings.UseDateTimeOffset" For="@(() => settings.UseDateTimeOffset)"></CheckField>
     </CardBody>
     <CardBody>
         <b>Models</b>
-        <hr />
+        <Divider />
         <CheckField @bind-Value="@settings.SupportExtensionXNullable" For="@(() => settings.SupportExtensionXNullable)"></CheckField>
         <CheckField @bind-Value="@settings.GeneratePrimitivePropertiesAsNullableForOpenApi20" For="@(() => settings.GeneratePrimitivePropertiesAsNullableForOpenApi20)"></CheckField>
     </CardBody>
     <CardBody>
         <b>Interface</b>
-        <hr />
-        <SelectField @bind-Value="@settings.MethodReturnType" For="@(() => settings.MethodReturnType)"></SelectField>
+        <Divider />
+        <SelectEnumField @bind-Value="@settings.MethodReturnType" For="@(() => settings.MethodReturnType)"></SelectEnumField>
         <CheckField @bind-Value="@settings.AppendAsync" For="@(() => settings.AppendAsync)"></CheckField>
-        <SelectField @bind-Value="@settings.MultipartFormDataFileType" For="@(() => settings.MultipartFormDataFileType)"></SelectField>
-        <SelectField @bind-Value="@settings.ApplicationOctetStreamType" For="@(() => settings.ApplicationOctetStreamType)"></SelectField>
+        <SelectEnumField @bind-Value="@settings.MultipartFormDataFileType" For="@(() => settings.MultipartFormDataFileType)"></SelectEnumField>
+        <SelectEnumField @bind-Value="@settings.ApplicationOctetStreamType" For="@(() => settings.ApplicationOctetStreamType)"></SelectEnumField>
         <CheckField @bind-Value="@settings.GenerateMultipartFormDataExtensionMethods" For="@(() => settings.GenerateMultipartFormDataExtensionMethods)"></CheckField>
         <CheckField @bind-Value="@settings.GenerateApplicationOctetStreamExtensionMethods" For="@(() => settings.GenerateApplicationOctetStreamExtensionMethods)"></CheckField>
         <CheckField @bind-Value="@settings.GenerateFormUrlEncodedExtensionMethods" For="@(() => settings.GenerateFormUrlEncodedExtensionMethods)"></CheckField>
         <CheckField @bind-Value="@settings.ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified" For="@(() => settings.ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified)"></CheckField>
-        <SelectField @bind-Value="@settings.PreferredContentType" For="@(() => settings.PreferredContentType)"></SelectField>
+        <SelectEnumField @bind-Value="@settings.PreferredContentType" For="@(() => settings.PreferredContentType)"></SelectEnumField>
         <CheckField @bind-Value="@settings.ForceContentTypeToApplicationJson" For="@(() => settings.ForceContentTypeToApplicationJson)"></CheckField>
         <CheckField @bind-Value="@settings.UseOperationIdAsMethodName" For="@(() => settings.UseOperationIdAsMethodName)"></CheckField>
-        <SelectField @bind-Value="@settings.PreferredSecurityDefinitionType" For="@(() => settings.PreferredSecurityDefinitionType)"></SelectField>
+        <SelectEnumField @bind-Value="@settings.PreferredSecurityDefinitionType" For="@(() => settings.PreferredSecurityDefinitionType)"></SelectEnumField>
         <CheckField @bind-Value="@settings.MakeNonRequiredParametersOptional" For="@(() => settings.MakeNonRequiredParametersOptional)"></CheckField>
         <CheckField @bind-Value="@settings.DefineAllMethodHeadersOnInterface" For="@(() => settings.DefineAllMethodHeadersOnInterface)"></CheckField>
         <CheckField @bind-Value="@settings.DefineSharedMethodQueryParametersOnInterface" For="@(() => settings.DefineSharedMethodQueryParametersOnInterface)"></CheckField>
@@ -53,7 +62,7 @@
     </CardBody>
     <CardBody>
         <b>Generate</b>
-        <hr />
+        <Divider />
         <Field Horizontal="true">
             <FieldBody ColumnSize="ColumnSize.Is4">
                 <Tooltip Text="Generate the .cs class files and download as .zip">

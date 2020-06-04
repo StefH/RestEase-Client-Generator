@@ -1,9 +1,9 @@
-﻿namespace RestEaseClientGeneratorBlazorApp.Models
-{
-    public class FileModel
-    {
-        public string Name { get; set; } = string.Empty;
+﻿//namespace RestEaseClientGeneratorBlazorApp.Models
+//{
+//    public class FileModel
+//    {
+//        public string Name { get; set; } = string.Empty;
 
-        public string? Content { get; set; }
-    }
-}
+//        public string? Content { get; set; }
+//    }
+//}

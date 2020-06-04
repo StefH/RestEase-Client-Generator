@@ -1,0 +1,18 @@
+﻿@typeparam TEnumValue
+
+@inherits BaseEnumField<TEnumValue>
+
+<Field Horizontal="true">
+    <FieldLabel ColumnSize="ColumnSize.Is4">@Label</FieldLabel>
+
+    <FieldBody ColumnSize="ColumnSize.Is2">
+
+        <Select Size="Size.Small" TValue="TEnumValue" @bind-SelectedValue="@Value">
+            @foreach (var entry in Values)
+            {
+                <SelectItem Value="@entry.Key">@entry.Value</SelectItem>
+            }
+        </Select>
+        <FieldHelp>@Tooltip</FieldHelp>
+    </FieldBody>
+</Field>

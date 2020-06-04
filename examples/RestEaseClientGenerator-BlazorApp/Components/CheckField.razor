@@ -4,8 +4,7 @@
     <FieldLabel ColumnSize="ColumnSize.Is4">@Label</FieldLabel>
 
     <FieldBody ColumnSize="ColumnSize.Is4">
-        <Tooltip Text=@Tooltip>
-            <Check Size="Size.Small" TValue="bool" @bind-Checked="@Value"></Check>
-        </Tooltip>
+        <Check Size="Size.Small" TValue="bool" @bind-Checked="@Value" />
+        <FieldHelp>@Tooltip</FieldHelp>
     </FieldBody>
 </Field>

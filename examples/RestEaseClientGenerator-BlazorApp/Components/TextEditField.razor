@@ -4,10 +4,7 @@
     <FieldLabel ColumnSize="ColumnSize.Is4">@Label</FieldLabel>
 
     <FieldBody ColumnSize="ColumnSize.Is4">
-        <Tooltip Text=@Tooltip>
-            <TextEdit Size="Size.Small" @bind-Text="@Value">
-                @*<FieldHelp>@Tooltip</FieldHelp>*@
-            </TextEdit>
-        </Tooltip>
+        <TextEdit Size="Size.Small" @bind-Text="@Value"/> 
+        <FieldHelp>@Tooltip</FieldHelp>
     </FieldBody>
 </Field>

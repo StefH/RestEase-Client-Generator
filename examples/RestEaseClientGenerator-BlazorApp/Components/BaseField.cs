@@ -36,6 +36,8 @@ namespace RestEaseClientGeneratorBlazorApp.Components
 
         protected string? Tooltip { get; private set; }
 
+        protected string PropertyName { get; private set; }
+
         protected override void OnParametersSet()
         {
             if (For == null)
@@ -50,6 +52,8 @@ namespace RestEaseClientGeneratorBlazorApp.Components
 
             var expression = (MemberExpression)For.Body;
             var property = expression.Member;
+
+            PropertyName = property.Name;
 
             var displayNameProperty = property.GetCustomAttribute<DisplayNameAttribute>();
             Label = displayNameProperty?.DisplayName ?? property.Name;

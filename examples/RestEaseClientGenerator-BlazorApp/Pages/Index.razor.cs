@@ -1,13 +1,13 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using BlazorDownloadFile;
 using Blazorise;
 using Microsoft.AspNetCore.Components;
 using Microsoft.OpenApi.Readers;
 using RestEaseClientGenerator.Extensions;
-using RestEaseClientGenerator.Settings;
 using RestEaseClientGeneratorBlazorApp.Models;
 using RestEaseClientGeneratorBlazorApp.Services;
 
@@ -21,40 +21,16 @@ namespace RestEaseClientGeneratorBlazorApp.Pages
         [Inject]
         IBlazorDownloadFileService BlazorDownloadFileService { get; set; }
 
-        GeneratorSettings settings = new GeneratorSettings
+        [Inject]
+        HttpClient HttpClient { get; set; }
+
+        SettingsModel settings = new SettingsModel
         {
             Namespace = "Example"
         };
 
         bool uploadButtonEnabled;
-        FileModel fileModel = new FileModel();
         string logMessages = string.Empty;
-
-        async Task GenerateAndDownloadFile()
-        {
-            if (fileModel.Content is null)
-            {
-                return;
-            }
-
-            uploadButtonEnabled = false;
-
-            var bytes = CodeGenerator.GenerateZippedBytesFromString(fileModel.Content, settings, out OpenApiDiagnostic diagnostic);
-
-            if (diagnostic.Errors.Any())
-            {
-                logMessages += "OpenApiWarnings:\r\n";
-                foreach (var error in diagnostic.Errors)
-                {
-                    logMessages += $"- {error.Message}\r\n";
-                }
-            }
-
-            string name = $"{Path.GetFileNameWithoutExtension(fileModel.Name)}.zip";
-            await BlazorDownloadFileService.DownloadFile(name, bytes);
-
-            uploadButtonEnabled = true;
-        }
 
         async Task InputFileChanged(FileChangedEventArgs e)
         {
@@ -80,7 +56,7 @@ namespace RestEaseClientGeneratorBlazorApp.Pages
                     // in this case we can assume it is a text file.
                     using (var reader = new StreamReader(stream))
                     {
-                        fileModel.Content = await reader.ReadToEndAsync();
+                        settings.Content = await reader.ReadToEndAsync();
                     }
                 }
 
@@ -88,8 +64,8 @@ namespace RestEaseClientGeneratorBlazorApp.Pages
 
                 logMessages = $"File '{file.Name}' ({file.Size} bytes) uploaded successfully.\r\n";
 
-                fileModel.Name = file.Name;
-                settings.ApiName = fileModel.Name.ToPascalCase();
+                settings.FileName = file.Name;
+                settings.ApiName = settings.FileName.ToPascalCase();
             }
             catch (Exception ex)
             {
@@ -99,6 +75,42 @@ namespace RestEaseClientGeneratorBlazorApp.Pages
             {
                 StateHasChanged();
             }
+        }
+
+        async Task GenerateAndDownloadFile()
+        {
+            if (settings.Source == SourceType.Url)
+            {
+                settings.Content = await HttpClient.GetStringAsync(settings.SourceUrl);
+
+                settings.FileName = Path.GetFileName(settings.SourceUrl);
+                settings.ApiName = settings.FileName.ToPascalCase();
+
+                logMessages = $"File '{settings.FileName}' ({settings.Content.Length} bytes) downloaded successfully.\r\n";
+            }
+
+            if (settings.Source == SourceType.File && settings.Content is null)
+            {
+                return;
+            }
+
+            uploadButtonEnabled = false;
+
+            var bytes = CodeGenerator.GenerateZippedBytesFromString(settings.Content, settings, out OpenApiDiagnostic diagnostic);
+
+            if (diagnostic.Errors.Any())
+            {
+                logMessages += "OpenApiWarnings:\r\n";
+                foreach (var error in diagnostic.Errors)
+                {
+                    logMessages += $"- {error.Message}\r\n";
+                }
+            }
+
+            string name = $"{Path.GetFileNameWithoutExtension(settings.FileName)}.zip";
+            await BlazorDownloadFileService.DownloadFile(name, bytes);
+
+            uploadButtonEnabled = true;
         }
     }
 }
