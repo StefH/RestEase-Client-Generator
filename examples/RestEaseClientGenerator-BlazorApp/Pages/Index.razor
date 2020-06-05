@@ -19,7 +19,7 @@
                 </FieldBody>
             </Field>
         }
-        else
+        else if (settings.Source == SourceType.Url)
         {
             <Field Horizontal="true">
                 <FieldLabel ColumnSize="ColumnSize.Is3">Url</FieldLabel>
@@ -34,6 +34,21 @@
                 </FieldBody>
             </Field>
         }
+		else
+		{
+            <Field Horizontal="true">
+                <FieldLabel ColumnSize="ColumnSize.Is3">Example</FieldLabel>
+                <FieldBody ColumnSize="ColumnSize.Is4">
+                    <TextEdit Size="Size.Small" @bind-Text="@settings.SourceUrl" />
+                    <FieldHelp>The OpenAPI Specification Url</FieldHelp>
+                </FieldBody>
+                <FieldBody>
+                    <Tooltip Text="Download OpenAPI Specification from the Url.">
+                        <Button Size="ButtonSize.Small" Color="Color.Primary" Disabled="@(!downloadFromUrlButtonEnabled)" Clicked="@DownloadFromUrl">Download</Button>
+                    </Tooltip>
+                </FieldBody>
+            </Field>
+		}
         <CheckField @bind-Value="@settings.SingleFile" For="@(() => settings.SingleFile)"></CheckField>
         <TextEditField @bind-Value="@settings.ApiName" For="@(() => settings.ApiName)"></TextEditField>
         <TextEditField @bind-Value="@settings.Namespace" For="@(() => settings.Namespace)"></TextEditField>

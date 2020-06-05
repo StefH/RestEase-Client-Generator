@@ -12,6 +12,9 @@ namespace RestEaseClientGeneratorBlazorApp.Models
         Url = 0,
 
         [Description("File")]
-        File = 1
+        File = 1,
+
+        [Description("Example")]
+        Example = 2
     }
 }
