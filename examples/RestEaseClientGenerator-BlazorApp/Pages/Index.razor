@@ -12,7 +12,7 @@
         @if (settings.Source == SourceType.File)
         {
             <Field Horizontal="true" >
-                <FieldLabel ColumnSize="ColumnSize.Is4">Input file</FieldLabel>
+                <FieldLabel ColumnSize="ColumnSize.Is3">Input file</FieldLabel>
                 <FieldBody ColumnSize="ColumnSize.Is4">
                     <FileEdit Size="Size.Small" Changed="@InputFileChanged" Multiple="true" Filter=".json, .yml, .yaml" />
                     <FieldHelp>Select the Swagger / OpenApi specification input file.</FieldHelp>
@@ -22,7 +22,7 @@
         else
         {
             <Field Horizontal="true">
-                <FieldLabel ColumnSize="ColumnSize.Is4">Url</FieldLabel>
+                <FieldLabel ColumnSize="ColumnSize.Is3">Url</FieldLabel>
                 <FieldBody ColumnSize="ColumnSize.Is4">
                     <TextEdit Size="Size.Small" @bind-Text="@settings.SourceUrl" />
                     <FieldHelp>The OpenAPI Specification Url</FieldHelp>
@@ -74,12 +74,12 @@
         <b>Generate</b>
         <Divider />
         <Field Horizontal="true">
-            <FieldBody ColumnSize="ColumnSize.Is4">
+            <FieldBody ColumnSize="ColumnSize.Is3">
                 <Tooltip Text="Generate the .cs class files and download as .zip">
                     <Button Size="ButtonSize.Small" Color="Color.Primary" Disabled="@(!uploadButtonEnabled)" Clicked="@GenerateAndDownloadFile">Generate and Download</Button>
                 </Tooltip>
             </FieldBody>
-            <FieldBody ColumnSize="ColumnSize.Is8">
+            <FieldBody ColumnSize="ColumnSize.Is9">
                 <MemoEdit Size="Size.ExtraSmall" Rows="10" ReadOnly="true" @bind-Text="@logMessages" />
             </FieldBody>
         </Field>

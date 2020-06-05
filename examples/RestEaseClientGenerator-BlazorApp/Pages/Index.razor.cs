@@ -41,7 +41,7 @@ namespace RestEaseClientGeneratorBlazorApp.Pages
             settings.Content = await HttpClient.GetStringAsync(settings.SourceUrl);
 
             settings.FileName = Path.GetFileName(settings.SourceUrl);
-            settings.ApiName = settings.FileName.ToPascalCase();
+            settings.ApiName = Path.GetFileNameWithoutExtension(settings.SourceUrl).ToPascalCase();
 
             logMessages = $"File '{settings.FileName}' ({settings.Content.Length} bytes) downloaded successfully.\r\n";
 
@@ -82,7 +82,7 @@ namespace RestEaseClientGeneratorBlazorApp.Pages
                 logMessages = $"File '{file.Name}' ({file.Size} bytes) uploaded successfully.\r\n";
 
                 settings.FileName = file.Name;
-                settings.ApiName = settings.FileName.ToPascalCase();
+                settings.ApiName = Path.GetFileNameWithoutExtension(file.Name).ToPascalCase();
             }
             catch (Exception ex)
             {
