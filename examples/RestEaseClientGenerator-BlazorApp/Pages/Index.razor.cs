@@ -38,15 +38,24 @@ namespace RestEaseClientGeneratorBlazorApp.Pages
             uploadButtonEnabled = false;
             downloadFromUrlButtonEnabled = false;
 
-            settings.Content = await HttpClient.GetStringAsync(settings.SourceUrl);
+            try
+            {
+                settings.Content = await HttpClient.GetStringAsync(settings.SourceUrl);
 
-            settings.FileName = Path.GetFileName(settings.SourceUrl);
-            settings.ApiName = Path.GetFileNameWithoutExtension(settings.SourceUrl).ToPascalCase();
+                settings.FileName = Path.GetFileName(settings.SourceUrl);
+                settings.ApiName = Path.GetFileNameWithoutExtension(settings.SourceUrl).ToPascalCase();
 
-            logMessages = $"File '{settings.FileName}' ({settings.Content.Length} bytes) downloaded successfully.\r\n";
-
-            uploadButtonEnabled = true;
-            downloadFromUrlButtonEnabled = true;
+                logMessages = $"File '{settings.FileName}' ({settings.Content.Length} bytes) downloaded successfully.\r\n";
+            }
+            catch (Exception ex)
+            {
+                logMessages += ex.Message;
+            }
+            finally
+            {
+                uploadButtonEnabled = true;
+                downloadFromUrlButtonEnabled = true;
+            }
         }
 
         async Task InputFileChanged(FileChangedEventArgs e)
