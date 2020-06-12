@@ -1,6 +1,6 @@
 ﻿namespace RestEaseClientGenerator.Types
 {
-    internal enum CasingType
+    public enum CasingType
     {
         None,
 

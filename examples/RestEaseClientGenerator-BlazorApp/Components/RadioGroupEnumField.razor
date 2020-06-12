@@ -1,0 +1,19 @@
+﻿@typeparam TEnumValue
+
+@inherits BaseEnumField<TEnumValue>
+
+<Field Horizontal="true">
+    <FieldLabel ColumnSize="ColumnSize.Is3">@Label</FieldLabel>
+
+    <FieldBody ColumnSize="ColumnSize.Is4">
+        <RadioGroup Inline="true" TValue="TEnumValue" Name="@PropertyName" @bind-CheckedValue="@Value">
+            <!-- CheckedValueChanged="@Changed" -->
+            @foreach (var entry in Values)
+            {
+                <Radio TValue="TEnumValue" Value="@entry.Key">@entry.Value</Radio>
+
+            }
+        </RadioGroup>
+        <FieldHelp>@Tooltip</FieldHelp>
+    </FieldBody>
+</Field>

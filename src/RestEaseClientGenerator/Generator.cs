@@ -20,7 +20,7 @@ namespace RestEaseClientGenerator
         public ICollection<GeneratedFile> FromFile(string path, GeneratorSettings settings, out OpenApiDiagnostic diagnostic)
         {
             OpenApiDocument document;
-            if (Path.GetExtension(path).EndsWith("raml",StringComparison.OrdinalIgnoreCase))
+            if (Path.GetExtension(path).EndsWith("raml", StringComparison.OrdinalIgnoreCase))
             {
                 diagnostic = new OpenApiDiagnostic();
                 document = new RamlConverter().ConvertToOpenApiDocument(path);

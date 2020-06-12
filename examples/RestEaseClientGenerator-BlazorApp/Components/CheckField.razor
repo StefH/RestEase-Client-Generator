@@ -1,0 +1,10 @@
+﻿@inherits BaseField<bool>
+
+<Field Horizontal="true">
+    <FieldLabel ColumnSize="ColumnSize.Is3">@Label</FieldLabel>
+
+    <FieldBody ColumnSize="ColumnSize.Is9">
+        <Check Size="Size.Small" TValue="bool" @bind-Checked="@Value" />
+        <FieldHelp>@Tooltip</FieldHelp>
+    </FieldBody>
+</Field>
