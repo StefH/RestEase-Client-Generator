@@ -1,7 +1,8 @@
-﻿using System.CodeDom.Compiler;
+﻿//using System.CodeDom.Compiler;
 using System.Text.RegularExpressions;
 using RestEaseClientGenerator.Extensions;
 using RestEaseClientGenerator.Types;
+using Roslyn.Utilities;
 
 namespace RestEaseClientGenerator.Utils
 {
@@ -10,7 +11,7 @@ namespace RestEaseClientGenerator.Utils
     /// </summary>
     internal static class CSharpUtils
     {
-        private static readonly CodeDomProvider CodeProvider = CodeDomProvider.CreateProvider("C#");
+        //private static readonly CodeDomProvider CodeProvider = CodeDomProvider.CreateProvider("C#");
         private static readonly Regex Regex = new Regex(@"[^\p{Ll}\p{Lu}\p{Lt}\p{Lo}\p{Nd}\p{Nl}\p{Mn}\p{Mc}\p{Cf}\p{Pc}\p{Lm}]");
 
         public static string CreateValidIdentifier(string identifier, CasingType casingType = CasingType.None)
@@ -31,7 +32,7 @@ namespace RestEaseClientGenerator.Utils
                     break;
             }
 
-            bool isValid = CodeProvider.IsValidIdentifier(casedIdentifier);
+            bool isValid = UnicodeCharacterUtilities.IsValidIdentifier(casedIdentifier);
 
             if (!isValid)
             {
@@ -45,7 +46,7 @@ namespace RestEaseClientGenerator.Utils
                 }
             }
 
-            return CodeProvider.CreateValidIdentifier(casedIdentifier.Replace(" ", string.Empty));
+            return casedIdentifier.Replace(" ", string.Empty);
         }
     }
 }
