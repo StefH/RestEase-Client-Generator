@@ -1,8 +1,11 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Microsoft.OpenApi.Readers;
 using Newtonsoft.Json;
 using RestEaseClientGenerator;
+using RestEaseClientGenerator.Models;
 using RestEaseClientGenerator.Settings;
 
 namespace RestEaseClientGeneratorBlazorApp.Services
@@ -35,8 +38,26 @@ namespace RestEaseClientGeneratorBlazorApp.Services
                 Trace.WriteLine($"OpenApi Errors: {errorMessages}");
             }
 
-            var result = _generator.FromDocument(document, settings, diagnostic.SpecificationVersion);
-            return _zipper.Zip(result);
+            ICollection<GeneratedFile> result;
+            try
+            {
+                result = _generator.FromDocument(document, settings, diagnostic.SpecificationVersion);
+            }
+            catch (Exception e)
+            {
+                Trace.WriteLine($"FromDocument Error: {e.Message}");
+                throw;
+            }
+
+            try
+            {
+                return _zipper.Zip(result);
+            }
+            catch (Exception e)
+            {
+                Trace.WriteLine($"Zip Error: {e.Message}");
+                throw;
+            }
         }
     }
 }
