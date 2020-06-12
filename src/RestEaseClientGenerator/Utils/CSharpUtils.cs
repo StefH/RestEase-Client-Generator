@@ -2,7 +2,6 @@
 using System.Text.RegularExpressions;
 using RestEaseClientGenerator.Extensions;
 using RestEaseClientGenerator.Types;
-using Roslyn.Utilities;
 
 namespace RestEaseClientGenerator.Utils
 {
@@ -32,7 +31,7 @@ namespace RestEaseClientGenerator.Utils
                     break;
             }
 
-            bool isValid = UnicodeCharacterUtilities.IsValidIdentifier(casedIdentifier);
+            bool isValid = IdentifierUtils.IsValidIdentifier(casedIdentifier);
 
             if (!isValid)
             {
@@ -46,7 +45,7 @@ namespace RestEaseClientGenerator.Utils
                 }
             }
 
-            return casedIdentifier.Replace(" ", string.Empty);
+            return IdentifierUtils.CreateValidIdentifier(casedIdentifier.Replace(" ", string.Empty));
         }
     }
 }
