@@ -15,6 +15,17 @@ namespace RestEaseClientGeneratorConsoleApp
         {
             var generator = new Generator();
 
+            var azureRestStorageSettings = new GeneratorSettings
+            {
+                Namespace = "AzureRestStorage",
+                ApiName = "AzureTableApi"
+            };
+            foreach (var file in generator.FromFile("Examples\\AzureRestStorage\\table.json", azureRestStorageSettings, out OpenApiDiagnostic diagnosticPetStoreOpenApi3))
+            {
+                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/AzureRestStorage/{file.Path}/{file.Name}", file.Content);
+            }
+
+
             // Corrupte enums
             var computerVisionSettings = new GeneratorSettings
             {
@@ -51,7 +62,7 @@ namespace RestEaseClientGeneratorConsoleApp
             //    File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/MediaWiki/{file.Path}/{file.Name}", file.Content);
             //}
 
-            // rrors enums
+            // Errors enums
             var iSettings = new GeneratorSettings
             {
                 Namespace = "RestEaseClientGeneratorConsoleApp.Examples.Infura",

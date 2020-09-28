@@ -61,10 +61,11 @@ namespace RestEaseClientGenerator.Mappers
             var definitions = new List<RestEaseSecurityDefinition>();
             foreach (var openApiSecurityScheme in openApiSecuritySchemes)
             {
+                string name = openApiSecurityScheme.Name ?? openApiSecurityScheme.Description ?? "RestEaseClientGeneratorSecurityName";
                 var restEaseSecurityDefinition = new RestEaseSecurityDefinition
                 {
-                    Name = openApiSecurityScheme.Name,
-                    IdentifierName = openApiSecurityScheme.Name.ToValidIdentifier(CasingType.Pascal)
+                    Name = name,
+                    IdentifierName = name.ToValidIdentifier(CasingType.Pascal)
                 };
 
                 switch (openApiSecurityScheme.In)
