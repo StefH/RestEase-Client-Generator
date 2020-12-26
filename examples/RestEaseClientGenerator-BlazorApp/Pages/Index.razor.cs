@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using BlazorDownloadFile;
+using Blazor.DownloadFileFast.Interfaces;
 using Blazorise;
 using Microsoft.AspNetCore.Components;
 using Microsoft.OpenApi.Readers;
@@ -124,7 +124,7 @@ namespace RestEaseClientGeneratorBlazorApp.Pages
             }
 
             string name = $"{Path.GetFileNameWithoutExtension(settings.FileName)}.zip";
-            await BlazorDownloadFileService.DownloadFile(name, bytes);
+            await BlazorDownloadFileService.DownloadFileAsync(name, bytes);
 
             uploadButtonEnabled = true;
         }
