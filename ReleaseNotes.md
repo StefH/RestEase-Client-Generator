@@ -1,5 +1,6 @@
-# 1.0.9 (14 July 2021)
+# 1.0.10 (14 July 2021)
 - [#23](https://github.com/StefH/RestEase-Client-Generator/pull/23) - Fix GetReturnType(...) to return correct value based on SchemaType [bug] contributed by [StefH](https://github.com/StefH)
+- [#25](https://github.com/StefH/RestEase-Client-Generator/pull/25) - Fix Microsoft.OpenApi 1.2.0 dll reference [bug] contributed by [StefH](https://github.com/StefH)
 
 # 1.0.8 (29 February 2020)
 - [#20](https://github.com/StefH/RestEase-Client-Generator/pull/20) - Add RAML + update Enum support contributed by [StefH](https://github.com/StefH)
