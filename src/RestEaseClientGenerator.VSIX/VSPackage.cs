@@ -13,12 +13,12 @@ using Task = System.Threading.Tasks.Task;
 namespace RestEaseClientGenerator.VSIX
 {
     [ExcludeFromCodeCoverage]
-    [Guid("47AFE4E1-0000-4FE1-8CA7-EDB8310BDA4A")]
+    [Guid(PackageGuids.guidPackageString)]
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
     [InstalledProductRegistration(VsixName, "", "1.0")]
     [ProvideMenuResource("Menus.ctmenu", 1)]
     [ProvideUIContextRule(
-        "A3381E62-0000-436F-824E-5F0097387C11",
+        PackageGuids.guidUIContextString,
         "UI Context",
         "json | yml | yaml | raml",
         new[] { "json", "yml", "yaml", "raml" },

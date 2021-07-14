@@ -6,6 +6,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <UseCodebase>true</UseCodebase>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>false</SignAssembly>
@@ -25,7 +26,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>RestEaseClientGenerator.VSIX</RootNamespace>
     <AssemblyName>RestEaseClientGenerator.VSIX</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <GeneratePkgDefFile>true</GeneratePkgDefFile>
     <IncludeAssemblyInVSIXContainer>true</IncludeAssemblyInVSIXContainer>
     <IncludeDebugSymbolsInVSIXContainer>false</IncludeDebugSymbolsInVSIXContainer>
@@ -77,9 +78,19 @@
     <Compile Include="Options\IOptionsFactory.cs" />
     <Compile Include="Options\OptionsBase.cs" />
     <Compile Include="Options\OptionsFactory.cs" />
+    <Compile Include="source.extension.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>source.extension.vsixmanifest</DependentUpon>
+    </Compile>
     <Compile Include="SupportedCodeGenerator.cs" />
     <Compile Include="SupportedLanguage.cs" />
     <Compile Include="TinyMapperUtils.cs" />
+    <Compile Include="VSCommandTable.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>VSCommandTable.vsct</DependentUpon>
+    </Compile>
     <Compile Include="Windows\OutputWindow.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Windows\OutputWindowTraceListener.cs" />
@@ -95,9 +106,11 @@
     <Compile Include="Windows\NativeMethods.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="stef.app.config" />
     <None Include="source.extension.vsixmanifest">
       <SubType>Designer</SubType>
+      <Generator>VsixManifestGenerator</Generator>
+      <LastGenOutput>source.extension.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -134,6 +147,8 @@
     <VSCTCompile Include="VSCommandTable.vsct">
       <ResourceName>Menus.ctmenu</ResourceName>
       <SubType>Designer</SubType>
+      <Generator>VsctGenerator</Generator>
+      <LastGenOutput>VSCommandTable.cs</LastGenOutput>
     </VSCTCompile>
   </ItemGroup>
   <ItemGroup>
@@ -157,11 +172,16 @@
       <Project>{cb53c19e-29cc-42ac-ae47-31a54e5d0759}</Project>
       <Name>RestEaseClientGenerator</Name>
       <AdditionalProperties>TargetFramework=net461</AdditionalProperties>
+      <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
+      <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Microsoft.OpenApi">
+      <Version>1.2.0</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.OpenApi.Readers">
-      <Version>1.2.3</Version>
+      <Version>1.2.0</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.ComponentModelHost">
       <Version>15.8.525</Version>
@@ -198,11 +218,8 @@
     <PackageReference Include="NuGet.VisualStudio">
       <Version>3.3.0</Version>
     </PackageReference>
-    <PackageReference Include="RamlToOpenApiConverter">
-      <Version>0.0.4</Version>
-    </PackageReference>
     <PackageReference Include="SharpYaml">
-      <Version>1.6.6</Version>
+      <Version>1.6.5</Version>
     </PackageReference>
     <PackageReference Include="System.CodeDom">
       <Version>4.7.0</Version>

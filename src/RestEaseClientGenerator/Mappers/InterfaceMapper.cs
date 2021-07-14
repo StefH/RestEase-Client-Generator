@@ -275,7 +275,7 @@ namespace RestEaseClientGenerator.Mappers
 
         private string GetReturnType(RestEaseInterface @interface, OpenApiSchema schema, string methodRestEaseMethodName)
         {
-            string nullable = schema.Nullable ? "?" : string.Empty;
+            string nullable = schema?.Nullable == true ? "?" : string.Empty;
 
             switch (schema.GetSchemaType())
             {
