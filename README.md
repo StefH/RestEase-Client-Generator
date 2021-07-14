@@ -6,7 +6,7 @@
 A Visual Studio Extension to generate a [RestEase](https://github.com/canton7/RestEase) compatible client (Interface & Models) based on a [Swagger / OpenApi](https://swagger.io/specification/) or [RAML](https://raml.org/) specification.
 
 # Demo
-[Blazor WenAssembly Demo](https://stefh.github.io/RestEase-Client-Generator/)
+[Blazor WebAssembly Demo](https://stefh.github.io/RestEase-Client-Generator/)
 
 ## Features
 - Supports Visual Studio 2017 and 2019
