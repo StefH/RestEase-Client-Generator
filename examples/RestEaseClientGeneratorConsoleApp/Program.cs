@@ -15,6 +15,18 @@ namespace RestEaseClientGeneratorConsoleApp
         {
             var generator = new Generator();
 
+            var weatherSettings = new GeneratorSettings
+            {
+                Namespace = "Weather",
+                ApiName = "Weather",
+                ForceContentTypeToApplicationJson = true
+            };
+            foreach (var file in generator.FromFile("Examples\\Weather\\WeatherForecast.json", weatherSettings, out OpenApiDiagnostic diagnosticWeather))
+            {
+                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Weather/{file.Path}/{file.Name}", file.Content);
+            }
+            return;
+
             var azureRestStorageSettings = new GeneratorSettings
             {
                 Namespace = "AzureRestStorage",

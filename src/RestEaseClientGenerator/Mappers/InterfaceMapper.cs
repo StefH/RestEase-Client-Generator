@@ -275,13 +275,36 @@ namespace RestEaseClientGenerator.Mappers
 
         private string GetReturnType(RestEaseInterface @interface, OpenApiSchema schema, string methodRestEaseMethodName)
         {
-            //if (schema == null)
-            //{
-            //    return null;
-            //}
+            string nullable = schema.Nullable ? "?" : string.Empty;
 
             switch (schema.GetSchemaType())
             {
+                case SchemaType.String:
+                    return "string";
+
+                case SchemaType.Integer:
+                    switch (schema.GetSchemaFormat())
+                    {
+                        case SchemaFormat.Int64:
+                            return $"long{nullable}";
+
+                        default:
+                            return $"int{nullable}";
+                    }
+
+                case SchemaType.Boolean:
+                    return $"bool{nullable}";
+
+                case SchemaType.Number:
+                    switch (schema.GetSchemaFormat())
+                    {
+                        case SchemaFormat.Float:
+                            return $"float{nullable}";
+
+                        default:
+                            return $"double{nullable}";
+                    }
+
                 case SchemaType.Array:
                     string arrayType = schema.Items.Reference != null
                         ? MakeValidModelName(schema.Items.Reference.Id)

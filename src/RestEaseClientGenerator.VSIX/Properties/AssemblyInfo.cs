@@ -1,16 +1,15 @@
 ﻿using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("REST API Client Code Generator")]
-[assembly: AssemblyDescription("A collection of Visual Studio custom tool code generators for Swagger / OpenAPI specification files")]
+[assembly: AssemblyTitle("RestEase Client Code Generator")]
+[assembly: AssemblyDescription("Generate a RestEase compatible client based on a Swagger / OpenAPI or RAML specification.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("REST API Client Code Generator")]
-[assembly: AssemblyCopyright("© 2019 Christian Resma Helle All Rights Reserved")]
+[assembly: AssemblyProduct("RestEase Client Code Generator")]
+[assembly: AssemblyCopyright("© 2019-2021 Stef Heyenrath")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

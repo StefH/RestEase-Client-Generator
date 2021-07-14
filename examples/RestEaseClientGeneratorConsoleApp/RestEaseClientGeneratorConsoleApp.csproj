@@ -129,6 +129,12 @@
     <None Update="Examples\SpeechServices.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Examples\Weather\WeatherForecast - Copy.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\Weather\WeatherForecast.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Examples\wp.raml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
