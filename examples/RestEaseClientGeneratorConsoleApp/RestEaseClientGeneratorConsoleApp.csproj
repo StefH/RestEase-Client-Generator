@@ -8,6 +8,7 @@
   <ItemGroup>
     <!--<Compile Remove="Infura\**\*.cs" />-->
     <!--<Compile Remove="Cog\**\*.cs" />-->
+    <Folder Include="Examples\JiraV3\" />
     <Folder Include="Examples\ComputerVision\" />
     <Folder Include="Examples\Drc\Api\" />
     <Folder Include="Examples\Drc\Models\" />
@@ -19,7 +20,6 @@
     <Folder Include="Examples\MediaWikiRaml\Models\" />
     <Folder Include="Examples\MediaWiki\Api\" />
     <Folder Include="Examples\MediaWiki\Models\" />
-    <Folder Include="Examples\JiraV3\" />
     <Folder Include="Examples\SharedQuery\Api\" />
     <Folder Include="Examples\SharedQuery\Models\" />
     <Folder Include="Examples\SpeechServices\Api\" />
