@@ -92,9 +92,9 @@ namespace RestEaseClientGenerator.Settings
         [Description("Preferred Content-Type to use when both 'application/json' and 'application/xml' are defined. The default value is 'application/json'.")]
         public ContentType PreferredContentType { get; set; }
 
-        [DisplayName("Force Content-Type to 'application/json'")]
-        [Description("Always use Content-Type 'application/json', also when multiple Content-Types are are defined. The default value is 'False'.")]
-        public bool ForceContentTypeToApplicationJson { get; set; }
+        [DisplayName("Content-Type behavior")]
+        [Description("Define the Content-Type behavior. Use 'Force to application/json' to always use Content-Type 'application/json', also when multiple Content-Types are are defined. Use 'Force to remove' to force that no Content-Type is added to the API, you need to provide it yourself. The default value is 'Default'.")]
+        public ContentTypeBehavior ContentTypeBehavior { get; set; } = ContentTypeBehavior.Default;
 
         [DisplayName("Use OperationId as method name")]
         [Description("Use the OperationId as method name, if valid. The default value is 'True'.")]

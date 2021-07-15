@@ -39,9 +39,9 @@
         </Strings>
       </Button>
 
-      <Button guid="guidNewRestApiClientCmdSet" id="GenerateWithRestEase" priority="0x0100" type="Button">
+      <Button guid="guidNewRestApiClientCmdSet" id="GenerateFromUrl" priority="0x0100" type="Button">
         <Strings>
-          <ButtonText>Generate</ButtonText>
+          <ButtonText>Generate from URL</ButtonText>
         </Strings>
       </Button>
     </Buttons>
@@ -70,7 +70,7 @@
     <CommandPlacement guid="guidNewRestApiClientCmdSet" id="NewCommandsGroup" priority="0x0001">
       <Parent guid="guidNewRestApiClientCmdSet" id="NewSubmenu"/>
     </CommandPlacement>
-    <CommandPlacement guid="guidNewRestApiClientCmdSet" id="GenerateWithRestEase" priority="0x0001" >
+    <CommandPlacement guid="guidNewRestApiClientCmdSet" id="GenerateFromUrl" priority="0x0001" >
       <Parent guid="guidNewRestApiClientCmdSet" id="NewCommandsGroup"/>
     </CommandPlacement>
   </CommandPlacements>
@@ -95,7 +95,7 @@
       <IDSymbol name="NewSubmenuGroup" value="0x1020" />
       <IDSymbol name="NewCommandsGroup" value="0x1021" />
       <IDSymbol name="NewSubmenu" value="0x0100" />
-      <IDSymbol name="GenerateWithRestEase" value="0x0200" />
+      <IDSymbol name="GenerateFromUrl" value="0x0200" />
     </GuidSymbol>
   </Symbols>
 </CommandTable>

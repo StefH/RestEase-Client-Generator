@@ -32,7 +32,7 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
 
         ContentType PreferredContentType { get; set; }
 
-        bool ForceContentTypeToApplicationJson { get; set; }
+        ContentTypeBehavior ContentTypeBehavior { get; set; }
 
         bool UseOperationIdAsMethodName { get; set; }
 
