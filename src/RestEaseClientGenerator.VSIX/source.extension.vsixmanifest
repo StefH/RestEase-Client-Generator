@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="7c7becf7-5f28-4b91-bc4c-6491845c6fe3" Version="1.0.10" Language="en-US" Publisher="Stef Heyenrath" />
+        <Identity Id="7c7becf7-5f28-4b91-bc4c-6491845c6fe3" Version="1.0.11" Language="en-US" Publisher="Stef Heyenrath" />
         <DisplayName>RestEase Client Code Generator</DisplayName>
         <Description xml:space="preserve">Generate a RestEase compatible client based on a Swagger / OpenAPI or RAML specification.</Description>
         <MoreInfo>https://marketplace.visualstudio.com/items?itemName=StefHeyenrath.RestEaseClientGenerator</MoreInfo>
