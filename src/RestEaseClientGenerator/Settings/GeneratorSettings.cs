@@ -22,12 +22,20 @@ namespace RestEaseClientGenerator.Settings
         [Description("Use DateTimeOffset instead of DateTime. The default value is 'False'.")]
         public bool UseDateTimeOffset { get; set; }
 
+        [DisplayName("Namespace definition for the Api")]
+        [Description("Append 'Namespace for the Api' or define a new namespace for the Api. The default value is 'Append'.")]
+        public ModelNamespaceType ApiNamespaceType { get; set; } = ModelNamespaceType.Append;
+
         [DisplayName("Namespace for the Api")]
-        [Description("Append this namespace for the Api. The default value is 'Api'.")]
+        [Description("The namespace for the Api. The default value is 'Api'.")]
         public string ApiNamespace { get; set; } = "Api";
 
+        [DisplayName("Namespace definition for the Models")]
+        [Description("Append 'Namespace for the Models' or define a new namespace for the Models. The default value is 'Append'.")]
+        public ModelNamespaceType ModelsNamespaceType { get; set; } = ModelNamespaceType.Append;
+
         [DisplayName("Namespace for the Models")]
-        [Description("Append this namespace for the Models. The default value is 'Models'.")]
+        [Description("The namespace for the Models. The default value is 'Models'.")]
         public string ModelsNamespace { get; set; } = "Models";
 
         [DisplayName("Generate option")]

@@ -17,8 +17,18 @@ namespace RestEaseClientGeneratorConsoleApp
 
             var weatherSettings = new GeneratorSettings
             {
+                SingleFile = false,
+
                 Namespace = "Weather",
+                
+                
                 ApiName = "Weather",
+
+                ApiNamespaceType = ModelNamespaceType.Append,
+                ApiNamespace = "Api",
+
+                ModelsNamespaceType = ModelNamespaceType.Define,
+                ModelsNamespace = "RestEaseClientGeneratorConsoleApp.Examples.Weather.Stef.Models",
                 ForceContentTypeToApplicationJson = true
             };
             foreach (var file in generator.FromFile("Examples\\Weather\\WeatherForecast.json", weatherSettings, out OpenApiDiagnostic diagnosticWeather))

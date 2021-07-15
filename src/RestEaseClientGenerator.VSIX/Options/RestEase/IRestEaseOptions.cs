@@ -24,7 +24,11 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
 
         bool GenerateFormUrlEncodedExtensionMethods { get; set; }
 
+        ModelNamespaceType ApiNamespaceType { get; set; }
+
         string ApiNamespace { get; set; }
+
+        ModelNamespaceType ModelsNamespaceType { get; set; }
 
         string ModelsNamespace { get; set; }
 

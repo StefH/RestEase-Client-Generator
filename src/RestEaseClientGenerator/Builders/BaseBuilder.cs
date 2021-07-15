@@ -1,4 +1,5 @@
 ﻿using RestEaseClientGenerator.Settings;
+using RestEaseClientGenerator.Types;
 
 namespace RestEaseClientGenerator.Builders
 {
@@ -11,24 +12,34 @@ namespace RestEaseClientGenerator.Builders
             Settings = settings;
         }
 
-        protected string AppendModelsNamespace(string input)
+        protected string BuildModelsNamespace(string input)
         {
             if (string.IsNullOrEmpty(Settings.ModelsNamespace))
             {
                 return input;
             }
 
-            return $"{input}.{Settings.ModelsNamespace}";
+            if (Settings.ModelsNamespaceType == ModelNamespaceType.Append)
+            {
+                return $"{input}.{Settings.ModelsNamespace}";
+            }
+
+            return Settings.ModelsNamespace;
         }
 
-        protected string AppendApiNamespace(string input)
+        protected string BuildApiNamespace(string input)
         {
             if (string.IsNullOrEmpty(Settings.ApiNamespace))
             {
                 return input;
             }
 
-            return $"{input}.{Settings.ApiNamespace}";
+            if (Settings.ApiNamespaceType == ModelNamespaceType.Append)
+            {
+                return $"{input}.{Settings.ApiNamespace}";
+            }
+
+            return Settings.ApiNamespace;
         }
     }
 }

@@ -21,7 +21,7 @@ namespace RestEaseClientGenerator.Builders
                 builder.AppendLine();
             }
 
-            builder.AppendLine($"namespace {AppendModelsNamespace(restEaseModel.Namespace)}");
+            builder.AppendLine($"namespace {BuildModelsNamespace(restEaseModel.Namespace)}");
             builder.AppendLine("{");
             builder.AppendLine($"    public class {restEaseModel.ClassName}");
             builder.AppendLine("    {");

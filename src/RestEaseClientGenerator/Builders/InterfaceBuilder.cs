@@ -24,10 +24,10 @@ namespace RestEaseClientGenerator.Builders
             builder.AppendLine("using RestEase;");
             if (hasModels || @interface.InlineModels.Any())
             {
-                builder.AppendLine($"using {AppendModelsNamespace(@interface.Namespace)};");
+                builder.AppendLine($"using {BuildModelsNamespace(@interface.Namespace)};");
             }
             builder.AppendLine();
-            builder.AppendLine($"namespace {AppendApiNamespace(@interface.Namespace)}");
+            builder.AppendLine($"namespace {BuildApiNamespace(@interface.Namespace)}");
             builder.AppendLine("{");
             builder.AppendLine("    /// <summary>");
             builder.AppendLine($"    /// {@interface.Summary.StripHtml()}");

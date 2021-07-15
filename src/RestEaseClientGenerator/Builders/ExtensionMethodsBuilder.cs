@@ -33,11 +33,11 @@ namespace RestEaseClientGenerator.Builders
                 builder.AppendLine("using System.Net.Http;");
                 builder.AppendLine("using System.Threading.Tasks;");
                 builder.AppendLine("using RestEase;");
-                builder.AppendLine($"using {AppendModelsNamespace(@interface.Namespace)};");
+                builder.AppendLine($"using {BuildModelsNamespace(@interface.Namespace)};");
             }
 
             builder.AppendLine();
-            builder.AppendLine($"namespace {AppendApiNamespace(@interface.Namespace)}");
+            builder.AppendLine($"namespace {BuildApiNamespace(@interface.Namespace)}");
             builder.AppendLine("{");
             builder.AppendLine($"    public static class {new string(apiName.Skip(1).ToArray())}Extensions");
             builder.AppendLine("    {");

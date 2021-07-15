@@ -32,13 +32,23 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         public bool UseDateTimeOffset { get; set; }
 
         [Category(General)]
+        [DisplayName("Namespace definition for the Api")]
+        [Description("Append 'Namespace for the Api' or define a new namespace for the Api. The default value is 'Append'.")]
+        public ModelNamespaceType ApiNamespaceType { get; set; } = ModelNamespaceType.Append;
+
+        [Category(General)]
         [DisplayName("Namespace for the Api")]
-        [Description("Append this namespace for the Api. The default value is 'Api'.")]
+        [Description("The namespace for the Api. The default value is 'Api'.")]
         public string ApiNamespace { get; set; } = "Api";
 
         [Category(General)]
+        [DisplayName("Namespace definition for the Models")]
+        [Description("Append 'Namespace for the Models' or define a new namespace for the Models. The default value is 'Append'.")]
+        public ModelNamespaceType ModelsNamespaceType { get; set; } = ModelNamespaceType.Append;
+
+        [Category(General)]
         [DisplayName("Namespace for the Models")]
-        [Description("Append this namespace for the Models. The default value is 'Models'.")]
+        [Description("The namespace for the Models. The default value is 'Models'.")]
         public string ModelsNamespace { get; set; } = "Models";
 
         [Category(General)]
