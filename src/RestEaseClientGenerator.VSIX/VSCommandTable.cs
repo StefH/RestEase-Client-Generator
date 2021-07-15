@@ -39,6 +39,6 @@ namespace RestEaseClientGenerator.VSIX
         public const int NewSubmenuGroup = 0x1020;
         public const int NewCommandsGroup = 0x1021;
         public const int NewSubmenu = 0x0100;
-        public const int GenerateWithRestEase = 0x0200;
+        public const int GenerateFromUrl = 0x0200;
     }
 }

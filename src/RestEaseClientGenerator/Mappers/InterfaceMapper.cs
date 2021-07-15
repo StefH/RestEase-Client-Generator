@@ -558,27 +558,31 @@ namespace RestEaseClientGenerator.Mappers
 
             if (detected == null)
             {
-                if (Settings.ForceContentTypeToApplicationJson)
+                switch (Settings.ContentTypeBehavior)
                 {
-                    detected =
-                        supportedMediaTypeInfoList.FirstOrDefault(m => m.Key == SupportedContentType.ApplicationJson) ??
-                        supportedMediaTypeInfoList.First();
+                    case ContentTypeBehavior.ForceToApplicationJson:
+                        detected =
+                            supportedMediaTypeInfoList.FirstOrDefault(m => m.Key == SupportedContentType.ApplicationJson) ??
+                            supportedMediaTypeInfoList.First();
 
-                    var requestDetails = MapRequestDetails(detected, bodyParameterList, extensionMethodParameterList, operation.RequestBody.Description);
-                    requestDetails.ContentTypes = new List<string>();
-                    requestDetails.DetectedContentType = SupportedContentType.ApplicationJson;
+                        var requestDetailsForceToJson = MapRequestDetails(detected, bodyParameterList, extensionMethodParameterList, operation.RequestBody.Description);
+                        requestDetailsForceToJson.ContentTypes = new List<string>();
+                        requestDetailsForceToJson.DetectedContentType = SupportedContentType.ApplicationJson;
 
-                    return requestDetails;
-                }
-                else
-                {
-                    detected = supportedMediaTypeInfoList.First();
+                        return requestDetailsForceToJson;
 
-                    var requestDetails = MapRequestDetails(detected, bodyParameterList, extensionMethodParameterList, operation.RequestBody.Description);
-                    requestDetails.ContentTypes = operation.RequestBody.Content.Keys;
-                    requestDetails.DetectedContentType = null;
+                    case ContentTypeBehavior.ForceRemove:
+                        // Just return null to remove/not add a ContentType
+                        return null;
 
-                    return requestDetails;
+                    default:
+                        detected = supportedMediaTypeInfoList.First();
+
+                        var requestDetails = MapRequestDetails(detected, bodyParameterList, extensionMethodParameterList, operation.RequestBody.Description);
+                        requestDetails.ContentTypes = operation.RequestBody.Content.Keys;
+                        requestDetails.DetectedContentType = null;
+
+                        return requestDetails;
                 }
             }
 
