@@ -1,24 +1,29 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFrameworks>net461;netstandard2.0</TargetFrameworks>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFrameworks>net461;netstandard2.0</TargetFrameworks>
+        <!--<PackageReleaseNotes>$([System.IO.File]::ReadAllText("$(MSBuildProjectDirectory)/../../PackageReleaseNotes.txt"))</PackageReleaseNotes>-->
+    </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="Utils\RoslynString.cs" />
-    <Compile Remove="Utils\UnicodeCharacterUtilities.cs" />
-  </ItemGroup>
+    <ItemGroup>
+        <Compile Remove="Utils\RoslynString.cs" />
+        <Compile Remove="Utils\UnicodeCharacterUtilities.cs" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.OpenApi" Version="1.2.0" />
-    <PackageReference Include="Microsoft.OpenApi.Readers" Version="1.2.0" />
-    <PackageReference Include="RamlToOpenApiConverter" Version="0.1.1" />
-    <PackageReference Include="RestEase" Version="1.5.5" />
-    <PackageReference Include="System.ValueTuple" Version="4.5.0" />
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Microsoft.OpenApi" Version="1.2.0" />
+        <PackageReference Include="Microsoft.OpenApi.Readers" Version="1.2.0" />
+        <PackageReference Include="RamlToOpenApiConverter" Version="0.1.1" />
+        <PackageReference Include="RestEase" Version="1.5.5" />
+        <PackageReference Include="System.ValueTuple" Version="4.5.0" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <!--<ProjectReference Include="..\..\..\RamlToOpenApiConverter\src\RamlToOpenApiConverter\RamlToOpenApiConverter.csproj" />-->
-  </ItemGroup>
+    <ItemGroup>
+        <!--<None Include="../../PackageReadme.md" Pack="true" PackagePath=""/>-->
+    </ItemGroup>
+
+    <ItemGroup>
+        <!--<ProjectReference Include="..\..\..\RamlToOpenApiConverter\src\RamlToOpenApiConverter\RamlToOpenApiConverter.csproj" />-->
+    </ItemGroup>
 
 </Project>

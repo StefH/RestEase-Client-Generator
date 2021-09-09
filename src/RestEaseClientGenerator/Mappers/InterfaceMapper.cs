@@ -495,7 +495,7 @@ namespace RestEaseClientGenerator.Mappers
                         break;
 
                     case SchemaType.Object:
-                        bodyParameter = MakeValidModelName(detected.Value.Schema?.Reference.Id);
+                        bodyParameter = detected.Value.Schema.Reference != null ? MakeValidModelName(detected.Value.Schema.Reference.Id) : null;
                         break;
                 }
 

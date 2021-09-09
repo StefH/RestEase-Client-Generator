@@ -2,6 +2,7 @@
 - [#26](https://github.com/StefH/RestEase-Client-Generator/pull/26) - Upgrade RestEase to &quot;1.5.5&quot; [enhancement] contributed by [StefH](https://github.com/StefH)
 
 # 1.0.10 (14 July 2021)
+- [#21](https://github.com/StefH/RestEase-Client-Generator/pull/21) - Add Blazor WASM Example [documentation] contributed by [StefH](https://github.com/StefH)
 - [#23](https://github.com/StefH/RestEase-Client-Generator/pull/23) - Fix GetReturnType(...) to return correct value based on SchemaType [bug] contributed by [StefH](https://github.com/StefH)
 - [#25](https://github.com/StefH/RestEase-Client-Generator/pull/25) - Fix Microsoft.OpenApi 1.2.0 dll reference [bug] contributed by [StefH](https://github.com/StefH)
 
