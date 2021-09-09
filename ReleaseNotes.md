@@ -1,3 +1,6 @@
+# 1.0.12 (09 September 2021)
+- [#28](https://github.com/StefH/RestEase-Client-Generator/pull/28) - Fix issue with swagger from WireMock Org [bug] contributed by [StefH](https://github.com/StefH)
+
 # 1.0.11 (15 July 2021)
 - [#26](https://github.com/StefH/RestEase-Client-Generator/pull/26) - Upgrade RestEase to &quot;1.5.5&quot; [enhancement] contributed by [StefH](https://github.com/StefH)
 
