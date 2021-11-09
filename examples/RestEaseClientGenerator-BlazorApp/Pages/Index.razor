@@ -77,7 +77,7 @@
         <CheckField @bind-Value="@settings.GenerateFormUrlEncodedExtensionMethods" For="@(() => settings.GenerateFormUrlEncodedExtensionMethods)"></CheckField>
         <CheckField @bind-Value="@settings.ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified" For="@(() => settings.ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified)"></CheckField>
         <SelectEnumField @bind-Value="@settings.PreferredContentType" For="@(() => settings.PreferredContentType)"></SelectEnumField>
-        <CheckField @bind-Value="@settings.ForceContentTypeToApplicationJson" For="@(() => settings.ForceContentTypeToApplicationJson)"></CheckField>
+        <SelectEnumField @bind-Value="@settings.ContentTypeBehavior" For="@(() => settings.ContentTypeBehavior)"></SelectEnumField>
         <CheckField @bind-Value="@settings.UseOperationIdAsMethodName" For="@(() => settings.UseOperationIdAsMethodName)"></CheckField>
         <SelectEnumField @bind-Value="@settings.PreferredSecurityDefinitionType" For="@(() => settings.PreferredSecurityDefinitionType)"></SelectEnumField>
         <CheckField @bind-Value="@settings.MakeNonRequiredParametersOptional" For="@(() => settings.MakeNonRequiredParametersOptional)"></CheckField>

@@ -17,26 +17,20 @@ namespace Weather.Api
         /// <summary>
         /// PostWeatherForecast (/WeatherForecast)
         /// </summary>
-        /// <param name="content"></param>
         [Post("/WeatherForecast")]
-        [Header("Content-Type", "application/json")]
-        Task<bool?> PostWeatherForecastAsync([Body] WeatherForecast content);
+        Task<bool?> PostWeatherForecastAsync();
 
         /// <summary>
         /// DeleteWeatherForecast (/WeatherForecast)
         /// </summary>
-        /// <param name="content"></param>
         [Delete("/WeatherForecast")]
-        [Header("Content-Type", "application/json")]
-        Task<string> DeleteWeatherForecastAsync([Body] WeatherForecast content);
+        Task<string> DeleteWeatherForecastAsync();
 
         /// <summary>
         /// PatchWeatherForecast (/WeatherForecast)
         /// </summary>
-        /// <param name="content"></param>
         [Patch("/WeatherForecast")]
-        [Header("Content-Type", "application/json")]
-        Task<int> PatchWeatherForecastAsync([Body] WeatherForecast content);
+        Task<int> PatchWeatherForecastAsync();
 
         /// <summary>
         /// GetWeatherForecast (/WeatherForecast)

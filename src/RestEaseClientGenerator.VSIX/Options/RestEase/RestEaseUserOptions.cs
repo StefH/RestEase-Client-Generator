@@ -39,7 +39,8 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         [JsonConverter(typeof(DescriptionEnumConverter))]
         public ContentType? PreferredContentType { get; set; }
 
-        public bool? ForceContentTypeToApplicationJson { get; set; }
+        [JsonConverter(typeof(DescriptionEnumConverter))]
+        public ContentTypeBehavior? ForceContentTypeToApplicationJson { get; set; }
 
         public bool? UseOperationIdAsMethodName { get; set; }
 

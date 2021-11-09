@@ -11,7 +11,7 @@ namespace RestEaseClientGenerator.VSIX
         public const string Name = "RestEase Client Code Generator";
         public const string Description = @"Generate a RestEase compatible client based on a Swagger / OpenAPI or RAML specification.";
         public const string Language = "en-US";
-        public const string Version = "1.0.10";
+        public const string Version = "1.0.12";
         public const string Author = "Stef Heyenrath";
         public const string Tags = "OpenAPI; Swagger; RestEase; REST API; Code Generator; REST Client; RAML";
     }

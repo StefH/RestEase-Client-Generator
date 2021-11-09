@@ -31,7 +31,7 @@ namespace RestEaseClientGeneratorConsoleApp
             {
                 Namespace = "Weather",
                 ApiName = "Weather",
-                ForceContentTypeToApplicationJson = true
+                ContentTypeBehavior = ContentTypeBehavior.ForceRemove
             };
             foreach (var file in generator.FromFile("Examples\\Weather\\WeatherForecast.json", weatherSettings, out OpenApiDiagnostic diagnosticWeather))
             {
@@ -196,7 +196,7 @@ namespace RestEaseClientGeneratorConsoleApp
             {
                 Namespace = "RestEaseClientGeneratorConsoleApp.Examples.Cog",
                 ApiName = "Cog",
-                ForceContentTypeToApplicationJson = true
+                ContentTypeBehavior = ContentTypeBehavior.ForceToApplicationJson
             };
             foreach (var file in generator.FromFile("Examples\\cognitive-services-personalizer.json", cogSettings, out var diagnosticCog))
             {
