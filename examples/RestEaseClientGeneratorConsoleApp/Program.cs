@@ -1,5 +1,7 @@
-﻿using System.IO;
+using System.IO;
+using System.Net.Http;
 using System.Threading.Tasks;
+using MachineLearningOpenAPIExample;
 using Microsoft.OpenApi;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Readers;
@@ -15,6 +17,19 @@ namespace RestEaseClientGeneratorConsoleApp
         {
             var generator = new Generator();
 
+            var mlSettings = new GeneratorSettings
+            {
+                Namespace = "AzureMachineLearning",
+                ApiName = "AzureMachineLearning",
+                SingleFile = false,
+                PreferredMultipleResponsesType = MultipleResponsesType.AnyOf
+            };
+            foreach (var file in generator.FromFile("Examples\\AzureMachineLearning\\swagger.json", mlSettings, out OpenApiDiagnostic diagnosticML))
+            {
+                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/AzureMachineLearning/{file.Path}/{file.Name}", file.Content);
+            }
+            return;
+
             var wiremockOrgSettings = new GeneratorSettings
             {
                 Namespace = "WireMockOrg",
@@ -25,7 +40,6 @@ namespace RestEaseClientGeneratorConsoleApp
             {
                 File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/WireMock.org/{file.Path}/{file.Name}", file.Content);
             }
-            return;
 
             var weatherSettings = new GeneratorSettings
             {

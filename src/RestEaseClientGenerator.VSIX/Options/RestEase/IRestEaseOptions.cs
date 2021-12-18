@@ -57,5 +57,7 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         bool GenerateAndUseModelForAnyOfOrOneOf { get; set; }
 
         EnumType PreferredEnumType { get; set; }
+
+        MultipleResponsesType PreferredMultipleResponsesType { get; set; }
     }
 }

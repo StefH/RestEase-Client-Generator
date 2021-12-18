@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -207,13 +207,7 @@ namespace RestEaseClientGenerator.Mappers
                 .OrderByDescending(p => p.Required)
                 .ToList();
 
-            var response = operation.Responses.First();
-
-            object returnType = null;
-            if (response.Value != null && TryGetOpenApiMediaType(response.Value.Content, SupportedContentType.ApplicationJson, out OpenApiMediaType responseJson, out var _))
-            {
-                returnType = GetReturnType(@interface, responseJson.Schema, methodRestEaseMethodName);
-            }
+            var returnType = MapResponse(@interface, operation.Responses, methodRestEaseMethodName);
 
             var method = new RestEaseInterfaceMethodDetails
             {
@@ -271,6 +265,36 @@ namespace RestEaseClientGenerator.Mappers
             }
 
             return method;
+        }
+
+        private string MapResponse(RestEaseInterface @interface, OpenApiResponses responses, string methodRestEaseMethodName)
+        {
+            var returnTypes = new List<string>();
+
+            foreach (var response in responses)
+            {
+                if (response.Value != null && TryGetOpenApiMediaType(response.Value.Content, SupportedContentType.ApplicationJson, out OpenApiMediaType responseJson, out var _))
+                {
+                    returnTypes.Add(GetReturnType(@interface, responseJson.Schema, methodRestEaseMethodName));
+                }
+            }
+
+            if (returnTypes.Count == 1)
+            {
+                return returnTypes.First();
+            }
+
+            switch (Settings.PreferredMultipleResponsesType)
+            {
+                case MultipleResponsesType.First:
+                    return returnTypes.First();
+
+                case MultipleResponsesType.AnyOf:
+                    return $"AnyOf<{string.Join(", ", returnTypes)}>";
+
+                default:
+                    return "object";
+            }
         }
 
         private string GetReturnType(RestEaseInterface @interface, OpenApiSchema schema, string methodRestEaseMethodName)

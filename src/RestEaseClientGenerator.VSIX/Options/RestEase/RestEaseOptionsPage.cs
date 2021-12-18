@@ -137,6 +137,11 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         [DisplayName("Generate and use model for 'AnyOf' and 'OneOf'")]
         [Description("Generate and use model for 'AnyOf' and 'OneOf' return types. The default value is 'True'.")]
         public bool GenerateAndUseModelForAnyOfOrOneOf { get; set; } = true;
+
+        [Category(Interface)]
+        [DisplayName("Preferred MultipleResponsesType")]
+        [Description("Preferred MultipleResponsesType to use when multiple responses are defined for a path. The default value is 'AnyOf'.")]
+        public MultipleResponsesType PreferredMultipleResponsesType { get; set; } = MultipleResponsesType.AnyOf;
         #endregion
 
         #region Models

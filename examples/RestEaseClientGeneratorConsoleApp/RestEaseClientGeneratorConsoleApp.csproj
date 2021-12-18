@@ -1,13 +1,16 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
+
 
   <ItemGroup>
     <!--<Compile Remove="Infura\**\*.cs" />-->
     <!--<Compile Remove="Cog\**\*.cs" />-->
+    <Folder Include="Examples\AzureMachineLearning\Api\" />
+    <Folder Include="Examples\AzureMachineLearning\Models\" />
     <Folder Include="Examples\ComputerVision\" />
     <Folder Include="Examples\Drc\Api\" />
     <Folder Include="Examples\Drc\Models\" />
@@ -19,6 +22,7 @@
     <Folder Include="Examples\MediaWikiRaml\Models\" />
     <Folder Include="Examples\MediaWiki\Api\" />
     <Folder Include="Examples\MediaWiki\Models\" />
+    <Folder Include="Examples\NewFolder\" />
     <Folder Include="Examples\SharedQuery\Api\" />
     <Folder Include="Examples\SharedQuery\Models\" />
     <Folder Include="Examples\SpeechServices\Api\" />
@@ -30,6 +34,22 @@
   </ItemGroup>
 
   <ItemGroup>
+    <OpenApiReference Include="Examples\AzureMachineLearning\ml-swagger.json" CodeGenerator="NSwagCSharp" Namespace="MachineLearningOpenAPIExample" ClassName="MachineLearningService">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </OpenApiReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AnyOf" Version="0.2.0" />
+    <PackageReference Include="Microsoft.Extensions.ApiDescription.Client" Version="3.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="NSwag.ApiDescription.Client" Version="13.0.5">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="RestEase" Version="1.5.5" />
   </ItemGroup>
 
@@ -38,6 +58,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Examples\AzureMachineLearning\swagger.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Examples\AzureRestStorage\blob.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

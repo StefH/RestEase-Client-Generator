@@ -1,4 +1,4 @@
-﻿using System.ComponentModel;
+using System.ComponentModel;
 using RestEaseClientGenerator.Types;
 
 namespace RestEaseClientGenerator.Settings
@@ -119,6 +119,10 @@ namespace RestEaseClientGenerator.Settings
         [DisplayName("Generate and use model for 'AnyOf' and 'OneOf'")]
         [Description("Generate and use model for 'AnyOf' and 'OneOf' return types. The default value is 'True'.")]
         public bool GenerateAndUseModelForAnyOfOrOneOf { get; set; } = true;
+
+        [DisplayName("Preferred MultipleResponsesType")]
+        [Description("Preferred MultipleResponsesType to use when multiple responses are defined for a path. The default value is 'AnyOf'.")]
+        public MultipleResponsesType PreferredMultipleResponsesType { get; set; } = MultipleResponsesType.AnyOf;
         #endregion
     }
 }

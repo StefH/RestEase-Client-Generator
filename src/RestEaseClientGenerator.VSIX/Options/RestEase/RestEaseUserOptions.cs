@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using Newtonsoft.Json;
 using RestEaseClientGenerator.Json;
 using RestEaseClientGenerator.Types;
@@ -65,5 +66,8 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
 
         [JsonConverter(typeof(DescriptionEnumConverter))]
         public EnumType? PreferredEnumType { get; set; }
+
+        [JsonConverter(typeof(DescriptionEnumConverter))]
+        public MultipleResponsesType? PreferredMultipleResponsesType { get; set; }
     }
 }

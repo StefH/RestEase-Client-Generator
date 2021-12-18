@@ -1,0 +1,220 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "predict-rentals",
+        "description": "API specification for the Azure Machine Learning service predict-rentals",
+        "version": "1.0"
+    },
+    "schemes": [
+        "https"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "securityDefinitions": {
+        "Bearer": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header",
+            "description": "For example: Bearer abc123"
+        }
+    },
+    "paths": {
+        "/": {
+            "get": {
+                "operationId": "ServiceHealthCheck",
+                "description": "Simple health check endpoint to ensure the service is up at any given point.",
+                "responses": {
+                    "200": {
+                        "description": "If service is up and running, this response will be returned with the content 'Healthy'",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "examples": {
+                            "application/json": "Healthy"
+                        }
+                    },
+                    "default": {
+                        "description": "The service failed to execute due to an error.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/score": {
+            "post": {
+                "operationId": "RunMLService",
+                "description": "Run web service's model and get the prediction output",
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "serviceInputPayload",
+                        "in": "body",
+                        "description": "The input payload for executing the real-time machine learning service.",
+                        "schema": {
+                            "$ref": "#/definitions/ServiceInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The service processed the input correctly and provided a result prediction, if applicable.",
+                        "schema": {
+                            "$ref": "#/definitions/ServiceOutput"
+                        }
+                    },
+                    "201": {
+                        "description": "TEST",
+                        "schema": {
+                            "$ref": "#/definitions/OKResponse"
+                        }
+                    },
+                    "default": {
+                        "description": "The service failed to execute due to an error.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "ServiceInput": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "required": [
+                            "day",
+                            "mnth",
+                            "year",
+                            "season",
+                            "holiday",
+                            "weekday",
+                            "workingday",
+                            "weathersit",
+                            "temp",
+                            "atemp",
+                            "hum",
+                            "windspeed"
+                        ],
+                        "properties": {
+                            "day": {
+                                "type": "integer",
+                                "format": "int64"
+                            },
+                            "mnth": {
+                                "type": "integer",
+                                "format": "int64"
+                            },
+                            "year": {
+                                "type": "integer",
+                                "format": "int64"
+                            },
+                            "season": {
+                                "type": "integer",
+                                "format": "int64"
+                            },
+                            "holiday": {
+                                "type": "integer",
+                                "format": "int64"
+                            },
+                            "weekday": {
+                                "type": "integer",
+                                "format": "int64"
+                            },
+                            "workingday": {
+                                "type": "integer",
+                                "format": "int64"
+                            },
+                            "weathersit": {
+                                "type": "integer",
+                                "format": "int64"
+                            },
+                            "temp": {
+                                "type": "number",
+                                "format": "double"
+                            },
+                            "atemp": {
+                                "type": "number",
+                                "format": "double"
+                            },
+                            "hum": {
+                                "type": "number",
+                                "format": "double"
+                            },
+                            "windspeed": {
+                                "type": "number",
+                                "format": "double"
+                            }
+                        }
+                    }
+                }
+            },
+            "example": {
+                "data": [
+                    {
+                        "day": 0,
+                        "mnth": 0,
+                        "year": 0,
+                        "season": 0,
+                        "holiday": 0,
+                        "weekday": 0,
+                        "workingday": 0,
+                        "weathersit": 0,
+                        "temp": 0,
+                        "atemp": 0,
+                        "hum": 0,
+                        "windspeed": 0
+                    }
+                ]
+            }
+        },
+        "ServiceOutput": {
+            "type": "array",
+            "items": {
+                "type": "integer",
+                "format": "int64"
+            },
+            "example": [
+                0
+            ]
+        },
+        "ErrorResponse": {
+            "type": "object",
+            "properties": {
+                "status_code": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "OKResponse": {
+            "type": "object",
+            "properties": {
+                "status_code": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "message123": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

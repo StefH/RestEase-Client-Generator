@@ -1,4 +1,4 @@
-﻿@page "/"
+@page "/"
 
 <Card>
     <CardHeader>
@@ -84,6 +84,7 @@
         <CheckField @bind-Value="@settings.DefineAllMethodHeadersOnInterface" For="@(() => settings.DefineAllMethodHeadersOnInterface)"></CheckField>
         <CheckField @bind-Value="@settings.DefineSharedMethodQueryParametersOnInterface" For="@(() => settings.DefineSharedMethodQueryParametersOnInterface)"></CheckField>
         <CheckField @bind-Value="@settings.GenerateAndUseModelForAnyOfOrOneOf" For="@(() => settings.GenerateAndUseModelForAnyOfOrOneOf)"></CheckField>
+        <SelectEnumField @bind-Value="@settings.PreferredMultipleResponsesType" For="@(() => settings.PreferredMultipleResponsesType)"></SelectEnumField>
     </CardBody>
     <CardBody>
         <b>Generate</b>
