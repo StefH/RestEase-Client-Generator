@@ -11,7 +11,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <!--<PackageReference Include="AnyOf" Version="0.2.0" />-->
         <PackageReference Include="Microsoft.OpenApi" Version="1.2.3" />
         <PackageReference Include="Microsoft.OpenApi.Readers" Version="1.2.3" />
         <PackageReference Include="RamlToOpenApiConverter" Version="0.6.0" />
