@@ -1,3 +1,6 @@
+# 1.0.13 (18 December 2021)
+- [#29](https://github.com/StefH/RestEase-Client-Generator/pull/29) - Support multiple responses [enhancement] contributed by [StefH](https://github.com/StefH)
+
 # 1.0.12 (09 September 2021)
 - [#28](https://github.com/StefH/RestEase-Client-Generator/pull/28) - Fix issue with swagger from WireMock Org [bug] contributed by [StefH](https://github.com/StefH)
 
