@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.OpenApi.Models;
 using RestEaseClientGenerator.Extensions;
@@ -10,6 +11,8 @@ namespace RestEaseClientGenerator.Mappers
 {
     internal class SecurityMapper : BaseMapper
     {
+        private static readonly string[] SecuritySchemaTypes = { "api_key" };
+
         public SecurityMapper(GeneratorSettings settings) : base(settings)
         {
         }
@@ -23,21 +26,24 @@ namespace RestEaseClientGenerator.Mappers
 
             if (openApiDocument.Components?.SecuritySchemes != null)
             {
-                return MapOpenApiVersion3(openApiDocument);
+                return MapOpenApiVersion3(new Dictionary<string, OpenApiSecurityScheme>(openApiDocument.Components.SecuritySchemes, StringComparer.OrdinalIgnoreCase));
             }
 
             return null;
         }
 
-        private RestEaseSecurity MapOpenApiVersion3(OpenApiDocument openApiDocument)
+        private RestEaseSecurity MapOpenApiVersion3(IDictionary<string, OpenApiSecurityScheme> schemas)
         {
-            if (openApiDocument.Components.SecuritySchemes.TryGetValue("api_key", out var openApiSecurityScheme))
+            foreach (var securitySchemaType in SecuritySchemaTypes)
             {
-                return new RestEaseSecurity
+                if (schemas.TryGetValue(securitySchemaType, out var openApiSecurityScheme))
                 {
-                    Definitions = Map(new[] { openApiSecurityScheme }),
-                    SecurityVersionType = SecurityVersionType.OpenApi3
-                };
+                    return new RestEaseSecurity
+                    {
+                        Definitions = Map(new[] { openApiSecurityScheme }),
+                        SecurityVersionType = SecurityVersionType.OpenApi3
+                    };
+                }
             }
 
             return null;

@@ -72,12 +72,6 @@
                             "$ref": "#/definitions/ServiceOutput"
                         }
                     },
-                    "201": {
-                        "description": "TEST",
-                        "schema": {
-                            "$ref": "#/definitions/OKResponse"
-                        }
-                    },
                     "default": {
                         "description": "The service failed to execute due to an error.",
                         "schema": {
@@ -200,18 +194,6 @@
                     "format": "int32"
                 },
                 "message": {
-                    "type": "string"
-                }
-            }
-        },
-        "OKResponse": {
-            "type": "object",
-            "properties": {
-                "status_code": {
-                    "type": "integer",
-                    "format": "int32"
-                },
-                "message123": {
                     "type": "string"
                 }
             }

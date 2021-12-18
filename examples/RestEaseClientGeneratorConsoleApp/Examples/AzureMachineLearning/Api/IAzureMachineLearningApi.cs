@@ -27,6 +27,6 @@ namespace AzureMachineLearning.Api
         /// <param name="content">The input payload for executing the real-time machine learning service.</param>
         [Post("/score")]
         [Header("Content-Type", "application/json")]
-        Task<AnyOf<long[], OKResponse, ErrorResponse>> RunMLServiceAsync([Body] ServiceInput content);
+        Task<AnyOf<long[], ErrorResponse>> RunMLServiceAsync([Body] ServiceInput content);
     }
 }

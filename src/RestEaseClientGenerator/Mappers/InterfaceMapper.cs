@@ -37,23 +37,6 @@ namespace RestEaseClientGenerator.Mappers
             {
                 MapPath(@interface, path.Key, path.Value);
             }
-            //var methods = paths.Select(p => MapPath(interfaceName, p.Key, p.Value)).SelectMany(x => x).ToList();
-
-            //var counts = methods
-            //    .GroupBy(method => method.RestEaseMethod.Name + method.RestEaseMethod.Parameters)
-            //    .Where(grouping => grouping.Count() > 1)
-            //    .ToDictionary(grouping => grouping.Key, p => p.Count());
-
-            //// modify the list, going backwards so we can take advantage of our counts.
-            //for (int i = methods.Count - 1; i >= 0; i--)
-            //{
-            //    string key = methods[i].RestEaseMethod.Name + methods[i].RestEaseMethod.Parameters;
-            //    if (counts.ContainsKey(key))
-            //    {
-            //        // add the suffix and decrement the number of duplicates left to tag.
-            //        methods[i].RestEaseMethod.Name += $"{counts[key]--}";
-            //    }
-            //}
 
             var security = new SecurityMapper(Settings).Map(openApiDocument);
             if (security != null && Settings.PreferredSecurityDefinitionType != SecurityDefinitionType.None)
