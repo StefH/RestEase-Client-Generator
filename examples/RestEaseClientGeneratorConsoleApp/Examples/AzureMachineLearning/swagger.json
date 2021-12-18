@@ -23,6 +23,29 @@
         }
     },
     "paths": {
+        "/": {
+            "get": {
+                "operationId": "ServiceHealthCheck",
+                "description": "Simple health check endpoint to ensure the service is up at any given point.",
+                "responses": {
+                    "200": {
+                        "description": "If service is up and running, this response will be returned with the content 'Healthy'",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "examples": {
+                            "application/json": "Healthy"
+                        }
+                    },
+                    "default": {
+                        "description": "The service failed to execute due to an error.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/score": {
             "post": {
                 "operationId": "RunMLService",
@@ -49,27 +72,10 @@
                             "$ref": "#/definitions/ServiceOutput"
                         }
                     },
-                    "default": {
-                        "description": "The service failed to execute due to an error.",
+                    "201": {
+                        "description": "TEST",
                         "schema": {
-                            "$ref": "#/definitions/ErrorResponse"
-                        }
-                    }
-                }
-            }
-        },
-        "/": {
-            "get": {
-                "operationId": "ServiceHealthCheck",
-                "description": "Simple health check endpoint to ensure the service is up at any given point.",
-                "responses": {
-                    "200": {
-                        "description": "If service is up and running, this response will be returned with the content 'Healthy'",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "examples": {
-                            "application/json": "Healthy"
+                            "$ref": "#/definitions/OKResponse"
                         }
                     },
                     "default": {
@@ -168,10 +174,10 @@
                         "weekday": 0,
                         "workingday": 0,
                         "weathersit": 0,
-                        "temp": 0.0,
-                        "atemp": 0.0,
-                        "hum": 0.0,
-                        "windspeed": 0.0
+                        "temp": 0,
+                        "atemp": 0,
+                        "hum": 0,
+                        "windspeed": 0
                     }
                 ]
             }
@@ -194,6 +200,18 @@
                     "format": "int32"
                 },
                 "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "OKResponse": {
+            "type": "object",
+            "properties": {
+                "status_code": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "message123": {
                     "type": "string"
                 }
             }

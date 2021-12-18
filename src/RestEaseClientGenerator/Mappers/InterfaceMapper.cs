@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Microsoft.OpenApi.Models;
-using RestEase;
 using RestEaseClientGenerator.Constants;
 using RestEaseClientGenerator.Extensions;
 using RestEaseClientGenerator.Models.Internal;
@@ -285,7 +284,17 @@ namespace RestEaseClientGenerator.Mappers
                 return returnTypes.First();
             }
 
-            return "object";
+            switch (Settings.PreferredMultipleResponsesType)
+            {
+                case MultipleResponsesType.First:
+                    return returnTypes.First();
+
+                case MultipleResponsesType.AnyOf:
+                    return $"AnyOf<{string.Join(", ", returnTypes)}>";
+
+                default:
+                    return "object";
+            }
         }
 
         private string GetReturnType(RestEaseInterface @interface, OpenApiSchema schema, string methodRestEaseMethodName)

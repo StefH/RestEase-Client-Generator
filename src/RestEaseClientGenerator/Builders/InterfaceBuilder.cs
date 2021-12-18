@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Text;
 using RestEaseClientGenerator.Extensions;
 using RestEaseClientGenerator.Models.Internal;
@@ -21,6 +21,7 @@ namespace RestEaseClientGenerator.Builders
             builder.AppendLine("using System.Net.Http;");
             builder.AppendLine("using System.Net.Http.Headers;");
             builder.AppendLine("using System.Threading.Tasks;");
+            builder.AppendLine("using AnyOfTypes;");
             builder.AppendLine("using RestEase;");
             if (hasModels || @interface.InlineModels.Any())
             {

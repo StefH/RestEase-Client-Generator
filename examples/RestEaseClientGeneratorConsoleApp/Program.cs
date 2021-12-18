@@ -21,7 +21,8 @@ namespace RestEaseClientGeneratorConsoleApp
             {
                 Namespace = "AzureMachineLearning",
                 ApiName = "AzureMachineLearning",
-                SingleFile = false
+                SingleFile = false,
+                PreferredMultipleResponsesType = MultipleResponsesType.AnyOf
             };
             foreach (var file in generator.FromFile("Examples\\AzureMachineLearning\\swagger.json", mlSettings, out OpenApiDiagnostic diagnosticML))
             {

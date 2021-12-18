@@ -23,6 +23,29 @@
         }
     },
     "paths": {
+        "/": {
+            "get": {
+                "operationId": "ServiceHealthCheck",
+                "description": "Simple health check endpoint to ensure the service is up at any given point.",
+                "responses": {
+                    "200": {
+                        "description": "If service is up and running, this response will be returned with the content 'Healthy'",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "examples": {
+                            "application/json": "Healthy"
+                        }
+                    },
+                    "default": {
+                        "description": "The service failed to execute due to an error.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/score": {
             "post": {
                 "operationId": "RunMLService",
@@ -47,29 +70,6 @@
                         "description": "The service processed the input correctly and provided a result prediction, if applicable.",
                         "schema": {
                             "$ref": "#/definitions/ServiceOutput"
-                        }
-                    },
-                    "default": {
-                        "description": "The service failed to execute due to an error.",
-                        "schema": {
-                            "$ref": "#/definitions/ErrorResponse"
-                        }
-                    }
-                }
-            }
-        },
-        "/": {
-            "get": {
-                "operationId": "ServiceHealthCheck",
-                "description": "Simple health check endpoint to ensure the service is up at any given point.",
-                "responses": {
-                    "200": {
-                        "description": "If service is up and running, this response will be returned with the content 'Healthy'",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "examples": {
-                            "application/json": "Healthy"
                         }
                     },
                     "default": {
@@ -168,10 +168,10 @@
                         "weekday": 0,
                         "workingday": 0,
                         "weathersit": 0,
-                        "temp": 0.0,
-                        "atemp": 0.0,
-                        "hum": 0.0,
-                        "windspeed": 0.0
+                        "temp": 0,
+                        "atemp": 0,
+                        "hum": 0,
+                        "windspeed": 0
                     }
                 ]
             }
