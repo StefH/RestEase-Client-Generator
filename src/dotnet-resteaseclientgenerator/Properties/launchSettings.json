@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "CoverageConvertor": {
+      "commandName": "Project",
+      "commandLineArgs": "--CoverageFilesFolder C:\\temp\\_TESTS"
+    }
+  }
+}

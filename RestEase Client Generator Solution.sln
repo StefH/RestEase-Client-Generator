@@ -32,6 +32,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "blazor", "blazor", "{4C16C3
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestEaseClientGenerator-BlazorApp", "examples\RestEaseClientGenerator-BlazorApp\RestEaseClientGenerator-BlazorApp.csproj", "{4029731C-2D4B-40A9-957F-F3E47344B4DA}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dotnet-resteaseclientgenerator", "src\dotnet-resteaseclientgenerator\dotnet-resteaseclientgenerator.csproj", "{AABD314E-1360-40F3-ABF7-03516212110D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -58,6 +60,10 @@ Global
 		{4029731C-2D4B-40A9-957F-F3E47344B4DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4029731C-2D4B-40A9-957F-F3E47344B4DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4029731C-2D4B-40A9-957F-F3E47344B4DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AABD314E-1360-40F3-ABF7-03516212110D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AABD314E-1360-40F3-ABF7-03516212110D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AABD314E-1360-40F3-ABF7-03516212110D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AABD314E-1360-40F3-ABF7-03516212110D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -68,6 +74,7 @@ Global
 		{9C54D0EC-F441-4525-806D-BD0688656280} = {01BD8AEA-3BBE-4D3D-A7A6-FED1DA9F0575}
 		{0A6A0B14-58D3-433D-AFE8-D9E8F53D34E7} = {51587962-74F5-415F-AA57-FEC39EF78DBC}
 		{4029731C-2D4B-40A9-957F-F3E47344B4DA} = {4C16C3C8-4F12-44F2-9F16-1A6DF06A2DC2}
+		{AABD314E-1360-40F3-ABF7-03516212110D} = {B929A431-00E4-4054-8796-A6F1DF7AC3EA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D9B883AA-56BD-4B76-A679-C82E766F4C2D}
