@@ -7,6 +7,10 @@
         "Help": {
             "commandName": "Project",
             "commandLineArgs": "--help"
+        },
+        "Version": {
+            "commandName": "Project",
+            "commandLineArgs": "--version"
         }
     }
 }

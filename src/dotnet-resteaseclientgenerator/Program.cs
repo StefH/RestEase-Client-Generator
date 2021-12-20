@@ -1,4 +1,6 @@
+using System;
 using System.IO;
+using System.Linq;
 using CommandLine;
 using DotNetRestEaseClientGenerator.Utils;
 using Microsoft.Extensions.Logging;
@@ -110,32 +112,48 @@ public class Program
         #endregion
     }
 
-    /// <summary>
-    /// The Logger.
-    /// </summary>
-    private static readonly ILogger<Program> Logger = LoggerFactory.Create(o =>
+    private static void Main(string[] args)
     {
-        o.SetMinimumLevel(LogLevel.Information);
-        o.AddConsole();
-    }).CreateLogger<Program>();
+        var logger = LoggerFactory.Create(o =>
+        {
+            o.SetMinimumLevel(LogLevel.Information);
+            o.AddSimpleConsole(c => c.SingleLine = true);
+        }).CreateLogger("RestEaseClientGenerator");
 
-    static void Main(string[] args)
-    {
-        Parser.Default.ParseArguments<Options>(args).WithParsed(Run);
+
+        logger.LogInformation("Starting");
+
+        Parser.Default.ParseArguments<Options>(args).WithParsed(options => Run(options, logger));
     }
 
-    private static void Run(Options options)
+    private static void Run(Options options, ILogger logger)
     {
         var settings = TinyMapperUtils.Instance.Map<GeneratorSettings>(options);
 
         var generator = new Generator();
 
-        foreach (var file in generator.FromFile(options.SourceFile, settings, out OpenApiDiagnostic diagnostic))
+        try
         {
-            var directory = Path.Combine(options.DestinationFolder, file.Path);
-            Directory.CreateDirectory(directory);
+            var files = generator.FromFile(options.SourceFile, settings, out OpenApiDiagnostic diagnostic);
+            if (diagnostic.Errors.Any())
+            {
+                logger.LogError("OpenApiDiagnostic Errors: {errors}", string.Format(",", diagnostic.Errors.Select(e => e.Message)));
+                return;
+            }
 
-            File.WriteAllText(Path.Combine(directory, file.Name), file.Content);
+            foreach (var file in files)
+            {
+                var directory = Path.Combine(options.DestinationFolder, file.Path);
+                Directory.CreateDirectory(directory);
+
+                File.WriteAllText(Path.Combine(directory, file.Name), file.Content);
+            }
+
+            logger.LogInformation("File{0} generated in '{1}'.", files.Count > 0 ? "s" : string.Empty, options.DestinationFolder);
+        }
+        catch (Exception ex)
+        {
+            logger.LogCritical(ex, string.Empty);
         }
     }
 }
