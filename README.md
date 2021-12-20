@@ -2,8 +2,24 @@
 [![Installs](https://vsmarketplacebadge.apphb.com/downloads-short/StefHeyenrath.RestEaseClientGenerator.svg)](https://marketplace.visualstudio.com/items?itemName=StefHeyenrath.RestEaseClientGenerator) 
 [![Rating](https://vsmarketplacebadge.apphb.com/rating-star/StefHeyenrath.RestEaseClientGenerator.svg)](https://marketplace.visualstudio.com/items?itemName=StefHeyenrath.RestEaseClientGenerator)
 
-# RestEase Client Generator
-A Visual Studio Extension to generate a [RestEase](https://github.com/canton7/RestEase) compatible client (Interface & Models) based on a [Swagger / OpenApi](https://swagger.io/specification/) or [RAML](https://raml.org/) specification.
+Generate a [RestEase](https://github.com/canton7/RestEase) compatible client (Interface & Models) based on a [Swagger / OpenApi](https://swagger.io/specification/) or [RAML](https://raml.org/) specification.
+
+
+## Visual Studio Extension
+
+[Link](https://marketplace.visualstudio.com/items?itemName=StefHeyenrath.RestEaseClientGenerator)
+
+## dotnet tool
+### Installation
+``` cmd
+dotnet tool install --global dotnet-resteaseclientgenerator
+```
+
+### Usage
+``` cmd
+dotnet-resteaseclientgenerator
+```
+
 
 # Demo
 [Blazor WebAssembly Demo](https://stefh.github.io/RestEase-Client-Generator/)

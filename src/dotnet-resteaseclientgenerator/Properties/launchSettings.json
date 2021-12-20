@@ -1,0 +1,16 @@
+{
+    "profiles": {
+        "Command": {
+            "commandName": "Project",
+            "commandLineArgs": "-f ..\\..\\..\\..\\..\\Examples\\RestEaseClientGeneratorConsoleApp\\Examples\\AzureMachineLearning\\swagger.json -d ..\\..\\..\\..\\..\\Examples\\RestEaseClientGeneratorConsoleApp\\Examples\\AzureMachineLearning\\commandline --Namespace AzureMachineLearningTest -a AzureMachineLearningTest"
+        },
+        "Help": {
+            "commandName": "Project",
+            "commandLineArgs": "--help"
+        },
+        "Version": {
+            "commandName": "Project",
+            "commandLineArgs": "--version"
+        }
+    }
+}

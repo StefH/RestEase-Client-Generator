@@ -11,6 +11,7 @@
     <!--<Compile Remove="Cog\**\*.cs" />-->
     <Folder Include="Examples\AzureMachineLearning\Api\" />
     <Folder Include="Examples\AzureMachineLearning\Models\" />
+    <Folder Include="Examples\AzureMachineLearning\commandline\" />
     <Folder Include="Examples\ComputerVision\" />
     <Folder Include="Examples\Drc\Api\" />
     <Folder Include="Examples\Drc\Models\" />
