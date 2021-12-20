@@ -4,9 +4,9 @@
             "commandName": "Project",
             "commandLineArgs": "-f ..\\..\\..\\..\\..\\Examples\\RestEaseClientGeneratorConsoleApp\\Examples\\AzureMachineLearning\\swagger.json -d ..\\..\\..\\..\\..\\Examples\\RestEaseClientGeneratorConsoleApp\\Examples\\AzureMachineLearning\\commandline --Namespace AzureMachineLearningTest -a AzureMachineLearningTest"
         },
-        "Command_Invalid": {
+        "Help": {
             "commandName": "Project",
-            "commandLineArgs": "-x"
+            "commandLineArgs": "--help"
         }
     }
 }
