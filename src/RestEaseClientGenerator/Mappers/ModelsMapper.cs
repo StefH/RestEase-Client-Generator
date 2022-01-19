@@ -1,4 +1,4 @@
-﻿using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi.Models;
 using RestEaseClientGenerator.Extensions;
 using RestEaseClientGenerator.Models.Internal;
 using RestEaseClientGenerator.Settings;
@@ -11,6 +11,8 @@ namespace RestEaseClientGenerator.Mappers
 {
     internal class ModelsMapper : BaseMapper
     {
+        private readonly SchemaType[] _schemaTypes = { SchemaType.Object, SchemaType.Unknown };
+
         private readonly SchemaMapper _schemaMapper;
         private readonly OpenApiSpecVersion _openApiSpecVersion;
 
@@ -22,7 +24,11 @@ namespace RestEaseClientGenerator.Mappers
 
         public IEnumerable<RestEaseModel> Map(IDictionary<string, OpenApiSchema> schemas)
         {
-            return schemas.Where(s => s.Value.GetSchemaType() == SchemaType.Object).Select(x => new RestEaseModel
+            var validSchemas = schemas
+                .OrderBy(s => s.Key)
+                .Where(s => _schemaTypes.Contains(s.Value.GetSchemaType()));
+
+            return validSchemas.Select(x => new RestEaseModel
             {
                 Namespace = Settings.Namespace,
                 ClassName = MakeValidModelName(x.Key),

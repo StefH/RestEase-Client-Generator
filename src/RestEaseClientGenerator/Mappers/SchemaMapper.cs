@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.OpenApi;
@@ -21,6 +21,11 @@ namespace RestEaseClientGenerator.Mappers
 
         public object MapSchema(OpenApiSchema schema, string name, bool isNullable, bool pascalCase, OpenApiSpecVersion? openApiSpecVersion)
         {
+            if (name == "CloudError")
+            {
+                int cccc = 9;
+            }
+
             if (schema == null)
             {
                 return null;
@@ -123,12 +128,17 @@ namespace RestEaseClientGenerator.Mappers
                     }
 
                 case SchemaType.Object:
+                case SchemaType.Unknown:
                     var list = new List<string>();
+                    if (schema.Properties == null)
+                    {
+                        return list;
+                    }
 
                     foreach (var schemaProperty in schema.Properties)
                     {
                         var openApiSchema = schemaProperty.Value;
-                        if (openApiSchema.GetSchemaType() == SchemaType.Object)
+                        if (new [] { SchemaType.Object, SchemaType.Unknown }.Contains(openApiSchema.GetSchemaType()))
                         {
                             string objectName = pascalCase ? schemaProperty.Key.ToPascalCase() : schemaProperty.Key;
                             string objectType = "object";

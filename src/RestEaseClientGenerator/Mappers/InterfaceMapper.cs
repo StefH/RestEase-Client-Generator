@@ -82,38 +82,40 @@ namespace RestEaseClientGenerator.Mappers
                 }
             }
 
-            if (Settings.DefineSharedMethodQueryParametersOnInterface)
+            if (!Settings.DefineSharedMethodQueryParametersOnInterface)
             {
-                var groupings = @interface.Methods
-                    .SelectMany(md => md.RestEaseMethod.Parameters.Where(p => p.ParameterLocation == ParameterLocation.Query))
-                    .GroupBy(x => x.IdentifierWithRestEase)
-                    .ToList();
+                return @interface;
+            }
 
-                foreach (var grouping in groupings)
+            var groupings = @interface.Methods
+                .SelectMany(md => md.RestEaseMethod.Parameters.Where(p => p.ParameterLocation == ParameterLocation.Query))
+                .GroupBy(x => x.IdentifierWithRestEase)
+                .ToList();
+
+            foreach (var grouping in groupings)
+            {
+                foreach (var parameter in grouping)
                 {
-                    foreach (var parameter in grouping)
+                    if (@interface.Methods.All(m => m.RestEaseMethod.Parameters.Select(p => p.IdentifierWithRestEase).Contains(grouping.Key)))
                     {
-                        if (@interface.Methods.All(m => m.RestEaseMethod.Parameters.Select(p => p.IdentifierWithRestEase).Contains(grouping.Key)))
+                        if (!@interface.ConstantQueryParameters.Select(cqp => cqp.Name).Contains(parameter.Identifier.ToPascalCase()))
                         {
-                            if (!@interface.ConstantQueryParameters.Select(cqp => cqp.Name).Contains(parameter.Identifier.ToPascalCase()))
+                            @interface.ConstantQueryParameters.Add(new RestEaseInterfaceQueryParameter
                             {
-                                @interface.ConstantQueryParameters.Add(new RestEaseInterfaceQueryParameter
-                                {
-                                    Name = parameter.Identifier,
-                                    IdentifierWithType = parameter.IdentifierWithTypePascalCase
-                                });
-                            }
+                                Name = parameter.Identifier,
+                                IdentifierWithType = parameter.IdentifierWithTypePascalCase
+                            });
+                        }
 
-                            // For all method: remove this shared query parameters from parameters and from summary and update extension methods
-                            foreach (var method in @interface.Methods)
+                        // For all method: remove this shared query parameters from parameters and from summary and update extension methods
+                        foreach (var method in @interface.Methods)
+                        {
+                            method.RestEaseMethod.Parameters = method.RestEaseMethod.Parameters.Where(p => p.IdentifierWithRestEase != parameter.IdentifierWithRestEase).ToList();
+                            method.SummaryParameters = method.SummaryParameters.Where(p => p.IdentifierWithRestEase != parameter.IdentifierWithRestEase).ToList();
+                            if (method.ExtensionMethodDetails != null)
                             {
-                                method.RestEaseMethod.Parameters = method.RestEaseMethod.Parameters.Where(p => p.IdentifierWithRestEase != parameter.IdentifierWithRestEase).ToList();
-                                method.SummaryParameters = method.SummaryParameters.Where(p => p.IdentifierWithRestEase != parameter.IdentifierWithRestEase).ToList();
-                                if (method.ExtensionMethodDetails != null)
-                                {
-                                    method.ExtensionMethodDetails.RestEaseMethod.Parameters = method.ExtensionMethodDetails.RestEaseMethod.Parameters.Where(p => p.IdentifierWithRestEase != parameter.IdentifierWithRestEase).ToList();
-                                    method.ExtensionMethodDetails.SummaryParameters = method.ExtensionMethodDetails.SummaryParameters.Where(p => p.IdentifierWithRestEase != parameter.IdentifierWithRestEase).ToList();
-                                }
+                                method.ExtensionMethodDetails.RestEaseMethod.Parameters = method.ExtensionMethodDetails.RestEaseMethod.Parameters.Where(p => p.IdentifierWithRestEase != parameter.IdentifierWithRestEase).ToList();
+                                method.ExtensionMethodDetails.SummaryParameters = method.ExtensionMethodDetails.SummaryParameters.Where(p => p.IdentifierWithRestEase != parameter.IdentifierWithRestEase).ToList();
                             }
                         }
                     }
@@ -133,6 +135,16 @@ namespace RestEaseClientGenerator.Mappers
 
         private RestEaseInterfaceMethodDetails MapOperationToMappingModel(RestEaseInterface @interface, string path, string httpMethod, OpenApiOperation operation)
         {
+            if (path == "/subscriptions/{subscriptionId}/providers/Microsoft.ContainerInstance/containerGroups")
+            {
+                int x = 0;
+            }
+
+            if (path == "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}/restart")
+            {
+                int yy = 0;
+            }
+
             string methodRestEaseForAnnotation = httpMethod.ToPascalCase();
 
             string methodRestEaseMethodName = GeneratedRestEaseMethodName(path, operation, methodRestEaseForAnnotation);
@@ -320,6 +332,12 @@ namespace RestEaseClientGenerator.Mappers
                     return MapArrayType(arrayType);
 
                 case SchemaType.Object:
+                case SchemaType.Unknown:
+                    if (schema == null)
+                    {
+                        return Settings.ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified ? "object" : null;
+                    }
+
                     if (schema.Reference != null)
                     {
                         // Existing defined object

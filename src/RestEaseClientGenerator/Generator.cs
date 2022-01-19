@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -38,7 +38,7 @@ namespace RestEaseClientGenerator
         {
             var schemaMapper = new SchemaMapper(settings);
 
-            IEnumerable<RestEaseModel> models;
+            IList<RestEaseModel> models;
             if (document.Components?.Schemas != null)
             {
                 models = new ModelsMapper(settings, schemaMapper, openApiSpecVersion)
@@ -46,7 +46,7 @@ namespace RestEaseClientGenerator
             }
             else
             {
-                models = Enumerable.Empty<RestEaseModel>();
+                models = new List<RestEaseModel>();
             }
 
             var @interface = new InterfaceMapper(settings, schemaMapper).Map(document);

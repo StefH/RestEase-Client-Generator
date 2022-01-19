@@ -23,6 +23,8 @@
     <Folder Include="Examples\MediaWikiRaml\Models\" />
     <Folder Include="Examples\MediaWiki\Api\" />
     <Folder Include="Examples\MediaWiki\Models\" />
+    <Folder Include="Examples\MicrosoftContainerInstance\Api\" />
+    <Folder Include="Examples\MicrosoftContainerInstance\Models\" />
     <Folder Include="Examples\NewFolder\" />
     <Folder Include="Examples\SharedQuery\Api\" />
     <Folder Include="Examples\SharedQuery\Models\" />
@@ -138,6 +140,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Examples\MediaWiki.raml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\MicrosoftContainerInstance\containerInstance.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Examples\SharedQueryParamsWithExtensionMethod.json">
