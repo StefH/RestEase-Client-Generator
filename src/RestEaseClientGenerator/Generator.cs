@@ -19,6 +19,8 @@ namespace RestEaseClientGenerator
     {
         public ICollection<GeneratedFile> FromFile(string path, GeneratorSettings settings, out OpenApiDiagnostic diagnostic)
         {
+            var directory = Path.GetDirectoryName(path);
+
             OpenApiDocument document;
             if (Path.GetExtension(path).EndsWith("raml", StringComparison.OrdinalIgnoreCase))
             {
@@ -31,10 +33,10 @@ namespace RestEaseClientGenerator
                 document = reader.Read(File.OpenRead(path), out diagnostic);
             }
 
-            return FromDocument(document, settings, diagnostic.SpecificationVersion);
+            return FromDocument(document, settings, diagnostic.SpecificationVersion, directory);
         }
 
-        public ICollection<GeneratedFile> FromDocument(OpenApiDocument document, GeneratorSettings settings, OpenApiSpecVersion openApiSpecVersion = OpenApiSpecVersion.OpenApi2_0)
+        public ICollection<GeneratedFile> FromDocument(OpenApiDocument document, GeneratorSettings settings, OpenApiSpecVersion openApiSpecVersion = OpenApiSpecVersion.OpenApi2_0, string directory = null)
         {
             var schemaMapper = new SchemaMapper(settings);
 
@@ -49,7 +51,7 @@ namespace RestEaseClientGenerator
                 models = new List<RestEaseModel>();
             }
 
-            var @interface = new InterfaceMapper(settings, schemaMapper).Map(document);
+            var @interface = new InterfaceMapper(settings, schemaMapper).Map(document, directory);
 
             var files = new List<GeneratedFile>();
 

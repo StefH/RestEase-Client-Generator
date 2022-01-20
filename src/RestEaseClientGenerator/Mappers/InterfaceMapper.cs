@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Microsoft.OpenApi.Models;
@@ -21,7 +22,7 @@ namespace RestEaseClientGenerator.Mappers
             _schemaMapper = schemaMapper;
         }
 
-        public RestEaseInterface Map(OpenApiDocument openApiDocument)
+        public RestEaseInterface Map(OpenApiDocument openApiDocument, string directory)
         {
             string name = CSharpUtils.CreateValidIdentifier(Settings.ApiName, CasingType.Pascal);
             string interfaceName = $"I{name}Api";
@@ -35,7 +36,7 @@ namespace RestEaseClientGenerator.Mappers
 
             foreach (var path in openApiDocument.Paths)
             {
-                MapPath(@interface, path.Key, path.Value);
+                MapPath(@interface, path.Key, path.Value, directory);
             }
 
             var security = new SecurityMapper(Settings).Map(openApiDocument);
@@ -125,15 +126,15 @@ namespace RestEaseClientGenerator.Mappers
             return @interface;
         }
 
-        private void MapPath(RestEaseInterface @interface, string path, OpenApiPathItem pathItem)
+        private void MapPath(RestEaseInterface @interface, string path, OpenApiPathItem pathItem, string directory)
         {
-            foreach (var restEaseInterfaceMethodDetails in pathItem.Operations.Select(o => MapOperationToMappingModel(@interface, path, o.Key.ToString(), o.Value)))
+            foreach (var restEaseInterfaceMethodDetails in pathItem.Operations.Select(o => MapOperationToMappingModel(@interface, path, o.Key.ToString(), o.Value, directory)))
             {
                 @interface.Methods.Add(restEaseInterfaceMethodDetails);
             }
         }
 
-        private RestEaseInterfaceMethodDetails MapOperationToMappingModel(RestEaseInterface @interface, string path, string httpMethod, OpenApiOperation operation)
+        private RestEaseInterfaceMethodDetails MapOperationToMappingModel(RestEaseInterface @interface, string path, string httpMethod, OpenApiOperation operation, string directory)
         {
             if (path == "/subscriptions/{subscriptionId}/providers/Microsoft.ContainerInstance/containerGroups")
             {
@@ -202,7 +203,11 @@ namespace RestEaseClientGenerator.Mappers
                 .OrderByDescending(p => p.Required)
                 .ToList();
 
-            var returnType = MapResponse(@interface, operation.Responses, methodRestEaseMethodName);
+            if (path == "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/privateEndpointConnections/{privateEndpointConnectionName}")
+            {
+                int a1 = 0;
+            }
+            var returnType = MapResponse(@interface, operation.Responses, methodRestEaseMethodName, directory);
 
             var method = new RestEaseInterfaceMethodDetails
             {
@@ -262,7 +267,7 @@ namespace RestEaseClientGenerator.Mappers
             return method;
         }
 
-        private string MapResponse(RestEaseInterface @interface, OpenApiResponses responses, string methodRestEaseMethodName)
+        private string MapResponse(RestEaseInterface @interface, OpenApiResponses responses, string methodRestEaseMethodName, string directory)
         {
             var returnTypes = new List<string>();
 
@@ -270,7 +275,7 @@ namespace RestEaseClientGenerator.Mappers
             {
                 if (response.Value != null && TryGetOpenApiMediaType(response.Value.Content, SupportedContentType.ApplicationJson, out OpenApiMediaType responseJson, out var _))
                 {
-                    returnTypes.Add(GetReturnType(@interface, responseJson.Schema, methodRestEaseMethodName));
+                    returnTypes.Add(GetReturnType(@interface, responseJson.Schema, methodRestEaseMethodName, directory));
                 }
             }
 
@@ -293,7 +298,7 @@ namespace RestEaseClientGenerator.Mappers
             }
         }
 
-        private string GetReturnType(RestEaseInterface @interface, OpenApiSchema schema, string methodRestEaseMethodName)
+        private string GetReturnType(RestEaseInterface @interface, OpenApiSchema schema, string methodRestEaseMethodName, string directory)
         {
             string nullable = schema?.Nullable == true ? "?" : string.Empty;
 
@@ -341,8 +346,33 @@ namespace RestEaseClientGenerator.Mappers
 
                     if (schema.Reference != null)
                     {
-                        // Existing defined object
-                        return MakeValidModelName(schema.Reference.Id);
+                        if (schema.Reference.IsLocal)
+                        {
+                            // Existing Local defined object
+                            return MakeValidModelName(schema.Reference.Id);
+                        }
+
+                        if (schema.Reference.IsExternal)
+                        {
+                            var generator = new Generator();
+
+                            var settings = new GeneratorSettings
+                            {
+                                Namespace = Settings.Namespace,
+                                ApiName = Settings.ApiName,
+                                SingleFile = false,
+                                PreferredMultipleResponsesType = Settings.PreferredMultipleResponsesType,
+                                GenerationType = GenerationType.Models
+                            };
+
+                            var location = Path.Combine(directory, schema.Reference.ExternalResource.Replace("./", string.Empty));
+
+                            var externalModels = generator.FromFile(location, settings, out var x);
+
+                            int eee = 9;
+                        }
+
+                        return null; // Stef
                     }
                     else if (schema.AdditionalProperties != null)
                     {
@@ -384,18 +414,18 @@ namespace RestEaseClientGenerator.Mappers
 
                             foreach (var one in schema.OneOf)
                             {
-                                var type = GetReturnType(@interface, one, null);
+                                var type = GetReturnType(@interface, one, null, directory);
                                 dummyOpenApiSchema.Properties.Add(type, one);
                             }
 
                             foreach (var one in schema.AnyOf)
                             {
-                                var type = GetReturnType(@interface, one, null);
+                                var type = GetReturnType(@interface, one, null, directory);
                                 dummyOpenApiSchema.Properties.Add(type, one);
                             }
 
                             string methodPostFix = schema.OneOf.Any() ? "OneOf" : "AnyOf";
-                            return GetReturnType(@interface, dummyOpenApiSchema, $"{methodRestEaseMethodName}{methodPostFix}");
+                            return GetReturnType(@interface, dummyOpenApiSchema, $"{methodRestEaseMethodName}{methodPostFix}", directory);
                         }
 
                         return "object";
