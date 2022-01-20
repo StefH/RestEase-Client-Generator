@@ -22,8 +22,7 @@ namespace RestEaseClientGeneratorConsoleApp
                 Namespace = "RestEaseClientGeneratorConsoleApp.Examples.MicrosoftContainerInstance",
                 ApiName = "MicrosoftContainerInstance",
                 SingleFile = false,
-                PreferredMultipleResponsesType = MultipleResponsesType.AnyOf,
-                ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified = true // Needed for ContainerGroupsRestart
+                PreferredMultipleResponsesType = MultipleResponsesType.AnyOf
             };
             foreach (var file in generator.FromFile("Examples\\MicrosoftContainerInstance\\containerInstance.json", aciSettings, out OpenApiDiagnostic diagnosticAci))
             {
@@ -131,7 +130,7 @@ namespace RestEaseClientGeneratorConsoleApp
                 Namespace = "RestEaseClientGeneratorConsoleApp.Examples.PetStore",
                 ApiName = "PetStore",
                 SupportExtensionXNullable = true,
-                ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified = true
+                ReturnResponseObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified = true
             };
             foreach (var file in generator.FromFile("Examples\\petstore.yaml", petStoreSettings, out OpenApiDiagnostic diagnosticPetStore1))
             {

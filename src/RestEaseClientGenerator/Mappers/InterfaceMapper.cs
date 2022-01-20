@@ -285,10 +285,10 @@ namespace RestEaseClientGenerator.Mappers
                     return returnTypes.First();
 
                 case MultipleResponsesType.AnyOf:
-                    return $"AnyOf<{string.Join(", ", returnTypes)}>";
+                    return $"AnyOf<{string.Join(", ", returnTypes.Distinct())}>";
 
                 default:
-                    return "object";
+                    return "Response<object>";
             }
         }
 
@@ -335,7 +335,7 @@ namespace RestEaseClientGenerator.Mappers
                 case SchemaType.Unknown:
                     if (schema == null)
                     {
-                        return Settings.ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified ? "object" : null;
+                        return Settings.ReturnResponseObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified ? "Response<object>" : null;
                     }
 
                     if (schema.Reference != null)
@@ -399,9 +399,9 @@ namespace RestEaseClientGenerator.Mappers
 
                         return "object";
                     }
-                    else if (Settings.ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified)
+                    else if (Settings.ReturnResponseObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified)
                     {
-                        return "object";
+                        return "Response<object>";
                     }
                     else
                     {

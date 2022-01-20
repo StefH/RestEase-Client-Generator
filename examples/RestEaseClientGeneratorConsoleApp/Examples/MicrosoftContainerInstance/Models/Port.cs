@@ -7,6 +7,6 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftContainerInstance.
     {
         public string Protocol { get; set; }
 
-        public int Port2 { get; set; }
+        public int Port { get; set; }
     }
 }

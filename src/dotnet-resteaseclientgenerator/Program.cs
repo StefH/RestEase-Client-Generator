@@ -72,8 +72,8 @@ public class Program
         [Option("GenerateFormUrlEncodedExtensionMethods", HelpText = "Generate Extension methods for FormUrlEncoded methods.", Default = true)]
         public bool GenerateFormUrlEncodedExtensionMethods { get; set; } = true;
 
-        [Option("ReturnObjectFromMethod", HelpText = "Return Object from Method when Response is defined but no Model is specified.", Default = false)]
-        public bool ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified { get; set; }
+        [Option("ReturnResponseObjectFromMethod", HelpText = "Return Response<object> from Method when Response is defined but no Model is specified.", Default = false)]
+        public bool ReturnResponseObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified { get; set; }
 
         [Option("PreferredContentType", HelpText = "Preferred Content-Type to use when both 'application/json' and 'application/xml' are defined.", Default = ContentType.ApplicationJson)]
         public ContentType PreferredContentType { get; set; }

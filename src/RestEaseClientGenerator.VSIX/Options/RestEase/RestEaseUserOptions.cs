@@ -35,7 +35,7 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
 
         public string ModelsNamespace { get; set; }
 
-        public bool? ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified { get; set; }
+        public bool? ReturnResponseObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified { get; set; }
 
         [JsonConverter(typeof(DescriptionEnumConverter))]
         public ContentType? PreferredContentType { get; set; }

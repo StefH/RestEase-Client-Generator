@@ -82,9 +82,9 @@ namespace RestEaseClientGenerator.Settings
         [Description("Generate Extension methods for FormUrlEncoded methods. The default value is 'True'.")]
         public bool GenerateFormUrlEncodedExtensionMethods { get; set; } = true;
 
-        [DisplayName("Return Object from Method")]
-        [Description("Return Object from Method when Response is defined but no Model is specified. The default value is 'False'.")]
-        public bool ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified { get; set; }
+        [DisplayName("Return Response<object> from Method")]
+        [Description("Return Response<object> from Method when Response is defined but no Model is specified. The default value is 'True'.")]
+        public bool ReturnResponseObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified { get; set; } = true;
 
         [DisplayName("Preferred Content-Type")]
         [Description("Preferred Content-Type to use when both 'application/json' and 'application/xml' are defined. The default value is 'application/json'.")]

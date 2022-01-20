@@ -94,9 +94,9 @@ namespace RestEaseClientGenerator.VSIX.Options.RestEase
         public bool GenerateApplicationOctetStreamExtensionMethods { get; set; } = true;
 
         [Category(Interface)]
-        [DisplayName("Return Object from Method")]
-        [Description("Return Object from Method when Response is defined but no Model is specified. The default value is 'False'.")]
-        public bool ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified { get; set; }
+        [DisplayName("Return Response<object> from Method")]
+        [Description("Return Response<object> from Method when Response is defined but no Model is specified. The default value is 'True'.")]
+        public bool ReturnResponseObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified { get; set; } = true;
 
         [Category(Interface)]
         [DisplayName("Preferred Content-Type")]

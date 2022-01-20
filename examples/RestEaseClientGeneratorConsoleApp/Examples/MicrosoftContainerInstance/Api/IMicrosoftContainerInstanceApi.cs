@@ -53,7 +53,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftContainerInstance.
         /// <param name="containerGroupName">The name of the container group.</param>
         [Put("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}")]
         [Header("Content-Type", "application/json")]
-        Task<AnyOf<ContainerGroup, ContainerGroup, CloudError>> ContainerGroupsCreateOrUpdateAsync([Path] string subscriptionId, [Path] string resourceGroupName, [Path] string containerGroupName);
+        Task<AnyOf<ContainerGroup, CloudError>> ContainerGroupsCreateOrUpdateAsync([Path] string subscriptionId, [Path] string resourceGroupName, [Path] string containerGroupName);
 
         /// <summary>
         /// Update container groups.
@@ -73,7 +73,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftContainerInstance.
         /// <param name="resourceGroupName">The name of the resource group.</param>
         /// <param name="containerGroupName">The name of the container group.</param>
         [Delete("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}")]
-        Task<AnyOf<ContainerGroup, object, object, CloudError>> ContainerGroupsDeleteAsync([Path] string subscriptionId, [Path] string resourceGroupName, [Path] string containerGroupName);
+        Task<AnyOf<ContainerGroup, Response<object>, CloudError>> ContainerGroupsDeleteAsync([Path] string subscriptionId, [Path] string resourceGroupName, [Path] string containerGroupName);
 
         /// <summary>
         /// Restarts all containers in a container group.
@@ -82,7 +82,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftContainerInstance.
         /// <param name="resourceGroupName">The name of the resource group.</param>
         /// <param name="containerGroupName">The name of the container group.</param>
         [Post("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}/restart")]
-        Task<AnyOf<object, CloudError>> ContainerGroupsRestartAsync([Path] string subscriptionId, [Path] string resourceGroupName, [Path] string containerGroupName);
+        Task<AnyOf<Response<object>, CloudError>> ContainerGroupsRestartAsync([Path] string subscriptionId, [Path] string resourceGroupName, [Path] string containerGroupName);
 
         /// <summary>
         /// Stops all containers in a container group.
@@ -91,7 +91,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftContainerInstance.
         /// <param name="resourceGroupName">The name of the resource group.</param>
         /// <param name="containerGroupName">The name of the container group.</param>
         [Post("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}/stop")]
-        Task<AnyOf<object, CloudError>> ContainerGroupsStopAsync([Path] string subscriptionId, [Path] string resourceGroupName, [Path] string containerGroupName);
+        Task<AnyOf<Response<object>, CloudError>> ContainerGroupsStopAsync([Path] string subscriptionId, [Path] string resourceGroupName, [Path] string containerGroupName);
 
         /// <summary>
         /// Starts all containers in a container group.
@@ -100,7 +100,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftContainerInstance.
         /// <param name="resourceGroupName">The name of the resource group.</param>
         /// <param name="containerGroupName">The name of the container group.</param>
         [Post("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}/start")]
-        Task<AnyOf<object, CloudError>> ContainerGroupsStartAsync([Path] string subscriptionId, [Path] string resourceGroupName, [Path] string containerGroupName);
+        Task<AnyOf<Response<object>, CloudError>> ContainerGroupsStartAsync([Path] string subscriptionId, [Path] string resourceGroupName, [Path] string containerGroupName);
 
         /// <summary>
         /// OperationsList (/providers/Microsoft.ContainerInstance/operations)

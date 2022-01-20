@@ -15,6 +15,6 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftContainerInstance.
 
         public string Gpu { get; set; }
 
-        public object Capabilities2 { get; set; }
+        public object Capabilities { get; set; }
     }
 }
