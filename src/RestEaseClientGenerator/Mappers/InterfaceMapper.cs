@@ -285,7 +285,8 @@ namespace RestEaseClientGenerator.Mappers
                     return returnTypes.First();
 
                 case MultipleResponsesType.AnyOf:
-                    return $"AnyOf<{string.Join(", ", returnTypes.Distinct())}>";
+                    var distinct = returnTypes.Distinct().ToArray();
+                    return distinct.Length > 1 ? $"AnyOf<{string.Join(", ", distinct)}>" : distinct.First();
 
                 default:
                     return "Response<object>";

@@ -17,6 +17,21 @@ namespace RestEaseClientGeneratorConsoleApp
         {
             var generator = new Generator();
 
+            var storageSettings = new GeneratorSettings
+            {
+                Namespace = "RestEaseClientGeneratorConsoleApp.Examples.MicrosoftStorage",
+                ApiName = "MicrosoftStorage",
+                SingleFile = false,
+                PreferredMultipleResponsesType = MultipleResponsesType.AnyOf,
+                PreferredSecurityDefinitionType = SecurityDefinitionType.None,
+                GenerationType = GenerationType.Api
+            };
+            foreach (var file in generator.FromFile("Examples\\MicrosoftStorage\\storage.json", storageSettings, out OpenApiDiagnostic diagnosticStorage))
+            {
+                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/MicrosoftStorage/{file.Path}/{file.Name}", file.Content);
+            }
+            return;
+
             var aciSettings = new GeneratorSettings
             {
                 Namespace = "RestEaseClientGeneratorConsoleApp.Examples.MicrosoftContainerInstance",
@@ -66,17 +81,6 @@ namespace RestEaseClientGeneratorConsoleApp
                 File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Weather/{file.Path}/{file.Name}", file.Content);
             }
             return;
-
-            var azureRestStorageSettings = new GeneratorSettings
-            {
-                Namespace = "AzureRestStorage",
-                ApiName = "AzureTableApi"
-            };
-            foreach (var file in generator.FromFile("Examples\\AzureRestStorage\\table.json", azureRestStorageSettings, out OpenApiDiagnostic diagnosticPetStoreOpenApi3))
-            {
-                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/AzureRestStorage/{file.Path}/{file.Name}", file.Content);
-            }
-
 
             // Corrupte enums
             var computerVisionSettings = new GeneratorSettings
