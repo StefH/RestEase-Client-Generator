@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Text;
 using RestEaseClientGenerator.Models.Internal;
 using RestEaseClientGenerator.Settings;
@@ -27,14 +27,24 @@ namespace RestEaseClientGenerator.Builders
             builder.AppendLine("    {");
             foreach (var property in restEaseModel.Properties)
             {
-                builder.AppendLine($"        public {property} {{ get; set; }}");
+                var propertyName = property.Split(' ').Last();
+                if (propertyName == restEaseModel.ClassName)
+                {
+                    builder.AppendLine($"        [Newtonsoft.Json.JsonProperty(\"{propertyName}\")]");
+                    builder.AppendLine($"        public {property}_ {{ get; set; }}");
+                }
+                else
+                {
+                    builder.AppendLine($"        public {property} {{ get; set; }}");
+                }
+                
                 if (property != restEaseModel.Properties.Last())
                 {
                     builder.AppendLine();
                 }
             }
             builder.AppendLine("    }");
-            builder.AppendLine("}");
+            builder.Append("}");
 
             return builder.ToString();
         }

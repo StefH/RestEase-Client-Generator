@@ -23,7 +23,6 @@
     <Folder Include="Examples\MediaWikiRaml\Models\" />
     <Folder Include="Examples\MediaWiki\Api\" />
     <Folder Include="Examples\MediaWiki\Models\" />
-    <Folder Include="Examples\MicrosoftContainerInstance\Api\" />
     <Folder Include="Examples\MicrosoftContainerInstance\Models\" />
     <Folder Include="Examples\NewFolder\" />
     <Folder Include="Examples\SharedQuery\Api\" />

@@ -77,7 +77,7 @@ namespace RestEaseClientGenerator.Builders
                 }
             }
             builder.AppendLine("    }");
-            builder.AppendLine("}");
+            builder.Append("}");
 
             return builder.ToString();
         }

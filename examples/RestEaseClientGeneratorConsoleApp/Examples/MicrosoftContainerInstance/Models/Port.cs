@@ -7,6 +7,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftContainerInstance.
     {
         public string Protocol { get; set; }
 
-        public int Port { get; set; }
+        [Newtonsoft.Json.JsonProperty("Port")]
+        public int Port_ { get; set; }
     }
 }

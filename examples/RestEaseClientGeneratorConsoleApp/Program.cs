@@ -22,7 +22,8 @@ namespace RestEaseClientGeneratorConsoleApp
                 Namespace = "RestEaseClientGeneratorConsoleApp.Examples.MicrosoftContainerInstance",
                 ApiName = "MicrosoftContainerInstance",
                 SingleFile = false,
-                PreferredMultipleResponsesType = MultipleResponsesType.AnyOf
+                PreferredMultipleResponsesType = MultipleResponsesType.AnyOf,
+                PreferredSecurityDefinitionType = SecurityDefinitionType.None
             };
             foreach (var file in generator.FromFile("Examples\\MicrosoftContainerInstance\\containerInstance.json", aciSettings, out OpenApiDiagnostic diagnosticAci))
             {

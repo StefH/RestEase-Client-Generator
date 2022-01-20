@@ -15,9 +15,6 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftContainerInstance.
     /// </summary>
     public interface IMicrosoftContainerInstanceApi
     {
-        [Query("Azure Active Directory OAuth2 Flow")]
-        string AzureActiveDirectoryOAuth2Flow { get; set; }
-
         [Query("api-version")]
         string ApiVersion { get; set; }
 
