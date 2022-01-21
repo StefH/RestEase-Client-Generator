@@ -5,6 +5,6 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftStorage.Models
 {
     public class ErrorResponse
     {
-        public ErrorDetail Error { get; set; }
+        public ErrorResponseBody Error { get; set; }
     }
 }

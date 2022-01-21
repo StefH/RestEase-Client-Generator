@@ -7,6 +7,6 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftStorage.Models
     {
         public BlobInventoryPolicyProperties Properties { get; set; }
 
-        //public DefinitionsSystemData SystemData { get; set; }
+        public SystemData SystemData { get; set; }
     }
 }

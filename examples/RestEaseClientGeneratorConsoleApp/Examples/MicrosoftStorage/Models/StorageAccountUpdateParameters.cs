@@ -5,9 +5,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftStorage.Models
 {
     public class StorageAccountUpdateParameters
     {
-        // public DefinitionsSku Sku { get; set; }
-
-        public object Tags { get; set; }
+        public Sku Sku { get; set; }
 
         public Identity Identity { get; set; }
 

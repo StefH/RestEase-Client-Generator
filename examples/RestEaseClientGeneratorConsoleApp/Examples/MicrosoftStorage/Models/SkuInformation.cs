@@ -5,9 +5,9 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftStorage.Models
 {
     public class SkuInformation
     {
-        //public DefinitionsSkuName Name { get; set; }
+        public string Name { get; set; }
 
-      //  public DefinitionsTier Tier { get; set; }
+        public string Tier { get; set; }
 
         public string ResourceType { get; set; }
 

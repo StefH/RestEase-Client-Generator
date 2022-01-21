@@ -5,7 +5,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftStorage.Models
 {
     public class StorageAccount
     {
-       // public DefinitionsSku Sku { get; set; }
+        public Sku Sku { get; set; }
 
         public string Kind { get; set; }
 
