@@ -30,7 +30,7 @@
         },
         "parameters": [
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           }
         ],
         "responses": {
@@ -60,10 +60,10 @@
         },
         "parameters": [
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -102,10 +102,10 @@
             "description": "The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only."
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -171,10 +171,10 @@
             "description": "The parameters to provide for the created account."
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -209,10 +209,10 @@
             "$ref": "#/parameters/StorageAccountName"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -246,10 +246,10 @@
             "$ref": "#/parameters/StorageAccountName"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           },
           {
             "name": "$expand",
@@ -325,10 +325,10 @@
             "description": "The parameters to provide for the updated account."
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -355,10 +355,10 @@
         },
         "parameters": [
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -404,10 +404,10 @@
             "description": "The location of the deleted storage account."
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -440,10 +440,10 @@
         },
         "parameters": [
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -476,10 +476,10 @@
             "$ref": "#/parameters/ResourceGroupName"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -515,10 +515,10 @@
             "$ref": "#/parameters/StorageAccountName"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           },
           {
             "name": "$expand",
@@ -576,10 +576,10 @@
             "description": "Specifies name of the key which should be regenerated -- key1, key2, kerb1, kerb2."
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -606,10 +606,10 @@
         },
         "parameters": [
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           },
           {
             "name": "location",
@@ -661,10 +661,10 @@
             "description": "The parameters to provide to list SAS credentials for the storage account."
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -706,10 +706,10 @@
             "description": "The parameters to provide to list service SAS credentials."
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -742,10 +742,10 @@
             "$ref": "#/parameters/StorageAccountName"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -782,10 +782,10 @@
             "$ref": "#/parameters/StorageAccountName"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           },
           {
             "name": "requestType",
@@ -835,10 +835,10 @@
             "$ref": "#/parameters/StorageAccountName"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -881,10 +881,10 @@
             "$ref": "#/parameters/StorageAccountName"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           },
           {
             "name": "parameters",
@@ -936,10 +936,10 @@
             "$ref": "#/parameters/StorageAccountName"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           },
           {
             "$ref": "#/parameters/ManagementPolicyName"
@@ -982,10 +982,10 @@
             "$ref": "#/parameters/StorageAccountName"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           },
           {
             "$ref": "#/parameters/ManagementPolicyName"
@@ -1028,10 +1028,10 @@
             "$ref": "#/parameters/StorageAccountName"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           },
           {
             "$ref": "#/parameters/ManagementPolicyName"
@@ -1067,10 +1067,10 @@
             "$ref": "#/parameters/StorageAccountName"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           },
           {
             "$ref": "#/parameters/BlobInventoryPolicyName"
@@ -1110,10 +1110,10 @@
             "$ref": "#/parameters/StorageAccountName"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           },
           {
             "$ref": "#/parameters/BlobInventoryPolicyName"
@@ -1162,10 +1162,10 @@
             "$ref": "#/parameters/StorageAccountName"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           },
           {
             "$ref": "#/parameters/BlobInventoryPolicyName"
@@ -1207,10 +1207,10 @@
             "$ref": "#/parameters/StorageAccountName"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -1252,10 +1252,10 @@
             "$ref": "#/parameters/StorageAccountName"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -1291,10 +1291,10 @@
             "$ref": "#/parameters/StorageAccountName"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           },
           {
             "$ref": "../../../../../common-types/resource-management/v1/privatelinks.json#/parameters/PrivateEndpointConnectionName"
@@ -1334,10 +1334,10 @@
             "$ref": "#/parameters/StorageAccountName"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           },
           {
             "$ref": "../../../../../common-types/resource-management/v1/privatelinks.json#/parameters/PrivateEndpointConnectionName"
@@ -1386,10 +1386,10 @@
             "$ref": "#/parameters/StorageAccountName"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           },
           {
             "$ref": "../../../../../common-types/resource-management/v1/privatelinks.json#/parameters/PrivateEndpointConnectionName"
@@ -1431,10 +1431,10 @@
             "$ref": "#/parameters/StorageAccountName"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -1467,10 +1467,10 @@
             "$ref": "#/parameters/StorageAccountName"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -1512,10 +1512,10 @@
             "$ref": "#/parameters/StorageAccountName"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           },
           {
             "$ref": "#/parameters/ObjectReplicationPolicyId"
@@ -1564,10 +1564,10 @@
             "$ref": "#/parameters/StorageAccountName"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           },
           {
             "$ref": "#/parameters/ObjectReplicationPolicyId"
@@ -1616,10 +1616,10 @@
             "$ref": "#/parameters/StorageAccountName"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           },
           {
             "$ref": "#/parameters/ObjectReplicationPolicyId"
@@ -1667,10 +1667,10 @@
             "minLength": 3
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -1700,10 +1700,10 @@
             "$ref": "#/parameters/StorageAccountName"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -1745,10 +1745,10 @@
             "$ref": "#/parameters/StorageAccountName"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           },
           {
             "$ref": "#/parameters/Username"
@@ -1791,10 +1791,10 @@
             "$ref": "#/parameters/StorageAccountName"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           },
           {
             "$ref": "#/parameters/Username"
@@ -1843,10 +1843,10 @@
             "$ref": "#/parameters/StorageAccountName"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           },
           {
             "$ref": "#/parameters/Username"
@@ -1888,10 +1888,10 @@
             "$ref": "#/parameters/StorageAccountName"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           },
           {
             "$ref": "#/parameters/Username"
@@ -1933,10 +1933,10 @@
             "$ref": "#/parameters/StorageAccountName"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           },
           {
             "$ref": "#/parameters/Username"
@@ -1981,10 +1981,10 @@
             "$ref": "#/parameters/StorageAccountName"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           },
           {
             "$ref": "#/parameters/EncryptionScopeName"
@@ -2039,10 +2039,10 @@
             "$ref": "#/parameters/StorageAccountName"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           },
           {
             "$ref": "#/parameters/EncryptionScopeName"
@@ -2091,10 +2091,10 @@
             "$ref": "#/parameters/StorageAccountName"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           },
           {
             "$ref": "#/parameters/EncryptionScopeName"
@@ -2136,10 +2136,10 @@
             "$ref": "#/parameters/StorageAccountName"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -3698,7 +3698,7 @@
       },
       "allOf": [
         {
-          "$ref": "../../../../../common-types/resource-management/v1/types.json#/definitions/ProxyResource"
+          "$ref": "./v1-types.json#/definitions/ProxyResource"
         }
       ],
       "description": "Deleted storage account"
@@ -3742,7 +3742,7 @@
       },
       "allOf": [
         {
-          "$ref": "../../../../../common-types/resource-management/v1/types.json#/definitions/TrackedResource"
+          "$ref": "./v1-types.json#/definitions/TrackedResource"
         }
       ],
       "description": "The storage account."
@@ -4373,7 +4373,7 @@
       },
       "allOf": [
         {
-          "$ref": "../../../../../common-types/resource-management/v1/types.json#/definitions/Resource"
+          "$ref": "./v1-types.json#/definitions/Resource"
         }
       ],
       "description": "The Get Storage Account ManagementPolicies operation response."
@@ -4629,7 +4629,7 @@
       },
       "allOf": [
         {
-          "$ref": "../../../../../common-types/resource-management/v1/types.json#/definitions/Resource"
+          "$ref": "./v1-types.json#/definitions/Resource"
         }
       ],
       "description": "The Encryption Scope resource."
@@ -4743,7 +4743,7 @@
       },
       "allOf": [
         {
-          "$ref": "../../../../../common-types/resource-management/v1/types.json#/definitions/Resource"
+          "$ref": "./v1-types.json#/definitions/Resource"
         }
       ],
       "description": "The replication policy between two storage accounts. Multiple rules can be defined in one policy."

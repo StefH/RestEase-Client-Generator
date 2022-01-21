@@ -36,10 +36,10 @@
             "$ref": "./storage.json#/parameters/StorageAccountName"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -78,10 +78,10 @@
             "$ref": "./storage.json#/parameters/StorageAccountName"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           },
           {
             "$ref": "#/parameters/QueueServiceName"
@@ -130,10 +130,10 @@
             "$ref": "./storage.json#/parameters/StorageAccountName"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           },
           {
             "$ref": "#/parameters/QueueServiceName"
@@ -178,10 +178,10 @@
             "$ref": "./storage.json#/parameters/StorageAccountName"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           },
           {
             "$ref": "#/parameters/QueueName"
@@ -230,10 +230,10 @@
             "$ref": "./storage.json#/parameters/StorageAccountName"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           },
           {
             "$ref": "#/parameters/QueueName"
@@ -282,10 +282,10 @@
             "$ref": "./storage.json#/parameters/StorageAccountName"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           },
           {
             "$ref": "#/parameters/QueueName"
@@ -325,10 +325,10 @@
             "$ref": "./storage.json#/parameters/StorageAccountName"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           },
           {
             "$ref": "#/parameters/QueueName"
@@ -367,10 +367,10 @@
             "$ref": "./storage.json#/parameters/StorageAccountName"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           },
           {
             "name": "$maxpagesize",
@@ -434,7 +434,7 @@
       },
       "allOf": [
         {
-          "$ref": "../../../../../common-types/resource-management/v1/types.json#/definitions/Resource"
+          "$ref": "./v1-types.json#/definitions/Resource"
         }
       ],
       "description": "The properties of a storage account’s Queue service."
@@ -450,7 +450,7 @@
       },
       "allOf": [
         {
-          "$ref": "../../../../../common-types/resource-management/v1/types.json#/definitions/Resource"
+          "$ref": "./v1-types.json#/definitions/Resource"
         }
       ]
     },
@@ -481,7 +481,7 @@
       },
       "allOf": [
         {
-          "$ref": "../../../../../common-types/resource-management/v1/types.json#/definitions/Resource"
+          "$ref": "./v1-types.json#/definitions/Resource"
         }
       ]
     },

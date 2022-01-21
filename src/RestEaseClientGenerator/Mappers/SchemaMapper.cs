@@ -1,3 +1,4 @@
+using System.Security.AccessControl;
 using AnyOfTypes;
 using Microsoft.OpenApi;
 using Microsoft.OpenApi.Any;
@@ -147,58 +148,44 @@ internal class SchemaMapper : BaseMapper
 
                 foreach (var schemaProperty in schema.Properties)
                 {
-                    if (schemaProperty.Key.ToLowerInvariant().Contains("sku"))
-                    {
-                        int y = 9;
-                    }
-
                     var openApiSchema = schemaProperty.Value;
-                    if (new[] { SchemaType.Object, SchemaType.Unknown }.Contains(openApiSchema.GetSchemaType()))
+                    string objectName = pascalCase ? schemaProperty.Key.ToPascalCase() : schemaProperty.Key;
+
+                    var pp = ProcessProperty(@interface, openApiSpecVersion, openApiSchema, objectName, directory);
+                    if (pp != null)
                     {
-                        string objectName = pascalCase ? schemaProperty.Key.ToPascalCase() : schemaProperty.Key;
-
-                        if (openApiSchema.AdditionalProperties?.Reference?.Id != null)
-                        {
-                            var dictionaryType = $"Dictionary<string, {MakeValidModelName(openApiSchema.AdditionalProperties.Reference.Id)}>";
-                            list.Add($"{dictionaryType} {objectName}");
-                        }
-                        else if (openApiSchema.Reference != null)
-                        {
-                            if (openApiSchema.Reference.IsLocal)
-                            {
-                                var className = MakeValidModelName(openApiSchema.Reference.Id);
-                                var existingModel = @interface.ExtraModels.FirstOrDefault(m => m.ClassName == className);
-                                if (existingModel == null)
-                                {
-                                    var extraModel = MapSchema(@interface, openApiSchema, className, false, true, null, directory);
-                                    var newModel = new RestEaseModel
-                                    {
-                                        Namespace = Settings.Namespace,
-                                        ClassName = className,
-                                        Properties = extraModel.Second
-                                    };
-                                    @interface.ExtraModels.Add(newModel);
-                                }
-
-                                list.Add($"{className} {objectName}");
-                            }
-                            else if (openApiSchema.Reference.IsExternal)
-                            {
-                                var ex = new ExternalModelMapper(Settings, @interface).Map(openApiSchema, directory);
-
-                                list.Add($"{ex} {objectName}");
-                            }
-                        }
+                        list.Add(pp);
                     }
-                    else
+                }
+
+                if (schema.AllOf != null && schema.AllOf.Any())
+                {
+                    foreach (var allOf in schema.AllOf)
                     {
-                        bool propertyIsNullable = openApiSchema.Nullable ||
-                                                  Settings.SupportExtensionXNullable && openApiSchema.TryGetXNullable(out bool x) && x;
-                        var property = MapSchema(@interface, openApiSchema, schemaProperty.Key, propertyIsNullable, true, openApiSpecVersion, directory);
-                        if (property.IsFirst)
+                        if (name == "LocalUser")
                         {
-                            list.Add(property.First);
+                            int y = 9;
                         }
+
+                        var pp = MapSchema(@interface, allOf, name, allOf.Nullable, true, openApiSpecVersion, directory);
+                        if (pp.IsFirst)
+                        {
+                            throw new NotSupportedException();
+                        }
+
+                        list.AddRange(pp.Second);
+
+                        //foreach (var allOffProperty in allOf.Properties)
+                        //{
+                        //    var openApiSchema = allOffProperty.Value;
+                        //    string objectName = pascalCase ? allOffProperty.Key.ToPascalCase() : allOffProperty.Key;
+
+                        //    var pp = ProcessProperty(@interface, openApiSpecVersion, openApiSchema, objectName, directory);
+                        //    if (pp != null)
+                        //    {
+                        //        list.Add(pp);
+                        //    }
+                        //}
                     }
                 }
 
@@ -215,6 +202,63 @@ internal class SchemaMapper : BaseMapper
                 throw new InvalidOperationException(); // TODO
                 //return null;
         }
+    }
+
+    private string? ProcessProperty(
+        RestEaseInterface @interface,
+        OpenApiSpecVersion? openApiSpecVersion,
+        OpenApiSchema openApiSchema,
+        string objectName,
+        string? directory)
+    {
+        if (new[] { SchemaType.Object, SchemaType.Unknown }.Contains(openApiSchema.GetSchemaType()))
+        {
+            if (openApiSchema.AdditionalProperties?.Reference?.Id != null)
+            {
+                var dictionaryType = $"Dictionary<string, {MakeValidModelName(openApiSchema.AdditionalProperties.Reference.Id)}>";
+                return $"{dictionaryType} {objectName}";
+            }
+
+            if (openApiSchema.Reference != null)
+            {
+                if (openApiSchema.Reference.IsLocal)
+                {
+                    var className = MakeValidModelName(openApiSchema.Reference.Id);
+                    var existingModel = @interface.ExtraModels.FirstOrDefault(m => m.ClassName == className);
+                    if (existingModel == null)
+                    {
+                        var extraModel = MapSchema(@interface, openApiSchema, className, false, true, null, directory);
+                        var newModel = new RestEaseModel
+                        {
+                            Namespace = Settings.Namespace,
+                            ClassName = className,
+                            Properties = extraModel.Second
+                        };
+                        @interface.ExtraModels.Add(newModel);
+                    }
+
+                    return $"{className} {objectName}";
+                }
+
+                if (openApiSchema.Reference.IsExternal)
+                {
+                    var ex = new ExternalModelMapper(Settings, @interface).Map(openApiSchema, directory);
+
+                    return $"{ex} {objectName}";
+                }
+            }
+        }
+        else
+        {
+            var propertyIsNullable = openApiSchema.Nullable || Settings.SupportExtensionXNullable && openApiSchema.TryGetXNullable(out var x) && x;
+            var property = MapSchema(@interface, openApiSchema, objectName, propertyIsNullable, true, openApiSpecVersion, directory);
+            if (property.IsFirst)
+            {
+                return property.First;
+            }
+        }
+
+        return null;
     }
 
     private string MapEnumSchema(OpenApiSchema schema, string name, string nameCamelCase, string nullable)

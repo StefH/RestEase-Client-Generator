@@ -36,10 +36,10 @@
             "$ref": "./storage.json#/parameters/StorageAccountName"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -84,10 +84,10 @@
             "$ref": "./storage.json#/parameters/StorageAccountName"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           },
           {
             "$ref": "#/parameters/FileServicesName"
@@ -136,10 +136,10 @@
             "$ref": "./storage.json#/parameters/StorageAccountName"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           },
           {
             "$ref": "#/parameters/FileServicesName"
@@ -187,10 +187,10 @@
             "$ref": "./storage.json#/parameters/StorageAccountName"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           },
           {
             "name": "$maxpagesize",
@@ -276,10 +276,10 @@
             "description": "Optional, used to expand the properties within share's properties. Valid values are: snapshots. Should be passed as a string with delimiter ','"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -337,10 +337,10 @@
             "description": "Properties to update for the file share."
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -384,10 +384,10 @@
             "$ref": "#/parameters/ShareName"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           },
           {
             "name": "$expand",
@@ -441,10 +441,10 @@
             "$ref": "#/parameters/ShareName"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           },
           {
             "name": "x-ms-snapshot",
@@ -508,10 +508,10 @@
             }
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -553,10 +553,10 @@
             "$ref": "#/parameters/ShareName"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           },
           {
             "name": "parameters",
@@ -639,7 +639,7 @@
       },
       "allOf": [
         {
-          "$ref": "../../../../../common-types/resource-management/v1/types.json#/definitions/Resource"
+          "$ref": "./v1-types.json#/definitions/Resource"
         }
       ],
       "description": "The properties of File services in storage account."
@@ -698,7 +698,7 @@
       },
       "allOf": [
         {
-          "$ref": "../../../../../common-types/resource-management/v1/types.json#/definitions/AzureEntityResource"
+          "$ref": "./v1-types.json#/definitions/AzureEntityResource"
         }
       ],
       "description": "Properties of the file share, including Id, resource name, resource type, Etag."
@@ -730,7 +730,7 @@
       },
       "allOf": [
         {
-          "$ref": "../../../../../common-types/resource-management/v1/types.json#/definitions/AzureEntityResource"
+          "$ref": "./v1-types.json#/definitions/AzureEntityResource"
         }
       ],
       "description": "The file share properties be listed out."
