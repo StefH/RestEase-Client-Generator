@@ -1,11 +1,5 @@
-﻿namespace RestEaseClientGenerator.Models
-{
-    public class GeneratedFile
-    {
-        public string Path { get; set; }
+using RestEaseClientGenerator.Types;
 
-        public string Name { get; set; }
+namespace RestEaseClientGenerator.Models;
 
-        public string Content { get; set; }
-    }
-}
+public record GeneratedFile(FileType FileType, string Path, string Name, string ClassOrInterface, string Content);

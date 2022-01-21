@@ -24,7 +24,7 @@ namespace RestEaseClientGeneratorConsoleApp
                 SingleFile = false,
                 PreferredMultipleResponsesType = MultipleResponsesType.AnyOf,
                 PreferredSecurityDefinitionType = SecurityDefinitionType.None,
-                GenerationType = GenerationType.Api
+                GenerationType = GenerationType.Both
             };
             foreach (var file in generator.FromFile("Examples\\MicrosoftStorage\\storage.json", storageSettings, out OpenApiDiagnostic diagnosticStorage))
             {

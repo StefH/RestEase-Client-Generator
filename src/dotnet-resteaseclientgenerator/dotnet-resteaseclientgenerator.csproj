@@ -9,6 +9,7 @@
         <OutputType>Exe</OutputType>
         <TargetFramework>netcoreapp3.1</TargetFramework>
         <LangVersion>10</LangVersion>
+        <Nullable>enable</Nullable>
         <PackAsTool>true</PackAsTool>
         <ToolCommandName>dotnet-resteaseclientgenerator</ToolCommandName>
         <RootNamespace>DotNetRestEaseClientGenerator</RootNamespace>

@@ -1,11 +1,10 @@
-﻿namespace RestEaseClientGenerator.Types
+namespace RestEaseClientGenerator.Types;
+
+public enum CasingType
 {
-    public enum CasingType
-    {
-        None,
+    None,
 
-        Camel,
+    Camel,
 
-        Pascal
-    }
+    Pascal
 }

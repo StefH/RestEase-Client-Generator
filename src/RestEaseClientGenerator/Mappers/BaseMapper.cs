@@ -1,47 +1,45 @@
-﻿using System.Linq;
 using RestEaseClientGenerator.Extensions;
 using RestEaseClientGenerator.Settings;
 using RestEaseClientGenerator.Types;
 
-namespace RestEaseClientGenerator.Mappers
+namespace RestEaseClientGenerator.Mappers;
+
+public abstract class BaseMapper
 {
-    public abstract class BaseMapper
+    protected string DateTime => Settings.UseDateTimeOffset ? "DateTimeOffset" : "DateTime";
+
+    protected readonly GeneratorSettings Settings;
+
+    protected BaseMapper(GeneratorSettings settings)
     {
-        protected string DateTime => Settings.UseDateTimeOffset ? "DateTimeOffset" : "DateTime";
+        Settings = settings;
+    }
 
-        protected readonly GeneratorSettings Settings;
+    protected string MakeValidModelName(string name)
+    {
+        string last = name.Replace(" ", "").Split('.').Last();
 
-        protected BaseMapper(GeneratorSettings settings)
+        return last.ToValidIdentifier(CasingType.Pascal);
+    }
+
+    protected string MapArrayType(object? value)
+    {
+        switch (Settings.ArrayType)
         {
-            Settings = settings;
-        }
+            case ArrayType.IEnumerable:
+                return $"IEnumerable<{value}>";
 
-        protected string MakeValidModelName(string name)
-        {
-            string last = name.Replace(" ", "").Split('.').Last();
+            case ArrayType.ICollection:
+                return $"ICollection<{value}>";
 
-            return last.ToValidIdentifier(CasingType.Pascal);
-        }
+            case ArrayType.IList:
+                return $"IList<{value}>";
 
-        protected string MapArrayType(object value)
-        {
-            switch (Settings.ArrayType)
-            {
-                case ArrayType.IEnumerable:
-                    return $"IEnumerable<{value}>";
+            case ArrayType.List:
+                return $"List<{value}>";
 
-                case ArrayType.ICollection:
-                    return $"ICollection<{value}>";
-
-                case ArrayType.IList:
-                    return $"IList<{value}>";
-
-                case ArrayType.List:
-                    return $"List<{value}>";
-
-                default:
-                    return $"{value}[]";
-            }
+            default:
+                return $"{value}[]";
         }
     }
 }

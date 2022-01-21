@@ -1,14 +1,13 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using RestEaseClientGenerator.Types;
 
-namespace RestEaseClientGenerator.Models.Internal
+namespace RestEaseClientGenerator.Models.Internal;
+
+internal class RequestDetails
 {
-    internal class RequestDetails
-    {
-        public SupportedContentType? DetectedContentType { get; set; }
+    public SupportedContentType? DetectedContentType { get; set; }
 
-        public ICollection<string> ContentTypes { get; set; }
+    public ICollection<string> ContentTypes { get; set; }
 
-        public bool IsExtension { get; set; }
-    }
+    public bool IsExtension { get; set; }
 }

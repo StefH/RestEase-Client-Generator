@@ -1,39 +1,64 @@
+using AnyOfTypes;
+using Microsoft.OpenApi;
 using Microsoft.OpenApi.Models;
 using RestEaseClientGenerator.Extensions;
 using RestEaseClientGenerator.Models.Internal;
 using RestEaseClientGenerator.Settings;
 using RestEaseClientGenerator.Types;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.OpenApi;
 
-namespace RestEaseClientGenerator.Mappers
+namespace RestEaseClientGenerator.Mappers;
+
+internal class ModelsMapper : BaseMapper
 {
-    internal class ModelsMapper : BaseMapper
+    // private readonly SchemaType[] _schemaTypes = { SchemaType.Object, SchemaType.Unknown };
+
+    private readonly RestEaseInterface _interface;
+    private readonly SchemaMapper _schemaMapper;
+    private readonly OpenApiSpecVersion _openApiSpecVersion;
+    private readonly string? _directory;
+
+    public ModelsMapper(
+        RestEaseInterface @interface,
+        GeneratorSettings settings,
+        SchemaMapper schemaMapper,
+        OpenApiSpecVersion openApiSpecVersion,
+        string? directory) : base(settings)
     {
-        private readonly SchemaType[] _schemaTypes = { SchemaType.Object, SchemaType.Unknown };
+        _interface = @interface;
+        _schemaMapper = schemaMapper;
+        _openApiSpecVersion = openApiSpecVersion;
+        _directory = directory;
+    }
 
-        private readonly SchemaMapper _schemaMapper;
-        private readonly OpenApiSpecVersion _openApiSpecVersion;
+    public IEnumerable<AnyOf<RestEaseModel, RestEaseEnum>> Map(IDictionary<string, OpenApiSchema> schemas)
+    {
+        var validSchemas = schemas
+            .OrderBy(s => s.Key);
+           // .Where(s => _schemaTypes.Contains(s.Value.GetSchemaType()));
 
-        public ModelsMapper(GeneratorSettings settings, SchemaMapper schemaMapper, OpenApiSpecVersion openApiSpecVersion) : base(settings)
+        foreach (var x in validSchemas)
         {
-            _schemaMapper = schemaMapper;
-            _openApiSpecVersion = openApiSpecVersion;
-        }
+            var properties = _schemaMapper.MapSchema(_interface, x.Value, x.Key, x.Value.Nullable, true, _openApiSpecVersion, _directory);
 
-        public IEnumerable<RestEaseModel> Map(IDictionary<string, OpenApiSchema> schemas)
-        {
-            var validSchemas = schemas
-                .OrderBy(s => s.Key)
-                .Where(s => _schemaTypes.Contains(s.Value.GetSchemaType()));
-
-            return validSchemas.Select(x => new RestEaseModel
+            if (properties.IsFirst)
             {
-                Namespace = Settings.Namespace,
-                ClassName = MakeValidModelName(x.Key),
-                Properties = _schemaMapper.MapSchema(x.Value, x.Key, x.Value.Nullable, true, _openApiSpecVersion) as ICollection<string>
-            });
+                // It's an enum
+                yield return new RestEaseEnum
+                {
+                    Namespace = Settings.Namespace,
+                    EnumName = MakeValidModelName(x.Key)
+                };
+            }
+
+            if (properties.IsSecond)
+            {
+                yield return new RestEaseModel
+                {
+                    Namespace = Settings.Namespace,
+                    ClassName = MakeValidModelName(x.Key),
+                    Properties = properties.Second
+                };
+            }
         }
     }
 }

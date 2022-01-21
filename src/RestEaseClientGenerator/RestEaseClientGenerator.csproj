@@ -3,6 +3,9 @@
     <PropertyGroup>
         <TargetFrameworks>net461;netstandard2.0</TargetFrameworks>
         <!--<PackageReleaseNotes>$([System.IO.File]::ReadAllText("$(MSBuildProjectDirectory)/../../PackageReleaseNotes.txt"))</PackageReleaseNotes>-->
+        <LangVersion>10</LangVersion>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
     </PropertyGroup>
 
     <ItemGroup>
@@ -11,15 +14,12 @@
     </ItemGroup>
 
     <ItemGroup>
+        <PackageReference Include="AnyOf" Version="0.2.0" />
         <PackageReference Include="Microsoft.OpenApi" Version="1.2.3" />
         <PackageReference Include="Microsoft.OpenApi.Readers" Version="1.2.3" />
         <PackageReference Include="RamlToOpenApiConverter" Version="0.6.0" />
         <PackageReference Include="RestEase" Version="1.5.5" />
         <PackageReference Include="System.ValueTuple" Version="4.5.0" />
-    </ItemGroup>
-
-    <ItemGroup>
-        <!--<None Include="../../PackageReadme.md" Pack="true" PackagePath=""/>-->
     </ItemGroup>
 
     <ItemGroup>

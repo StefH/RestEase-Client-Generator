@@ -1,15 +1,12 @@
-﻿using System.Collections.Generic;
+namespace RestEaseClientGenerator.Models.Internal;
 
-namespace RestEaseClientGenerator.Models.Internal
+public class RestEaseInterfaceMethod
 {
-    internal class RestEaseInterfaceMethod
-    {
-        public string ReturnType { get; set; }
+    public string ReturnType { get; set; }
 
-        public string Name { get; set; }
+    public string Name { get; set; }
 
-        // public string ParametersAsString { get; set; }
+    // public string ParametersAsString { get; set; }
 
-        public ICollection<RestEaseParameter> Parameters { get; set; }
-    }
+    public ICollection<RestEaseParameter> Parameters { get; set; }
 }

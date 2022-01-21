@@ -1,34 +1,33 @@
-﻿using RestEaseClientGenerator.Settings;
+using RestEaseClientGenerator.Settings;
 
-namespace RestEaseClientGenerator.Builders
+namespace RestEaseClientGenerator.Builders;
+
+public abstract class BaseBuilder
 {
-    public abstract class BaseBuilder
+    protected readonly GeneratorSettings Settings;
+
+    protected BaseBuilder(GeneratorSettings settings)
     {
-        protected readonly GeneratorSettings Settings;
+        Settings = settings;
+    }
 
-        protected BaseBuilder(GeneratorSettings settings)
+    protected string AppendModelsNamespace(string input)
+    {
+        if (string.IsNullOrEmpty(Settings.ModelsNamespace))
         {
-            Settings = settings;
+            return input;
         }
 
-        protected string AppendModelsNamespace(string input)
-        {
-            if (string.IsNullOrEmpty(Settings.ModelsNamespace))
-            {
-                return input;
-            }
+        return $"{input}.{Settings.ModelsNamespace}";
+    }
 
-            return $"{input}.{Settings.ModelsNamespace}";
+    protected string AppendApiNamespace(string input)
+    {
+        if (string.IsNullOrEmpty(Settings.ApiNamespace))
+        {
+            return input;
         }
 
-        protected string AppendApiNamespace(string input)
-        {
-            if (string.IsNullOrEmpty(Settings.ApiNamespace))
-            {
-                return input;
-            }
-
-            return $"{input}.{Settings.ApiNamespace}";
-        }
+        return $"{input}.{Settings.ApiNamespace}";
     }
 }

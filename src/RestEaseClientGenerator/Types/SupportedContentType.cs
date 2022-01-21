@@ -1,22 +1,21 @@
-﻿using System.ComponentModel;
+using System.ComponentModel;
 
-namespace RestEaseClientGenerator.Types
+namespace RestEaseClientGenerator.Types;
+
+public enum SupportedContentType
 {
-    internal enum SupportedContentType
-    {
-        [Description("application/json")]
-        ApplicationJson,
+    [Description("application/json")]
+    ApplicationJson,
 
-        [Description("application/xml")]
-        ApplicationXml,
+    [Description("application/xml")]
+    ApplicationXml,
 
-        [Description("application/x-www-form-urlencoded")]
-        ApplicationFormUrlEncoded,
+    [Description("application/x-www-form-urlencoded")]
+    ApplicationFormUrlEncoded,
 
-        [Description("application/octet-stream")]
-        ApplicationOctetStream,
+    [Description("application/octet-stream")]
+    ApplicationOctetStream,
 
-        [Description("multipart/form-data")]
-        MultipartFormData
-    }
+    [Description("multipart/form-data")]
+    MultipartFormData
 }

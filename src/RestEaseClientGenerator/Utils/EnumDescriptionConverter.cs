@@ -1,51 +1,50 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Globalization;
 using RestEaseClientGenerator.Extensions;
 
-namespace RestEaseClientGenerator.Utils
+namespace RestEaseClientGenerator.Utils;
+
+/// <summary>
+/// EnumConverter supporting System.ComponentModel.DescriptionAttribute
+/// Based on https://www.codeproject.com/articles/6294/description-enum-typeconverter
+/// </summary>
+public class EnumDescriptionConverter : EnumConverter
 {
-    /// <summary>
-    /// EnumConverter supporting System.ComponentModel.DescriptionAttribute
-    /// Based on https://www.codeproject.com/articles/6294/description-enum-typeconverter
-    /// </summary>
-    public class EnumDescriptionConverter : EnumConverter
+    private readonly Type _enumType;
+
+    public EnumDescriptionConverter(Type type) : base(type)
     {
-        private readonly Type _enumType;
+        _enumType = type;
+    }
 
-        public EnumDescriptionConverter(Type type) : base(type)
+    public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
+    {
+        if (value is Enum @enum && destinationType == typeof(string))
         {
-            _enumType = type;
+            return @enum.GetDescription();
         }
 
-        public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
+        if (value is string @string && destinationType == typeof(string))
         {
-            if (value is Enum @enum && destinationType == typeof(string))
-            {
-                return @enum.GetDescription();
-            }
-
-            if (value is string @string && destinationType == typeof(string))
-            {
-                return EnumExtensions.GetDescription(_enumType, @string);
-            }
-
-            return base.ConvertTo(context, culture, value, destinationType);
+            return EnumExtensions.GetDescription(_enumType, @string);
         }
 
-        public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
+        return base.ConvertTo(context, culture, value, destinationType);
+    }
+
+    public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
+    {
+        if (value is string @string)
         {
-            if (value is string @string)
-            {
-                return EnumExtensions.GetEnumByDescription(_enumType, @string);
-            }
-
-            if (value is Enum @enum)
-            {
-                return @enum.GetDescription();
-            }
-
-            return base.ConvertFrom(context, culture, value);
+            return EnumExtensions.GetEnumByDescription(_enumType, @string);
         }
+
+        if (value is Enum @enum)
+        {
+            return @enum.GetDescription();
+        }
+
+        return base.ConvertFrom(context, culture, value);
     }
 }

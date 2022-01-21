@@ -1,21 +1,20 @@
-﻿namespace RestEaseClientGenerator.Types
+namespace RestEaseClientGenerator.Types;
+
+public enum SchemaType
 {
-    internal enum SchemaType
-    {
-        Object,
+    Object,
 
-        Array,
+    Array,
 
-        String,
+    String,
 
-        Integer,
+    Integer,
 
-        Number,
+    Number,
 
-        Boolean,
+    Boolean,
 
-        File,
+    File,
 
-        Unknown
-    }
+    Unknown
 }
