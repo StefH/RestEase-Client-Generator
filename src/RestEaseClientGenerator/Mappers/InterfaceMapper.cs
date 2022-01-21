@@ -272,11 +272,19 @@ internal class InterfaceMapper : BaseMapper
     {
         var returnTypes = new List<string>();
 
-        foreach (var response in responses)
+        foreach (var response in responses.Where(r => r.Value != null))
         {
-            if (response.Value != null && TryGetOpenApiMediaType(response.Value.Content, SupportedContentType.ApplicationJson, out OpenApiMediaType responseJson, out var _))
+            if (TryGetOpenApiMediaType(
+                    response.Value.Content,
+                    SupportedContentType.ApplicationJson,
+                    out OpenApiMediaType responseJson, out var _))
             {
                 returnTypes.Add(GetReturnType(@interface, responseJson.Schema, methodRestEaseMethodName, directory));
+            }
+            else
+            {
+                // It's not JSON, just use object
+                returnTypes.Add("Response<object>");
             }
         }
 

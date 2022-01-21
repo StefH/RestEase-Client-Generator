@@ -27,6 +27,7 @@
     <Folder Include="Examples\MicrosoftStorage\Api\" />
     <Folder Include="Examples\MicrosoftStorage\Models\" />
     <Folder Include="Examples\NewFolder\" />
+    <Folder Include="Examples\PetStoreJson\" />
     <Folder Include="Examples\SharedQuery\Api\" />
     <Folder Include="Examples\SharedQuery\Models\" />
     <Folder Include="Examples\SpeechServices\Api\" />
@@ -45,6 +46,7 @@
 
   <ItemGroup>
     <PackageReference Include="AnyOf" Version="0.2.0" />
+    <!--<PackageReference Include="AnyOf.Newtonsoft.Json" Version="0.2.0" />-->
     <PackageReference Include="Microsoft.Extensions.ApiDescription.Client" Version="3.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -58,6 +60,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\AnyOf\src\AnyOf.Newtonsoft.Json\AnyOf.Newtonsoft.Json.csproj" />
     <ProjectReference Include="..\..\src\RestEaseClientGenerator\RestEaseClientGenerator.csproj" />
   </ItemGroup>
 

@@ -149,8 +149,6 @@ public class Generator : IGenerator
                 modelBuilder.Build(model)
             )));
 
-            var xxx = @interface.ExtraModels.FirstOrDefault(x => x.ClassName == "PrivateEndpointConnectionProperties");
-
             // Add Inline/External Models
             files.AddRange(@interface.ExtraModels.Select(model => new GeneratedFile
             (
@@ -179,56 +177,21 @@ public class Generator : IGenerator
 
         if (settings.SingleFile)
         {
+            var content = files
+                .GroupBy(f => f.ClassOrInterface)
+                .Distinct()
+                .SelectMany(f => f)
+                .Select(f => f.Content);
+
             return new[] { new GeneratedFile
             (
                 FileType.ApiAndModels,
                 string.Empty,
                 $"{@interface.Name}.cs",
                 @interface.Name,
-                string.Join("\r\n", files.Select(f => f.Content))
+                string.Join("\r\n", content)
             )};
         }
-
-        //var schemaMapper = new SchemaMapper(settings);
-
-        //var models = document.Components?.Schemas != null ?
-        //    new ModelsMapper(settings, schemaMapper, openApiSpecVersion).Map(document.Components.Schemas).ToList() :
-        //    new List<RestEaseModel>();
-
-        //var @interface2 = new InterfaceMapper(settings, schemaMapper).Map(document, directory);
-
-        
-
-        //if (settings.GenerationType.HasFlag(GenerationType.Api))
-        //{
-        //    // Add Interface
-        //    files.Add(new GeneratedFile
-        //    (
-        //        FileType.Api,
-        //        settings.ApiNamespace,
-        //        $"{@interface.Name}.cs",
-        //        @interface.Name,
-        //        new InterfaceBuilder(settings).Build(@interface, models.Any())
-        //    ));
-
-        //    var extensionContent = new ExtensionMethodsBuilder(settings).Build(@interface, @interface.Name);
-        //    if (extensionContent != null)
-        //    {
-        //        var extensionClassName = $"{@interface.Name.Substring(1)}Extensions";
-
-        //        // Add ApiExtension
-        //        files.Add(new GeneratedFile
-        //        (
-        //            FileType.ApiExtensions,
-        //            settings.ApiNamespace,
-        //            $"{extensionClassName}.cs",
-        //            extensionClassName,
-        //            extensionContent
-        //        ));
-        //    }
-        //}
-
-        
 
         return files;
     }
