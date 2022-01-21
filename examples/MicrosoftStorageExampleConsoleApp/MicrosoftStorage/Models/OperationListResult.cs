@@ -6,7 +6,5 @@ namespace MicrosoftStorageExampleConsoleApp.MicrosoftStorage.Models
     public class OperationListResult
     {
         public Operation[] Value { get; set; }
-
-        public string NextLink { get; set; }
     }
 }

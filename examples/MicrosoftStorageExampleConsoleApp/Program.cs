@@ -25,7 +25,7 @@ static void Generate()
 
     foreach (var file in generator.FromFile("MicrosoftStorage\\storage.json", storageSettings, out OpenApiDiagnostic diagnosticStorage))
     {
-        Console.WriteLine("Generating file-type '{0}': {1}{2}", file.FileType, file.Path, file.Name);
+        Console.WriteLine("Generating file-type '{0}': {1}\\{2}", file.FileType, file.Path, file.Name);
         File.WriteAllText($"../../../MicrosoftStorage/{file.Path}/{file.Name}", file.Content);
     }
 }

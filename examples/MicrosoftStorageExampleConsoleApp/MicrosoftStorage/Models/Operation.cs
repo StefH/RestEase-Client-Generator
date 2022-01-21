@@ -7,10 +7,8 @@ namespace MicrosoftStorageExampleConsoleApp.MicrosoftStorage.Models
     {
         public string Name { get; set; }
 
-        public bool IsDataAction { get; set; }
-
         public string Origin { get; set; }
 
-        public string ActionType { get; set; }
+        public OperationProperties Properties { get; set; }
     }
 }

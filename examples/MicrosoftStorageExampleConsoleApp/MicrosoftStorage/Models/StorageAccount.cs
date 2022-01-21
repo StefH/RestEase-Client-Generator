@@ -1,0 +1,18 @@
+using System;
+using System.Collections.Generic;
+
+namespace MicrosoftStorageExampleConsoleApp.MicrosoftStorage.Models
+{
+    public class StorageAccount
+    {
+        public Sku Sku { get; set; }
+
+        public string Kind { get; set; }
+
+        public Identity Identity { get; set; }
+
+        public ExtendedLocation ExtendedLocation { get; set; }
+
+        public StorageAccountProperties Properties { get; set; }
+    }
+}

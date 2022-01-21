@@ -208,6 +208,10 @@ internal class InterfaceMapper : BaseMapper
         {
             int a1 = 0;
         }
+        if (path == "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/localUsers/{username}")
+        {
+            int x = 0;
+        }
         var returnType = MapResponse(@interface, operation.Responses, methodRestEaseMethodName, directory);
 
         var method = new RestEaseInterfaceMethodDetails
@@ -352,8 +356,37 @@ internal class InterfaceMapper : BaseMapper
                 {
                     if (schema.Reference.IsLocal)
                     {
+                        var className = MakeValidModelName(schema.Reference.Id);
+                        if (@interface.ExtraModels.All(m => m.ClassName != className) || @interface.ExtraEnums.All(m => m.EnumName != className))
+                        {
+                            var extraModel = _schemaMapper.MapSchema(@interface, schema, className, false, true, null, directory);
+
+                            //if (extraModel.IsFirst && Settings.PreferredEnumType == EnumType.Enum)
+                            //{
+                            //    // It's a single string, so probably -enum
+                            //    var newEnum = new RestEaseEnum
+                            //    {
+                            //        Namespace = Settings.Namespace,
+                            //        EnumName = className,
+                            //        Values = null,
+                            //        EnumType = Settings.PreferredEnumType
+                            //    };
+                            //    @interface.ExtraEnums.Add(newEnum);
+                            //}
+                            //else
+                            {
+                                var newModel = new RestEaseModel
+                                {
+                                    Namespace = Settings.Namespace,
+                                    ClassName = className,
+                                    Properties = extraModel.Second
+                                };
+                                @interface.ExtraModels.Add(newModel);
+                            }
+                        }
+
                         // Internal Local defined object
-                        return MakeValidModelName(schema.Reference.Id);
+                        return className;
                     }
 
                     if (schema.Reference.IsExternal)

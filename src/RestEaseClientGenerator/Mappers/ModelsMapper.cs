@@ -1,7 +1,6 @@
 using AnyOfTypes;
 using Microsoft.OpenApi;
 using Microsoft.OpenApi.Models;
-using RestEaseClientGenerator.Extensions;
 using RestEaseClientGenerator.Models.Internal;
 using RestEaseClientGenerator.Settings;
 using RestEaseClientGenerator.Types;
@@ -32,30 +31,40 @@ internal class ModelsMapper : BaseMapper
 
     public IEnumerable<AnyOf<RestEaseModel, RestEaseEnum>> Map(IDictionary<string, OpenApiSchema> schemas)
     {
-        var validSchemas = schemas
-            .OrderBy(s => s.Key);
-           // .Where(s => _schemaTypes.Contains(s.Value.GetSchemaType()));
+        //var k = schemas.Where(s => s.Key.StartsWith("LocalU")).ToList()[1];
+        //var s = _schemaMapper.MapSchema(_interface, k.Value, k.Key, k.Value.Nullable, true, _openApiSpecVersion,
+        //    _directory);
 
-        foreach (var x in validSchemas)
+        foreach (var entry in schemas.OrderBy(s => s.Key))
         {
-            var properties = _schemaMapper.MapSchema(_interface, x.Value, x.Key, x.Value.Nullable, true, _openApiSpecVersion, _directory);
+            var properties = _schemaMapper.MapSchema(_interface, entry.Value, entry.Key, entry.Value.Nullable, true, _openApiSpecVersion, _directory);
 
-            if (properties.IsFirst)
-            {
-                // It's an enum
-                yield return new RestEaseEnum
-                {
-                    Namespace = Settings.Namespace,
-                    EnumName = MakeValidModelName(x.Key)
-                };
-            }
+            //if (properties.IsFirst)
+            //{
+            //    // It's an enum
+            //    //var e = Settings.PreferredEnumType switch
+            //    //{
+            //    //    EnumType.Enum => MakeValidModelName(entry.Key),
+            //    //    EnumType.Integer => $"int{nullable}{nameCamelCase}",
+            //    //    EnumType.Object => $"object{nameCamelCase}",
+            //    //    _ => $"string{nameCamelCase}"
+            //    //};
+
+            //    yield return new RestEaseEnum
+            //    {
+            //        Namespace = Settings.Namespace,
+            //        EnumName = MakeValidModelName(entry.Key),
+            //        Values = null,
+            //        EnumType = Settings.PreferredEnumType
+            //    };
+            //}
 
             if (properties.IsSecond)
             {
                 yield return new RestEaseModel
                 {
                     Namespace = Settings.Namespace,
-                    ClassName = MakeValidModelName(x.Key),
+                    ClassName = MakeValidModelName(entry.Key),
                     Properties = properties.Second
                 };
             }

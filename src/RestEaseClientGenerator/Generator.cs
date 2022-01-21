@@ -65,10 +65,16 @@ public class Generator : IGenerator
 
         if (document.Components?.Schemas != null)
         {
-            foreach (var model in new ModelsMapper(@interface, settings, schemaMapper, OpenApiSpecVersion.OpenApi2_0, directory).Map(document.Components.Schemas))
+            var models = new ModelsMapper(@interface, settings, schemaMapper, OpenApiSpecVersion.OpenApi2_0, directory)
+                    .Map(document.Components.Schemas);
+            foreach (var model in models)
             {
                 if (model.IsFirst)
                 {
+                    if (model.First.ClassName == "LocalUser")
+                    {
+                        int y = 9;
+                    }
                     result.Add(model.First);
                 }
                 if (model.IsSecond)
@@ -78,19 +84,16 @@ public class Generator : IGenerator
             }
         }
 
-        if (settings.GenerationType.HasFlag(GenerationType.Models))
+        // Add Inline Models
+        foreach (var inlineModel in @interface.ExtraModels)
         {
-            // Add Inline Models
-            foreach (var inlineModel in @interface.ExtraModels)
-            {
-                result.Add(inlineModel);
-            }
+            result.Add(inlineModel);
+        }
 
-            // Add Inline Enums
-            foreach (var inlineEnum in schemaMapper.Enums)
-            {
-                result.Add(inlineEnum);
-            }
+        // Add Inline Enums
+        foreach (var inlineEnum in schemaMapper.Enums)
+        {
+            result.Add(inlineEnum);
         }
 
         return result;
@@ -137,10 +140,18 @@ public class Generator : IGenerator
 
         if (settings.GenerationType.HasFlag(GenerationType.Models))
         {
-            // Add Models
+            // Add Models + Inline/External Models
             var modelBuilder = new ModelBuilder(settings);
-            var models = result.Where(r => r.IsFirst).Select(r => r.First);
-            files.AddRange(models.Select(model => new GeneratedFile
+            var models = result
+                .Where(r => r.IsFirst)
+                .Select(r => r.First)
+                .ToList();
+            var allModels = models.Union(@interface.ExtraModels)
+                .GroupBy(r => r.ClassName)
+                .Select(r => r.First())
+                .OrderBy(m => m.ClassName)
+                .ToList();
+            files.AddRange(allModels.Select(model => new GeneratedFile
             (
                 FileType.Model,
                 settings.ModelsNamespace,
@@ -148,24 +159,17 @@ public class Generator : IGenerator
                 model.ClassName,
                 modelBuilder.Build(model)
             )));
-
-            // Add Inline/External Models
-            files.AddRange(@interface.ExtraModels.Select(model => new GeneratedFile
-            (
-                FileType.Model,
-                settings.ModelsNamespace,
-                $"{model.ClassName}.cs",
-                model.ClassName,
-                modelBuilder.Build(model)
-            )));
-            
+           
             // Add Inline/External Enums
             var enumBuilder = new EnumBuilder(settings);
-            var enums = result
+            var extraEnums = result
                 .Where(r => r.IsSecond)
                 .Select(r => r.Second)
-                .Where(e => e.Values is not null); // In case the values is null, do not create a file because enum is replaced by string
-            files.AddRange(@enums.Select(@enum => new GeneratedFile
+                .Where(e => e.Values is not null) // In case the values is null, do not create a file because enum is replaced by string
+                .GroupBy(r => r.EnumName)
+                .SelectMany(r => r);
+
+            files.AddRange(extraEnums.Select(@enum => new GeneratedFile
             (
                 FileType.Model,
                 settings.ModelsNamespace,
@@ -180,8 +184,7 @@ public class Generator : IGenerator
             var content = files
                 .GroupBy(f => f.ClassOrInterface)
                 .Distinct()
-                .SelectMany(f => f)
-                .Select(f => f.Content);
+                .Select(f => f.First().Content);
 
             return new[] { new GeneratedFile
             (

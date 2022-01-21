@@ -60,10 +60,23 @@ internal class ExternalModelMapper
             return foundModel.ClassName;
         }
 
-        var foundEnum = _interface.ExtraEnums.FirstOrDefault(m => string.Equals(m.EnumName, className, StringComparison.InvariantCultureIgnoreCase));
-        if (foundEnum is not null)
+        if (_settings.PreferredEnumType == EnumType.Enum)
         {
-            return foundEnum.EnumName;
+            var foundEnum = _interface.ExtraEnums.FirstOrDefault(m => string.Equals(m.EnumName, className, StringComparison.InvariantCultureIgnoreCase));
+            if (foundEnum is not null)
+            {
+                return foundEnum.EnumName;
+            }
+        }
+        else
+        {
+            var nullable = schema.Nullable ? "?" : string.Empty;
+            return _settings.PreferredEnumType switch
+            {
+                EnumType.Integer => $"int{nullable}",
+                EnumType.Object => $"object{nullable}",
+                _ => $"string{nullable}"
+            };
         }
 
         throw new InvalidOperationException($"External model/enum with name '{className}' not found in local or external ({schema.Reference.ExternalResource}).");

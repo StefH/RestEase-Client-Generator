@@ -10,5 +10,7 @@ namespace MicrosoftStorageExampleConsoleApp.MicrosoftStorage.Models
         public string TenantId { get; set; }
 
         public string Type { get; set; }
+
+        public Dictionary<string, UserAssignedIdentity> UserAssignedIdentities { get; set; }
     }
 }

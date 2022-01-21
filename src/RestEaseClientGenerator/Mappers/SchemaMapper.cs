@@ -29,6 +29,11 @@ internal class SchemaMapper : BaseMapper
             int cccc2 = 9;
         }
 
+        if (name == "StorageAccount")
+        {
+            int cccc2 = 9;
+        }
+
         if (name == "PrivateEndpointConnectionProperties")
         {
             int x = 8;
@@ -151,7 +156,6 @@ internal class SchemaMapper : BaseMapper
                     if (new[] { SchemaType.Object, SchemaType.Unknown }.Contains(openApiSchema.GetSchemaType()))
                     {
                         string objectName = pascalCase ? schemaProperty.Key.ToPascalCase() : schemaProperty.Key;
-                        //string objectType = "object";
 
                         if (openApiSchema.AdditionalProperties?.Reference?.Id != null)
                         {
@@ -162,7 +166,7 @@ internal class SchemaMapper : BaseMapper
                         {
                             if (openApiSchema.Reference.IsLocal)
                             {
-                                var className = openApiSchema.Reference.Id;
+                                var className = MakeValidModelName(openApiSchema.Reference.Id);
                                 var existingModel = @interface.ExtraModels.FirstOrDefault(m => m.ClassName == className);
                                 if (existingModel == null)
                                 {
@@ -180,7 +184,9 @@ internal class SchemaMapper : BaseMapper
                             }
                             else if (openApiSchema.Reference.IsExternal)
                             {
-                                return new ExternalModelMapper(Settings, @interface).Map(openApiSchema, directory);
+                                var ex = new ExternalModelMapper(Settings, @interface).Map(openApiSchema, directory);
+
+                                list.Add($"{ex} {objectName}");
                             }
                         }
                     }
@@ -226,15 +232,15 @@ internal class SchemaMapper : BaseMapper
                 Namespace = Settings.Namespace,
                 BaseName = enumName,
                 EnumName = enumName,
-                Values = enumValues
+                Values = enumValues,
+                EnumType = EnumType.Enum
             };
 
             Enums.Add(newEnum);
         }
         else
         {
-            var existingEnumWithSameValues = existingEnums
-                .SingleOrDefault(existingEnum => existingEnum.Values.SequenceEqual(enumValues));
+            var existingEnumWithSameValues = existingEnums.SingleOrDefault(existingEnum => existingEnum.Values.SequenceEqual(enumValues));
 
             if (existingEnumWithSameValues == null)
             {
@@ -247,7 +253,8 @@ internal class SchemaMapper : BaseMapper
                     Namespace = Settings.Namespace,
                     BaseName = basename,
                     EnumName = enumName,
-                    Values = enumValues
+                    Values = enumValues,
+                    EnumType = EnumType.Enum
                 };
 
                 Enums.Add(newEnum);

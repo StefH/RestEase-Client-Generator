@@ -1,4 +1,3 @@
-using System.Linq;
 using System.Text;
 using RestEaseClientGenerator.Extensions;
 using RestEaseClientGenerator.Models.Internal;
