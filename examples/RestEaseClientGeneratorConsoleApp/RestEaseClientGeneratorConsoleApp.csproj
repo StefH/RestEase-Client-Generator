@@ -45,7 +45,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AnyOf" Version="0.2.0" />
+    <PackageReference Include="AnyOf" Version="0.3.0" />
+    <PackageReference Include="AnyOf.Newtonsoft.Json" Version="0.3.0" />
     <!--<PackageReference Include="AnyOf.Newtonsoft.Json" Version="0.2.0" />-->
     <PackageReference Include="Microsoft.Extensions.ApiDescription.Client" Version="3.0.0">
       <PrivateAssets>all</PrivateAssets>
@@ -60,7 +61,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\AnyOf\src\AnyOf.Newtonsoft.Json\AnyOf.Newtonsoft.Json.csproj" />
     <ProjectReference Include="..\..\src\RestEaseClientGenerator\RestEaseClientGenerator.csproj" />
   </ItemGroup>
 

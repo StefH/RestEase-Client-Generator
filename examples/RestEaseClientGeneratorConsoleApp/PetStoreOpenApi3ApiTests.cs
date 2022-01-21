@@ -1,5 +1,4 @@
 using System;
-using System.Text;
 using System.Threading.Tasks;
 using AnyOfTypes.Newtonsoft.Json;
 using Newtonsoft.Json;
@@ -31,20 +30,6 @@ namespace RestEaseClientGeneratorConsoleApp
                 JsonSerializerSettings = settings
             }.For<IPetStoreOpenApi3Api>();
 
-            //var findPetsByStatusAsync3 = await petStoreApi.FindPetsByStatusAsync3("available");
-            //var r = findPetsByStatusAsync3.GetContent();
-            //if (r.IsFirst)
-            //{
-            //    foreach (var find in r.First)
-            //    {
-            //        Console.WriteLine("FindPetsByStatusAsync Pets:" + JsonConvert.SerializeObject(find));
-            //    }
-            //}
-            //else
-            //{
-            //    Console.WriteLine("FindPetsByStatusAsync object:" + JsonConvert.SerializeObject(r.Second));
-            //}
-
             var findPetsByStatusAsync = await petStoreApi.FindPetsByStatusAsync("available");
             if (findPetsByStatusAsync.IsFirst)
             {
@@ -58,34 +43,25 @@ namespace RestEaseClientGeneratorConsoleApp
                 Console.WriteLine("FindPetsByStatusAsync object:" + JsonConvert.SerializeObject(findPetsByStatusAsync.Second.StringContent));
             }
 
-            //var findPetsByStatusAsync = await petStoreApi.FindPetsByStatusAsync(Status2.available);
-            //foreach (var find in findPetsByStatusAsync)
-            //{
-            //    Console.WriteLine("FindPetsByStatusAsync:" + JsonConvert.SerializeObject(find));
-            //}
+            try
+            {
+                await petStoreApi.DeletePetAsync(1000);
+            }
+            catch
+            {
+                // no-op
+            }
 
-            // await petStoreApi.DeletePetAsync(1000);
-
-            //var addPet = await petStoreApi.AddPetAsync(new Pet
-            //{
-            //    Id = 1000,
-            //    Name = "Rossa",
-            //    Category = new Category { Id = 1, Name = "cat" },
-            //    Tags = new[] { new Tag { Id = 1, Name = "cat" } },
-            //    Status = Status2.available,
-            //    PhotoUrls = new string[] { }
-            //});
-            //Console.WriteLine("AddPetAsync:" + JsonSerializer.Serialize(addPet));
-
-            //var getPetById = await petStoreApi.GetPetByPetIdAsync(1000);
-            //Console.WriteLine("GetPetByIdAsync:" + JsonConvert.SerializeObject(getPetById));
-
-            //var uploadFileResponse = await petStoreApi.UploadFileAsync(1000, "rossa", Encoding.UTF8.GetBytes("Poes"));
-            //Console.WriteLine("UploadFileAsync:" + JsonConvert.SerializeObject(uploadFileResponse));
-
-            //var stream = File.OpenRead("Examples\\petstore-openapi3.json");
-            //var uploadFile = await petStoreApi.UploadFileAsync(1000, "rossa", stream);
-            //Console.WriteLine("UploadFileAsync:" + uploadFile.ToString());
+            var addPet = await petStoreApi.AddPetAsync(new Pet
+            {
+                Id = 1000,
+                Name = "Rossa",
+                Category = new Category { Id = 1, Name = "cat" },
+                Tags = new[] { new Tag { Id = 1, Name = "cat" } },
+                Status = "available",
+                PhotoUrls = new string[] { }
+            });
+            Console.WriteLine("AddPetAsync:" + JsonConvert.SerializeObject(addPet.CurrentValue));
         }
     }
 }
