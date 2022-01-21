@@ -34,45 +34,43 @@ internal class ExternalModelMapper
             GenerationType = GenerationType.Models
         };
 
-        var location = Path.Combine(directory, schema.Reference.ExternalResource.Replace("./", string.Empty));
+        var location = Path.Combine(directory, schema.Reference.ExternalResource);
 
-        if (location.Contains("common.json"))
-        {
-            int yyy = 9;
-        }
-
-        var externalModels = generator.FromFileInternal(location, settings, out var x);
+        var externalModelOrEnum = generator.FromFileInternal(location, settings, out var x);
 
         var className = schema.Reference.Id.Split('/').Last();
 
-        var externalModel = externalModels
-            .Where(e => e.IsFirst)
-            .Select(e => e.First)
-            .FirstOrDefault(m => string.Equals(m.ClassName, className, StringComparison.OrdinalIgnoreCase));
-        if (externalModel is not null)
+        foreach (var externalModel in externalModelOrEnum)
         {
-            if (_interface.ExtraModels.FirstOrDefault(m => m.ClassName == className) is null)
+            if (externalModel.IsFirst)
             {
-                _interface.ExtraModels.Add(externalModel);
+                if (_interface.ExtraModels.FirstOrDefault(m => string.Equals(m.ClassName, externalModel.First.ClassName, StringComparison.InvariantCultureIgnoreCase)) is null)
+                {
+                    _interface.ExtraModels.Add(externalModel);
+                }
             }
 
-            return externalModel.ClassName;
-        }
-
-        var externalEnum = externalModels
-            .Where(e => e.IsSecond)
-            .Select(e => e.Second)
-            .FirstOrDefault(m => string.Equals(m.EnumName, className, StringComparison.OrdinalIgnoreCase));
-        if (externalEnum is not null)
-        {
-            if (_interface.ExtraEnums.FirstOrDefault(m => m.EnumName == className) is null)
+            if (externalModel.IsSecond)
             {
-                _interface.ExtraEnums.Add(externalEnum);
+                if (_interface.ExtraEnums.FirstOrDefault(m => string.Equals(m.EnumName, externalModel.Second.EnumName, StringComparison.InvariantCultureIgnoreCase)) is null)
+                {
+                    _interface.ExtraEnums.Add(externalModel);
+                }
             }
-
-            return externalEnum.EnumName;
         }
 
-        throw new InvalidOperationException($"External model/enum with name '{className}' not found in {schema.Reference.ExternalResource}.");
+        var foundModel = _interface.ExtraModels.FirstOrDefault(m => string.Equals(m.ClassName, className, StringComparison.InvariantCultureIgnoreCase));
+        if (foundModel is not null)
+        {
+            return foundModel.ClassName;
+        }
+
+        var foundEnum = _interface.ExtraEnums.FirstOrDefault(m => string.Equals(m.EnumName, className, StringComparison.InvariantCultureIgnoreCase));
+        if (foundEnum is not null)
+        {
+            return foundEnum.EnumName;
+        }
+
+        throw new InvalidOperationException($"External model/enum with name '{className}' not found in local or external ({schema.Reference.ExternalResource}).");
     }
 }

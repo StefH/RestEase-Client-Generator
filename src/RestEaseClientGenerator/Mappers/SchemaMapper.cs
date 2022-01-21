@@ -163,21 +163,47 @@ internal class SchemaMapper : BaseMapper
                         {
                             if (openApiSchema.Reference.IsLocal)
                             {
-                                var s = MapSchema(@interface, openApiSchema, openApiSchema.Reference.Id, openApiSchema.Nullable, true, openApiSpecVersion, directory);
-                                if (s.IsFirst)
+                                var className = openApiSchema.Reference.Id;
+                                var existingModel = @interface.ExtraModels.FirstOrDefault(m => m.ClassName == className);
+                                if (existingModel == null)
                                 {
-                                    list.Add($"{s.First} {objectName}");
+                                    var extraModel = MapSchema(@interface, openApiSchema, className, false, true, null, directory);
+                                    var newModel = new RestEaseModel
+                                    {
+                                        Namespace = Settings.Namespace,
+                                        ClassName = className,
+                                        Properties = extraModel.Second
+                                    };
+                                    @interface.ExtraModels.Add(newModel);
                                 }
-                                else if (s.IsSecond)
-                                {
-                                    list.AddRange(s.Second);
 
-                                    //foreach (var second in s.Second)
-                                    //{
-                                    //    int ssss = 9;
-                                    //}
-                                    //throw new InvalidOperationException();
-                                }
+                                list.Add($"{className} {objectName}");
+
+                               
+                                //else
+                                //{
+                                //    list.Add($"{mapped.First} {objectName}");
+                                //}
+                               
+
+                                //return className;
+
+                                //var s = MapSchema(@interface, openApiSchema, openApiSchema.Reference.Id, openApiSchema.Nullable, true, openApiSpecVersion, directory);
+                                //if (s.IsFirst)
+                                //{
+                                //    list.Add($"{s.First} {objectName}");
+                                //}
+                                //else if (s.IsSecond)
+                                //{
+                                //    list.Add($"{openApiSchema.Reference.Id} {objectName}");
+                                //    //list.AddRange(s.Second);
+
+                                //    //foreach (var second in s.Second)
+                                //    //{
+                                //    //    int ssss = 9;
+                                //    //}
+                                //    //throw new InvalidOperationException();
+                                //}
 
                                 //objectType = MakeValidModelName(openApiSchema.Reference.Id);
                             }
@@ -185,24 +211,7 @@ internal class SchemaMapper : BaseMapper
                             {
                                 return new ExternalModelMapper(Settings, @interface).Map(openApiSchema, directory);
                             }
-                            
-                            
-                            //var existingModel = @interface.InlineModels.FirstOrDefault(m => m.ClassName == className);
-                            //if (existingModel == null)
-                            //{
-                            //    var newModel = new RestEaseModel
-                            //    {
-                            //        Namespace = Settings.Namespace,
-                            //        ClassName = className,
-                            //        Properties = _schemaMapper.MapSchema(schema, null, false, true, null) as ICollection<string>
-                            //    };
-                            //    @interface.InlineModels.Add(newModel);
-                            //}
-
-                            // objectType = MakeValidModelName(openApiSchema.Reference.Id);
                         }
-
-                        //list.Add($"{objectType} {objectName}");
                     }
                     else
                     {

@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftStorage.Models
 {
-    public class Identity
+    public class Resource
     {
-        public string PrincipalId { get; set; }
+        public string Id { get; set; }
 
-        public string TenantId { get; set; }
+        public string Name { get; set; }
 
         public string Type { get; set; }
     }

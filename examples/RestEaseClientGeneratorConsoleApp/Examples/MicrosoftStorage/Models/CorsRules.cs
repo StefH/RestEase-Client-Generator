@@ -3,8 +3,9 @@ using System.Collections.Generic;
 
 namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftStorage.Models
 {
-    public class ErrorResponse
+    public class CorsRules
     {
-        public ErrorDetail Error { get; set; }
+        [Newtonsoft.Json.JsonProperty("CorsRules")]
+        public object[] CorsRules_ { get; set; }
     }
 }

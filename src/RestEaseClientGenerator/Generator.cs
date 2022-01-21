@@ -149,6 +149,8 @@ public class Generator : IGenerator
                 modelBuilder.Build(model)
             )));
 
+            var xxx = @interface.ExtraModels.FirstOrDefault(x => x.ClassName == "PrivateEndpointConnectionProperties");
+
             // Add Inline/External Models
             files.AddRange(@interface.ExtraModels.Select(model => new GeneratedFile
             (

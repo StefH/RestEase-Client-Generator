@@ -3,8 +3,8 @@ using System.Collections.Generic;
 
 namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftStorage.Models
 {
-    public class ErrorResponse
+    public class TrackedResource
     {
-        public ErrorDetail Error { get; set; }
+        public string Location { get; set; }
     }
 }

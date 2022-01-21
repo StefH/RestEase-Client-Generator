@@ -3,8 +3,10 @@ using System.Collections.Generic;
 
 namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftStorage.Models
 {
-    public class ErrorResponse
+    public class DeleteRetentionPolicy
     {
-        public ErrorDetail Error { get; set; }
+        public bool Enabled { get; set; }
+
+        public int Days { get; set; }
     }
 }
