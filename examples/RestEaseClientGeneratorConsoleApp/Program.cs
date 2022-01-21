@@ -17,19 +17,19 @@ namespace RestEaseClientGeneratorConsoleApp
         {
             var generator = new Generator();
 
-            //var storageSettings = new GeneratorSettings
-            //{
-            //    Namespace = "RestEaseClientGeneratorConsoleApp.Examples.MicrosoftStorage",
-            //    ApiName = "MicrosoftStorage",
-            //    SingleFile = false,
-            //    PreferredMultipleResponsesType = MultipleResponsesType.AnyOf,
-            //    PreferredSecurityDefinitionType = SecurityDefinitionType.None,
-            //    GenerationType = GenerationType.Both
-            //};
-            //foreach (var file in generator.FromFile("Examples\\MicrosoftStorage\\storage.json", storageSettings, out OpenApiDiagnostic diagnosticStorage))
-            //{
-            //    File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/MicrosoftStorage/{file.Path}/{file.Name}", file.Content);
-            //}
+            var storageSettings = new GeneratorSettings
+            {
+                Namespace = "RestEaseClientGeneratorConsoleApp.Examples.MicrosoftStorage",
+                ApiName = "MicrosoftStorage",
+                SingleFile = false,
+                PreferredMultipleResponsesType = MultipleResponsesType.AnyOf,
+                PreferredSecurityDefinitionType = SecurityDefinitionType.None,
+                GenerationType = GenerationType.Both
+            };
+            foreach (var file in generator.FromFile("Examples\\MicrosoftStorage\\storage.json", storageSettings, out OpenApiDiagnostic diagnosticStorage))
+            {
+                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/MicrosoftStorage/{file.Path}/{file.Name}", file.Content);
+            }
 
             var storageSettings2 = new GeneratorSettings
             {

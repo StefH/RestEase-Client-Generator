@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.OpenApi.Models;
 using RestEaseClientGenerator.Extensions;
 using RestEaseClientGenerator.Models.Internal;
@@ -17,7 +14,7 @@ internal class SecurityMapper : BaseMapper
     {
     }
 
-    public RestEaseSecurity Map(OpenApiDocument openApiDocument)
+    public RestEaseSecurity? Map(OpenApiDocument openApiDocument)
     {
         if (openApiDocument.SecurityRequirements != null && openApiDocument.SecurityRequirements.Any())
         {
@@ -32,7 +29,7 @@ internal class SecurityMapper : BaseMapper
         return null;
     }
 
-    private RestEaseSecurity MapOpenApiVersion3(IDictionary<string, OpenApiSecurityScheme> schemas)
+    private RestEaseSecurity? MapOpenApiVersion3(IDictionary<string, OpenApiSecurityScheme> schemas)
     {
         foreach (var securitySchemaType in SecuritySchemaTypes)
         {
@@ -74,16 +71,12 @@ internal class SecurityMapper : BaseMapper
                 IdentifierName = name.ToValidIdentifier(CasingType.Pascal)
             };
 
-            switch (openApiSecurityScheme.In)
+            restEaseSecurityDefinition.Type = openApiSecurityScheme.In switch
             {
-                case ParameterLocation.Header:
-                    restEaseSecurityDefinition.Type = SecurityDefinitionType.Header;
-                    break;
-
-                case ParameterLocation.Query:
-                    restEaseSecurityDefinition.Type = SecurityDefinitionType.Query;
-                    break;
-            }
+                ParameterLocation.Header => SecurityDefinitionType.Header,
+                ParameterLocation.Query => SecurityDefinitionType.Query,
+                _ => restEaseSecurityDefinition.Type
+            };
 
             definitions.Add(restEaseSecurityDefinition);
         }

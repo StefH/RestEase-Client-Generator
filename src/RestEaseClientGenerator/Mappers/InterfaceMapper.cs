@@ -340,11 +340,6 @@ internal class InterfaceMapper : BaseMapper
 
             case SchemaType.Object:
             case SchemaType.Unknown:
-                //if (schema == null)
-                //{
-                //    return Settings.ReturnResponseObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified ? "Response<object>" : null;
-                //}
-
                 if (schema.Reference != null)
                 {
                     if (schema.Reference.IsLocal)

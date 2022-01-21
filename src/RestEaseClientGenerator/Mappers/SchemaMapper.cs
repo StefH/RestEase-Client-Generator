@@ -1,4 +1,3 @@
-using System.IO;
 using AnyOfTypes;
 using Microsoft.OpenApi;
 using Microsoft.OpenApi.Any;
@@ -149,7 +148,7 @@ internal class SchemaMapper : BaseMapper
                     }
 
                     var openApiSchema = schemaProperty.Value;
-                    if (new [] { SchemaType.Object, SchemaType.Unknown }.Contains(openApiSchema.GetSchemaType()))
+                    if (new[] { SchemaType.Object, SchemaType.Unknown }.Contains(openApiSchema.GetSchemaType()))
                     {
                         string objectName = pascalCase ? schemaProperty.Key.ToPascalCase() : schemaProperty.Key;
                         //string objectType = "object";
@@ -178,34 +177,6 @@ internal class SchemaMapper : BaseMapper
                                 }
 
                                 list.Add($"{className} {objectName}");
-
-                               
-                                //else
-                                //{
-                                //    list.Add($"{mapped.First} {objectName}");
-                                //}
-                               
-
-                                //return className;
-
-                                //var s = MapSchema(@interface, openApiSchema, openApiSchema.Reference.Id, openApiSchema.Nullable, true, openApiSpecVersion, directory);
-                                //if (s.IsFirst)
-                                //{
-                                //    list.Add($"{s.First} {objectName}");
-                                //}
-                                //else if (s.IsSecond)
-                                //{
-                                //    list.Add($"{openApiSchema.Reference.Id} {objectName}");
-                                //    //list.AddRange(s.Second);
-
-                                //    //foreach (var second in s.Second)
-                                //    //{
-                                //    //    int ssss = 9;
-                                //    //}
-                                //    //throw new InvalidOperationException();
-                                //}
-
-                                //objectType = MakeValidModelName(openApiSchema.Reference.Id);
                             }
                             else if (openApiSchema.Reference.IsExternal)
                             {
@@ -228,14 +199,11 @@ internal class SchemaMapper : BaseMapper
                 return list;
 
             case SchemaType.File:
-                switch (Settings.MultipartFormDataFileType)
+                return Settings.MultipartFormDataFileType switch
                 {
-                    case MultipartFormDataFileType.Stream:
-                        return $"System.IO.Stream{nameCamelCase}";
-
-                    default:
-                        return $"byte[]{nameCamelCase}";
-                }
+                    MultipartFormDataFileType.Stream => $"System.IO.Stream{nameCamelCase}",
+                    _ => $"byte[]{nameCamelCase}"
+                };
 
             default:
                 throw new InvalidOperationException(); // TODO
@@ -267,7 +235,7 @@ internal class SchemaMapper : BaseMapper
         {
             var existingEnumWithSameValues = existingEnums
                 .SingleOrDefault(existingEnum => existingEnum.Values.SequenceEqual(enumValues));
-                
+
             if (existingEnumWithSameValues == null)
             {
                 int matchingCount = existingEnums.Count;

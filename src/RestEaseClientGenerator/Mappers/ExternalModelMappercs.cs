@@ -2,6 +2,7 @@ using Microsoft.OpenApi.Models;
 using RestEaseClientGenerator.Models.Internal;
 using RestEaseClientGenerator.Settings;
 using RestEaseClientGenerator.Types;
+using RestEaseClientGenerator.Utils;
 
 namespace RestEaseClientGenerator.Mappers;
 
@@ -25,14 +26,8 @@ internal class ExternalModelMapper
 
         var generator = new Generator();
 
-        var settings = new GeneratorSettings
-        {
-            Namespace = _settings.Namespace,
-            ApiName = _settings.ApiName,
-            SingleFile = false,
-            PreferredMultipleResponsesType = _settings.PreferredMultipleResponsesType,
-            GenerationType = GenerationType.Models
-        };
+        var settings = TinyMapperUtils.Instance.Map<GeneratorSettings>(_settings);
+        settings.GenerationType = GenerationType.Models;
 
         var location = Path.Combine(directory, schema.Reference.ExternalResource);
 
