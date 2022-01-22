@@ -11,7 +11,7 @@ public class RestEaseParameter
 
     public string ValidIdentifier { get; set; }
 
-    public string IdentifierWithTypePascalCase { get; set; }
+    public string? IdentifierWithTypePascalCase { get; set; }
 
     public string IdentifierWithType { get; set; }
 

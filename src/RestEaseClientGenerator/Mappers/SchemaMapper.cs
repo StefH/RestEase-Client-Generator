@@ -116,15 +116,10 @@ internal class SchemaMapper : BaseMapper
             case SchemaType.Object:
             case SchemaType.Unknown:
                 var list = new List<PropertyDto>();
-                if (schema.Properties == null)
-                {
-                    return list;
-                }
-
                 foreach (var schemaProperty in schema.Properties)
                 {
                     var openApiSchema = schemaProperty.Value;
-                    string objectName = pascalCase ? schemaProperty.Key.ToPascalCase() : schemaProperty.Key;
+                    var objectName = pascalCase ? schemaProperty.Key.ToPascalCase() : schemaProperty.Key;
 
                     var propertyDto = MapReference(@interface, openApiSpecVersion, openApiSchema, objectName, directory);
                     if (propertyDto != null)
@@ -152,8 +147,7 @@ internal class SchemaMapper : BaseMapper
                 };
 
             default:
-                throw new InvalidOperationException(); // TODO
-                //return null;
+                throw new InvalidOperationException();
         }
     }
 

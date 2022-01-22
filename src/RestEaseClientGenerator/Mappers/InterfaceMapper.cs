@@ -132,21 +132,6 @@ internal class InterfaceMapper : BaseMapper
 
     private RestEaseInterfaceMethodDetails MapOperationToMappingModel(RestEaseInterface @interface, string path, string httpMethod, OpenApiOperation operation, string? directory)
     {
-        if (path == "/subscriptions/{subscriptionId}/providers/Microsoft.ContainerInstance/containerGroups")
-        {
-            int x = 0;
-        }
-
-        if (path == "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}/restart")
-        {
-            int yy = 0;
-        }
-
-        if (path.Contains("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}"))
-        {
-            var StorageAccount = 9998;
-        }
-
         string methodRestEaseForAnnotation = httpMethod.ToPascalCase();
 
         string methodRestEaseMethodName = GeneratedRestEaseMethodName(path, operation, methodRestEaseForAnnotation);
@@ -204,14 +189,6 @@ internal class InterfaceMapper : BaseMapper
             .OrderByDescending(p => p.Required)
             .ToList();
 
-        if (path == "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/privateEndpointConnections/{privateEndpointConnectionName}")
-        {
-            int a1 = 0;
-        }
-        if (path == "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/localUsers/{username}")
-        {
-            int x = 0;
-        }
         var returnType = MapResponse(@interface, operation.Responses, methodRestEaseMethodName, directory);
 
         var method = new RestEaseInterfaceMethodDetails
@@ -283,7 +260,11 @@ internal class InterfaceMapper : BaseMapper
                     SupportedContentType.ApplicationJson,
                     out OpenApiMediaType responseJson, out var _))
             {
-                returnTypes.Add(GetReturnType(@interface, responseJson.Schema, methodRestEaseMethodName, directory));
+                var rt = GetReturnType(@interface, responseJson.Schema, methodRestEaseMethodName, directory);
+                if (rt is not null)
+                {
+                    returnTypes.Add(rt);
+                }
             }
             else
             {
@@ -311,7 +292,8 @@ internal class InterfaceMapper : BaseMapper
         }
     }
 
-    private string? GetReturnType(RestEaseInterface @interface, OpenApiSchema? schema, string methodRestEaseMethodName, string? directory)
+    // TODO null?
+    private string? GetReturnType(RestEaseInterface @interface, OpenApiSchema? schema, string? methodRestEaseMethodName, string? directory)
     {
         string nullable = schema?.Nullable == true ? "?" : string.Empty;
 
@@ -321,30 +303,24 @@ internal class InterfaceMapper : BaseMapper
                 return "string";
 
             case SchemaType.Integer:
-                switch (schema.GetSchemaFormat())
+                return schema.GetSchemaFormat() switch
                 {
-                    case SchemaFormat.Int64:
-                        return $"long{nullable}";
-
-                    default:
-                        return $"int{nullable}";
-                }
+                    SchemaFormat.Int64 => $"long{nullable}",
+                    _ => $"int{nullable}"
+                };
 
             case SchemaType.Boolean:
                 return $"bool{nullable}";
 
             case SchemaType.Number:
-                switch (schema.GetSchemaFormat())
+                return schema.GetSchemaFormat() switch
                 {
-                    case SchemaFormat.Float:
-                        return $"float{nullable}";
-
-                    default:
-                        return $"double{nullable}";
-                }
+                    SchemaFormat.Float => $"float{nullable}",
+                    _ => $"double{nullable}"
+                };
 
             case SchemaType.Array:
-                string arrayType = schema.Items.Reference != null
+                var arrayType = schema.Items.Reference != null
                     ? MakeValidModelName(schema.Items.Reference.Id)
                     : _schemaMapper.MapSchema(@interface, schema.Items, null, false, true, null, directory).First.Type;
 
@@ -363,7 +339,7 @@ internal class InterfaceMapper : BaseMapper
 
                             if (extraModel.IsFirst && Settings.PreferredEnumType == EnumType.Enum)
                             {
-                                // It's a single value, so probably -enum
+                                // It's a single value, so probably enum
                                 var newEnum = new RestEaseEnum
                                 {
                                     Namespace = Settings.Namespace,

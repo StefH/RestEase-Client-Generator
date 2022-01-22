@@ -7,7 +7,7 @@ Generate();
 
 Test();
 
-// --------------------------------------------------------------
+// -----------------------------------------------------------------------------------------------------------------------------------------
 
 static void Generate()
 {
@@ -23,7 +23,8 @@ static void Generate()
         GenerationType = GenerationType.Both
     };
 
-    foreach (var file in generator.FromFile("MicrosoftStorage\\storage.json", storageSettings, out OpenApiDiagnostic diagnosticStorage))
+    const string x = @"C:\Dev\azure-rest-api-specs\specification\storage\resource-manager\Microsoft.Storage\stable\2021-08-01\storage.json";
+    foreach (var file in generator.FromFile(x, storageSettings, out OpenApiDiagnostic diagnosticStorage))
     {
         Console.WriteLine("Generating file-type '{0}': {1}\\{2}", file.FileType, file.Path, file.Name);
         File.WriteAllText($"../../../MicrosoftStorage/{file.Path}/{file.Name}", file.Content);

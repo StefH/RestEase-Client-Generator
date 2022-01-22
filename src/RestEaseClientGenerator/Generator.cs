@@ -71,10 +71,6 @@ public class Generator : IGenerator
             {
                 if (model.IsFirst)
                 {
-                    if (model.First.ClassName == "LocalUser")
-                    {
-                        int y = 9;
-                    }
                     result.Add(model.First);
                 }
                 if (model.IsSecond)
