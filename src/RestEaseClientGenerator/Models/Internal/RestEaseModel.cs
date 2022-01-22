@@ -7,4 +7,6 @@ public class RestEaseModel
     public string ClassName { get; set; }
 
     public ICollection<string>? Properties { get; set; }
+
+    public IList<string> Extends = new List<string>();
 }

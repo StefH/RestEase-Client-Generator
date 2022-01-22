@@ -18,37 +18,11 @@ internal class SchemaMapper : BaseMapper
     {
     }
 
-    public AnyOf<string, List<string>> MapSchema(RestEaseInterface @interface, OpenApiSchema? schema, string? name, bool isNullable, bool pascalCase, OpenApiSpecVersion? openApiSpecVersion, string? directory)
+    public AnyOf<string, List<string>> MapSchema(RestEaseInterface @interface, OpenApiSchema schema, string? name, bool isNullable, bool pascalCase, OpenApiSpecVersion? openApiSpecVersion, string? directory)
     {
-        if (name == "Sku")
-        {
-            int cccc = 9;
-        }
-
-        if (name == "SkuName")
-        {
-            int cccc2 = 9;
-        }
-
-        if (name == "StorageAccount")
-        {
-            int cccc2 = 9;
-        }
-
-        if (name == "PrivateEndpointConnectionProperties")
-        {
-            int x = 8;
-        }
-
-        if (name == "PrivateEndpointConnection")
-        {
-            int x2 = 8;
-        }
-
         if (schema == null)
         {
             throw new ArgumentNullException();
-            // return null;
         }
 
         name ??= string.Empty;
@@ -151,43 +125,20 @@ internal class SchemaMapper : BaseMapper
                     var openApiSchema = schemaProperty.Value;
                     string objectName = pascalCase ? schemaProperty.Key.ToPascalCase() : schemaProperty.Key;
 
-                    var pp = ProcessProperty(@interface, openApiSpecVersion, openApiSchema, objectName, directory);
+                    var pp = MapReference(@interface, openApiSpecVersion, openApiSchema, objectName, directory);
                     if (pp != null)
                     {
                         list.Add(pp);
                     }
                 }
 
-                if (schema.AllOf != null && schema.AllOf.Any())
+                foreach (var allOrAny in schema.AllOf.Union(schema.AnyOf))
                 {
-                    foreach (var allOf in schema.AllOf)
-                    {
-                        if (name == "LocalUser")
-                        {
-                            int y = 9;
-                        }
+                    var extendsClass = MapReference(@interface, openApiSpecVersion, allOrAny, string.Empty, directory);
 
-                        var pp = MapSchema(@interface, allOf, name, allOf.Nullable, true, openApiSpecVersion, directory);
-                        if (pp.IsFirst)
-                        {
-                            throw new NotSupportedException();
-                        }
 
-                        list.AddRange(pp.Second);
-
-                        //foreach (var allOffProperty in allOf.Properties)
-                        //{
-                        //    var openApiSchema = allOffProperty.Value;
-                        //    string objectName = pascalCase ? allOffProperty.Key.ToPascalCase() : allOffProperty.Key;
-
-                        //    var pp = ProcessProperty(@interface, openApiSpecVersion, openApiSchema, objectName, directory);
-                        //    if (pp != null)
-                        //    {
-                        //        list.Add(pp);
-                        //    }
-                        //}
-                    }
                 }
+                
 
                 return list;
 
@@ -204,7 +155,7 @@ internal class SchemaMapper : BaseMapper
         }
     }
 
-    private string? ProcessProperty(
+    private string? MapReference(
         RestEaseInterface @interface,
         OpenApiSpecVersion? openApiSpecVersion,
         OpenApiSchema openApiSchema,
