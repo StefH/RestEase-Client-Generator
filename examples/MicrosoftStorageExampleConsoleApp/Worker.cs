@@ -1,4 +1,5 @@
 using System.Text.Json;
+using AnyOfTypes.System.Text.Json;
 using Microsoft.Extensions.Logging;
 using MicrosoftExampleConsoleApp.MicrosoftStorage.Api;
 using MicrosoftExampleConsoleApp.MicrosoftStorage.Models;
@@ -10,14 +11,21 @@ internal class Worker
 {
     private readonly JsonSerializerOptions _options = new()
     {
-        WriteIndented = true
+        WriteIndented = true,
+        PropertyNameCaseInsensitive = true,
+        Converters = { new AnyOfJsonConverter() }
     };
 
     private readonly IMicrosoftStorageApi _storageApi;
     private readonly IMicrosoftStorage20190401Api _storageApi2019;
+    //private readonly IMicrosoftContainerInstanceApi _aci;
     private readonly ILogger<Worker> _logger;
 
-    public Worker(IMicrosoftStorageApi storageApi, IMicrosoftStorage20190401Api storageApi2019, ILogger<Worker> logger)
+    public Worker(
+        IMicrosoftStorageApi storageApi,
+        IMicrosoftStorage20190401Api storageApi2019,
+      //  IMicrosoftContainerInstanceApi aci,
+        ILogger<Worker> logger)
     {
         _storageApi = storageApi;
         _storageApi.ApiVersion = "2021-04-01";
@@ -25,11 +33,56 @@ internal class Worker
         _storageApi2019 = storageApi2019;
         _storageApi2019.ApiVersion = "2019-04-01";
 
+     //   _aci = aci;
+      //  _aci.ApiVersion = "2021-10-01";
+
         _logger = logger;
     }
 
     public async Task RunAsync(CancellationToken cancellationToken = default)
     {
+        //try
+        //{
+        //    var aci = await _aci.ContainerGroupsListAsync("2de19637-27a3-42a8-812f-2c2a7f7f935c");
+        //    _logger.LogInformation("ContainerGroupsListAsync = '{aci}'", JsonSerializer.Serialize(aci.GetContent(), _options));
+        //}
+        //catch (Exception ex)
+        //{
+        //    Console.WriteLine(ex);
+        //}
+        
+        //try
+        //{
+        //    var cg = new ContainerGroup
+        //    {
+        //        //Location = "westeurope",
+        //        //Containers = new []
+        //        //{
+        //        //    new Container
+        //        //    {
+        //        //        Name = "stef",
+        //        //        Properties = new ContainerProperties
+        //        //        {
+        //        //            Image = "nginx",
+
+        //        //        }
+        //        //    }
+        //        //},
+        //        //OsType = "Linux",
+
+        //    };
+        //    var aci = await _aci.ContainerGroupsCreateOrUpdateAsync(
+        //        "2de19637-27a3-42a8-812f-2c2a7f7f935c",
+        //        "testformanagementsdk",
+        //        "testaci2",
+        //        cg);
+        //    _logger.LogInformation("ContainerGroupsListAsync = '{aci}'", JsonSerializer.Serialize(aci.GetContent(), _options));
+        //}
+        //catch (Exception ex)
+        //{
+        //    Console.WriteLine(ex);
+        //}
+
         //try
         //{
         //    var operations = await _storageApi.OperationsListAsync();

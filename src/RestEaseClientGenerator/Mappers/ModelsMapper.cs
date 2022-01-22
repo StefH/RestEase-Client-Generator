@@ -30,14 +30,14 @@ internal class ModelsMapper : BaseMapper
 
     public IEnumerable<AnyOf<RestEaseModel, RestEaseEnum>> Map(IDictionary<string, OpenApiSchema> schemas)
     {
-        if (schemas.ContainsKey("LocalUser"))
+        if (schemas.ContainsKey("ContainerGroup"))
         {
             int x = 0;
         }
 
         foreach (var entry in schemas.OrderBy(s => s.Key))
         {
-            if (entry.Key == "LocalUser")
+            if (entry.Key == "ContainerGroup")
             {
                 int y = 0;
             }
