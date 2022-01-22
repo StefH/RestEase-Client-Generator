@@ -53,7 +53,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Models
 
         public string LargeFileSharesState { get; set; }
 
-        public object[] PrivateEndpointConnections { get; set; }
+        public PrivateEndpointConnection[] PrivateEndpointConnections { get; set; }
 
         public RoutingPreference RoutingPreference { get; set; }
 

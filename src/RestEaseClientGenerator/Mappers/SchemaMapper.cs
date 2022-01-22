@@ -37,20 +37,11 @@ internal class SchemaMapper : BaseMapper
                 switch (schema.Items.GetSchemaType())
                 {
                     case SchemaType.Object:
-                        return schema.Items.Reference != null ?
-                            new PropertyDto(MapArrayType(MakeValidModelName(schema.Items.Reference.Id)), nameCamelCase) :
-                            new PropertyDto(MapArrayType("object"), nameCamelCase);
-
                     case SchemaType.Unknown:
-                        if (schema.Items.Reference is { IsLocal: true })
-                        {
-                            // Nog niet 100% ok denk ik...
-                            return new PropertyDto(MapArrayType(MakeValidModelName(schema.Items.Reference.Id)), nameCamelCase);
-                        }
-                        else
-                        {
-                            return new PropertyDto(MapArrayType("object"), nameCamelCase);
-                        }
+                        var or = TryMapAsReference(@interface, schema.Items, "not-used", directory);
+                        return or != null ?
+                            new PropertyDto(MapArrayType(MakeValidModelName(or.Type)), nameCamelCase) :
+                            new PropertyDto(MapArrayType("object"), nameCamelCase);
 
                     case SchemaType.String:
                         if (schema.Items.Enum != null && schema.Items.Enum.Any() && Settings.PreferredEnumType == EnumType.Enum)
@@ -123,7 +114,7 @@ internal class SchemaMapper : BaseMapper
                     var openApiSchema = schemaProperty.Value;
                     var objectName = pascalCase ? schemaProperty.Key.ToPascalCase() : schemaProperty.Key;
 
-                    var propertyDto = MapReference(@interface, openApiSpecVersion, openApiSchema, objectName, directory);
+                    var propertyDto = MapProperty(@interface, openApiSpecVersion, openApiSchema, objectName, directory);
                     if (propertyDto != null)
                     {
                         list.Add(propertyDto);
@@ -132,7 +123,7 @@ internal class SchemaMapper : BaseMapper
 
                 foreach (var allOrAny in schema.AllOf.Union(schema.AnyOf))
                 {
-                    var extendsType = MapReference(@interface, openApiSpecVersion, allOrAny, string.Empty, directory);
+                    var extendsType = MapProperty(@interface, openApiSpecVersion, allOrAny, string.Empty, directory);
                     if (extendsType is not null)
                     {
                         list.Add(new PropertyDto("not-used", "not-used", extendsType.Type));
@@ -153,7 +144,7 @@ internal class SchemaMapper : BaseMapper
         }
     }
 
-    private PropertyDto? MapReference(
+    private PropertyDto? MapProperty(
         RestEaseInterface @interface,
         OpenApiSpecVersion? openApiSpecVersion,
         OpenApiSchema openApiSchema,
@@ -168,46 +159,47 @@ internal class SchemaMapper : BaseMapper
                 return new PropertyDto(dictionaryType, objectName);
             }
 
-            if (openApiSchema.Reference != null)
-            {
-                if (openApiSchema.Reference.IsLocal)
+            return TryMapAsReference(@interface, openApiSchema, objectName, directory);
+        }
+
+        var propertyIsNullable = openApiSchema.Nullable || Settings.SupportExtensionXNullable && openApiSchema.TryGetXNullable(out var x) && x;
+        var property = MapSchema(@interface, openApiSchema, objectName, propertyIsNullable, true, openApiSpecVersion, directory);
+        return property.IsFirst ? property.First : null;
+    }
+
+    private PropertyDto? TryMapAsReference(RestEaseInterface @interface, OpenApiSchema openApiSchema, string objectName, string? directory)
+    {
+        switch (openApiSchema.Reference)
+        {
+            case { IsLocal: true }:
                 {
                     var className = MakeValidModelName(openApiSchema.Reference.Id);
-                    var existingModel = @interface.ExtraModels.FirstOrDefault(m => m.ClassName == className);
-                    if (existingModel == null)
-                    {
-                        var extraModel = MapSchema(@interface, openApiSchema, className, false, true, null, directory);
-                        var newModel = new RestEaseModel
-                        {
-                            Namespace = Settings.Namespace,
-                            ClassName = className,
-                            Properties = extraModel.Second
-                        };
-                        @interface.ExtraModels.Add(newModel);
-                    }
+                    //var existingModel = @interface.ExtraModels.FirstOrDefault(m => m.ClassName == className);
+                    //if (existingModel == null)
+                    //{
+                    //    var extraModel = MapSchema(@interface, openApiSchema, className, false, true, null, directory);
+                    //    var newModel = new RestEaseModel
+                    //    {
+                    //        Namespace = Settings.Namespace,
+                    //        ClassName = className,
+                    //        Properties = extraModel.Second
+                    //    };
+                    //    @interface.ExtraModels.Add(newModel);
+                    //}
 
                     return new PropertyDto(className, objectName);
                 }
 
-                if (openApiSchema.Reference.IsExternal)
+            case { IsExternal: true }:
                 {
                     var externalModel = new ExternalModelMapper(Settings, @interface).Map(openApiSchema, directory);
 
                     return new PropertyDto(externalModel, objectName);
                 }
-            }
-        }
-        else
-        {
-            var propertyIsNullable = openApiSchema.Nullable || Settings.SupportExtensionXNullable && openApiSchema.TryGetXNullable(out var x) && x;
-            var property = MapSchema(@interface, openApiSchema, objectName, propertyIsNullable, true, openApiSpecVersion, directory);
-            if (property.IsFirst)
-            {
-                return property.First;
-            }
-        }
 
-        return null;
+            default:
+                return null;
+        }
     }
 
     private PropertyDto MapEnumSchema(OpenApiSchema schema, string name, string nameCamelCase, string nullable)
