@@ -11,15 +11,4 @@
     <ProjectReference Include="..\..\src\RestEaseClientGenerator\RestEaseClientGenerator.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Update="MicrosoftStorage\*.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="MicrosoftStorage\Api\" />
-    <Folder Include="MicrosoftStorage\Models\" />
-  </ItemGroup>
-
 </Project>

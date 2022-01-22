@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace MicrosoftStorageExampleConsoleApp.MicrosoftStorage.Models
+namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Models
 {
     public class BlobInventoryPolicy : Resource
     {

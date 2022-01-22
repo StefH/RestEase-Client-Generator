@@ -34,7 +34,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestEaseClientGenerator-Bla
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dotnet-resteaseclientgenerator", "src\dotnet-resteaseclientgenerator\dotnet-resteaseclientgenerator.csproj", "{AABD314E-1360-40F3-ABF7-03516212110D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicrosoftStorageExampleConsoleApp", "examples\MicrosoftStorageExampleConsoleApp\MicrosoftStorageExampleConsoleApp.csproj", "{099E447D-54F0-44A8-8A69-B3DAB36742A1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicrosoftExampleConsoleApp", "examples\MicrosoftStorageExampleConsoleApp\MicrosoftExampleConsoleApp.csproj", "{099E447D-54F0-44A8-8A69-B3DAB36742A1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

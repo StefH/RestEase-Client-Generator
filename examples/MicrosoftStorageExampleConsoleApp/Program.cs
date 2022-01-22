@@ -15,7 +15,7 @@ static void Generate()
 
     var storageSettings = new GeneratorSettings
     {
-        Namespace = "MicrosoftStorageExampleConsoleApp.MicrosoftStorage",
+        Namespace = "MicrosoftExampleConsoleApp.MicrosoftStorage",
         ApiName = "MicrosoftStorage",
         SingleFile = false,
         PreferredMultipleResponsesType = MultipleResponsesType.AnyOf,

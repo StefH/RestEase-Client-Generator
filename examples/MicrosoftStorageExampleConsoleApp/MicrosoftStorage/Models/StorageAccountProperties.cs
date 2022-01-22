@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace MicrosoftStorageExampleConsoleApp.MicrosoftStorage.Models
+namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Models
 {
     public class StorageAccountProperties
     {
@@ -53,7 +53,7 @@ namespace MicrosoftStorageExampleConsoleApp.MicrosoftStorage.Models
 
         public string LargeFileSharesState { get; set; }
 
-        public DefinitionsPrivateEndpointConnection[] PrivateEndpointConnections { get; set; }
+        public object[] PrivateEndpointConnections { get; set; }
 
         public RoutingPreference RoutingPreference { get; set; }
 

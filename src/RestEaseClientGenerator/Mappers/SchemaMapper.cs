@@ -19,14 +19,9 @@ internal class SchemaMapper : BaseMapper
 
     public AnyOf<PropertyDto, IList<PropertyDto>> MapSchema(RestEaseInterface @interface, OpenApiSchema schema, string? name, bool isNullable, bool pascalCase, OpenApiSpecVersion? openApiSpecVersion, string? directory)
     {
-        if (schema == null)
-        {
-            throw new ArgumentNullException();
-        }
-
         name ??= string.Empty;
 
-        string nameCamelCase = string.IsNullOrEmpty(name) ? string.Empty : $"{(pascalCase ? name.ToPascalCase() : name)}";
+        var nameCamelCase = string.IsNullOrEmpty(name) ? string.Empty : $"{(pascalCase ? name.ToPascalCase() : name)}";
 
         bool nullableForOpenApi20 = openApiSpecVersion == OpenApiSpecVersion.OpenApi2_0 && Settings.GeneratePrimitivePropertiesAsNullableForOpenApi20;
         string nullable = nullableForOpenApi20 || isNullable ? "?" : string.Empty;
@@ -42,13 +37,20 @@ internal class SchemaMapper : BaseMapper
                 switch (schema.Items.GetSchemaType())
                 {
                     case SchemaType.Object:
-                    case SchemaType.Unknown:
                         return schema.Items.Reference != null ?
                             new PropertyDto(MapArrayType(MakeValidModelName(schema.Items.Reference.Id)), nameCamelCase) :
                             new PropertyDto(MapArrayType("object"), nameCamelCase);
 
-                    //case SchemaType.Unknown:
-                    //    return new PropertyDto(MapArrayType("object"), nameCamelCase);
+                    case SchemaType.Unknown:
+                        if (schema.Items.Reference is { IsLocal: true })
+                        {
+                            // Nog niet 100% ok denk ik...
+                            return new PropertyDto(MapArrayType(MakeValidModelName(schema.Items.Reference.Id)), nameCamelCase);
+                        }
+                        else
+                        {
+                            return new PropertyDto(MapArrayType("object"), nameCamelCase);
+                        }
 
                     case SchemaType.String:
                         if (schema.Items.Enum != null && schema.Items.Enum.Any() && Settings.PreferredEnumType == EnumType.Enum)
@@ -70,24 +72,18 @@ internal class SchemaMapper : BaseMapper
                 return new PropertyDto($"bool{nullable}", nameCamelCase);
 
             case SchemaType.Integer:
-                switch (schema.GetSchemaFormat())
+                return schema.GetSchemaFormat() switch
                 {
-                    case SchemaFormat.Int64:
-                        return new PropertyDto($"long{nullable}", nameCamelCase);
-
-                    default:
-                        return new PropertyDto($"int{nullable}", nameCamelCase);
-                }
+                    SchemaFormat.Int64 => new PropertyDto($"long{nullable}", nameCamelCase),
+                    _ => new PropertyDto($"int{nullable}", nameCamelCase)
+                };
 
             case SchemaType.Number:
-                switch (schema.GetSchemaFormat())
+                return schema.GetSchemaFormat() switch
                 {
-                    case SchemaFormat.Float:
-                        return new PropertyDto($"float{nullable}", nameCamelCase);
-
-                    default:
-                        return new PropertyDto($"double{nullable}", nameCamelCase);
-                }
+                    SchemaFormat.Float => new PropertyDto($"float{nullable}", nameCamelCase),
+                    _ => new PropertyDto($"double{nullable}", nameCamelCase)
+                };
 
             case SchemaType.String:
                 switch (schema.GetSchemaFormat())
@@ -195,9 +191,9 @@ internal class SchemaMapper : BaseMapper
 
                 if (openApiSchema.Reference.IsExternal)
                 {
-                    var ex = new ExternalModelMapper(Settings, @interface).Map(openApiSchema, directory);
+                    var externalModel = new ExternalModelMapper(Settings, @interface).Map(openApiSchema, directory);
 
-                    return new PropertyDto(ex, objectName);
+                    return new PropertyDto(externalModel, objectName);
                 }
             }
         }

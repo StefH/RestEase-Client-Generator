@@ -6,9 +6,9 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using AnyOfTypes;
 using RestEase;
-using MicrosoftStorageExampleConsoleApp.MicrosoftStorage.Models;
+using MicrosoftExampleConsoleApp.MicrosoftStorage.Models;
 
-namespace MicrosoftStorageExampleConsoleApp.MicrosoftStorage.Api
+namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Api
 {
     /// <summary>
     /// The Azure Storage Management API.
