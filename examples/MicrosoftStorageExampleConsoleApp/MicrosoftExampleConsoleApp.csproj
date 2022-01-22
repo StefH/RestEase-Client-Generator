@@ -26,4 +26,9 @@
       </None>
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="MicrosoftStorage20190401\Api\" />
+      <Folder Include="MicrosoftStorage20190401\Models\" />
+    </ItemGroup>
+
 </Project>
