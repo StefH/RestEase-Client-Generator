@@ -22,24 +22,24 @@ public abstract class BaseMapper
         return last.ToValidIdentifier(CasingType.Pascal);
     }
 
-    protected string MapArrayType(object? value)
+    protected string MapArrayType(object? type)
     {
         switch (Settings.ArrayType)
         {
             case ArrayType.IEnumerable:
-                return $"IEnumerable<{value}>";
+                return $"IEnumerable<{type}>";
 
             case ArrayType.ICollection:
-                return $"ICollection<{value}>";
+                return $"ICollection<{type}>";
 
             case ArrayType.IList:
-                return $"IList<{value}>";
+                return $"IList<{type}>";
 
             case ArrayType.List:
-                return $"List<{value}>";
+                return $"List<{type}>";
 
             default:
-                return $"{value}[]";
+                return $"{type}[]";
         }
     }
 }

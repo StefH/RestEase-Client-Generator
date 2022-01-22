@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace MicrosoftStorageExampleConsoleApp.MicrosoftStorage.Models
 {
-    public class ProxyResource
+    public class ProxyResource : Resource
     {
     }
 }

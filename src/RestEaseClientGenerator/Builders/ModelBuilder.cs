@@ -1,4 +1,3 @@
-using System.Linq;
 using System.Text;
 using RestEaseClientGenerator.Models.Internal;
 using RestEaseClientGenerator.Settings;
@@ -21,23 +20,29 @@ internal class ModelBuilder : BaseBuilder
             builder.AppendLine();
         }
 
+        string extendsClass = string.Empty;
+        if (restEaseModel.Properties.Any(p => p.Extends is not null))
+        {
+            var extends = restEaseModel.Properties.Where(p => p.Extends is not null).Select(p => p.Extends);
+            extendsClass = $" : {string.Join(", ", extends)}";
+        }
+
         builder.AppendLine($"namespace {AppendModelsNamespace(restEaseModel.Namespace)}");
         builder.AppendLine("{");
-        builder.AppendLine($"    public class {restEaseModel.ClassName}");
+        builder.AppendLine($"    public class {restEaseModel.ClassName}{extendsClass}");
         builder.AppendLine("    {");
-        foreach (var property in restEaseModel.Properties)
+        foreach (var property in restEaseModel.Properties.Where(p => p.Extends is null))
         {
-            var propertyName = property.Split(' ').Last();
-            if (propertyName == restEaseModel.ClassName)
+            if (property.Name == restEaseModel.ClassName)
             {
-                builder.AppendLine($"        [Newtonsoft.Json.JsonProperty(\"{propertyName}\")]");
+                builder.AppendLine($"        [Newtonsoft.Json.JsonProperty(\"{property.Name}\")]");
                 builder.AppendLine($"        public {property}_ {{ get; set; }}");
             }
             else
             {
                 builder.AppendLine($"        public {property} {{ get; set; }}");
             }
-                
+
             if (property != restEaseModel.Properties.Last())
             {
                 builder.AppendLine();

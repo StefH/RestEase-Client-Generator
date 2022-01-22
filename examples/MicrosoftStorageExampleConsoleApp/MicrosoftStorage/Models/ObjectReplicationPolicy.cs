@@ -3,8 +3,9 @@ using System.Collections.Generic;
 
 namespace MicrosoftStorageExampleConsoleApp.MicrosoftStorage.Models
 {
-    public class ObjectReplicationPolicy
+    public class ObjectReplicationPolicy : Resource
     {
         public ObjectReplicationPolicyProperties Properties { get; set; }
+
     }
 }

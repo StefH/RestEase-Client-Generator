@@ -1,4 +1,3 @@
-using System.Security.AccessControl;
 using AnyOfTypes;
 using Microsoft.OpenApi;
 using Microsoft.OpenApi.Any;
@@ -18,7 +17,7 @@ internal class SchemaMapper : BaseMapper
     {
     }
 
-    public AnyOf<string, List<string>> MapSchema(RestEaseInterface @interface, OpenApiSchema schema, string? name, bool isNullable, bool pascalCase, OpenApiSpecVersion? openApiSpecVersion, string? directory)
+    public AnyOf<PropertyDto, IList<PropertyDto>> MapSchema(RestEaseInterface @interface, OpenApiSchema schema, string? name, bool isNullable, bool pascalCase, OpenApiSpecVersion? openApiSpecVersion, string? directory)
     {
         if (schema == null)
         {
@@ -27,7 +26,7 @@ internal class SchemaMapper : BaseMapper
 
         name ??= string.Empty;
 
-        string nameCamelCase = string.IsNullOrEmpty(name) ? string.Empty : $" {(pascalCase ? name.ToPascalCase() : name)}";
+        string nameCamelCase = string.IsNullOrEmpty(name) ? string.Empty : $"{(pascalCase ? name.ToPascalCase() : name)}";
 
         bool nullableForOpenApi20 = openApiSpecVersion == OpenApiSpecVersion.OpenApi2_0 && Settings.GeneratePrimitivePropertiesAsNullableForOpenApi20;
         string nullable = nullableForOpenApi20 || isNullable ? "?" : string.Empty;
@@ -39,47 +38,49 @@ internal class SchemaMapper : BaseMapper
                 {
                     case SchemaType.Object:
                         return schema.Items.Reference != null ?
-                            $"{MapArrayType(MakeValidModelName(schema.Items.Reference.Id))}{nameCamelCase}" :
-                            $"{MapArrayType("object")}{nameCamelCase}";
+                            new PropertyDto(MapArrayType(MakeValidModelName(schema.Items.Reference.Id)), nameCamelCase) :
+                            new PropertyDto(MapArrayType("object"), nameCamelCase);
 
                     case SchemaType.Unknown:
-                        return $"{MapArrayType("object")}{nameCamelCase}";
+                        return new PropertyDto(MapArrayType("object"), nameCamelCase);
 
                     case SchemaType.String:
                         if (schema.Items.Enum != null && schema.Items.Enum.Any() && Settings.PreferredEnumType == EnumType.Enum)
                         {
-                            return $"{MapArrayType(MakeValidModelName(name))}{nameCamelCase}";
+                            return new PropertyDto(MapArrayType(MakeValidModelName(name)), nameCamelCase);
                         }
                         else
                         {
-                            return $"{MapArrayType(MapSchema(@interface, schema.Items, null, schema.Items.Nullable, true, openApiSpecVersion, directory))}{nameCamelCase}";
+                            var sp = MapSchema(@interface, schema.Items, null, schema.Items.Nullable, true, openApiSpecVersion, directory);
+                            return new PropertyDto(MapArrayType(sp.First.Type), nameCamelCase);
                         }
 
                     default:
-                        return $"{MapArrayType(MapSchema(@interface, schema.Items, null, schema.Items.Nullable, true, openApiSpecVersion, directory))}{nameCamelCase}";
+                        var p = MapSchema(@interface, schema.Items, null, schema.Items.Nullable, true, openApiSpecVersion, directory);
+                        return new PropertyDto(MapArrayType(p.First.Type), nameCamelCase);
                 }
 
             case SchemaType.Boolean:
-                return $"bool{nullable}{nameCamelCase}";
+                return new PropertyDto($"bool{nullable}", nameCamelCase);
 
             case SchemaType.Integer:
                 switch (schema.GetSchemaFormat())
                 {
                     case SchemaFormat.Int64:
-                        return $"long{nullable}{nameCamelCase}";
+                        return new PropertyDto($"long{nullable}", nameCamelCase);
 
                     default:
-                        return $"int{nullable}{nameCamelCase}";
+                        return new PropertyDto($"int{nullable}", nameCamelCase);
                 }
 
             case SchemaType.Number:
                 switch (schema.GetSchemaFormat())
                 {
                     case SchemaFormat.Float:
-                        return $"float{nullable}{nameCamelCase}";
+                        return new PropertyDto($"float{nullable}", nameCamelCase);
 
                     default:
-                        return $"double{nullable}{nameCamelCase}";
+                        return new PropertyDto($"double{nullable}", nameCamelCase);
                 }
 
             case SchemaType.String:
@@ -87,14 +88,14 @@ internal class SchemaMapper : BaseMapper
                 {
                     case SchemaFormat.Date:
                     case SchemaFormat.DateTime:
-                        return $"{DateTime}{nullable}{nameCamelCase}";
+                        return new PropertyDto($"{DateTime}{nullable}", nameCamelCase);
 
                     case SchemaFormat.Byte:
                     case SchemaFormat.Binary:
                         return Settings.ApplicationOctetStreamType switch
                         {
-                            ApplicationOctetStreamType.Stream => $"System.IO.Stream{nameCamelCase}",
-                            _ => $"byte[]{nameCamelCase}"
+                            ApplicationOctetStreamType.Stream => new PropertyDto("System.IO.Stream", nameCamelCase),
+                            _ => new PropertyDto("byte[]", nameCamelCase)
                         };
 
                     default:
@@ -103,18 +104,18 @@ internal class SchemaMapper : BaseMapper
                             return Settings.PreferredEnumType switch
                             {
                                 EnumType.Enum => MapEnumSchema(schema, name, nameCamelCase, nullable),
-                                EnumType.Integer => $"int{nullable}{nameCamelCase}",
-                                EnumType.Object => $"object{nameCamelCase}",
-                                _ => $"string{nameCamelCase}"
+                                EnumType.Integer => new PropertyDto("int", nameCamelCase),
+                                EnumType.Object => new PropertyDto("object", nameCamelCase),
+                                _ => new PropertyDto("string", nameCamelCase)
                             };
                         }
 
-                        return $"string{nameCamelCase}";
+                        return new PropertyDto("string", nameCamelCase);
                 }
 
             case SchemaType.Object:
             case SchemaType.Unknown:
-                var list = new List<string>();
+                var list = new List<PropertyDto>();
                 if (schema.Properties == null)
                 {
                     return list;
@@ -125,28 +126,29 @@ internal class SchemaMapper : BaseMapper
                     var openApiSchema = schemaProperty.Value;
                     string objectName = pascalCase ? schemaProperty.Key.ToPascalCase() : schemaProperty.Key;
 
-                    var pp = MapReference(@interface, openApiSpecVersion, openApiSchema, objectName, directory);
-                    if (pp != null)
+                    var propertyDto = MapReference(@interface, openApiSpecVersion, openApiSchema, objectName, directory);
+                    if (propertyDto != null)
                     {
-                        list.Add(pp);
+                        list.Add(propertyDto);
                     }
                 }
 
                 foreach (var allOrAny in schema.AllOf.Union(schema.AnyOf))
                 {
-                    var extendsClass = MapReference(@interface, openApiSpecVersion, allOrAny, string.Empty, directory);
-
-
+                    var extendsType = MapReference(@interface, openApiSpecVersion, allOrAny, string.Empty, directory);
+                    if (extendsType is not null)
+                    {
+                        list.Add(new PropertyDto("not-used", "not-used", extendsType.Type));
+                    }
                 }
-                
 
                 return list;
 
             case SchemaType.File:
                 return Settings.MultipartFormDataFileType switch
                 {
-                    MultipartFormDataFileType.Stream => $"System.IO.Stream{nameCamelCase}",
-                    _ => $"byte[]{nameCamelCase}"
+                    MultipartFormDataFileType.Stream => new PropertyDto("System.IO.Stream", nameCamelCase),
+                    _ => new PropertyDto("byte[]", nameCamelCase)
                 };
 
             default:
@@ -155,7 +157,7 @@ internal class SchemaMapper : BaseMapper
         }
     }
 
-    private string? MapReference(
+    private PropertyDto? MapReference(
         RestEaseInterface @interface,
         OpenApiSpecVersion? openApiSpecVersion,
         OpenApiSchema openApiSchema,
@@ -167,7 +169,7 @@ internal class SchemaMapper : BaseMapper
             if (openApiSchema.AdditionalProperties?.Reference?.Id != null)
             {
                 var dictionaryType = $"Dictionary<string, {MakeValidModelName(openApiSchema.AdditionalProperties.Reference.Id)}>";
-                return $"{dictionaryType} {objectName}";
+                return new PropertyDto(dictionaryType, objectName);
             }
 
             if (openApiSchema.Reference != null)
@@ -188,14 +190,14 @@ internal class SchemaMapper : BaseMapper
                         @interface.ExtraModels.Add(newModel);
                     }
 
-                    return $"{className} {objectName}";
+                    return new PropertyDto(className, objectName);
                 }
 
                 if (openApiSchema.Reference.IsExternal)
                 {
                     var ex = new ExternalModelMapper(Settings, @interface).Map(openApiSchema, directory);
 
-                    return $"{ex} {objectName}";
+                    return new PropertyDto(ex, objectName);
                 }
             }
         }
@@ -212,12 +214,12 @@ internal class SchemaMapper : BaseMapper
         return null;
     }
 
-    private string MapEnumSchema(OpenApiSchema schema, string name, string nameCamelCase, string nullable)
+    private PropertyDto MapEnumSchema(OpenApiSchema schema, string name, string nameCamelCase, string nullable)
     {
         string enumName = name.ToPascalCase();
         string basename = enumName;
-        var enumValues = schema.Enum.OfType<OpenApiString>().SelectMany(str =>
-            str.Value.Split(new[] { '|' }, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim())).ToList();
+        var enumValues = schema.Enum.OfType<OpenApiString>()
+            .SelectMany(str => str.Value.Split(new[] { '|' }, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim())).ToList();
 
         var existingEnums = Enums.Where(e => e.BaseName == enumName).ToList();
         if (!existingEnums.Any())
@@ -235,7 +237,8 @@ internal class SchemaMapper : BaseMapper
         }
         else
         {
-            var existingEnumWithSameValues = existingEnums.SingleOrDefault(existingEnum => existingEnum.Values.SequenceEqual(enumValues));
+            var existingEnumWithSameValues = existingEnums
+                .SingleOrDefault(existingEnum => (existingEnum.Values ?? new List<string>()).SequenceEqual(enumValues));
 
             if (existingEnumWithSameValues == null)
             {
@@ -260,6 +263,6 @@ internal class SchemaMapper : BaseMapper
             }
         }
 
-        return $"{enumName}{nullable}{nameCamelCase}";
+        return new PropertyDto($"{enumName}{nullable}", nameCamelCase);
     }
 }

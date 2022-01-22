@@ -1,3 +1,9 @@
 namespace RestEaseClientGenerator.Models.Internal;
 
-internal record PropertyDto(string Type, string Name);
+public record PropertyDto(string Type, string Name, string? Extends = null)
+{
+    public override string ToString()
+    {
+        return $"{Type} {Name}";
+    }
+}

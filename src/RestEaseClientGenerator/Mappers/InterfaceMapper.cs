@@ -346,7 +346,7 @@ internal class InterfaceMapper : BaseMapper
             case SchemaType.Array:
                 string arrayType = schema.Items.Reference != null
                     ? MakeValidModelName(schema.Items.Reference.Id)
-                    : _schemaMapper.MapSchema(@interface, schema.Items, null, false, true, null, directory).ToString();
+                    : _schemaMapper.MapSchema(@interface, schema.Items, null, false, true, null, directory).First.Type;
 
                 return MapArrayType(arrayType);
 
@@ -361,19 +361,19 @@ internal class InterfaceMapper : BaseMapper
                         {
                             var extraModel = _schemaMapper.MapSchema(@interface, schema, className, false, true, null, directory);
 
-                            //if (extraModel.IsFirst && Settings.PreferredEnumType == EnumType.Enum)
-                            //{
-                            //    // It's a single string, so probably -enum
-                            //    var newEnum = new RestEaseEnum
-                            //    {
-                            //        Namespace = Settings.Namespace,
-                            //        EnumName = className,
-                            //        Values = null,
-                            //        EnumType = Settings.PreferredEnumType
-                            //    };
-                            //    @interface.ExtraEnums.Add(newEnum);
-                            //}
-                            //else
+                            if (extraModel.IsFirst && Settings.PreferredEnumType == EnumType.Enum)
+                            {
+                                // It's a single value, so probably -enum
+                                var newEnum = new RestEaseEnum
+                                {
+                                    Namespace = Settings.Namespace,
+                                    EnumName = className,
+                                    Values = null,
+                                    EnumType = Settings.PreferredEnumType
+                                };
+                                @interface.ExtraEnums.Add(newEnum);
+                            }
+                            else
                             {
                                 var newModel = new RestEaseModel
                                 {
@@ -402,15 +402,15 @@ internal class InterfaceMapper : BaseMapper
                     var additionalResult = _schemaMapper.MapSchema(@interface, schema.AdditionalProperties, null, schema.AdditionalProperties.Nullable, false, null, directory);
                     if (additionalResult.IsFirst)
                     {
-                        return additionalResult.First;
+                        return additionalResult.First.Type;
                     }
 
-                    throw new InvalidOperationException("AdditionalProperties should return a string");
+                    throw new InvalidOperationException($"AdditionalProperties should return a single {nameof(PropertyDto)}");
                 }
                 else
                 {
                     // Object is defined `inline`, create a new Model and use that one.
-                    string className = !string.IsNullOrEmpty(schema.Title)
+                    var className = !string.IsNullOrEmpty(schema.Title)
                         ? CSharpUtils.CreateValidIdentifier(schema.Title, CasingType.Pascal)
                         : $"{methodRestEaseMethodName.ToPascalCase()}Result";
 
@@ -720,8 +720,7 @@ internal class InterfaceMapper : BaseMapper
 
     private string MapReturnType(object returnType)
     {
-        var returnTypeAsString = returnType as string;
-        if (returnTypeAsString == null)
+        if (returnType is not string returnTypeAsString)
         {
             return "Task";
         }

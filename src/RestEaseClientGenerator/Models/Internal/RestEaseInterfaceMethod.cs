@@ -2,9 +2,9 @@ namespace RestEaseClientGenerator.Models.Internal;
 
 public class RestEaseInterfaceMethod
 {
-    public string ReturnType { get; set; }
+    public string ReturnType { get; set; } = null!;
 
-    public string Name { get; set; }
+    public string Name { get; set; } = null!;
 
     // public string ParametersAsString { get; set; }
 
