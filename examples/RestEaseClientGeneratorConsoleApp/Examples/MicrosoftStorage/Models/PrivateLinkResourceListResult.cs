@@ -5,6 +5,6 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftStorage.Models
 {
     public class PrivateLinkResourceListResult
     {
-        public object[] Value { get; set; }
+        public PrivateLinkResource[] Value { get; set; }
     }
 }

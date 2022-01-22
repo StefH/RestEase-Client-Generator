@@ -5,6 +5,6 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftStorage.Models
 {
     public class PrivateEndpointConnectionListResult
     {
-        public object[] Value { get; set; }
+        public PrivateEndpointConnection[] Value { get; set; }
     }
 }

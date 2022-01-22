@@ -3,8 +3,9 @@ using System.Collections.Generic;
 
 namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftStorage.Models
 {
-    public class PrivateLinkResource
+    public class PrivateLinkResource : Resource
     {
         public PrivateLinkResourceProperties Properties { get; set; }
+
     }
 }

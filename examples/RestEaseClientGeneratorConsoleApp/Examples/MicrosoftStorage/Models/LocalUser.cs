@@ -3,10 +3,11 @@ using System.Collections.Generic;
 
 namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftStorage.Models
 {
-    public class LocalUser
+    public class LocalUser : Resource
     {
         public LocalUserProperties Properties { get; set; }
 
         public SystemData SystemData { get; set; }
+
     }
 }

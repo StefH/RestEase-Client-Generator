@@ -36,10 +36,10 @@
             "$ref": "./storage.json#/parameters/StorageAccountName"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -78,10 +78,10 @@
             "$ref": "./storage.json#/parameters/StorageAccountName"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           },
           {
             "$ref": "#/parameters/BlobServicesName"
@@ -124,10 +124,10 @@
             "$ref": "./storage.json#/parameters/StorageAccountName"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           },
           {
             "$ref": "#/parameters/BlobServicesName"
@@ -166,10 +166,10 @@
             "$ref": "./storage.json#/parameters/StorageAccountName"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           },
           {
             "name": "$maxpagesize",
@@ -249,10 +249,10 @@
             "description": "Properties of the blob container to create."
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -301,10 +301,10 @@
             "description": "Properties to update for the blob container."
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -342,10 +342,10 @@
             "$ref": "#/parameters/ContainerName"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -379,10 +379,10 @@
             "$ref": "#/parameters/ContainerName"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -421,10 +421,10 @@
             "$ref": "#/parameters/ContainerName"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           },
           {
             "name": "LegalHold",
@@ -469,10 +469,10 @@
             "$ref": "#/parameters/ContainerName"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           },
           {
             "name": "LegalHold",
@@ -523,10 +523,10 @@
             "$ref": "#/parameters/ImmutabilityPolicyName"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           },
           {
             "name": "parameters",
@@ -584,10 +584,10 @@
             "$ref": "#/parameters/ImmutabilityPolicyName"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           },
           {
             "name": "If-Match",
@@ -637,10 +637,10 @@
             "$ref": "#/parameters/ImmutabilityPolicyName"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           },
           {
             "name": "If-Match",
@@ -689,10 +689,10 @@
             "$ref": "#/parameters/ContainerName"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           },
           {
             "name": "If-Match",
@@ -741,10 +741,10 @@
             "$ref": "#/parameters/ContainerName"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           },
           {
             "name": "parameters",
@@ -804,10 +804,10 @@
             "$ref": "#/parameters/ContainerName"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           },
           {
             "name": "parameters",
@@ -851,10 +851,10 @@
             "$ref": "#/parameters/ContainerName"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/ApiVersionParameter"
+            "$ref": "./v1-types.json#/parameters/ApiVersionParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/types.json#/parameters/SubscriptionIdParameter"
+            "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           }
         ],
         "responses": {
@@ -1025,7 +1025,7 @@
       },
       "allOf": [
         {
-          "$ref": "../../../../../common-types/resource-management/v1/types.json#/definitions/AzureEntityResource"
+          "$ref": "./v1-types.json#/definitions/AzureEntityResource"
         }
       ],
       "description": "Properties of the blob container, including Id, resource name, resource type, Etag."
@@ -1093,7 +1093,7 @@
       },
       "allOf": [
         {
-          "$ref": "../../../../../common-types/resource-management/v1/types.json#/definitions/AzureEntityResource"
+          "$ref": "./v1-types.json#/definitions/AzureEntityResource"
         }
       ],
       "required": [
@@ -1287,7 +1287,7 @@
       },
       "allOf": [
         {
-          "$ref": "../../../../../common-types/resource-management/v1/types.json#/definitions/AzureEntityResource"
+          "$ref": "./v1-types.json#/definitions/AzureEntityResource"
         }
       ],
       "description": "The blob container properties be listed out."
@@ -1363,7 +1363,7 @@
       },
       "allOf": [
         {
-          "$ref": "../../../../../common-types/resource-management/v1/types.json#/definitions/Resource"
+          "$ref": "./v1-types.json#/definitions/Resource"
         }
       ],
       "description": "The properties of a storage account’s Blob service."

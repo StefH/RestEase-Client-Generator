@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftStorage.Models
 {
-    public class StorageAccount
+    public class StorageAccount : TrackedResource
     {
         public Sku Sku { get; set; }
 
@@ -14,5 +14,6 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftStorage.Models
         public ExtendedLocation ExtendedLocation { get; set; }
 
         public StorageAccountProperties Properties { get; set; }
+
     }
 }
