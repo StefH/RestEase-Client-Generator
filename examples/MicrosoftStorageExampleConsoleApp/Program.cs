@@ -37,8 +37,7 @@ static void Generate20190401()
         SingleFile = false,
         PreferredMultipleResponsesType = MultipleResponsesType.AnyOf,
         PreferredSecurityDefinitionType = SecurityDefinitionType.None,
-        GenerationType = GenerationType.Both,
-        MethodReturnType = MethodReturnType.Response
+        GenerationType = GenerationType.Both
     };
 
     const string x = @"C:\Dev\azure-rest-api-specs\specification\storage\resource-manager\Microsoft.Storage\stable\2019-04-01\storage.json";

@@ -13,7 +13,7 @@
     "application/json"
   ],
   "produces": [
-    "application/json"
+    "application/json"  
   ],
   "paths": {
     "/providers/Microsoft.Storage/operations": {
@@ -1297,7 +1297,7 @@
             "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/privatelinks.json#/parameters/PrivateEndpointConnectionName"
+            "$ref": "./privatelinks.json#/parameters/PrivateEndpointConnectionName"
           }
         ],
         "responses": {
@@ -1340,7 +1340,7 @@
             "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/privatelinks.json#/parameters/PrivateEndpointConnectionName"
+            "$ref": "./privatelinks.json#/parameters/PrivateEndpointConnectionName"
           },
           {
             "name": "properties",
@@ -1392,7 +1392,7 @@
             "$ref": "./v1-types.json#/parameters/SubscriptionIdParameter"
           },
           {
-            "$ref": "../../../../../common-types/resource-management/v1/privatelinks.json#/parameters/PrivateEndpointConnectionName"
+            "$ref": "./privatelinks.json#/parameters/PrivateEndpointConnectionName"
           }
         ],
         "responses": {

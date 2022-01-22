@@ -5,7 +5,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftContainerInstance.
 {
     public class ContainerGroupListResult
     {
-        public object[] Value { get; set; }
+        public ContainerGroup[] Value { get; set; }
 
         public string NextLink { get; set; }
     }

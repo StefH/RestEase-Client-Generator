@@ -14,8 +14,5 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftContainerInstance.
         public string IpAddressType { get; set; }
 
         public string Gpu { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("Capabilities")]
-        public object Capabilities_ { get; set; }
     }
 }

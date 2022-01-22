@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftContainerInstance.Models
 {
-    public class ContainerGroup
+    public class ContainerGroup : Resource
     {
     }
 }

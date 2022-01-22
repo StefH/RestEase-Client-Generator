@@ -10,7 +10,5 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftContainerInstance.
         public int CurrentValue { get; set; }
 
         public int Limit { get; set; }
-
-        public object Name { get; set; }
     }
 }

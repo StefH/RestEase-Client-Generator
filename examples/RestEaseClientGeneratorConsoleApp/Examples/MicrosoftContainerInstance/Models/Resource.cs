@@ -13,8 +13,6 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftContainerInstance.
 
         public string Location { get; set; }
 
-        public object Tags { get; set; }
-
         public string[] Zones { get; set; }
     }
 }

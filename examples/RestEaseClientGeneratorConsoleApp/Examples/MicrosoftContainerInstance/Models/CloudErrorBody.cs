@@ -11,6 +11,6 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftContainerInstance.
 
         public string Target { get; set; }
 
-        public object[] Details { get; set; }
+        public CloudErrorBody[] Details { get; set; }
     }
 }

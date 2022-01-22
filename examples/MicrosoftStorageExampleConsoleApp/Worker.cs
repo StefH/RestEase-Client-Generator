@@ -75,20 +75,12 @@ internal class Worker
         {
             var content = new StorageAccountCreateParameters
             {
-
                 Sku = new Sku
                 {
-                    Name = "Standard_LRS",
-                    Tier = "Standard"
+                    Name = "Standard_LRS"
                 },
                 Kind = "StorageV2",
                 Location = "westeurope"
-                //Properties = new StorageAccountPropertiesCreateParameters
-                //{
-                //    IsHnsEnabled = true,
-                //    AllowBlobPublicAccess = false,
-                //    AllowSharedKeyAccess = false
-                //}
             };
 
             var name = ("stef" + Guid.NewGuid().ToString().Replace("-", "")).Substring(0, 24);
@@ -99,19 +91,16 @@ internal class Worker
                 "2de19637-27a3-42a8-812f-2c2a7f7f935c",
                 content);
             _logger.LogInformation("_storageApi.StorageAccountsCreateAsync {status} = '{sa}'", sa1.ResponseMessage.StatusCode, sa1.StringContent);
-            //_logger.LogInformation("_storageApi.StorageAccountsCreateAsync 204 = '{sa}'", sa1.Second);
 
             Console.WriteLine("waiting...");
             await Task.Delay(5000, cancellationToken).ConfigureAwait(false);
 
-            // Task<Response<AnyOf<StorageAccount, object>>> StorageAccountsCreateAsyncOK
             var sa2 = await _storageApi.StorageAccountsCreateAsync(
                 "testformanagementsdk",
                 name,
                 "2de19637-27a3-42a8-812f-2c2a7f7f935c",
                 content);
             _logger.LogInformation("_storageApi.StorageAccountsCreateAsync {status} = '{sa}'", sa2.ResponseMessage.StatusCode, sa2.GetContent().First.Id);
-            //_logger.LogInformation("_storageApi.StorageAccountsCreateAsync 200 = '{sa}'", sa2.First.Id);
         }
         catch (Exception ex)
         {
