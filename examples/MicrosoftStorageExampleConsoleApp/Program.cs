@@ -59,7 +59,7 @@ static ServiceProvider RegisterServices(string[] args)
 
     services
         .UseWithAzureAuthenticatedRestEaseClient<IMicrosoftStorageApi>(
-            configuration.GetSection("DocumentApiClientOptions"),
+            configuration.GetSection("ManagementOptions"),
             c =>
             {
                 c.JsonSerializerSettings = new JsonSerializerSettings { Converters = new List<JsonConverter> { new AnyOfJsonConverter() } };

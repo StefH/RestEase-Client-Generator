@@ -17,7 +17,7 @@ internal class Worker
     public Worker(IMicrosoftStorageApi storageApi, ILogger<Worker> logger)
     {
         _storageApi = storageApi;
-        // _storageApi.SubscriptionId = "xxx";
+        _storageApi.ApiVersion = "2021-08-01";
 
         _logger = logger;
     }
