@@ -6,12 +6,12 @@ using RestEaseClientGenerator.Utils;
 
 namespace RestEaseClientGenerator.Mappers;
 
-internal class ExternalReferenceMapper
+internal class ExternalReferenceMapper : BaseMapper
 {
     private readonly GeneratorSettings _settings;
     private readonly RestEaseInterface _interface;
 
-    public ExternalReferenceMapper(GeneratorSettings settings, RestEaseInterface @interface)
+    public ExternalReferenceMapper(GeneratorSettings settings, RestEaseInterface @interface) : base(settings)
     {
         _settings = settings;
         _interface = @interface;
@@ -94,7 +94,7 @@ internal class ExternalReferenceMapper
 
         var location = Path.Combine(directory, reference.ExternalResource);
 
-        var className = reference.Id.Split('/').Last();
+        var className = MakeValidReferenceId(reference.Id);
 
         return (className, generator.FromFileInternal(location, settings, out var x));
     }

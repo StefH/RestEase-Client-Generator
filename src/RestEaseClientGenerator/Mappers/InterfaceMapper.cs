@@ -137,7 +137,7 @@ internal class InterfaceMapper : BaseMapper
 
     private RestEaseInterfaceMethodDetails MapOperationToMappingModel(RestEaseInterface @interface, string path, string httpMethod, OpenApiOperation operation, string? directory)
     {
-        if (path == "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/privateEndpointConnections/{privateEndpointConnectionName}")
+        if (path == "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}")
         {
             int p = 0;
         }
@@ -333,7 +333,7 @@ internal class InterfaceMapper : BaseMapper
 
             case SchemaType.Array:
                 var arrayType = schema.Items.Reference != null
-                    ? MakeValidModelName(schema.Items.Reference.Id)
+                    ? MakeValidReferenceId(schema.Items.Reference.Id)
                     : _schemaMapper.MapSchema(@interface, schema.Items, null, false, true, null, directory).First.Type;
 
                 return MapArrayType(arrayType);
@@ -344,7 +344,7 @@ internal class InterfaceMapper : BaseMapper
                 {
                     if (schema.Reference.IsLocal)
                     {
-                        var className = MakeValidModelName(schema.Reference.Id);
+                        var className = MakeValidReferenceId(schema.Reference.Id);
                         if (@interface.ExtraModels.All(m => m.ClassName != className) || @interface.ExtraEnums.All(m => m.EnumName != className))
                         {
                             var extraModel = _schemaMapper.MapSchema(@interface, schema, className, false, true, null, directory);
@@ -461,7 +461,7 @@ internal class InterfaceMapper : BaseMapper
         }
     }
 
-    private RequestDetails MapRequestDetails(
+    private RequestDetails? MapRequestDetails(
         RestEaseInterface @interface,
         MediaTypeInfo detected,
         ICollection<RestEaseParameter> bodyParameterList,
@@ -571,13 +571,14 @@ internal class InterfaceMapper : BaseMapper
             {
                 case SchemaType.Array:
                     string arrayType = detected.Value.Schema.Items.Reference != null
-                        ? MakeValidModelName(detected.Value.Schema.Items.Reference.Id)
+                        ? MakeValidReferenceId(detected.Value.Schema.Items.Reference.Id)
                         : _schemaMapper.MapSchema(@interface, detected.Value.Schema.Items, null, false, true, null, directory).ToString();
                     bodyParameter = MapArrayType(arrayType);
                     break;
 
                 case SchemaType.Object:
-                    bodyParameter = detected.Value.Schema.Reference != null ? MakeValidModelName(detected.Value.Schema.Reference.Id) : null;
+                case SchemaType.Unknown:
+                    bodyParameter = detected.Value.Schema.Reference != null ? MakeValidReferenceId(detected.Value.Schema.Reference.Id) : null;
                     break;
             }
 

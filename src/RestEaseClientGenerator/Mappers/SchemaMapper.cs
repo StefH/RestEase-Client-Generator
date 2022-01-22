@@ -150,7 +150,7 @@ internal class SchemaMapper : BaseMapper
         {
             if (openApiSchema.AdditionalProperties?.Reference?.Id != null)
             {
-                var dictionaryType = $"Dictionary<string, {MakeValidModelName(openApiSchema.AdditionalProperties.Reference.Id)}>";
+                var dictionaryType = $"Dictionary<string, {MakeValidReferenceId(openApiSchema.AdditionalProperties.Reference.Id)}>";
                 return new PropertyDto(dictionaryType, objectName);
             }
 
@@ -167,7 +167,7 @@ internal class SchemaMapper : BaseMapper
         switch (reference)
         {
             case { IsLocal: true }:
-                var className = MakeValidModelName(reference.Id);
+                var className = MakeValidReferenceId(reference.Id);
                 //var existingModel = @interface.ExtraModels.FirstOrDefault(m => m.ClassName == className);
                 //if (existingModel == null)
                 //{

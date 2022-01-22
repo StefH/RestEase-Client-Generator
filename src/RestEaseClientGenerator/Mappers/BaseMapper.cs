@@ -22,6 +22,11 @@ public abstract class BaseMapper
         return last.ToValidIdentifier(CasingType.Pascal);
     }
 
+    protected string MakeValidReferenceId(string id)
+    {
+        return MakeValidModelName(id.Split('/').Last());
+    }
+
     protected string MapArrayType(object? type)
     {
         return Settings.ArrayType switch

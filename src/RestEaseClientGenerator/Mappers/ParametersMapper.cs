@@ -41,7 +41,7 @@ internal class ParametersMapper : BaseMapper
         switch (reference)
         {
             case { IsLocal: true }:
-                var name = MakeValidModelName(reference.Id.Split('/').Last());
+                var name = MakeValidReferenceId(reference.Id);
                 if (@interface.Parameters.TryGetValue(name, out var parameter))
                 {
                     return parameter;
