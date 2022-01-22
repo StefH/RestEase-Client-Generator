@@ -5,6 +5,6 @@ namespace MicrosoftStorageExampleConsoleApp.MicrosoftStorage.Models
 {
     public class StorageSkuListResult
     {
-        public object[] Value { get; set; }
+        public SkuInformation[] Value { get; set; }
     }
 }

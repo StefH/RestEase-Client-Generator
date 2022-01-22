@@ -31,18 +31,24 @@ internal class SchemaMapper : BaseMapper
         bool nullableForOpenApi20 = openApiSpecVersion == OpenApiSpecVersion.OpenApi2_0 && Settings.GeneratePrimitivePropertiesAsNullableForOpenApi20;
         string nullable = nullableForOpenApi20 || isNullable ? "?" : string.Empty;
 
+        if (name == "PrivateEndpointConnectionListResult")
+        {
+            int x = 9;
+        }
+
         switch (schema.GetSchemaType())
         {
             case SchemaType.Array:
                 switch (schema.Items.GetSchemaType())
                 {
                     case SchemaType.Object:
+                    case SchemaType.Unknown:
                         return schema.Items.Reference != null ?
                             new PropertyDto(MapArrayType(MakeValidModelName(schema.Items.Reference.Id)), nameCamelCase) :
                             new PropertyDto(MapArrayType("object"), nameCamelCase);
 
-                    case SchemaType.Unknown:
-                        return new PropertyDto(MapArrayType("object"), nameCamelCase);
+                    //case SchemaType.Unknown:
+                    //    return new PropertyDto(MapArrayType("object"), nameCamelCase);
 
                     case SchemaType.String:
                         if (schema.Items.Enum != null && schema.Items.Enum.Any() && Settings.PreferredEnumType == EnumType.Enum)

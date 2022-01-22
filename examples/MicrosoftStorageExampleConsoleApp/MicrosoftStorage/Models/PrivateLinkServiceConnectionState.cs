@@ -9,6 +9,6 @@ namespace MicrosoftStorageExampleConsoleApp.MicrosoftStorage.Models
 
         public string Description { get; set; }
 
-        public string ActionsRequired { get; set; }
+        public string ActionRequired { get; set; }
     }
 }

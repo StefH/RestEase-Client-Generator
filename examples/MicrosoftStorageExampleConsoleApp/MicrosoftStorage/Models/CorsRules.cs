@@ -6,6 +6,6 @@ namespace MicrosoftStorageExampleConsoleApp.MicrosoftStorage.Models
     public class CorsRules
     {
         [Newtonsoft.Json.JsonProperty("CorsRules")]
-        public object[] CorsRules_ { get; set; }
+        public CorsRule[] CorsRules_ { get; set; }
     }
 }

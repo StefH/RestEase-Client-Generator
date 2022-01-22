@@ -3,8 +3,8 @@ using System.Collections.Generic;
 
 namespace MicrosoftStorageExampleConsoleApp.MicrosoftStorage.Models
 {
-    public class ManagementPolicySchema
+    public class CloudError
     {
-        public ManagementPolicyRule[] Rules { get; set; }
+        public CloudErrorBody Error { get; set; }
     }
 }

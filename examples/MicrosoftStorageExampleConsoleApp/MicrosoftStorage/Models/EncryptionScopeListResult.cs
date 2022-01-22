@@ -5,7 +5,7 @@ namespace MicrosoftStorageExampleConsoleApp.MicrosoftStorage.Models
 {
     public class EncryptionScopeListResult
     {
-        public object[] Value { get; set; }
+        public EncryptionScope[] Value { get; set; }
 
         public string NextLink { get; set; }
     }

@@ -7,11 +7,11 @@ namespace MicrosoftStorageExampleConsoleApp.MicrosoftStorage.Models
     {
         public string Bypass { get; set; }
 
-        public object[] ResourceAccessRules { get; set; }
+        public ResourceAccessRule[] ResourceAccessRules { get; set; }
 
-        public object[] VirtualNetworkRules { get; set; }
+        public VirtualNetworkRule[] VirtualNetworkRules { get; set; }
 
-        public object[] IpRules { get; set; }
+        public IPRule[] IpRules { get; set; }
 
         public string DefaultAction { get; set; }
     }

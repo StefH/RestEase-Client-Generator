@@ -24,22 +24,13 @@ public abstract class BaseMapper
 
     protected string MapArrayType(object? type)
     {
-        switch (Settings.ArrayType)
+        return Settings.ArrayType switch
         {
-            case ArrayType.IEnumerable:
-                return $"IEnumerable<{type}>";
-
-            case ArrayType.ICollection:
-                return $"ICollection<{type}>";
-
-            case ArrayType.IList:
-                return $"IList<{type}>";
-
-            case ArrayType.List:
-                return $"List<{type}>";
-
-            default:
-                return $"{type}[]";
-        }
+            ArrayType.IEnumerable => $"IEnumerable<{type}>",
+            ArrayType.ICollection => $"ICollection<{type}>",
+            ArrayType.IList => $"IList<{type}>",
+            ArrayType.List => $"List<{type}>",
+            _ => $"{type}[]"
+        };
     }
 }

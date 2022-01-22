@@ -5,6 +5,6 @@ namespace MicrosoftStorageExampleConsoleApp.MicrosoftStorage.Models
 {
     public class StorageAccountListKeysResult
     {
-        public object[] Keys { get; set; }
+        public StorageAccountKey[] Keys { get; set; }
     }
 }
