@@ -31,16 +31,16 @@ namespace RestEaseClientGeneratorConsoleApp
             }.For<IPetStoreOpenApi3Api>();
 
             var findPetsByStatusAsync = await petStoreApi.FindPetsByStatusAsync("available");
-            if (findPetsByStatusAsync.IsFirst)
+            if (findPetsByStatusAsync.GetContent().IsFirst)
             {
-                foreach (var find in findPetsByStatusAsync.First)
+                foreach (var find in findPetsByStatusAsync.GetContent().First)
                 {
                     Console.WriteLine("FindPetsByStatusAsync Pets:" + JsonConvert.SerializeObject(find));
                 }
             }
             else
             {
-                Console.WriteLine("FindPetsByStatusAsync object:" + JsonConvert.SerializeObject(findPetsByStatusAsync.Second.StringContent));
+                Console.WriteLine("FindPetsByStatusAsync object:" + JsonConvert.SerializeObject(findPetsByStatusAsync.GetContent().Second));
             }
 
             try
@@ -61,7 +61,7 @@ namespace RestEaseClientGeneratorConsoleApp
                 Status = "available",
                 PhotoUrls = new string[] { }
             });
-            Console.WriteLine("AddPetAsync:" + JsonConvert.SerializeObject(addPet.CurrentValue));
+            Console.WriteLine("AddPetAsync:" + JsonConvert.SerializeObject(addPet.GetContent().CurrentValue));
         }
     }
 }

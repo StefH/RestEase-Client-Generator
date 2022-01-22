@@ -16,9 +16,5 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Models
         public string DomainSid { get; set; }
 
         public string AzureStorageSid { get; set; }
-
-        public string SamAccountName { get; set; }
-
-        public string AccountType { get; set; }
     }
 }

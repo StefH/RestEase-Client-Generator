@@ -70,21 +70,6 @@ namespace RestEaseClientGeneratorConsoleApp
                 File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/MicrosoftStorage/{file.Path}/{file.Name}", file.Content);
             }
 
-            var storageSettings2 = new GeneratorSettings
-            {
-                Namespace = "StefExamples.MicrosoftStorage",
-                ApiName = "MicrosoftStorage",
-                SingleFile = false,
-                PreferredMultipleResponsesType = MultipleResponsesType.AnyOf,
-                PreferredSecurityDefinitionType = SecurityDefinitionType.None,
-                GenerationType = GenerationType.Both
-            };
-            foreach (var file in generator.FromFile(@"C:\Users\StefHeyenrath\Downloads\azure-rest-api-specs-main\specification\storage\resource-manager\Microsoft.Storage\stable\2021-08-01\storage.json", storageSettings2, out OpenApiDiagnostic diagnosticStorage2))
-            {
-                File.WriteAllText($@"C:\Users\StefHeyenrath\Downloads\azure-rest-api-specs-main\specification\storage\resource-manager\Microsoft.Storage\stable\2021-08-01\{file.Path}\{file.Name}", file.Content);
-            }
-            
-            //
             return;
 
             var aciSettings = new GeneratorSettings

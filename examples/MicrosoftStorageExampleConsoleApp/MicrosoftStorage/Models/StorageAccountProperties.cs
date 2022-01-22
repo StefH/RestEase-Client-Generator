@@ -41,10 +41,6 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Models
 
         public NetworkRuleSet NetworkAcls { get; set; }
 
-        public bool IsSftpEnabled { get; set; }
-
-        public bool IsLocalUserEnabled { get; set; }
-
         public bool IsHnsEnabled { get; set; }
 
         public GeoReplicationStats GeoReplicationStats { get; set; }
@@ -68,13 +64,5 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Models
         public bool IsNfsV3Enabled { get; set; }
 
         public bool AllowCrossTenantReplication { get; set; }
-
-        public bool DefaultToOAuthAuthentication { get; set; }
-
-        public string PublicNetworkAccess { get; set; }
-
-        public ImmutableStorageAccount ImmutableStorageWithVersioning { get; set; }
-
-        public string AllowedCopyScope { get; set; }
     }
 }

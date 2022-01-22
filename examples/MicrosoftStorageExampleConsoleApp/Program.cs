@@ -12,8 +12,8 @@ using RestEaseClientGenerator.Types;
 using Serilog;
 using Serilog.Sinks.SystemConsole.Themes;
 
-Generate20190401();
-// GenerateLatestStable();
+//Generate20190401();
+Generate20210401();
 
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Debug()
@@ -49,7 +49,7 @@ static void Generate20190401()
     }
 }
 
-static void GenerateLatestStable()
+static void Generate20210401()
 {
     var generator = new Generator();
 
@@ -63,7 +63,7 @@ static void GenerateLatestStable()
         GenerationType = GenerationType.Both
     };
 
-    const string x = @"C:\Dev\azure-rest-api-specs\specification\storage\resource-manager\Microsoft.Storage\stable\2021-08-01\storage.json";
+    const string x = @"C:\Dev\azure-rest-api-specs\specification\storage\resource-manager\Microsoft.Storage\stable\2021-04-01\storage.json";
     foreach (var file in generator.FromFile(x, storageSettings, out OpenApiDiagnostic diagnosticStorage))
     {
         Console.WriteLine("Generating file-type '{0}': {1}\\{2}", file.FileType, file.Path, file.Name);
@@ -85,13 +85,21 @@ static ServiceProvider RegisterServices(string[] args)
             configuration.GetSection("ManagementOptions"),
             c =>
             {
-                c.JsonSerializerSettings = new JsonSerializerSettings { Converters = new List<JsonConverter> { new AnyOfJsonConverter() } };
+                c.JsonSerializerSettings = new JsonSerializerSettings
+                {
+                    NullValueHandling = NullValueHandling.Ignore,
+                    Converters = new List<JsonConverter> { new AnyOfJsonConverter() }
+                };
             })
         .UseWithAzureAuthenticatedRestEaseClient<IMicrosoftStorage20190401Api>(
             configuration.GetSection("ManagementOptions"),
             c =>
             {
-                c.JsonSerializerSettings = new JsonSerializerSettings { Converters = new List<JsonConverter> { new AnyOfJsonConverter() } };
+                c.JsonSerializerSettings = new JsonSerializerSettings
+                {
+                    NullValueHandling = NullValueHandling.Ignore,
+                    Converters = new List<JsonConverter> { new AnyOfJsonConverter() }
+                };
             });
 
 

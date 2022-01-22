@@ -270,7 +270,7 @@ internal class InterfaceMapper : BaseMapper
             if (TryGetOpenApiMediaType(
                     response.Value.Content,
                     SupportedContentType.ApplicationJson,
-                    out OpenApiMediaType responseJson, out var _))
+                    out OpenApiMediaType responseJson, out _))
             {
                 var rt = GetReturnType(@interface, responseJson.Schema, methodRestEaseMethodName, directory);
                 if (rt is not null)
@@ -281,7 +281,7 @@ internal class InterfaceMapper : BaseMapper
             else
             {
                 // It's not JSON, just use object
-                returnTypes.Add("Response<object>");
+                returnTypes.Add("object");
             }
         }
 
@@ -290,6 +290,7 @@ internal class InterfaceMapper : BaseMapper
             return returnTypes.First();
         }
 
+        // Task<Response<AnyOf<StorageAccount, object>>> StorageAccountsCreateAsyncOK
         switch (Settings.PreferredMultipleResponsesType)
         {
             case MultipleResponsesType.First:
@@ -297,7 +298,7 @@ internal class InterfaceMapper : BaseMapper
 
             case MultipleResponsesType.AnyOf:
                 var distinct = returnTypes.Distinct().ToArray();
-                return distinct.Length > 1 ? $"AnyOf<{string.Join(", ", distinct)}>" : distinct.First();
+                return distinct.Length > 1 ? $"Response<AnyOf<{string.Join(", ", distinct)}>>" : distinct.First();
 
             default:
                 return "Response<object>";
@@ -452,7 +453,7 @@ internal class InterfaceMapper : BaseMapper
                 }
                 else if (Settings.ReturnResponseObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified)
                 {
-                    return "Response<object>";
+                    return "object";
                 }
                 else
                 {

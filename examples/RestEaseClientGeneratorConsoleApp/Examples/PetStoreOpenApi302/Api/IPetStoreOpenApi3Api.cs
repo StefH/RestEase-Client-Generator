@@ -24,7 +24,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreOpenApi302.Api
         /// <param name="content">Update an existent pet in the store</param>
         [Put("/pet")]
         [Header("Content-Type", "application/json")]
-        Task<AnyOf<Pet, Response<object>>> UpdatePetAsync([Body] Pet content);
+        Task<Response<AnyOf<Pet, object>>> UpdatePetAsync([Body] Pet content);
 
         /// <summary>
         /// Add a new pet to the store
@@ -32,28 +32,28 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreOpenApi302.Api
         /// <param name="content">Create a new pet in the store</param>
         [Post("/pet")]
         [Header("Content-Type", "application/json")]
-        Task<AnyOf<Pet, Response<object>>> AddPetAsync([Body] Pet content);
+        Task<Response<AnyOf<Pet, object>>> AddPetAsync([Body] Pet content);
 
         /// <summary>
         /// Finds Pets by status
         /// </summary>
         /// <param name="status">Status values that need to be considered for filter</param>
         [Get("/pet/findByStatus")]
-        Task<AnyOf<Pet[], Response<object>>> FindPetsByStatusAsync([Query] string status);
+        Task<Response<AnyOf<Pet[], object>>> FindPetsByStatusAsync([Query] string status);
 
         /// <summary>
         /// Finds Pets by tags
         /// </summary>
         /// <param name="tags">Tags to filter by</param>
         [Get("/pet/findByTags")]
-        Task<AnyOf<Pet[], Response<object>>> FindPetsByTagsAsync([Query] string[] tags);
+        Task<Response<AnyOf<Pet[], object>>> FindPetsByTagsAsync([Query] string[] tags);
 
         /// <summary>
         /// Find pet by ID
         /// </summary>
         /// <param name="petId">ID of pet to return</param>
         [Get("/pet/{petId}")]
-        Task<AnyOf<Pet, Response<object>>> GetPetByPetIdAsync([Path] long petId);
+        Task<Response<AnyOf<Pet, object>>> GetPetByPetIdAsync([Path] long petId);
 
         /// <summary>
         /// Updates a pet in the store with form data
@@ -62,7 +62,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreOpenApi302.Api
         /// <param name="name">Name of pet that needs to be updated</param>
         /// <param name="status">Status of pet that needs to be updated</param>
         [Post("/pet/{petId}")]
-        Task<Response<object>> UpdatePetWithFormAsync([Path] long petId, [Query] string name, [Query] string status);
+        Task<object> UpdatePetWithFormAsync([Path] long petId, [Query] string name, [Query] string status);
 
         /// <summary>
         /// Deletes a pet
@@ -70,7 +70,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreOpenApi302.Api
         /// <param name="petId">Pet id to delete</param>
         /// <param name="apiKey"></param>
         [Delete("/pet/{petId}")]
-        Task<Response<object>> DeletePetAsync([Path] long petId);
+        Task<object> DeletePetAsync([Path] long petId);
 
         /// <summary>
         /// uploads an image
@@ -94,21 +94,21 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreOpenApi302.Api
         /// <param name="content"></param>
         [Post("/store/order")]
         [Header("Content-Type", "application/json")]
-        Task<AnyOf<Order, Response<object>>> PlaceOrderAsync([Body] Order content);
+        Task<Response<AnyOf<Order, object>>> PlaceOrderAsync([Body] Order content);
 
         /// <summary>
         /// Find purchase order by ID
         /// </summary>
         /// <param name="orderId">ID of order that needs to be fetched</param>
         [Get("/store/order/{orderId}")]
-        Task<AnyOf<Order, Response<object>>> GetOrderByIdAsync([Path] long orderId);
+        Task<Response<AnyOf<Order, object>>> GetOrderByIdAsync([Path] long orderId);
 
         /// <summary>
         /// Delete purchase order by ID
         /// </summary>
         /// <param name="orderId">ID of the order that needs to be deleted</param>
         [Delete("/store/order/{orderId}")]
-        Task<Response<object>> DeleteOrderAsync([Path] long orderId);
+        Task<object> DeleteOrderAsync([Path] long orderId);
 
         /// <summary>
         /// Create user
@@ -124,7 +124,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreOpenApi302.Api
         /// <param name="content"></param>
         [Post("/user/createWithList")]
         [Header("Content-Type", "application/json")]
-        Task<AnyOf<User, Response<object>>> CreateUsersWithListInputAsync([Body] User[] content);
+        Task<Response<AnyOf<User, object>>> CreateUsersWithListInputAsync([Body] User[] content);
 
         /// <summary>
         /// Logs user into the system
@@ -132,20 +132,20 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreOpenApi302.Api
         /// <param name="username">The user name for login</param>
         /// <param name="password">The password for login in clear text</param>
         [Get("/user/login")]
-        Task<AnyOf<string, Response<object>>> LoginUserAsync([Query] string username, [Query] string password);
+        Task<Response<AnyOf<string, object>>> LoginUserAsync([Query] string username, [Query] string password);
 
         /// <summary>
         /// Logs out current logged in user session
         /// </summary>
         [Get("/user/logout")]
-        Task<Response<object>> LogoutUserAsync();
+        Task<object> LogoutUserAsync();
 
         /// <summary>
         /// Get user by user name
         /// </summary>
         /// <param name="username">The name that needs to be fetched. Use user1 for testing. </param>
         [Get("/user/{username}")]
-        Task<AnyOf<User, Response<object>>> GetUserByNameAsync([Path] string username);
+        Task<Response<AnyOf<User, object>>> GetUserByNameAsync([Path] string username);
 
         /// <summary>
         /// Update user
@@ -154,13 +154,13 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreOpenApi302.Api
         /// <param name="content">Update an existent user in the store</param>
         [Put("/user/{username}")]
         [Header("Content-Type", "application/json")]
-        Task<Response<object>> UpdateUserAsync([Path] string username, [Body] User content);
+        Task<object> UpdateUserAsync([Path] string username, [Body] User content);
 
         /// <summary>
         /// Delete user
         /// </summary>
         /// <param name="username">The name that needs to be deleted</param>
         [Delete("/user/{username}")]
-        Task<Response<object>> DeleteUserAsync([Path] string username);
+        Task<object> DeleteUserAsync([Path] string username);
     }
 }

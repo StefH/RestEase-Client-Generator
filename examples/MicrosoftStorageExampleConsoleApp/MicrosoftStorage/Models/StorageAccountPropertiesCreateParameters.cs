@@ -5,10 +5,6 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Models
 {
     public class StorageAccountPropertiesCreateParameters
     {
-        public string AllowedCopyScope { get; set; }
-
-        public string PublicNetworkAccess { get; set; }
-
         public SasPolicy SasPolicy { get; set; }
 
         public KeyPolicy KeyPolicy { get; set; }
@@ -25,10 +21,6 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Models
 
         public bool SupportsHttpsTrafficOnly { get; set; }
 
-        public bool IsSftpEnabled { get; set; }
-
-        public bool IsLocalUserEnabled { get; set; }
-
         public bool IsHnsEnabled { get; set; }
 
         public string LargeFileSharesState { get; set; }
@@ -44,9 +36,5 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Models
         public bool IsNfsV3Enabled { get; set; }
 
         public bool AllowCrossTenantReplication { get; set; }
-
-        public bool DefaultToOAuthAuthentication { get; set; }
-
-        public ImmutableStorageAccount ImmutableStorageWithVersioning { get; set; }
     }
 }
