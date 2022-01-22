@@ -5,6 +5,6 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftStorage.Models
 {
     public class StorageSkuListResult
     {
-        public object[] Value { get; set; }
+        public SkuInformation[] Value { get; set; }
     }
 }

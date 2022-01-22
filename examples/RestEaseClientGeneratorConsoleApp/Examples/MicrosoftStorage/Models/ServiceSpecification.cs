@@ -5,6 +5,6 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftStorage.Models
 {
     public class ServiceSpecification
     {
-        public object[] MetricSpecifications { get; set; }
+        public MetricSpecification[] MetricSpecifications { get; set; }
     }
 }

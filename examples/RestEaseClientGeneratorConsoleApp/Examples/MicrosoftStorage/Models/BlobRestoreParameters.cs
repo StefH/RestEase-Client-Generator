@@ -7,6 +7,6 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftStorage.Models
     {
         public DateTime TimeToRestore { get; set; }
 
-        public object[] BlobRanges { get; set; }
+        public BlobRestoreRange[] BlobRanges { get; set; }
     }
 }

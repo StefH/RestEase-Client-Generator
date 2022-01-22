@@ -15,8 +15,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftStorage.Models
 
         public string[] Locations { get; set; }
 
-        public object[] Capabilities { get; set; }
+        public SKUCapability[] Capabilities { get; set; }
 
-        public object[] Restrictions { get; set; }
+        public Restriction[] Restrictions { get; set; }
     }
 }

@@ -9,6 +9,6 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftStorage.Models
 
         public string[] BlobTypes { get; set; }
 
-        public object[] BlobIndexMatch { get; set; }
+        public TagFilter[] BlobIndexMatch { get; set; }
     }
 }

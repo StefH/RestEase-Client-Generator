@@ -13,6 +13,6 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftStorage.Models
 
         public string DestinationAccount { get; set; }
 
-        public object[] Rules { get; set; }
+        public ObjectReplicationPolicyRule[] Rules { get; set; }
     }
 }

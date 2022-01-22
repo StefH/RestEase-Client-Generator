@@ -13,7 +13,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftStorage.Models
 
         public string Unit { get; set; }
 
-        public object[] Dimensions { get; set; }
+        public Dimension[] Dimensions { get; set; }
 
         public string AggregationType { get; set; }
 

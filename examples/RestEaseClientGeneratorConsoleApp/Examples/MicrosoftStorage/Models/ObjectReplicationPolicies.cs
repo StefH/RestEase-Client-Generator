@@ -5,6 +5,6 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftStorage.Models
 {
     public class ObjectReplicationPolicies
     {
-        public object[] Value { get; set; }
+        public ObjectReplicationPolicy[] Value { get; set; }
     }
 }

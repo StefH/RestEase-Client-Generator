@@ -9,6 +9,6 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftStorage.Models
 
         public string Type { get; set; }
 
-        public object[] Rules { get; set; }
+        public BlobInventoryPolicyRule[] Rules { get; set; }
     }
 }

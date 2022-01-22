@@ -5,7 +5,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftStorage.Models
 {
     public class StorageAccountListResult
     {
-        public object[] Value { get; set; }
+        public StorageAccount[] Value { get; set; }
 
         public string NextLink { get; set; }
     }

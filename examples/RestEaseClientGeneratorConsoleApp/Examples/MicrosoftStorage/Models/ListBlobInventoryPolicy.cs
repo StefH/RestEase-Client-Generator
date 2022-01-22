@@ -5,6 +5,6 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftStorage.Models
 {
     public class ListBlobInventoryPolicy
     {
-        public object[] Value { get; set; }
+        public BlobInventoryPolicy[] Value { get; set; }
     }
 }

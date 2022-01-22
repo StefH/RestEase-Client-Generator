@@ -5,6 +5,6 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftStorage.Models
 {
     public class StorageAccountListKeysResult
     {
-        public object[] Keys { get; set; }
+        public StorageAccountKey[] Keys { get; set; }
     }
 }

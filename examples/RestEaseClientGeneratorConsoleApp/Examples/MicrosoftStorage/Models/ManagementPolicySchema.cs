@@ -5,6 +5,6 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftStorage.Models
 {
     public class ManagementPolicySchema
     {
-        public object[] Rules { get; set; }
+        public ManagementPolicyRule[] Rules { get; set; }
     }
 }
