@@ -58,7 +58,7 @@ static ServiceProvider RegisterServices(string[] args)
     services.AddLogging(builder => builder.AddSerilog(logger: Log.Logger, dispose: true));
 
     services
-        .UseWithAzureAuthenticatedRestEaseClient<IMicrosoftStorageApiWithSubscriptionId>(
+        .UseWithAzureAuthenticatedRestEaseClient<IMicrosoftStorageApi>(
             configuration.GetSection("DocumentApiClientOptions"),
             c =>
             {

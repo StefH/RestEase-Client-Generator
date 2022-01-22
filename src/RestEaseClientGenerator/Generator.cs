@@ -1,4 +1,3 @@
-using AnyOfTypes;
 using Microsoft.OpenApi;
 using Microsoft.OpenApi.Models;
 using Microsoft.OpenApi.Readers;
@@ -33,7 +32,7 @@ public class Generator : IGenerator
         return FromDocument(document, settings, diagnostic.SpecificationVersion, directory);
     }
 
-    public ICollection<AnyOf<RestEaseModel, RestEaseEnum, RestEaseInterface>> FromFileInternal(string path, GeneratorSettings settings, out OpenApiDiagnostic diagnostic, OpenApiSpecVersion openApiSpecVersion = OpenApiSpecVersion.OpenApi2_0)
+    public InternalDto FromFileInternal(string path, GeneratorSettings settings, out OpenApiDiagnostic diagnostic, OpenApiSpecVersion openApiSpecVersion = OpenApiSpecVersion.OpenApi2_0)
     {
         var directory = Path.GetDirectoryName(path);
 
@@ -52,47 +51,47 @@ public class Generator : IGenerator
         return FromDocumentInternal(document, settings, openApiSpecVersion, directory);
     }
 
-    public ICollection<AnyOf<RestEaseModel, RestEaseEnum, RestEaseInterface>> FromDocumentInternal(OpenApiDocument document, GeneratorSettings settings, OpenApiSpecVersion openApiSpecVersion = OpenApiSpecVersion.OpenApi2_0, string? directory = null)
+    public InternalDto FromDocumentInternal(OpenApiDocument document, GeneratorSettings settings, OpenApiSpecVersion openApiSpecVersion = OpenApiSpecVersion.OpenApi2_0, string? directory = null)
     {
         var schemaMapper = new SchemaMapper(settings);
 
         var @interface = new InterfaceMapper(settings, schemaMapper).Map(document, directory);
 
-        var result = new List<AnyOf<RestEaseModel, RestEaseEnum, RestEaseInterface>>
-        {
-            @interface
-        };
+        var models = new List<RestEaseModel>();
+        var enums = new List<RestEaseEnum>();
 
         if (document.Components?.Schemas != null)
         {
-            var models = new ModelsMapper(@interface, settings, schemaMapper, OpenApiSpecVersion.OpenApi2_0, directory)
+            var modelsOrEnums = new ModelsMapper(@interface, settings, schemaMapper, OpenApiSpecVersion.OpenApi2_0, directory)
                     .Map(document.Components.Schemas);
-            foreach (var model in models)
+
+            foreach (var model in modelsOrEnums)
             {
                 if (model.IsFirst)
                 {
-                    result.Add(model.First);
+                    models.Add(model.First);
                 }
+
                 if (model.IsSecond)
                 {
-                    result.Add(model.Second);
+                    enums.Add(model.Second);
                 }
             }
         }
 
-        // Add Inline Models
-        foreach (var inlineModel in @interface.ExtraModels)
+        // Add Inline/External Models
+        foreach (var extraModel in @interface.ExtraModels)
         {
-            result.Add(inlineModel);
+            models.Add(extraModel);
         }
 
         // Add Inline Enums
         foreach (var inlineEnum in schemaMapper.Enums)
         {
-            result.Add(inlineEnum);
+            enums.Add(inlineEnum);
         }
 
-        return result;
+        return new InternalDto(@interface, models, enums, document.Components?.Parameters ?? new Dictionary<string, OpenApiParameter>());
     }
 
     public ICollection<GeneratedFile> FromDocument(OpenApiDocument document, GeneratorSettings settings, OpenApiSpecVersion openApiSpecVersion = OpenApiSpecVersion.OpenApi2_0, string? directory = null)
@@ -101,11 +100,11 @@ public class Generator : IGenerator
 
         var files = new List<GeneratedFile>();
 
-        var @interface = result.Single(r => r.IsThird).Third;
+        var @interface = result.Interface;
 
         if (settings.GenerationType.HasFlag(GenerationType.Api))
         {
-            var anyModels = result.Any(r => r.IsFirst);
+            var anyModels = result.Models.Any();
 
             // Add Interface
             files.Add(new GeneratedFile
@@ -138,11 +137,7 @@ public class Generator : IGenerator
         {
             // Add Models + Inline/External Models
             var modelBuilder = new ModelBuilder(settings);
-            var models = result
-                .Where(r => r.IsFirst)
-                .Select(r => r.First)
-                .ToList();
-            var allModels = models.Union(@interface.ExtraModels)
+            var allModels = result.Models.Union(@interface.ExtraModels)
                 .GroupBy(r => r.ClassName)
                 .Select(r => r.First())
                 .OrderBy(m => m.ClassName)
@@ -155,12 +150,10 @@ public class Generator : IGenerator
                 model.ClassName,
                 modelBuilder.Build(model)
             )));
-           
+
             // Add Inline/External Enums
             var enumBuilder = new EnumBuilder(settings);
-            var extraEnums = result
-                .Where(r => r.IsSecond)
-                .Select(r => r.Second)
+            var extraEnums = result.Enums
                 .Where(e => e.Values is not null) // In case the values is null, do not create a file because enum is replaced by string
                 .GroupBy(r => r.EnumName)
                 .SelectMany(r => r);

@@ -132,21 +132,28 @@ internal class InterfaceMapper : BaseMapper
 
     private RestEaseInterfaceMethodDetails MapOperationToMappingModel(RestEaseInterface @interface, string path, string httpMethod, OpenApiOperation operation, string? directory)
     {
+        if (path == "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/privateEndpointConnections/{privateEndpointConnectionName}")
+        {
+            int p = 0;
+        }
+
         string methodRestEaseForAnnotation = httpMethod.ToPascalCase();
 
         string methodRestEaseMethodName = GeneratedRestEaseMethodName(path, operation, methodRestEaseForAnnotation);
 
-        var headerParameterList = operation.Parameters
+        var parameters = new ParametersMapper(@interface, _schemaMapper, Settings, directory).Map(operation);
+
+        var headerParameterList = parameters
             .Where(p => p.In == ParameterLocation.Header && p.Schema.GetSchemaType() != SchemaType.Object)
             .Select(p => BuildValidParameter(@interface, p.Name, p.Schema, p.Required, p.Description, p.In, Array.Empty<string>(), directory))
             .ToList();
 
-        var pathParameterList = operation.Parameters
+        var pathParameterList = parameters
             .Where(p => p.In == ParameterLocation.Path && p.Schema.GetSchemaType() != SchemaType.Object)
             .Select(p => BuildValidParameter(@interface, p.Name, p.Schema, p.Required, p.Description, p.In, Array.Empty<string>(), directory))
             .ToList();
 
-        var queryParameterList = operation.Parameters
+        var queryParameterList = parameters
             .Where(p => p.In == ParameterLocation.Query && p.Schema.GetSchemaType() != SchemaType.Object)
             .Select(p => BuildValidParameter(@interface, p.Name, p.Schema, p.Required, p.Description, p.In, Array.Empty<string>(), directory))
             .ToList();
@@ -214,7 +221,7 @@ internal class InterfaceMapper : BaseMapper
         {
             var combinedMethodParameterList = new List<RestEaseParameter>
             {
-                new RestEaseParameter
+                new ()
                 {
                     ValidIdentifier = "api",
                     IdentifierWithTypePascalCase = null,
@@ -367,7 +374,7 @@ internal class InterfaceMapper : BaseMapper
 
                     if (schema.Reference.IsExternal)
                     {
-                        return new ExternalModelMapper(Settings, @interface).Map(schema, directory);
+                        return new ExternalReferenceMapper(Settings, @interface).MapProperty(schema.Reference, directory).Type; // TODO : kan dit niet altijd?
                     }
 
                     throw new InvalidOperationException();

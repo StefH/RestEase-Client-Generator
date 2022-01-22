@@ -11,13 +11,13 @@ internal class Worker
         WriteIndented = true
     };
 
-    private readonly IMicrosoftStorageApiWithSubscriptionId _storageApi;
+    private readonly IMicrosoftStorageApi _storageApi;
     private readonly ILogger<Worker> _logger;
 
-    public Worker(IMicrosoftStorageApiWithSubscriptionId storageApi, ILogger<Worker> logger)
+    public Worker(IMicrosoftStorageApi storageApi, ILogger<Worker> logger)
     {
         _storageApi = storageApi;
-        _storageApi.SubscriptionId = "xxx";
+        // _storageApi.SubscriptionId = "xxx";
 
         _logger = logger;
     }
@@ -26,7 +26,7 @@ internal class Worker
     {
         try
         {
-            var skus = await _storageApi.SkusListAsync();
+            var skus = await _storageApi.SkusListAsync("2de19637-27a3-42a8-812f-2c2a7f7f935c");
             _logger.LogInformation("IDocumentApi : GetDocumentAsync = '{doc}'", JsonSerializer.Serialize(skus, _options));
         }
         catch (Exception ex)

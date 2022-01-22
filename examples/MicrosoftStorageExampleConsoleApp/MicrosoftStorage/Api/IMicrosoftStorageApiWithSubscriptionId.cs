@@ -1,13 +1,12 @@
 using RestEase;
 
-namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Api
+namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Api;
+
+/// <summary>
+/// The Azure Storage Management API.
+/// </summary>
+public interface IMicrosoftStorageApiWithSubscriptionId : IMicrosoftStorageApi
 {
-    /// <summary>
-    /// The Azure Storage Management API.
-    /// </summary>
-    public interface IMicrosoftStorageApiWithSubscriptionId : IMicrosoftStorageApi
-    {
-        [Path("subscriptionId")]
-        public string SubscriptionId { get; set; }
-    }
+    [Path("subscriptionId")]
+    public string SubscriptionId { get; set; }
 }

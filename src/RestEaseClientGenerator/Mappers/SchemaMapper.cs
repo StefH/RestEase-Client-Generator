@@ -26,11 +26,6 @@ internal class SchemaMapper : BaseMapper
         bool nullableForOpenApi20 = openApiSpecVersion == OpenApiSpecVersion.OpenApi2_0 && Settings.GeneratePrimitivePropertiesAsNullableForOpenApi20;
         string nullable = nullableForOpenApi20 || isNullable ? "?" : string.Empty;
 
-        if (name == "PrivateEndpointConnectionListResult")
-        {
-            int x = 9;
-        }
-
         switch (schema.GetSchemaType())
         {
             case SchemaType.Array:
@@ -38,7 +33,7 @@ internal class SchemaMapper : BaseMapper
                 {
                     case SchemaType.Object:
                     case SchemaType.Unknown:
-                        var or = TryMapAsReference(@interface, schema.Items, "not-used", directory);
+                        var or = TryMapPropertyReference(@interface, schema.Items.Reference, "not-used", directory);
                         return or != null ?
                             new PropertyDto(MapArrayType(MakeValidModelName(or.Type)), nameCamelCase) :
                             new PropertyDto(MapArrayType("object"), nameCamelCase);
@@ -159,7 +154,7 @@ internal class SchemaMapper : BaseMapper
                 return new PropertyDto(dictionaryType, objectName);
             }
 
-            return TryMapAsReference(@interface, openApiSchema, objectName, directory);
+            return TryMapPropertyReference(@interface, openApiSchema.Reference, objectName, directory);
         }
 
         var propertyIsNullable = openApiSchema.Nullable || Settings.SupportExtensionXNullable && openApiSchema.TryGetXNullable(out var x) && x;
@@ -167,36 +162,46 @@ internal class SchemaMapper : BaseMapper
         return property.IsFirst ? property.First : null;
     }
 
-    private PropertyDto? TryMapAsReference(RestEaseInterface @interface, OpenApiSchema openApiSchema, string objectName, string? directory)
+    public PropertyDto? TryMapPropertyReference(RestEaseInterface @interface, OpenApiReference? reference, string? name, string? directory)
     {
-        switch (openApiSchema.Reference)
+        switch (reference)
         {
             case { IsLocal: true }:
-                {
-                    var className = MakeValidModelName(openApiSchema.Reference.Id);
-                    //var existingModel = @interface.ExtraModels.FirstOrDefault(m => m.ClassName == className);
-                    //if (existingModel == null)
-                    //{
-                    //    var extraModel = MapSchema(@interface, openApiSchema, className, false, true, null, directory);
-                    //    var newModel = new RestEaseModel
-                    //    {
-                    //        Namespace = Settings.Namespace,
-                    //        ClassName = className,
-                    //        Properties = extraModel.Second
-                    //    };
-                    //    @interface.ExtraModels.Add(newModel);
-                    //}
-
-                    return new PropertyDto(className, objectName);
-                }
+                var className = MakeValidModelName(reference.Id);
+                //var existingModel = @interface.ExtraModels.FirstOrDefault(m => m.ClassName == className);
+                //if (existingModel == null)
+                //{
+                //    var extraModel = MapSchema(@interface, openApiSchema, className, false, true, null, directory);
+                //    var newModel = new RestEaseModel
+                //    {
+                //        Namespace = Settings.Namespace,
+                //        ClassName = className,
+                //        Properties = extraModel.Second
+                //    };
+                //    @interface.ExtraModels.Add(newModel);
+                //}
+                return new PropertyDto(className, name ?? className);
 
             case { IsExternal: true }:
-                {
-                    var externalModel = new ExternalModelMapper(Settings, @interface).Map(openApiSchema, directory);
+                var externalModel = new ExternalReferenceMapper(Settings, @interface).MapProperty(reference, directory);
+                return new PropertyDto(externalModel.Type, name ?? externalModel.Name); // TODO
 
-                    return new PropertyDto(externalModel, objectName);
-                }
+            default:
+                return null; // TODO : throw?
+        }
+    }
 
+    public OpenApiParameter? TryMapParameterReference(RestEaseInterface @interface, OpenApiReference reference, string? directory)
+    {
+        switch (reference)
+        {
+            //case { IsLocal: true }:
+            //    // var className = MakeValidModelName(reference.Id);
+            //    throw new NotSupportedException();
+              
+            case { IsExternal: true }:
+                return new ExternalReferenceMapper(Settings, @interface).MapParameter(reference, directory);
+               
             default:
                 return null;
         }
