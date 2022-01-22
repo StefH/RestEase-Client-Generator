@@ -6,6 +6,6 @@ public record InternalDto
 (
     RestEaseInterface Interface,
     IList<RestEaseModel> Models,
-    IList<RestEaseEnum> Enums,
-    IDictionary<string, OpenApiParameter> Parameters
+    IList<RestEaseEnum> Enums
+    //IDictionary<string, OpenApiParameter> Parameters
 );

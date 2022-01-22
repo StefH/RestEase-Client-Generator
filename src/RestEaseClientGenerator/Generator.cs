@@ -91,7 +91,7 @@ public class Generator : IGenerator
             enums.Add(inlineEnum);
         }
 
-        return new InternalDto(@interface, models, enums, document.Components?.Parameters ?? new Dictionary<string, OpenApiParameter>());
+        return new InternalDto(@interface, models, enums);
     }
 
     public ICollection<GeneratedFile> FromDocument(OpenApiDocument document, GeneratorSettings settings, OpenApiSpecVersion openApiSpecVersion = OpenApiSpecVersion.OpenApi2_0, string? directory = null)

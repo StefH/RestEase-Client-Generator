@@ -191,22 +191,6 @@ internal class SchemaMapper : BaseMapper
         }
     }
 
-    public OpenApiParameter? TryMapParameterReference(RestEaseInterface @interface, OpenApiReference reference, string? directory)
-    {
-        switch (reference)
-        {
-            //case { IsLocal: true }:
-            //    // var className = MakeValidModelName(reference.Id);
-            //    throw new NotSupportedException();
-              
-            case { IsExternal: true }:
-                return new ExternalReferenceMapper(Settings, @interface).MapParameter(reference, directory);
-               
-            default:
-                return null;
-        }
-    }
-
     private PropertyDto MapEnumSchema(OpenApiSchema schema, string name, string nameCamelCase, string nullable)
     {
         string enumName = name.ToPascalCase();

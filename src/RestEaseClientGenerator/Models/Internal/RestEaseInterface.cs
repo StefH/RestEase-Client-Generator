@@ -1,3 +1,5 @@
+using Microsoft.OpenApi.Models;
+
 namespace RestEaseClientGenerator.Models.Internal;
 
 public class RestEaseInterface
@@ -17,4 +19,6 @@ public class RestEaseInterface
     public ICollection<RestEaseModel> ExtraModels { get; set; } = new List<RestEaseModel>();
 
     public ICollection<RestEaseEnum> ExtraEnums { get; set; } = new List<RestEaseEnum>();
+
+    public IDictionary<string, OpenApiParameter> Parameters { get; set; } = new Dictionary<string, OpenApiParameter>();
 }

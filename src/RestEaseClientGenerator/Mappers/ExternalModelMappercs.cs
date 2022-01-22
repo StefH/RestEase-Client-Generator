@@ -22,7 +22,7 @@ internal class ExternalReferenceMapper
         var result = CallFromFileInternal(reference, directory);
         var name = result.className;
 
-        if (result.dto.Parameters.TryGetValue(name, out var parameter))
+        if (result.dto.Interface.Parameters.TryGetValue(name, out var parameter))
         {
             return parameter;
         }

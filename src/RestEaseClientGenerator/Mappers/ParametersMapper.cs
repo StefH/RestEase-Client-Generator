@@ -4,7 +4,7 @@ using RestEaseClientGenerator.Settings;
 
 namespace RestEaseClientGenerator.Mappers;
 
-internal class ParametersMapper
+internal class ParametersMapper : BaseMapper
 {
     private readonly RestEaseInterface _interface;
     private readonly SchemaMapper _schemaMapper;
@@ -12,6 +12,7 @@ internal class ParametersMapper
     private readonly string? _directory;
 
     public ParametersMapper(RestEaseInterface @interface, SchemaMapper schemaMapper, GeneratorSettings settings, string? directory)
+        : base(settings)
     {
         _interface = @interface;
         _schemaMapper = schemaMapper;
@@ -25,7 +26,7 @@ internal class ParametersMapper
 
         foreach (var parameterWithReference in operation.Parameters.Where(p => p.Reference is not null))
         {
-            var foundParameter = _schemaMapper.TryMapParameterReference(_interface, parameterWithReference.Reference, _directory);
+            var foundParameter = TryMapParameterReference(_interface, parameterWithReference.Reference, _directory);
             if (foundParameter is not null)
             {
                 allOpenApiParameters.Add(foundParameter);
@@ -33,5 +34,26 @@ internal class ParametersMapper
         }
 
         return allOpenApiParameters;
+    }
+
+    private OpenApiParameter? TryMapParameterReference(RestEaseInterface @interface, OpenApiReference reference, string? directory)
+    {
+        switch (reference)
+        {
+            case { IsLocal: true }:
+                var name = MakeValidModelName(reference.Id.Split('/').Last());
+                if (@interface.Parameters.TryGetValue(name, out var parameter))
+                {
+                    return parameter;
+                }
+
+                throw new InvalidOperationException();
+
+            case { IsExternal: true }:
+                return new ExternalReferenceMapper(_settings, @interface).MapParameter(reference, directory);
+
+            default:
+                return null;
+        }
     }
 }

@@ -26,8 +26,18 @@ internal class Worker
     {
         try
         {
+            var operations = await _storageApi.OperationsListAsync();
+            _logger.LogInformation("GetDocumentAsync = '{operations}'", JsonSerializer.Serialize(operations, _options));
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+        }
+
+        try
+        {
             var skus = await _storageApi.SkusListAsync("2de19637-27a3-42a8-812f-2c2a7f7f935c");
-            _logger.LogInformation("IDocumentApi : GetDocumentAsync = '{doc}'", JsonSerializer.Serialize(skus, _options));
+            _logger.LogInformation("GetDocumentAsync = '{skus}'", JsonSerializer.Serialize(skus, _options));
         }
         catch (Exception ex)
         {
