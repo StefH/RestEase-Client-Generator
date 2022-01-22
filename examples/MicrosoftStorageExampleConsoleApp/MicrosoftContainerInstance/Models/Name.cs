@@ -3,8 +3,10 @@ using System.Collections.Generic;
 
 namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
 {
-    public class InitContainerDefinition
+    public class Name
     {
-        public string Name { get; set; }
+        public string Value { get; set; }
+
+        public string LocalizedValue { get; set; }
     }
 }

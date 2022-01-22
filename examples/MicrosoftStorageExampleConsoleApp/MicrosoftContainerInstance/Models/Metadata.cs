@@ -3,8 +3,7 @@ using System.Collections.Generic;
 
 namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
 {
-    public class InitContainerDefinition
+    public class Metadata
     {
-        public string Name { get; set; }
     }
 }

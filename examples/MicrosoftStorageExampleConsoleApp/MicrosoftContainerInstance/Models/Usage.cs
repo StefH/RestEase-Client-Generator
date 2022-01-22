@@ -10,5 +10,9 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
         public int CurrentValue { get; set; }
 
         public int Limit { get; set; }
+
+        public string Value { get; set; }
+
+        public string LocalizedValue { get; set; }
     }
 }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using AnyOfTypes;
 using Microsoft.OpenApi;
 using Microsoft.OpenApi.Any;
@@ -6,6 +7,7 @@ using RestEaseClientGenerator.Extensions;
 using RestEaseClientGenerator.Models.Internal;
 using RestEaseClientGenerator.Settings;
 using RestEaseClientGenerator.Types;
+using RestEaseClientGenerator.Utils;
 
 namespace RestEaseClientGenerator.Mappers;
 
@@ -110,18 +112,37 @@ internal class SchemaMapper : BaseMapper
                     var objectName = pascalCase ? schemaProperty.Key.ToPascalCase() : schemaProperty.Key;
 
                     var propertyDto = MapProperty(@interface, openApiSpecVersion, openApiSchema, objectName, directory);
-                    if (propertyDto != null)
+                    if (propertyDto != null && !propertyDto.Value.isRef)
                     {
-                        list.Add(propertyDto);
+                        if (propertyDto.Value.p.IsFirst)
+                        {
+                            list.Add(propertyDto.Value.p.First);
+                        }
+                        else
+                        {
+                            list.AddRange(propertyDto.Value.p.Second);
+                        }
                     }
                 }
 
                 foreach (var allOrAny in schema.AllOf.Union(schema.AnyOf))
                 {
-                    var extendsType = MapProperty(@interface, openApiSpecVersion, allOrAny, string.Empty, directory);
-                    if (extendsType is not null)
+                    var extendsType = MapProperty(@interface, openApiSpecVersion, allOrAny, name, directory);
+                    if (extendsType is not null && extendsType.Value.isRef)
                     {
-                        list.Add(new PropertyDto("not-used", "not-used", extendsType.Type));
+                        list.Add(new PropertyDto("not-used", "not-used", extendsType.Value.p.First.Type));
+                    }
+
+                    if (extendsType is not null && !extendsType.Value.isRef)
+                    {
+                        if (extendsType.Value.p.IsFirst)
+                        {
+                            list.Add(extendsType.Value.p.First);
+                        }
+                        else
+                        {
+                            list.AddRange(extendsType.Value.p.Second);
+                        }
                     }
                 }
 
@@ -139,7 +160,7 @@ internal class SchemaMapper : BaseMapper
         }
     }
 
-    private PropertyDto? MapProperty(
+    private (bool isRef, AnyOf<PropertyDto, IList<PropertyDto>> p)? MapProperty(
         RestEaseInterface @interface,
         OpenApiSpecVersion? openApiSpecVersion,
         OpenApiSchema openApiSchema,
@@ -148,18 +169,57 @@ internal class SchemaMapper : BaseMapper
     {
         if (new[] { SchemaType.Object, SchemaType.Unknown }.Contains(openApiSchema.GetSchemaType()))
         {
-            if (openApiSchema.AdditionalProperties?.Reference?.Id != null)
+            //if (openApiSchema.AdditionalProperties?.Reference?.Id != null)
+            //{
+            //    var dictionaryType = $"Dictionary<string, {MakeValidReferenceId(openApiSchema.AdditionalProperties.Reference.Id)}>";
+            //    return new PropertyDto(dictionaryType, objectName);
+            //}
+
+            var e = TryMapPropertyReference(@interface, openApiSchema.Reference, objectName, directory);
+            if (e is not null)
             {
-                var dictionaryType = $"Dictionary<string, {MakeValidReferenceId(openApiSchema.AdditionalProperties.Reference.Id)}>";
-                return new PropertyDto(dictionaryType, objectName);
+                return (true, e);
             }
 
-            return TryMapPropertyReference(@interface, openApiSchema.Reference, objectName, directory);
+            // Object is defined `inline`, create a new Model and use that one.
+            var existingModel = @interface.ExtraModels.FirstOrDefault(m => m.ClassName == objectName);
+            AnyOf<PropertyDto, IList<PropertyDto>> x2;
+            if (existingModel == null)
+            {
+                var inlineModel = MapSchema(@interface, openApiSchema, null, false, true, null, directory);
+                //if (inlineModel.IsSecond)
+                {
+                    var newModel = new RestEaseModel
+                    {
+                        Namespace = Settings.Namespace,
+                        ClassName = objectName,
+                        Properties = inlineModel.Second
+                    };
+                    @interface.ExtraModels.Add(newModel);
+
+                    x2 = inlineModel;
+                }
+            }
+            else
+            {
+                x2 = existingModel.Properties.ToList();
+            }
+
+            return (false, x2);
         }
 
         var propertyIsNullable = openApiSchema.Nullable || Settings.SupportExtensionXNullable && openApiSchema.TryGetXNullable(out var x) && x;
         var property = MapSchema(@interface, openApiSchema, objectName, propertyIsNullable, true, openApiSpecVersion, directory);
-        return property.IsFirst ? property.First : null;
+        if (property.IsFirst)
+        {
+            return (false, property.First);
+        }
+        else
+        {
+            return null;
+        }
+
+        //return null;
     }
 
     public PropertyDto? TryMapPropertyReference(RestEaseInterface @interface, OpenApiReference? reference, string? name, string? directory)

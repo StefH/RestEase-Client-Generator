@@ -14,5 +14,11 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
         public string IpAddressType { get; set; }
 
         public string Gpu { get; set; }
+
+        public double MaxMemoryInGB { get; set; }
+
+        public double MaxCpu { get; set; }
+
+        public double MaxGpuCount { get; set; }
     }
 }

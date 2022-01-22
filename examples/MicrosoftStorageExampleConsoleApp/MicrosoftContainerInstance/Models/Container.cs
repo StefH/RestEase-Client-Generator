@@ -6,7 +6,5 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
     public class Container
     {
         public string Name { get; set; }
-
-        public ContainerProperties Properties { get; set; }
     }
 }

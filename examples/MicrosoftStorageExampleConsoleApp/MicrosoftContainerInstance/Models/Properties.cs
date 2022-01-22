@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
 {
-    public class ContainerGroup : Resource
+    public class Properties
     {
         public string ProvisioningState { get; set; }
 

@@ -5,10 +5,6 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
 {
     public class ContainerProbe
     {
-        public ContainerExec Exec { get; set; }
-
-        public ContainerHttpGet HttpGet { get; set; }
-
         public int InitialDelaySeconds { get; set; }
 
         public int PeriodSeconds { get; set; }

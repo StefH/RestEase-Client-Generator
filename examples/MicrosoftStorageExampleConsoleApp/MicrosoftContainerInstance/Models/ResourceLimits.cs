@@ -8,7 +8,5 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
         public double MemoryInGB { get; set; }
 
         public double Cpu { get; set; }
-
-        public GpuResource Gpu { get; set; }
     }
 }

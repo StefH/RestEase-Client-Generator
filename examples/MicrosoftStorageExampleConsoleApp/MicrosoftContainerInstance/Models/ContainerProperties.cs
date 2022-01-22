@@ -13,12 +13,10 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
 
         public EnvironmentVariable[] EnvironmentVariables { get; set; }
 
-        public ResourceRequirements Resources { get; set; }
+        public Event[] Events { get; set; }
+
+        public string State { get; set; }
 
         public VolumeMount[] VolumeMounts { get; set; }
-
-        public ContainerProbe LivenessProbe { get; set; }
-
-        public ContainerProbe ReadinessProbe { get; set; }
     }
 }
