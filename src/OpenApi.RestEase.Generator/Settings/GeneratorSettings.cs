@@ -1,7 +1,8 @@
 using System.ComponentModel;
+using OpenApi.RestEase.Generator.Types;
 using RestEaseClientGenerator.Types;
 
-namespace RestEaseClientGenerator.Settings;
+namespace OpenApi.RestEase.Generator.Settings;
 
 public class GeneratorSettings
 {

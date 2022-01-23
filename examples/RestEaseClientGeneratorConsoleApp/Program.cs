@@ -1,12 +1,8 @@
 using System.IO;
-using System.Net.Http;
-using System.Threading.Tasks;
-using MachineLearningOpenAPIExample;
-using Microsoft.OpenApi;
-using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Readers;
-using RestEaseClientGenerator;
-using RestEaseClientGenerator.Settings;
+using OpenApi.RestEase.Generator;
+using OpenApi.RestEase.Generator.Settings;
+using OpenApi.RestEase.Generator.Types;
 using RestEaseClientGenerator.Types;
 
 namespace RestEaseClientGeneratorConsoleApp
@@ -167,7 +163,7 @@ namespace RestEaseClientGeneratorConsoleApp
                 File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Infura/{file.Path}/{file.Name}", file.Content);
             }
 
-            
+
 
             var ramlSettings = new GeneratorSettings
             {
@@ -190,7 +186,7 @@ namespace RestEaseClientGeneratorConsoleApp
                 File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/wpraml/{file.Path}/{file.Name}", file.Content);
             }
 
-            
+
 
             //var drcSettings = new GeneratorSettings
             //{
@@ -218,7 +214,7 @@ namespace RestEaseClientGeneratorConsoleApp
                 File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/SharedQuery/{file.Path}/{file.Name}", file.Content);
             }
 
-            
+
 
             var cogSettings = new GeneratorSettings
             {

@@ -1,4 +1,4 @@
-namespace RestEaseClientGenerator.Types;
+namespace OpenApi.RestEase.Generator.Types;
 
 internal enum SecurityVersionType
 {

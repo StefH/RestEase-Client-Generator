@@ -1,7 +1,7 @@
 using System.ComponentModel;
-using RestEaseClientGenerator.Utils;
+using OpenApi.RestEase.Generator.Utils;
 
-namespace RestEaseClientGenerator.Types;
+namespace OpenApi.RestEase.Generator.Types;
 
 /// <summary>
 /// MultipartFormData : 'file' type to generate

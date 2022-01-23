@@ -1,7 +1,7 @@
-using RestEaseClientGenerator.Utils;
 using System.ComponentModel;
+using OpenApi.RestEase.Generator.Utils;
 
-namespace RestEaseClientGenerator.Types;
+namespace OpenApi.RestEase.Generator.Types;
 
 [TypeConverter(typeof(EnumDescriptionConverter))]
 public enum ContentType

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -7,7 +7,6 @@ using Blazor.DownloadFileFast.Interfaces;
 using Blazorise;
 using Microsoft.AspNetCore.Components;
 using Microsoft.OpenApi.Readers;
-using RestEaseClientGenerator.Extensions;
 using RestEaseClientGeneratorBlazorApp.Models;
 using RestEaseClientGeneratorBlazorApp.Services;
 

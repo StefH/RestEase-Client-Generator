@@ -1,5 +1,4 @@
 using Nelibur.ObjectMapper;
-using RestEaseClientGenerator.Settings;
 
 namespace DotNetRestEaseClientGenerator.Utils;
 

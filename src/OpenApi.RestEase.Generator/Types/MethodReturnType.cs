@@ -1,7 +1,7 @@
 using System.ComponentModel;
-using RestEaseClientGenerator.Utils;
+using OpenApi.RestEase.Generator.Utils;
 
-namespace RestEaseClientGenerator.Types;
+namespace OpenApi.RestEase.Generator.Types;
 
 /// <summary>
 /// See also https://github.com/canton7/RestEase#return-types

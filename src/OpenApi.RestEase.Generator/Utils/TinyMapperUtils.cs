@@ -1,7 +1,7 @@
 using Nelibur.ObjectMapper;
-using RestEaseClientGenerator.Settings;
+using OpenApi.RestEase.Generator.Settings;
 
-namespace RestEaseClientGenerator.Utils;
+namespace OpenApi.RestEase.Generator.Utils;
 
 internal sealed class TinyMapperUtils
 {

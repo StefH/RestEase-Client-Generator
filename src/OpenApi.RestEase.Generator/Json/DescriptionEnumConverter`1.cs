@@ -1,7 +1,7 @@
 using Newtonsoft.Json;
-using RestEaseClientGenerator.Extensions;
+using OpenApi.RestEase.Generator.Extensions;
 
-namespace RestEaseClientGenerator.Json;
+namespace OpenApi.RestEase.Generator.Json;
 
 /// <summary>
 /// Based on https://stackoverflow.com/questions/59403305/deserializing-enum-from-descriptionattribute-using-custom-json-net-jsonconverter

@@ -1,8 +1,8 @@
 using System.Text.RegularExpressions;
-using RestEaseClientGenerator.Types;
-using RestEaseClientGenerator.Utils;
+using OpenApi.RestEase.Generator.Types;
+using OpenApi.RestEase.Generator.Utils;
 
-namespace RestEaseClientGenerator.Extensions;
+namespace OpenApi.RestEase.Generator.Extensions;
 
 /// <summary>
 /// Some code copied from https://raw.githubusercontent.com/andeart/CaseConversions/master/CaseConversions/CaseConversion.cs

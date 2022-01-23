@@ -1,4 +1,4 @@
-namespace RestEaseClientGenerator.Models.Internal;
+namespace OpenApi.RestEase.Generator.Models.Internal;
 
 public record PropertyDto(string Type, string Name, string? Description = null, string? Extends = null)
 {

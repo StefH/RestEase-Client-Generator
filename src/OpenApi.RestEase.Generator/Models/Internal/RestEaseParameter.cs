@@ -1,7 +1,7 @@
 using Microsoft.OpenApi.Models;
-using RestEaseClientGenerator.Types;
+using OpenApi.RestEase.Generator.Types;
 
-namespace RestEaseClientGenerator.Models.Internal;
+namespace OpenApi.RestEase.Generator.Models.Internal;
 
 public class RestEaseParameter
 {

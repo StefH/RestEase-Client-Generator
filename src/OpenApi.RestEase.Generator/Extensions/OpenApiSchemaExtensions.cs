@@ -1,9 +1,9 @@
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Interfaces;
 using Microsoft.OpenApi.Models;
-using RestEaseClientGenerator.Types;
+using OpenApi.RestEase.Generator.Types;
 
-namespace RestEaseClientGenerator.Extensions;
+namespace OpenApi.RestEase.Generator.Extensions;
 
 internal static class OpenApiSchemaExtensions
 {

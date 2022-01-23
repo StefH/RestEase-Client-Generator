@@ -1,6 +1,7 @@
 // ReSharper disable All
-using RestEaseClientGenerator.Utils;
+
 using System.ComponentModel;
+using OpenApi.RestEase.Generator.Utils;
 
 namespace RestEaseClientGenerator.Types;
 

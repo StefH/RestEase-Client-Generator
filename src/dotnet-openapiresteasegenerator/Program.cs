@@ -5,8 +5,9 @@ using CommandLine;
 using DotNetRestEaseClientGenerator.Utils;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Readers;
-using RestEaseClientGenerator;
-using RestEaseClientGenerator.Settings;
+using OpenApi.RestEase.Generator;
+using OpenApi.RestEase.Generator.Settings;
+using OpenApi.RestEase.Generator.Types;
 using RestEaseClientGenerator.Types;
 
 namespace DotNetRestEaseClientGenerator;

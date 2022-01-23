@@ -1,6 +1,6 @@
 using System.Reflection;
 
-namespace RestEaseClientGenerator.Utils;
+namespace OpenApi.RestEase.Generator.Utils;
 
 public static class TypeHelper
 {

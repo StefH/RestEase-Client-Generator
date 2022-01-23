@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using RestEaseClientGenerator.Settings;
+using System.ComponentModel;
 
 namespace RestEaseClientGeneratorBlazorApp.Models
 {

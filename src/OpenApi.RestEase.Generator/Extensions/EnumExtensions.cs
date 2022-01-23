@@ -1,8 +1,8 @@
 using System.ComponentModel;
 using System.Reflection;
-using RestEaseClientGenerator.Utils;
+using OpenApi.RestEase.Generator.Utils;
 
-namespace RestEaseClientGenerator.Extensions;
+namespace OpenApi.RestEase.Generator.Extensions;
 
 public static class EnumExtensions
 {

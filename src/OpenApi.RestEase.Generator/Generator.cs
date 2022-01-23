@@ -1,15 +1,15 @@
 using Microsoft.OpenApi;
 using Microsoft.OpenApi.Models;
 using Microsoft.OpenApi.Readers;
+using OpenApi.RestEase.Generator.Builders;
+using OpenApi.RestEase.Generator.Mappers;
+using OpenApi.RestEase.Generator.Models;
+using OpenApi.RestEase.Generator.Models.Internal;
+using OpenApi.RestEase.Generator.Settings;
+using OpenApi.RestEase.Generator.Types;
 using RamlToOpenApiConverter;
-using RestEaseClientGenerator.Builders;
-using RestEaseClientGenerator.Mappers;
-using RestEaseClientGenerator.Models;
-using RestEaseClientGenerator.Models.Internal;
-using RestEaseClientGenerator.Settings;
-using RestEaseClientGenerator.Types;
 
-namespace RestEaseClientGenerator;
+namespace OpenApi.RestEase.Generator;
 
 public class Generator : IGenerator
 {

@@ -1,6 +1,6 @@
-using RestEaseClientGenerator.Settings;
+using OpenApi.RestEase.Generator.Settings;
 
-namespace RestEaseClientGenerator.Builders;
+namespace OpenApi.RestEase.Generator.Builders;
 
 public abstract class BaseBuilder
 {

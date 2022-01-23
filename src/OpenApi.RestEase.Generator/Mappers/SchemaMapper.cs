@@ -2,12 +2,13 @@ using AnyOfTypes;
 using Microsoft.OpenApi;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
-using RestEaseClientGenerator.Extensions;
-using RestEaseClientGenerator.Models.Internal;
-using RestEaseClientGenerator.Settings;
+using OpenApi.RestEase.Generator.Extensions;
+using OpenApi.RestEase.Generator.Models.Internal;
+using OpenApi.RestEase.Generator.Settings;
+using OpenApi.RestEase.Generator.Types;
 using RestEaseClientGenerator.Types;
 
-namespace RestEaseClientGenerator.Mappers;
+namespace OpenApi.RestEase.Generator.Mappers;
 
 internal class SchemaMapper : BaseMapper
 {

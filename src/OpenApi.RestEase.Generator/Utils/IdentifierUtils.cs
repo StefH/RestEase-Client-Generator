@@ -1,6 +1,6 @@
 using System.Text.RegularExpressions;
 
-namespace RestEaseClientGenerator.Utils;
+namespace OpenApi.RestEase.Generator.Utils;
 
 /// <summary>
 /// Based on https://gist.github.com/FabienDehopre/5245476

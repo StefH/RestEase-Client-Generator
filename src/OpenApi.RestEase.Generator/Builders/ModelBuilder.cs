@@ -1,9 +1,9 @@
 using System.Text;
-using RestEaseClientGenerator.Extensions;
-using RestEaseClientGenerator.Models.Internal;
-using RestEaseClientGenerator.Settings;
+using OpenApi.RestEase.Generator.Extensions;
+using OpenApi.RestEase.Generator.Models.Internal;
+using OpenApi.RestEase.Generator.Settings;
 
-namespace RestEaseClientGenerator.Builders;
+namespace OpenApi.RestEase.Generator.Builders;
 
 internal class ModelBuilder : BaseBuilder
 {

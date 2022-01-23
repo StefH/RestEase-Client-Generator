@@ -1,10 +1,11 @@
 using Microsoft.OpenApi.Models;
-using RestEaseClientGenerator.Models.Internal;
-using RestEaseClientGenerator.Settings;
+using OpenApi.RestEase.Generator.Models.Internal;
+using OpenApi.RestEase.Generator.Settings;
+using OpenApi.RestEase.Generator.Types;
+using OpenApi.RestEase.Generator.Utils;
 using RestEaseClientGenerator.Types;
-using RestEaseClientGenerator.Utils;
 
-namespace RestEaseClientGenerator.Mappers;
+namespace OpenApi.RestEase.Generator.Mappers;
 
 internal class ExternalReferenceMapper : BaseMapper
 {

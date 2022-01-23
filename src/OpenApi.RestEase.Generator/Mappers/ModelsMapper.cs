@@ -1,10 +1,10 @@
 using AnyOfTypes;
 using Microsoft.OpenApi;
 using Microsoft.OpenApi.Models;
-using RestEaseClientGenerator.Models.Internal;
-using RestEaseClientGenerator.Settings;
+using OpenApi.RestEase.Generator.Models.Internal;
+using OpenApi.RestEase.Generator.Settings;
 
-namespace RestEaseClientGenerator.Mappers;
+namespace OpenApi.RestEase.Generator.Mappers;
 
 internal class ModelsMapper : BaseMapper
 {

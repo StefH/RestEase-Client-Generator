@@ -1,6 +1,6 @@
 using System.ComponentModel;
 
-namespace RestEaseClientGenerator.Types;
+namespace OpenApi.RestEase.Generator.Types;
 
 public enum SupportedContentType
 {

@@ -1,10 +1,10 @@
 using Microsoft.OpenApi.Models;
-using RestEaseClientGenerator.Extensions;
-using RestEaseClientGenerator.Models.Internal;
-using RestEaseClientGenerator.Settings;
-using RestEaseClientGenerator.Types;
+using OpenApi.RestEase.Generator.Extensions;
+using OpenApi.RestEase.Generator.Models.Internal;
+using OpenApi.RestEase.Generator.Settings;
+using OpenApi.RestEase.Generator.Types;
 
-namespace RestEaseClientGenerator.Mappers;
+namespace OpenApi.RestEase.Generator.Mappers;
 
 internal class SecurityMapper : BaseMapper
 {

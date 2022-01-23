@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using RestEaseClientGenerator.Models;
+using System.Collections.Generic;
 
 namespace RestEaseClientGeneratorBlazorApp.Services
 {

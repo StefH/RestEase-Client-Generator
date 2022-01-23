@@ -1,8 +1,8 @@
 using System.ComponentModel;
 using System.Globalization;
-using RestEaseClientGenerator.Extensions;
+using OpenApi.RestEase.Generator.Extensions;
 
-namespace RestEaseClientGenerator.Utils;
+namespace OpenApi.RestEase.Generator.Utils;
 
 /// <summary>
 /// EnumConverter supporting System.ComponentModel.DescriptionAttribute

@@ -1,8 +1,8 @@
 using System.Text.RegularExpressions;
-using RestEaseClientGenerator.Extensions;
-using RestEaseClientGenerator.Types;
+using OpenApi.RestEase.Generator.Extensions;
+using OpenApi.RestEase.Generator.Types;
 
-namespace RestEaseClientGenerator.Utils;
+namespace OpenApi.RestEase.Generator.Utils;
 
 /// <summary>
 /// See also https://stackoverflow.com/questions/25139734/how-can-i-generate-a-safe-class-name-from-a-file-name

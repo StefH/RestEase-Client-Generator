@@ -1,8 +1,9 @@
-using RestEaseClientGenerator.Extensions;
-using RestEaseClientGenerator.Settings;
+using OpenApi.RestEase.Generator.Extensions;
+using OpenApi.RestEase.Generator.Settings;
+using OpenApi.RestEase.Generator.Types;
 using RestEaseClientGenerator.Types;
 
-namespace RestEaseClientGenerator.Mappers;
+namespace OpenApi.RestEase.Generator.Mappers;
 
 public abstract class BaseMapper
 {

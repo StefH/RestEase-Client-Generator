@@ -1,6 +1,5 @@
-﻿using System.IO;
+using System.IO;
 using Microsoft.OpenApi.Readers;
-using RestEaseClientGenerator.Settings;
 
 namespace RestEaseClientGeneratorBlazorApp.Services
 {

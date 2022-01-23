@@ -1,6 +1,6 @@
-using RestEaseClientGenerator.Types;
+using OpenApi.RestEase.Generator.Types;
 
-namespace RestEaseClientGenerator.Models.Internal;
+namespace OpenApi.RestEase.Generator.Models.Internal;
 
 internal class RestEaseSecurity
 {

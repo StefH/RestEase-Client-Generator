@@ -1,10 +1,10 @@
 using Microsoft.OpenApi;
 using Microsoft.OpenApi.Models;
 using Microsoft.OpenApi.Readers;
-using RestEaseClientGenerator.Models;
-using RestEaseClientGenerator.Settings;
+using OpenApi.RestEase.Generator.Models;
+using OpenApi.RestEase.Generator.Settings;
 
-namespace RestEaseClientGenerator;
+namespace OpenApi.RestEase.Generator;
 
 public interface IGenerator
 {

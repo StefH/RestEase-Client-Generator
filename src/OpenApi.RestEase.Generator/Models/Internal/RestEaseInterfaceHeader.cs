@@ -1,4 +1,4 @@
-namespace RestEaseClientGenerator.Models.Internal;
+namespace OpenApi.RestEase.Generator.Models.Internal;
 
 public class RestEaseInterfaceHeader
 {

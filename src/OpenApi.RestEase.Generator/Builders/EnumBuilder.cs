@@ -1,11 +1,12 @@
 using System.Text;
-using RestEaseClientGenerator.Extensions;
-using RestEaseClientGenerator.Models.Internal;
-using RestEaseClientGenerator.Settings;
+using OpenApi.RestEase.Generator.Extensions;
+using OpenApi.RestEase.Generator.Models.Internal;
+using OpenApi.RestEase.Generator.Settings;
+using OpenApi.RestEase.Generator.Types;
+using OpenApi.RestEase.Generator.Utils;
 using RestEaseClientGenerator.Types;
-using RestEaseClientGenerator.Utils;
 
-namespace RestEaseClientGenerator.Builders;
+namespace OpenApi.RestEase.Generator.Builders;
 
 internal class EnumBuilder : BaseBuilder
 {
