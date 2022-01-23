@@ -19,10 +19,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\src\RestEaseClientGenerator\RestEaseClientGenerator.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
       <None Update="appsettings.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
@@ -35,6 +31,10 @@
       <Folder Include="MicrosoftStorage20190401\Models\" />
       <Folder Include="MicrosoftStorage\Api\" />
       <Folder Include="MicrosoftStorage\Models\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\src\OpenApi.RestEase.Generator\OpenApi.RestEase.Generator.csproj" />
     </ItemGroup>
 
 </Project>

@@ -13,6 +13,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\OpenApi.RestEase.Generator\OpenApi.RestEase.Generator.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="MediaWiki.raml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

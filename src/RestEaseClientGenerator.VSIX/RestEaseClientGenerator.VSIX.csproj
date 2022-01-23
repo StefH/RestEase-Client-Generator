@@ -163,20 +163,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <!--<ProjectReference Include="..\..\..\RamlToOpenApiConverter\src\RamlToOpenApiConverter\RamlToOpenApiConverter.csproj">
-      <Project>{d3804228-91f4-1111-9595-39584e5a01ad}</Project>
-      <Name>RamlToOpenApiConverter</Name>
-      <AdditionalProperties>TargetFramework=net461</AdditionalProperties>
-    </ProjectReference>-->
-    <ProjectReference Include="..\RestEaseClientGenerator\RestEaseClientGenerator.csproj">
-      <Project>{cb53c19e-29cc-42ac-ae47-31a54e5d0759}</Project>
-      <Name>RestEaseClientGenerator</Name>
-      <AdditionalProperties>TargetFramework=net461</AdditionalProperties>
-      <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
-      <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="Microsoft.OpenApi">
       <Version>1.2.0</Version>
     </PackageReference>
@@ -257,7 +243,12 @@
       <Version>8.1.0</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\OpenApi.RestEase.Generator\OpenApi.RestEase.Generator.csproj">
+      <Project>{c5837150-2bfb-4e13-9656-a9ba0ec24f21}</Project>
+      <Name>OpenApi.RestEase.Generator</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
