@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
+        <Version>0.0.0.1-preview-01</Version>
         <TargetFrameworks>net461;netstandard2.0</TargetFrameworks>
         <Description>Generate a RestEase compatible client (Interface and Models) based on a Swagger / OpenApi or RAML specification.</Description>
         <PackageTags>OpenAPI; Swagger; RestEase; REST API; Code Generator; REST Client; RAML</PackageTags>
