@@ -109,41 +109,40 @@ internal class SchemaMapper : BaseMapper
                     var openApiSchema = schemaProperty.Value;
                     var objectName = pascalCase ? schemaProperty.Key.ToPascalCase() : schemaProperty.Key;
 
-                    var propertyDto = MapProperty(@interface, openApiSpecVersion, openApiSchema, objectName, directory);
-                    if (propertyDto.type == PropertyType.Normal)
+                    var propertyDto = TryMapProperty(@interface, openApiSpecVersion, openApiSchema, objectName, directory);
+                    if (propertyDto.Type == PropertyType.Normal)
                     {
-                        if (propertyDto.p.IsFirst)
+                        if (propertyDto.Result.IsFirst)
                         {
-                            list.Add(propertyDto.p.First);
+                            list.Add(propertyDto.Result.First);
                         }
                         else
                         {
                             list.Add(new PropertyDto(objectName, objectName));
-                            // list.AddRange(propertyDto.p.Second);
                         }
                     }
-                    else if (propertyDto.type == PropertyType.Reference)
+                    else if (propertyDto.Type == PropertyType.Reference)
                     {
-                        list.Add(propertyDto.p.First);
+                        list.Add(propertyDto.Result.First);
                     }
                 }
 
                 foreach (var allOrAny in schema.AllOf.Union(schema.AnyOf))
                 {
-                    var extendsType = MapProperty(@interface, openApiSpecVersion, allOrAny, name, directory);
-                    if (extendsType.type == PropertyType.Reference)
+                    var extendsType = TryMapProperty(@interface, openApiSpecVersion, allOrAny, name, directory);
+                    if (extendsType.Type == PropertyType.Reference)
                     {
-                        list.Add(new PropertyDto("not-used", "not-used", extendsType.p.First.Type));
+                        list.Add(new PropertyDto("not-used", "not-used", extendsType.Result.First.Type));
                     }
-                    else if (extendsType.type == PropertyType.Normal)
+                    else if (extendsType.Type == PropertyType.Normal)
                     {
-                        if (extendsType.p.IsFirst)
+                        if (extendsType.Result.IsFirst)
                         {
-                            list.Add(extendsType.p.First);
+                            list.Add(extendsType.Result.First);
                         }
                         else
                         {
-                            list.AddRange(extendsType.p.Second);
+                            list.AddRange(extendsType.Result.Second);
                         }
                     }
                 }
@@ -162,7 +161,7 @@ internal class SchemaMapper : BaseMapper
         }
     }
 
-    private (PropertyType type, AnyOf<PropertyDto, IList<PropertyDto>> p) MapProperty(
+    private (PropertyType Type, AnyOf<PropertyDto, IList<PropertyDto>> Result) TryMapProperty(
         RestEaseInterface @interface,
         OpenApiSpecVersion? openApiSpecVersion,
         OpenApiSchema openApiSchema,
@@ -184,30 +183,20 @@ internal class SchemaMapper : BaseMapper
             }
 
             // Object is defined `inline`, create a new Model and use that one.
-            var existingModel = @interface.ExtraModels.FirstOrDefault(m => m.ClassName == objectName);
-            AnyOf<PropertyDto, IList<PropertyDto>> x2;
-            if (existingModel == null)
+            var model = @interface.ExtraModels.FirstOrDefault(m => m.ClassName == objectName);
+            if (model == null)
             {
                 var inlineModel = MapSchema(@interface, openApiSchema, null, false, true, null, directory);
-                //if (inlineModel.IsSecond)
+                model = new RestEaseModel
                 {
-                    var newModel = new RestEaseModel
-                    {
-                        Namespace = Settings.Namespace,
-                        ClassName = objectName,
-                        Properties = inlineModel.Second
-                    };
-                    @interface.ExtraModels.Add(newModel);
-
-                    x2 = inlineModel;
-                }
-            }
-            else
-            {
-                x2 = existingModel.Properties.ToList();
+                    Namespace = Settings.Namespace,
+                    ClassName = objectName,
+                    Properties = inlineModel.Second
+                };
+                @interface.ExtraModels.Add(model);
             }
 
-            return (PropertyType.Normal, x2);
+            return (PropertyType.Normal, model.Properties.ToList());
         }
 
         var propertyIsNullable = openApiSchema.Nullable || Settings.SupportExtensionXNullable && openApiSchema.TryGetXNullable(out var x) && x;
