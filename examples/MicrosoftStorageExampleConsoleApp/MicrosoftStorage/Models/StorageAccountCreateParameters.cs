@@ -13,6 +13,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Models
 
         public ExtendedLocation ExtendedLocation { get; set; }
 
+        public Tags Tags { get; set; }
+
         public Identity Identity { get; set; }
 
         public StorageAccountPropertiesCreateParameters Properties { get; set; }

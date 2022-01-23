@@ -13,8 +13,8 @@ using RestEaseClientGenerator.Types;
 using Serilog;
 using Serilog.Sinks.SystemConsole.Themes;
 
-GenerateMicrosoftStorage20190401();
-// GenerateMicrosoftStorage20210401();
+//GenerateMicrosoftStorage20190401();
+GenerateMicrosoftStorage20210401();
 // GenerateMicrosoftContainerInstance20211001();
 
 Log.Logger = new LoggerConfiguration()

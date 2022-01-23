@@ -3,10 +3,7 @@ using System.Collections.Generic;
 
 namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Models
 {
-    public class ErrorAdditionalInfo
+    public class Tags
     {
-        public string Type { get; set; }
-
-        public Info Info { get; set; }
     }
 }

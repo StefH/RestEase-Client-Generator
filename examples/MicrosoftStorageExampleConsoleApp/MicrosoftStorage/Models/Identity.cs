@@ -11,6 +11,6 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Models
 
         public string Type { get; set; }
 
-        public Dictionary<string, UserAssignedIdentity> UserAssignedIdentities { get; set; }
+        public UserAssignedIdentities UserAssignedIdentities { get; set; }
     }
 }
