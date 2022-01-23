@@ -8,6 +8,10 @@
         <ImplicitUsings>enable</ImplicitUsings>
     </PropertyGroup>
 
+    <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    </PropertyGroup>
+
     <ItemGroup>
         <Compile Remove="Utils\RoslynString.cs" />
         <Compile Remove="Utils\UnicodeCharacterUtilities.cs" />
