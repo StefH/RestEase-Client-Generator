@@ -13,6 +13,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftContainerInstance.
 
         public EnvironmentVariable[] EnvironmentVariables { get; set; }
 
+        public InstanceView InstanceView { get; set; }
+
         public ResourceRequirements Resources { get; set; }
 
         public VolumeMount[] VolumeMounts { get; set; }

@@ -1,4 +1,3 @@
-using System;
 using System.ComponentModel;
 using RestEaseClientGenerator.Utils;
 
@@ -9,11 +8,11 @@ namespace RestEaseClientGenerator.Types;
 public enum GenerationType
 {
     [Description("Api")]
-    Api = 1,
+    Api = 0b00000001,
 
     [Description("Models")]
-    Models = 2,
+    Models = 0b00000010,
 
     [Description("Api and Models")]
-    Both = 3
+    Both = Api | Models
 }

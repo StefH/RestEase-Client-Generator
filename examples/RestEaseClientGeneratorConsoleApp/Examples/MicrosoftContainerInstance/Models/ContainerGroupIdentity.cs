@@ -10,5 +10,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftContainerInstance.
         public string TenantId { get; set; }
 
         public string Type { get; set; }
+
+        public UserAssignedIdentities UserAssignedIdentities { get; set; }
     }
 }

@@ -67,14 +67,7 @@ internal class ExternalReferenceMapper : BaseMapper
         }
         else
         {
-            // Probably an enum or just a simple parameter ?
-            var nullable = "";
-            return _settings.PreferredEnumType switch
-            {
-                //EnumType.Integer => new PropertyDto($"int{nullable}", className),
-                //EnumType.Object => new PropertyDto($"object", className),
-                _ => new PropertyDto($"string", className)
-            };
+            return new PropertyDto("string", className);
         }
 
         throw new InvalidOperationException($"External model/enum with name '{className}' not found in local or external ({reference.ExternalResource}).");

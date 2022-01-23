@@ -154,7 +154,6 @@ public class Generator : IGenerator
             // Add Inline/External Enums
             var enumBuilder = new EnumBuilder(settings);
             var extraEnums = result.Enums
-                .Where(e => e.Values is not null) // In case the values is null, do not create a file because enum is replaced by string
                 .GroupBy(r => r.EnumName)
                 .SelectMany(r => r);
 

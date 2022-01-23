@@ -5,5 +5,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftContainerInstance.
 {
     public class ContainerGroup : Resource
     {
+        public ContainerGroupIdentity Identity { get; set; }
+
+        public Properties Properties { get; set; }
     }
 }

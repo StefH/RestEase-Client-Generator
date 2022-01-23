@@ -11,6 +11,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftContainerInstance.
 
         public string LogType { get; set; }
 
+        public Metadata Metadata { get; set; }
+
         public string WorkspaceResourceId { get; set; }
     }
 }

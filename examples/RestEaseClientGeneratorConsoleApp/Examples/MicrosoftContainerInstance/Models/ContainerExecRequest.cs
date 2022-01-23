@@ -6,5 +6,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftContainerInstance.
     public class ContainerExecRequest
     {
         public string Command { get; set; }
+
+        public TerminalSize TerminalSize { get; set; }
     }
 }

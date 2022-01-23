@@ -7,6 +7,10 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftContainerInstance.
     {
         public string Name { get; set; }
 
+        public Display Display { get; set; }
+
+        public Properties Properties { get; set; }
+
         public string Origin { get; set; }
     }
 }

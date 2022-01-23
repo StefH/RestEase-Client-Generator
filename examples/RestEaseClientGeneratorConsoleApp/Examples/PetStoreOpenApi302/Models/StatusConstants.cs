@@ -1,11 +1,9 @@
-using System;
-
 namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreOpenApi302.Models
 {
     public static class StatusConstants
     {
-        public const string available = "available";
-        public const string pending = "pending";
-        public const string sold = "sold";
+        public const string Available = "available";
+        public const string Pending = "pending";
+        public const string Sold = "sold";
     }
 }

@@ -30,18 +30,8 @@ internal class ModelsMapper : BaseMapper
 
     public IEnumerable<AnyOf<RestEaseModel, RestEaseEnum>> Map(IDictionary<string, OpenApiSchema> schemas)
     {
-        if (schemas.ContainsKey("ContainerGroup"))
-        {
-            int x = 0;
-        }
-
         foreach (var entry in schemas.OrderBy(s => s.Key))
         {
-            if (entry.Key == "ContainerGroup")
-            {
-                int y = 0;
-            }
-
             var properties = _schemaMapper.MapSchema(_interface, entry.Value, string.Empty, entry.Key, entry.Value.Nullable, true, _openApiSpecVersion, _directory);
 
             //if (properties.IsFirst)

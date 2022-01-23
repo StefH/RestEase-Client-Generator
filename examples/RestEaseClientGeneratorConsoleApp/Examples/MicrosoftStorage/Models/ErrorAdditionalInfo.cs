@@ -6,5 +6,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftStorage.Models
     public class ErrorAdditionalInfo
     {
         public string Type { get; set; }
+
+        public Info Info { get; set; }
     }
 }
