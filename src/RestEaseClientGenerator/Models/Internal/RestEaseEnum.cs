@@ -10,7 +10,7 @@ public class RestEaseEnum
 
     public string BaseName { get; set; }
 
-    public ICollection<string>? Values { get; set; } // Can be null in case EnumType is not Enum
+    public ICollection<string> Values { get; set; }
 
-    public EnumType EnumType { get; set; }
+    // public EnumType EnumType { get; set; }
 }

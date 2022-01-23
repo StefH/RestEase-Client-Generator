@@ -43,15 +43,20 @@ internal class Worker
 
     public async Task RunAsync(CancellationToken cancellationToken = default)
     {
-        //try
-        //{
-        //    var aci = await _aci.ContainerGroupsListAsync("2de19637-27a3-42a8-812f-2c2a7f7f935c");
-        //    _logger.LogInformation("ContainerGroupsListAsync = '{aci}'", JsonSerializer.Serialize(aci.GetContent(), _options));
-        //}
-        //catch (Exception ex)
-        //{
-        //    Console.WriteLine(ex);
-        //}
+        try
+        {
+            var aci = await _aci.ContainerGroupsListAsync("2de19637-27a3-42a8-812f-2c2a7f7f935c");
+            _logger.LogInformation("ContainerGroupsListAsync = '{aci}'", JsonSerializer.Serialize(aci.GetContent(), _options));
+
+            //foreach (var cg in aci.GetContent().First.Value)
+            //{
+            //    var d = await _aci.ContainerGroupsDeleteAsync("2de19637-27a3-42a8-812f-2c2a7f7f935c");
+            //}
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+        }
 
         try
         {
@@ -80,9 +85,8 @@ internal class Worker
                             }
                         }
                     },
-                    OsType = "Linux"
+                    OsType = OsTypeConstants.Linux
                 }
-
             };
             var aci = await _aci.ContainerGroupsCreateOrUpdateAsync(
                 "2de19637-27a3-42a8-812f-2c2a7f7f935c",

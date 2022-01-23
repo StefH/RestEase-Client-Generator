@@ -10,11 +10,11 @@ public enum EnumType
     [Description("string")]
     String,
 
-    [Description("object")]
-    Object,
+    //[Description("object")]
+    //Object,
 
-    [Description("integer")]
-    Integer,
+    //[Description("integer")]
+    //Integer,
 
     [Description("enum")]
     Enum

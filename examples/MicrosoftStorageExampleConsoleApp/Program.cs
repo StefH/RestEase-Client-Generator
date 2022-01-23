@@ -84,7 +84,8 @@ static void GenerateMicrosoftContainerInstance20211001()
         SingleFile = false,
         PreferredMultipleResponsesType = MultipleResponsesType.AnyOf,
         PreferredSecurityDefinitionType = SecurityDefinitionType.None,
-        GenerationType = GenerationType.Both
+        GenerationType = GenerationType.Both,
+        PreferredEnumType = EnumType.String
     };
 
     const string x = @"C:\Dev\azure-rest-api-specs\specification\containerinstance\resource-manager\Microsoft.ContainerInstance\stable\2021-10-01\containerInstance.json";

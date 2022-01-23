@@ -71,8 +71,8 @@ internal class ExternalReferenceMapper : BaseMapper
             var nullable = "";
             return _settings.PreferredEnumType switch
             {
-                EnumType.Integer => new PropertyDto($"int{nullable}", className),
-                EnumType.Object => new PropertyDto($"object", className),
+                //EnumType.Integer => new PropertyDto($"int{nullable}", className),
+                //EnumType.Object => new PropertyDto($"object", className),
                 _ => new PropertyDto($"string", className)
             };
         }

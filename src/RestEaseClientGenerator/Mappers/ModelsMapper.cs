@@ -42,19 +42,19 @@ internal class ModelsMapper : BaseMapper
                 int y = 0;
             }
 
-            var properties = _schemaMapper.MapSchema(_interface, entry.Value, entry.Key, entry.Value.Nullable, true, _openApiSpecVersion, _directory);
+            var properties = _schemaMapper.MapSchema(_interface, entry.Value, string.Empty, entry.Key, entry.Value.Nullable, true, _openApiSpecVersion, _directory);
 
-            if (properties.IsFirst)
-            {
-                // It's an Enum
-                yield return new RestEaseEnum
-                {
-                    Namespace = Settings.Namespace,
-                    EnumName = MakeValidModelName(entry.Key),
-                    Values = null,
-                    EnumType = Settings.PreferredEnumType
-                };
-            }
+            //if (properties.IsFirst)
+            //{
+            //    throw new InvalidOperationException();
+            //    // It's an Enum
+            //    yield return new RestEaseEnum
+            //    {
+            //        Namespace = Settings.Namespace,
+            //        EnumName = MakeValidModelName(entry.Key),
+            //        Values = null
+            //    };
+            //}
 
             if (properties.IsSecond)
             {

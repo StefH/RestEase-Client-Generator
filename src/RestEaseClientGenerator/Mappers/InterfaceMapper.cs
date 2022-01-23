@@ -335,7 +335,7 @@ internal class InterfaceMapper : BaseMapper
             case SchemaType.Array:
                 var arrayType = schema.Items.Reference != null
                     ? MakeValidReferenceId(schema.Items.Reference.Id)
-                    : _schemaMapper.MapSchema(@interface, schema.Items, null, false, true, null, directory).First.Type;
+                    : _schemaMapper.MapSchema(@interface, schema.Items, string.Empty, null, false, true, null, directory).First.Type;
 
                 return MapArrayType(arrayType);
 
@@ -348,17 +348,17 @@ internal class InterfaceMapper : BaseMapper
                         var className = MakeValidReferenceId(schema.Reference.Id);
                         if (@interface.ExtraModels.All(m => m.ClassName != className) || @interface.ExtraEnums.All(m => m.EnumName != className))
                         {
-                            var extraModel = _schemaMapper.MapSchema(@interface, schema, className, false, true, null, directory);
+                            var extraModel = _schemaMapper.MapSchema(@interface, schema, string.Empty, className, false, true, null, directory);
 
                             if (extraModel.IsFirst && Settings.PreferredEnumType == EnumType.Enum)
                             {
+                                throw new NotSupportedException();
                                 // It's a single value, so probably enum
                                 var newEnum = new RestEaseEnum
                                 {
                                     Namespace = Settings.Namespace,
                                     EnumName = className,
-                                    Values = null,
-                                    EnumType = Settings.PreferredEnumType
+                                    Values = null
                                 };
                                 @interface.ExtraEnums.Add(newEnum);
                             }
@@ -388,7 +388,7 @@ internal class InterfaceMapper : BaseMapper
                 else if (schema.AdditionalProperties != null)
                 {
                     // Use AdditionalProperties
-                    var additionalResult = _schemaMapper.MapSchema(@interface, schema.AdditionalProperties, null, schema.AdditionalProperties.Nullable, false, null, directory);
+                    var additionalResult = _schemaMapper.MapSchema(@interface, schema.AdditionalProperties, string.Empty, null, schema.AdditionalProperties.Nullable, false, null, directory);
                     if (additionalResult.IsFirst)
                     {
                         return additionalResult.First.Type;
@@ -406,7 +406,7 @@ internal class InterfaceMapper : BaseMapper
                     var existingModel = @interface.ExtraModels.FirstOrDefault(m => m.ClassName == className);
                     if (existingModel == null)
                     {
-                        var inlineModel = _schemaMapper.MapSchema(@interface, schema, null, false, true, null, directory);
+                        var inlineModel = _schemaMapper.MapSchema(@interface, schema, string.Empty, null, false, true, null, directory);
                         if (inlineModel.IsSecond)
                         {
                             var newModel = new RestEaseModel
@@ -573,7 +573,7 @@ internal class InterfaceMapper : BaseMapper
                 case SchemaType.Array:
                     string arrayType = detected.Value.Schema.Items.Reference != null
                         ? MakeValidReferenceId(detected.Value.Schema.Items.Reference.Id)
-                        : _schemaMapper.MapSchema(@interface, detected.Value.Schema.Items, null, false, true, null, directory).ToString();
+                        : _schemaMapper.MapSchema(@interface, detected.Value.Schema.Items, string.Empty, null, false, true, null, directory).ToString();
                     bodyParameter = MapArrayType(arrayType);
                     break;
 
@@ -775,7 +775,7 @@ internal class InterfaceMapper : BaseMapper
 
             attributes.AddRange(extraAttributes);
 
-            identifierWithType = $"{_schemaMapper.MapSchema(@interface, schema, validIdentifier, !required, false, null, directory)}";
+            identifierWithType = $"{_schemaMapper.MapSchema(@interface, schema, string.Empty, validIdentifier, !required, false, null, directory)}";
 
             return new RestEaseParameter
             {
@@ -786,14 +786,14 @@ internal class InterfaceMapper : BaseMapper
                 SchemaType = schema.GetSchemaType(),
                 SchemaFormat = schema.GetSchemaFormat(),
                 IdentifierWithType = $"{identifierWithType}",
-                IdentifierWithTypePascalCase = $"{_schemaMapper.MapSchema(@interface, schema, validIdentifier, !required, true, null, directory)}",
+                IdentifierWithTypePascalCase = $"{_schemaMapper.MapSchema(@interface, schema, string.Empty, validIdentifier, !required, true, null, directory)}",
                 IdentifierWithRestEase = $"[{restEaseParameterAnnotation}({string.Join(", ", attributes)})] {identifierWithType}{isNullPostfix}",
                 Summary = description
             };
         }
 
         string extraAttributesBetweenParentheses = extraAttributes.Length == 0 ? string.Empty : $"({string.Join(", ", extraAttributes)})";
-        identifierWithType = $"{_schemaMapper.MapSchema(@interface, schema, identifier, !required, false, null, directory)}";
+        identifierWithType = $"{_schemaMapper.MapSchema(@interface, schema, string.Empty, identifier, !required, false, null, directory)}";
 
         return new RestEaseParameter
         {
@@ -804,7 +804,7 @@ internal class InterfaceMapper : BaseMapper
             SchemaType = schema.GetSchemaType(),
             SchemaFormat = schema.GetSchemaFormat(),
             IdentifierWithType = $"{identifierWithType}",
-            IdentifierWithTypePascalCase = $"{_schemaMapper.MapSchema(@interface, schema, identifier, !required, true, null, directory)}",
+            IdentifierWithTypePascalCase = $"{_schemaMapper.MapSchema(@interface, schema, string.Empty, identifier, !required, true, null, directory)}",
             IdentifierWithRestEase = $"[{restEaseParameterAnnotation}{extraAttributesBetweenParentheses}] {identifierWithType}{isNullPostfix}",
             Summary = description
         };

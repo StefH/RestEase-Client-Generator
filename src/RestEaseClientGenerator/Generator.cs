@@ -86,7 +86,7 @@ public class Generator : IGenerator
         }
 
         // Add Inline Enums
-        foreach (var inlineEnum in schemaMapper.Enums)
+        foreach (var inlineEnum in @interface.ExtraEnums)
         {
             enums.Add(inlineEnum);
         }

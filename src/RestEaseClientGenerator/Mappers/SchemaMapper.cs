@@ -11,13 +11,21 @@ namespace RestEaseClientGenerator.Mappers;
 
 internal class SchemaMapper : BaseMapper
 {
-    public readonly IList<RestEaseEnum> Enums = new List<RestEaseEnum>();
+    // public readonly IList<RestEaseEnum> Enums = new List<RestEaseEnum>();
 
     public SchemaMapper(GeneratorSettings settings) : base(settings)
     {
     }
 
-    public AnyOf<PropertyDto, IList<PropertyDto>> MapSchema(RestEaseInterface @interface, OpenApiSchema schema, string? name, bool isNullable, bool pascalCase, OpenApiSpecVersion? openApiSpecVersion, string? directory)
+    public AnyOf<PropertyDto, IList<PropertyDto>> MapSchema(
+        RestEaseInterface @interface,
+        OpenApiSchema schema,
+        string parentName,
+        string? name,
+        bool isNullable,
+        bool pascalCase,
+        OpenApiSpecVersion? openApiSpecVersion,
+        string? directory)
     {
         name ??= string.Empty;
 
@@ -45,12 +53,12 @@ internal class SchemaMapper : BaseMapper
                         }
                         else
                         {
-                            var sp = MapSchema(@interface, schema.Items, null, schema.Items.Nullable, true, openApiSpecVersion, directory);
+                            var sp = MapSchema(@interface, schema.Items, parentName, null, schema.Items.Nullable, true, openApiSpecVersion, directory);
                             return new PropertyDto(MapArrayType(sp.First.Type), nameCamelCase);
                         }
 
                     default:
-                        var p = MapSchema(@interface, schema.Items, null, schema.Items.Nullable, true, openApiSpecVersion, directory);
+                        var p = MapSchema(@interface, schema.Items, parentName, null, schema.Items.Nullable, true, openApiSpecVersion, directory);
                         return new PropertyDto(MapArrayType(p.First.Type), nameCamelCase);
                 }
 
@@ -89,13 +97,14 @@ internal class SchemaMapper : BaseMapper
                     default:
                         if (schema.Enum != null && schema.Enum.Any())
                         {
-                            return Settings.PreferredEnumType switch
-                            {
-                                EnumType.Enum => MapEnumSchema(schema, name, nameCamelCase, nullable),
-                                EnumType.Integer => new PropertyDto("int", nameCamelCase),
-                                EnumType.Object => new PropertyDto("object", nameCamelCase),
-                                _ => new PropertyDto("string", nameCamelCase)
-                            };
+                            return MapEnumSchema(@interface, schema, parentName, name, nameCamelCase, nullable);
+                            //return Settings.PreferredEnumType switch
+                            //{
+                            //    EnumType.Enum => MapEnumSchema(schema, name, nameCamelCase, nullable),
+                            //    //EnumType.Integer => new PropertyDto("int", nameCamelCase),
+                            //    //EnumType.Object => new PropertyDto("object", nameCamelCase),
+                            //    _ => new PropertyDto("string", nameCamelCase)
+                            //};
                         }
 
                         return new PropertyDto("string", nameCamelCase);
@@ -109,7 +118,7 @@ internal class SchemaMapper : BaseMapper
                     var openApiSchema = schemaProperty.Value;
                     var objectName = pascalCase ? schemaProperty.Key.ToPascalCase() : schemaProperty.Key;
 
-                    var propertyDto = TryMapProperty(@interface, openApiSpecVersion, openApiSchema, objectName, directory);
+                    var propertyDto = TryMapProperty(@interface, openApiSpecVersion, openApiSchema, name, objectName, directory);
                     if (propertyDto.Type == PropertyType.Normal)
                     {
                         if (propertyDto.Result.IsFirst)
@@ -129,7 +138,7 @@ internal class SchemaMapper : BaseMapper
 
                 foreach (var allOrAny in schema.AllOf.Union(schema.AnyOf))
                 {
-                    var extendsType = TryMapProperty(@interface, openApiSpecVersion, allOrAny, name, directory);
+                    var extendsType = TryMapProperty(@interface, openApiSpecVersion, allOrAny, name, name, directory);
                     if (extendsType.Type == PropertyType.Reference)
                     {
                         list.Add(new PropertyDto("not-used", "not-used", extendsType.Result.First.Type));
@@ -165,6 +174,7 @@ internal class SchemaMapper : BaseMapper
         RestEaseInterface @interface,
         OpenApiSpecVersion? openApiSpecVersion,
         OpenApiSchema openApiSchema,
+        string parentName,
         string objectName,
         string? directory)
     {
@@ -183,14 +193,15 @@ internal class SchemaMapper : BaseMapper
             }
 
             // Object is defined `inline`, create a new Model and use that one.
-            var model = @interface.ExtraModels.FirstOrDefault(m => m.ClassName == objectName);
+            var className = $"{objectName}";
+            var model = @interface.ExtraModels.FirstOrDefault(m => m.ClassName == className);
             if (model == null)
             {
-                var inlineModel = MapSchema(@interface, openApiSchema, null, false, true, null, directory);
+                var inlineModel = MapSchema(@interface, openApiSchema, parentName, null, false, true, null, directory);
                 model = new RestEaseModel
                 {
                     Namespace = Settings.Namespace,
-                    ClassName = objectName,
+                    ClassName = className,
                     Properties = inlineModel.Second
                 };
                 @interface.ExtraModels.Add(model);
@@ -200,7 +211,7 @@ internal class SchemaMapper : BaseMapper
         }
 
         var propertyIsNullable = openApiSchema.Nullable || Settings.SupportExtensionXNullable && openApiSchema.TryGetXNullable(out var x) && x;
-        var property = MapSchema(@interface, openApiSchema, objectName, propertyIsNullable, true, openApiSpecVersion, directory);
+        var property = MapSchema(@interface, openApiSchema, parentName, objectName, propertyIsNullable, true, openApiSpecVersion, directory);
         if (property.IsFirst)
         {
             return (PropertyType.Normal, property.First);
@@ -242,14 +253,16 @@ internal class SchemaMapper : BaseMapper
         }
     }
 
-    private PropertyDto MapEnumSchema(OpenApiSchema schema, string name, string nameCamelCase, string nullable)
+    private PropertyDto MapEnumSchema(RestEaseInterface @interface, OpenApiSchema schema, string parentName, string name, string nameCamelCase, string nullable)
     {
-        string enumName = name.ToPascalCase();
+        var enumNamePostfix = Settings.PreferredEnumType == EnumType.Enum ? "EnumType" : "Constants";
+
+        string enumName = $"{parentName}{name.ToPascalCase()}{enumNamePostfix}";
         string basename = enumName;
         var enumValues = schema.Enum.OfType<OpenApiString>()
             .SelectMany(str => str.Value.Split(new[] { '|' }, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim())).ToList();
 
-        var existingEnums = Enums.Where(e => e.BaseName == enumName).ToList();
+        var existingEnums = @interface.ExtraEnums.Where(e => e.BaseName == enumName).ToList();
         if (!existingEnums.Any())
         {
             var newEnum = new RestEaseEnum
@@ -257,33 +270,31 @@ internal class SchemaMapper : BaseMapper
                 Namespace = Settings.Namespace,
                 BaseName = enumName,
                 EnumName = enumName,
-                Values = enumValues,
-                EnumType = EnumType.Enum
+                Values = enumValues
             };
 
-            Enums.Add(newEnum);
+            @interface.ExtraEnums.Add(newEnum);
         }
         else
         {
-            var existingEnumWithSameValues = existingEnums
-                .SingleOrDefault(existingEnum => (existingEnum.Values ?? new List<string>()).SequenceEqual(enumValues));
-
+            var existingEnumWithSameValues = existingEnums.SingleOrDefault(existingEnum => existingEnum.Values.SequenceEqual(enumValues));
             if (existingEnumWithSameValues == null)
             {
                 int matchingCount = existingEnums.Count;
 
                 enumName = $"{enumName}{matchingCount}";
 
+                //enumName = $"{parentName}{enumName}";
+
                 var newEnum = new RestEaseEnum
                 {
                     Namespace = Settings.Namespace,
                     BaseName = basename,
                     EnumName = enumName,
-                    Values = enumValues,
-                    EnumType = EnumType.Enum
+                    Values = enumValues
                 };
 
-                Enums.Add(newEnum);
+                @interface.ExtraEnums.Add(newEnum);
             }
             else
             {
@@ -291,6 +302,8 @@ internal class SchemaMapper : BaseMapper
             }
         }
 
-        return new PropertyDto($"{enumName}{nullable}", nameCamelCase);
+        var type = Settings.PreferredEnumType == EnumType.Enum ? $"{enumName}{nullable}" : "string";
+
+        return new PropertyDto(type, nameCamelCase);
     }
 }
