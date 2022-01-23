@@ -1,5 +1,3 @@
-using Microsoft.OpenApi.Models;
-
 namespace RestEaseClientGenerator.Models.Internal;
 
 public record InternalDto

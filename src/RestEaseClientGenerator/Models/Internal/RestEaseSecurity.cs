@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using RestEaseClientGenerator.Types;
 
 namespace RestEaseClientGenerator.Models.Internal;
