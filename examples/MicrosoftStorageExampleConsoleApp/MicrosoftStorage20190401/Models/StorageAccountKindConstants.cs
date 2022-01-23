@@ -1,5 +1,8 @@
 namespace MicrosoftExampleConsoleApp.MicrosoftStorage20190401.Models
 {
+    /// <summary>
+    /// Gets the Kind.
+    /// </summary>
     public static class StorageAccountKindConstants
     {
         public const string Storage = "Storage";

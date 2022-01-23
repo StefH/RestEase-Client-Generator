@@ -1,4 +1,5 @@
 using System.Text;
+using RestEaseClientGenerator.Extensions;
 using RestEaseClientGenerator.Models.Internal;
 using RestEaseClientGenerator.Settings;
 using RestEaseClientGenerator.Types;
@@ -34,6 +35,14 @@ internal class EnumBuilder : BaseBuilder
 
         builder.AppendLine($"namespace {AppendModelsNamespace(restEaseEnum.Namespace)}");
         builder.AppendLine("{");
+
+        if (!string.IsNullOrEmpty(restEaseEnum.Description))
+        {
+            builder.AppendLine("    /// <summary>");
+            builder.AppendLine($"    /// {restEaseEnum.Description.StripHtml()}");
+            builder.AppendLine("    /// </summary>");
+        }
+
         builder.AppendLine($"    public enum {restEaseEnum.EnumName}");
         builder.AppendLine("    {");
         builder.AppendLine(string.Join(",\r\n", restEaseEnum.Values.Select(enumValue => $"        {enumValue}")));
@@ -54,6 +63,14 @@ internal class EnumBuilder : BaseBuilder
 
         builder.AppendLine($"namespace {AppendModelsNamespace(restEaseEnum.Namespace)}");
         builder.AppendLine("{");
+
+        if (!string.IsNullOrEmpty(restEaseEnum.Description))
+        {
+            builder.AppendLine("    /// <summary>");
+            builder.AppendLine($"    /// {restEaseEnum.Description.StripHtml()}");
+            builder.AppendLine("    /// </summary>");
+        }
+
         builder.AppendLine($"    public static class {restEaseEnum.EnumName}");
         builder.AppendLine("    {");
         builder.AppendLine(string.Join("\r\n", values.Select(x => $"        public const string {x.name} = \"{x.value}\";")));

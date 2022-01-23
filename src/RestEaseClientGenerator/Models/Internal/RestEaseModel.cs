@@ -9,6 +9,4 @@ public class RestEaseModel
     public string ClassName { get; set; } = null!;
 
     public ICollection<PropertyDto> Properties { get; set; } = new List<PropertyDto>();
-
-    public IList<string> Extends = new List<string>();
 }

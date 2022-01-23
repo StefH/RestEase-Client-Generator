@@ -252,6 +252,7 @@ internal class SchemaMapper : BaseMapper
         {
             var newEnum = new RestEaseEnum
             {
+                Description = schema.Description,
                 Namespace = Settings.Namespace,
                 BaseName = enumName,
                 EnumName = enumName,
@@ -271,6 +272,7 @@ internal class SchemaMapper : BaseMapper
 
                 var newEnum = new RestEaseEnum
                 {
+                    Description = schema.Description,
                     Namespace = Settings.Namespace,
                     BaseName = basename,
                     EnumName = enumName,

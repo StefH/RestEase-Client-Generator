@@ -51,6 +51,7 @@ internal class ModelsMapper : BaseMapper
                 // It's a Model
                 yield return new RestEaseModel
                 {
+                    Description = entry.Value.Description,
                     Namespace = Settings.Namespace,
                     ClassName = MakeValidModelName(entry.Key),
                     Properties = properties.Second

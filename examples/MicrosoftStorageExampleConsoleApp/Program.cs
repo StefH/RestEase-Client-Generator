@@ -24,9 +24,7 @@ Log.Logger = new LoggerConfiguration()
 
 await using ServiceProvider serviceProvider = RegisterServices(args);
 
-Worker worker = serviceProvider.GetRequiredService<Worker>();
-
-await worker.RunAsync(CancellationToken.None);
+await serviceProvider.GetRequiredService<Worker>().RunAsync(CancellationToken.None);
 
 static void GenerateMicrosoftStorage20190401()
 {

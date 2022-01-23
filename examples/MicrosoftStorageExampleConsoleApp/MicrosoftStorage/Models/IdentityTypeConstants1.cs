@@ -1,5 +1,8 @@
 namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Models
 {
+    /// <summary>
+    /// The identity type.
+    /// </summary>
     public static class IdentityTypeConstants1
     {
         public const string None = "None";

@@ -1,5 +1,8 @@
 namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
 {
+    /// <summary>
+    /// Restart policy for all containers within the container group. - `Always` Always restart- `OnFailure` Restart on failure- `Never` Never restart
+    /// </summary>
     public static class RestartPolicyConstants
     {
         public const string Always = "Always";

@@ -1,5 +1,8 @@
 namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Models
 {
+    /// <summary>
+    /// The type of identity that created the resource.
+    /// </summary>
     public static class SystemDataCreatedByTypeConstants
     {
         public const string User = "User";

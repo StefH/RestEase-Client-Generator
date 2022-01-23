@@ -1,5 +1,8 @@
 namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Models
 {
+    /// <summary>
+    /// Required. Indicates the type of storage account.
+    /// </summary>
     public static class StorageAccountCreateParametersKindConstants
     {
         public const string Storage = "Storage";

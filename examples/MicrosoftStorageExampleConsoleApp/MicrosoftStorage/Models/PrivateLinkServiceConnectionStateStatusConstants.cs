@@ -1,5 +1,8 @@
 namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Models
 {
+    /// <summary>
+    /// The private endpoint connection status.
+    /// </summary>
     public static class PrivateLinkServiceConnectionStateStatusConstants
     {
         public const string Pending = "Pending";

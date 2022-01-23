@@ -1,5 +1,8 @@
 namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Models
 {
+    /// <summary>
+    /// Default share permission for users using Kerberos authentication if RBAC role is not assigned.
+    /// </summary>
     public static class AzureFilesIdentityBasedAuthenticationDefaultSharePermissionConstants
     {
         public const string None = "None";

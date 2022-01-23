@@ -1,5 +1,8 @@
 namespace MicrosoftExampleConsoleApp.MicrosoftStorage20190401.Models
 {
+    /// <summary>
+    /// Indicates the type of storage account.
+    /// </summary>
     public static class SkuKindConstants
     {
         public const string Storage = "Storage";

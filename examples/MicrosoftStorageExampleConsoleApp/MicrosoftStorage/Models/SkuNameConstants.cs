@@ -1,5 +1,8 @@
 namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Models
 {
+    /// <summary>
+    /// The SKU name. Required for account creation; optional for update. Note that in older versions, SKU name was called accountType.
+    /// </summary>
     public static class SkuNameConstants
     {
         public const string StandardLRS = "Standard_LRS";

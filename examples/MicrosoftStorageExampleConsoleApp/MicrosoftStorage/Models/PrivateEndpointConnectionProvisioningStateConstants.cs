@@ -1,5 +1,8 @@
 namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Models
 {
+    /// <summary>
+    /// The current provisioning state.
+    /// </summary>
     public static class PrivateEndpointConnectionProvisioningStateConstants
     {
         public const string Succeeded = "Succeeded";

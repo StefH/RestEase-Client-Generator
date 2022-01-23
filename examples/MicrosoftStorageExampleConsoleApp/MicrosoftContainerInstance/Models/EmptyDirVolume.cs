@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
 {
+    /// <summary>
+    /// The empty directory volume.
+    /// </summary>
     public class EmptyDirVolume
     {
     }

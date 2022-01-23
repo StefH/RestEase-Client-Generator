@@ -1,5 +1,8 @@
 namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Models
 {
+    /// <summary>
+    /// Gets the unit of measurement.
+    /// </summary>
     public static class UsageUnitConstants
     {
         public const string Count = "Count";

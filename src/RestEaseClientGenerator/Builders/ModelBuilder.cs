@@ -1,4 +1,5 @@
 using System.Text;
+using RestEaseClientGenerator.Extensions;
 using RestEaseClientGenerator.Models.Internal;
 using RestEaseClientGenerator.Settings;
 
@@ -29,10 +30,25 @@ internal class ModelBuilder : BaseBuilder
 
         builder.AppendLine($"namespace {AppendModelsNamespace(restEaseModel.Namespace)}");
         builder.AppendLine("{");
+
+        if (!string.IsNullOrEmpty(restEaseModel.Description))
+        {
+            builder.AppendLine("    /// <summary>");
+            builder.AppendLine($"    /// {restEaseModel.Description.StripHtml()}");
+            builder.AppendLine("    /// </summary>");
+        }
+
         builder.AppendLine($"    public class {restEaseModel.ClassName}{extendsClass}");
         builder.AppendLine("    {");
         foreach (var property in restEaseModel.Properties.Where(p => p.Extends is null))
         {
+            if (!string.IsNullOrEmpty(property.Description))
+            {
+                builder.AppendLine("        /// <summary>");
+                builder.AppendLine($"        /// {property.Description.StripHtml()}");
+                builder.AppendLine("        /// </summary>");
+            }
+
             if (property.Name == restEaseModel.ClassName)
             {
                 builder.AppendLine($"        [Newtonsoft.Json.JsonProperty(\"{property.Name}\")]");

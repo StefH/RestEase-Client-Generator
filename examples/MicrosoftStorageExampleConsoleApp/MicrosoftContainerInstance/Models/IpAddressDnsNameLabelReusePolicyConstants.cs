@@ -1,5 +1,8 @@
 namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
 {
+    /// <summary>
+    /// The value representing the security enum.
+    /// </summary>
     public static class IpAddressDnsNameLabelReusePolicyConstants
     {
         public const string Unsecure = "Unsecure";

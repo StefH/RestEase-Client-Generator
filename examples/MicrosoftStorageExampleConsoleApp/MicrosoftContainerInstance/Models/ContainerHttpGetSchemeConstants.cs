@@ -1,5 +1,8 @@
 namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
 {
+    /// <summary>
+    /// The scheme.
+    /// </summary>
     public static class ContainerHttpGetSchemeConstants
     {
         public const string Http = "http";

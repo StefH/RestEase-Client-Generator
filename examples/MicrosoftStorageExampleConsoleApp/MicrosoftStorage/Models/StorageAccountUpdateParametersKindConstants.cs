@@ -1,5 +1,8 @@
 namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Models
 {
+    /// <summary>
+    /// Optional. Indicates the type of storage account. Currently only StorageV2 value supported by server.
+    /// </summary>
     public static class StorageAccountUpdateParametersKindConstants
     {
         public const string Storage = "Storage";

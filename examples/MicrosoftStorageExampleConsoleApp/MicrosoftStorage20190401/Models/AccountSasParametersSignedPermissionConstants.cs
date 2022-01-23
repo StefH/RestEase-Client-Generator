@@ -1,5 +1,8 @@
 namespace MicrosoftExampleConsoleApp.MicrosoftStorage20190401.Models
 {
+    /// <summary>
+    /// The signed permissions for the account SAS. Possible values include: Read (r), Write (w), Delete (d), List (l), Add (a), Create (c), Update (u) and Process (p).
+    /// </summary>
     public static class AccountSasParametersSignedPermissionConstants
     {
         public const string R = "r";
