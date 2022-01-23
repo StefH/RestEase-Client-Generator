@@ -7,6 +7,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage20190401.Models
     {
         public string Name { get; set; }
 
+        public Display Display { get; set; }
+
         public string Origin { get; set; }
 
         public OperationProperties Properties { get; set; }

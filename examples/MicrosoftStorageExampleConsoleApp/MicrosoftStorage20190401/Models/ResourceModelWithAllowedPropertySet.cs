@@ -18,5 +18,13 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage20190401.Models
         public string Kind { get; set; }
 
         public string Etag { get; set; }
+
+        public Tags Tags { get; set; }
+
+        public Identity Identity { get; set; }
+
+        public Sku Sku { get; set; }
+
+        public Plan Plan { get; set; }
     }
 }

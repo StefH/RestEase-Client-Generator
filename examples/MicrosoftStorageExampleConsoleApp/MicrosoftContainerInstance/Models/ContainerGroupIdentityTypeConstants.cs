@@ -1,5 +1,3 @@
-using System;
-
 namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
 {
     public static class ContainerGroupIdentityTypeConstants

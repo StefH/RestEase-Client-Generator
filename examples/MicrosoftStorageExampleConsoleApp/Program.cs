@@ -4,7 +4,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Readers;
 using MicrosoftExampleConsoleApp;
 using MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Api;
-//using MicrosoftExampleConsoleApp.Microsoft.ContainerInstance.Api;
 using MicrosoftExampleConsoleApp.MicrosoftStorage.Api;
 using MicrosoftExampleConsoleApp.MicrosoftStorage20190401.Api;
 using Newtonsoft.Json;
@@ -14,9 +13,9 @@ using RestEaseClientGenerator.Types;
 using Serilog;
 using Serilog.Sinks.SystemConsole.Themes;
 
-// GenerateMicrosoftStorage20190401();
+GenerateMicrosoftStorage20190401();
 // GenerateMicrosoftStorage20210401();
-GenerateMicrosoftContainerInstance20211001();
+// GenerateMicrosoftContainerInstance20211001();
 
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Debug()

@@ -6,5 +6,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage20190401.Models
     public class ErrorAdditionalInfo
     {
         public string Type { get; set; }
+
+        public Info Info { get; set; }
     }
 }

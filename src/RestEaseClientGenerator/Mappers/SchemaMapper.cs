@@ -257,10 +257,15 @@ internal class SchemaMapper : BaseMapper
     {
         var enumNamePostfix = Settings.PreferredEnumType == EnumType.Enum ? "EnumType" : "Constants";
 
-        string enumName = $"{parentName}{name.ToPascalCase()}{enumNamePostfix}";
+        string enumName = $"{parentName}{name}{enumNamePostfix}".ToPascalCase();
         string basename = enumName;
         var enumValues = schema.Enum.OfType<OpenApiString>()
             .SelectMany(str => str.Value.Split(new[] { '|' }, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim())).ToList();
+
+        if (enumValues.Any(ev => ev.Contains("0")))
+        {
+            int y = 0;
+        }
 
         var existingEnums = @interface.ExtraEnums.Where(e => e.BaseName == enumName).ToList();
         if (!existingEnums.Any())
