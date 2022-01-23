@@ -244,9 +244,9 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\OpenApi.RestEase.Generator\OpenApi.RestEase.Generator.csproj">
+    <ProjectReference Include="..\RestEaseClientGenerator\RestEaseClientGenerator.csproj">
       <Project>{c5837150-2bfb-4e13-9656-a9ba0ec24f21}</Project>
-      <Name>OpenApi.RestEase.Generator</Name>
+      <Name>RestEaseClientGenerator</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

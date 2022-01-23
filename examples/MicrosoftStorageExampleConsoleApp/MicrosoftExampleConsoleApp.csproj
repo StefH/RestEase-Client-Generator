@@ -34,7 +34,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\src\OpenApi.RestEase.Generator\OpenApi.RestEase.Generator.csproj" />
+      <ProjectReference Include="..\..\src\RestEaseClientGenerator\RestEaseClientGenerator.csproj" />
     </ItemGroup>
 
 </Project>

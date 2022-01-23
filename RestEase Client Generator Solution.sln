@@ -32,9 +32,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestEaseClientGenerator-Bla
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicrosoftExampleConsoleApp", "examples\MicrosoftStorageExampleConsoleApp\MicrosoftExampleConsoleApp.csproj", "{099E447D-54F0-44A8-8A69-B3DAB36742A1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenApi.RestEase.Generator", "src\OpenApi.RestEase.Generator\OpenApi.RestEase.Generator.csproj", "{C5837150-2BFB-4E13-9656-A9BA0EC24F21}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestEaseClientGenerator", "src\RestEaseClientGenerator\RestEaseClientGenerator.csproj", "{C5837150-2BFB-4E13-9656-A9BA0EC24F21}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dotnet-openapiresteasegenerator", "src\dotnet-openapiresteasegenerator\dotnet-openapiresteasegenerator.csproj", "{E7328300-8190-4854-B164-1F54939F57DD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dotnet-resteaseclientgenerator ", "src\dotnet-resteaseclientgenerator\dotnet-resteaseclientgenerator .csproj", "{D0086101-71E3-48B1-9EA0-9261A630B6D1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -66,10 +66,10 @@ Global
 		{C5837150-2BFB-4E13-9656-A9BA0EC24F21}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C5837150-2BFB-4E13-9656-A9BA0EC24F21}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C5837150-2BFB-4E13-9656-A9BA0EC24F21}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E7328300-8190-4854-B164-1F54939F57DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E7328300-8190-4854-B164-1F54939F57DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E7328300-8190-4854-B164-1F54939F57DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E7328300-8190-4854-B164-1F54939F57DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0086101-71E3-48B1-9EA0-9261A630B6D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0086101-71E3-48B1-9EA0-9261A630B6D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0086101-71E3-48B1-9EA0-9261A630B6D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0086101-71E3-48B1-9EA0-9261A630B6D1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -81,7 +81,7 @@ Global
 		{4029731C-2D4B-40A9-957F-F3E47344B4DA} = {4C16C3C8-4F12-44F2-9F16-1A6DF06A2DC2}
 		{099E447D-54F0-44A8-8A69-B3DAB36742A1} = {51587962-74F5-415F-AA57-FEC39EF78DBC}
 		{C5837150-2BFB-4E13-9656-A9BA0EC24F21} = {B929A431-00E4-4054-8796-A6F1DF7AC3EA}
-		{E7328300-8190-4854-B164-1F54939F57DD} = {B929A431-00E4-4054-8796-A6F1DF7AC3EA}
+		{D0086101-71E3-48B1-9EA0-9261A630B6D1} = {B929A431-00E4-4054-8796-A6F1DF7AC3EA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D9B883AA-56BD-4B76-A679-C82E766F4C2D}

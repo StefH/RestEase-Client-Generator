@@ -1,8 +1,8 @@
 using System.IO;
 using Microsoft.OpenApi.Readers;
-using OpenApi.RestEase.Generator;
-using OpenApi.RestEase.Generator.Settings;
-using OpenApi.RestEase.Generator.Types;
+using RestEaseClientGenerator;
+using RestEaseClientGenerator.Settings;
+using RestEaseClientGenerator.Types;
 using RestEaseClientGenerator.Types;
 
 namespace RestEaseClientGeneratorConsoleApp
