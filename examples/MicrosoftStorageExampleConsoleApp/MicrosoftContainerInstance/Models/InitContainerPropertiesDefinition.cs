@@ -11,9 +11,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
 
         public EnvironmentVariable[] EnvironmentVariables { get; set; }
 
-        public Event[] Events { get; set; }
-
-        public string State { get; set; }
+        public InstanceView InstanceView { get; set; }
 
         public VolumeMount[] VolumeMounts { get; set; }
     }

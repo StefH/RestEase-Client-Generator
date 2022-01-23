@@ -13,6 +13,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
 
         public string Location { get; set; }
 
+        public Tags Tags { get; set; }
+
         public string[] Zones { get; set; }
     }
 }

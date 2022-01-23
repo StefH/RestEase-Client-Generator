@@ -13,17 +13,23 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
 
         public string RestartPolicy { get; set; }
 
+        public IpAddress IpAddress { get; set; }
+
         public string OsType { get; set; }
 
         public Volume[] Volumes { get; set; }
 
-        public Event[] Events { get; set; }
+        public InstanceView InstanceView { get; set; }
 
-        public string State { get; set; }
+        public ContainerGroupDiagnostics Diagnostics { get; set; }
 
         public ContainerGroupSubnetId[] SubnetIds { get; set; }
 
+        public DnsConfiguration DnsConfig { get; set; }
+
         public string Sku { get; set; }
+
+        public EncryptionProperties EncryptionProperties { get; set; }
 
         public InitContainerDefinition[] InitContainers { get; set; }
     }

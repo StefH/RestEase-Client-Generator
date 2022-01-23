@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Readers;
 using MicrosoftExampleConsoleApp;
+using MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Api;
 //using MicrosoftExampleConsoleApp.Microsoft.ContainerInstance.Api;
 using MicrosoftExampleConsoleApp.MicrosoftStorage.Api;
 using MicrosoftExampleConsoleApp.MicrosoftStorage20190401.Api;
@@ -124,16 +125,16 @@ static ServiceProvider RegisterServices(string[] args)
                     Converters = new List<JsonConverter> { new AnyOfJsonConverter() }
                 };
             })
-        //.UseWithAzureAuthenticatedRestEaseClient<IMicrosoftContainerInstanceApi>(
-        //    configuration.GetSection("ManagementOptions"),
-        //    c =>
-        //    {
-        //        c.JsonSerializerSettings = new JsonSerializerSettings
-        //        {
-        //            NullValueHandling = NullValueHandling.Ignore,
-        //            Converters = new List<JsonConverter> { new AnyOfJsonConverter() }
-        //        };
-        //    })
+        .UseWithAzureAuthenticatedRestEaseClient<IMicrosoftContainerInstanceApi>(
+            configuration.GetSection("ManagementOptions"),
+            c =>
+            {
+                c.JsonSerializerSettings = new JsonSerializerSettings
+                {
+                    NullValueHandling = NullValueHandling.Ignore,
+                    Converters = new List<JsonConverter> { new AnyOfJsonConverter() }
+                };
+            })
         ;
 
 

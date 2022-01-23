@@ -15,10 +15,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
 
         public string Gpu { get; set; }
 
-        public double MaxMemoryInGB { get; set; }
-
-        public double MaxCpu { get; set; }
-
-        public double MaxGpuCount { get; set; }
+        [Newtonsoft.Json.JsonProperty("Capabilities")]
+        public Capabilities Capabilities_ { get; set; }
     }
 }

@@ -1,6 +1,8 @@
 using System.Text.Json;
 using AnyOfTypes.System.Text.Json;
 using Microsoft.Extensions.Logging;
+using MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Api;
+using MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models;
 using MicrosoftExampleConsoleApp.MicrosoftStorage.Api;
 using MicrosoftExampleConsoleApp.MicrosoftStorage.Models;
 using MicrosoftExampleConsoleApp.MicrosoftStorage20190401.Api;
@@ -18,13 +20,13 @@ internal class Worker
 
     private readonly IMicrosoftStorageApi _storageApi;
     private readonly IMicrosoftStorage20190401Api _storageApi2019;
-    //private readonly IMicrosoftContainerInstanceApi _aci;
+    private readonly IMicrosoftContainerInstanceApi _aci;
     private readonly ILogger<Worker> _logger;
 
     public Worker(
         IMicrosoftStorageApi storageApi,
         IMicrosoftStorage20190401Api storageApi2019,
-      //  IMicrosoftContainerInstanceApi aci,
+        IMicrosoftContainerInstanceApi aci,
         ILogger<Worker> logger)
     {
         _storageApi = storageApi;
@@ -33,8 +35,8 @@ internal class Worker
         _storageApi2019 = storageApi2019;
         _storageApi2019.ApiVersion = "2019-04-01";
 
-     //   _aci = aci;
-      //  _aci.ApiVersion = "2021-10-01";
+        _aci = aci;
+        _aci.ApiVersion = "2021-10-01";
 
         _logger = logger;
     }
@@ -50,38 +52,49 @@ internal class Worker
         //{
         //    Console.WriteLine(ex);
         //}
-        
-        //try
-        //{
-        //    var cg = new ContainerGroup
-        //    {
-        //        //Location = "westeurope",
-        //        //Containers = new []
-        //        //{
-        //        //    new Container
-        //        //    {
-        //        //        Name = "stef",
-        //        //        Properties = new ContainerProperties
-        //        //        {
-        //        //            Image = "nginx",
 
-        //        //        }
-        //        //    }
-        //        //},
-        //        //OsType = "Linux",
+        try
+        {
+            var name = ("stef" + Guid.NewGuid().ToString().Replace("-", "")).Substring(0, 10);
+            var cg = new ContainerGroup
+            {
+                Location = "westeurope",
+                Properties = new Properties
+                {
+                    Containers = new[]
+                    {
+                        new Container
+                        {
+                            Name = $"container{name}",
+                            Properties = new ContainerProperties
+                            {
+                                Image = "nginx",
+                                Resources = new ResourceRequirements
+                                {
+                                    Requests = new ResourceRequests
+                                    {
+                                        Cpu = 1,
+                                        MemoryInGB = 1.5
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    OsType = "Linux"
+                }
 
-        //    };
-        //    var aci = await _aci.ContainerGroupsCreateOrUpdateAsync(
-        //        "2de19637-27a3-42a8-812f-2c2a7f7f935c",
-        //        "testformanagementsdk",
-        //        "testaci2",
-        //        cg);
-        //    _logger.LogInformation("ContainerGroupsListAsync = '{aci}'", JsonSerializer.Serialize(aci.GetContent(), _options));
-        //}
-        //catch (Exception ex)
-        //{
-        //    Console.WriteLine(ex);
-        //}
+            };
+            var aci = await _aci.ContainerGroupsCreateOrUpdateAsync(
+                "2de19637-27a3-42a8-812f-2c2a7f7f935c",
+                "testformanagementsdk",
+                $"aci{name}",
+                cg);
+            _logger.LogInformation("ContainerGroupsListAsync = '{aci}'", JsonSerializer.Serialize(aci.GetContent(), _options));
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+        }
 
         //try
         //{

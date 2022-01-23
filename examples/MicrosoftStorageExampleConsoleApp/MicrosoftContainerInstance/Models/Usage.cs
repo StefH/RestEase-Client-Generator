@@ -11,8 +11,6 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
 
         public int Limit { get; set; }
 
-        public string Value { get; set; }
-
-        public string LocalizedValue { get; set; }
+        public Name Name { get; set; }
     }
 }
