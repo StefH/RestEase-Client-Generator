@@ -10,8 +10,6 @@ using Newtonsoft.Json;
 using RestEaseClientGenerator;
 using RestEaseClientGenerator.Settings;
 using RestEaseClientGenerator.Types;
-using RestEaseClientGenerator;
-using RestEaseClientGenerator.Types;
 using Serilog;
 using Serilog.Sinks.SystemConsole.Themes;
 
