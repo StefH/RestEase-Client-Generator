@@ -9,10 +9,27 @@ namespace RestEaseClientGenerator.Utils;
 /// </summary>
 internal static class CSharpUtils
 {
-    private static readonly Regex Regex = new Regex(@"[^\p{Ll}\p{Lu}\p{Lt}\p{Lo}\p{Nd}\p{Nl}\p{Mn}\p{Mc}\p{Cf}\p{Pc}\p{Lm}]");
+    private static readonly Regex Regex = new(@"[^\p{Ll}\p{Lu}\p{Lt}\p{Lo}\p{Nd}\p{Nl}\p{Mn}\p{Mc}\p{Cf}\p{Pc}\p{Lm}]");
+
+    private static readonly Dictionary<string, string> Specials = new()
+    {
+        { "=", "Equal" },
+        { "!=", "NotEqual" },
+        { ">", "GreaterThan" },
+        { "<", "LessThan" },
+        { ">=", "GreaterThanEqual" },
+        { "<=", "LessThanEqual" },
+        { "~", "Approximately" },
+        { "~=", "Translingual" }
+    };
 
     public static string CreateValidIdentifier(string identifier, CasingType casingType = CasingType.None)
     {
+        foreach (var special in Specials)
+        {
+            identifier = identifier.Replace(special.Key, special.Value);
+        }
+
         string casedIdentifier;
         switch (casingType)
         {
@@ -28,7 +45,7 @@ internal static class CSharpUtils
                 casedIdentifier = identifier;
                 break;
         }
-
+        
         bool isValid = IdentifierUtils.IsValidIdentifier(casedIdentifier);
 
         if (!isValid)

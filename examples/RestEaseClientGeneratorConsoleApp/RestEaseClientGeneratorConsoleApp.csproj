@@ -5,10 +5,7 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
-
-  <ItemGroup>
-    <!--<Compile Remove="Infura\**\*.cs" />-->
-    <!--<Compile Remove="Cog\**\*.cs" />-->
+    <ItemGroup>
     <Folder Include="Examples\AzureMachineLearning\Api\" />
     <Folder Include="Examples\AzureMachineLearning\Models\" />
     <Folder Include="Examples\AzureMachineLearning\commandline\" />
@@ -19,6 +16,8 @@
     <Folder Include="Examples\FormRecognizerV2\Models\" />
     <Folder Include="Examples\HelloWorldRaml\Api\" />
     <Folder Include="Examples\HelloWorldRaml\Models\" />
+    <Folder Include="Examples\Jira\Api\" />
+    <Folder Include="Examples\Jira\Models\" />
     <Folder Include="Examples\MediaWikiRaml\Api\" />
     <Folder Include="Examples\MediaWikiRaml\Models\" />
     <Folder Include="Examples\MediaWiki\Api\" />
@@ -26,7 +25,6 @@
     <Folder Include="Examples\MicrosoftContainerInstance\Models\" />
     <Folder Include="Examples\MicrosoftStorage\Api\" />
     <Folder Include="Examples\MicrosoftStorage\Models\" />
-    <Folder Include="Examples\NewFolder\" />
     <Folder Include="Examples\PetStoreJson\" />
     <Folder Include="Examples\SharedQuery\Api\" />
     <Folder Include="Examples\SharedQuery\Models\" />
@@ -93,6 +91,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Examples\infura.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\Jira\swagger-v3.v3.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Examples\MediaWiki.json">

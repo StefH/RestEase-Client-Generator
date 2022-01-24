@@ -55,6 +55,12 @@ internal class EnumBuilder : BaseBuilder
     private string BuildAsString(RestEaseEnum restEaseEnum)
     {
         var builder = new StringBuilder();
+
+        if (restEaseEnum.Values.Any(v => v == "32"))
+        {
+            int t = 0;
+        }
+
         var values = restEaseEnum.Values.Select(value => new
         {
             name = CSharpUtils.CreateValidIdentifier(value, CasingType.Pascal),

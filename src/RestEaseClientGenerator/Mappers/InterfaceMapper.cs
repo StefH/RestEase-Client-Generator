@@ -270,8 +270,15 @@ internal class InterfaceMapper : BaseMapper
             if (TryGetOpenApiMediaType(
                     response.Value.Content,
                     SupportedContentType.ApplicationJson,
-                    out OpenApiMediaType responseJson, out _))
+                    out OpenApiMediaType? responseJson, out _))
             {
+                if (responseJson == null)
+                {
+                    // No response defined, just use object;
+                    returnTypes.Add("object");
+                    continue;
+                }
+
                 var rt = GetReturnType(@interface, responseJson.Schema, methodRestEaseMethodName, directory);
                 if (rt is not null)
                 {
@@ -810,9 +817,9 @@ internal class InterfaceMapper : BaseMapper
         };
     }
 
-    private bool TryGetOpenApiMediaType(IDictionary<string, OpenApiMediaType> contentTypes, SupportedContentType contentType, out OpenApiMediaType mediaType, out string detectedContentType)
+    private static bool TryGetOpenApiMediaType(IDictionary<string, OpenApiMediaType?> contentTypes, SupportedContentType contentType, out OpenApiMediaType? mediaType, out string detectedContentType)
     {
-        var contentTypesIgnoreCase = new Dictionary<string, OpenApiMediaType>(contentTypes, StringComparer.InvariantCultureIgnoreCase);
+        var contentTypesIgnoreCase = new Dictionary<string, OpenApiMediaType?>(contentTypes, StringComparer.InvariantCultureIgnoreCase);
 
         string contentDescription = contentType.GetDescription();
         if (contentTypesIgnoreCase.TryGetValue(contentDescription, out mediaType))

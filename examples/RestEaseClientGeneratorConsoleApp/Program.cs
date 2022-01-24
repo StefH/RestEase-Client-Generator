@@ -3,7 +3,6 @@ using Microsoft.OpenApi.Readers;
 using RestEaseClientGenerator;
 using RestEaseClientGenerator.Settings;
 using RestEaseClientGenerator.Types;
-using RestEaseClientGenerator.Types;
 
 namespace RestEaseClientGeneratorConsoleApp
 {
@@ -12,6 +11,19 @@ namespace RestEaseClientGeneratorConsoleApp
         static void Main(string[] args)
         {
             var generator = new Generator();
+
+            var jiraSettings = new GeneratorSettings
+            {
+                Namespace = "RestEaseClientGeneratorConsoleApp.Examples.Jira",
+                ApiName = "Jira",
+                SingleFile = true,
+                PreferredMultipleResponsesType = MultipleResponsesType.AnyOf
+            };
+            foreach (var file in generator.FromFile("Examples\\Jira\\swagger-v3.v3.json", jiraSettings, out OpenApiDiagnostic diagnosticJira))
+            {
+                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Jira/{file.Path}/{file.Name}", file.Content);
+            }
+            return;
 
             //var petStoreJsonSettings = new GeneratorSettings
             //{
