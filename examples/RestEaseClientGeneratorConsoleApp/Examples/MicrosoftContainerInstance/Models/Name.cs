@@ -5,8 +5,14 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftContainerInstance.
 {
     public class Name
     {
+        /// <summary>
+        /// The name of the resource
+        /// </summary>
         public string Value { get; set; }
 
+        /// <summary>
+        /// The localized name of the resource
+        /// </summary>
         public string LocalizedValue { get; set; }
     }
 }

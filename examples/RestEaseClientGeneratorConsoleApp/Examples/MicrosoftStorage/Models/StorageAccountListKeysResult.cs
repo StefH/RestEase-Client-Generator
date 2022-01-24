@@ -3,8 +3,14 @@ using System.Collections.Generic;
 
 namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftStorage.Models
 {
+    /// <summary>
+    /// The response from the ListKeys operation.
+    /// </summary>
     public class StorageAccountListKeysResult
     {
+        /// <summary>
+        /// Gets the list of storage account keys and their properties for the specified storage account.
+        /// </summary>
         public StorageAccountKey[] Keys { get; set; }
     }
 }

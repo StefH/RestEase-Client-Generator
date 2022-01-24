@@ -36,7 +36,6 @@ internal class Worker
         _storageApi2019.ApiVersion = "2019-04-01";
 
         _aci = aci;
-        _aci.ApiVersion = "2021-10-01";
 
         _logger = logger;
     }

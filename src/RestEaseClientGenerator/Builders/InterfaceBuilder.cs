@@ -1,4 +1,5 @@
 using System.Text;
+using Flurl;
 using RestEaseClientGenerator.Extensions;
 using RestEaseClientGenerator.Models.Internal;
 using RestEaseClientGenerator.Settings;
@@ -42,19 +43,16 @@ internal class InterfaceBuilder : BaseBuilder
             builder.AppendLine();
         }
 
-        foreach (var query in @interface.ConstantQueryParameters)
+        Url url = string.Empty;
+        foreach (var query in @interface.ConstantQueryParameters.Where(p => p.Value != null))
+        {
+            url = url.SetQueryParam(query.Name, query.Value);
+        }
+        var appendPath = url.ToString();
+
+        foreach (var query in @interface.ConstantQueryParameters.Where(p => p.Value is null))
         {
             builder.AppendLine($"        [Query(\"{query.Name}\")]");
-
-            //if (query.Value != null)
-            //{
-            //    builder.AppendLine($"        {query.IdentifierWithType} {{ get; }} = \"{query.Value}\"");
-            //}
-            //else
-            //{
-            //    builder.AppendLine($"        {query.IdentifierWithType} {{ get; set; }}");
-            //}
-
             builder.AppendLine($"        {query.IdentifierWithType} {{ get; set; }}");
             builder.AppendLine();
         }
@@ -70,7 +68,9 @@ internal class InterfaceBuilder : BaseBuilder
             {
                 builder.AppendLine($"        /// <param name=\"{sp.ValidIdentifier}\">{sp.Summary.StripHtml()}</param>");
             }
-            builder.AppendLine($"        {method.RestEaseAttribute}");
+
+            var path = $"{method.RestEaseAttribute.Path}{appendPath}";
+            builder.AppendLine($"        [{method.RestEaseAttribute.Method}(\"{path}\")]");
 
             foreach (var header in method.Headers)
             {

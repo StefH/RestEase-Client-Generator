@@ -213,7 +213,7 @@ internal class InterfaceMapper : BaseMapper
                 IdentifierWithRestEase = mp.IdentifierWithRestEase,
                 Summary = mp.Summary
             }).ToList(),
-            RestEaseAttribute = $"[{methodRestEaseForAnnotation}(\"{path}\")]",
+            RestEaseAttribute = new(methodRestEaseForAnnotation, path),
             RestEaseMethod = new RestEaseInterfaceMethod
             {
                 ReturnType = MapReturnType(returnType),

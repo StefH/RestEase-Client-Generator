@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftStorage.Models
 {
+    /// <summary>
+    /// Storage account keys creation time.
+    /// </summary>
     public class KeyCreationTime
     {
         public DateTime Key1 { get; set; }

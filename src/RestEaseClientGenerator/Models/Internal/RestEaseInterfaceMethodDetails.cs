@@ -10,7 +10,7 @@ internal class RestEaseInterfaceMethodDetails
 
     public ICollection<string> Headers { get; set; } = new List<string>();
 
-    public string RestEaseAttribute { get; set; }
+    public RestEaseAttribute RestEaseAttribute { get; set; }
 
     public RestEaseInterfaceMethod RestEaseMethod { get; set; }
 
