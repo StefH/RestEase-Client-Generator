@@ -14,7 +14,7 @@ internal class RestEaseInterfaceMethodDetails
 
     public RestEaseInterfaceMethod RestEaseMethod { get; set; }
 
-    public RestEaseInterfaceMethodDetails? ExtensionMethodDetails { get; set; }
+    public RestEaseInterfaceMethodDetails ExtensionMethodDetails { get; set; }
 
     public SupportedContentType? ExtensionMethodContentType { get; set; }
 

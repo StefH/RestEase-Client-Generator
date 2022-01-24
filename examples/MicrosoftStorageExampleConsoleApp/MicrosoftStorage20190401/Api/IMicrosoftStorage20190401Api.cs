@@ -21,14 +21,14 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage20190401.Api
         /// <summary>
         /// OperationsList (/providers/Microsoft.Storage/operations)
         /// </summary>
-        [Get("/providers/Microsoft.Storage/operations?")]
+        [Get("/providers/Microsoft.Storage/operations")]
         Task<OperationListResult> OperationsListAsync();
 
         /// <summary>
         /// SkusList (/subscriptions/{subscriptionId}/providers/Microsoft.Storage/skus)
         /// </summary>
         /// <param name="subscriptionId">The ID of the target subscription.</param>
-        [Get("/subscriptions/{subscriptionId}/providers/Microsoft.Storage/skus?")]
+        [Get("/subscriptions/{subscriptionId}/providers/Microsoft.Storage/skus")]
         Task<StorageSkuListResult> SkusListAsync([Path] string subscriptionId);
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage20190401.Api
         /// </summary>
         /// <param name="subscriptionId">The ID of the target subscription.</param>
         /// <param name="content">The parameters used to check the availability of the storage account name.</param>
-        [Post("/subscriptions/{subscriptionId}/providers/Microsoft.Storage/checkNameAvailability?")]
+        [Post("/subscriptions/{subscriptionId}/providers/Microsoft.Storage/checkNameAvailability")]
         [Header("Content-Type", "application/json")]
         Task<CheckNameAvailabilityResult> StorageAccountsCheckNameAvailabilityAsync([Path] string subscriptionId, [Body] StorageAccountCheckNameAvailabilityParameters content);
 
@@ -47,7 +47,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage20190401.Api
         /// <param name="accountName">The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only.</param>
         /// <param name="subscriptionId">The ID of the target subscription.</param>
         /// <param name="content">The parameters used when creating a storage account.</param>
-        [Put("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}?")]
+        [Put("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}")]
         [Header("Content-Type", "application/json")]
         Task<Response<AnyOf<StorageAccount, object>>> StorageAccountsCreateAsync([Path] string resourceGroupName, [Path] string accountName, [Path] string subscriptionId, [Body] StorageAccountCreateParameters content);
 
@@ -57,7 +57,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage20190401.Api
         /// <param name="resourceGroupName">The name of the resource group within the user's subscription. The name is case insensitive.</param>
         /// <param name="accountName">The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only.</param>
         /// <param name="subscriptionId">The ID of the target subscription.</param>
-        [Delete("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}?")]
+        [Delete("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}")]
         Task<object> StorageAccountsDeleteAsync([Path] string resourceGroupName, [Path] string accountName, [Path] string subscriptionId);
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage20190401.Api
         /// <param name="accountName">The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only.</param>
         /// <param name="subscriptionId">The ID of the target subscription.</param>
         /// <param name="expand">May be used to expand the properties within account's properties. By default, data is not included when fetching properties. Currently we only support geoReplicationStats.</param>
-        [Get("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}?")]
+        [Get("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}")]
         Task<StorageAccount> StorageAccountsGetPropertiesAsync([Path] string resourceGroupName, [Path] string accountName, [Path] string subscriptionId, [Query(Name = "$expand")] string expand);
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage20190401.Api
         /// <param name="accountName">The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only.</param>
         /// <param name="subscriptionId">The ID of the target subscription.</param>
         /// <param name="content">The parameters that can be provided when updating the storage account properties.</param>
-        [Patch("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}?")]
+        [Patch("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}")]
         [Header("Content-Type", "application/json")]
         Task<StorageAccount> StorageAccountsUpdateAsync([Path] string resourceGroupName, [Path] string accountName, [Path] string subscriptionId, [Body] StorageAccountUpdateParameters content);
 
@@ -85,7 +85,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage20190401.Api
         /// StorageAccountsList (/subscriptions/{subscriptionId}/providers/Microsoft.Storage/storageAccounts)
         /// </summary>
         /// <param name="subscriptionId">The ID of the target subscription.</param>
-        [Get("/subscriptions/{subscriptionId}/providers/Microsoft.Storage/storageAccounts?")]
+        [Get("/subscriptions/{subscriptionId}/providers/Microsoft.Storage/storageAccounts")]
         Task<StorageAccountListResult> StorageAccountsListAsync([Path] string subscriptionId);
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage20190401.Api
         /// </summary>
         /// <param name="resourceGroupName">The name of the resource group within the user's subscription. The name is case insensitive.</param>
         /// <param name="subscriptionId">The ID of the target subscription.</param>
-        [Get("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts?")]
+        [Get("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts")]
         Task<StorageAccountListResult> StorageAccountsListByResourceGroupAsync([Path] string resourceGroupName, [Path] string subscriptionId);
 
         /// <summary>
@@ -103,7 +103,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage20190401.Api
         /// <param name="accountName">The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only.</param>
         /// <param name="subscriptionId">The ID of the target subscription.</param>
         /// <param name="expand">Specifies type of the key to be listed. Possible value is kerb.</param>
-        [Post("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/listKeys?")]
+        [Post("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/listKeys")]
         Task<StorageAccountListKeysResult> StorageAccountsListKeysAsync([Path] string resourceGroupName, [Path] string accountName, [Path] string subscriptionId, [Query(Name = "$expand")] string expand);
 
         /// <summary>
@@ -113,7 +113,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage20190401.Api
         /// <param name="accountName">The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only.</param>
         /// <param name="subscriptionId">The ID of the target subscription.</param>
         /// <param name="content">The parameters used to regenerate the storage account key.</param>
-        [Post("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/regenerateKey?")]
+        [Post("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/regenerateKey")]
         [Header("Content-Type", "application/json")]
         Task<StorageAccountListKeysResult> StorageAccountsRegenerateKeyAsync([Path] string resourceGroupName, [Path] string accountName, [Path] string subscriptionId, [Body] StorageAccountRegenerateKeyParameters content);
 
@@ -122,7 +122,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage20190401.Api
         /// </summary>
         /// <param name="location">The location of the Azure Storage resource.</param>
         /// <param name="subscriptionId">The ID of the target subscription.</param>
-        [Get("/subscriptions/{subscriptionId}/providers/Microsoft.Storage/locations/{location}/usages?")]
+        [Get("/subscriptions/{subscriptionId}/providers/Microsoft.Storage/locations/{location}/usages")]
         Task<UsageListResult> UsagesListByLocationAsync([Path] string location, [Path] string subscriptionId);
 
         /// <summary>
@@ -132,7 +132,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage20190401.Api
         /// <param name="accountName">The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only.</param>
         /// <param name="subscriptionId">The ID of the target subscription.</param>
         /// <param name="content">The parameters to list SAS credentials of a storage account.</param>
-        [Post("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/ListAccountSas?")]
+        [Post("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/ListAccountSas")]
         [Header("Content-Type", "application/json")]
         Task<ListAccountSasResponse> StorageAccountsListAccountSASAsync([Path] string resourceGroupName, [Path] string accountName, [Path] string subscriptionId, [Body] AccountSasParameters content);
 
@@ -143,7 +143,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage20190401.Api
         /// <param name="accountName">The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only.</param>
         /// <param name="subscriptionId">The ID of the target subscription.</param>
         /// <param name="content">The parameters to list service SAS credentials of a specific resource.</param>
-        [Post("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/ListServiceSas?")]
+        [Post("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/ListServiceSas")]
         [Header("Content-Type", "application/json")]
         Task<ListServiceSasResponse> StorageAccountsListServiceSASAsync([Path] string resourceGroupName, [Path] string accountName, [Path] string subscriptionId, [Body] ServiceSasParameters content);
 
@@ -153,7 +153,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage20190401.Api
         /// <param name="resourceGroupName">The name of the resource group within the user's subscription. The name is case insensitive.</param>
         /// <param name="accountName">The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only.</param>
         /// <param name="subscriptionId">The ID of the target subscription.</param>
-        [Post("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/failover?")]
+        [Post("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/failover")]
         Task<object> StorageAccountsFailoverAsync([Path] string resourceGroupName, [Path] string accountName, [Path] string subscriptionId);
 
         /// <summary>
@@ -163,7 +163,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage20190401.Api
         /// <param name="accountName">The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only.</param>
         /// <param name="subscriptionId">The ID of the target subscription.</param>
         /// <param name="managementPolicyName">The name of the Storage Account Management Policy. It should always be 'default'</param>
-        [Get("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/managementPolicies/{managementPolicyName}?")]
+        [Get("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/managementPolicies/{managementPolicyName}")]
         Task<ManagementPolicy> ManagementPoliciesGetAsync([Path] string resourceGroupName, [Path] string accountName, [Path] string subscriptionId, [Path] string managementPolicyName);
 
         /// <summary>
@@ -174,7 +174,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage20190401.Api
         /// <param name="subscriptionId">The ID of the target subscription.</param>
         /// <param name="managementPolicyName">The name of the Storage Account Management Policy. It should always be 'default'</param>
         /// <param name="content">The Get Storage Account ManagementPolicies operation response.</param>
-        [Put("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/managementPolicies/{managementPolicyName}?")]
+        [Put("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/managementPolicies/{managementPolicyName}")]
         [Header("Content-Type", "application/json")]
         Task<ManagementPolicy> ManagementPoliciesCreateOrUpdateAsync([Path] string resourceGroupName, [Path] string accountName, [Path] string subscriptionId, [Path] string managementPolicyName, [Body] ManagementPolicy content);
 
@@ -185,7 +185,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage20190401.Api
         /// <param name="accountName">The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only.</param>
         /// <param name="subscriptionId">The ID of the target subscription.</param>
         /// <param name="managementPolicyName">The name of the Storage Account Management Policy. It should always be 'default'</param>
-        [Delete("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/managementPolicies/{managementPolicyName}?")]
+        [Delete("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/managementPolicies/{managementPolicyName}")]
         Task<object> ManagementPoliciesDeleteAsync([Path] string resourceGroupName, [Path] string accountName, [Path] string subscriptionId, [Path] string managementPolicyName);
 
         /// <summary>
@@ -194,7 +194,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage20190401.Api
         /// <param name="accountName">The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only.</param>
         /// <param name="resourceGroupName">The name of the resource group within the user's subscription. The name is case insensitive.</param>
         /// <param name="subscriptionId">The ID of the target subscription.</param>
-        [Post("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/revokeUserDelegationKeys?")]
+        [Post("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/revokeUserDelegationKeys")]
         Task<object> StorageAccountsRevokeUserDelegationKeysAsync([Path] string accountName, [Path] string resourceGroupName, [Path] string subscriptionId);
     }
 }
