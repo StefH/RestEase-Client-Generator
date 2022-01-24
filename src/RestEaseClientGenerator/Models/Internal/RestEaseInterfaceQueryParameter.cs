@@ -5,4 +5,6 @@ internal class RestEaseInterfaceQueryParameter
     public string IdentifierWithType { get; set; }
 
     public string Name { get; set; }
+
+    public string? Value { get; set; }
 }

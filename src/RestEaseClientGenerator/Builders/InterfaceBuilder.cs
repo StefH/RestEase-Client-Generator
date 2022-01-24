@@ -45,6 +45,16 @@ internal class InterfaceBuilder : BaseBuilder
         foreach (var query in @interface.ConstantQueryParameters)
         {
             builder.AppendLine($"        [Query(\"{query.Name}\")]");
+
+            //if (query.Value != null)
+            //{
+            //    builder.AppendLine($"        {query.IdentifierWithType} {{ get; }} = \"{query.Value}\"");
+            //}
+            //else
+            //{
+            //    builder.AppendLine($"        {query.IdentifierWithType} {{ get; set; }}");
+            //}
+
             builder.AppendLine($"        {query.IdentifierWithType} {{ get; set; }}");
             builder.AppendLine();
         }

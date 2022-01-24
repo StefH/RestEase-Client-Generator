@@ -82,7 +82,8 @@ static void GenerateMicrosoftContainerInstance20211001()
         PreferredMultipleResponsesType = MultipleResponsesType.AnyOf,
         PreferredSecurityDefinitionType = SecurityDefinitionType.None,
         GenerationType = GenerationType.Both,
-        PreferredEnumType = EnumType.String
+        PreferredEnumType = EnumType.String,
+        ConstantQueryParameters = new Dictionary<string, string> { { "api-version", "2021-10-01" } }
     };
 
     const string x = @"C:\Dev\azure-rest-api-specs\specification\containerinstance\resource-manager\Microsoft.ContainerInstance\stable\2021-10-01\containerInstance.json";

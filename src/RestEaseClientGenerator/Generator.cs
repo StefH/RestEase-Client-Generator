@@ -102,6 +102,17 @@ public class Generator : IGenerator
 
         var @interface = result.Interface;
 
+        if (settings.ConstantQueryParameters != null)
+        {
+            foreach (var queryParameter in @interface.ConstantQueryParameters)
+            {
+                if (settings.ConstantQueryParameters.TryGetValue(queryParameter.Name, out var value))
+                {
+                    queryParameter.Value = value;
+                }
+            }
+        }
+
         if (settings.GenerationType.HasFlag(GenerationType.Api))
         {
             var anyModels = result.Models.Any();
