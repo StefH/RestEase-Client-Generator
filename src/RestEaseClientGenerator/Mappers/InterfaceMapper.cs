@@ -1,4 +1,5 @@
 using System.Text.RegularExpressions;
+using Microsoft.OpenApi;
 using Microsoft.OpenApi.Models;
 using RestEaseClientGenerator.Constants;
 using RestEaseClientGenerator.Extensions;
@@ -474,11 +475,13 @@ internal class InterfaceMapper : BaseMapper
         MediaTypeInfo detected,
         ICollection<RestEaseParameter> bodyParameterList,
         List<RestEaseParameter> extensionMethodParameterList,
-        string bodyParameterDescription,
+        string? bodyParameterDescription,
         string? directory)
     {
         if (detected.Key == SupportedContentType.MultipartFormData)
         {
+            var schema = detected.Value.Schema;
+
             string httpContentDescription;
             if (!Settings.GenerateMultipartFormDataExtensionMethods)
             {
@@ -487,7 +490,15 @@ internal class InterfaceMapper : BaseMapper
             else
             {
                 httpContentDescription = "An extension method is generated to support the exact parameters.";
-                extensionMethodParameterList.AddRange(detected.Value.Schema.Properties.Select(p => BuildValidParameter(@interface, p.Key, p.Value, p.Value.Nullable, p.Value.Description, null, Array.Empty<string>(), directory)));
+
+                if (schema.Properties.Any())
+                {
+                    extensionMethodParameterList.AddRange(schema.Properties.Select(p => BuildValidParameter(@interface, p.Key, p.Value, p.Value.Nullable, p.Value.Description, null, Array.Empty<string>(), directory)));
+                }
+                else if (schema.GetSchemaType() == SchemaType.Array)
+                {
+                    extensionMethodParameterList.Add(BuildValidParameter(@interface, "content", schema, schema.Nullable, schema.Description, null, Array.Empty<string>(), directory));
+                }
             }
 
             bodyParameterList.Add(new RestEaseParameter
@@ -572,7 +583,7 @@ internal class InterfaceMapper : BaseMapper
             };
         }
 
-        if (detected.Key == SupportedContentType.ApplicationJson || detected.Key == SupportedContentType.ApplicationXml)
+        if (detected.Key is SupportedContentType.ApplicationJson or SupportedContentType.ApplicationXml)
         {
             string? bodyParameter = null;
             switch (detected.Value.Schema?.GetSchemaType())

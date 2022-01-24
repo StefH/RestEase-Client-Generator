@@ -30,6 +30,7 @@ internal class ExtensionMethodsBuilder : BaseBuilder
             builder.AppendLine("using System.Collections.Generic;");
             builder.AppendLine("using System.Net.Http;");
             builder.AppendLine("using System.Threading.Tasks;");
+            builder.AppendLine("using AnyOfTypes;");
             builder.AppendLine("using RestEase;");
             builder.AppendLine($"using {AppendModelsNamespace(@interface.Namespace)};");
         }
@@ -37,7 +38,7 @@ internal class ExtensionMethodsBuilder : BaseBuilder
         builder.AppendLine();
         builder.AppendLine($"namespace {AppendApiNamespace(@interface.Namespace)}");
         builder.AppendLine("{");
-        builder.AppendLine($"    public static class {new string(apiName.Skip(1).ToArray())}Extensions");
+        builder.AppendLine($"    public static class {apiName.Substring(1)}Extensions");
         builder.AppendLine("    {");
 
         foreach (var method in methods)

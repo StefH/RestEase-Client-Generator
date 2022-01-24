@@ -51,16 +51,16 @@ public static class IdentifierUtils
         "enum",      "namespace",  "string",
 
         // contextual keywords 
-        "add",       "alias",      "ascending",  "async",
-        "await",     "by",         "descending", "dynamic",
-        "equals",    "from",       "get",        "global",
-        "group",     "into",       "join",       "let",
-        "nameof",    "on",         "orderby",    "partial",
-        "remove",    "select",     "set",        "value",
-        "var",       "when",       "where",      "yield"
+        //"add",       "alias",      "ascending",  "async",
+        //"await",     "by",         "descending", "dynamic",
+        //"equals",    "from",       "get",        "global",
+        //"group",     "into",       "join",       "let",
+        //"nameof",    "on",         "orderby",    "partial",
+        //"remove",    "select",     "set",        "value",
+        //"var",       "when",       "where",      "yield"
     };
 
-    private static readonly Regex ValidIdentifierRegex = new Regex("^" + IDENTIFIER_OR_KEYWORD + "$", RegexOptions.Compiled);
+    private static readonly Regex ValidIdentifierRegex = new ("^" + IDENTIFIER_OR_KEYWORD + "$", RegexOptions.Compiled);
 
     public static bool IsValidIdentifier(string identifier)
     {
@@ -91,7 +91,7 @@ public static class IdentifierUtils
     {
         if (!IsValidIdentifier(identifier))
         {
-            return $"x{Guid.NewGuid().ToString().Replace('-', '\0')}";
+            return $"x{Guid.NewGuid().ToString().Replace("-", string.Empty)}";
         }
 
         var normalizedIdentifier = identifier.Normalize();

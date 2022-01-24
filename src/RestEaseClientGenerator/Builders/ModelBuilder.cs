@@ -54,18 +54,18 @@ internal class ModelBuilder : BaseBuilder
             if (safePropertyName != property.Name)
             {
                 builder.AppendLine($"        [Newtonsoft.Json.JsonProperty(\"{property.Name}\")]");
-                builder.AppendLine($"        public {safePropertyName} {{ get; set; }}");
+                builder.AppendLine($"        public {property.Type} {safePropertyName} {{ get; set; }}");
             }
             else
             {
                 if (safePropertyName == restEaseModel.ClassName)
                 {
                     builder.AppendLine($"        [Newtonsoft.Json.JsonProperty(\"{safePropertyName}\")]");
-                    builder.AppendLine($"        public {safePropertyName}_ {{ get; set; }}");
+                    builder.AppendLine($"        public {property.Type} {safePropertyName}_ {{ get; set; }}");
                 }
                 else
                 {
-                    builder.AppendLine($"        public {safePropertyName} {{ get; set; }}");
+                    builder.AppendLine($"        public {property.Type} {safePropertyName} {{ get; set; }}");
                 }
             }
 
