@@ -1,6 +1,6 @@
 namespace RestEaseClientGenerator.Models.Internal;
 
-public record InternalDto
+internal record InternalDto
 (
     RestEaseInterface Interface,
     IList<RestEaseModel> Models,

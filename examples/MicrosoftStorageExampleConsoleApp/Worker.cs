@@ -43,15 +43,23 @@ internal class Worker
 
     public async Task RunAsync(CancellationToken cancellationToken = default)
     {
+        const string sub = "2de19637-27a3-42a8-812f-2c2a7f7f935c";
+        const string rg = "testformanagementsdk";
+
         try
         {
             var aci = await _aci.ContainerGroupsListAsync("2de19637-27a3-42a8-812f-2c2a7f7f935c");
             _logger.LogInformation("ContainerGroupsListAsync = '{aci}'", JsonSerializer.Serialize(aci.GetContent(), _options));
-
-            //foreach (var cg in aci.GetContent().First.Value)
-            //{
-            //    var d = await _aci.ContainerGroupsDeleteAsync("2de19637-27a3-42a8-812f-2c2a7f7f935c");
-            //}
+            
+            foreach (var cg in aci.GetContent().First.Value.Where(x => x.Name.StartsWith("acistef")))
+            {
+                _logger.LogWarning("Deleting : {name}", cg.Name);
+                var d = await _aci.ContainerGroupsDeleteAsync(
+                    sub,
+                    rg,
+                    cg.Name);
+                _logger.LogInformation("ContainerGroupsDeleteAsync = '{d}'", JsonSerializer.Serialize(d.GetContent().CurrentValue, _options));
+            }
         }
         catch (Exception ex)
         {

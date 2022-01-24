@@ -73,7 +73,7 @@ internal class EnumBuilder : BaseBuilder
 
         builder.AppendLine($"    public static class {restEaseEnum.EnumName}");
         builder.AppendLine("    {");
-        builder.AppendLine(string.Join("\r\n", values.Select(x => $"        public const string {x.name} = \"{x.value}\";")));
+        builder.AppendLine(string.Join("\r\n\r\n", values.Select(x => $"        public const string {x.name} = \"{x.value}\";")));
         builder.AppendLine("    }");
         builder.AppendLine("}");
 

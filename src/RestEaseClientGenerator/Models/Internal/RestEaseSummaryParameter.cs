@@ -1,6 +1,6 @@
 namespace RestEaseClientGenerator.Models.Internal;
 
-public class RestEaseSummaryParameter
+internal class RestEaseSummaryParameter
 {
     public string IdentifierWithRestEase { get; set; }
 

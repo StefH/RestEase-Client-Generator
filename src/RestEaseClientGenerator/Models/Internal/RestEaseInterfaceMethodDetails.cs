@@ -2,7 +2,7 @@ using RestEaseClientGenerator.Types;
 
 namespace RestEaseClientGenerator.Models.Internal;
 
-public class RestEaseInterfaceMethodDetails
+internal class RestEaseInterfaceMethodDetails
 {
     public string Summary { get; set; }
 

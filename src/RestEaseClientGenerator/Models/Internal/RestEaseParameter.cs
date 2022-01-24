@@ -3,7 +3,7 @@ using RestEaseClientGenerator.Types;
 
 namespace RestEaseClientGenerator.Models.Internal;
 
-public class RestEaseParameter
+internal class RestEaseParameter
 {
     public ParameterLocation? ParameterLocation { get; set; }
 

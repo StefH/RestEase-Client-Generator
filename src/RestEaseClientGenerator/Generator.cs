@@ -32,7 +32,7 @@ public class Generator : IGenerator
         return FromDocument(document, settings, diagnostic.SpecificationVersion, directory);
     }
 
-    public InternalDto FromFileInternal(string path, GeneratorSettings settings, out OpenApiDiagnostic diagnostic, OpenApiSpecVersion openApiSpecVersion = OpenApiSpecVersion.OpenApi2_0)
+    internal InternalDto FromFileInternal(string path, GeneratorSettings settings, out OpenApiDiagnostic diagnostic, OpenApiSpecVersion openApiSpecVersion = OpenApiSpecVersion.OpenApi2_0)
     {
         var directory = Path.GetDirectoryName(path);
 
@@ -51,7 +51,7 @@ public class Generator : IGenerator
         return FromDocumentInternal(document, settings, openApiSpecVersion, directory);
     }
 
-    public InternalDto FromDocumentInternal(OpenApiDocument document, GeneratorSettings settings, OpenApiSpecVersion openApiSpecVersion = OpenApiSpecVersion.OpenApi2_0, string? directory = null)
+    internal InternalDto FromDocumentInternal(OpenApiDocument document, GeneratorSettings settings, OpenApiSpecVersion openApiSpecVersion = OpenApiSpecVersion.OpenApi2_0, string? directory = null)
     {
         var schemaMapper = new SchemaMapper(settings);
 

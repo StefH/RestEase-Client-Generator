@@ -1,6 +1,6 @@
 namespace RestEaseClientGenerator.Models.Internal;
 
-public class RestEaseInterfaceQueryParameter
+internal class RestEaseInterfaceQueryParameter
 {
     public string IdentifierWithType { get; set; }
 

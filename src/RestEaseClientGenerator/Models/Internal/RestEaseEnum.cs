@@ -1,6 +1,6 @@
 namespace RestEaseClientGenerator.Models.Internal;
 
-public class RestEaseEnum
+internal class RestEaseEnum
 {
     public string? Description { get; set; }
 

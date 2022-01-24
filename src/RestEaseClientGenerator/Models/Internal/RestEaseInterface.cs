@@ -2,7 +2,7 @@ using Microsoft.OpenApi.Models;
 
 namespace RestEaseClientGenerator.Models.Internal;
 
-public class RestEaseInterface
+internal class RestEaseInterface
 {
     public string Name { get; set; }
 
