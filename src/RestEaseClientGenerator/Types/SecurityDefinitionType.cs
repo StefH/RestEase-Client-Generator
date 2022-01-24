@@ -1,24 +1,23 @@
-﻿using System.ComponentModel;
+using System.ComponentModel;
 using RestEaseClientGenerator.Utils;
 
-namespace RestEaseClientGenerator.Types
+namespace RestEaseClientGenerator.Types;
+
+[TypeConverter(typeof(EnumDescriptionConverter))]
+public enum SecurityDefinitionType
 {
-    [TypeConverter(typeof(EnumDescriptionConverter))]
-    public enum SecurityDefinitionType
-    {
-        [Description("None")]
-        None,
+    [Description("None")]
+    None,
 
-        [Description("Automatic")]
-        Automatic,
+    [Description("Automatic")]
+    Automatic,
 
-        [Description("Fixed")]
-        Fixed,
+    [Description("Fixed")]
+    Fixed,
 
-        [Description("Header")]
-        Header,
+    [Description("Header")]
+    Header,
 
-        [Description("Query")]
-        Query
-    }
+    [Description("Query")]
+    Query
 }

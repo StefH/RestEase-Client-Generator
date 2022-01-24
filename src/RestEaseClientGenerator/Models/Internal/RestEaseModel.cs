@@ -1,13 +1,12 @@
-﻿using System.Collections.Generic;
+namespace RestEaseClientGenerator.Models.Internal;
 
-namespace RestEaseClientGenerator.Models.Internal
+internal class RestEaseModel
 {
-    internal class RestEaseModel
-    {
-        public string Namespace { get; set; }
+    public string? Description { get; set; }
 
-        public string ClassName { get; set; }
+    public string Namespace { get; set; } = null!;
 
-        public ICollection<string> Properties { get; set; }
-    }
+    public string ClassName { get; set; } = null!;
+
+    public ICollection<PropertyDto> Properties { get; set; } = new List<PropertyDto>();
 }

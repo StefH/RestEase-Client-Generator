@@ -1,15 +1,14 @@
-﻿using System.Collections.Generic;
+namespace RestEaseClientGenerator.Models.Internal;
 
-namespace RestEaseClientGenerator.Models.Internal
+internal class RestEaseEnum
 {
-    public class RestEaseEnum
-    {
-        public string Namespace { get; set; }
+    public string? Description { get; set; }
 
-        public string EnumName { get; set; }
+    public string Namespace { get; set; }
 
-        public string BaseName { get; set; }
+    public string EnumName { get; set; }
 
-        public ICollection<string> Values { get; set; }
-    }
+    public string BaseName { get; set; }
+
+    public ICollection<string> Values { get; set; }
 }

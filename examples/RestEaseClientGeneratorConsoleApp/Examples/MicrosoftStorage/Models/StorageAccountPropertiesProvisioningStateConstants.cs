@@ -1,0 +1,14 @@
+namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftStorage.Models
+{
+    /// <summary>
+    /// Gets the status of the storage account at the time the operation was called.
+    /// </summary>
+    public static class StorageAccountPropertiesProvisioningStateConstants
+    {
+        public const string Creating = "Creating";
+
+        public const string ResolvingDNS = "ResolvingDNS";
+
+        public const string Succeeded = "Succeeded";
+    }
+}

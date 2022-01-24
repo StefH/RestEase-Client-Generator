@@ -1,14 +1,13 @@
-﻿using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi.Models;
 using RestEaseClientGenerator.Types;
 
-namespace RestEaseClientGenerator.Models.Internal
+namespace RestEaseClientGenerator.Models.Internal;
+
+internal class MediaTypeInfo
 {
-    internal class MediaTypeInfo
-    {
-        public SupportedContentType Key { get; set; }
+    public SupportedContentType Key { get; set; }
 
-        public string ContentType { get; set; }
+    public string ContentType { get; set; }
 
-        public OpenApiMediaType Value { get; set; }
-    }
+    public OpenApiMediaType Value { get; set; }
 }

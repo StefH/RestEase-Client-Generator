@@ -1,6 +1,5 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using Blazorise;
 using Microsoft.AspNetCore.Components;
 using RestEaseClientGenerator.Extensions;
 

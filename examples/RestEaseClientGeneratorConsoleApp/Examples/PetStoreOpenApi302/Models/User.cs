@@ -19,6 +19,9 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreOpenApi302.Models
 
         public string Phone { get; set; }
 
+        /// <summary>
+        /// User Status
+        /// </summary>
         public int UserStatus { get; set; }
     }
 }

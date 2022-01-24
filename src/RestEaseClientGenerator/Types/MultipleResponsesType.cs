@@ -1,18 +1,17 @@
 using System.ComponentModel;
 using RestEaseClientGenerator.Utils;
 
-namespace RestEaseClientGenerator.Types
+namespace RestEaseClientGenerator.Types;
+
+[TypeConverter(typeof(EnumDescriptionConverter))]
+public enum MultipleResponsesType
 {
-    [TypeConverter(typeof(EnumDescriptionConverter))]
-    public enum MultipleResponsesType
-    {
-        [Description("First")]
-        First,
+    [Description("First")]
+    First,
 
-        [Description("Object")]
-        Object,
+    [Description("Object")]
+    Object,
 
-        [Description("AnyOf<,>")]
-        AnyOf
-    }
+    [Description("AnyOf<,>")]
+    AnyOf
 }

@@ -1,12 +1,10 @@
-﻿using System.Collections.Generic;
 using RestEaseClientGenerator.Types;
 
-namespace RestEaseClientGenerator.Models.Internal
-{
-    internal class RestEaseSecurity
-    {
-        public ICollection<RestEaseSecurityDefinition> Definitions { get; set; }
+namespace RestEaseClientGenerator.Models.Internal;
 
-        public SecurityVersionType SecurityVersionType { get; set; }
-    }
+internal class RestEaseSecurity
+{
+    public ICollection<RestEaseSecurityDefinition> Definitions { get; set; }
+
+    public SecurityVersionType SecurityVersionType { get; set; }
 }

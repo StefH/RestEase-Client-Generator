@@ -1,6 +1,6 @@
-﻿using System;
-using System.Text;
+using System;
 using System.Threading.Tasks;
+using AnyOfTypes.Newtonsoft.Json;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using RestEase;
@@ -11,7 +11,7 @@ namespace RestEaseClientGeneratorConsoleApp
 {
     public static class PetStoreOpenApi3ApiTests
     {
-        public static async Task Run()
+        public static async Task RunAsync()
         {
             Console.WriteLine(new string('-', 80));
             Console.WriteLine("PetStoreOpenApi3ApiTests");
@@ -19,7 +19,10 @@ namespace RestEaseClientGeneratorConsoleApp
             {
                 ContractResolver = new CamelCasePropertyNamesContractResolver()
             };
-            string urlLocal = "http://localhost:8080/api/v3";
+            settings.Converters.Add(new AnyOfJsonConverter());
+
+
+            //string urlLocal = "http://localhost:8080/api/v3";
             string urlAzure = "https://petstore3-7ea5e6b7-1956-45e8-b452-21d94116e2c4.azurewebsites.net/api/v3";
             //string urlPostman = "https://postman-echo.com/get";
             var petStoreApi = new RestClient(urlAzure)
@@ -27,19 +30,27 @@ namespace RestEaseClientGeneratorConsoleApp
                 JsonSerializerSettings = settings
             }.For<IPetStoreOpenApi3Api>();
 
-            var findPetsByTags = await petStoreApi.FindPetsByTagsAsync(new[] { "cat" });
-            foreach (var find in findPetsByTags)
+            var findPetsByStatusAsync = await petStoreApi.FindPetsByStatusAsync("available");
+            if (findPetsByStatusAsync.GetContent().IsFirst)
             {
-                Console.WriteLine("FindPetsByTagsAsync:" + JsonConvert.SerializeObject(find));
+                foreach (var find in findPetsByStatusAsync.GetContent().First)
+                {
+                    Console.WriteLine("FindPetsByStatusAsync Pets:" + JsonConvert.SerializeObject(find));
+                }
+            }
+            else
+            {
+                Console.WriteLine("FindPetsByStatusAsync object:" + JsonConvert.SerializeObject(findPetsByStatusAsync.GetContent().Second));
             }
 
-            var findPetsByStatusAsync = await petStoreApi.FindPetsByStatusAsync(Status2.available);
-            foreach (var find in findPetsByStatusAsync)
+            try
             {
-                Console.WriteLine("FindPetsByStatusAsync:" + JsonConvert.SerializeObject(find));
+                await petStoreApi.DeletePetAsync(1000);
             }
-
-            // await petStoreApi.DeletePetAsync(1000);
+            catch
+            {
+                // no-op
+            }
 
             var addPet = await petStoreApi.AddPetAsync(new Pet
             {
@@ -47,20 +58,10 @@ namespace RestEaseClientGeneratorConsoleApp
                 Name = "Rossa",
                 Category = new Category { Id = 1, Name = "cat" },
                 Tags = new[] { new Tag { Id = 1, Name = "cat" } },
-                Status = Status2.available,
+                Status = "available",
                 PhotoUrls = new string[] { }
             });
-            //Console.WriteLine("AddPetAsync:" + JsonSerializer.Serialize(addPet));
-
-            var getPetById = await petStoreApi.GetPetByPetIdAsync(1000);
-            Console.WriteLine("GetPetByIdAsync:" + JsonConvert.SerializeObject(getPetById));
-
-            var uploadFileResponse = await petStoreApi.UploadFileAsync(1000, "rossa", Encoding.UTF8.GetBytes("Poes"));
-            Console.WriteLine("UploadFileAsync:" + JsonConvert.SerializeObject(uploadFileResponse));
-
-            //var stream = File.OpenRead("Examples\\petstore-openapi3.json");
-            //var uploadFile = await petStoreApi.UploadFileAsync(1000, "rossa", stream);
-            //Console.WriteLine("UploadFileAsync:" + uploadFile.ToString());
+            Console.WriteLine("AddPetAsync:" + JsonConvert.SerializeObject(addPet.GetContent().CurrentValue));
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -10,7 +10,7 @@ namespace RestEaseClientGeneratorConsoleApp
 {
     public static class PetStoreTests
     {
-        public static async Task Run()
+        public static async Task RunAsync()
         {
             var settings = new JsonSerializerSettings
             {
@@ -25,6 +25,15 @@ namespace RestEaseClientGeneratorConsoleApp
             foreach (var find in findPetsByTags)
             {
                 Console.WriteLine(JsonConvert.SerializeObject(find));
+            }
+
+            try
+            {
+                await petStoreApi.DeletePetAsync(1000, "");
+            }
+            catch
+            {
+                // no-op
             }
 
             var addPet = await petStoreApi.AddPetAsync(new Pet

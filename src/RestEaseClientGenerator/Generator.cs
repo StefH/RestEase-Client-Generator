@@ -1,121 +1,200 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using Microsoft.OpenApi;
 using Microsoft.OpenApi.Models;
 using Microsoft.OpenApi.Readers;
-using RamlToOpenApiConverter;
 using RestEaseClientGenerator.Builders;
 using RestEaseClientGenerator.Mappers;
 using RestEaseClientGenerator.Models;
 using RestEaseClientGenerator.Models.Internal;
 using RestEaseClientGenerator.Settings;
 using RestEaseClientGenerator.Types;
+using RamlToOpenApiConverter;
 
-namespace RestEaseClientGenerator
+namespace RestEaseClientGenerator;
+
+public class Generator : IGenerator
 {
-    public class Generator : IGenerator
+    public ICollection<GeneratedFile> FromFile(string path, GeneratorSettings settings, out OpenApiDiagnostic diagnostic)
     {
-        public ICollection<GeneratedFile> FromFile(string path, GeneratorSettings settings, out OpenApiDiagnostic diagnostic)
-        {
-            OpenApiDocument document;
-            if (Path.GetExtension(path).EndsWith("raml", StringComparison.OrdinalIgnoreCase))
-            {
-                diagnostic = new OpenApiDiagnostic();
-                document = new RamlConverter().ConvertToOpenApiDocument(path);
-            }
-            else
-            {
-                var reader = new OpenApiStreamReader();
-                document = reader.Read(File.OpenRead(path), out diagnostic);
-            }
+        var directory = Path.GetDirectoryName(path);
 
-            return FromDocument(document, settings, diagnostic.SpecificationVersion);
+        OpenApiDocument document;
+        if (Path.GetExtension(path).EndsWith("raml", StringComparison.OrdinalIgnoreCase))
+        {
+            diagnostic = new OpenApiDiagnostic();
+            document = new RamlConverter().ConvertToOpenApiDocument(path);
+        }
+        else
+        {
+            var reader = new OpenApiStreamReader();
+            document = reader.Read(File.OpenRead(path), out diagnostic);
         }
 
-        public ICollection<GeneratedFile> FromDocument(OpenApiDocument document, GeneratorSettings settings, OpenApiSpecVersion openApiSpecVersion = OpenApiSpecVersion.OpenApi2_0)
+        return FromDocument(document, settings, diagnostic.SpecificationVersion, directory);
+    }
+
+    internal InternalDto FromFileInternal(string path, GeneratorSettings settings, out OpenApiDiagnostic diagnostic, OpenApiSpecVersion openApiSpecVersion = OpenApiSpecVersion.OpenApi2_0)
+    {
+        var directory = Path.GetDirectoryName(path);
+
+        OpenApiDocument document;
+        if (Path.GetExtension(path).EndsWith("raml", StringComparison.OrdinalIgnoreCase))
         {
-            var schemaMapper = new SchemaMapper(settings);
+            diagnostic = new OpenApiDiagnostic();
+            document = new RamlConverter().ConvertToOpenApiDocument(path);
+        }
+        else
+        {
+            var reader = new OpenApiStreamReader();
+            document = reader.Read(File.OpenRead(path), out diagnostic);
+        }
 
-            IEnumerable<RestEaseModel> models;
-            if (document.Components?.Schemas != null)
+        return FromDocumentInternal(document, settings, openApiSpecVersion, directory);
+    }
+
+    internal InternalDto FromDocumentInternal(OpenApiDocument document, GeneratorSettings settings, OpenApiSpecVersion openApiSpecVersion = OpenApiSpecVersion.OpenApi2_0, string? directory = null)
+    {
+        var schemaMapper = new SchemaMapper(settings);
+
+        var @interface = new InterfaceMapper(settings, schemaMapper).Map(document, directory);
+
+        var models = new List<RestEaseModel>();
+        var enums = new List<RestEaseEnum>();
+
+        if (document.Components?.Schemas != null)
+        {
+            var modelsOrEnums = new ModelsMapper(@interface, settings, schemaMapper, OpenApiSpecVersion.OpenApi2_0, directory)
+                    .Map(document.Components.Schemas);
+
+            foreach (var model in modelsOrEnums)
             {
-                models = new ModelsMapper(settings, schemaMapper, openApiSpecVersion)
-                    .Map(document.Components.Schemas).ToList();
-            }
-            else
-            {
-                models = Enumerable.Empty<RestEaseModel>();
-            }
-
-            var @interface = new InterfaceMapper(settings, schemaMapper).Map(document);
-
-            var files = new List<GeneratedFile>();
-
-            if (settings.GenerationType.HasFlag(GenerationType.Api))
-            {
-                // Add Interface
-                files.Add(new GeneratedFile
+                if (model.IsFirst)
                 {
-                    Path = settings.ApiNamespace,
-                    Name = $"{@interface.Name}.cs",
-                    Content = new InterfaceBuilder(settings).Build(@interface, models.Any())
-                });
+                    models.Add(model.First);
+                }
 
-                var extensions = new ExtensionMethodsBuilder(settings).Build(@interface, @interface.Name);
-                if (extensions != null)
+                if (model.IsSecond)
                 {
-                    // Add ApiExtension
-                    files.Add(new GeneratedFile
-                    {
-                        Path = settings.ApiNamespace,
-                        Name = $"{new string(@interface.Name.Skip(1).ToArray())}Extensions.cs",
-                        Content = extensions
-                    });
+                    enums.Add(model.Second);
                 }
             }
-
-            if (settings.GenerationType.HasFlag(GenerationType.Models))
-            {
-                // Add Models
-                var modelBuilder = new ModelBuilder(settings);
-                files.AddRange(models.Select(model => new GeneratedFile
-                {
-                    Path = settings.ModelsNamespace,
-                    Name = $"{model.ClassName}.cs",
-                    Content = modelBuilder.Build(model)
-                }));
-
-                // Add Inline Models
-                files.AddRange(@interface.InlineModels.Select(model => new GeneratedFile
-                {
-                    Path = settings.ModelsNamespace,
-                    Name = $"{model.ClassName}.cs",
-                    Content = modelBuilder.Build(model)
-                }));
-
-                // Add Inline Enums
-                var enumBuilder = new EnumBuilder(settings);
-                files.AddRange(schemaMapper.Enums.Select(@enum => new GeneratedFile
-                {
-                    Path = settings.ModelsNamespace,
-                    Name = $"{@enum.EnumName}.cs",
-                    Content = enumBuilder.Build(@enum)
-                }));
-            }
-
-            if (settings.SingleFile)
-            {
-                return new[] { new GeneratedFile
-                {
-                    Path = string.Empty,
-                    Name = $"{@interface.Name}.cs",
-                    Content = string.Join("\r\n", files.Select(f => f.Content))
-                }};
-            }
-
-            return files;
         }
+
+        // Add Inline/External Models
+        foreach (var extraModel in @interface.ExtraModels)
+        {
+            models.Add(extraModel);
+        }
+
+        // Add Inline Enums
+        foreach (var inlineEnum in @interface.ExtraEnums)
+        {
+            enums.Add(inlineEnum);
+        }
+
+        return new InternalDto(@interface, models, enums);
+    }
+
+    public ICollection<GeneratedFile> FromDocument(OpenApiDocument document, GeneratorSettings settings, OpenApiSpecVersion openApiSpecVersion = OpenApiSpecVersion.OpenApi2_0, string? directory = null)
+    {
+        var result = FromDocumentInternal(document, settings, openApiSpecVersion, directory);
+
+        var files = new List<GeneratedFile>();
+
+        var @interface = result.Interface;
+
+        if (settings.ConstantQueryParameters != null)
+        {
+            foreach (var queryParameter in @interface.ConstantQueryParameters)
+            {
+                if (settings.ConstantQueryParameters.TryGetValue(queryParameter.Name, out var value))
+                {
+                    queryParameter.Value = value;
+                }
+            }
+        }
+
+        if (settings.GenerationType.HasFlag(GenerationType.Api))
+        {
+            var anyModels = result.Models.Any();
+
+            // Add Interface
+            files.Add(new GeneratedFile
+            (
+                FileType.Api,
+                settings.ApiNamespace,
+                $"{@interface.Name}.cs",
+                @interface.Name,
+                new InterfaceBuilder(settings).Build(@interface, anyModels)
+            ));
+
+            var extensionContent = new ExtensionMethodsBuilder(settings).Build(@interface, @interface.Name);
+            if (extensionContent != null)
+            {
+                var extensionClassName = $"{@interface.Name.Substring(1)}Extensions";
+
+                // Add ApiExtension
+                files.Add(new GeneratedFile
+                (
+                    FileType.ApiExtensions,
+                    settings.ApiNamespace,
+                    $"{extensionClassName}.cs",
+                    extensionClassName,
+                    extensionContent
+                ));
+            }
+        }
+
+        if (settings.GenerationType.HasFlag(GenerationType.Models))
+        {
+            // Add Models + Inline/External Models
+            var modelBuilder = new ModelBuilder(settings);
+            var allModels = result.Models.Union(@interface.ExtraModels)
+                .GroupBy(r => r.ClassName)
+                .Select(r => r.First())
+                .OrderBy(m => m.ClassName)
+                .ToList();
+            files.AddRange(allModels.Select(model => new GeneratedFile
+            (
+                FileType.Model,
+                settings.ModelsNamespace,
+                $"{model.ClassName}.cs",
+                model.ClassName,
+                modelBuilder.Build(model)
+            )));
+
+            // Add Inline/External Enums
+            var enumBuilder = new EnumBuilder(settings);
+            var extraEnums = result.Enums
+                .GroupBy(r => r.EnumName)
+                .SelectMany(r => r);
+
+            files.AddRange(extraEnums.Select(@enum => new GeneratedFile
+            (
+                FileType.Model,
+                settings.ModelsNamespace,
+                $"{@enum.EnumName}.cs",
+                @enum.EnumName,
+                enumBuilder.Build(@enum)
+            )));
+        }
+
+        if (settings.SingleFile)
+        {
+            var content = files
+                .GroupBy(f => f.ClassOrInterface)
+                .Distinct()
+                .Select(f => f.First().Content);
+
+            return new[] { new GeneratedFile
+            (
+                FileType.ApiAndModels,
+                string.Empty,
+                $"{@interface.Name}.cs",
+                @interface.Name,
+                string.Join("\r\n", content)
+            )};
+        }
+
+        return files;
     }
 }

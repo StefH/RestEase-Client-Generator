@@ -13,7 +13,10 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreOpenApi302.Models
 
         public DateTime ShipDate { get; set; }
 
-        public Status Status { get; set; }
+        /// <summary>
+        /// Order Status
+        /// </summary>
+        public string Status { get; set; }
 
         public bool Complete { get; set; }
     }

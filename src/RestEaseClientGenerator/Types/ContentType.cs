@@ -1,15 +1,14 @@
-﻿using RestEaseClientGenerator.Utils;
 using System.ComponentModel;
+using RestEaseClientGenerator.Utils;
 
-namespace RestEaseClientGenerator.Types
+namespace RestEaseClientGenerator.Types;
+
+[TypeConverter(typeof(EnumDescriptionConverter))]
+public enum ContentType
 {
-    [TypeConverter(typeof(EnumDescriptionConverter))]
-    public enum ContentType
-    {
-        [Description("application/json")]
-        ApplicationJson,
+    [Description("application/json")]
+    ApplicationJson,
 
-        [Description("application/xml")]
-        ApplicationXml
-    }
+    [Description("application/xml")]
+    ApplicationXml
 }

@@ -13,7 +13,7 @@
   "ModelsNamespace": "Models",
   "MultipartFormDataFileType": "byte[]" /*Possible values are: 'byte[]', 'Stream'*/,
   "PreferredContentType": "application/json" /*Possible values are: 'application/json', 'application/xml'*/,
-  "ReturnObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified": false,
+  "ReturnResponseObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified": false,
   "UseDateTimeOffset": false,
   "UseOperationIdAsMethodName": true
 }
