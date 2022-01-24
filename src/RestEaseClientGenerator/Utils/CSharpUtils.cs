@@ -45,7 +45,7 @@ internal static class CSharpUtils
                 casedIdentifier = identifier;
                 break;
         }
-        
+
         bool isValid = IdentifierUtils.IsValidIdentifier(casedIdentifier);
 
         if (!isValid)

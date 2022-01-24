@@ -16,8 +16,6 @@
     <Folder Include="Examples\FormRecognizerV2\Models\" />
     <Folder Include="Examples\HelloWorldRaml\Api\" />
     <Folder Include="Examples\HelloWorldRaml\Models\" />
-    <Folder Include="Examples\Jira\Api\" />
-    <Folder Include="Examples\Jira\Models\" />
     <Folder Include="Examples\MediaWikiRaml\Api\" />
     <Folder Include="Examples\MediaWikiRaml\Models\" />
     <Folder Include="Examples\MediaWiki\Api\" />
