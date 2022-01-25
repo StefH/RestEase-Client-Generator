@@ -12,7 +12,7 @@ internal class ModelBuilder : BaseBuilder
     {
     }
 
-    public string Build(RestEaseModel restEaseModel)
+    public string Build(RestEaseModel restEaseModel, bool isFirst, bool isLast)
     {
         var builder = new StringBuilder();
         if (!Settings.SingleFile)
@@ -29,8 +29,11 @@ internal class ModelBuilder : BaseBuilder
             extendsClass = $" : {string.Join(", ", extends)}";
         }
 
-        builder.AppendLine($"namespace {AppendModelsNamespace(restEaseModel.Namespace)}");
-        builder.AppendLine("{");
+        if (!Settings.SingleFile || isFirst)
+        {
+            builder.AppendLine($"namespace {AppendModelsNamespace(restEaseModel.Namespace)}");
+            builder.AppendLine("{");
+        }
 
         if (!string.IsNullOrEmpty(restEaseModel.Description))
         {
@@ -75,7 +78,11 @@ internal class ModelBuilder : BaseBuilder
             }
         }
         builder.AppendLine("    }");
-        builder.Append("}");
+
+        if (!Settings.SingleFile || isLast)
+        {
+            builder.Append("}");
+        }
 
         return builder.ToString();
     }

@@ -153,28 +153,30 @@ public class Generator : IGenerator
                 .Select(r => r.First())
                 .OrderBy(m => m.ClassName)
                 .ToList();
+
             files.AddRange(allModels.Select(model => new GeneratedFile
             (
                 FileType.Model,
                 settings.ModelsNamespace,
                 $"{model.ClassName}.cs",
                 model.ClassName,
-                modelBuilder.Build(model)
+                modelBuilder.Build(model, model == allModels.First(), model == allModels.Last())
             )));
 
             // Add Inline/External Enums
             var enumBuilder = new EnumBuilder(settings);
-            var extraEnums = result.Enums
+            var allEnums = result.Enums
                 .GroupBy(r => r.EnumName)
-                .SelectMany(r => r);
+                .SelectMany(r => r)
+                .ToList();
 
-            files.AddRange(extraEnums.Select(@enum => new GeneratedFile
+            files.AddRange(allEnums.Select(@enum => new GeneratedFile
             (
                 FileType.Model,
                 settings.ModelsNamespace,
                 $"{@enum.EnumName}.cs",
                 @enum.EnumName,
-                enumBuilder.Build(@enum)
+                enumBuilder.Build(@enum, @enum == allEnums.First(), @enum == allEnums.Last())
             )));
         }
 
