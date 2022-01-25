@@ -380,7 +380,8 @@ internal class InterfaceMapper : BaseMapper
                                     Description = schema.Description,
                                     Namespace = Settings.Namespace,
                                     ClassName = className,
-                                    Properties = extraModel.Second
+                                    Properties = extraModel.Second,
+                                    Priority = 1000
                                 };
                                 @interface.ExtraModels.Add(newModel);
                             }
@@ -426,7 +427,8 @@ internal class InterfaceMapper : BaseMapper
                                 Description = schema.Description,
                                 Namespace = Settings.Namespace,
                                 ClassName = className,
-                                Properties = inlineModel.Second
+                                Properties = inlineModel.Second,
+                                Priority = 1002
                             };
                             @interface.ExtraModels.Add(newModel);
                         }

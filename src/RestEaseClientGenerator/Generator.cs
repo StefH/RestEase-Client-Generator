@@ -1,14 +1,13 @@
 using Microsoft.OpenApi;
 using Microsoft.OpenApi.Models;
 using Microsoft.OpenApi.Readers;
+using RamlToOpenApiConverter;
 using RestEaseClientGenerator.Builders;
 using RestEaseClientGenerator.Mappers;
-using RestEaseClientGenerator.Models;
+using RestEaseClientGenerator.Models.External;
 using RestEaseClientGenerator.Models.Internal;
 using RestEaseClientGenerator.Settings;
 using RestEaseClientGenerator.Types;
-using RamlToOpenApiConverter;
-using RestEaseClientGenerator.Models.External;
 
 namespace RestEaseClientGenerator;
 
@@ -156,7 +155,7 @@ public class Generator : IGenerator
 
             var allModels = result.Models.Union(@interface.ExtraModels)
                 .GroupBy(r => r.ClassName)
-                .Select(r => r.First())
+                .Select(r => r.OrderBy(o => o.Priority).First())
                 .OrderBy(m => m.ClassName)
                 .ToList();
 

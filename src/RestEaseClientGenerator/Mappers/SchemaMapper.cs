@@ -193,7 +193,8 @@ internal class SchemaMapper : BaseMapper
                     Description = schema.Description,
                     Namespace = Settings.Namespace,
                     ClassName = className,
-                    Properties = inlineModel.Second
+                    Properties = inlineModel.Second,
+                    Priority = 1001
                 };
                 @interface.ExtraModels.Add(model);
             }
