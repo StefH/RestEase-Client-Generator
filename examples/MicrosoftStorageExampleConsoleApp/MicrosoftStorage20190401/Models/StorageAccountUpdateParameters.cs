@@ -16,7 +16,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage20190401.Models
         /// <summary>
         /// The parameters that can be provided when updating the storage account properties.
         /// </summary>
-        public Tags Tags { get; set; }
+        public StorageAccountUpdateParametersTags Tags { get; set; }
 
         /// <summary>
         /// not-used

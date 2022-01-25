@@ -26,7 +26,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage20190401.Models
         /// <summary>
         /// The parameters used when creating a storage account.
         /// </summary>
-        public Tags Tags { get; set; }
+        public StorageAccountCreateParametersTags Tags { get; set; }
 
         /// <summary>
         /// not-used

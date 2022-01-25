@@ -92,7 +92,7 @@ internal class Worker
                             }
                         }
                     },
-                    OsType = OsTypeConstants.Linux
+                    OsType = ContainerGroupPropertiesOsTypeConstants.Linux
                 }
             };
             var aci = await _aci.ContainerGroupsCreateOrUpdateAsync(

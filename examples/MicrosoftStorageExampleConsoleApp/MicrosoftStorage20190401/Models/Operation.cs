@@ -16,7 +16,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage20190401.Models
         /// <summary>
         /// Storage REST API operation definition.
         /// </summary>
-        public Display Display { get; set; }
+        public OperationDisplay Display { get; set; }
 
         /// <summary>
         /// The origin of operations.
