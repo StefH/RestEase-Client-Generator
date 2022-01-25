@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using CommandLine;
@@ -109,6 +111,12 @@ public class Program
 
         [Option("SupportExtensionXNullable", HelpText = "Support vendor extension 'x-nullable' to indicate a property as nullable for OpenApi 2.0", Default = false)]
         public bool SupportExtensionXNullable { get; set; }
+
+
+        [DisplayName("ConstantQueryParameters")]
+        [Option("A dictionary defining values for constant query parameters.")]
+        public IDictionary<string, string>? ConstantQueryParameters { get; set; }
+
         #endregion
     }
 

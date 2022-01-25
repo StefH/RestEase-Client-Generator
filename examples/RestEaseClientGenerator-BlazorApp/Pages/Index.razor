@@ -85,6 +85,7 @@
         <CheckField @bind-Value="@settings.DefineSharedMethodQueryParametersOnInterface" For="@(() => settings.DefineSharedMethodQueryParametersOnInterface)"></CheckField>
         <CheckField @bind-Value="@settings.GenerateAndUseModelForAnyOfOrOneOf" For="@(() => settings.GenerateAndUseModelForAnyOfOrOneOf)"></CheckField>
         <SelectEnumField @bind-Value="@settings.PreferredMultipleResponsesType" For="@(() => settings.PreferredMultipleResponsesType)"></SelectEnumField>
+        <DictionaryField @bind-Value="@settings.ConstantQueryParameters" For="@(() => settings.ConstantQueryParameters!)"></DictionaryField>
     </CardBody>
     <CardBody>
         <b>Generate</b>
