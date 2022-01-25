@@ -1,45 +1,41 @@
+Generate a [RestEase](https://github.com/canton7/RestEase) compatible client (Interface & Models) based on a [Swagger / OpenApi](https://swagger.io/specification/) or [RAML](https://raml.org/) specification.
+
+
+## :one: Visual Studio Extension
+
 [![Version](https://vsmarketplacebadge.apphb.com/version/StefHeyenrath.RestEaseClientGenerator.svg)](https://marketplace.visualstudio.com/items?itemName=StefHeyenrath.RestEaseClientGenerator) 
 [![Installs](https://vsmarketplacebadge.apphb.com/downloads-short/StefHeyenrath.RestEaseClientGenerator.svg)](https://marketplace.visualstudio.com/items?itemName=StefHeyenrath.RestEaseClientGenerator) 
 [![Rating](https://vsmarketplacebadge.apphb.com/rating-star/StefHeyenrath.RestEaseClientGenerator.svg)](https://marketplace.visualstudio.com/items?itemName=StefHeyenrath.RestEaseClientGenerator)
 
-Generate a [RestEase](https://github.com/canton7/RestEase) compatible client (Interface & Models) based on a [Swagger / OpenApi](https://swagger.io/specification/) or [RAML](https://raml.org/) specification.
-
-
-## Visual Studio Extension
-
-[Link](https://marketplace.visualstudio.com/items?itemName=StefHeyenrath.RestEaseClientGenerator)
-
-## dotnet tool
-### Installation
-``` cmd
-dotnet tool install --global dotnet-resteaseclientgenerator
-```
-
-### Usage
-``` cmd
-dotnet-resteaseclientgenerator
-```
-
-
-# Demo
-[Blazor WebAssembly Demo](https://stefh.github.io/RestEase-Client-Generator/)
-
-## Features
+### Features
 - Supports Visual Studio 2017 and 2019
 - Add New RestEase API Client to a project from an OpenAPI specification URL (e.g https://petstore.swagger.io/v2/swagger.json)
 - Define custom namespace for the generated file
 - Auto-updating of generated code file when changes are made to the specification file (.json, .yml, .yaml, .raml)
+- This Visual Studio Extension will automatically add the required nuget packages that the generated code depends on.
+
+## :two: dotnet tool
+
+[![NuGet Badge dotnet-resteaseclientgenerator](https://buildstats.info/nuget/dotnet-resteaseclientgenerator)](https://www.nuget.org/packages/dotnet-resteaseclientgenerator)
+
+#### [Installation & Usage](https://github.com/StefH/RestEase-Client-Generator/wiki/Tool)
+
+## :three: NuGet Package
+[![NuGet Badge](https://buildstats.info/nuget/RestEaseClientGenerator)](https://www.nuget.org/packages/RestEaseClientGenerator)
+
+#### [Installation & Usage](https://github.com/StefH/RestEase-Client-Generator/wiki/NuGet)
+
+## Options
+
+See https://github.com/StefH/RestEase-Client-Generator/wiki/Options
+
+---
+
+# Demo
+[Blazor WebAssembly Demo](https://stefh.github.io/RestEase-Client-Generator/)
 
 
-### Custom Tools
-- RestClientCodeGenerator - Generates a single file C# RestEase Client **Interface** and **Models**.
-
-
-### Dependencies
-This Visual Studio Extension will automatically add the required nuget packages that the generated code depends on.
-
-
-## Example
+# Example
 
 ### Input Yaml file 'PetStore.yaml'
 Excerpt...
@@ -105,7 +101,7 @@ var petStoreApi = RestClient.For<IPetStoreApi>("https://petstore.swagger.io/v2")
 var findPetsByTags = await petStoreApi.FindPetsByTagsAsync(new[] { "cat" });
 ```
 
-## Screenshots
+## Screenshots 
 
 ### Add new specification and generate client code
 ![Add from OpenAPI Specification](https://github.com/StefH/RestEase-Client-Generator/raw/master/resources/add-new.png)
@@ -113,10 +109,6 @@ var findPetsByTags = await petStoreApi.FindPetsByTagsAsync(new[] { "cat" });
 
 ### Generate client code for existing .json, .yml or .yaml file
 ![Solution Explorer Context Menus](https://github.com/StefH/RestEase-Client-Generator/raw/master/resources/generate.png)
-
-## Options
-
-See https://github.com/StefH/RestEase-Client-Generator/wiki/Options
 
 ## Credits
 - Project source code is based on [REST API Client Code Generator](https://github.com/christianhelle/apiclientcodegen)
