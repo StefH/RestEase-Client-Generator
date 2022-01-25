@@ -1,6 +1,7 @@
 using System.Text.RegularExpressions;
 using RestEaseClientGenerator.Extensions;
 using RestEaseClientGenerator.Types;
+using RestEaseClientGenerator.Types.Internal;
 
 namespace RestEaseClientGenerator.Utils;
 

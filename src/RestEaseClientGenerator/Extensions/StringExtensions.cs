@@ -1,5 +1,6 @@
 using System.Text.RegularExpressions;
 using RestEaseClientGenerator.Types;
+using RestEaseClientGenerator.Types.Internal;
 using RestEaseClientGenerator.Utils;
 
 namespace RestEaseClientGenerator.Extensions;
@@ -9,7 +10,7 @@ namespace RestEaseClientGenerator.Extensions;
 /// </summary>
 public static class StringExtensions
 {
-    public static string ToValidIdentifier(this string value, CasingType casingType)
+    internal static string ToValidIdentifier(this string value, CasingType casingType)
     {
         return CSharpUtils.CreateValidIdentifier(value, casingType);
     }

@@ -1,4 +1,5 @@
 using RestEaseClientGenerator.Types;
+using RestEaseClientGenerator.Types.Internal;
 
 namespace RestEaseClientGenerator.Models.Internal;
 

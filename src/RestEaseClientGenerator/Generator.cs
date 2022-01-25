@@ -8,6 +8,7 @@ using RestEaseClientGenerator.Models.Internal;
 using RestEaseClientGenerator.Settings;
 using RestEaseClientGenerator.Types;
 using RamlToOpenApiConverter;
+using RestEaseClientGenerator.Models.External;
 
 namespace RestEaseClientGenerator;
 

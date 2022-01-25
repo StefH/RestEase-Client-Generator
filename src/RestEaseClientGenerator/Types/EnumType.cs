@@ -1,5 +1,3 @@
-// ReSharper disable All
-
 using System.ComponentModel;
 using RestEaseClientGenerator.Utils;
 
@@ -10,12 +8,6 @@ public enum EnumType
 {
     [Description("string")]
     String,
-
-    //[Description("object")]
-    //Object,
-
-    //[Description("integer")]
-    //Integer,
 
     [Description("enum")]
     Enum

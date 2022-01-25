@@ -6,6 +6,7 @@ using Microsoft.OpenApi.Readers;
 using Newtonsoft.Json;
 using RestEaseClientGenerator;
 using RestEaseClientGenerator.Models;
+using RestEaseClientGenerator.Models.External;
 using RestEaseClientGenerator.Settings;
 
 namespace RestEaseClientGeneratorBlazorApp.Services

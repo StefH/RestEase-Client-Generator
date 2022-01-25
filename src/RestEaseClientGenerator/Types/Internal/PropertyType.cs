@@ -1,4 +1,4 @@
-namespace RestEaseClientGenerator.Types;
+namespace RestEaseClientGenerator.Types.Internal;
 
 internal enum PropertyType
 {
