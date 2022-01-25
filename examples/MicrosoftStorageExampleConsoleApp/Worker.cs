@@ -110,6 +110,8 @@ internal class Worker
             Console.WriteLine(ex);
         }
 
+        return;
+
         //try
         //{
         //    var operations = await _storageApi.OperationsListAsync();
@@ -136,7 +138,7 @@ internal class Worker
 
             foreach (var sa in storageAccounts.Value.Where(s => s.Name.StartsWith("stef")))
             {
-                _logger.LogWarning("Deleting SA : {sa}", sa.Name);
+                // _logger.LogWarning("Deleting SA : {sa}", sa.Name);
                 // await _storageApi.StorageAccountsDeleteAsync(rg, sa.Name, sub);
             }
         }
