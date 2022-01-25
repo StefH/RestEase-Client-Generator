@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
 {
+    /// <summary>
+    /// The display information of the operation.
+    /// </summary>
     public class Display
     {
         /// <summary>

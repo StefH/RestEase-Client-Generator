@@ -14,8 +14,8 @@ using Serilog;
 using Serilog.Sinks.SystemConsole.Themes;
 
 GenerateMicrosoftContainerInstance20211001();
-GenerateMicrosoftStorage20190401();
-GenerateMicrosoftStorage20210401();
+// GenerateMicrosoftStorage20190401();
+// GenerateMicrosoftStorage20210401();
 
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Debug()
@@ -87,6 +87,11 @@ static void GenerateMicrosoftContainerInstance20211001()
     };
 
     const string x = @"C:\Dev\azure-rest-api-specs\specification\containerinstance\resource-manager\Microsoft.ContainerInstance\stable\2021-10-01\containerInstance.json";
+
+    foreach (var file in Directory.GetFiles($"../../../MicrosoftContainerInstance/Models", "*.cs"))
+    {
+        //File.Delete(file);
+    }
     foreach (var file in generator.FromFile(x, storageSettings, out OpenApiDiagnostic diagnosticStorage))
     {
         // Console.WriteLine("Generating file-type '{0}': {1}\\{2}", file.FileType, file.Path, file.Name);

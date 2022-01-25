@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
 {
+    /// <summary>
+    /// The name object of the resource
+    /// </summary>
     public class Name
     {
         /// <summary>

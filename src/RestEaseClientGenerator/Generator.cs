@@ -149,6 +149,11 @@ public class Generator : IGenerator
         {
             // Add Models + Inline/External Models
             var modelBuilder = new ModelBuilder(settings);
+            var allModelsDup = result.Models.Union(@interface.ExtraModels)
+                .GroupBy(r => r.ClassName)
+                .Where(x => x.Count() > 1)
+                .ToList();
+
             var allModels = result.Models.Union(@interface.ExtraModels)
                 .GroupBy(r => r.ClassName)
                 .Select(r => r.First())

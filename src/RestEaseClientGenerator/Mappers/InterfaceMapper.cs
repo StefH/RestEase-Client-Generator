@@ -355,9 +355,10 @@ internal class InterfaceMapper : BaseMapper
                     if (schema.Reference.IsLocal)
                     {
                         var className = MakeValidReferenceId(schema.Reference.Id);
-                        if (@interface.ExtraModels.All(m => m.ClassName != className) || @interface.ExtraEnums.All(m => m.EnumName != className))
+                        if (@interface.ExtraModels.All(m => string.Equals(m.ClassName, className, StringComparison.InvariantCultureIgnoreCase)) ||
+                            @interface.ExtraEnums.All(m => string.Equals(m.EnumName, className, StringComparison.InvariantCultureIgnoreCase)))
                         {
-                            var extraModel = _schemaMapper.MapSchema(@interface, schema, string.Empty, className, false, true, null, directory);
+                            var extraModel = _schemaMapper.MapSchema(@interface, schema, string.Empty, className,  false, true, null, directory);
 
                             if (extraModel.IsFirst && Settings.PreferredEnumType == EnumType.Enum)
                             {
@@ -365,6 +366,7 @@ internal class InterfaceMapper : BaseMapper
                                 // It's a single value, so probably enum
                                 var newEnum = new RestEaseEnum
                                 {
+                                    Description = schema.Description,
                                     Namespace = Settings.Namespace,
                                     EnumName = className,
                                     Values = null
@@ -375,6 +377,7 @@ internal class InterfaceMapper : BaseMapper
                             {
                                 var newModel = new RestEaseModel
                                 {
+                                    Description = schema.Description,
                                     Namespace = Settings.Namespace,
                                     ClassName = className,
                                     Properties = extraModel.Second
@@ -412,7 +415,7 @@ internal class InterfaceMapper : BaseMapper
                         ? CSharpUtils.CreateValidIdentifier(schema.Title, CasingType.Pascal)
                         : $"{methodRestEaseMethodName.ToPascalCase()}Result";
 
-                    var existingModel = @interface.ExtraModels.FirstOrDefault(m => m.ClassName == className);
+                    var existingModel = @interface.ExtraModels.FirstOrDefault(m => string.Equals(m.ClassName, className, StringComparison.InvariantCultureIgnoreCase));
                     if (existingModel == null)
                     {
                         var inlineModel = _schemaMapper.MapSchema(@interface, schema, string.Empty, null, false, true, null, directory);
@@ -420,6 +423,7 @@ internal class InterfaceMapper : BaseMapper
                         {
                             var newModel = new RestEaseModel
                             {
+                                Description = schema.Description,
                                 Namespace = Settings.Namespace,
                                 ClassName = className,
                                 Properties = inlineModel.Second

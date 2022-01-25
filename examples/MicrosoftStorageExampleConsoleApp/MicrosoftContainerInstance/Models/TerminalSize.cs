@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
 {
+    /// <summary>
+    /// The size of the terminal.
+    /// </summary>
     public class TerminalSize
     {
         /// <summary>

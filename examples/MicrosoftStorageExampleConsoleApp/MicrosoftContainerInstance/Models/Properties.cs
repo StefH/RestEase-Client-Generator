@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
 {
+    /// <summary>
+    /// The container group properties
+    /// </summary>
     public class Properties
     {
         /// <summary>
