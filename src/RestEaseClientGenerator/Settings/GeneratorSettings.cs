@@ -122,6 +122,8 @@ public class GeneratorSettings
     [Description("Preferred MultipleResponsesType to use when multiple responses are defined for a path. The default value is 'AnyOf'.")]
     public MultipleResponsesType PreferredMultipleResponsesType { get; set; } = MultipleResponsesType.AnyOf;
 
+    [DisplayName("ConstantQueryParameters")]
+    [Description("A dictionary defining values for constant query parameters.")]
     public IDictionary<string, string>? ConstantQueryParameters { get; set; }
     #endregion
 }

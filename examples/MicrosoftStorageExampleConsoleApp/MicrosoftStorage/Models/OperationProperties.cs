@@ -9,7 +9,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Models
     public class OperationProperties
     {
         /// <summary>
-        /// not-used
+        /// One property of operation, include metric specifications.
         /// </summary>
         public ServiceSpecification ServiceSpecification { get; set; }
     }

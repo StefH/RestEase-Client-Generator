@@ -9,7 +9,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Models
     public class ManagementPolicy : Resource
     {
         /// <summary>
-        /// not-used
+        /// The Storage Account ManagementPolicy properties.
         /// </summary>
         public ManagementPolicyProperties Properties { get; set; }
 

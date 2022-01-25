@@ -1,5 +1,6 @@
 using Microsoft.OpenApi.Models;
 using RestEaseClientGenerator.Types;
+using RestEaseClientGenerator.Types.Internal;
 
 namespace RestEaseClientGenerator.Models.Internal;
 

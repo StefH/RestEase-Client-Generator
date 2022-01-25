@@ -24,8 +24,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
         public string Type { get; set; }
 
         /// <summary>
-        /// Identity for the container group.
+        /// The list of user identities associated with the container group. The user identity dictionary key references will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.
         /// </summary>
-        public UserAssignedIdentities UserAssignedIdentities { get; set; }
+        public ContainerGroupIdentityUserAssignedIdentities UserAssignedIdentities { get; set; }
     }
 }

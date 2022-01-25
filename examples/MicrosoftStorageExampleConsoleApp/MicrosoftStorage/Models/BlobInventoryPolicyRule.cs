@@ -24,7 +24,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Models
         public string Destination { get; set; }
 
         /// <summary>
-        /// not-used
+        /// An object that defines the blob inventory rule.
         /// </summary>
         public BlobInventoryPolicyDefinition Definition { get; set; }
     }

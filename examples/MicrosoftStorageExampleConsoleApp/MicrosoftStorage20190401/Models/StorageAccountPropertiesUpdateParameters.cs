@@ -9,12 +9,12 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage20190401.Models
     public class StorageAccountPropertiesUpdateParameters
     {
         /// <summary>
-        /// not-used
+        /// The custom domain assigned to this storage account. This can be set via Update.
         /// </summary>
         public CustomDomain CustomDomain { get; set; }
 
         /// <summary>
-        /// not-used
+        /// The encryption settings on the storage account.
         /// </summary>
         public Encryption Encryption { get; set; }
 
@@ -24,7 +24,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage20190401.Models
         public string AccessTier { get; set; }
 
         /// <summary>
-        /// not-used
+        /// Settings for Azure Files identity based authentication.
         /// </summary>
         public AzureFilesIdentityBasedAuthentication AzureFilesIdentityBasedAuthentication { get; set; }
 
@@ -34,7 +34,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage20190401.Models
         public bool SupportsHttpsTrafficOnly { get; set; }
 
         /// <summary>
-        /// not-used
+        /// Network rule set
         /// </summary>
         public NetworkRuleSet NetworkAcls { get; set; }
 

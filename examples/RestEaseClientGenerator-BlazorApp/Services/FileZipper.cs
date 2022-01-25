@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
-using RestEaseClientGenerator.Models;
+using RestEaseClientGenerator.Models.External;
 
 namespace RestEaseClientGeneratorBlazorApp.Services
 {

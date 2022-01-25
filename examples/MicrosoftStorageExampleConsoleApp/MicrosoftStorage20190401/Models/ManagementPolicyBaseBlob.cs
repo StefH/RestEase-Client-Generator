@@ -9,17 +9,17 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage20190401.Models
     public class ManagementPolicyBaseBlob
     {
         /// <summary>
-        /// not-used
+        /// Object to define the number of days after last modification.
         /// </summary>
         public DateAfterModification TierToCool { get; set; }
 
         /// <summary>
-        /// not-used
+        /// Object to define the number of days after last modification.
         /// </summary>
         public DateAfterModification TierToArchive { get; set; }
 
         /// <summary>
-        /// not-used
+        /// Object to define the number of days after last modification.
         /// </summary>
         public DateAfterModification Delete { get; set; }
     }

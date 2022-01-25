@@ -13,9 +13,6 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage20190401.Models
         /// </summary>
         public string Status { get; set; }
 
-        /// <summary>
-        /// not-used
-        /// </summary>
         public KeyVaultProperties KeyVaultProperties { get; set; }
     }
 }

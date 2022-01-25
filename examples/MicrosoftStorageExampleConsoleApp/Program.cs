@@ -41,6 +41,10 @@ static void GenerateMicrosoftStorage20190401()
     };
 
     const string x = @"C:\Dev\azure-rest-api-specs\specification\storage\resource-manager\Microsoft.Storage\stable\2019-04-01\storage.json";
+    foreach (var file in Directory.GetFiles("../../../MicrosoftStorage20190401/Models", "*.cs"))
+    {
+        //File.Delete(file);
+    }
     foreach (var file in generator.FromFile(x, storageSettings, out OpenApiDiagnostic diagnosticStorage))
     {
         // Console.WriteLine("Generating file-type '{0}': {1}\\{2}", file.FileType, file.Path, file.Name);
@@ -63,6 +67,10 @@ static void GenerateMicrosoftStorage20210401()
     };
 
     const string x = @"C:\Dev\azure-rest-api-specs\specification\storage\resource-manager\Microsoft.Storage\stable\2021-04-01\storage.json";
+    foreach (var file in Directory.GetFiles("../../../MicrosoftStorage/Models", "*.cs"))
+    {
+        //File.Delete(file);
+    }
     foreach (var file in generator.FromFile(x, storageSettings, out OpenApiDiagnostic diagnosticStorage))
     {
         // Console.WriteLine("Generating file-type '{0}': {1}\\{2}", file.FileType, file.Path, file.Name);
@@ -87,9 +95,14 @@ static void GenerateMicrosoftContainerInstance20211001()
     };
 
     const string x = @"C:\Dev\azure-rest-api-specs\specification\containerinstance\resource-manager\Microsoft.ContainerInstance\stable\2021-10-01\containerInstance.json";
-    foreach (var file in generator.FromFile(x, storageSettings, out OpenApiDiagnostic diagnosticStorage))
+
+    foreach (var file in Directory.GetFiles("../../../MicrosoftContainerInstance/Models", "*.cs"))
     {
-        // Console.WriteLine("Generating file-type '{0}': {1}\\{2}", file.FileType, file.Path, file.Name);
+       // File.Delete(file);
+    }
+    foreach (var file in generator.FromFile(x, storageSettings, out var xxxx))
+    {
+        Console.WriteLine("Generating file-type '{0}': {1}\\{2}", file.FileType, file.Path, file.Name);
         File.WriteAllText($"../../../MicrosoftContainerInstance/{file.Path}/{file.Name}", file.Content);
     }
 }

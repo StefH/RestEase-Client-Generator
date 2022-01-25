@@ -11,7 +11,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftStorage.Models
         /// <summary>
         /// The resource model definition for an Azure Resource Manager tracked top level resource which has 'tags' and a 'location'
         /// </summary>
-        public Tags Tags { get; set; }
+        public TrackedResourceTags Tags { get; set; }
 
         /// <summary>
         /// The geo-location where the resource lives

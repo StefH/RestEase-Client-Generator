@@ -4,18 +4,33 @@ using System.Collections.Generic;
 namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftStorage.Models
 {
     /// <summary>
-    /// The SKU of the storage account.
+    /// The resource model definition representing SKU
     /// </summary>
     public class Sku
     {
         /// <summary>
-        /// The SKU name. Required for account creation; optional for update. Note that in older versions, SKU name was called accountType.
+        /// The name of the SKU. Ex - P3. It is typically a letter+number code
         /// </summary>
         public string Name { get; set; }
 
         /// <summary>
-        /// The SKU tier. This is based on the SKU name.
+        /// This field is required to be implemented by the Resource Provider if the service has more than one tier, but is not required on a PUT.
         /// </summary>
         public string Tier { get; set; }
+
+        /// <summary>
+        /// The SKU size. When the name field is the combination of tier and some other value, this would be the standalone code. 
+        /// </summary>
+        public string Size { get; set; }
+
+        /// <summary>
+        /// If the service has different generations of hardware, for the same SKU, then that can be captured here.
+        /// </summary>
+        public string Family { get; set; }
+
+        /// <summary>
+        /// If the SKU supports scale out/in then the capacity integer should be included. If scale out/in is not possible for the resource this may be omitted.
+        /// </summary>
+        public int Capacity { get; set; }
     }
 }

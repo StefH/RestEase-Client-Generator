@@ -24,9 +24,9 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
         public EnvironmentVariable[] EnvironmentVariables { get; set; }
 
         /// <summary>
-        /// The init container definition properties.
+        /// The instance view of the init container. Only valid in response.
         /// </summary>
-        public InstanceView InstanceView { get; set; }
+        public InitContainerPropertiesDefinitionInstanceView InstanceView { get; set; }
 
         /// <summary>
         /// The volume mounts available to the init container.

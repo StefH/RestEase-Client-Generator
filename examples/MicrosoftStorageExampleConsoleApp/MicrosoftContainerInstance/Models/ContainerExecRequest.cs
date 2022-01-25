@@ -14,8 +14,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
         public string Command { get; set; }
 
         /// <summary>
-        /// The container exec request.
+        /// The size of the terminal.
         /// </summary>
-        public TerminalSize TerminalSize { get; set; }
+        public ContainerExecRequestTerminalSize TerminalSize { get; set; }
     }
 }

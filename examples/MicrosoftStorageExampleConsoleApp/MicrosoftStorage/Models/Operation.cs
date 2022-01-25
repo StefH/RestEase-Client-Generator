@@ -14,9 +14,9 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// Storage REST API operation definition.
+        /// Display metadata associated with the operation.
         /// </summary>
-        public Display Display { get; set; }
+        public OperationDisplay Display { get; set; }
 
         /// <summary>
         /// The origin of operations.
@@ -24,7 +24,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Models
         public string Origin { get; set; }
 
         /// <summary>
-        /// not-used
+        /// Properties of operation, include metric specifications.
         /// </summary>
         public OperationProperties Properties { get; set; }
     }

@@ -9,22 +9,22 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Models
     public class EncryptionServices
     {
         /// <summary>
-        /// not-used
+        /// A service that allows server-side encryption to be used.
         /// </summary>
         public EncryptionService Blob { get; set; }
 
         /// <summary>
-        /// not-used
+        /// A service that allows server-side encryption to be used.
         /// </summary>
         public EncryptionService File { get; set; }
 
         /// <summary>
-        /// not-used
+        /// A service that allows server-side encryption to be used.
         /// </summary>
         public EncryptionService Table { get; set; }
 
         /// <summary>
-        /// not-used
+        /// A service that allows server-side encryption to be used.
         /// </summary>
         public EncryptionService Queue { get; set; }
     }

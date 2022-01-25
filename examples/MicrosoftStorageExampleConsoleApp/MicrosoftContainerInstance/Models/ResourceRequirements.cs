@@ -9,12 +9,12 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
     public class ResourceRequirements
     {
         /// <summary>
-        /// not-used
+        /// The resource requests.
         /// </summary>
         public ResourceRequests Requests { get; set; }
 
         /// <summary>
-        /// not-used
+        /// The resource limits.
         /// </summary>
         public ResourceLimits Limits { get; set; }
     }

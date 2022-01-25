@@ -2,7 +2,7 @@
     "profiles": {
         "Command": {
             "commandName": "Project",
-            "commandLineArgs": "-f ..\\..\\..\\..\\..\\Examples\\RestEaseClientGeneratorConsoleApp\\Examples\\AzureMachineLearning\\swagger.json -d ..\\..\\..\\..\\..\\Examples\\RestEaseClientGeneratorConsoleApp\\Examples\\AzureMachineLearning\\commandline --Namespace AzureMachineLearningTest -a AzureMachineLearningTest"
+            "commandLineArgs": "-f C:\\Dev\\azure-rest-api-specs\\specification\\containerinstance\\resource-manager\\Microsoft.ContainerInstance\\stable\\2021-10-01\\containerInstance.json -d ..\\\\..\\\\..\\\\..\\\\..\\\\Examples\\\\RestEaseClientGeneratorConsoleApp\\\\Examples\\\\commandline --Namespace AzureMachineLearningTest -a AzureMachineLearningTest"
         },
         "Help": {
             "commandName": "Project",

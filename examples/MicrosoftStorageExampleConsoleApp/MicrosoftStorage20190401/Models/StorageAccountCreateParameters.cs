@@ -9,7 +9,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage20190401.Models
     public class StorageAccountCreateParameters
     {
         /// <summary>
-        /// not-used
+        /// The SKU of the storage account.
         /// </summary>
         public Sku Sku { get; set; }
 
@@ -24,17 +24,17 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage20190401.Models
         public string Location { get; set; }
 
         /// <summary>
-        /// The parameters used when creating a storage account.
+        /// Gets or sets a list of key value pairs that describe the resource. These tags can be used for viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key with a length no greater than 128 characters and a value with a length no greater than 256 characters.
         /// </summary>
-        public Tags Tags { get; set; }
+        public StorageAccountCreateParametersTags Tags { get; set; }
 
         /// <summary>
-        /// not-used
+        /// Identity for the resource.
         /// </summary>
         public Identity Identity { get; set; }
 
         /// <summary>
-        /// not-used
+        /// The parameters used to create the storage account.
         /// </summary>
         public StorageAccountPropertiesCreateParameters Properties { get; set; }
     }

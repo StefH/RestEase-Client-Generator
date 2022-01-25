@@ -26,6 +26,6 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftStorage.Models
         /// <summary>
         /// Identity for the resource.
         /// </summary>
-        public UserAssignedIdentities UserAssignedIdentities { get; set; }
+        public IdentityUserAssignedIdentities UserAssignedIdentities { get; set; }
     }
 }

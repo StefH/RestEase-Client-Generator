@@ -4,7 +4,6 @@ using RestEaseClientGenerator.Utils;
 namespace RestEaseClientGenerator.Types;
 
 [TypeConverter(typeof(EnumDescriptionConverter))]
-[Flags]
 public enum FileType
 {
     [Description("Api")]

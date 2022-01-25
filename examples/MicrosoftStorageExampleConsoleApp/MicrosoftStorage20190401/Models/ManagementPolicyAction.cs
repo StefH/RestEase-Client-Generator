@@ -9,12 +9,12 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage20190401.Models
     public class ManagementPolicyAction
     {
         /// <summary>
-        /// not-used
+        /// Management policy action for base blob.
         /// </summary>
         public ManagementPolicyBaseBlob BaseBlob { get; set; }
 
         /// <summary>
-        /// not-used
+        /// Management policy action for snapshot.
         /// </summary>
         public ManagementPolicySnapShot Snapshot { get; set; }
     }

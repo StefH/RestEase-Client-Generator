@@ -9,12 +9,12 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Models
     public class PrivateEndpointConnectionProperties
     {
         /// <summary>
-        /// not-used
+        /// The Private Endpoint resource.
         /// </summary>
         public PrivateEndpoint PrivateEndpoint { get; set; }
 
         /// <summary>
-        /// not-used
+        /// A collection of information about the state of the connection between service consumer and provider.
         /// </summary>
         public PrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
 

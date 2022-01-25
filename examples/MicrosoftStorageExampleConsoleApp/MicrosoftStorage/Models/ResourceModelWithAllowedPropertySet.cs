@@ -44,23 +44,14 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Models
         public string Etag { get; set; }
 
         /// <summary>
-        /// The resource model definition containing the full set of allowed properties for a resource. Except properties bag, there cannot be a top level property outside of this set.
+        /// Resource tags.
         /// </summary>
-        public Tags Tags { get; set; }
+        public ResourceModelWithAllowedPropertySetTags Tags { get; set; }
 
-        /// <summary>
-        /// The resource model definition containing the full set of allowed properties for a resource. Except properties bag, there cannot be a top level property outside of this set.
-        /// </summary>
-        public Identity Identity { get; set; }
+        public ResourceModelWithAllowedPropertySetIdentity Identity { get; set; }
 
-        /// <summary>
-        /// The resource model definition containing the full set of allowed properties for a resource. Except properties bag, there cannot be a top level property outside of this set.
-        /// </summary>
-        public Sku Sku { get; set; }
+        public ResourceModelWithAllowedPropertySetSku Sku { get; set; }
 
-        /// <summary>
-        /// The resource model definition containing the full set of allowed properties for a resource. Except properties bag, there cannot be a top level property outside of this set.
-        /// </summary>
-        public Plan Plan { get; set; }
+        public ResourceModelWithAllowedPropertySetPlan Plan { get; set; }
     }
 }

@@ -78,18 +78,18 @@ namespace RestEaseClientGeneratorConsoleApp
                 File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/MicrosoftStorage/{file.Path}/{file.Name}", file.Content);
             }
 
-            var aciSettings = new GeneratorSettings
-            {
-                Namespace = "RestEaseClientGeneratorConsoleApp.Examples.MicrosoftContainerInstance",
-                ApiName = "MicrosoftContainerInstance",
-                SingleFile = false,
-                PreferredMultipleResponsesType = MultipleResponsesType.AnyOf,
-                PreferredSecurityDefinitionType = SecurityDefinitionType.None
-            };
-            foreach (var file in generator.FromFile("Examples\\MicrosoftContainerInstance\\containerInstance.json", aciSettings, out OpenApiDiagnostic diagnosticAci))
-            {
-                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/MicrosoftContainerInstance/{file.Path}/{file.Name}", file.Content);
-            }
+            //var aciSettings = new GeneratorSettings
+            //{
+            //    Namespace = "RestEaseClientGeneratorConsoleApp.Examples.MicrosoftContainerInstance",
+            //    ApiName = "MicrosoftContainerInstance",
+            //    SingleFile = false,
+            //    PreferredMultipleResponsesType = MultipleResponsesType.AnyOf,
+            //    PreferredSecurityDefinitionType = SecurityDefinitionType.None
+            //};
+            //foreach (var file in generator.FromFile("Examples\\MicrosoftContainerInstance\\containerInstance.json", aciSettings, out OpenApiDiagnostic diagnosticAci))
+            //{
+            //    File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/MicrosoftContainerInstance/{file.Path}/{file.Name}", file.Content);
+            //}
             return;
 
             var mlSettings = new GeneratorSettings

@@ -9,12 +9,12 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
     public class ContainerProbe
     {
         /// <summary>
-        /// not-used
+        /// The container execution command, for liveness or readiness probe
         /// </summary>
         public ContainerExec Exec { get; set; }
 
         /// <summary>
-        /// not-used
+        /// The container Http Get settings, for liveness or readiness probe
         /// </summary>
         public ContainerHttpGet HttpGet { get; set; }
 

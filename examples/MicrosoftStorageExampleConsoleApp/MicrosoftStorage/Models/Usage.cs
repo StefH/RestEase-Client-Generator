@@ -24,7 +24,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Models
         public int Limit { get; set; }
 
         /// <summary>
-        /// not-used
+        /// The usage names that can be used; currently limited to StorageAccount.
         /// </summary>
         public UsageName Name { get; set; }
     }

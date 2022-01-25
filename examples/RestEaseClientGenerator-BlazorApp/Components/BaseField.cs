@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -45,13 +45,12 @@ namespace RestEaseClientGeneratorBlazorApp.Components
                 throw new InvalidOperationException($"{GetType()} requires a value for the {nameof(For)} parameter.");
             }
 
-            if (!(For.Body is MemberExpression))
+            if (!(For.Body is MemberExpression memberExpression))
             {
                 throw new InvalidOperationException($"{GetType()} should define a MemberExpression for the {nameof(For)} parameter.");
             }
 
-            var expression = (MemberExpression)For.Body;
-            var property = expression.Member;
+            var property = memberExpression.Member;
 
             PropertyName = property.Name;
 

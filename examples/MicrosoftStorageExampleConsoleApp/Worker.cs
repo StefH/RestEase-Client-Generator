@@ -71,7 +71,7 @@ internal class Worker
             var cg = new ContainerGroup
             {
                 Location = "westeurope",
-                Properties = new Properties
+                Properties = new ContainerGroupProperties
                 {
                     Containers = new[]
                     {
@@ -92,7 +92,8 @@ internal class Worker
                             }
                         }
                     },
-                    OsType = OsTypeConstants.Linux
+                    OsType = ContainerGroupPropertiesOsTypeConstants.Linux,
+                    Sku = ContainerGroupSkuConstants.Standard
                 }
             };
             var aci = await _aci.ContainerGroupsCreateOrUpdateAsync(
@@ -129,8 +130,13 @@ internal class Worker
 
         try
         {
-            var sa = await _storageApi.StorageAccountsListAsync("2de19637-27a3-42a8-812f-2c2a7f7f935c");
-            // _logger.LogInformation("StorageAccountsListAsync = '{sa}'", JsonSerializer.Serialize(sa.GetContent(), _options));
+            var storageAccounts = await _storageApi.StorageAccountsListAsync("2de19637-27a3-42a8-812f-2c2a7f7f935c");
+
+            foreach (var sa in storageAccounts.Value.Where(s => s.Name.StartsWith("stef")))
+            {
+                _logger.LogWarning("Deleting SA : {sa}", sa.Name);
+                await _storageApi.StorageAccountsDeleteAsync(rg, sa.Name, sub);
+            }
         }
         catch (Exception ex)
         {

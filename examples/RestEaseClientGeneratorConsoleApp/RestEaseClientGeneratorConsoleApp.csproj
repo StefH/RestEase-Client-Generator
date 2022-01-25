@@ -8,7 +8,6 @@
     <ItemGroup>
     <Folder Include="Examples\AzureMachineLearning\Api\" />
     <Folder Include="Examples\AzureMachineLearning\Models\" />
-    <Folder Include="Examples\AzureMachineLearning\commandline\" />
     <Folder Include="Examples\ComputerVision\" />
     <Folder Include="Examples\Drc\Api\" />
     <Folder Include="Examples\Drc\Models\" />
@@ -23,6 +22,7 @@
     <Folder Include="Examples\MicrosoftContainerInstance\Models\" />
     <Folder Include="Examples\MicrosoftStorage\Api\" />
     <Folder Include="Examples\MicrosoftStorage\Models\" />
+    <Folder Include="Examples\commandline\" />
     <Folder Include="Examples\PetStoreJson\" />
     <Folder Include="Examples\SharedQuery\Api\" />
     <Folder Include="Examples\SharedQuery\Models\" />

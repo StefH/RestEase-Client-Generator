@@ -9,7 +9,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Models
     public class ObjectReplicationPolicy : Resource
     {
         /// <summary>
-        /// not-used
+        /// The Storage Account ObjectReplicationPolicy properties.
         /// </summary>
         public ObjectReplicationPolicyProperties Properties { get; set; }
 

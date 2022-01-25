@@ -9,22 +9,22 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Models
     public class StorageAccountPropertiesUpdateParameters
     {
         /// <summary>
-        /// not-used
+        /// The custom domain assigned to this storage account. This can be set via Update.
         /// </summary>
         public CustomDomain CustomDomain { get; set; }
 
         /// <summary>
-        /// not-used
+        /// The encryption settings on the storage account.
         /// </summary>
         public Encryption Encryption { get; set; }
 
         /// <summary>
-        /// not-used
+        /// SasPolicy assigned to the storage account.
         /// </summary>
         public SasPolicy SasPolicy { get; set; }
 
         /// <summary>
-        /// not-used
+        /// KeyPolicy assigned to the storage account.
         /// </summary>
         public KeyPolicy KeyPolicy { get; set; }
 
@@ -34,7 +34,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Models
         public string AccessTier { get; set; }
 
         /// <summary>
-        /// not-used
+        /// Settings for Azure Files identity based authentication.
         /// </summary>
         public AzureFilesIdentityBasedAuthentication AzureFilesIdentityBasedAuthentication { get; set; }
 
@@ -44,7 +44,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Models
         public bool SupportsHttpsTrafficOnly { get; set; }
 
         /// <summary>
-        /// not-used
+        /// Network rule set
         /// </summary>
         public NetworkRuleSet NetworkAcls { get; set; }
 
@@ -54,7 +54,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Models
         public string LargeFileSharesState { get; set; }
 
         /// <summary>
-        /// not-used
+        /// Routing preference defines the type of network, either microsoft or internet routing to be used to deliver the user data, the default option is microsoft routing
         /// </summary>
         public RoutingPreference RoutingPreference { get; set; }
 

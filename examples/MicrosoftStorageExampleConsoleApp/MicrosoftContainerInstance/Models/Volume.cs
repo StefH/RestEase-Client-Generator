@@ -14,22 +14,22 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// not-used
+        /// The properties of the Azure File volume. Azure File shares are mounted as volumes.
         /// </summary>
         public AzureFileVolume AzureFile { get; set; }
 
         /// <summary>
-        /// not-used
+        /// The empty directory volume.
         /// </summary>
         public EmptyDirVolume EmptyDir { get; set; }
 
         /// <summary>
-        /// not-used
+        /// The secret volume.
         /// </summary>
         public SecretVolume Secret { get; set; }
 
         /// <summary>
-        /// not-used
+        /// Represents a volume that is populated with the contents of a git repository
         /// </summary>
         public GitRepoVolume GitRepo { get; set; }
     }

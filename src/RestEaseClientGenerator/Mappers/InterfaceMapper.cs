@@ -1,11 +1,11 @@
 using System.Text.RegularExpressions;
-using Microsoft.OpenApi;
 using Microsoft.OpenApi.Models;
 using RestEaseClientGenerator.Constants;
 using RestEaseClientGenerator.Extensions;
 using RestEaseClientGenerator.Models.Internal;
 using RestEaseClientGenerator.Settings;
 using RestEaseClientGenerator.Types;
+using RestEaseClientGenerator.Types.Internal;
 using RestEaseClientGenerator.Utils;
 
 namespace RestEaseClientGenerator.Mappers;
@@ -138,11 +138,6 @@ internal class InterfaceMapper : BaseMapper
 
     private RestEaseInterfaceMethodDetails MapOperationToMappingModel(RestEaseInterface @interface, string path, string httpMethod, OpenApiOperation operation, string? directory)
     {
-        if (path == "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}")
-        {
-            int p = 0;
-        }
-
         string methodRestEaseForAnnotation = httpMethod.ToPascalCase();
 
         string methodRestEaseMethodName = GeneratedRestEaseMethodName(path, operation, methodRestEaseForAnnotation);
@@ -298,7 +293,6 @@ internal class InterfaceMapper : BaseMapper
             return returnTypes.First();
         }
 
-        // Task<Response<AnyOf<StorageAccount, object>>> StorageAccountsCreateAsyncOK
         switch (Settings.PreferredMultipleResponsesType)
         {
             case MultipleResponsesType.First:
@@ -349,49 +343,10 @@ internal class InterfaceMapper : BaseMapper
 
             case SchemaType.Object:
             case SchemaType.Unknown:
-                if (schema.Reference != null)
+                var propertyReference = _schemaMapper.TryMapPropertyReference(@interface, schema, string.Empty, directory);
+                if (propertyReference != null)
                 {
-                    if (schema.Reference.IsLocal)
-                    {
-                        var className = MakeValidReferenceId(schema.Reference.Id);
-                        if (@interface.ExtraModels.All(m => m.ClassName != className) || @interface.ExtraEnums.All(m => m.EnumName != className))
-                        {
-                            var extraModel = _schemaMapper.MapSchema(@interface, schema, string.Empty, className, false, true, null, directory);
-
-                            if (extraModel.IsFirst && Settings.PreferredEnumType == EnumType.Enum)
-                            {
-                                throw new NotSupportedException();
-                                // It's a single value, so probably enum
-                                var newEnum = new RestEaseEnum
-                                {
-                                    Namespace = Settings.Namespace,
-                                    EnumName = className,
-                                    Values = null
-                                };
-                                @interface.ExtraEnums.Add(newEnum);
-                            }
-                            else
-                            {
-                                var newModel = new RestEaseModel
-                                {
-                                    Namespace = Settings.Namespace,
-                                    ClassName = className,
-                                    Properties = extraModel.Second
-                                };
-                                @interface.ExtraModels.Add(newModel);
-                            }
-                        }
-
-                        // Internal Local defined object
-                        return className;
-                    }
-
-                    if (schema.Reference.IsExternal)
-                    {
-                        return new ExternalReferenceMapper(Settings, @interface).MapProperty(schema.Reference, directory).Type; // TODO : kan dit niet altijd?
-                    }
-
-                    throw new InvalidOperationException();
+                    return propertyReference.Type;
                 }
                 else if (schema.AdditionalProperties != null)
                 {
@@ -411,7 +366,7 @@ internal class InterfaceMapper : BaseMapper
                         ? CSharpUtils.CreateValidIdentifier(schema.Title, CasingType.Pascal)
                         : $"{methodRestEaseMethodName.ToPascalCase()}Result";
 
-                    var existingModel = @interface.ExtraModels.FirstOrDefault(m => m.ClassName == className);
+                    var existingModel = @interface.ExtraModels.FirstOrDefault(m => string.Equals(m.ClassName, className, StringComparison.InvariantCultureIgnoreCase));
                     if (existingModel == null)
                     {
                         var inlineModel = _schemaMapper.MapSchema(@interface, schema, string.Empty, null, false, true, null, directory);
@@ -419,9 +374,11 @@ internal class InterfaceMapper : BaseMapper
                         {
                             var newModel = new RestEaseModel
                             {
+                                Description = schema.Description,
                                 Namespace = Settings.Namespace,
                                 ClassName = className,
-                                Properties = inlineModel.Second
+                                Properties = inlineModel.Second,
+                                Priority = 1002
                             };
                             @interface.ExtraModels.Add(newModel);
                         }

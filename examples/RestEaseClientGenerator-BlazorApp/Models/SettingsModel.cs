@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.ComponentModel;
 using RestEaseClientGenerator.Settings;
 
@@ -16,5 +17,10 @@ namespace RestEaseClientGeneratorBlazorApp.Models
         public string FileName { get; set; } = string.Empty;
 
         public string? Content { get; set; }
+
+        public SettingsModel()
+        {
+            ConstantQueryParameters = new Dictionary<string, string> { { "api-version", "123" } };
+        }
     }
 }
