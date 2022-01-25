@@ -2,6 +2,7 @@ using System.Text;
 using RestEaseClientGenerator.Extensions;
 using RestEaseClientGenerator.Models.Internal;
 using RestEaseClientGenerator.Settings;
+using RestEaseClientGenerator.Utils;
 
 namespace RestEaseClientGenerator.Builders;
 
@@ -11,7 +12,7 @@ internal class ModelBuilder : BaseBuilder
     {
     }
 
-    public string Build(RestEaseModel restEaseModel)
+    public string Build(RestEaseModel restEaseModel, bool isFirst, bool isLast)
     {
         var builder = new StringBuilder();
         if (!Settings.SingleFile)
@@ -28,8 +29,11 @@ internal class ModelBuilder : BaseBuilder
             extendsClass = $" : {string.Join(", ", extends)}";
         }
 
-        builder.AppendLine($"namespace {AppendModelsNamespace(restEaseModel.Namespace)}");
-        builder.AppendLine("{");
+        if (!Settings.SingleFile || isFirst)
+        {
+            builder.AppendLine($"namespace {AppendModelsNamespace(restEaseModel.Namespace)}");
+            builder.AppendLine("{");
+        }
 
         if (!string.IsNullOrEmpty(restEaseModel.Description))
         {
@@ -49,14 +53,23 @@ internal class ModelBuilder : BaseBuilder
                 builder.AppendLine("        /// </summary>");
             }
 
-            if (property.Name == restEaseModel.ClassName)
+            var safePropertyName = CSharpUtils.CreateValidIdentifier(property.Name);
+            if (safePropertyName != property.Name)
             {
                 builder.AppendLine($"        [Newtonsoft.Json.JsonProperty(\"{property.Name}\")]");
-                builder.AppendLine($"        public {property}_ {{ get; set; }}");
+                builder.AppendLine($"        public {property.Type} {safePropertyName} {{ get; set; }}");
             }
             else
             {
-                builder.AppendLine($"        public {property} {{ get; set; }}");
+                if (safePropertyName == restEaseModel.ClassName)
+                {
+                    builder.AppendLine($"        [Newtonsoft.Json.JsonProperty(\"{safePropertyName}\")]");
+                    builder.AppendLine($"        public {property.Type} {safePropertyName}_ {{ get; set; }}");
+                }
+                else
+                {
+                    builder.AppendLine($"        public {property.Type} {safePropertyName} {{ get; set; }}");
+                }
             }
 
             if (property != restEaseModel.Properties.Last())
@@ -65,7 +78,11 @@ internal class ModelBuilder : BaseBuilder
             }
         }
         builder.AppendLine("    }");
-        builder.Append("}");
+
+        if (!Settings.SingleFile || isLast)
+        {
+            builder.Append("}");
+        }
 
         return builder.ToString();
     }

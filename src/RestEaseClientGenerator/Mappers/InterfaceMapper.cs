@@ -1,4 +1,5 @@
 using System.Text.RegularExpressions;
+using Microsoft.OpenApi;
 using Microsoft.OpenApi.Models;
 using RestEaseClientGenerator.Constants;
 using RestEaseClientGenerator.Extensions;
@@ -270,8 +271,15 @@ internal class InterfaceMapper : BaseMapper
             if (TryGetOpenApiMediaType(
                     response.Value.Content,
                     SupportedContentType.ApplicationJson,
-                    out OpenApiMediaType responseJson, out _))
+                    out OpenApiMediaType? responseJson, out _))
             {
+                if (responseJson == null)
+                {
+                    // No response defined, just use object;
+                    returnTypes.Add("object");
+                    continue;
+                }
+
                 var rt = GetReturnType(@interface, responseJson.Schema, methodRestEaseMethodName, directory);
                 if (rt is not null)
                 {
@@ -467,11 +475,13 @@ internal class InterfaceMapper : BaseMapper
         MediaTypeInfo detected,
         ICollection<RestEaseParameter> bodyParameterList,
         List<RestEaseParameter> extensionMethodParameterList,
-        string bodyParameterDescription,
+        string? bodyParameterDescription,
         string? directory)
     {
         if (detected.Key == SupportedContentType.MultipartFormData)
         {
+            var schema = detected.Value.Schema;
+
             string httpContentDescription;
             if (!Settings.GenerateMultipartFormDataExtensionMethods)
             {
@@ -480,7 +490,15 @@ internal class InterfaceMapper : BaseMapper
             else
             {
                 httpContentDescription = "An extension method is generated to support the exact parameters.";
-                extensionMethodParameterList.AddRange(detected.Value.Schema.Properties.Select(p => BuildValidParameter(@interface, p.Key, p.Value, p.Value.Nullable, p.Value.Description, null, Array.Empty<string>(), directory)));
+
+                if (schema.Properties.Any())
+                {
+                    extensionMethodParameterList.AddRange(schema.Properties.Select(p => BuildValidParameter(@interface, p.Key, p.Value, p.Value.Nullable, p.Value.Description, null, Array.Empty<string>(), directory)));
+                }
+                else if (schema.GetSchemaType() == SchemaType.Array)
+                {
+                    extensionMethodParameterList.Add(BuildValidParameter(@interface, "content", schema, schema.Nullable, schema.Description, null, Array.Empty<string>(), directory));
+                }
             }
 
             bodyParameterList.Add(new RestEaseParameter
@@ -565,7 +583,7 @@ internal class InterfaceMapper : BaseMapper
             };
         }
 
-        if (detected.Key == SupportedContentType.ApplicationJson || detected.Key == SupportedContentType.ApplicationXml)
+        if (detected.Key is SupportedContentType.ApplicationJson or SupportedContentType.ApplicationXml)
         {
             string? bodyParameter = null;
             switch (detected.Value.Schema?.GetSchemaType())
@@ -810,9 +828,9 @@ internal class InterfaceMapper : BaseMapper
         };
     }
 
-    private bool TryGetOpenApiMediaType(IDictionary<string, OpenApiMediaType> contentTypes, SupportedContentType contentType, out OpenApiMediaType mediaType, out string detectedContentType)
+    private static bool TryGetOpenApiMediaType(IDictionary<string, OpenApiMediaType?> contentTypes, SupportedContentType contentType, out OpenApiMediaType? mediaType, out string detectedContentType)
     {
-        var contentTypesIgnoreCase = new Dictionary<string, OpenApiMediaType>(contentTypes, StringComparer.InvariantCultureIgnoreCase);
+        var contentTypesIgnoreCase = new Dictionary<string, OpenApiMediaType?>(contentTypes, StringComparer.InvariantCultureIgnoreCase);
 
         string contentDescription = contentType.GetDescription();
         if (contentTypesIgnoreCase.TryGetValue(contentDescription, out mediaType))

@@ -13,17 +13,17 @@ internal class EnumBuilder : BaseBuilder
     {
     }
 
-    public string Build(RestEaseEnum restEaseEnum)
+    public string Build(RestEaseEnum restEaseEnum, bool isFirst, bool isLast)
     {
         if (Settings.PreferredEnumType == EnumType.Enum)
         {
-            return BuildAsEnum(restEaseEnum);
+            return BuildAsEnum(restEaseEnum, isFirst, isLast);
         }
 
-        return BuildAsString(restEaseEnum);
+        return BuildAsString(restEaseEnum, isFirst, isLast);
     }
 
-    private string BuildAsEnum(RestEaseEnum restEaseEnum)
+    private string BuildAsEnum(RestEaseEnum restEaseEnum, bool isFirst, bool isLast)
     {
         var builder = new StringBuilder();
         if (!Settings.SingleFile)
@@ -33,8 +33,11 @@ internal class EnumBuilder : BaseBuilder
             builder.AppendLine();
         }
 
-        builder.AppendLine($"namespace {AppendModelsNamespace(restEaseEnum.Namespace)}");
-        builder.AppendLine("{");
+        if (!Settings.SingleFile || isFirst)
+        {
+            builder.AppendLine($"namespace {AppendModelsNamespace(restEaseEnum.Namespace)}");
+            builder.AppendLine("{");
+        }
 
         if (!string.IsNullOrEmpty(restEaseEnum.Description))
         {
@@ -47,22 +50,30 @@ internal class EnumBuilder : BaseBuilder
         builder.AppendLine("    {");
         builder.AppendLine(string.Join(",\r\n", restEaseEnum.Values.Select(enumValue => $"        {enumValue}")));
         builder.AppendLine("    }");
-        builder.AppendLine("}");
+
+        if (!Settings.SingleFile || isLast)
+        {
+            builder.AppendLine("}");
+        }
 
         return builder.ToString();
     }
 
-    private string BuildAsString(RestEaseEnum restEaseEnum)
+    private string BuildAsString(RestEaseEnum restEaseEnum, bool isFirst, bool isLast)
     {
         var builder = new StringBuilder();
+
         var values = restEaseEnum.Values.Select(value => new
         {
             name = CSharpUtils.CreateValidIdentifier(value, CasingType.Pascal),
             value
         });
 
-        builder.AppendLine($"namespace {AppendModelsNamespace(restEaseEnum.Namespace)}");
-        builder.AppendLine("{");
+        if (!Settings.SingleFile || isFirst)
+        {
+            builder.AppendLine($"namespace {AppendModelsNamespace(restEaseEnum.Namespace)}");
+            builder.AppendLine("{");
+        }
 
         if (!string.IsNullOrEmpty(restEaseEnum.Description))
         {
@@ -75,7 +86,11 @@ internal class EnumBuilder : BaseBuilder
         builder.AppendLine("    {");
         builder.AppendLine(string.Join("\r\n\r\n", values.Select(x => $"        public const string {x.name} = \"{x.value}\";")));
         builder.AppendLine("    }");
-        builder.AppendLine("}");
+
+        if (!Settings.SingleFile || isLast)
+        {
+            builder.AppendLine("}");
+        }
 
         return builder.ToString();
     }
