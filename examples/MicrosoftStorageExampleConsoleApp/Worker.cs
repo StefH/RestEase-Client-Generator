@@ -70,6 +70,7 @@ internal class Worker
             var name = ("stef" + Guid.NewGuid().ToString().Replace("-", "")).Substring(0, 10);
             var cg = new ContainerGroup
             {
+                Tags = new Dictionary<string, string> { { "Entity", "CG" } },
                 Location = "westeurope",
                 Properties = new ContainerGroupProperties
                 {
@@ -78,6 +79,7 @@ internal class Worker
                         new Container
                         {
                             Name = $"container{name}",
+                            
                             Properties = new ContainerProperties
                             {
                                 Image = "nginx",
@@ -135,7 +137,7 @@ internal class Worker
             foreach (var sa in storageAccounts.Value.Where(s => s.Name.StartsWith("stef")))
             {
                 _logger.LogWarning("Deleting SA : {sa}", sa.Name);
-                await _storageApi.StorageAccountsDeleteAsync(rg, sa.Name, sub);
+                // await _storageApi.StorageAccountsDeleteAsync(rg, sa.Name, sub);
             }
         }
         catch (Exception ex)
