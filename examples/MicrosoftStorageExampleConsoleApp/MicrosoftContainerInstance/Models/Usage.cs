@@ -26,6 +26,6 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
         /// <summary>
         /// A single usage result
         /// </summary>
-        public Name Name { get; set; }
+        public UsageName Name { get; set; }
     }
 }

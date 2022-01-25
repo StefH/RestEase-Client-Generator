@@ -352,6 +352,10 @@ internal class InterfaceMapper : BaseMapper
             case SchemaType.Unknown:
                 if (schema.Reference != null)
                 {
+                    var x = _schemaMapper.TryMapPropertyReference(@interface, schema.Reference, string.Empty, directory);
+
+                    return x.Type;
+
                     if (schema.Reference.IsLocal)
                     {
                         var className = MakeValidReferenceId(schema.Reference.Id);
@@ -375,15 +379,15 @@ internal class InterfaceMapper : BaseMapper
                             }
                             else
                             {
-                                var newModel = new RestEaseModel
-                                {
-                                    Description = schema.Description,
-                                    Namespace = Settings.Namespace,
-                                    ClassName = className,
-                                    Properties = extraModel.Second,
-                                    Priority = 1000
-                                };
-                                @interface.ExtraModels.Add(newModel);
+                                //var newModel = new RestEaseModel
+                                //{
+                                //    Description = schema.Description,
+                                //    Namespace = Settings.Namespace,
+                                //    ClassName = className,
+                                //    Properties = extraModel.Second,
+                                //    Priority = 1000
+                                //};
+                                //@interface.ExtraModels.Add(newModel);
                             }
                         }
 

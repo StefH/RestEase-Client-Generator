@@ -16,12 +16,12 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
         /// <summary>
         /// An operation for Azure Container Instance service.
         /// </summary>
-        public Display Display { get; set; }
+        public OperationDisplay Display { get; set; }
 
         /// <summary>
         /// An operation for Azure Container Instance service.
         /// </summary>
-        public Properties Properties { get; set; }
+        public OperationProperties Properties { get; set; }
 
         /// <summary>
         /// The intended executor of the operation.

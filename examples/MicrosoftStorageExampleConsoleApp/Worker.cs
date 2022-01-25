@@ -71,7 +71,7 @@ internal class Worker
             var cg = new ContainerGroup
             {
                 Location = "westeurope",
-                Properties = new Properties
+                Properties = new ContainerGroupProperties
                 {
                     Containers = new[]
                     {

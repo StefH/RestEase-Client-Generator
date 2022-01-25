@@ -26,7 +26,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
         /// <summary>
         /// The init container definition properties.
         /// </summary>
-        public InstanceView InstanceView { get; set; }
+        public InitContainerPropertiesDefinitionInstanceView InstanceView { get; set; }
 
         /// <summary>
         /// The volume mounts available to the init container.

@@ -26,6 +26,6 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
         /// <summary>
         /// Identity for the container group.
         /// </summary>
-        public UserAssignedIdentities UserAssignedIdentities { get; set; }
+        public ContainerGroupIdentityUserAssignedIdentities UserAssignedIdentities { get; set; }
     }
 }

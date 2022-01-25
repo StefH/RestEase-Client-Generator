@@ -26,7 +26,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
         /// <summary>
         /// Container group log analytics information.
         /// </summary>
-        public Metadata Metadata { get; set; }
+        public LogAnalyticsMetadata Metadata { get; set; }
 
         /// <summary>
         /// The workspace resource id for log analytics

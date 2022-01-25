@@ -31,7 +31,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
         /// <summary>
         /// The container instance properties.
         /// </summary>
-        public InstanceView InstanceView { get; set; }
+        public ContainerPropertiesInstanceView InstanceView { get; set; }
 
         /// <summary>
         /// not-used

@@ -37,6 +37,6 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
         /// The regional capabilities.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("Capabilities")]
-        public Capabilities Capabilities_ { get; set; }
+        public CapabilitiesCapabilities Capabilities_ { get; set; }
     }
 }

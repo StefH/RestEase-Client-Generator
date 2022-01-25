@@ -13,6 +13,6 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
         /// </summary>
         public ContainerGroupIdentity Identity { get; set; }
 
-        public Properties Properties { get; set; }
+        public ContainerGroupProperties Properties { get; set; }
     }
 }

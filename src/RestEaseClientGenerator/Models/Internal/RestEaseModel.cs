@@ -8,7 +8,7 @@ internal class RestEaseModel
 
     public string ClassName { get; set; } = null!;
 
-    public ICollection<PropertyDto> Properties { get; set; } = new List<PropertyDto>();
+    public IList<PropertyDto> Properties { get; set; } = new List<PropertyDto>();
 
     public int Priority { get; set; }
 }
