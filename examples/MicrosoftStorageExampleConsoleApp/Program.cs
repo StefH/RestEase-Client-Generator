@@ -43,7 +43,7 @@ static void GenerateMicrosoftStorage20190401()
     const string x = @"C:\Dev\azure-rest-api-specs\specification\storage\resource-manager\Microsoft.Storage\stable\2019-04-01\storage.json";
     foreach (var file in Directory.GetFiles("../../../MicrosoftStorage20190401/Models", "*.cs"))
     {
-        File.Delete(file);
+        //File.Delete(file);
     }
     foreach (var file in generator.FromFile(x, storageSettings, out OpenApiDiagnostic diagnosticStorage))
     {
@@ -69,7 +69,7 @@ static void GenerateMicrosoftStorage20210401()
     const string x = @"C:\Dev\azure-rest-api-specs\specification\storage\resource-manager\Microsoft.Storage\stable\2021-04-01\storage.json";
     foreach (var file in Directory.GetFiles("../../../MicrosoftStorage/Models", "*.cs"))
     {
-        File.Delete(file);
+        //File.Delete(file);
     }
     foreach (var file in generator.FromFile(x, storageSettings, out OpenApiDiagnostic diagnosticStorage))
     {

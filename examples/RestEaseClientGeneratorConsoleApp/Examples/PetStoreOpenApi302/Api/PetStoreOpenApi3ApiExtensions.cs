@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using AnyOfTypes;
 using RestEase;
 using RestEaseClientGeneratorConsoleApp.Examples.PetStoreOpenApi302.Models;
 
