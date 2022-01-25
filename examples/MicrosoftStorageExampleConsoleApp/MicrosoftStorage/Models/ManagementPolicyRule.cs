@@ -24,7 +24,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Models
         public string Type { get; set; }
 
         /// <summary>
-        /// not-used
+        /// An object that defines the Lifecycle rule. Each definition is made up with a filters set and an actions set.
         /// </summary>
         public ManagementPolicyDefinition Definition { get; set; }
     }

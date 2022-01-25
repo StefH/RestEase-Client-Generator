@@ -9,7 +9,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Models
     public class PrivateLinkResource : Resource
     {
         /// <summary>
-        /// not-used
+        /// Properties of a private link resource.
         /// </summary>
         public PrivateLinkResourceProperties Properties { get; set; }
 

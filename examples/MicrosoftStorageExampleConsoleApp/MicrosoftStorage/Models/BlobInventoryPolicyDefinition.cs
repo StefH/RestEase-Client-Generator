@@ -9,7 +9,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Models
     public class BlobInventoryPolicyDefinition
     {
         /// <summary>
-        /// not-used
+        /// An object that defines the blob inventory rule filter conditions. For 'Blob' definition.objectType all filter properties are applicable, 'blobTypes' is required and others are optional. For 'Container' definition.objectType only prefixMatch is applicable and is optional.
         /// </summary>
         public BlobInventoryPolicyFilter Filters { get; set; }
 

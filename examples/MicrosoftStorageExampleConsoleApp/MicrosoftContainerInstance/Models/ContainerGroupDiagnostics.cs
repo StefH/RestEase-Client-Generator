@@ -9,7 +9,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
     public class ContainerGroupDiagnostics
     {
         /// <summary>
-        /// not-used
+        /// Container group log analytics information.
         /// </summary>
         public LogAnalytics LogAnalytics { get; set; }
     }

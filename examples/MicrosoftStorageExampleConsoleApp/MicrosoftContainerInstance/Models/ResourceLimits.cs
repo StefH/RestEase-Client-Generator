@@ -19,7 +19,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
         public double Cpu { get; set; }
 
         /// <summary>
-        /// not-used
+        /// The GPU resource.
         /// </summary>
         public GpuResource Gpu { get; set; }
     }

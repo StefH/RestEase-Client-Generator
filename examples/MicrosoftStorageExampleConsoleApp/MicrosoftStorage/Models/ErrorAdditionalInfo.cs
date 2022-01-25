@@ -14,7 +14,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Models
         public string Type { get; set; }
 
         /// <summary>
-        /// The resource management error additional info.
+        /// The additional info.
         /// </summary>
         public ErrorAdditionalInfoInfo Info { get; set; }
     }

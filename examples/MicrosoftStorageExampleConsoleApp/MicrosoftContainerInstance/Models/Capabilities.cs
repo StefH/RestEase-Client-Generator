@@ -34,7 +34,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
         public string Gpu { get; set; }
 
         /// <summary>
-        /// The regional capabilities.
+        /// The supported capabilities.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("Capabilities")]
         public CapabilitiesCapabilities Capabilities_ { get; set; }

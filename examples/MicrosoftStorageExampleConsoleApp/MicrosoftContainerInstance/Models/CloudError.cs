@@ -9,7 +9,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
     public class CloudError
     {
         /// <summary>
-        /// not-used
+        /// An error response from the Container Instance service.
         /// </summary>
         public CloudErrorBody Error { get; set; }
     }

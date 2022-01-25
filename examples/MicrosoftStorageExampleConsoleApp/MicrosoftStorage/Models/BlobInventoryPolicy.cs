@@ -9,7 +9,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Models
     public class BlobInventoryPolicy : Resource
     {
         /// <summary>
-        /// not-used
+        /// The storage account blob inventory policy properties.
         /// </summary>
         public BlobInventoryPolicyProperties Properties { get; set; }
 

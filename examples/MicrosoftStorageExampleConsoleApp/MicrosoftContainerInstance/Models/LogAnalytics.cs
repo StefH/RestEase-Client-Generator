@@ -24,7 +24,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
         public string LogType { get; set; }
 
         /// <summary>
-        /// Container group log analytics information.
+        /// Metadata for log analytics.
         /// </summary>
         public LogAnalyticsMetadata Metadata { get; set; }
 

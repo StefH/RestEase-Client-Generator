@@ -29,7 +29,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
         public string Location { get; set; }
 
         /// <summary>
-        /// The Resource model definition.
+        /// The resource tags.
         /// </summary>
         public ResourceTags Tags { get; set; }
 

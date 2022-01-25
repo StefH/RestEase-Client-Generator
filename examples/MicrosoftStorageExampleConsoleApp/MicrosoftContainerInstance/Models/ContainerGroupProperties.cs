@@ -29,7 +29,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
         public string RestartPolicy { get; set; }
 
         /// <summary>
-        /// not-used
+        /// IP address for the container group.
         /// </summary>
         public IpAddress IpAddress { get; set; }
 
@@ -44,12 +44,12 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
         public Volume[] Volumes { get; set; }
 
         /// <summary>
-        /// The container group properties
+        /// The instance view of the container group. Only valid in response.
         /// </summary>
         public ContainerGroupPropertiesInstanceView InstanceView { get; set; }
 
         /// <summary>
-        /// not-used
+        /// Container group diagnostic information.
         /// </summary>
         public ContainerGroupDiagnostics Diagnostics { get; set; }
 
@@ -59,7 +59,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
         public ContainerGroupSubnetId[] SubnetIds { get; set; }
 
         /// <summary>
-        /// not-used
+        /// DNS configuration for the container group.
         /// </summary>
         public DnsConfiguration DnsConfig { get; set; }
 
@@ -69,7 +69,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
         public string Sku { get; set; }
 
         /// <summary>
-        /// not-used
+        /// The container group encryption properties.
         /// </summary>
         public EncryptionProperties EncryptionProperties { get; set; }
 

@@ -14,12 +14,12 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
         public int RestartCount { get; set; }
 
         /// <summary>
-        /// not-used
+        /// The container instance state.
         /// </summary>
         public ContainerState CurrentState { get; set; }
 
         /// <summary>
-        /// not-used
+        /// The container instance state.
         /// </summary>
         public ContainerState PreviousState { get; set; }
 

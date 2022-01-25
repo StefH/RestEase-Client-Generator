@@ -9,7 +9,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage20190401.Models
     public class StorageAccount : TrackedResource
     {
         /// <summary>
-        /// not-used
+        /// The SKU of the storage account.
         /// </summary>
         public Sku Sku { get; set; }
 
@@ -19,12 +19,12 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage20190401.Models
         public string Kind { get; set; }
 
         /// <summary>
-        /// not-used
+        /// Identity for the resource.
         /// </summary>
         public Identity Identity { get; set; }
 
         /// <summary>
-        /// not-used
+        /// Properties of the storage account.
         /// </summary>
         public StorageAccountProperties Properties { get; set; }
 

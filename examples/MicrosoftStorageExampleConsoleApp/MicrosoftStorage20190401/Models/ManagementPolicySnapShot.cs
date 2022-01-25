@@ -9,7 +9,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage20190401.Models
     public class ManagementPolicySnapShot
     {
         /// <summary>
-        /// not-used
+        /// Object to define the number of days after creation.
         /// </summary>
         public DateAfterCreation Delete { get; set; }
     }

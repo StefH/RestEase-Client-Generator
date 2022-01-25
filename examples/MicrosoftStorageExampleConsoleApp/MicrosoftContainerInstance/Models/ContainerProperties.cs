@@ -29,12 +29,12 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
         public EnvironmentVariable[] EnvironmentVariables { get; set; }
 
         /// <summary>
-        /// The container instance properties.
+        /// The instance view of the container instance. Only valid in response.
         /// </summary>
         public ContainerPropertiesInstanceView InstanceView { get; set; }
 
         /// <summary>
-        /// not-used
+        /// The resource requirements.
         /// </summary>
         public ResourceRequirements Resources { get; set; }
 
@@ -44,12 +44,12 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
         public VolumeMount[] VolumeMounts { get; set; }
 
         /// <summary>
-        /// not-used
+        /// The container probe, for liveness or readiness
         /// </summary>
         public ContainerProbe LivenessProbe { get; set; }
 
         /// <summary>
-        /// not-used
+        /// The container probe, for liveness or readiness
         /// </summary>
         public ContainerProbe ReadinessProbe { get; set; }
     }

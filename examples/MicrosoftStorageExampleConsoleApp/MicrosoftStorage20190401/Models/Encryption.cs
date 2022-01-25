@@ -9,7 +9,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage20190401.Models
     public class Encryption
     {
         /// <summary>
-        /// not-used
+        /// A list of services that support encryption.
         /// </summary>
         public EncryptionServices Services { get; set; }
 
@@ -19,7 +19,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage20190401.Models
         public string KeySource { get; set; }
 
         /// <summary>
-        /// not-used
+        /// Properties of key vault.
         /// </summary>
         public KeyVaultProperties Keyvaultproperties { get; set; }
     }

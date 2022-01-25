@@ -14,7 +14,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// not-used
+        /// The container instance properties.
         /// </summary>
         public ContainerProperties Properties { get; set; }
     }

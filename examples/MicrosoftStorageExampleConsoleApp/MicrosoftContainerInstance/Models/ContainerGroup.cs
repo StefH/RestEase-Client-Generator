@@ -9,10 +9,13 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
     public class ContainerGroup : Resource
     {
         /// <summary>
-        /// not-used
+        /// Identity for the container group.
         /// </summary>
         public ContainerGroupIdentity Identity { get; set; }
 
+        /// <summary>
+        /// The container group properties
+        /// </summary>
         public ContainerGroupProperties Properties { get; set; }
     }
 }

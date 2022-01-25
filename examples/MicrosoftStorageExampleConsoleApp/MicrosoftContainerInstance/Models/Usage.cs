@@ -24,7 +24,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
         public int Limit { get; set; }
 
         /// <summary>
-        /// A single usage result
+        /// The name object of the resource
         /// </summary>
         public UsageName Name { get; set; }
     }

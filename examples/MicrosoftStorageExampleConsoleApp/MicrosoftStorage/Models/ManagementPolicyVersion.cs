@@ -9,17 +9,17 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Models
     public class ManagementPolicyVersion
     {
         /// <summary>
-        /// not-used
+        /// Object to define the number of days after creation.
         /// </summary>
         public DateAfterCreation TierToCool { get; set; }
 
         /// <summary>
-        /// not-used
+        /// Object to define the number of days after creation.
         /// </summary>
         public DateAfterCreation TierToArchive { get; set; }
 
         /// <summary>
-        /// not-used
+        /// Object to define the number of days after creation.
         /// </summary>
         public DateAfterCreation Delete { get; set; }
     }

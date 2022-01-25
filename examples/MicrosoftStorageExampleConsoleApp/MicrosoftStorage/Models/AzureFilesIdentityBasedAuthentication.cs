@@ -14,7 +14,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Models
         public string DirectoryServiceOptions { get; set; }
 
         /// <summary>
-        /// not-used
+        /// Settings properties for Active Directory (AD).
         /// </summary>
         public ActiveDirectoryProperties ActiveDirectoryProperties { get; set; }
 

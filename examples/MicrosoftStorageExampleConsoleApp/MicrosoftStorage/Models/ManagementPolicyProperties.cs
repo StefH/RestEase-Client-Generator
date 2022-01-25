@@ -14,7 +14,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Models
         public DateTime LastModifiedTime { get; set; }
 
         /// <summary>
-        /// not-used
+        /// The Storage Account ManagementPolicies Rules. See more details in: https://docs.microsoft.com/en-us/azure/storage/common/storage-lifecycle-managment-concepts.
         /// </summary>
         public ManagementPolicySchema Policy { get; set; }
     }

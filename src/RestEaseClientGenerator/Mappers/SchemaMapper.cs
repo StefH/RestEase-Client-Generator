@@ -1,4 +1,3 @@
-using System.Security.AccessControl;
 using AnyOfTypes;
 using Microsoft.OpenApi;
 using Microsoft.OpenApi.Any;
@@ -41,7 +40,7 @@ internal class SchemaMapper : BaseMapper
                 {
                     case SchemaType.Object:
                     case SchemaType.Unknown:
-                        var or = TryMapPropertyReference(@interface, schema.Items.Reference, "not-used", directory);
+                        var or = TryMapPropertyReference(@interface, schema.Items, "not-used", directory);
                         return or != null ?
                             new PropertyDto(MapArrayType(MakeValidModelName(or.Type)), nameCamelCase, schema.Description) :
                             new PropertyDto(MapArrayType("object"), nameCamelCase, schema.Description);
@@ -116,11 +115,10 @@ internal class SchemaMapper : BaseMapper
                     {
                         case PropertyType.Normal when property.Result.IsFirst:
                             list.Add(property.Result.First);
-                            //list.Add(new PropertyDto($"{parentName}{objectName}", property.Result.First.Name));
                             break;
 
                         case PropertyType.Normal:
-                            list.Add(new PropertyDto(property.className, objectName, schema.Description));
+                            list.Add(new PropertyDto(property.className, objectName, openApiSchema.Description));
                             break;
 
                         case PropertyType.Reference:
@@ -135,7 +133,7 @@ internal class SchemaMapper : BaseMapper
                     switch (property.Type)
                     {
                         case PropertyType.Reference:
-                            list.Add(new PropertyDto("not-used", "not-used", schema.Description, property.Result.First.Type));
+                            list.Add(new PropertyDto("not-used", "not-used", allOrAny.Description, property.Result.First.Type));
                             break;
 
                         case PropertyType.Normal when property.Result.IsFirst:
@@ -178,7 +176,7 @@ internal class SchemaMapper : BaseMapper
             //    return new PropertyDto(dictionaryType, objectName);
             //}
 
-            var referencedProperty = TryMapPropertyReference(@interface, schema.Reference, objectName, directory);
+            var referencedProperty = TryMapPropertyReference(@interface, schema, objectName, directory);
             if (referencedProperty is not null)
             {
                 return (PropertyType.Reference, string.Empty, referencedProperty);
@@ -202,13 +200,6 @@ internal class SchemaMapper : BaseMapper
 
                 return (PropertyType.Normal, className, inlineModel);
             }
-            //var result = MapSchema(@interface, schema, parentName, className, false, true, null, directory);
-            // return (PropertyType.Normal, model.Properties.ToList());
-
-            //if (result.IsFirst)
-            //{
-            //    return (PropertyType.Normal, result);
-            //}
             
             return (PropertyType.Normal, className, model.Properties.ToList());
         }
@@ -223,29 +214,17 @@ internal class SchemaMapper : BaseMapper
         return (PropertyType.None,  string.Empty, new PropertyDto("not-used", "not-used", "not-used"));
     }
 
-    public PropertyDto? TryMapPropertyReference(RestEaseInterface @interface, OpenApiReference? reference, string? name, string? directory)
+    public PropertyDto? TryMapPropertyReference(RestEaseInterface @interface, OpenApiSchema schema, string? name, string? directory)
     {
-        switch (reference)
+        switch (schema.Reference)
         {
             case { IsLocal: true }:
-                var className = MakeValidReferenceId(reference.Id);
-                //var existingModel = @interface.ExtraModels.FirstOrDefault(m => m.ClassName == className);
-                //if (existingModel == null)
-                //{
-                //    var extraModel = MapSchema(@interface, openApiSchema, className, false, true, null, directory);
-                //    var newModel = new RestEaseModel
-                //    {
-                //        Namespace = Settings.Namespace,
-                //        ClassName = className,
-                //        Properties = extraModel.Second
-                //    };
-                //    @interface.ExtraModels.Add(newModel);
-                //}
-                return new PropertyDto(className, name ?? className, "not-used");
+                var className = MakeValidReferenceId(schema.Reference.Id);
+                return new PropertyDto(className, name ?? className, schema.Description);
 
             case { IsExternal: true }:
-                var externalProperty = new ExternalReferenceMapper(Settings, @interface).MapProperty(reference, directory);
-                return new PropertyDto(externalProperty.Type, name ?? externalProperty.Name, "not-used"); // TODO
+                var externalProperty = new ExternalReferenceMapper(Settings, @interface).MapProperty(schema.Reference, directory);
+                return new PropertyDto(externalProperty.Type, name ?? externalProperty.Name, "not-used");
 
             default:
                 return null;
