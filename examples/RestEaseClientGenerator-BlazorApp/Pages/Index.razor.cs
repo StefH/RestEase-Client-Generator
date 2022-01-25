@@ -8,7 +8,6 @@ using Blazorise;
 using Microsoft.AspNetCore.Components;
 using Microsoft.OpenApi.Readers;
 using RestEaseClientGenerator.Extensions;
-using RestEaseClientGeneratorBlazorApp.Extensions;
 using RestEaseClientGeneratorBlazorApp.Models;
 using RestEaseClientGeneratorBlazorApp.Services;
 
