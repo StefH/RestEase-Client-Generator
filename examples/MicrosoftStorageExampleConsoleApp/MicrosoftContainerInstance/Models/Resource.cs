@@ -31,7 +31,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
         /// <summary>
         /// The resource tags.
         /// </summary>
-        public ResourceTags Tags { get; set; }
+        public Dictionary<string, string> Tags { get; set; }
 
         /// <summary>
         /// The zones for the container group.

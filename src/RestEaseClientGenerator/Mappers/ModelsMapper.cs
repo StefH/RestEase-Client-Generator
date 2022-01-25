@@ -32,6 +32,11 @@ internal class ModelsMapper : BaseMapper
     {
         foreach (var entry in schemas.OrderBy(s => s.Key))
         {
+            if (entry.Key.Contains("SecretVolume"))
+            {
+                int y = 0;
+            }
+
             var properties = _schemaMapper.MapSchema(_interface, entry.Value, string.Empty, entry.Key, entry.Value.Nullable, true, _openApiSpecVersion, _directory);
 
             //if (properties.IsFirst)

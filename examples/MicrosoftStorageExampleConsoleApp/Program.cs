@@ -14,8 +14,8 @@ using Serilog;
 using Serilog.Sinks.SystemConsole.Themes;
 
 GenerateMicrosoftContainerInstance20211001();
-GenerateMicrosoftStorage20190401();
-GenerateMicrosoftStorage20210401();
+//GenerateMicrosoftStorage20190401();
+//GenerateMicrosoftStorage20210401();
 
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Debug()
