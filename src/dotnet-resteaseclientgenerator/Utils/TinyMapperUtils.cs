@@ -1,4 +1,3 @@
-using System.Linq;
 using Nelibur.ObjectMapper;
 using RestEaseClientGenerator.Settings;
 

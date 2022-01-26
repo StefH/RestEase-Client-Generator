@@ -30,7 +30,7 @@ internal class SecurityMapper : BaseMapper
         return null;
     }
 
-    private RestEaseSecurity? MapOpenApiVersion3(IDictionary<string, OpenApiSecurityScheme> schemas)
+    private static RestEaseSecurity? MapOpenApiVersion3(IDictionary<string, OpenApiSecurityScheme> schemas)
     {
         foreach (var securitySchemaType in SecuritySchemaTypes)
         {
@@ -47,7 +47,7 @@ internal class SecurityMapper : BaseMapper
         return null;
     }
 
-    private RestEaseSecurity MapSwaggerVersion2(OpenApiDocument openApiDocument)
+    private static RestEaseSecurity MapSwaggerVersion2(OpenApiDocument openApiDocument)
     {
         var openApiSecuritySchemes = openApiDocument.SecurityRequirements
             .Select(sr => sr.Keys.FirstOrDefault())
@@ -60,7 +60,7 @@ internal class SecurityMapper : BaseMapper
         };
     }
 
-    private ICollection<RestEaseSecurityDefinition> Map(IEnumerable<OpenApiSecurityScheme> openApiSecuritySchemes)
+    private static ICollection<RestEaseSecurityDefinition> Map(IEnumerable<OpenApiSecurityScheme> openApiSecuritySchemes)
     {
         var definitions = new List<RestEaseSecurityDefinition>();
         foreach (var openApiSecurityScheme in openApiSecuritySchemes)

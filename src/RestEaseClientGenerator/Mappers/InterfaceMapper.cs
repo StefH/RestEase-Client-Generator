@@ -275,10 +275,10 @@ internal class InterfaceMapper : BaseMapper
                     continue;
                 }
 
-                var rt = GetReturnType(@interface, responseJson.Schema, methodRestEaseMethodName, directory);
-                if (rt is not null)
+                var returnType = GetReturnType(@interface, responseJson.Schema, methodRestEaseMethodName, directory);
+                if (returnType is not null)
                 {
-                    returnTypes.Add(rt);
+                    returnTypes.Add(returnType);
                 }
             }
             else
@@ -308,7 +308,7 @@ internal class InterfaceMapper : BaseMapper
     }
 
     // TODO null?
-    private string? GetReturnType(RestEaseInterface @interface, OpenApiSchema? schema, string methodRestEaseMethodName, string? directory)
+    private string? GetReturnType(RestEaseInterface @interface, OpenApiSchema? schema, string? methodRestEaseMethodName, string? directory)
     {
         string nullable = schema?.Nullable == true ? "?" : string.Empty;
 
