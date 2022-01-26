@@ -362,7 +362,7 @@ internal class InterfaceMapper : BaseMapper
                 {
                     // Object is defined `inline`, create a new Model and use that one.
                     var className = !string.IsNullOrEmpty(schema.Title)
-                        ? schema.Title.ToValidIdentifier(CasingType.Pascal)
+                        ? MakeValidClassName(schema.Title)
                         : $"{methodRestEaseMethodName.ToPascalCase()}Result";
 
                     var existingModel = @interface.ExtraModels.FirstOrDefault(m => string.Equals(m.ClassName, className, StringComparison.InvariantCultureIgnoreCase));

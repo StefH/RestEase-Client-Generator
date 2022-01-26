@@ -60,7 +60,27 @@ internal static class IdentifierUtils
         //"var",       "when",       "where",      "yield"
     };
 
-    private static readonly Regex ValidIdentifierRegex = new ("^" + IDENTIFIER_OR_KEYWORD + "$", RegexOptions.Compiled);
+    private static readonly Regex ValidIdentifierRegex = new("^" + IDENTIFIER_OR_KEYWORD + "$", RegexOptions.Compiled);
+
+    private static readonly string[] ReservedClassName;
+
+    static IdentifierUtils()
+    {
+        ReservedClassName = typeof(Version).Assembly.GetTypes().OrderBy(t => t.Name).Select(t => t.Name).ToArray();
+    }
+
+    public static bool TryGenerateValidClassName(string className, out string validClassName)
+    {
+        validClassName = className;
+
+        if (ReservedClassName.Contains(className))
+        {
+            validClassName = $"{className}_";
+            return false;
+        }
+
+        return true;
+    }
 
     public static bool IsValidIdentifier(string identifier)
     {

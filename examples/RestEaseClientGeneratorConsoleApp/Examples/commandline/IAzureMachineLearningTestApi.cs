@@ -6,7 +6,19 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using AnyOfTypes;
 using RestEase;
-using AzureMachineLearningTest.Models;
+using RestEaseClientGeneratorConsoleApp.Examples.MicrosoftContainerInstance.Models;
+using CachedImagesListResult = AzureMachineLearningTest.Models.CachedImagesListResult;
+using CapabilitiesListResult = AzureMachineLearningTest.Models.CapabilitiesListResult;
+using CloudError = AzureMachineLearningTest.Models.CloudError;
+using ContainerAttachResponse = AzureMachineLearningTest.Models.ContainerAttachResponse;
+using ContainerExecRequest = AzureMachineLearningTest.Models.ContainerExecRequest;
+using ContainerExecResponse = AzureMachineLearningTest.Models.ContainerExecResponse;
+using ContainerGroup = AzureMachineLearningTest.Models.ContainerGroup;
+using ContainerGroupListResult = AzureMachineLearningTest.Models.ContainerGroupListResult;
+using Logs = AzureMachineLearningTest.Models.Logs;
+using OperationListResult = AzureMachineLearningTest.Models.OperationListResult;
+using Resource = AzureMachineLearningTest.Models.Resource;
+using UsageListResult = AzureMachineLearningTest.Models.UsageListResult;
 
 namespace AzureMachineLearningTest.Api
 {

@@ -28,11 +28,6 @@ internal class SchemaMapper : BaseMapper
     {
         name ??= string.Empty;
 
-        if (parentName.Contains("secretVolume"))
-        {
-            int y = 0;
-        }
-
         var nameCamelCase = string.IsNullOrEmpty(name) ? string.Empty : $"{(pascalCase ? name.ToPascalCase() : name)}";
 
         bool nullableForOpenApi20 = openApiSpecVersion == OpenApiSpecVersion.OpenApi2_0 && Settings.GeneratePrimitivePropertiesAsNullableForOpenApi20;
@@ -47,13 +42,13 @@ internal class SchemaMapper : BaseMapper
                     case SchemaType.Unknown:
                         var or = TryMapPropertyReference(@interface, schema.Items, "not-used", directory);
                         return or != null ?
-                            new PropertyDto(MapArrayType(MakeValidModelName(or.Type)), nameCamelCase, schema.Description) :
+                            new PropertyDto(MapArrayType(MakeValidClassName(or.Type)), nameCamelCase, schema.Description) :
                             new PropertyDto(MapArrayType("object"), nameCamelCase, schema.Description);
 
                     case SchemaType.String:
                         if (schema.Items.Enum != null && schema.Items.Enum.Any() && Settings.PreferredEnumType == EnumType.Enum)
                         {
-                            return new PropertyDto(MapArrayType(MakeValidModelName(name)), nameCamelCase, schema.Description);
+                            return new PropertyDto(MapArrayType(MakeValidClassName(name)), nameCamelCase, schema.Description);
                         }
                         else
                         {
@@ -112,35 +107,14 @@ internal class SchemaMapper : BaseMapper
                 var list = new List<PropertyDto>();
                 if (schema.AdditionalProperties != null)
                 {
-                    //var add = TryMapProperty(@interface, openApiSpecVersion, schema.AdditionalProperties, "", name, directory);
                     var additionalResult = MapSchema(@interface, schema.AdditionalProperties, string.Empty, null, schema.AdditionalProperties.Nullable, false, null, directory);
                     if (additionalResult.IsFirst)
                     {
                         var dictionaryType = $"Dictionary<string, {additionalResult.First}>";
                         return new PropertyDto(dictionaryType, string.Empty, schema.Description);
-                        // list.Add(new PropertyDto(dictionaryType, string.Empty, schema.Description));
-                    }
-                    else
-                    {
-                        int d = 0;
                     }
 
-                    //list.AddRange(additionalResult.Second);
-                    //switch (add.Type)
-                    //{
-                    //    case PropertyType.Normal when add.Result.IsFirst:
-                    //        list.Add(add.Result.First);
-                    //        break;
-
-                    //    case PropertyType.Normal:
-                    //        list.Add(new PropertyDto(add.className, string.Empty, schema.AdditionalProperties.Description));
-                    //        break;
-
-                    //    case PropertyType.Reference:
-                    //        list.Add(add.Result.First);
-                    //        break;
-                    //}
-
+                    throw new InvalidOperationException();
                 }
 
                 foreach (var schemaProperty in schema.Properties)
@@ -214,7 +188,7 @@ internal class SchemaMapper : BaseMapper
                 return (PropertyType.Reference, string.Empty, referencedProperty);
             }
 
-            var className = $"{parentName}{objectName}";
+            var className = MakeValidClassName($"{parentName}{objectName}");
 
             if (schemaIn.AdditionalProperties != null)
             {

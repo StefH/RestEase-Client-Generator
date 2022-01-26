@@ -58,7 +58,7 @@ internal class ModelsMapper : BaseMapper
                 {
                     Description = entry.Value.Description,
                     Namespace = Settings.Namespace,
-                    ClassName = MakeValidModelName(entry.Key),
+                    ClassName = MakeValidClassName(entry.Key),
                     Properties = properties.Second
                 };
             }
