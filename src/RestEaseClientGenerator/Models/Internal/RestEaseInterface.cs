@@ -20,7 +20,5 @@ internal class RestEaseInterface
 
     public ICollection<RestEaseEnum> ExtraEnums { get; set; } = new List<RestEaseEnum>();
 
-    public IDictionary<string, OpenApiParameter> Parameters { get; set; } = new Dictionary<string, OpenApiParameter>();
-
     public OpenApiDocument OpenApiDocument { get; set; } = null!;
 }

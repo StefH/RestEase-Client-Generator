@@ -42,12 +42,12 @@ internal class ParametersMapper : BaseMapper
         {
             case { IsLocal: true }:
                 var name = MakeValidReferenceId(reference.Id);
-                if (@interface.Parameters.TryGetValue(name, out var parameter))
+                if (@interface.OpenApiDocument.Components.Parameters.TryGetValue(name, out var parameter))
                 {
                     return parameter;
                 }
 
-                throw new InvalidOperationException();
+                throw new InvalidOperationException($"Reference with id '{reference.Id}' is not found in document.");
 
             case { IsExternal: true }:
                 return new ExternalReferenceMapper(_settings, @interface).MapParameter(reference, directory);
