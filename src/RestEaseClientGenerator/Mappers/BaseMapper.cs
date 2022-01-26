@@ -20,7 +20,7 @@ public abstract class BaseMapper
     {
         string last = name.Replace(" ", "").Split('.').Last().ToPascalCase();
 
-        return IdentifierUtils.TryGenerateValidClassName(last, out var valid) ? valid : last; //last.ToValidIdentifier(CasingType.Pascal);
+        return last; //IdentifierUtils.TryGenerateValidClassName(last, out var valid) ? valid : last; //last.ToValidIdentifier(CasingType.Pascal);
     }
 
     protected string MakeValidReferenceId(string id)
