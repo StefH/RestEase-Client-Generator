@@ -1,3 +1,4 @@
+using System.Security.AccessControl;
 using AnyOfTypes;
 using Microsoft.OpenApi;
 using Microsoft.OpenApi.Any;
@@ -27,6 +28,11 @@ internal class SchemaMapper : BaseMapper
         string? directory)
     {
         name ??= string.Empty;
+
+        if (name == "Volume" || name == "volume" || name == "SecretVolume")
+        {
+            int yyy = 0;
+        }
 
         var nameCamelCase = string.IsNullOrEmpty(name) ? string.Empty : $"{(pascalCase ? name.ToPascalCase() : name)}";
 
@@ -111,7 +117,7 @@ internal class SchemaMapper : BaseMapper
                     if (additionalResult.IsFirst)
                     {
                         var dictionaryType = $"Dictionary<string, {additionalResult.First}>";
-                        return new PropertyDto(dictionaryType, string.Empty, schema.Description);
+                        return new PropertyDto(dictionaryType, parentName, schema.Description);
                     }
 
                     throw new InvalidOperationException();
@@ -119,8 +125,15 @@ internal class SchemaMapper : BaseMapper
 
                 foreach (var schemaProperty in schema.Properties)
                 {
+                    
+
                     var openApiSchema = schemaProperty.Value;
                     var objectName = pascalCase ? schemaProperty.Key.ToPascalCase() : schemaProperty.Key;
+                    if (objectName == "Code")
+                    {
+                        int s = 9;
+                    }
+
 
                     var property = TryMapProperty(@interface, openApiSpecVersion, openApiSchema, name, objectName, directory);
                     switch (property.Type)
@@ -185,7 +198,7 @@ internal class SchemaMapper : BaseMapper
             var referencedProperty = TryMapPropertyReference(@interface, schemaIn, objectName, directory);
             if (referencedProperty is not null)
             {
-                return (PropertyType.Reference, string.Empty, referencedProperty);
+                return (PropertyType.Reference, referencedProperty.Name, referencedProperty);
             }
 
             var className = MakeValidClassName($"{parentName}{objectName}");
@@ -241,8 +254,61 @@ internal class SchemaMapper : BaseMapper
         switch (schema.Reference)
         {
             case { IsLocal: true }:
-                var className = MakeValidReferenceId(schema.Reference.Id);
-                return new PropertyDto(className, name ?? className, schema.Description);
+                if (@interface.OpenApiDocument.Components.Schemas.TryGetValue(schema.Reference.Id, out var internalSchema))
+                {
+                    if (internalSchema.AdditionalProperties == null)
+                    {
+                        var className = MakeValidClassName(schema.Reference.Id);
+                        return new PropertyDto(className, name ?? className, schema.Description);
+
+                        //return (PropertyType.Normal, objectName, new PropertyDto(schema.Reference.Id, objectName));
+                    }
+                    else
+                    {
+                        var local = MapSchema(
+                            @interface,
+                            internalSchema,
+                            schema.Reference.Id,
+                            null,
+                            internalSchema.Nullable,
+                            true,
+                            OpenApiSpecVersion.OpenApi2_0, directory);
+
+                        if (local.IsFirst)
+                        {
+                            return local.First;
+                        }
+
+                        else
+                        {
+                            int y = 9;
+                        }
+                    }
+
+                    //var local = MapSchema(@interface, internalSchema,
+                    //    name ?? schema.Reference.Id,
+                    //    schema.Reference.Id,
+                    //    internalSchema.Nullable,
+                    //    true,
+                    //    OpenApiSpecVersion.OpenApi2_0, directory);
+
+                    //if (local.IsFirst)
+                    //{
+                    //    return new PropertyDto(local.First.Type, name, internalSchema.Description);
+                    //}
+                    //else
+                    //{
+                    //    return new PropertyDto(schema.Reference.Id, internalSchema.Description);
+                    //}
+
+                    int ddddd = 9;
+
+                }
+
+                throw new InvalidOperationException();
+
+                //var className = MakeValidReferenceId(schema.Reference.Id);
+                //return new PropertyDto(className, name ?? className, schema.Description);
 
             case { IsExternal: true }:
                 var externalProperty = new ExternalReferenceMapper(Settings, @interface).MapProperty(schema.Reference, directory);

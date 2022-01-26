@@ -1,3 +1,4 @@
+using System.Text;
 using System.Text.RegularExpressions;
 using RestEaseClientGenerator.Types.Internal;
 using RestEaseClientGenerator.Utils;
@@ -59,6 +60,65 @@ public static class StringExtensions
         text = CapitaliseFirstChar(text);
 
         return text;
+    }
+
+    public static string ToPascalCasedddd(this string original)
+    {
+        Regex invalidCharsRgx = new Regex("[^_a-zA-Z0-9]");
+        Regex whiteSpace = new Regex(@"(?<=\s)");
+        Regex startsWithLowerCaseChar = new Regex("^[a-z]");
+        Regex firstCharFollowedByUpperCasesOnly = new Regex("(?<=[A-Z])[A-Z0-9]+$");
+        Regex lowerCaseNextToNumber = new Regex("(?<=[0-9])[a-z]");
+        Regex upperCaseInside = new Regex("(?<=[A-Z])[A-Z]+?((?=[A-Z][a-z])|(?=[0-9]))");
+
+        // replace white spaces with undescore, then replace all invalid chars with empty string
+        var pascalCase = invalidCharsRgx.Replace(whiteSpace.Replace(original, "_"), string.Empty)
+            // split by underscores
+            .Split(new char[] { '_' }, StringSplitOptions.RemoveEmptyEntries)
+            // set first letter to uppercase
+            .Select(w => startsWithLowerCaseChar.Replace(w, m => m.Value.ToUpper()))
+            // replace second and all following upper case letters to lower if there is no next lower (ABC -> Abc)
+            .Select(w => firstCharFollowedByUpperCasesOnly.Replace(w, m => m.Value.ToLower()))
+            // set upper case the first lower case following a number (Ab9cd -> Ab9Cd)
+            .Select(w => lowerCaseNextToNumber.Replace(w, m => m.Value.ToUpper()))
+            // lower second and next upper case letters except the last if it follows by any lower (ABcDEf -> AbcDef)
+            .Select(w => upperCaseInside.Replace(w, m => m.Value.ToLower()));
+
+        return string.Concat(pascalCase);
+    }
+
+    public static string ToPascalCase3(this string initial)
+        => Regex.Replace(initial,
+            // (Match any non punctuation) & then ignore any punctuation
+            @"([^\p{Pc}]+)[\p{Pc}]*",
+            new MatchEvaluator(mtch =>
+            {
+                var word = mtch.Groups[1].Value.ToLower();
+
+                return $"{Char.ToUpper(word[0])}{word.Substring(1)}";
+            }));
+
+    public static string ToPascalCase32(this string s)
+    {
+        // Find word parts using the following rules:
+        // 1. all lowercase starting at the beginning is a word
+        // 2. all caps is a word.
+        // 3. first letter caps, followed by all lowercase is a word
+        // 4. the entire string must decompose into words according to 1,2,3.
+        // Note that 2&3 together ensure MPSUser is parsed as "MPS" + "User".
+
+        var m = Regex.Match(s, "^(?<word>^[a-z]+|[A-Z]+|[A-Z][a-z]+)+$");
+        var g = m.Groups["word"];
+
+        // Take each word and convert individually to TitleCase
+        // to generate the final output.  Note the use of ToLower
+        // before ToTitleCase because all caps is treated as an abbreviation.
+        var t = Thread.CurrentThread.CurrentCulture.TextInfo;
+        var sb = new StringBuilder();
+        foreach (var c in g.Captures.Cast<Capture>())
+            sb.Append(t.ToTitleCase(c.Value.ToLower()));
+
+        return sb.ToString();
     }
 
     /// <summary>
@@ -123,8 +183,17 @@ public static class StringExtensions
 
     private static string CapitaliseFirstChar(string nonSpacedText)
     {
-        nonSpacedText = Regex.Replace(nonSpacedText, @"(^.)", EvaluateCapitaliseString);
-        return nonSpacedText;
+        if (string.IsNullOrEmpty(nonSpacedText))
+        {
+            return string.Empty;
+        }
+
+        if (char.IsUpper(nonSpacedText[0]))
+        {
+            return nonSpacedText;
+        }
+
+        return Regex.Replace(nonSpacedText, @"(^.)", EvaluateCapitaliseString);
     }
 
     private static string EvaluateCapitaliseString(Match match)

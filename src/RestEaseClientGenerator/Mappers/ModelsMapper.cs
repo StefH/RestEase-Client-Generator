@@ -32,24 +32,17 @@ internal class ModelsMapper : BaseMapper
     {
         foreach (var entry in schemas.OrderBy(s => s.Key))
         {
-            if (entry.Key.Contains("SecretVolume"))
+            if (entry.Key == "Volume")
             {
                 int y = 0;
             }
 
             var properties = _schemaMapper.MapSchema(_interface, entry.Value, string.Empty, entry.Key, entry.Value.Nullable, true, _openApiSpecVersion, _directory);
 
-            //if (properties.IsFirst)
-            //{
-            //    throw new InvalidOperationException();
-            //    // It's an Enum
-            //    yield return new RestEaseEnum
-            //    {
-            //        Namespace = Settings.Namespace,
-            //        EnumName = MakeValidModelName(entry.Key),
-            //        Values = null
-            //    };
-            //}
+            if (properties.IsFirst)
+            {
+                int f = 9;
+            }
 
             if (properties.IsSecond)
             {

@@ -26,7 +26,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
         /// <summary>
         /// The secret volume.
         /// </summary>
-        public SecretVolume Secret { get; set; }
+        public Dictionary<string, string > SecretVolume { get; set; }
 
         /// <summary>
         /// Represents a volume that is populated with the contents of a git repository

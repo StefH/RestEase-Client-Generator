@@ -1,3 +1,4 @@
+using System.Linq;
 using Nelibur.ObjectMapper;
 using RestEaseClientGenerator.Settings;
 
@@ -11,17 +12,19 @@ internal sealed class TinyMapperUtils
     {
         TinyMapper.Bind<Program.Options, GeneratorSettings>(config =>
         {
-            // config.Ignore(x => x.?);
+            config.Ignore(x => x.ConstantQueryParameters);
         });
     }
 
-    public void Map<TSource, TTarget>(TSource source, TTarget target)
+    public GeneratorSettings Map(Program.Options options)
     {
-        TinyMapper.Map(source, target);
-    }
+        var settings = TinyMapper.Map<GeneratorSettings>(options);
 
-    public TTarget Map<TTarget>(object source)
-    {
-        return TinyMapper.Map<TTarget>(source);
+        if (options.ConstantQueryParameters != null)
+        {
+            settings.ConstantQueryParameters = DictionaryUtils.ToDictionary(options.ConstantQueryParameters);
+        }
+
+        return settings;
     }
 }

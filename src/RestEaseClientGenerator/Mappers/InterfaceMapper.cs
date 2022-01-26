@@ -25,6 +25,7 @@ internal class InterfaceMapper : BaseMapper
 
         var @interface = new RestEaseInterface
         {
+            OpenApiDocument = openApiDocument,
             Name = interfaceName,
             Namespace = Settings.Namespace,
             Summary = openApiDocument.Info?.Description ?? name

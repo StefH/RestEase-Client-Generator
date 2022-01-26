@@ -104,9 +104,8 @@ public class Program
         [Option("PreferredMultipleResponsesType", HelpText = "Preferred MultipleResponsesType to use when multiple responses are defined for a path.", Default = MultipleResponsesType.AnyOf)]
         public MultipleResponsesType PreferredMultipleResponsesType { get; set; }
 
-        //[DisplayName("ConstantQueryParameters")]
-        //[Option("A dictionary defining values for constant query parameters.")]
-        //public IDictionary<string, string>? ConstantQueryParameters { get; set; }
+        [Option("ConstantQueryParameters", HelpText = "A dictionary defining values for constant query parameters.")]
+        public IEnumerable<string>? ConstantQueryParameters { get; set; }
         #endregion
 
         #region Models
@@ -134,7 +133,7 @@ public class Program
 
     private static void Run(Options options, ILogger logger)
     {
-        var settings = TinyMapperUtils.Instance.Map<GeneratorSettings>(options);
+        var settings = TinyMapperUtils.Instance.Map(options);
 
         var generator = new Generator();
 
