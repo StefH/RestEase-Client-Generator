@@ -103,6 +103,10 @@ public class Program
 
         [Option("PreferredMultipleResponsesType", HelpText = "Preferred MultipleResponsesType to use when multiple responses are defined for a path.", Default = MultipleResponsesType.AnyOf)]
         public MultipleResponsesType PreferredMultipleResponsesType { get; set; }
+
+        //[DisplayName("ConstantQueryParameters")]
+        //[Option("A dictionary defining values for constant query parameters.")]
+        //public IDictionary<string, string>? ConstantQueryParameters { get; set; }
         #endregion
 
         #region Models
@@ -111,12 +115,6 @@ public class Program
 
         [Option("SupportExtensionXNullable", HelpText = "Support vendor extension 'x-nullable' to indicate a property as nullable for OpenApi 2.0", Default = false)]
         public bool SupportExtensionXNullable { get; set; }
-
-
-        [DisplayName("ConstantQueryParameters")]
-        [Option("A dictionary defining values for constant query parameters.")]
-        public IDictionary<string, string>? ConstantQueryParameters { get; set; }
-
         #endregion
     }
 
