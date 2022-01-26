@@ -5,7 +5,7 @@ namespace RestEaseClientGenerator.Utils;
 /// <summary>
 /// Based on https://gist.github.com/FabienDehopre/5245476
 /// </summary>
-public static class IdentifierUtils
+internal static class IdentifierUtils
 {
     // definition of a valid C# identifier: http://msdn.microsoft.com/en-us/library/aa664670(v=vs.71).aspx
     private const string FORMATTING_CHARACTER = @"\p{Cf}";
@@ -60,7 +60,27 @@ public static class IdentifierUtils
         //"var",       "when",       "where",      "yield"
     };
 
-    private static readonly Regex ValidIdentifierRegex = new ("^" + IDENTIFIER_OR_KEYWORD + "$", RegexOptions.Compiled);
+    private static readonly Regex ValidIdentifierRegex = new("^" + IDENTIFIER_OR_KEYWORD + "$", RegexOptions.Compiled);
+
+    private static readonly string[] ReservedClassName;
+
+    static IdentifierUtils()
+    {
+        ReservedClassName = typeof(Version).Assembly.GetTypes().OrderBy(t => t.Name).Select(t => t.Name).ToArray();
+    }
+
+    public static bool TryGenerateValidClassName(string className, out string validClassName)
+    {
+        validClassName = className;
+
+        if (ReservedClassName.Contains(className))
+        {
+            validClassName = $"{className}_";
+            return false;
+        }
+
+        return true;
+    }
 
     public static bool IsValidIdentifier(string identifier)
     {

@@ -4,7 +4,6 @@ using RestEaseClientGenerator.Models.Internal;
 using RestEaseClientGenerator.Settings;
 using RestEaseClientGenerator.Types;
 using RestEaseClientGenerator.Types.Internal;
-using RestEaseClientGenerator.Utils;
 
 namespace RestEaseClientGenerator.Builders;
 
@@ -47,9 +46,11 @@ internal class EnumBuilder : BaseBuilder
             builder.AppendLine("    /// </summary>");
         }
 
+        var safeValues = restEaseEnum.Values.Select(value => value.ToValidIdentifier());
+
         builder.AppendLine($"    public enum {restEaseEnum.EnumName}");
         builder.AppendLine("    {");
-        builder.AppendLine(string.Join(",\r\n", restEaseEnum.Values.Select(enumValue => $"        {enumValue}")));
+        builder.AppendLine(string.Join(",\r\n", safeValues.Select(enumValue => $"        {enumValue}")));
         builder.AppendLine("    }");
 
         if (!Settings.SingleFile || isLast)
@@ -66,7 +67,7 @@ internal class EnumBuilder : BaseBuilder
 
         var values = restEaseEnum.Values.Select(value => new
         {
-            name = CSharpUtils.CreateValidIdentifier(value, CasingType.Pascal),
+            name = value.ToValidIdentifier(CasingType.Pascal),
             value
         });
 

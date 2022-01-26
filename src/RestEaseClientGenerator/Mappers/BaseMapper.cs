@@ -1,7 +1,7 @@
 using RestEaseClientGenerator.Extensions;
 using RestEaseClientGenerator.Settings;
 using RestEaseClientGenerator.Types;
-using RestEaseClientGenerator.Types.Internal;
+using RestEaseClientGenerator.Utils;
 
 namespace RestEaseClientGenerator.Mappers;
 
@@ -16,16 +16,16 @@ public abstract class BaseMapper
         Settings = settings;
     }
 
-    protected string MakeValidModelName(string name)
+    protected string MakeValidClassName(string name)
     {
-        string last = name.Replace(" ", "").Split('.').Last();
+        string last = name.Replace(" ", "").Split('.').Last().ToPascalCase();
 
-        return last.ToValidIdentifier(CasingType.Pascal);
+        return last; //IdentifierUtils.TryGenerateValidClassName(last, out var valid) ? valid : last; //last.ToValidIdentifier(CasingType.Pascal);
     }
 
     protected string MakeValidReferenceId(string id)
     {
-        return MakeValidModelName(id.Split('/').Last());
+        return MakeValidClassName(id.Split('/').Last());
     }
 
     protected string MapArrayType(object? type)

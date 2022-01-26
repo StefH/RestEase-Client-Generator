@@ -5,7 +5,6 @@ using MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Api;
 using MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models;
 using MicrosoftExampleConsoleApp.MicrosoftStorage.Api;
 using MicrosoftExampleConsoleApp.MicrosoftStorage.Models;
-using MicrosoftExampleConsoleApp.MicrosoftStorage20190401.Api;
 
 namespace MicrosoftExampleConsoleApp;
 
@@ -19,21 +18,16 @@ internal class Worker
     };
 
     private readonly IMicrosoftStorageApi _storageApi;
-    private readonly IMicrosoftStorage20190401Api _storageApi2019;
     private readonly IMicrosoftContainerInstanceApi _aci;
     private readonly ILogger<Worker> _logger;
 
     public Worker(
         IMicrosoftStorageApi storageApi,
-        IMicrosoftStorage20190401Api storageApi2019,
         IMicrosoftContainerInstanceApi aci,
         ILogger<Worker> logger)
     {
         _storageApi = storageApi;
         _storageApi.ApiVersion = "2021-04-01";
-
-        _storageApi2019 = storageApi2019;
-        _storageApi2019.ApiVersion = "2019-04-01";
 
         _aci = aci;
 
@@ -49,7 +43,7 @@ internal class Worker
         {
             var aci = await _aci.ContainerGroupsListAsync("2de19637-27a3-42a8-812f-2c2a7f7f935c");
             _logger.LogInformation("ContainerGroupsListAsync = '{aci}'", JsonSerializer.Serialize(aci.GetContent(), _options));
-            
+
             foreach (var cg in aci.GetContent().First.Value.Where(x => x.Name.StartsWith("acistef")))
             {
                 _logger.LogWarning("Deleting : {name}", cg.Name);
@@ -79,7 +73,7 @@ internal class Worker
                         new Container
                         {
                             Name = $"container{name}",
-                            
+
                             Properties = new ContainerProperties
                             {
                                 Image = "nginx",

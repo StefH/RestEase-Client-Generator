@@ -28,8 +28,6 @@
     <ItemGroup>
       <Folder Include="MicrosoftContainerInstance\Api\" />
       <Folder Include="MicrosoftContainerInstance\Models\" />
-      <Folder Include="MicrosoftStorage20190401\Api\" />
-      <Folder Include="MicrosoftStorage20190401\Models\" />
       <Folder Include="MicrosoftStorage\Api\" />
       <Folder Include="MicrosoftStorage\Models\" />
     </ItemGroup>

@@ -2,7 +2,6 @@ using System.Text;
 using RestEaseClientGenerator.Extensions;
 using RestEaseClientGenerator.Models.Internal;
 using RestEaseClientGenerator.Settings;
-using RestEaseClientGenerator.Utils;
 
 namespace RestEaseClientGenerator.Builders;
 
@@ -53,7 +52,7 @@ internal class ModelBuilder : BaseBuilder
                 builder.AppendLine("        /// </summary>");
             }
 
-            var safePropertyName = CSharpUtils.CreateValidIdentifier(property.Name);
+            var safePropertyName = property.Name.ToValidIdentifier();
             if (safePropertyName != property.Name)
             {
                 builder.AppendLine($"        [Newtonsoft.Json.JsonProperty(\"{property.Name}\")]");

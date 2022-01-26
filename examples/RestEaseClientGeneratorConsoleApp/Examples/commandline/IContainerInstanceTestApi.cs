@@ -6,26 +6,23 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using AnyOfTypes;
 using RestEase;
-using AzureMachineLearningTest.Models;
+using ContainerInstanceTest.Models;
 
-namespace AzureMachineLearningTest.Api
+namespace ContainerInstanceTest.Api
 {
     /// <summary>
-    /// AzureMachineLearningTest
+    /// ContainerInstanceTest
     /// </summary>
-    public interface IAzureMachineLearningTestApi
+    public interface IContainerInstanceTestApi
     {
         [Query("Azure Active Directory OAuth2 Flow")]
         string AzureActiveDirectoryOAuth2Flow { get; set; }
-
-        [Query("api-version")]
-        string ApiVersion { get; set; }
 
         /// <summary>
         /// Get a list of container groups in the specified subscription.
         /// </summary>
         /// <param name="subscriptionId">Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.</param>
-        [Get("/subscriptions/{subscriptionId}/providers/Microsoft.ContainerInstance/containerGroups")]
+        [Get("/subscriptions/{subscriptionId}/providers/Microsoft.ContainerInstance/containerGroups?api-version=2021-10-01")]
         Task<Response<AnyOf<ContainerGroupListResult, CloudError>>> ContainerGroupsListAsync([Path] string subscriptionId);
 
         /// <summary>
@@ -33,7 +30,7 @@ namespace AzureMachineLearningTest.Api
         /// </summary>
         /// <param name="subscriptionId">Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.</param>
         /// <param name="resourceGroupName">The name of the resource group.</param>
-        [Get("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups")]
+        [Get("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups?api-version=2021-10-01")]
         Task<Response<AnyOf<ContainerGroupListResult, CloudError>>> ContainerGroupsListByResourceGroupAsync([Path] string subscriptionId, [Path] string resourceGroupName);
 
         /// <summary>
@@ -42,7 +39,7 @@ namespace AzureMachineLearningTest.Api
         /// <param name="subscriptionId">Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.</param>
         /// <param name="resourceGroupName">The name of the resource group.</param>
         /// <param name="containerGroupName">The name of the container group.</param>
-        [Get("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}")]
+        [Get("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}?api-version=2021-10-01")]
         Task<Response<AnyOf<ContainerGroup, CloudError>>> ContainerGroupsGetAsync([Path] string subscriptionId, [Path] string resourceGroupName, [Path] string containerGroupName);
 
         /// <summary>
@@ -52,7 +49,7 @@ namespace AzureMachineLearningTest.Api
         /// <param name="resourceGroupName">The name of the resource group.</param>
         /// <param name="containerGroupName">The name of the container group.</param>
         /// <param name="content">A container group.</param>
-        [Put("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}")]
+        [Put("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}?api-version=2021-10-01")]
         [Header("Content-Type", "application/json")]
         Task<Response<AnyOf<ContainerGroup, CloudError>>> ContainerGroupsCreateOrUpdateAsync([Path] string subscriptionId, [Path] string resourceGroupName, [Path] string containerGroupName, [Body] ContainerGroup content);
 
@@ -63,7 +60,7 @@ namespace AzureMachineLearningTest.Api
         /// <param name="resourceGroupName">The name of the resource group.</param>
         /// <param name="containerGroupName">The name of the container group.</param>
         /// <param name="content">The Resource model definition.</param>
-        [Patch("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}")]
+        [Patch("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}?api-version=2021-10-01")]
         [Header("Content-Type", "application/json")]
         Task<Response<AnyOf<ContainerGroup, CloudError>>> ContainerGroupsUpdateAsync([Path] string subscriptionId, [Path] string resourceGroupName, [Path] string containerGroupName, [Body] Resource content);
 
@@ -73,7 +70,7 @@ namespace AzureMachineLearningTest.Api
         /// <param name="subscriptionId">Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.</param>
         /// <param name="resourceGroupName">The name of the resource group.</param>
         /// <param name="containerGroupName">The name of the container group.</param>
-        [Delete("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}")]
+        [Delete("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}?api-version=2021-10-01")]
         Task<Response<AnyOf<ContainerGroup, CloudError>>> ContainerGroupsDeleteAsync([Path] string subscriptionId, [Path] string resourceGroupName, [Path] string containerGroupName);
 
         /// <summary>
@@ -82,7 +79,7 @@ namespace AzureMachineLearningTest.Api
         /// <param name="subscriptionId">Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.</param>
         /// <param name="resourceGroupName">The name of the resource group.</param>
         /// <param name="containerGroupName">The name of the container group.</param>
-        [Post("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}/restart")]
+        [Post("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}/restart?api-version=2021-10-01")]
         Task<CloudError> ContainerGroupsRestartAsync([Path] string subscriptionId, [Path] string resourceGroupName, [Path] string containerGroupName);
 
         /// <summary>
@@ -91,7 +88,7 @@ namespace AzureMachineLearningTest.Api
         /// <param name="subscriptionId">Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.</param>
         /// <param name="resourceGroupName">The name of the resource group.</param>
         /// <param name="containerGroupName">The name of the container group.</param>
-        [Post("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}/stop")]
+        [Post("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}/stop?api-version=2021-10-01")]
         Task<CloudError> ContainerGroupsStopAsync([Path] string subscriptionId, [Path] string resourceGroupName, [Path] string containerGroupName);
 
         /// <summary>
@@ -100,13 +97,13 @@ namespace AzureMachineLearningTest.Api
         /// <param name="subscriptionId">Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.</param>
         /// <param name="resourceGroupName">The name of the resource group.</param>
         /// <param name="containerGroupName">The name of the container group.</param>
-        [Post("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}/start")]
+        [Post("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}/start?api-version=2021-10-01")]
         Task<CloudError> ContainerGroupsStartAsync([Path] string subscriptionId, [Path] string resourceGroupName, [Path] string containerGroupName);
 
         /// <summary>
         /// OperationsList (/providers/Microsoft.ContainerInstance/operations)
         /// </summary>
-        [Get("/providers/Microsoft.ContainerInstance/operations")]
+        [Get("/providers/Microsoft.ContainerInstance/operations?api-version=2021-10-01")]
         Task<Response<AnyOf<OperationListResult, CloudError>>> OperationsListAsync();
 
         /// <summary>
@@ -114,7 +111,7 @@ namespace AzureMachineLearningTest.Api
         /// </summary>
         /// <param name="subscriptionId">Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.</param>
         /// <param name="location">The identifier for the physical azure location.</param>
-        [Get("/subscriptions/{subscriptionId}/providers/Microsoft.ContainerInstance/locations/{location}/usages")]
+        [Get("/subscriptions/{subscriptionId}/providers/Microsoft.ContainerInstance/locations/{location}/usages?api-version=2021-10-01")]
         Task<Response<AnyOf<UsageListResult, CloudError>>> LocationListUsageAsync([Path] string subscriptionId, [Path] string location);
 
         /// <summary>
@@ -126,7 +123,7 @@ namespace AzureMachineLearningTest.Api
         /// <param name="containerGroupName">The name of the container group.</param>
         /// <param name="tail">The number of lines to show from the tail of the container instance log. If not provided, all available logs are shown up to 4mb.</param>
         /// <param name="timestamps">If true, adds a timestamp at the beginning of every line of log output. If not provided, defaults to false.</param>
-        [Get("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}/containers/{containerName}/logs")]
+        [Get("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}/containers/{containerName}/logs?api-version=2021-10-01")]
         Task<Response<AnyOf<Logs, CloudError>>> ContainersListLogsAsync([Path] string containerName, [Path] string subscriptionId, [Path] string resourceGroupName, [Path] string containerGroupName, [Query] int? tail, [Query] bool? timestamps);
 
         /// <summary>
@@ -137,7 +134,7 @@ namespace AzureMachineLearningTest.Api
         /// <param name="resourceGroupName">The name of the resource group.</param>
         /// <param name="containerGroupName">The name of the container group.</param>
         /// <param name="content">The container exec request.</param>
-        [Post("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}/containers/{containerName}/exec")]
+        [Post("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}/containers/{containerName}/exec?api-version=2021-10-01")]
         [Header("Content-Type", "application/json")]
         Task<Response<AnyOf<ContainerExecResponse, CloudError>>> ContainersExecuteCommandAsync([Path] string containerName, [Path] string subscriptionId, [Path] string resourceGroupName, [Path] string containerGroupName, [Body] ContainerExecRequest content);
 
@@ -148,7 +145,7 @@ namespace AzureMachineLearningTest.Api
         /// <param name="subscriptionId">Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.</param>
         /// <param name="resourceGroupName">The name of the resource group.</param>
         /// <param name="containerGroupName">The name of the container group.</param>
-        [Post("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}/containers/{containerName}/attach")]
+        [Post("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}/containers/{containerName}/attach?api-version=2021-10-01")]
         Task<Response<AnyOf<ContainerAttachResponse, CloudError>>> ContainersAttachAsync([Path] string containerName, [Path] string subscriptionId, [Path] string resourceGroupName, [Path] string containerGroupName);
 
         /// <summary>
@@ -156,7 +153,7 @@ namespace AzureMachineLearningTest.Api
         /// </summary>
         /// <param name="subscriptionId">Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.</param>
         /// <param name="location">The identifier for the physical azure location.</param>
-        [Get("/subscriptions/{subscriptionId}/providers/Microsoft.ContainerInstance/locations/{location}/cachedImages")]
+        [Get("/subscriptions/{subscriptionId}/providers/Microsoft.ContainerInstance/locations/{location}/cachedImages?api-version=2021-10-01")]
         Task<Response<AnyOf<CachedImagesListResult, CloudError>>> LocationListCachedImagesAsync([Path] string subscriptionId, [Path] string location);
 
         /// <summary>
@@ -164,7 +161,7 @@ namespace AzureMachineLearningTest.Api
         /// </summary>
         /// <param name="subscriptionId">Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.</param>
         /// <param name="location">The identifier for the physical azure location.</param>
-        [Get("/subscriptions/{subscriptionId}/providers/Microsoft.ContainerInstance/locations/{location}/capabilities")]
+        [Get("/subscriptions/{subscriptionId}/providers/Microsoft.ContainerInstance/locations/{location}/capabilities?api-version=2021-10-01")]
         Task<Response<AnyOf<CapabilitiesListResult, CloudError>>> LocationListCapabilitiesAsync([Path] string subscriptionId, [Path] string location);
 
         /// <summary>
@@ -173,11 +170,11 @@ namespace AzureMachineLearningTest.Api
         /// <param name="subscriptionId">Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.</param>
         /// <param name="resourceGroupName">The name of the resource group.</param>
         /// <param name="containerGroupName">The name of the container group.</param>
-        [Get("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}/outboundNetworkDependenciesEndpoints")]
+        [Get("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}/outboundNetworkDependenciesEndpoints?api-version=2021-10-01")]
         Task<Response<AnyOf<string[], CloudError>>> ContainerGroupsGetOutboundNetworkDependenciesEndpointsAsync([Path] string subscriptionId, [Path] string resourceGroupName, [Path] string containerGroupName);
     }
 }
-namespace AzureMachineLearningTest.Models
+namespace ContainerInstanceTest.Models
 {
     /// <summary>
     /// The properties of the Azure File volume. Azure File shares are mounted as volumes.
@@ -268,10 +265,31 @@ namespace AzureMachineLearningTest.Models
         public string Gpu { get; set; }
 
         /// <summary>
-        /// The regional capabilities.
+        /// The supported capabilities.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("Capabilities")]
-        public Capabilities Capabilities_ { get; set; }
+        public CapabilitiesCapabilities Capabilities_ { get; set; }
+    }
+
+    /// <summary>
+    /// The supported capabilities.
+    /// </summary>
+    public class CapabilitiesCapabilities
+    {
+        /// <summary>
+        /// The maximum allowed memory request in GB.
+        /// </summary>
+        public double MaxMemoryInGB { get; set; }
+
+        /// <summary>
+        /// The maximum allowed CPU request in cores.
+        /// </summary>
+        public double MaxCpu { get; set; }
+
+        /// <summary>
+        /// The maximum allowed GPU count.
+        /// </summary>
+        public double MaxGpuCount { get; set; }
     }
 
     /// <summary>
@@ -296,7 +314,7 @@ namespace AzureMachineLearningTest.Models
     public class CloudError
     {
         /// <summary>
-        /// not-used
+        /// An error response from the Container Instance service.
         /// </summary>
         public CloudErrorBody Error { get; set; }
     }
@@ -338,7 +356,7 @@ namespace AzureMachineLearningTest.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// not-used
+        /// The container instance properties.
         /// </summary>
         public ContainerProperties Properties { get; set; }
     }
@@ -381,9 +399,25 @@ namespace AzureMachineLearningTest.Models
         public string Command { get; set; }
 
         /// <summary>
-        /// The container exec request.
+        /// The size of the terminal.
         /// </summary>
-        public TerminalSize TerminalSize { get; set; }
+        public ContainerExecRequestTerminalSize TerminalSize { get; set; }
+    }
+
+    /// <summary>
+    /// The size of the terminal.
+    /// </summary>
+    public class ContainerExecRequestTerminalSize
+    {
+        /// <summary>
+        /// The row size of the terminal
+        /// </summary>
+        public int Rows { get; set; }
+
+        /// <summary>
+        /// The column size of the terminal
+        /// </summary>
+        public int Cols { get; set; }
     }
 
     /// <summary>
@@ -408,11 +442,14 @@ namespace AzureMachineLearningTest.Models
     public class ContainerGroup : Resource
     {
         /// <summary>
-        /// not-used
+        /// Identity for the container group.
         /// </summary>
         public ContainerGroupIdentity Identity { get; set; }
 
-        public Properties Properties { get; set; }
+        /// <summary>
+        /// The container group properties
+        /// </summary>
+        public ContainerGroupProperties Properties { get; set; }
     }
 
     /// <summary>
@@ -421,7 +458,7 @@ namespace AzureMachineLearningTest.Models
     public class ContainerGroupDiagnostics
     {
         /// <summary>
-        /// not-used
+        /// Container group log analytics information.
         /// </summary>
         public LogAnalytics LogAnalytics { get; set; }
     }
@@ -447,9 +484,22 @@ namespace AzureMachineLearningTest.Models
         public string Type { get; set; }
 
         /// <summary>
-        /// Identity for the container group.
+        /// The list of user identities associated with the container group. The user identity dictionary key references will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.
         /// </summary>
-        public UserAssignedIdentities UserAssignedIdentities { get; set; }
+        public Dictionary<string, ContainerGroupIdentityUserAssignedIdentities> ContainerGroupIdentityUserAssignedIdentities { get; set; }
+    }
+
+    public class ContainerGroupIdentityUserAssignedIdentities
+    {
+        /// <summary>
+        /// The principal id of user assigned identity.
+        /// </summary>
+        public string PrincipalId { get; set; }
+
+        /// <summary>
+        /// The client id of user assigned identity.
+        /// </summary>
+        public string ClientId { get; set; }
     }
 
     /// <summary>
@@ -466,6 +516,98 @@ namespace AzureMachineLearningTest.Models
         /// The URI to fetch the next page of container groups.
         /// </summary>
         public string NextLink { get; set; }
+    }
+
+    /// <summary>
+    /// The container group properties
+    /// </summary>
+    public class ContainerGroupProperties
+    {
+        /// <summary>
+        /// The provisioning state of the container group. This only appears in the response.
+        /// </summary>
+        public string ProvisioningState { get; set; }
+
+        /// <summary>
+        /// The containers within the container group.
+        /// </summary>
+        public Container[] Containers { get; set; }
+
+        /// <summary>
+        /// The image registry credentials by which the container group is created from.
+        /// </summary>
+        public ImageRegistryCredential[] ImageRegistryCredentials { get; set; }
+
+        /// <summary>
+        /// Restart policy for all containers within the container group. - `Always` Always restart- `OnFailure` Restart on failure- `Never` Never restart
+        /// </summary>
+        public string RestartPolicy { get; set; }
+
+        /// <summary>
+        /// IP address for the container group.
+        /// </summary>
+        public IpAddress IpAddress { get; set; }
+
+        /// <summary>
+        /// The operating system type required by the containers in the container group.
+        /// </summary>
+        public string OsType { get; set; }
+
+        /// <summary>
+        /// The list of volumes that can be mounted by containers in this container group.
+        /// </summary>
+        public Volume[] Volumes { get; set; }
+
+        /// <summary>
+        /// The instance view of the container group. Only valid in response.
+        /// </summary>
+        public ContainerGroupPropertiesInstanceView InstanceView { get; set; }
+
+        /// <summary>
+        /// Container group diagnostic information.
+        /// </summary>
+        public ContainerGroupDiagnostics Diagnostics { get; set; }
+
+        /// <summary>
+        /// The subnet resource IDs for a container group.
+        /// </summary>
+        public ContainerGroupSubnetId[] SubnetIds { get; set; }
+
+        /// <summary>
+        /// DNS configuration for the container group.
+        /// </summary>
+        public DnsConfiguration DnsConfig { get; set; }
+
+        /// <summary>
+        /// The container group SKU.
+        /// </summary>
+        public string Sku { get; set; }
+
+        /// <summary>
+        /// The container group encryption properties.
+        /// </summary>
+        public EncryptionProperties EncryptionProperties { get; set; }
+
+        /// <summary>
+        /// The init containers for a container group.
+        /// </summary>
+        public InitContainerDefinition[] InitContainers { get; set; }
+    }
+
+    /// <summary>
+    /// The instance view of the container group. Only valid in response.
+    /// </summary>
+    public class ContainerGroupPropertiesInstanceView
+    {
+        /// <summary>
+        /// The events of this container group.
+        /// </summary>
+        public Event[] Events { get; set; }
+
+        /// <summary>
+        /// The state of the container group. Only valid in response.
+        /// </summary>
+        public string State { get; set; }
     }
 
     /// <summary>
@@ -532,12 +674,12 @@ namespace AzureMachineLearningTest.Models
     public class ContainerProbe
     {
         /// <summary>
-        /// not-used
+        /// The container execution command, for liveness or readiness probe
         /// </summary>
         public ContainerExec Exec { get; set; }
 
         /// <summary>
-        /// not-used
+        /// The container Http Get settings, for liveness or readiness probe
         /// </summary>
         public ContainerHttpGet HttpGet { get; set; }
 
@@ -593,12 +735,12 @@ namespace AzureMachineLearningTest.Models
         public EnvironmentVariable[] EnvironmentVariables { get; set; }
 
         /// <summary>
-        /// The container instance properties.
+        /// The instance view of the container instance. Only valid in response.
         /// </summary>
-        public InstanceView InstanceView { get; set; }
+        public ContainerPropertiesInstanceView InstanceView { get; set; }
 
         /// <summary>
-        /// not-used
+        /// The resource requirements.
         /// </summary>
         public ResourceRequirements Resources { get; set; }
 
@@ -608,14 +750,40 @@ namespace AzureMachineLearningTest.Models
         public VolumeMount[] VolumeMounts { get; set; }
 
         /// <summary>
-        /// not-used
+        /// The container probe, for liveness or readiness
         /// </summary>
         public ContainerProbe LivenessProbe { get; set; }
 
         /// <summary>
-        /// not-used
+        /// The container probe, for liveness or readiness
         /// </summary>
         public ContainerProbe ReadinessProbe { get; set; }
+    }
+
+    /// <summary>
+    /// The instance view of the container instance. Only valid in response.
+    /// </summary>
+    public class ContainerPropertiesInstanceView
+    {
+        /// <summary>
+        /// The number of times that the container instance has been restarted.
+        /// </summary>
+        public int RestartCount { get; set; }
+
+        /// <summary>
+        /// The container instance state.
+        /// </summary>
+        public ContainerState CurrentState { get; set; }
+
+        /// <summary>
+        /// The container instance state.
+        /// </summary>
+        public ContainerState PreviousState { get; set; }
+
+        /// <summary>
+        /// The events of the container instance.
+        /// </summary>
+        public Event[] Events { get; set; }
     }
 
     /// <summary>
@@ -647,29 +815,6 @@ namespace AzureMachineLearningTest.Models
         /// The human-readable status of the container instance state.
         /// </summary>
         public string DetailStatus { get; set; }
-    }
-
-    public class Display
-    {
-        /// <summary>
-        /// The name of the provider of the operation.
-        /// </summary>
-        public string Provider { get; set; }
-
-        /// <summary>
-        /// The name of the resource type of the operation.
-        /// </summary>
-        public string Resource { get; set; }
-
-        /// <summary>
-        /// The friendly name of the operation.
-        /// </summary>
-        public string Operation { get; set; }
-
-        /// <summary>
-        /// The description of the operation.
-        /// </summary>
-        public string Description { get; set; }
     }
 
     /// <summary>
@@ -873,7 +1018,7 @@ namespace AzureMachineLearningTest.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// not-used
+        /// The init container definition properties.
         /// </summary>
         public InitContainerPropertiesDefinition Properties { get; set; }
     }
@@ -899,9 +1044,9 @@ namespace AzureMachineLearningTest.Models
         public EnvironmentVariable[] EnvironmentVariables { get; set; }
 
         /// <summary>
-        /// The init container definition properties.
+        /// The instance view of the init container. Only valid in response.
         /// </summary>
-        public InstanceView InstanceView { get; set; }
+        public InitContainerPropertiesDefinitionInstanceView InstanceView { get; set; }
 
         /// <summary>
         /// The volume mounts available to the init container.
@@ -909,17 +1054,30 @@ namespace AzureMachineLearningTest.Models
         public VolumeMount[] VolumeMounts { get; set; }
     }
 
-    public class InstanceView
+    /// <summary>
+    /// The instance view of the init container. Only valid in response.
+    /// </summary>
+    public class InitContainerPropertiesDefinitionInstanceView
     {
         /// <summary>
-        /// The events of this container group.
+        /// The number of times that the init container has been restarted.
         /// </summary>
-        public Event[] Events { get; set; }
+        public int RestartCount { get; set; }
 
         /// <summary>
-        /// The state of the container group. Only valid in response.
+        /// The container instance state.
         /// </summary>
-        public string State { get; set; }
+        public ContainerState CurrentState { get; set; }
+
+        /// <summary>
+        /// The container instance state.
+        /// </summary>
+        public ContainerState PreviousState { get; set; }
+
+        /// <summary>
+        /// The events of the init container.
+        /// </summary>
+        public Event[] Events { get; set; }
     }
 
     /// <summary>
@@ -979,9 +1137,9 @@ namespace AzureMachineLearningTest.Models
         public string LogType { get; set; }
 
         /// <summary>
-        /// Container group log analytics information.
+        /// Metadata for log analytics.
         /// </summary>
-        public Metadata Metadata { get; set; }
+        public Dictionary<string, string> Metadata { get; set; }
 
         /// <summary>
         /// The workspace resource id for log analytics
@@ -1000,23 +1158,6 @@ namespace AzureMachineLearningTest.Models
         public string Content { get; set; }
     }
 
-    public class Metadata
-    {
-    }
-
-    public class Name
-    {
-        /// <summary>
-        /// The name of the resource
-        /// </summary>
-        public string Value { get; set; }
-
-        /// <summary>
-        /// The localized name of the resource
-        /// </summary>
-        public string LocalizedValue { get; set; }
-    }
-
     /// <summary>
     /// An operation for Azure Container Instance service.
     /// </summary>
@@ -1028,19 +1169,45 @@ namespace AzureMachineLearningTest.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// An operation for Azure Container Instance service.
+        /// The display information of the operation.
         /// </summary>
-        public Display Display { get; set; }
+        public OperationDisplay Display { get; set; }
 
         /// <summary>
-        /// An operation for Azure Container Instance service.
+        /// The additional properties.
         /// </summary>
-        public Properties Properties { get; set; }
+        public OperationProperties Properties { get; set; }
 
         /// <summary>
         /// The intended executor of the operation.
         /// </summary>
         public string Origin { get; set; }
+    }
+
+    /// <summary>
+    /// The display information of the operation.
+    /// </summary>
+    public class OperationDisplay
+    {
+        /// <summary>
+        /// The name of the provider of the operation.
+        /// </summary>
+        public string Provider { get; set; }
+
+        /// <summary>
+        /// The name of the resource type of the operation.
+        /// </summary>
+        public string Resource { get; set; }
+
+        /// <summary>
+        /// The friendly name of the operation.
+        /// </summary>
+        public string Operation { get; set; }
+
+        /// <summary>
+        /// The description of the operation.
+        /// </summary>
+        public string Description { get; set; }
     }
 
     /// <summary>
@@ -1060,6 +1227,13 @@ namespace AzureMachineLearningTest.Models
     }
 
     /// <summary>
+    /// The additional properties.
+    /// </summary>
+    public class OperationProperties
+    {
+    }
+
+    /// <summary>
     /// The port exposed on the container group.
     /// </summary>
     public class Port
@@ -1074,79 +1248,6 @@ namespace AzureMachineLearningTest.Models
         /// </summary>
         [Newtonsoft.Json.JsonProperty("Port")]
         public int Port_ { get; set; }
-    }
-
-    public class Properties
-    {
-        /// <summary>
-        /// The provisioning state of the container group. This only appears in the response.
-        /// </summary>
-        public string ProvisioningState { get; set; }
-
-        /// <summary>
-        /// The containers within the container group.
-        /// </summary>
-        public Container[] Containers { get; set; }
-
-        /// <summary>
-        /// The image registry credentials by which the container group is created from.
-        /// </summary>
-        public ImageRegistryCredential[] ImageRegistryCredentials { get; set; }
-
-        /// <summary>
-        /// Restart policy for all containers within the container group. - `Always` Always restart- `OnFailure` Restart on failure- `Never` Never restart
-        /// </summary>
-        public string RestartPolicy { get; set; }
-
-        /// <summary>
-        /// not-used
-        /// </summary>
-        public IpAddress IpAddress { get; set; }
-
-        /// <summary>
-        /// The operating system type required by the containers in the container group.
-        /// </summary>
-        public string OsType { get; set; }
-
-        /// <summary>
-        /// The list of volumes that can be mounted by containers in this container group.
-        /// </summary>
-        public Volume[] Volumes { get; set; }
-
-        /// <summary>
-        /// The container group properties
-        /// </summary>
-        public InstanceView InstanceView { get; set; }
-
-        /// <summary>
-        /// not-used
-        /// </summary>
-        public ContainerGroupDiagnostics Diagnostics { get; set; }
-
-        /// <summary>
-        /// The subnet resource IDs for a container group.
-        /// </summary>
-        public ContainerGroupSubnetId[] SubnetIds { get; set; }
-
-        /// <summary>
-        /// not-used
-        /// </summary>
-        public DnsConfiguration DnsConfig { get; set; }
-
-        /// <summary>
-        /// The container group SKU.
-        /// </summary>
-        public string Sku { get; set; }
-
-        /// <summary>
-        /// not-used
-        /// </summary>
-        public EncryptionProperties EncryptionProperties { get; set; }
-
-        /// <summary>
-        /// The init containers for a container group.
-        /// </summary>
-        public InitContainerDefinition[] InitContainers { get; set; }
     }
 
     /// <summary>
@@ -1175,9 +1276,9 @@ namespace AzureMachineLearningTest.Models
         public string Location { get; set; }
 
         /// <summary>
-        /// The Resource model definition.
+        /// The resource tags.
         /// </summary>
-        public Tags Tags { get; set; }
+        public Dictionary<string, string> Tags { get; set; }
 
         /// <summary>
         /// The zones for the container group.
@@ -1201,7 +1302,7 @@ namespace AzureMachineLearningTest.Models
         public double Cpu { get; set; }
 
         /// <summary>
-        /// not-used
+        /// The GPU resource.
         /// </summary>
         public GpuResource Gpu { get; set; }
     }
@@ -1222,7 +1323,7 @@ namespace AzureMachineLearningTest.Models
         public double Cpu { get; set; }
 
         /// <summary>
-        /// not-used
+        /// The GPU resource.
         /// </summary>
         public GpuResource Gpu { get; set; }
     }
@@ -1233,38 +1334,14 @@ namespace AzureMachineLearningTest.Models
     public class ResourceRequirements
     {
         /// <summary>
-        /// not-used
+        /// The resource requests.
         /// </summary>
         public ResourceRequests Requests { get; set; }
 
         /// <summary>
-        /// not-used
+        /// The resource limits.
         /// </summary>
         public ResourceLimits Limits { get; set; }
-    }
-
-    /// <summary>
-    /// The secret volume.
-    /// </summary>
-    public class SecretVolume
-    {
-    }
-
-    public class Tags
-    {
-    }
-
-    public class TerminalSize
-    {
-        /// <summary>
-        /// The row size of the terminal
-        /// </summary>
-        public int Rows { get; set; }
-
-        /// <summary>
-        /// The column size of the terminal
-        /// </summary>
-        public int Cols { get; set; }
     }
 
     /// <summary>
@@ -1288,9 +1365,9 @@ namespace AzureMachineLearningTest.Models
         public int Limit { get; set; }
 
         /// <summary>
-        /// A single usage result
+        /// The name object of the resource
         /// </summary>
-        public Name Name { get; set; }
+        public UsageName Name { get; set; }
     }
 
     /// <summary>
@@ -1304,8 +1381,20 @@ namespace AzureMachineLearningTest.Models
         public Usage[] Value { get; set; }
     }
 
-    public class UserAssignedIdentities
+    /// <summary>
+    /// The name object of the resource
+    /// </summary>
+    public class UsageName
     {
+        /// <summary>
+        /// The name of the resource
+        /// </summary>
+        public string Value { get; set; }
+
+        /// <summary>
+        /// The localized name of the resource
+        /// </summary>
+        public string LocalizedValue { get; set; }
     }
 
     /// <summary>
@@ -1319,22 +1408,22 @@ namespace AzureMachineLearningTest.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// not-used
+        /// The properties of the Azure File volume. Azure File shares are mounted as volumes.
         /// </summary>
         public AzureFileVolume AzureFile { get; set; }
 
         /// <summary>
-        /// not-used
+        /// The empty directory volume.
         /// </summary>
         public EmptyDirVolume EmptyDir { get; set; }
 
         /// <summary>
-        /// not-used
+        /// The secret volume.
         /// </summary>
-        public SecretVolume Secret { get; set; }
+        public Dictionary<string, string > SecretVolume { get; set; }
 
         /// <summary>
-        /// not-used
+        /// Represents a volume that is populated with the contents of a git repository
         /// </summary>
         public GitRepoVolume GitRepo { get; set; }
     }
@@ -1360,12 +1449,12 @@ namespace AzureMachineLearningTest.Models
         public bool ReadOnly { get; set; }
     }
 }
-namespace AzureMachineLearningTest.Models
+namespace ContainerInstanceTest.Models
 {
     /// <summary>
     /// Restart policy for all containers within the container group. - `Always` Always restart- `OnFailure` Restart on failure- `Never` Never restart
     /// </summary>
-    public static class RestartPolicyConstants
+    public static class ContainerGroupPropertiesRestartPolicyConstants
     {
         public const string Always = "Always";
 
@@ -1377,7 +1466,7 @@ namespace AzureMachineLearningTest.Models
     /// <summary>
     /// The operating system type required by the containers in the container group.
     /// </summary>
-    public static class OsTypeConstants
+    public static class ContainerGroupPropertiesOsTypeConstants
     {
         public const string Windows = "Windows";
 
@@ -1387,7 +1476,7 @@ namespace AzureMachineLearningTest.Models
     /// <summary>
     /// The container group SKU.
     /// </summary>
-    public static class SkuConstants
+    public static class ContainerGroupPropertiesSkuConstants
     {
         public const string Standard = "Standard";
 

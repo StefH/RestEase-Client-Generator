@@ -1,4 +1,3 @@
-using System.Security.AccessControl;
 using AnyOfTypes;
 using Microsoft.OpenApi;
 using Microsoft.OpenApi.Any;
@@ -29,11 +28,6 @@ internal class SchemaMapper : BaseMapper
     {
         name ??= string.Empty;
 
-        if (parentName.Contains("secretVolume"))
-        {
-            int y = 0;
-        }
-
         var nameCamelCase = string.IsNullOrEmpty(name) ? string.Empty : $"{(pascalCase ? name.ToPascalCase() : name)}";
 
         bool nullableForOpenApi20 = openApiSpecVersion == OpenApiSpecVersion.OpenApi2_0 && Settings.GeneratePrimitivePropertiesAsNullableForOpenApi20;
@@ -48,13 +42,13 @@ internal class SchemaMapper : BaseMapper
                     case SchemaType.Unknown:
                         var or = TryMapPropertyReference(@interface, schema.Items, "not-used", directory);
                         return or != null ?
-                            new PropertyDto(MapArrayType(MakeValidModelName(or.Type)), nameCamelCase, schema.Description) :
+                            new PropertyDto(MapArrayType(MakeValidClassName(or.Type)), nameCamelCase, schema.Description) :
                             new PropertyDto(MapArrayType("object"), nameCamelCase, schema.Description);
 
                     case SchemaType.String:
                         if (schema.Items.Enum != null && schema.Items.Enum.Any() && Settings.PreferredEnumType == EnumType.Enum)
                         {
-                            return new PropertyDto(MapArrayType(MakeValidModelName(name)), nameCamelCase, schema.Description);
+                            return new PropertyDto(MapArrayType(MakeValidClassName(name)), nameCamelCase, schema.Description);
                         }
                         else
                         {
@@ -113,35 +107,14 @@ internal class SchemaMapper : BaseMapper
                 var list = new List<PropertyDto>();
                 if (schema.AdditionalProperties != null)
                 {
-                    //var add = TryMapProperty(@interface, openApiSpecVersion, schema.AdditionalProperties, "", name, directory);
                     var additionalResult = MapSchema(@interface, schema.AdditionalProperties, string.Empty, null, schema.AdditionalProperties.Nullable, false, null, directory);
                     if (additionalResult.IsFirst)
                     {
                         var dictionaryType = $"Dictionary<string, {additionalResult.First}>";
-                        return new PropertyDto(dictionaryType, string.Empty, schema.Description);
-                        // list.Add(new PropertyDto(dictionaryType, string.Empty, schema.Description));
-                    }
-                    else
-                    {
-                        int d = 0;
+                        return new PropertyDto(dictionaryType, parentName, schema.Description);
                     }
 
-                    //list.AddRange(additionalResult.Second);
-                    //switch (add.Type)
-                    //{
-                    //    case PropertyType.Normal when add.Result.IsFirst:
-                    //        list.Add(add.Result.First);
-                    //        break;
-
-                    //    case PropertyType.Normal:
-                    //        list.Add(new PropertyDto(add.className, string.Empty, schema.AdditionalProperties.Description));
-                    //        break;
-
-                    //    case PropertyType.Reference:
-                    //        list.Add(add.Result.First);
-                    //        break;
-                    //}
-
+                    throw new InvalidOperationException();
                 }
 
                 foreach (var schemaProperty in schema.Properties)
@@ -153,11 +126,11 @@ internal class SchemaMapper : BaseMapper
                     switch (property.Type)
                     {
                         case PropertyType.Normal when property.Result.IsFirst:
-                            list.Add(new PropertyDto(property.Result.First.Type, property.Result.First.Name, openApiSchema.Description));
+                            list.Add(property.Result.First);
                             break;
 
                         case PropertyType.Normal:
-                            list.Add(new PropertyDto(property.className, objectName, openApiSchema.Description));
+                            list.Add(new PropertyDto(property.TypeName, objectName, openApiSchema.Description));
                             break;
 
                         case PropertyType.Reference:
@@ -199,64 +172,47 @@ internal class SchemaMapper : BaseMapper
         }
     }
 
-    private (PropertyType Type, string className, AnyOf<PropertyDto, IList<PropertyDto>> Result) TryMapProperty(
+    private (PropertyType Type, string TypeName, AnyOf<PropertyDto, IList<PropertyDto>> Result) TryMapProperty(
         RestEaseInterface @interface,
         OpenApiSpecVersion? openApiSpecVersion,
-        OpenApiSchema schemaIn,
+        OpenApiSchema schema,
         string parentName,
         string objectName,
         string? directory)
     {
-        if (new[] { SchemaType.Object, SchemaType.Unknown }.Contains(schemaIn.GetSchemaType()))
+        if (new[] { SchemaType.Object, SchemaType.Unknown }.Contains(schema.GetSchemaType()))
         {
-            var referencedProperty = TryMapPropertyReference(@interface, schemaIn, objectName, directory);
+            var referencedProperty = TryMapPropertyReference(@interface, schema, objectName, directory);
             if (referencedProperty is not null)
             {
-                return (PropertyType.Reference, string.Empty, referencedProperty);
+                return (PropertyType.Reference, referencedProperty.Name, referencedProperty);
             }
 
-            var className = $"{parentName}{objectName}";
+            var className = MakeValidClassName($"{parentName}{objectName}");
 
-         //   var schema = schemaIn;
-            if (schemaIn.AdditionalProperties != null)
+            if (schema.AdditionalProperties != null)
             {
-                //schema = schemaIn.AdditionalProperties!;
-
-                var typ = TryMapProperty(@interface, openApiSpecVersion, schemaIn.AdditionalProperties, parentName, objectName, directory);
-                
-                // if (!new[] { SchemaType.Object, SchemaType.Unknown }.Contains(schema.GetSchemaType()))
-
-                if (typ.Result.IsFirst)
+                var additionalPropertiesType = TryMapProperty(@interface, openApiSpecVersion, schema.AdditionalProperties, parentName, objectName, directory);
+                if (additionalPropertiesType.Result.IsFirst)
                 {
-                    var dictionaryType = $"Dictionary<string, {typ.Result.First.Type}>";
-                    return (PropertyType.Normal, objectName, new PropertyDto(dictionaryType, objectName));
-
+                    var dictionaryType = $"Dictionary<string, {additionalPropertiesType.Result.First.Type}>";
+                    return (PropertyType.Normal, objectName, new PropertyDto(dictionaryType, objectName, schema.Description));
                 }
                 else
                 {
-                    var dictionaryType = $"Dictionary<string, {typ.className}>";
-                    return (PropertyType.Normal, className, new PropertyDto(dictionaryType, className));
+                    var dictionaryType = $"Dictionary<string, {additionalPropertiesType.TypeName}>";
+                    return (PropertyType.Normal, className, new PropertyDto(dictionaryType, className, schema.Description));
                 }
-
-            //    var t = typ.Result.IsFirst ? typ.Result.First.Type : typ.className;
-                
-                
-                {
-              //      var dictionaryType = $"Dictionary<string, {t}>";
-                //    return (PropertyType.Normal, className, new PropertyDto(dictionaryType, className));
-                }
-                //var dictionaryType = $"Dictionary<string, {MakeValidReferenceId(schema.AdditionalProperties.Reference.Id)}>";
-                //return new PropertyDto(dictionaryType, objectName);
             }
 
             // Object is defined `inline`, create a new Model and use that one.
             var model = @interface.ExtraModels.FirstOrDefault(m => string.Equals(m.ClassName, className, StringComparison.InvariantCultureIgnoreCase));
             if (model == null)
             {
-                var inlineModel = MapSchema(@interface, schemaIn, parentName, className, false, true, null, directory);
+                var inlineModel = MapSchema(@interface, schema, parentName, className, false, true, null, directory);
                 model = new RestEaseModel
                 {
-                    Description = schemaIn.Description,
+                    Description = schema.Description,
                     Namespace = Settings.Namespace,
                     ClassName = className,
                     Properties = inlineModel.Second,
@@ -270,8 +226,8 @@ internal class SchemaMapper : BaseMapper
             return (PropertyType.Normal, className, model.Properties.ToList());
         }
 
-        var propertyIsNullable = schemaIn.Nullable || Settings.SupportExtensionXNullable && schemaIn.TryGetXNullable(out var x) && x;
-        var property = MapSchema(@interface, schemaIn, parentName, objectName, propertyIsNullable, true, openApiSpecVersion, directory);
+        var propertyIsNullable = schema.Nullable || Settings.SupportExtensionXNullable && schema.TryGetXNullable(out var x) && x;
+        var property = MapSchema(@interface, schema, parentName, objectName, propertyIsNullable, true, openApiSpecVersion, directory);
         if (property.IsFirst)
         {
             return (PropertyType.Normal, string.Empty, property.First);
@@ -285,8 +241,30 @@ internal class SchemaMapper : BaseMapper
         switch (schema.Reference)
         {
             case { IsLocal: true }:
-                var className = MakeValidReferenceId(schema.Reference.Id);
-                return new PropertyDto(className, name ?? className, schema.Description);
+                if (@interface.OpenApiDocument.Components.Schemas.TryGetValue(schema.Reference.Id, out var internalSchema))
+                {
+                    if (internalSchema.AdditionalProperties == null)
+                    {
+                        var className = MakeValidClassName(schema.Reference.Id);
+                        return new PropertyDto(className, name ?? className, schema.Description);
+                    }
+
+                    var local = MapSchema(
+                        @interface,
+                        internalSchema,
+                        schema.Reference.Id,
+                        null,
+                        internalSchema.Nullable,
+                        true,
+                        OpenApiSpecVersion.OpenApi2_0, directory);
+
+                    if (local.IsFirst)
+                    {
+                        return local.First;
+                    }
+                }
+
+                throw new InvalidOperationException();
 
             case { IsExternal: true }:
                 var externalProperty = new ExternalReferenceMapper(Settings, @interface).MapProperty(schema.Reference, directory);

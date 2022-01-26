@@ -1,7 +1,6 @@
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Interfaces;
 using Microsoft.OpenApi.Models;
-using RestEaseClientGenerator.Types;
 using RestEaseClientGenerator.Types.Internal;
 
 namespace RestEaseClientGenerator.Extensions;
@@ -26,7 +25,7 @@ internal static class OpenApiSchemaExtensions
 
     public static SchemaType GetSchemaType(this OpenApiSchema schema)
     {
-        switch (schema?.Type)
+        switch (schema.Type)
         {
             case "object":
                 return SchemaType.Object;
@@ -56,7 +55,7 @@ internal static class OpenApiSchemaExtensions
 
     public static SchemaFormat GetSchemaFormat(this OpenApiSchema schema)
     {
-        switch (schema?.Format)
+        switch (schema.Format)
         {
             case "float":
                 return SchemaFormat.Float;
