@@ -6,7 +6,6 @@ using RestEaseClientGenerator.Models.Internal;
 using RestEaseClientGenerator.Settings;
 using RestEaseClientGenerator.Types;
 using RestEaseClientGenerator.Types.Internal;
-using RestEaseClientGenerator.Utils;
 
 namespace RestEaseClientGenerator.Mappers;
 
@@ -21,7 +20,7 @@ internal class InterfaceMapper : BaseMapper
 
     public RestEaseInterface Map(OpenApiDocument openApiDocument, string? directory)
     {
-        string name = CSharpUtils.CreateValidIdentifier(Settings.ApiName, CasingType.Pascal);
+        string name = Settings.ApiName.ToValidIdentifier(CasingType.Pascal);
         string interfaceName = $"I{name}Api";
 
         var @interface = new RestEaseInterface
@@ -308,7 +307,7 @@ internal class InterfaceMapper : BaseMapper
     }
 
     // TODO null?
-    private string? GetReturnType(RestEaseInterface @interface, OpenApiSchema? schema, string? methodRestEaseMethodName, string? directory)
+    private string? GetReturnType(RestEaseInterface @interface, OpenApiSchema? schema, string methodRestEaseMethodName, string? directory)
     {
         string nullable = schema?.Nullable == true ? "?" : string.Empty;
 
@@ -363,7 +362,7 @@ internal class InterfaceMapper : BaseMapper
                 {
                     // Object is defined `inline`, create a new Model and use that one.
                     var className = !string.IsNullOrEmpty(schema.Title)
-                        ? CSharpUtils.CreateValidIdentifier(schema.Title, CasingType.Pascal)
+                        ? schema.Title.ToValidIdentifier(CasingType.Pascal)
                         : $"{methodRestEaseMethodName.ToPascalCase()}Result";
 
                     var existingModel = @interface.ExtraModels.FirstOrDefault(m => string.Equals(m.ClassName, className, StringComparison.InvariantCultureIgnoreCase));
@@ -725,7 +724,8 @@ internal class InterfaceMapper : BaseMapper
         string? directory)
     {
         var attributes = new List<string>();
-        string validIdentifier = CSharpUtils.CreateValidIdentifier(identifier, CasingType.Camel);
+        string validIdentifier = identifier.ToValidIdentifier(CasingType.Camel);
+        bool parameterIsRenamed = identifier != validIdentifier;
 
         string restEaseParameterAnnotation = parameterLocation != null ? parameterLocation.ToString() : string.Empty;
 
@@ -738,7 +738,7 @@ internal class InterfaceMapper : BaseMapper
         }
 
         string identifierWithType;
-        if (identifier != validIdentifier)
+        if (parameterIsRenamed)
         {
             switch (parameterLocation)
             {

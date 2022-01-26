@@ -1,4 +1,3 @@
-using System.Security.AccessControl;
 using AnyOfTypes;
 using Microsoft.OpenApi;
 using Microsoft.OpenApi.Any;
@@ -217,36 +216,19 @@ internal class SchemaMapper : BaseMapper
 
             var className = $"{parentName}{objectName}";
 
-         //   var schema = schemaIn;
             if (schemaIn.AdditionalProperties != null)
             {
-                //schema = schemaIn.AdditionalProperties!;
-
-                var typ = TryMapProperty(@interface, openApiSpecVersion, schemaIn.AdditionalProperties, parentName, objectName, directory);
-                
-                // if (!new[] { SchemaType.Object, SchemaType.Unknown }.Contains(schema.GetSchemaType()))
-
-                if (typ.Result.IsFirst)
+                var additionalPropertiesType = TryMapProperty(@interface, openApiSpecVersion, schemaIn.AdditionalProperties, parentName, objectName, directory);
+                if (additionalPropertiesType.Result.IsFirst)
                 {
-                    var dictionaryType = $"Dictionary<string, {typ.Result.First.Type}>";
+                    var dictionaryType = $"Dictionary<string, {additionalPropertiesType.Result.First.Type}>";
                     return (PropertyType.Normal, objectName, new PropertyDto(dictionaryType, objectName));
-
                 }
                 else
                 {
-                    var dictionaryType = $"Dictionary<string, {typ.className}>";
+                    var dictionaryType = $"Dictionary<string, {additionalPropertiesType.className}>";
                     return (PropertyType.Normal, className, new PropertyDto(dictionaryType, className));
                 }
-
-            //    var t = typ.Result.IsFirst ? typ.Result.First.Type : typ.className;
-                
-                
-                {
-              //      var dictionaryType = $"Dictionary<string, {t}>";
-                //    return (PropertyType.Normal, className, new PropertyDto(dictionaryType, className));
-                }
-                //var dictionaryType = $"Dictionary<string, {MakeValidReferenceId(schema.AdditionalProperties.Reference.Id)}>";
-                //return new PropertyDto(dictionaryType, objectName);
             }
 
             // Object is defined `inline`, create a new Model and use that one.

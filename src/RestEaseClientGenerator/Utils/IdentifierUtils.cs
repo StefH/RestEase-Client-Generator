@@ -5,7 +5,7 @@ namespace RestEaseClientGenerator.Utils;
 /// <summary>
 /// Based on https://gist.github.com/FabienDehopre/5245476
 /// </summary>
-public static class IdentifierUtils
+internal static class IdentifierUtils
 {
     // definition of a valid C# identifier: http://msdn.microsoft.com/en-us/library/aa664670(v=vs.71).aspx
     private const string FORMATTING_CHARACTER = @"\p{Cf}";

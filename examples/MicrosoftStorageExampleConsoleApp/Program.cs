@@ -5,7 +5,6 @@ using Microsoft.OpenApi.Readers;
 using MicrosoftExampleConsoleApp;
 using MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Api;
 using MicrosoftExampleConsoleApp.MicrosoftStorage.Api;
-using MicrosoftExampleConsoleApp.MicrosoftStorage20190401.Api;
 using Newtonsoft.Json;
 using RestEaseClientGenerator;
 using RestEaseClientGenerator.Settings;
@@ -118,16 +117,6 @@ static ServiceProvider RegisterServices(string[] args)
 
     services
         .UseWithAzureAuthenticatedRestEaseClient<IMicrosoftStorageApi>(
-            configuration.GetSection("ManagementOptions"),
-            c =>
-            {
-                c.JsonSerializerSettings = new JsonSerializerSettings
-                {
-                    NullValueHandling = NullValueHandling.Ignore,
-                    Converters = new List<JsonConverter> { new AnyOfJsonConverter() }
-                };
-            })
-        .UseWithAzureAuthenticatedRestEaseClient<IMicrosoftStorage20190401Api>(
             configuration.GetSection("ManagementOptions"),
             c =>
             {
