@@ -220,7 +220,7 @@ internal class InterfaceMapper : BaseMapper
                 new ()
                 {
                     ValidIdentifier = "api",
-                    IdentifierWithTypePascalCase = null,
+                    IdentifierWithTypePascalCase = string.Empty,
                     IdentifierWithType = $"this {@interface.Name} api",
                     IdentifierWithRestEase = $"this {@interface.Name} api",
                     Summary = "The Api"
