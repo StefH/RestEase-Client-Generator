@@ -4,6 +4,7 @@ using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using AnyOfTypes;
 using RestEase;
 using WireMockOrg.Models;
 
@@ -33,38 +34,38 @@ namespace WireMockOrg.Api
         /// Delete all stub mappings
         /// </summary>
         [Delete("/__admin/mappings")]
-        Task DeleteAdminMappingsAsync();
+        Task<object> DeleteAdminMappingsAsync();
 
         /// <summary>
         /// Reset stub mappings
         /// </summary>
         [Post("/__admin/mappings/reset")]
-        Task PostAdminMappingsResetAsync();
+        Task<object> PostAdminMappingsResetAsync();
 
         /// <summary>
         /// Persist stub mappings
         /// </summary>
         [Post("/__admin/mappings/save")]
-        Task PostAdminMappingsSaveAsync();
+        Task<object> PostAdminMappingsSaveAsync();
 
         /// <summary>
         /// Get stub mapping by ID
         /// </summary>
         [Get("/__admin/mappings/{stubMappingId}")]
-        Task<GetAdminMappingsByStubMappingIdResult> GetAdminMappingsByStubMappingIdAsync();
+        Task<Response<AnyOf<GetAdminMappingsByStubMappingIdResult, object>>> GetAdminMappingsByStubMappingIdAsync();
 
         /// <summary>
         /// Update a stub mapping
         /// </summary>
         [Put("/__admin/mappings/{stubMappingId}")]
         [Header("Content-Type", "application/json")]
-        Task<PutAdminMappingsByStubMappingIdResult> PutAdminMappingsByStubMappingIdAsync();
+        Task<Response<AnyOf<PutAdminMappingsByStubMappingIdResult, object>>> PutAdminMappingsByStubMappingIdAsync();
 
         /// <summary>
         /// Delete a stub mapping
         /// </summary>
         [Delete("/__admin/mappings/{stubMappingId}")]
-        Task DeleteAdminMappingsByStubMappingIdAsync();
+        Task<object> DeleteAdminMappingsByStubMappingIdAsync();
 
         /// <summary>
         /// PostAdminMappingsFindByMetadata (/__admin/mappings/find-by-metadata)
@@ -78,7 +79,7 @@ namespace WireMockOrg.Api
         /// </summary>
         [Post("/__admin/mappings/remove-by-metadata")]
         [Header("Content-Type", "application/json")]
-        Task PostAdminMappingsRemoveByMetadataAsync();
+        Task<object> PostAdminMappingsRemoveByMetadataAsync();
 
         /// <summary>
         /// Get all requests in journal
@@ -86,33 +87,33 @@ namespace WireMockOrg.Api
         /// <param name="limit">The maximum number of results to return</param>
         /// <param name="since">Only return logged requests after this date</param>
         [Get("/__admin/requests")]
-        Task GetAdminRequestsAsync([Query] string limit, [Query] string since);
+        Task<object> GetAdminRequestsAsync([Query] string limit, [Query] string since);
 
         /// <summary>
         /// Delete all requests in journal
         /// </summary>
         [Delete("/__admin/requests")]
-        Task DeleteAdminRequestsAsync();
+        Task<object> DeleteAdminRequestsAsync();
 
         /// <summary>
         /// Get request by ID
         /// </summary>
         /// <param name="requestId">The UUID of the logged request</param>
         [Get("/__admin/requests/{requestId}")]
-        Task GetAdminRequestsByRequestIdAsync([Path] string requestId);
+        Task<object> GetAdminRequestsByRequestIdAsync([Path] string requestId);
 
         /// <summary>
         /// Delete request by ID
         /// </summary>
         /// <param name="requestId">The UUID of the logged request</param>
         [Delete("/__admin/requests/{requestId}")]
-        Task DeleteAdminRequestsByRequestIdAsync([Path] string requestId);
+        Task<object> DeleteAdminRequestsByRequestIdAsync([Path] string requestId);
 
         /// <summary>
         /// Empty the request journal
         /// </summary>
         [Post("/__admin/requests/reset")]
-        Task PostAdminRequestsResetAsync();
+        Task<object> PostAdminRequestsResetAsync();
 
         /// <summary>
         /// Count requests by criteria
@@ -126,27 +127,27 @@ namespace WireMockOrg.Api
         /// </summary>
         [Post("/__admin/requests/remove")]
         [Header("Content-Type", "application/json")]
-        Task PostAdminRequestsRemoveAsync();
+        Task<object> PostAdminRequestsRemoveAsync();
 
         /// <summary>
         /// Delete requests mappings matching metadata
         /// </summary>
         [Post("/__admin/requests/remove-by-metadata")]
         [Header("Content-Type", "application/json")]
-        Task PostAdminRequestsRemoveByMetadataAsync();
+        Task<object> PostAdminRequestsRemoveByMetadataAsync();
 
         /// <summary>
         /// Find requests by criteria
         /// </summary>
         [Post("/__admin/requests/find")]
         [Header("Content-Type", "application/json")]
-        Task PostAdminRequestsFindAsync();
+        Task<object> PostAdminRequestsFindAsync();
 
         /// <summary>
         /// Find unmatched requests
         /// </summary>
         [Get("/__admin/requests/unmatched")]
-        Task GetAdminRequestsUnmatchedAsync();
+        Task<object> GetAdminRequestsUnmatchedAsync();
 
         /// <summary>
         /// GetAdminRequestsUnmatchedNearMisses (/__admin/requests/unmatched/near-misses)
@@ -173,7 +174,7 @@ namespace WireMockOrg.Api
         /// </summary>
         [Post("/__admin/recordings/start")]
         [Header("Content-Type", "application/json")]
-        Task PostAdminRecordingsStartAsync();
+        Task<object> PostAdminRecordingsStartAsync();
 
         /// <summary>
         /// Stop recording
@@ -204,25 +205,25 @@ namespace WireMockOrg.Api
         /// Reset the state of all scenarios
         /// </summary>
         [Post("/__admin/scenarios/reset")]
-        Task PostAdminScenariosResetAsync();
+        Task<object> PostAdminScenariosResetAsync();
 
         /// <summary>
         /// Update global settings
         /// </summary>
         [Post("/__admin/settings")]
         [Header("Content-Type", "application/json")]
-        Task PostAdminSettingsAsync();
+        Task<object> PostAdminSettingsAsync();
 
         /// <summary>
         /// Reset mappings and request journal
         /// </summary>
         [Post("/__admin/reset")]
-        Task PostAdminResetAsync();
+        Task<object> PostAdminResetAsync();
 
         /// <summary>
         /// PostAdminShutdown (/__admin/shutdown)
         /// </summary>
         [Post("/__admin/shutdown")]
-        Task PostAdminShutdownAsync();
+        Task<object> PostAdminShutdownAsync();
     }
 }

@@ -262,20 +262,20 @@ internal class InterfaceMapper : BaseMapper
                     SupportedContentType.ApplicationJson,
                     out OpenApiMediaType? responseJson, out _))
             {
-                if (responseJson == null)
-                {
-                    // No response defined, just use object;
-                    returnTypes.Add("object");
-                    continue;
-                }
+                //if (responseJson == null)
+                //{
+                //    // No response defined, just use object;
+                //    returnTypes.Add("object");
+                //    continue;
+                //}
 
-                var returnType = GetReturnType(@interface, responseJson.Schema, methodRestEaseMethodName, directory);
+                var returnType = GetReturnType(@interface, responseJson?.Schema, methodRestEaseMethodName, directory);
                 if (returnType is not null)
                 {
                     returnTypes.Add(FixReservedType(returnType));
                 }
             }
-            else
+            else if (Settings.ReturnResponseObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified)
             {
                 // It's not JSON, just use object
                 returnTypes.Add("object");

@@ -12,6 +12,29 @@ namespace RestEaseClientGeneratorConsoleApp
         {
             var generator = new Generator();
 
+            //var wiremockOrgSettings = new GeneratorSettings
+            //{
+            //    Namespace = "WireMockOrg",
+            //    ApiName = "WireMockOrg",
+            //    SingleFile = false
+            //};
+            //foreach (var file in generator.FromFile("Examples\\WireMock.org\\wiremock.json", wiremockOrgSettings, out OpenApiDiagnostic diagnosticWeather))
+            //{
+            //    File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/WireMock.org/{file.Path}/{file.Name}", file.Content);
+            //}
+
+            var weatherSettings = new GeneratorSettings
+            {
+                Namespace = "Weather",
+                ApiName = "Weather",
+                ForceContentTypeToApplicationJson = true
+            };
+            foreach (var file in generator.FromFile("Examples\\Weather\\WeatherForecast.json", weatherSettings, out OpenApiDiagnostic diagnosticWeather))
+            {
+                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Weather/{file.Path}/{file.Name}", file.Content);
+            }
+            return;
+
             var jiraSettings = new GeneratorSettings
             {
                 Namespace = "RestEaseClientGeneratorConsoleApp.Examples.Jira",
@@ -105,28 +128,7 @@ namespace RestEaseClientGeneratorConsoleApp
             }
             return;
 
-            var wiremockOrgSettings = new GeneratorSettings
-            {
-                Namespace = "WireMockOrg",
-                ApiName = "WireMockOrg",
-                SingleFile = false
-            };
-            foreach (var file in generator.FromFile("Examples\\WireMock.org\\wiremock.json", wiremockOrgSettings, out OpenApiDiagnostic diagnosticWeather))
-            {
-                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/WireMock.org/{file.Path}/{file.Name}", file.Content);
-            }
-
-            var weatherSettings = new GeneratorSettings
-            {
-                Namespace = "Weather",
-                ApiName = "Weather",
-                ForceContentTypeToApplicationJson = true
-            };
-            foreach (var file in generator.FromFile("Examples\\Weather\\WeatherForecast.json", weatherSettings, out OpenApiDiagnostic diagnosticWeather))
-            {
-                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Weather/{file.Path}/{file.Name}", file.Content);
-            }
-            return;
+            
 
             // Corrupte enums
             var computerVisionSettings = new GeneratorSettings

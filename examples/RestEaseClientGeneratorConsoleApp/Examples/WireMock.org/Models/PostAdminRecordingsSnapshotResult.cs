@@ -7,6 +7,6 @@ namespace WireMockOrg.Models
     {
         public object[] Mappings { get; set; }
 
-        public object Meta { get; set; }
+        public Meta Meta { get; set; }
     }
 }
