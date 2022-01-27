@@ -45,7 +45,13 @@ internal class ModelBuilder : BaseBuilder
                         throw new InvalidOperationException($"Model with name '{extend}' is not found.");
                     }
 
-                    properties.AddRange(model.Properties);
+                    foreach (var extraProperty in model.Properties)
+                    {
+                        if (!properties.Select(p => p.Name).Contains(extraProperty.Name))
+                        {
+                            properties.Add(extraProperty);
+                        }
+                    }
                 }
             }
         }

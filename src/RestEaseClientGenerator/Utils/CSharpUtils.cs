@@ -16,6 +16,7 @@ internal static class CSharpUtils
         { "-", "Minus" },
         { "+", "Plus" },
         { "=", "Equal" },
+        { "!", "Not" },
         { "!=", "NotEqual" },
         { ">", "GreaterThan" },
         { "<", "LessThan" },

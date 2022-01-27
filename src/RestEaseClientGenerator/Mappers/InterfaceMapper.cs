@@ -272,7 +272,7 @@ internal class InterfaceMapper : BaseMapper
                 var returnType = GetReturnType(@interface, responseJson.Schema, methodRestEaseMethodName, directory);
                 if (returnType is not null)
                 {
-                    returnTypes.Add(returnType);
+                    returnTypes.Add(FixReservedType(returnType));
                 }
             }
             else
@@ -333,7 +333,7 @@ internal class InterfaceMapper : BaseMapper
                     ? MakeValidReferenceId(schema.Items.Reference.Id)
                     : _schemaMapper.MapSchema(@interface, schema.Items, string.Empty, null, false, true, null, directory).First.Type;
 
-                return MapArrayType(arrayType);
+                return MapArrayType(FixReservedType(arrayType));
 
             case SchemaType.Object:
             case SchemaType.Unknown:
@@ -551,12 +551,11 @@ internal class InterfaceMapper : BaseMapper
 
             if (!string.IsNullOrEmpty(bodyParameter))
             {
-                string bodyParameterIdentifierName = "content";
                 bodyParameterList.Add(new RestEaseParameter
                 {
                     Required = true,
-                    ValidIdentifier = bodyParameterIdentifierName,
-                    IdentifierWithType = new PropertyDto(bodyParameter!, bodyParameterIdentifierName),
+                    ValidIdentifier = "content",
+                    IdentifierWithType = new PropertyDto(FixReservedType(bodyParameter!), "content"),
                     IdentifierRestEasePrefix = "[Body]",
                     Summary = detected.Value.Schema?.Description ?? bodyParameterDescription
                 });
@@ -682,7 +681,7 @@ internal class InterfaceMapper : BaseMapper
 
         if (returnTypeAsString == Settings.ModelsNamespace)
         {
-            returnTypeAsString = $"{Settings.ModelsNamespace}.{Settings.ModelsNamespace}";
+            returnTypeAsString = $"{Settings.ModelsNamespace}.{returnTypeAsString}";
         }
 
         switch (Settings.MethodReturnType)
@@ -785,11 +784,20 @@ internal class InterfaceMapper : BaseMapper
     {
         if (IdentifierUtils.IsReserved(identifierWithType.Type))
         {
-            identifierWithType =
-                new PropertyDto($"{Settings.ModelsNamespace}.{identifierWithType.Type}", identifierWithType.Name);
+            return new PropertyDto($"{Settings.ModelsNamespace}.{identifierWithType.Type}", identifierWithType.Name);
         }
 
         return identifierWithType;
+    }
+
+    private string FixReservedType(string type)
+    {
+        if (IdentifierUtils.IsReserved(type))
+        {
+            return $"{Settings.ModelsNamespace}.{type}";
+        }
+
+        return type;
     }
 
     private static bool TryGetOpenApiMediaType(IDictionary<string, OpenApiMediaType?> contentTypes, SupportedContentType contentType, out OpenApiMediaType? mediaType, out string detectedContentType)
