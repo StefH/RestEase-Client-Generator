@@ -69,17 +69,9 @@ internal static class IdentifierUtils
         ReservedClassName = typeof(Version).Assembly.GetTypes().OrderBy(t => t.Name).Select(t => t.Name).ToArray();
     }
 
-    public static bool TryGenerateValidClassName(string className, out string validClassName)
+    public static bool IsReserved(string className)
     {
-        validClassName = className;
-
-        if (ReservedClassName.Contains(className))
-        {
-            validClassName = $"{className}_";
-            return false;
-        }
-
-        return true;
+        return ReservedClassName.Contains(className);
     }
 
     public static bool IsValidIdentifier(string identifier)

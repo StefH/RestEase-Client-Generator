@@ -153,7 +153,7 @@ internal class SchemaMapper : BaseMapper
                             break;
 
                         case PropertyType.Normal:
-                            list.AddRange(property.Result.Second);
+                            list.AddRange(property.Result.Second.Properties);
                             break;
                     }
                 }
@@ -172,7 +172,7 @@ internal class SchemaMapper : BaseMapper
         }
     }
 
-    private (PropertyType Type, string TypeName, AnyOf<PropertyDto, IList<PropertyDto>> Result) TryMapProperty(
+    private (PropertyType Type, string TypeName, AnyOf<PropertyDto, RestEaseModel> Result) TryMapProperty(
         RestEaseInterface @interface,
         OpenApiSpecVersion? openApiSpecVersion,
         OpenApiSchema schema,
@@ -219,11 +219,9 @@ internal class SchemaMapper : BaseMapper
                     Priority = 1001
                 };
                 @interface.ExtraModels.Add(model);
-
-                return (PropertyType.Normal, className, inlineModel);
             }
 
-            return (PropertyType.Normal, className, model.Properties.ToList());
+            return (PropertyType.Normal, className, model);
         }
 
         var propertyIsNullable = schema.Nullable || Settings.SupportExtensionXNullable && schema.TryGetXNullable(out var x) && x;

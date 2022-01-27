@@ -27,8 +27,6 @@ internal class Worker
         ILogger<Worker> logger)
     {
         _storageApi = storageApi;
-        _storageApi.ApiVersion = "2021-04-01";
-
         _aci = aci;
 
         _logger = logger;
@@ -104,8 +102,6 @@ internal class Worker
             Console.WriteLine(ex);
         }
 
-        return;
-
         //try
         //{
         //    var operations = await _storageApi.OperationsListAsync();
@@ -141,6 +137,8 @@ internal class Worker
             // Console.WriteLine(ex);
             // Fails with Error converting value {null} to type 'System.DateTime'. Path 'value[0].properties.keyCreationTime.key1', line 1, position 361.
         }
+
+        return;
 
         try
         {

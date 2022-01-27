@@ -11,7 +11,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Models
         /// <summary>
         /// Resource tags.
         /// </summary>
-        public TrackedResourceTags Tags { get; set; }
+        public Dictionary<string, string> Tags { get; set; }
 
         /// <summary>
         /// The geo-location where the resource lives

@@ -13,7 +13,10 @@ internal static class CSharpUtils
 
     private static readonly Dictionary<string, string> Specials = new()
     {
+        { "-", "Minus" },
+        { "+", "Plus" },
         { "=", "Equal" },
+        { "!", "Not" },
         { "!=", "NotEqual" },
         { ">", "GreaterThan" },
         { "<", "LessThan" },

@@ -7,8 +7,11 @@ namespace RestEaseClientGenerator.Builders;
 
 internal class ModelBuilder : BaseBuilder
 {
-    public ModelBuilder(GeneratorSettings settings) : base(settings)
+    private readonly IReadOnlyList<RestEaseModel> _models;
+
+    public ModelBuilder(GeneratorSettings settings, IReadOnlyList<RestEaseModel> models) : base(settings)
     {
+        _models = models;
     }
 
     public string Build(RestEaseModel restEaseModel, bool isFirst, bool isLast)
@@ -21,11 +24,36 @@ internal class ModelBuilder : BaseBuilder
             builder.AppendLine();
         }
 
+        var properties = restEaseModel.Properties.Where(p => p.Extends is null).ToList();
+
         string extendsClass = string.Empty;
-        if (restEaseModel.Properties.Any(p => p.Extends is not null))
+        var extends = restEaseModel.Properties.Where(p => p.Extends is not null).Select(p => p.Extends).ToList();
+
+        if (extends.Any())
         {
-            var extends = restEaseModel.Properties.Where(p => p.Extends is not null).Select(p => p.Extends);
-            extendsClass = $" : {string.Join(", ", extends)}";
+            if (extends.Count == 1)
+            {
+                extendsClass = $" : {extends[0]}";
+            }
+            else
+            {
+                foreach (var extend in extends)
+                {
+                    var model = _models.FirstOrDefault(m => string.Equals(m.ClassName, extend, StringComparison.InvariantCultureIgnoreCase));
+                    if (model == null)
+                    {
+                        throw new InvalidOperationException($"Model with name '{extend}' is not found.");
+                    }
+
+                    foreach (var extraProperty in model.Properties)
+                    {
+                        if (!properties.Select(p => p.Name).Contains(extraProperty.Name))
+                        {
+                            properties.Add(extraProperty);
+                        }
+                    }
+                }
+            }
         }
 
         if (!Settings.SingleFile || isFirst)
@@ -43,7 +71,7 @@ internal class ModelBuilder : BaseBuilder
 
         builder.AppendLine($"    public class {restEaseModel.ClassName}{extendsClass}");
         builder.AppendLine("    {");
-        foreach (var property in restEaseModel.Properties.Where(p => p.Extends is null))
+        foreach (var property in properties)
         {
             if (!string.IsNullOrEmpty(property.Description))
             {

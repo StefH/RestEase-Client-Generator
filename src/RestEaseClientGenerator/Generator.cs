@@ -147,7 +147,6 @@ public class Generator : IGenerator
         if (settings.GenerationType.HasFlag(GenerationType.Models))
         {
             // Add Models + Inline/External Models
-            var modelBuilder = new ModelBuilder(settings);
             var allModelsDup = result.Models.Union(@interface.ExtraModels)
                 .GroupBy(r => r.ClassName)
                 .Where(x => x.Count() > 1)
@@ -158,6 +157,8 @@ public class Generator : IGenerator
                 .Select(r => r.OrderBy(o => o.Priority).First())
                 .OrderBy(m => m.ClassName)
                 .ToList();
+
+            var modelBuilder = new ModelBuilder(settings, allModels);
 
             files.AddRange(allModels.Select(model => new GeneratedFile
             (
