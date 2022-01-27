@@ -14,7 +14,7 @@ using Serilog.Sinks.SystemConsole.Themes;
 
 GenerateMicrosoftContainerInstance20211001();
 //GenerateMicrosoftStorage20190401();
-//GenerateMicrosoftStorage20210401();
+GenerateMicrosoftStorage20210401();
 
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Debug()
@@ -60,15 +60,14 @@ static void GenerateMicrosoftStorage20210401()
         Namespace = "MicrosoftExampleConsoleApp.MicrosoftStorage",
         ApiName = "MicrosoftStorage",
         SingleFile = false,
-        PreferredMultipleResponsesType = MultipleResponsesType.AnyOf,
         PreferredSecurityDefinitionType = SecurityDefinitionType.None,
-        GenerationType = GenerationType.Both
+        ConstantQueryParameters = new Dictionary<string, string> { { "api-version", "2021-04-01" } }
     };
 
     const string x = @"C:\Dev\azure-rest-api-specs\specification\storage\resource-manager\Microsoft.Storage\stable\2021-04-01\storage.json";
     foreach (var file in Directory.GetFiles("../../../MicrosoftStorage/Models", "*.cs"))
     {
-        //File.Delete(file);
+        File.Delete(file);
     }
     foreach (var file in generator.FromFile(x, storageSettings, out OpenApiDiagnostic diagnosticStorage))
     {
@@ -85,11 +84,7 @@ static void GenerateMicrosoftContainerInstance20211001()
     {
         Namespace = "MicrosoftExampleConsoleApp.MicrosoftContainerInstance",
         ApiName = "MicrosoftContainerInstance",
-        SingleFile = false,
-        PreferredMultipleResponsesType = MultipleResponsesType.AnyOf,
         PreferredSecurityDefinitionType = SecurityDefinitionType.None,
-        GenerationType = GenerationType.Both,
-        PreferredEnumType = EnumType.String,
         ConstantQueryParameters = new Dictionary<string, string> { { "api-version", "2021-10-01" } }
     };
 

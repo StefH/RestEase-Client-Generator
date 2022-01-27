@@ -46,7 +46,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Models
         /// <summary>
         /// Resource tags.
         /// </summary>
-        public ResourceModelWithAllowedPropertySetTags Tags { get; set; }
+        public Dictionary<string, string> Tags { get; set; }
 
         public ResourceModelWithAllowedPropertySetIdentity Identity { get; set; }
 
