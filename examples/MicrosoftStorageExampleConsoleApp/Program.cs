@@ -13,7 +13,6 @@ using Serilog;
 using Serilog.Sinks.SystemConsole.Themes;
 
 GenerateMicrosoftContainerInstance20211001();
-//GenerateMicrosoftStorage20190401();
 GenerateMicrosoftStorage20210401();
 
 Log.Logger = new LoggerConfiguration()
@@ -24,32 +23,6 @@ Log.Logger = new LoggerConfiguration()
 await using ServiceProvider serviceProvider = RegisterServices(args);
 
 await serviceProvider.GetRequiredService<Worker>().RunAsync(CancellationToken.None);
-
-static void GenerateMicrosoftStorage20190401()
-{
-    var generator = new Generator();
-
-    var storageSettings = new GeneratorSettings
-    {
-        Namespace = "MicrosoftExampleConsoleApp.MicrosoftStorage20190401",
-        ApiName = "MicrosoftStorage20190401",
-        SingleFile = false,
-        PreferredMultipleResponsesType = MultipleResponsesType.AnyOf,
-        PreferredSecurityDefinitionType = SecurityDefinitionType.None,
-        GenerationType = GenerationType.Both
-    };
-
-    const string x = @"C:\Dev\azure-rest-api-specs\specification\storage\resource-manager\Microsoft.Storage\stable\2019-04-01\storage.json";
-    foreach (var file in Directory.GetFiles("../../../MicrosoftStorage20190401/Models", "*.cs"))
-    {
-        //File.Delete(file);
-    }
-    foreach (var file in generator.FromFile(x, storageSettings, out OpenApiDiagnostic diagnosticStorage))
-    {
-        // Console.WriteLine("Generating file-type '{0}': {1}\\{2}", file.FileType, file.Path, file.Name);
-        File.WriteAllText($"../../../MicrosoftStorage20190401/{file.Path}/{file.Name}", file.Content);
-    }
-}
 
 static void GenerateMicrosoftStorage20210401()
 {
@@ -67,7 +40,7 @@ static void GenerateMicrosoftStorage20210401()
     const string x = @"C:\Dev\azure-rest-api-specs\specification\storage\resource-manager\Microsoft.Storage\stable\2021-04-01\storage.json";
     foreach (var file in Directory.GetFiles("../../../MicrosoftStorage/Models", "*.cs"))
     {
-        File.Delete(file);
+        // File.Delete(file);
     }
     foreach (var file in generator.FromFile(x, storageSettings, out OpenApiDiagnostic diagnosticStorage))
     {
@@ -84,6 +57,7 @@ static void GenerateMicrosoftContainerInstance20211001()
     {
         Namespace = "MicrosoftExampleConsoleApp.MicrosoftContainerInstance",
         ApiName = "MicrosoftContainerInstance",
+        SingleFile = false,
         PreferredSecurityDefinitionType = SecurityDefinitionType.None,
         ConstantQueryParameters = new Dictionary<string, string> { { "api-version", "2021-10-01" } }
     };
