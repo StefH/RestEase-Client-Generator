@@ -6,6 +6,7 @@ using RestEaseClientGenerator.Models.Internal;
 using RestEaseClientGenerator.Settings;
 using RestEaseClientGenerator.Types;
 using RestEaseClientGenerator.Types.Internal;
+using RestEaseClientGenerator.Utils;
 
 namespace RestEaseClientGenerator.Mappers;
 
@@ -53,7 +54,7 @@ internal class InterfaceMapper : BaseMapper
                 @interface.ConstantQueryParameters.Add(new RestEaseInterfaceQueryParameter
                 {
                     Name = query.Name,
-                    IdentifierWithType = $"string {query.IdentifierName}"
+                    IdentifierWithType = new PropertyDto("string", query.IdentifierName)
                 });
             }
         }
@@ -175,9 +176,8 @@ internal class InterfaceMapper : BaseMapper
                     Required = true,
                     Summary = "The Content-Type",
                     ValidIdentifier = "contentType",
-                    IdentifierWithRestEase = $"[Header(\"{HttpKnownHeaderNames.ContentType}\")] string contentType",
-                    IdentifierWithType = "string contentType",
-                    IdentifierWithTypePascalCase = "string ContentType",
+                    IdentifierRestEasePrefix = $"[Header(\"{HttpKnownHeaderNames.ContentType}\")]",
+                    IdentifierWithType = new PropertyDto("string", "contentType"),
                     IsSpecial = false,
                     SchemaFormat = SchemaFormat.Undefined,
                     SchemaType = SchemaType.String
@@ -220,9 +220,8 @@ internal class InterfaceMapper : BaseMapper
                 new ()
                 {
                     ValidIdentifier = "api",
-                    IdentifierWithTypePascalCase = string.Empty,
-                    IdentifierWithType = $"this {@interface.Name} api",
-                    IdentifierWithRestEase = $"this {@interface.Name} api",
+                    IdentifierWithType = new PropertyDto($"this {@interface.Name}", "api"),
+                    IdentifierRestEasePrefix = "this",
                     Summary = "The Api"
                 }
             };
@@ -457,9 +456,8 @@ internal class InterfaceMapper : BaseMapper
             {
                 Required = true,
                 ValidIdentifier = "content",
-                IdentifierWithType = "HttpContent content",
-                IdentifierWithTypePascalCase = "HttpContent Content",
-                IdentifierWithRestEase = "[Body] HttpContent content",
+                IdentifierWithType = new PropertyDto("HttpContent", "content"),
+                IdentifierRestEasePrefix = "[Body]",
                 Summary = httpContentDescription,
                 IsSpecial = true
             });
@@ -490,9 +488,8 @@ internal class InterfaceMapper : BaseMapper
             {
                 Required = true,
                 ValidIdentifier = "content",
-                IdentifierWithType = "HttpContent content",
-                IdentifierWithTypePascalCase = "HttpContent Content",
-                IdentifierWithRestEase = "[Body] HttpContent content",
+                IdentifierWithType = new PropertyDto("HttpContent", "content"),
+                IdentifierRestEasePrefix = "[Body]",
                 Summary = httpContentDescription,
                 IsSpecial = true
             });
@@ -521,9 +518,8 @@ internal class InterfaceMapper : BaseMapper
             {
                 Required = true,
                 ValidIdentifier = "form",
-                IdentifierWithType = "IDictionary<string, object> form",
-                IdentifierWithTypePascalCase = "IDictionary<string, object> Form",
-                IdentifierWithRestEase = "[Body(BodySerializationMethod.UrlEncoded)] IDictionary<string, object> form",
+                IdentifierWithType = new PropertyDto("IDictionary<string, object>", "form"),
+                IdentifierRestEasePrefix = "[Body(BodySerializationMethod.UrlEncoded)]",
                 Summary = description,
                 IsSpecial = true
             });
@@ -560,9 +556,8 @@ internal class InterfaceMapper : BaseMapper
                 {
                     Required = true,
                     ValidIdentifier = bodyParameterIdentifierName,
-                    IdentifierWithType = $"{bodyParameter} {bodyParameterIdentifierName}",
-                    IdentifierWithTypePascalCase = $"{bodyParameter} {bodyParameterIdentifierName.ToPascalCase()}",
-                    IdentifierWithRestEase = $"[Body] {bodyParameter} {bodyParameterIdentifierName}",
+                    IdentifierWithType = new PropertyDto(bodyParameter!, bodyParameterIdentifierName),
+                    IdentifierRestEasePrefix = "[Body]",
                     Summary = detected.Value.Schema?.Description ?? bodyParameterDescription
                 });
             }
@@ -726,14 +721,14 @@ internal class InterfaceMapper : BaseMapper
         string restEaseParameterAnnotation = parameterLocation != null ? parameterLocation.ToString() : string.Empty;
 
         bool canBeNull = schema.Enum == null;
-        string isNullPostfix = !required && canBeNull && Settings.MakeNonRequiredParametersOptional ? " = null" : string.Empty;
+        bool isNullPostfix = !required && canBeNull && Settings.MakeNonRequiredParametersOptional;
 
         if (parameterLocation == ParameterLocation.Header)
         {
             attributes.Add($"\"{identifier}\"");
         }
 
-        string identifierWithType;
+        PropertyDto identifierWithType;
         if (parameterIsRenamed)
         {
             switch (parameterLocation)
@@ -746,7 +741,9 @@ internal class InterfaceMapper : BaseMapper
 
             attributes.AddRange(extraAttributes);
 
-            identifierWithType = $"{_schemaMapper.MapSchema(@interface, schema, string.Empty, validIdentifier, !required, false, null, directory)}";
+            identifierWithType = _schemaMapper.MapSchema(@interface, schema, string.Empty, validIdentifier, !required, false, null, directory).First;
+
+            identifierWithType = FixReservedType(identifierWithType);
 
             return new RestEaseParameter
             {
@@ -756,15 +753,17 @@ internal class InterfaceMapper : BaseMapper
                 ValidIdentifier = validIdentifier,
                 SchemaType = schema.GetSchemaType(),
                 SchemaFormat = schema.GetSchemaFormat(),
-                IdentifierWithType = $"{identifierWithType}",
-                IdentifierWithTypePascalCase = $"{_schemaMapper.MapSchema(@interface, schema, string.Empty, validIdentifier, !required, true, null, directory)}",
-                IdentifierWithRestEase = $"[{restEaseParameterAnnotation}({string.Join(", ", attributes)})] {identifierWithType}{isNullPostfix}",
+                IdentifierWithType = identifierWithType,
+                IdentifierRestEasePrefix = $"[{restEaseParameterAnnotation}({string.Join(", ", attributes)})]",
+                IsNullPostfix = isNullPostfix,
                 Summary = description
             };
         }
 
         string extraAttributesBetweenParentheses = extraAttributes.Length == 0 ? string.Empty : $"({string.Join(", ", extraAttributes)})";
-        identifierWithType = $"{_schemaMapper.MapSchema(@interface, schema, string.Empty, identifier, !required, false, null, directory)}";
+        identifierWithType = _schemaMapper.MapSchema(@interface, schema, string.Empty, identifier, !required, false, null, directory);
+
+        identifierWithType = FixReservedType(identifierWithType);
 
         return new RestEaseParameter
         {
@@ -774,11 +773,23 @@ internal class InterfaceMapper : BaseMapper
             ValidIdentifier = identifier,
             SchemaType = schema.GetSchemaType(),
             SchemaFormat = schema.GetSchemaFormat(),
-            IdentifierWithType = $"{identifierWithType}",
-            IdentifierWithTypePascalCase = $"{_schemaMapper.MapSchema(@interface, schema, string.Empty, identifier, !required, true, null, directory)}",
-            IdentifierWithRestEase = $"[{restEaseParameterAnnotation}{extraAttributesBetweenParentheses}] {identifierWithType}{isNullPostfix}",
+            IdentifierWithType = identifierWithType, // 
+            //IdentifierRestEasePrefix = $"[{restEaseParameterAnnotation}{extraAttributesBetweenParentheses}] {identifierWithType}{isNullPostfix}",
+            IdentifierRestEasePrefix = $"[{restEaseParameterAnnotation}{extraAttributesBetweenParentheses}]", // TODO isNullPostfix
+            IsNullPostfix = isNullPostfix,
             Summary = description
         };
+    }
+
+    private PropertyDto FixReservedType(PropertyDto identifierWithType)
+    {
+        if (IdentifierUtils.IsReserved(identifierWithType.Type))
+        {
+            identifierWithType =
+                new PropertyDto($"{Settings.ModelsNamespace}.{identifierWithType.Type}", identifierWithType.Name);
+        }
+
+        return identifierWithType;
     }
 
     private static bool TryGetOpenApiMediaType(IDictionary<string, OpenApiMediaType?> contentTypes, SupportedContentType contentType, out OpenApiMediaType? mediaType, out string detectedContentType)

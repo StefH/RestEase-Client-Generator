@@ -1,4 +1,5 @@
 using Microsoft.OpenApi.Models;
+using RestEaseClientGenerator.Extensions;
 using RestEaseClientGenerator.Types.Internal;
 
 namespace RestEaseClientGenerator.Models.Internal;
@@ -11,15 +12,19 @@ internal class RestEaseParameter
 
     public string ValidIdentifier { get; set; }
 
-    public string IdentifierWithTypePascalCase { get; set; }
+    public PropertyDto IdentifierWithTypePascalCase => new(IdentifierWithType.Type, IdentifierWithType.Name.ToPascalCase());
 
-    public string IdentifierWithType { get; set; }
+    public PropertyDto IdentifierWithType { get; set; }
+
+    public string IdentifierRestEasePrefix { get; set; }
+
+    public bool IsNullPostfix { get; set; }
 
     public SchemaType SchemaType { get; set; }
 
     public SchemaFormat SchemaFormat { get; set; }
 
-    public string IdentifierWithRestEase { get; set; }
+    public string IdentifierWithRestEase => $"{IdentifierRestEasePrefix} {IdentifierWithType}{(IsNullPostfix ? " = null" : string.Empty)}";
 
     public string Summary { get; set; }
 

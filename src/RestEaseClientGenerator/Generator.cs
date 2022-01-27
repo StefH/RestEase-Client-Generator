@@ -147,7 +147,6 @@ public class Generator : IGenerator
         if (settings.GenerationType.HasFlag(GenerationType.Models))
         {
             // Add Models + Inline/External Models
-            
             var allModelsDup = result.Models.Union(@interface.ExtraModels)
                 .GroupBy(r => r.ClassName)
                 .Where(x => x.Count() > 1)
