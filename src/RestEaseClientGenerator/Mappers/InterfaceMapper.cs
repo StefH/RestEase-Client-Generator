@@ -31,11 +31,6 @@ internal class InterfaceMapper : BaseMapper
             Summary = openApiDocument.Info?.Description ?? name
         };
 
-        if (openApiDocument.Components.Parameters is not null)
-        {
-            @interface.Parameters = openApiDocument.Components.Parameters;
-        }
-
         foreach (var path in openApiDocument.Paths)
         {
             MapPath(@interface, path.Key, path.Value, directory);
@@ -225,7 +220,7 @@ internal class InterfaceMapper : BaseMapper
                 new ()
                 {
                     ValidIdentifier = "api",
-                    IdentifierWithTypePascalCase = null,
+                    IdentifierWithTypePascalCase = string.Empty,
                     IdentifierWithType = $"this {@interface.Name} api",
                     IdentifierWithRestEase = $"this {@interface.Name} api",
                     Summary = "The Api"

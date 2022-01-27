@@ -19,10 +19,9 @@ internal class ExternalReferenceMapper : BaseMapper
 
     public OpenApiParameter? MapParameter(OpenApiReference reference, string? directory)
     {
-        var result = CallFromFileInternal(reference, directory);
-        var name = result.className;
+        var (className, dto) = CallFromFileInternal(reference, directory);
 
-        if (result.dto.Interface.Parameters.TryGetValue(name, out var parameter))
+        if (dto.Interface.OpenApiDocument.Components.Parameters.TryGetValue(className, out var parameter))
         {
             return parameter;
         }
@@ -32,10 +31,9 @@ internal class ExternalReferenceMapper : BaseMapper
 
     public PropertyDto MapProperty(OpenApiReference reference, string? directory)
     {
-        var result = CallFromFileInternal(reference, directory);
-        var className = result.className;
+        var (className, dto) = CallFromFileInternal(reference, directory);
 
-        foreach (var item in result.dto.Models)
+        foreach (var item in dto.Models)
         {
             if (_interface.ExtraModels.FirstOrDefault(m => string.Equals(m.ClassName, item.ClassName, StringComparison.InvariantCultureIgnoreCase)) is null)
             {
@@ -43,7 +41,7 @@ internal class ExternalReferenceMapper : BaseMapper
             }
         }
 
-        foreach (var item in result.dto.Enums)
+        foreach (var item in dto.Enums)
         {
             if (_interface.ExtraEnums.FirstOrDefault(m => string.Equals(m.EnumName, item.EnumName, StringComparison.InvariantCultureIgnoreCase)) is null)
             {
