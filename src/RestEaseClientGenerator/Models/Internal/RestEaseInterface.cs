@@ -10,15 +10,15 @@ internal class RestEaseInterface
 
     public string Summary { get; set; }
 
-    public List<RestEaseInterfaceHeader> VariableHeaders { get; set; } = new List<RestEaseInterfaceHeader>();
+    public List<RestEaseInterfaceHeader> VariableHeaders { get; set; } = new();
 
-    public List<RestEaseInterfaceQueryParameter> ConstantQueryParameters { get; set; } = new List<RestEaseInterfaceQueryParameter>();
+    public List<RestEaseInterfaceQueryParameter> ConstantQueryParameters { get; set; } = new();
 
-    public ICollection<RestEaseInterfaceMethodDetails> Methods { get; set; } = new List<RestEaseInterfaceMethodDetails>();
+    public List<RestEaseInterfaceMethodDetails> Methods { get; set; } = new();
 
-    public ICollection<RestEaseModel> ExtraModels { get; set; } = new List<RestEaseModel>();
+    public List<RestEaseModel> ExtraModels { get; set; } = new();
 
-    public ICollection<RestEaseEnum> ExtraEnums { get; set; } = new List<RestEaseEnum>();
+    public List<RestEaseEnum> ExtraEnums { get; set; } = new();
 
     public OpenApiDocument OpenApiDocument { get; set; } = null!;
 }

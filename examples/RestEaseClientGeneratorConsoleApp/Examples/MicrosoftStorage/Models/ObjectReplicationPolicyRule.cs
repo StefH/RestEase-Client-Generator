@@ -24,7 +24,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftStorage.Models
         public string DestinationContainer { get; set; }
 
         /// <summary>
-        /// not-used
+        /// Filters limit replication to a subset of blobs within the storage account. A logical OR is performed on values in the filter. If multiple filters are defined, a logical AND is performed on all filters.
         /// </summary>
         public ObjectReplicationPolicyFilter Filters { get; set; }
     }

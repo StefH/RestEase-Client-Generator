@@ -14,7 +14,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftStorage.Models
         public string ProvisioningState { get; set; }
 
         /// <summary>
-        /// not-used
+        /// The URIs that are used to perform a retrieval of a public blob, queue, table, web or dfs object.
         /// </summary>
         public Endpoints PrimaryEndpoints { get; set; }
 
@@ -49,32 +49,32 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftStorage.Models
         public DateTime CreationTime { get; set; }
 
         /// <summary>
-        /// not-used
+        /// The custom domain assigned to this storage account. This can be set via Update.
         /// </summary>
         public CustomDomain CustomDomain { get; set; }
 
         /// <summary>
-        /// not-used
+        /// SasPolicy assigned to the storage account.
         /// </summary>
         public SasPolicy SasPolicy { get; set; }
 
         /// <summary>
-        /// not-used
+        /// KeyPolicy assigned to the storage account.
         /// </summary>
         public KeyPolicy KeyPolicy { get; set; }
 
         /// <summary>
-        /// not-used
+        /// Storage account keys creation time.
         /// </summary>
         public KeyCreationTime KeyCreationTime { get; set; }
 
         /// <summary>
-        /// not-used
+        /// The URIs that are used to perform a retrieval of a public blob, queue, table, web or dfs object.
         /// </summary>
         public Endpoints SecondaryEndpoints { get; set; }
 
         /// <summary>
-        /// not-used
+        /// The encryption settings on the storage account.
         /// </summary>
         public Encryption Encryption { get; set; }
 
@@ -84,7 +84,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftStorage.Models
         public string AccessTier { get; set; }
 
         /// <summary>
-        /// not-used
+        /// Settings for Azure Files identity based authentication.
         /// </summary>
         public AzureFilesIdentityBasedAuthentication AzureFilesIdentityBasedAuthentication { get; set; }
 
@@ -94,7 +94,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftStorage.Models
         public bool SupportsHttpsTrafficOnly { get; set; }
 
         /// <summary>
-        /// not-used
+        /// Network rule set
         /// </summary>
         public NetworkRuleSet NetworkAcls { get; set; }
 
@@ -114,7 +114,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftStorage.Models
         public bool IsHnsEnabled { get; set; }
 
         /// <summary>
-        /// not-used
+        /// Statistics related to replication for storage account's Blob, Table, Queue and File services. It is only available when geo-redundant replication is enabled for the storage account.
         /// </summary>
         public GeoReplicationStats GeoReplicationStats { get; set; }
 
@@ -134,12 +134,12 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftStorage.Models
         public PrivateEndpointConnection[] PrivateEndpointConnections { get; set; }
 
         /// <summary>
-        /// not-used
+        /// Routing preference defines the type of network, either microsoft or internet routing to be used to deliver the user data, the default option is microsoft routing
         /// </summary>
         public RoutingPreference RoutingPreference { get; set; }
 
         /// <summary>
-        /// not-used
+        /// Blob restore status.
         /// </summary>
         public BlobRestoreStatus BlobRestoreStatus { get; set; }
 
@@ -179,7 +179,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftStorage.Models
         public string PublicNetworkAccess { get; set; }
 
         /// <summary>
-        /// not-used
+        /// This property enables and defines account-level immutability. Enabling the feature auto-enables Blob Versioning.
         /// </summary>
         public ImmutableStorageAccount ImmutableStorageWithVersioning { get; set; }
 

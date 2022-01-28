@@ -9,7 +9,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftStorage.Models
     public class PrivateEndpointConnection : Resource
     {
         /// <summary>
-        /// not-used
+        /// Properties of the PrivateEndpointConnectProperties.
         /// </summary>
         public PrivateEndpointConnectionProperties Properties { get; set; }
 

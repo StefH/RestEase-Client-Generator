@@ -39,12 +39,12 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftStorage.Models
         public string Dfs { get; set; }
 
         /// <summary>
-        /// not-used
+        /// The URIs that are used to perform a retrieval of a public blob, queue, table, web or dfs object via a microsoft routing endpoint.
         /// </summary>
         public StorageAccountMicrosoftEndpoints MicrosoftEndpoints { get; set; }
 
         /// <summary>
-        /// not-used
+        /// The URIs that are used to perform a retrieval of a public blob, file, web or dfs object via a internet routing endpoint.
         /// </summary>
         public StorageAccountInternetEndpoints InternetEndpoints { get; set; }
     }

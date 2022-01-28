@@ -19,17 +19,17 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftStorage.Models
         public string Kind { get; set; }
 
         /// <summary>
-        /// not-used
+        /// Identity for the resource.
         /// </summary>
         public Identity Identity { get; set; }
 
         /// <summary>
-        /// not-used
+        /// The complex type of the extended location.
         /// </summary>
         public ExtendedLocation ExtendedLocation { get; set; }
 
         /// <summary>
-        /// not-used
+        /// Properties of the storage account.
         /// </summary>
         public StorageAccountProperties Properties { get; set; }
 

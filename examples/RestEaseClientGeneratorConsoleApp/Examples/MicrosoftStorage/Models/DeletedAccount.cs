@@ -9,7 +9,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftStorage.Models
     public class DeletedAccount : ProxyResource
     {
         /// <summary>
-        /// not-used
+        /// Attributes of a deleted storage account.
         /// </summary>
         public DeletedAccountProperties Properties { get; set; }
 

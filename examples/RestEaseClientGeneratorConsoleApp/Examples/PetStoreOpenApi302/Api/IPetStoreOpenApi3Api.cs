@@ -15,7 +15,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreOpenApi302.Api
     /// </summary>
     public interface IPetStoreOpenApi3Api
     {
-        [Header("api_key")]
+        [Header("api_key", "0x0001")]
         string ApiKey { get; set; }
 
         /// <summary>

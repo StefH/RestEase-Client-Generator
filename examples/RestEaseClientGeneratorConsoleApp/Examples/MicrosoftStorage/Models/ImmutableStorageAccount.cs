@@ -14,7 +14,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftStorage.Models
         public bool Enabled { get; set; }
 
         /// <summary>
-        /// not-used
+        /// This defines account-level immutability policy properties.
         /// </summary>
         public AccountImmutabilityPolicyProperties ImmutabilityPolicy { get; set; }
     }

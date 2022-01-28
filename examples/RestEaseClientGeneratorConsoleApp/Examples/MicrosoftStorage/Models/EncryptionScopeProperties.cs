@@ -29,7 +29,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftStorage.Models
         public DateTime LastModifiedTime { get; set; }
 
         /// <summary>
-        /// not-used
+        /// The key vault properties for the encryption scope. This is a required field if encryption scope 'source' attribute is set to 'Microsoft.KeyVault'.
         /// </summary>
         public EncryptionScopeKeyVaultProperties KeyVaultProperties { get; set; }
 

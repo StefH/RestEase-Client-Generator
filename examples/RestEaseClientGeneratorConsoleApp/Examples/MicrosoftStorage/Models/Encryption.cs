@@ -9,7 +9,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftStorage.Models
     public class Encryption
     {
         /// <summary>
-        /// not-used
+        /// A list of services that support encryption.
         /// </summary>
         public EncryptionServices Services { get; set; }
 
@@ -24,12 +24,12 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftStorage.Models
         public bool RequireInfrastructureEncryption { get; set; }
 
         /// <summary>
-        /// not-used
+        /// Properties of key vault.
         /// </summary>
         public KeyVaultProperties Keyvaultproperties { get; set; }
 
         /// <summary>
-        /// not-used
+        /// Encryption identity for the storage account.
         /// </summary>
         public EncryptionIdentity Identity { get; set; }
     }

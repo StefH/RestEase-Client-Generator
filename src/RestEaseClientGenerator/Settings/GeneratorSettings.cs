@@ -129,5 +129,9 @@ public class GeneratorSettings
     [DisplayName("ConstantQueryParameters")]
     [Description("A dictionary defining values for constant query parameters.")]
     public IDictionary<string, string>? ConstantQueryParameters { get; set; }
+
+    [DisplayName("ConstantHeaderParameters")]
+    [Description("A dictionary defining values for constant header parameters.")]
+    public IDictionary<string, string>? ConstantHeaderParameters { get; set; }
     #endregion
 }

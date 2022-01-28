@@ -44,9 +44,9 @@ internal class InterfaceMapper : BaseMapper
             var query = security.Definitions.FirstOrDefault(sd => sd.Type == SecurityDefinitionType.Query);
 
             if (header != null &&
-                (Settings.PreferredSecurityDefinitionType == SecurityDefinitionType.Automatic || Settings.PreferredSecurityDefinitionType == SecurityDefinitionType.Header))
+                Settings.PreferredSecurityDefinitionType is SecurityDefinitionType.Automatic or SecurityDefinitionType.Header)
             {
-                @interface.VariableHeaders.Add(new RestEaseInterfaceHeader { ValidIdentifier = header.IdentifierName, Name = header.Name });
+                @interface.VariableHeaders.Add(new RestEaseInterfaceHeader(header.IdentifierName, header.Name));
             }
             else if (query != null &&
                      (Settings.PreferredSecurityDefinitionType == SecurityDefinitionType.Automatic || Settings.PreferredSecurityDefinitionType == SecurityDefinitionType.Query))
@@ -76,7 +76,7 @@ internal class InterfaceMapper : BaseMapper
 
                 if (@interface.VariableHeaders.All(v => v.Name != parameter.Identifier))
                 {
-                    @interface.VariableHeaders.Add(new RestEaseInterfaceHeader { Name = parameter.Identifier, ValidIdentifier = parameter.ValidIdentifier });
+                    @interface.VariableHeaders.Add(new RestEaseInterfaceHeader(parameter.Identifier, parameter.ValidIdentifier));
                 }
             }
         }

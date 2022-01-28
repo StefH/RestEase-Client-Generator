@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.IO;
 using Microsoft.OpenApi.Readers;
 using RestEaseClientGenerator;
@@ -78,7 +79,8 @@ namespace RestEaseClientGeneratorConsoleApp
                 MethodReturnType = MethodReturnType.Type,
                 PreferredEnumType = EnumType.String,
                 SingleFile = false,
-                GenerationType = GenerationType.Both
+                GenerationType = GenerationType.Both,
+                ConstantHeaderParameters = new Dictionary<string, string> { { "api_key", "0x0001" } }
             };
             foreach (var file in generator.FromFile("Examples\\petstore-openapi3.json", petStoreOpenApi3Settings, out OpenApiDiagnostic diagnosticPetStoreOpenApi3))
             {
