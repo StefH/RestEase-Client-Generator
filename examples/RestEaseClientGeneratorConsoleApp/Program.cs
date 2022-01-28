@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.IO;
 using Microsoft.OpenApi.Readers;
 using RestEaseClientGenerator;
@@ -33,20 +34,20 @@ namespace RestEaseClientGeneratorConsoleApp
             {
                 File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Weather/{file.Path}/{file.Name}", file.Content);
             }
-            return;
+            //return;
 
-            var jiraSettings = new GeneratorSettings
-            {
-                Namespace = "RestEaseClientGeneratorConsoleApp.Examples.Jira",
-                ApiName = "Jira",
-                SingleFile = true,
-                PreferredMultipleResponsesType = MultipleResponsesType.AnyOf
-            };
-            foreach (var file in generator.FromFile("Examples\\Jira\\swagger-v3.v3.json", jiraSettings, out OpenApiDiagnostic diagnosticJira))
-            {
-                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Jira/{file.Path}/{file.Name}", file.Content);
-            }
-            return;
+            //var jiraSettings = new GeneratorSettings
+            //{
+            //    Namespace = "RestEaseClientGeneratorConsoleApp.Examples.Jira",
+            //    ApiName = "Jira",
+            //    SingleFile = true,
+            //    PreferredMultipleResponsesType = MultipleResponsesType.AnyOf
+            //};
+            //foreach (var file in generator.FromFile("Examples\\Jira\\swagger-v3.v3.json", jiraSettings, out OpenApiDiagnostic diagnosticJira))
+            //{
+            //    File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Jira/{file.Path}/{file.Name}", file.Content);
+            //}
+            //return;
 
             //var petStoreJsonSettings = new GeneratorSettings
             //{
@@ -78,7 +79,8 @@ namespace RestEaseClientGeneratorConsoleApp
                 MethodReturnType = MethodReturnType.Type,
                 PreferredEnumType = EnumType.String,
                 SingleFile = false,
-                GenerationType = GenerationType.Both
+                GenerationType = GenerationType.Both,
+                ConstantHeaderParameters = new Dictionary<string, string> { { "api_key", "0x0001" } }
             };
             foreach (var file in generator.FromFile("Examples\\petstore-openapi3.json", petStoreOpenApi3Settings, out OpenApiDiagnostic diagnosticPetStoreOpenApi3))
             {

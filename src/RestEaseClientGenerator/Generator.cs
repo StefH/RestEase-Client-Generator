@@ -113,6 +113,17 @@ public class Generator : IGenerator
             }
         }
 
+        if (settings.ConstantHeaderParameters != null)
+        {
+            foreach (var header in @interface.VariableHeaders)
+            {
+                if (settings.ConstantHeaderParameters.TryGetValue(header.Name, out var value))
+                {
+                    header.Value = value;
+                }
+            }
+        }
+
         if (settings.GenerationType.HasFlag(GenerationType.Api))
         {
             var anyModels = result.Models.Any();

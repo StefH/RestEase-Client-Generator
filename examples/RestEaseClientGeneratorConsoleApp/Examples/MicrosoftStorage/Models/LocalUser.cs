@@ -9,7 +9,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftStorage.Models
     public class LocalUser : Resource
     {
         /// <summary>
-        /// not-used
+        /// The Storage Account Local User properties.
         /// </summary>
         public LocalUserProperties Properties { get; set; }
 

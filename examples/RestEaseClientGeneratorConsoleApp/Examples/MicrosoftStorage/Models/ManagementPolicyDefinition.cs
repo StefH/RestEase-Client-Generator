@@ -9,12 +9,12 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftStorage.Models
     public class ManagementPolicyDefinition
     {
         /// <summary>
-        /// not-used
+        /// Actions are applied to the filtered blobs when the execution condition is met.
         /// </summary>
         public ManagementPolicyAction Actions { get; set; }
 
         /// <summary>
-        /// not-used
+        /// Filters limit rule actions to a subset of blobs within the storage account. If multiple filters are defined, a logical AND is performed on all filters. 
         /// </summary>
         public ManagementPolicyFilter Filters { get; set; }
     }

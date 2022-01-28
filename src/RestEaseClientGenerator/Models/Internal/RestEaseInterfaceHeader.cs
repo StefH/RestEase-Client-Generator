@@ -1,8 +1,6 @@
 namespace RestEaseClientGenerator.Models.Internal;
 
-internal class RestEaseInterfaceHeader
+internal record RestEaseInterfaceHeader(string ValidIdentifier, string Name)
 {
-    public string ValidIdentifier { get; set; }
-
-    public string Name { get; set; }
+    public string? Value { get; set; }
 }

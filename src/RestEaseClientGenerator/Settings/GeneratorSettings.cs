@@ -47,6 +47,10 @@ public class GeneratorSettings
     [DisplayName("Support 'x-nullable'")]
     [Description("Support vendor extension 'x-nullable' to indicate a property as nullable for OpenApi 2.0, the default value is 'False'.")]
     public bool SupportExtensionXNullable { get; set; } = false;
+
+    [DisplayName("Extend the class")]
+    [Description("Extend the generated Model class if the type has a AnyOf or AllOf, the default value is 'True'.")]
+    public bool ExtendClassForAnyOfAllOf { get; set; } = true;
     #endregion
 
     #region Interface
@@ -125,5 +129,9 @@ public class GeneratorSettings
     [DisplayName("ConstantQueryParameters")]
     [Description("A dictionary defining values for constant query parameters.")]
     public IDictionary<string, string>? ConstantQueryParameters { get; set; }
+
+    [DisplayName("ConstantHeaderParameters")]
+    [Description("A dictionary defining values for constant header parameters.")]
+    public IDictionary<string, string>? ConstantHeaderParameters { get; set; }
     #endregion
 }

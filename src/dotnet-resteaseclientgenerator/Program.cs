@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using CommandLine;
@@ -8,7 +7,6 @@ using DotNetRestEaseClientGenerator.Utils;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Readers;
 using RestEaseClientGenerator;
-using RestEaseClientGenerator.Settings;
 using RestEaseClientGenerator.Types;
 
 namespace DotNetRestEaseClientGenerator;
@@ -106,6 +104,9 @@ public class Program
 
         [Option("ConstantQueryParameters", HelpText = "A dictionary defining values for constant query parameters.")]
         public IEnumerable<string>? ConstantQueryParameters { get; set; }
+
+        [Option("ConstantHeaderParameters", HelpText = "A dictionary defining values for constant header parameters.")]
+        public IEnumerable<string>? ConstantHeaderParameters { get; set; }
         #endregion
 
         #region Models

@@ -24,7 +24,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftStorage.Models
         public string RestoreId { get; set; }
 
         /// <summary>
-        /// not-used
+        /// Blob restore parameters
         /// </summary>
         public BlobRestoreParameters Parameters { get; set; }
     }

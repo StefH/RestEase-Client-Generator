@@ -64,6 +64,7 @@
         <Divider />
         <CheckField @bind-Value="@settings.SupportExtensionXNullable" For="@(() => settings.SupportExtensionXNullable)"></CheckField>
         <CheckField @bind-Value="@settings.GeneratePrimitivePropertiesAsNullableForOpenApi20" For="@(() => settings.GeneratePrimitivePropertiesAsNullableForOpenApi20)"></CheckField>
+        <CheckField @bind-Value="@settings.ExtendClassForAnyOfAllOf" For="@(() => settings.ExtendClassForAnyOfAllOf)"></CheckField>
     </CardBody>
     <CardBody>
         <b>Interface</b>
@@ -85,7 +86,8 @@
         <CheckField @bind-Value="@settings.DefineSharedMethodQueryParametersOnInterface" For="@(() => settings.DefineSharedMethodQueryParametersOnInterface)"></CheckField>
         <CheckField @bind-Value="@settings.GenerateAndUseModelForAnyOfOrOneOf" For="@(() => settings.GenerateAndUseModelForAnyOfOrOneOf)"></CheckField>
         <SelectEnumField @bind-Value="@settings.PreferredMultipleResponsesType" For="@(() => settings.PreferredMultipleResponsesType)"></SelectEnumField>
-        <DictionaryField @bind-Value="@settings.ConstantQueryParameters" For="@(() => settings.ConstantQueryParameters!)"></DictionaryField>
+        <DictionaryField @bind-Value="@settings.ConstantQueryParameterItems" For="@(() => settings.ConstantQueryParameterItems)"></DictionaryField>
+        <DictionaryField @bind-Value="@settings.ConstantHeaderParameterItems" For="@(() => settings.ConstantHeaderParameterItems)"></DictionaryField>
     </CardBody>
     <CardBody>
         <b>Generate</b>

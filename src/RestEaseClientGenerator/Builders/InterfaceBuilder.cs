@@ -38,7 +38,10 @@ internal class InterfaceBuilder : BaseBuilder
 
         foreach (var header in @interface.VariableHeaders)
         {
-            builder.AppendLine($"        [Header(\"{header.Name}\")]");
+            builder.AppendLine(header.Value != null
+                ? $"        [Header(\"{header.Name}\", \"{header.Value}\")]"
+                : $"        [Header(\"{header.Name}\")]");
+
             builder.AppendLine($"        string {header.ValidIdentifier} {{ get; set; }}");
             builder.AppendLine();
         }

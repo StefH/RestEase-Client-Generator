@@ -9,7 +9,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftStorage.Models
     public class ErrorResponse
     {
         /// <summary>
-        /// not-used
+        /// Error response body contract.
         /// </summary>
         public ErrorResponseBody Error { get; set; }
     }

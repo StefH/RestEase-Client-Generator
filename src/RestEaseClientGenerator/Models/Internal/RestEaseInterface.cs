@@ -2,23 +2,15 @@ using Microsoft.OpenApi.Models;
 
 namespace RestEaseClientGenerator.Models.Internal;
 
-internal class RestEaseInterface
+internal record RestEaseInterface(OpenApiDocument OpenApiDocument, string Name, string Namespace, string Summary)
 {
-    public string Name { get; set; }
+    public List<RestEaseInterfaceHeader> VariableHeaders { get; set; } = new();
 
-    public string Namespace { get; set; }
+    public List<RestEaseInterfaceQueryParameter> ConstantQueryParameters { get; set; } = new();
 
-    public string Summary { get; set; }
+    public List<RestEaseInterfaceMethodDetails> Methods { get; set; } = new();
 
-    public List<RestEaseInterfaceHeader> VariableHeaders { get; set; } = new List<RestEaseInterfaceHeader>();
+    public List<RestEaseModel> ExtraModels { get; set; } = new();
 
-    public List<RestEaseInterfaceQueryParameter> ConstantQueryParameters { get; set; } = new List<RestEaseInterfaceQueryParameter>();
-
-    public ICollection<RestEaseInterfaceMethodDetails> Methods { get; set; } = new List<RestEaseInterfaceMethodDetails>();
-
-    public ICollection<RestEaseModel> ExtraModels { get; set; } = new List<RestEaseModel>();
-
-    public ICollection<RestEaseEnum> ExtraEnums { get; set; } = new List<RestEaseEnum>();
-
-    public OpenApiDocument OpenApiDocument { get; set; } = null!;
+    public List<RestEaseEnum> ExtraEnums { get; set; } = new();
 }

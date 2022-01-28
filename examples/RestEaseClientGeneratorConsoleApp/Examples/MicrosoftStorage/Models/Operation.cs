@@ -14,7 +14,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftStorage.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// Storage REST API operation definition.
+        /// Display metadata associated with the operation.
         /// </summary>
         public OperationDisplay Display { get; set; }
 
@@ -24,7 +24,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftStorage.Models
         public string Origin { get; set; }
 
         /// <summary>
-        /// not-used
+        /// Properties of operation, include metric specifications.
         /// </summary>
         public OperationProperties Properties { get; set; }
     }

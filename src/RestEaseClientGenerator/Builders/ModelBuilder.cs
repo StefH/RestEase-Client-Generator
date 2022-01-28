@@ -31,26 +31,26 @@ internal class ModelBuilder : BaseBuilder
 
         if (extends.Any())
         {
-            if (extends.Count == 1)
+            int skip = 0;
+            if (Settings.ExtendClassForAnyOfAllOf)
             {
                 extendsClass = $" : {extends[0]}";
+                skip = 1;
             }
-            else
+            
+            foreach (var extend in extends.Skip(skip))
             {
-                foreach (var extend in extends)
+                var model = _models.FirstOrDefault(m => string.Equals(m.ClassName, extend, StringComparison.InvariantCultureIgnoreCase));
+                if (model == null)
                 {
-                    var model = _models.FirstOrDefault(m => string.Equals(m.ClassName, extend, StringComparison.InvariantCultureIgnoreCase));
-                    if (model == null)
-                    {
-                        throw new InvalidOperationException($"Model with name '{extend}' is not found.");
-                    }
+                    throw new InvalidOperationException($"Model with name '{extend}' is not found.");
+                }
 
-                    foreach (var extraProperty in model.Properties)
+                foreach (var extraProperty in model.Properties)
+                {
+                    if (!properties.Select(p => p.Name).Contains(extraProperty.Name))
                     {
-                        if (!properties.Select(p => p.Name).Contains(extraProperty.Name))
-                        {
-                            properties.Add(extraProperty);
-                        }
+                        properties.Add(extraProperty);
                     }
                 }
             }

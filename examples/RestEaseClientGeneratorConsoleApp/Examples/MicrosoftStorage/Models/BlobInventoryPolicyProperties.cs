@@ -14,7 +14,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftStorage.Models
         public DateTime LastModifiedTime { get; set; }
 
         /// <summary>
-        /// not-used
+        /// The storage account blob inventory policy rules.
         /// </summary>
         public BlobInventoryPolicySchema Policy { get; set; }
     }

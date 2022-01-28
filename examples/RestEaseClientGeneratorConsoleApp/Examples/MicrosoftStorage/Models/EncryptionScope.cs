@@ -9,7 +9,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftStorage.Models
     public class EncryptionScope : Resource
     {
         /// <summary>
-        /// not-used
+        /// Properties of the encryption scope.
         /// </summary>
         public EncryptionScopeProperties Properties { get; set; }
 

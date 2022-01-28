@@ -1,10 +1,9 @@
 using Microsoft.OpenApi.Readers;
 using RestEaseClientGenerator.Settings;
 
-namespace RestEaseClientGeneratorBlazorApp.Services
+namespace RestEaseClientGeneratorBlazorApp.Services;
+
+public interface IRestEaseCodeGenerator
 {
-    public interface IRestEaseCodeGenerator
-    {
-        byte[] GenerateZippedBytesFromString(string content, GeneratorSettings settings, out OpenApiDiagnostic diagnostic);
-    }
+    byte[] GenerateZippedBytesFromString(string content, GeneratorSettings settings, out OpenApiDiagnostic diagnostic);
 }

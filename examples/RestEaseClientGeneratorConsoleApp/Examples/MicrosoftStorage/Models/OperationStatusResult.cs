@@ -44,7 +44,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.MicrosoftStorage.Models
         public OperationStatusResult[] Operations { get; set; }
 
         /// <summary>
-        /// not-used
+        /// The error detail.
         /// </summary>
         public ErrorDetail Error { get; set; }
     }

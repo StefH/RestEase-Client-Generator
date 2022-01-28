@@ -25,12 +25,12 @@ internal class InterfaceMapper : BaseMapper
         string interfaceName = $"I{name}Api";
 
         var @interface = new RestEaseInterface
-        {
-            OpenApiDocument = openApiDocument,
-            Name = interfaceName,
-            Namespace = Settings.Namespace,
-            Summary = openApiDocument.Info?.Description ?? name
-        };
+        (
+            openApiDocument,
+            interfaceName,
+            Settings.Namespace,
+            openApiDocument.Info?.Description ?? name
+        );
 
         foreach (var path in openApiDocument.Paths)
         {
@@ -44,9 +44,9 @@ internal class InterfaceMapper : BaseMapper
             var query = security.Definitions.FirstOrDefault(sd => sd.Type == SecurityDefinitionType.Query);
 
             if (header != null &&
-                (Settings.PreferredSecurityDefinitionType == SecurityDefinitionType.Automatic || Settings.PreferredSecurityDefinitionType == SecurityDefinitionType.Header))
+                Settings.PreferredSecurityDefinitionType is SecurityDefinitionType.Automatic or SecurityDefinitionType.Header)
             {
-                @interface.VariableHeaders.Add(new RestEaseInterfaceHeader { ValidIdentifier = header.IdentifierName, Name = header.Name });
+                @interface.VariableHeaders.Add(new RestEaseInterfaceHeader(header.IdentifierName, header.Name));
             }
             else if (query != null &&
                      (Settings.PreferredSecurityDefinitionType == SecurityDefinitionType.Automatic || Settings.PreferredSecurityDefinitionType == SecurityDefinitionType.Query))
@@ -76,7 +76,7 @@ internal class InterfaceMapper : BaseMapper
 
                 if (@interface.VariableHeaders.All(v => v.Name != parameter.Identifier))
                 {
-                    @interface.VariableHeaders.Add(new RestEaseInterfaceHeader { Name = parameter.Identifier, ValidIdentifier = parameter.ValidIdentifier });
+                    @interface.VariableHeaders.Add(new RestEaseInterfaceHeader(parameter.Identifier, parameter.ValidIdentifier));
                 }
             }
         }
@@ -773,8 +773,7 @@ internal class InterfaceMapper : BaseMapper
             SchemaType = schema.GetSchemaType(),
             SchemaFormat = schema.GetSchemaFormat(),
             IdentifierWithType = identifierWithType, // 
-            //IdentifierRestEasePrefix = $"[{restEaseParameterAnnotation}{extraAttributesBetweenParentheses}] {identifierWithType}{isNullPostfix}",
-            IdentifierRestEasePrefix = $"[{restEaseParameterAnnotation}{extraAttributesBetweenParentheses}]", // TODO isNullPostfix
+            IdentifierRestEasePrefix = $"[{restEaseParameterAnnotation}{extraAttributesBetweenParentheses}]",
             IsNullPostfix = isNullPostfix,
             Summary = description
         };
@@ -782,22 +781,14 @@ internal class InterfaceMapper : BaseMapper
 
     private PropertyDto FixReservedType(PropertyDto identifierWithType)
     {
-        if (IdentifierUtils.IsReserved(identifierWithType.Type))
-        {
-            return new PropertyDto($"{Settings.ModelsNamespace}.{identifierWithType.Type}", identifierWithType.Name);
-        }
-
-        return identifierWithType;
+        return !IdentifierUtils.IsReserved(identifierWithType.Type)
+            ? identifierWithType
+            : identifierWithType with { Type = $"{Settings.ModelsNamespace}.{identifierWithType.Type}" };
     }
 
     private string FixReservedType(string type)
     {
-        if (IdentifierUtils.IsReserved(type))
-        {
-            return $"{Settings.ModelsNamespace}.{type}";
-        }
-
-        return type;
+        return IdentifierUtils.IsReserved(type) ? $"{Settings.ModelsNamespace}.{type}" : type;
     }
 
     private static bool TryGetOpenApiMediaType(IDictionary<string, OpenApiMediaType?> contentTypes, SupportedContentType contentType, out OpenApiMediaType? mediaType, out string detectedContentType)
