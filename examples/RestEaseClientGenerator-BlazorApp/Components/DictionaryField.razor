@@ -1,4 +1,4 @@
-@inherits BaseField<IDictionary<string, string>>
+@inherits BaseField<List<DictionaryItem>>
 
 <Field Horizontal="true">
     <FieldLabel ColumnSize="ColumnSize.Is3">@Label</FieldLabel>
@@ -11,20 +11,36 @@
             <Column>
                 <Label>Value</Label>
             </Column>
+            <Column>
+            </Column>
         </Row>
 
-        @foreach (var key in Value.Keys)
+        @if (Value.Count > 0)
         {
-            var editKey = key;
-            var editValue = Value[key];
+            @foreach (var x in Value)
+            {
+                <Row>
+                    <Column>
+                        <TextEdit Size="Size.Small" @bind-Text="x.Key" />
+                    </Column>
 
+                    <Column>
+                        <TextEdit Size="Size.Small" @bind-Text="@x.Value" />
+                    </Column>
+                    <Column>
+                        <Button Size="Size.ExtraSmall" Color="Color.Secondary" Clicked="@Add"><Icon Name="IconName.Add" /></Button>
+                        <Button Size="Size.ExtraSmall" Color="Color.Secondary" Clicked="() => Remove(x.Id)"><Icon Name="IconName.Remove" /></Button>
+                    </Column>
+                </Row>
+            }
+        }
+        else
+        {
             <Row>
+                <Column></Column>
+                <Column></Column>
                 <Column>
-                    <TextEdit Size="Size.Small" @bind-Text="@editKey" />
-                </Column>
-
-                <Column>
-                    <TextEdit Size="Size.Small" @bind-Text="@editValue" />
+                    <Button Size="Size.ExtraSmall" Color="Color.Secondary" Clicked="@Add"><Icon Name="IconName.Add" /></Button>
                 </Column>
             </Row>
         }

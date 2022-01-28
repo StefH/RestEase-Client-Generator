@@ -2,19 +2,18 @@ using System;
 using System.ComponentModel;
 using RestEaseClientGenerator.Utils;
 
-namespace RestEaseClientGeneratorBlazorApp.Models
+namespace RestEaseClientGeneratorBlazorApp.Models;
+
+[TypeConverter(typeof(EnumDescriptionConverter))]
+[Flags]
+public enum SourceType
 {
-    [TypeConverter(typeof(EnumDescriptionConverter))]
-    [Flags]
-    public enum SourceType
-    {
-        [Description("Url")]
-        Url = 0,
+    [Description("Url")]
+    Url = 0,
 
-        [Description("File")]
-        File = 1,
+    [Description("File")]
+    File = 1,
 
-        [Description("Example")]
-        Example = 2
-    }
+    [Description("Example")]
+    Example = 2
 }

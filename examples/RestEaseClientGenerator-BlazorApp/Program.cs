@@ -9,42 +9,41 @@ using Microsoft.Extensions.DependencyInjection;
 using RestEaseClientGenerator;
 using RestEaseClientGeneratorBlazorApp.Services;
 
-namespace RestEaseClientGeneratorBlazorApp
+namespace RestEaseClientGeneratorBlazorApp;
+
+public class Program
 {
-    public class Program
+    public static async Task Main(string[] args)
     {
-        public static async Task Main(string[] args)
-        {
-            var builder = WebAssemblyHostBuilder.CreateDefault(args);
+        var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
-            builder.Services
-                .AddBlazorise(options =>
-                {
-                    options.ChangeTextOnKeyPress = true;
-                })
-                .AddBootstrapProviders()
-                .AddFontAwesomeIcons()
-                .AddBlazorDownloadFile();
-
-            builder.Services.AddSingleton(new HttpClient
+        builder.Services
+            .AddBlazorise(options =>
             {
-                BaseAddress = new Uri(builder.HostEnvironment.BaseAddress)
-            });
+                options.ChangeTextOnKeyPress = true;
+            })
+            .AddBootstrapProviders()
+            .AddFontAwesomeIcons()
+            .AddBlazorDownloadFile();
 
-            // Own Services
-            builder.Services.AddSingleton<IGenerator, Generator>();
-            builder.Services.AddSingleton<IRestEaseCodeGenerator, RestEaseCodeGenerator>();
-            builder.Services.AddSingleton<IFileZipper, FileZipper>();
+        builder.Services.AddSingleton(new HttpClient
+        {
+            BaseAddress = new Uri(builder.HostEnvironment.BaseAddress)
+        });
 
-            builder.RootComponents.Add<App>("app");
+        // Own Services
+        builder.Services.AddSingleton<IGenerator, Generator>();
+        builder.Services.AddSingleton<IRestEaseCodeGenerator, RestEaseCodeGenerator>();
+        builder.Services.AddSingleton<IFileZipper, FileZipper>();
 
-            var host = builder.Build();
+        builder.RootComponents.Add<App>("app");
 
-            host.Services
-                .UseBootstrapProviders()
-                .UseFontAwesomeIcons();
+        var host = builder.Build();
 
-            await host.RunAsync();
-        }
+        host.Services
+            .UseBootstrapProviders()
+            .UseFontAwesomeIcons();
+
+        await host.RunAsync();
     }
 }
