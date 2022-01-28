@@ -11,9 +11,6 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.PetStoreOpenApi302.Models
 
         public string Name { get; set; }
 
-        /// <summary>
-        /// not-used
-        /// </summary>
         public Category Category { get; set; }
 
         public string[] PhotoUrls { get; set; }
