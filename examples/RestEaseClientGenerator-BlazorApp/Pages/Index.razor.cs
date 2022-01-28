@@ -122,6 +122,15 @@ public partial class Index
             }
         }
 
+        if (settings.ConstantHeaderParameterItems.Count > 0)
+        {
+            settings.ConstantHeaderParameters = new Dictionary<string, string>();
+            foreach (var item in settings.ConstantHeaderParameterItems.Where(c => !string.IsNullOrEmpty(c.Key)))
+            {
+                settings.ConstantHeaderParameters.Add(item.Key, item.Value);
+            }
+        }
+
         var bytes = CodeGenerator.GenerateZippedBytesFromString(settings.Content, settings, out OpenApiDiagnostic diagnostic);
 
         if (diagnostic.Errors.Any())

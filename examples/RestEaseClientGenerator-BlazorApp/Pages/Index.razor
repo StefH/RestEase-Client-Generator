@@ -87,6 +87,7 @@
         <CheckField @bind-Value="@settings.GenerateAndUseModelForAnyOfOrOneOf" For="@(() => settings.GenerateAndUseModelForAnyOfOrOneOf)"></CheckField>
         <SelectEnumField @bind-Value="@settings.PreferredMultipleResponsesType" For="@(() => settings.PreferredMultipleResponsesType)"></SelectEnumField>
         <DictionaryField @bind-Value="@settings.ConstantQueryParameterItems" For="@(() => settings.ConstantQueryParameterItems)"></DictionaryField>
+        <DictionaryField @bind-Value="@settings.ConstantHeaderParameterItems" For="@(() => settings.ConstantHeaderParameterItems)"></DictionaryField>
     </CardBody>
     <CardBody>
         <b>Generate</b>
