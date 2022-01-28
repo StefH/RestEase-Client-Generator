@@ -12,6 +12,7 @@ internal sealed class TinyMapperUtils
         TinyMapper.Bind<Program.Options, GeneratorSettings>(config =>
         {
             config.Ignore(x => x.ConstantQueryParameters);
+            config.Ignore(x => x.ConstantHeaderParameters);
         });
     }
 
@@ -22,6 +23,11 @@ internal sealed class TinyMapperUtils
         if (options.ConstantQueryParameters != null)
         {
             settings.ConstantQueryParameters = DictionaryUtils.ToDictionary(options.ConstantQueryParameters);
+        }
+
+        if (options.ConstantHeaderParameters != null)
+        {
+            settings.ConstantHeaderParameters = DictionaryUtils.ToDictionary(options.ConstantHeaderParameters);
         }
 
         return settings;

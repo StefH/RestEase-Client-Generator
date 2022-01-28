@@ -11,8 +11,6 @@
     <Folder Include="Examples\ComputerVision\" />
     <Folder Include="Examples\Drc\Api\" />
     <Folder Include="Examples\Drc\Models\" />
-    <Folder Include="Examples\FormRecognizerV2\Api\" />
-    <Folder Include="Examples\FormRecognizerV2\Models\" />
     <Folder Include="Examples\HelloWorldRaml\Api\" />
     <Folder Include="Examples\HelloWorldRaml\Models\" />
     <Folder Include="Examples\MediaWikiRaml\Api\" />
