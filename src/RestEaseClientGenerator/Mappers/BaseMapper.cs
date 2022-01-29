@@ -1,7 +1,6 @@
 using RestEaseClientGenerator.Extensions;
 using RestEaseClientGenerator.Settings;
 using RestEaseClientGenerator.Types;
-using RestEaseClientGenerator.Utils;
 
 namespace RestEaseClientGenerator.Mappers;
 
@@ -18,9 +17,7 @@ public abstract class BaseMapper
 
     protected string MakeValidClassName(string name)
     {
-        string last = name.Replace(" ", "").Split('.').Last().ToPascalCase();
-
-        return last; //IdentifierUtils.TryGenerateValidClassName(last, out var valid) ? valid : last; //last.ToValidIdentifier(CasingType.Pascal);
+        return name.Replace(" ", "").Split('.').Last().ToPascalCase();
     }
 
     protected string MakeValidReferenceId(string id)

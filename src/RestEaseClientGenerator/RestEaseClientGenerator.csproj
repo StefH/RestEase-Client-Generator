@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <Version>0.0.0.1-preview-01</Version>
-        <TargetFrameworks>net461;netstandard2.0</TargetFrameworks>
+        <TargetFrameworks>net461;netstandard2.0;netstandard2.1</TargetFrameworks>
         <Description>Generate a RestEase compatible client (Interface and Models) based on a Swagger / OpenApi or RAML specification.</Description>
         <PackageTags>OpenAPI; Swagger; RestEase; REST API; Code Generator; REST Client; RAML</PackageTags>
         <!--<PackageReleaseNotes>$([System.IO.File]::ReadAllText("$(MSBuildProjectDirectory)/../../PackageReleaseNotes.txt"))</PackageReleaseNotes>-->
@@ -14,6 +14,13 @@
     <PropertyGroup Condition="'$(Configuration)' == 'Release'">
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     </PropertyGroup>
+
+    <ItemGroup Condition="'$(TargetFramework)' != 'netstandard2.1'">
+        <PackageReference Include="Nullable" Version="1.3.0">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+    </ItemGroup>
 
     <ItemGroup>
         <Compile Remove="Utils\RoslynString.cs" />
@@ -31,5 +38,4 @@
         <PackageReference Include="System.ValueTuple" Version="4.5.0" />
         <PackageReference Include="TinyMapper" Version="3.0.3" />
     </ItemGroup>
-
 </Project>
