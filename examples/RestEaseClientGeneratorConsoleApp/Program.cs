@@ -36,18 +36,18 @@ namespace RestEaseClientGeneratorConsoleApp
             }
             //return;
 
-            //var jiraSettings = new GeneratorSettings
-            //{
-            //    Namespace = "RestEaseClientGeneratorConsoleApp.Examples.Jira",
-            //    ApiName = "Jira",
-            //    SingleFile = true,
-            //    PreferredMultipleResponsesType = MultipleResponsesType.AnyOf
-            //};
-            //foreach (var file in generator.FromFile("Examples\\Jira\\swagger-v3.v3.json", jiraSettings, out OpenApiDiagnostic diagnosticJira))
-            //{
-            //    File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Jira/{file.Path}/{file.Name}", file.Content);
-            //}
-            //return;
+            var jiraSettings = new GeneratorSettings
+            {
+                Namespace = "RestEaseClientGeneratorConsoleApp.Examples.Jira",
+                ApiName = "Jira",
+                SingleFile = true,
+                PreferredMultipleResponsesType = MultipleResponsesType.AnyOf
+            };
+            foreach (var file in generator.FromFile("Examples\\Jira\\swagger-v3.v3.json", jiraSettings, out OpenApiDiagnostic diagnosticJira))
+            {
+                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Jira/{file.Path}/{file.Name}", file.Content);
+            }
+            return;
 
             //var petStoreJsonSettings = new GeneratorSettings
             //{

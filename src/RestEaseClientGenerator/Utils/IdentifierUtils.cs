@@ -60,6 +60,21 @@ internal static class IdentifierUtils
         //"var",       "when",       "where",      "yield"
     };
 
+    private static readonly Dictionary<string, string> Specials = new()
+    {
+        { "-", "Minus" },
+        { "+", "Plus" },
+        { "=", "Equal" },
+        { "!", "Not" },
+        { "!=", "NotEqual" },
+        { ">", "GreaterThan" },
+        { "<", "LessThan" },
+        { ">=", "GreaterThanEqual" },
+        { "<=", "LessThanEqual" },
+        { "~", "Approximately" },
+        { "~=", "Translingual" }
+    };
+
     private static readonly Regex ValidIdentifierRegex = new("^" + IDENTIFIER_OR_KEYWORD + "$", RegexOptions.Compiled);
 
     private static readonly string[] ReservedClassName;
@@ -99,6 +114,7 @@ internal static class IdentifierUtils
         return false;
     }
 
+
     public static string CreateValidIdentifier(string identifier)
     {
         if (!IsValidIdentifier(identifier))
@@ -109,5 +125,15 @@ internal static class IdentifierUtils
         var normalizedIdentifier = identifier.Normalize();
 
         return Keywords.Contains(normalizedIdentifier) ? $"_{normalizedIdentifier}" : identifier;
+    }
+
+    public static string CreateValidEnumMember(string value)
+    {
+        foreach (var special in Specials)
+        {
+            value = value.Replace(special.Key, special.Value);
+        }
+
+        return CreateValidIdentifier(value);
     }
 }
