@@ -6,6 +6,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
     /// <summary>
     /// The container group encryption properties.
     /// </summary>
+    [FluentBuilder.AutoGenerateBuilder]
     public class EncryptionProperties
     {
         /// <summary>

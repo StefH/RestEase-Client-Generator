@@ -6,6 +6,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
     /// <summary>
     /// DNS configuration for the container group.
     /// </summary>
+    [FluentBuilder.AutoGenerateBuilder]
     public class DnsConfiguration
     {
         /// <summary>

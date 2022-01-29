@@ -6,6 +6,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
     /// <summary>
     /// The resource requests.
     /// </summary>
+    [FluentBuilder.AutoGenerateBuilder]
     public class ResourceRequests
     {
         /// <summary>

@@ -6,6 +6,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
     /// <summary>
     /// The container instance properties.
     /// </summary>
+    [FluentBuilder.AutoGenerateBuilder]
     public class ContainerProperties
     {
         /// <summary>

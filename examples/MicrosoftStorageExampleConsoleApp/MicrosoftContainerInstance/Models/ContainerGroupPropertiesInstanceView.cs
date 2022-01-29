@@ -6,6 +6,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
     /// <summary>
     /// The instance view of the container group. Only valid in response.
     /// </summary>
+    [FluentBuilder.AutoGenerateBuilder]
     public class ContainerGroupPropertiesInstanceView
     {
         /// <summary>

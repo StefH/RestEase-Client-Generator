@@ -59,7 +59,8 @@ static void GenerateMicrosoftContainerInstance20211001()
         ApiName = "MicrosoftContainerInstance",
         SingleFile = false,
         PreferredSecurityDefinitionType = SecurityDefinitionType.None,
-        ConstantQueryParameters = new Dictionary<string, string> { { "api-version", "2021-10-01" } }
+        ConstantQueryParameters = new Dictionary<string, string> { { "api-version", "2021-10-01" } },
+        AddFluentBuilder = true
     };
 
     const string x = @"C:\Dev\azure-rest-api-specs\specification\containerinstance\resource-manager\Microsoft.ContainerInstance\stable\2021-10-01\containerInstance.json";

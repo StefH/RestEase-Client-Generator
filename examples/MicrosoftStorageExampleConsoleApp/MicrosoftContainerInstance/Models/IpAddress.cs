@@ -6,6 +6,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
     /// <summary>
     /// IP address for the container group.
     /// </summary>
+    [FluentBuilder.AutoGenerateBuilder]
     public class IpAddress
     {
         /// <summary>

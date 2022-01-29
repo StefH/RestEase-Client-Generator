@@ -6,6 +6,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
     /// <summary>
     /// The resource limits.
     /// </summary>
+    [FluentBuilder.AutoGenerateBuilder]
     public class ResourceLimits
     {
         /// <summary>

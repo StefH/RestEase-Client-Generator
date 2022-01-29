@@ -6,6 +6,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
     /// <summary>
     /// The regional capabilities.
     /// </summary>
+    [FluentBuilder.AutoGenerateBuilder]
     public class Capabilities
     {
         /// <summary>

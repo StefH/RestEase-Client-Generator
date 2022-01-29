@@ -69,6 +69,11 @@ internal class ModelBuilder : BaseBuilder
             builder.AppendLine("    /// </summary>");
         }
 
+        if (Settings.AddFluentBuilder)
+        {
+            builder.AppendLine("    [FluentBuilder.AutoGenerateBuilder]");
+        }
+
         builder.AppendLine($"    public class {restEaseModel.ClassName}{extendsClass}");
         builder.AppendLine("    {");
         foreach (var property in properties)

@@ -6,6 +6,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
     /// <summary>
     /// The environment variable to set within the container instance.
     /// </summary>
+    [FluentBuilder.AutoGenerateBuilder]
     public class EnvironmentVariable
     {
         /// <summary>

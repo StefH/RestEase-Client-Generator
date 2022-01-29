@@ -6,6 +6,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
     /// <summary>
     /// The GPU resource.
     /// </summary>
+    [FluentBuilder.AutoGenerateBuilder]
     public class GpuResource
     {
         /// <summary>

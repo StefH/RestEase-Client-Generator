@@ -6,6 +6,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
     /// <summary>
     /// The information for the output stream from container attach.
     /// </summary>
+    [FluentBuilder.AutoGenerateBuilder]
     public class ContainerAttachResponse
     {
         /// <summary>

@@ -6,6 +6,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
     /// <summary>
     /// The init container definition.
     /// </summary>
+    [FluentBuilder.AutoGenerateBuilder]
     public class InitContainerDefinition
     {
         /// <summary>

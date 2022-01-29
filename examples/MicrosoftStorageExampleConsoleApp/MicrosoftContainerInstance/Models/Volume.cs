@@ -6,6 +6,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
     /// <summary>
     /// The properties of the volume.
     /// </summary>
+    [FluentBuilder.AutoGenerateBuilder]
     public class Volume
     {
         /// <summary>

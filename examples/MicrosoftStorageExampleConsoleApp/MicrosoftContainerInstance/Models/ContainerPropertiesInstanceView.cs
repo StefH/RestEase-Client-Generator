@@ -6,6 +6,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
     /// <summary>
     /// The instance view of the container instance. Only valid in response.
     /// </summary>
+    [FluentBuilder.AutoGenerateBuilder]
     public class ContainerPropertiesInstanceView
     {
         /// <summary>

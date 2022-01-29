@@ -6,6 +6,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
     /// <summary>
     /// Container group log analytics information.
     /// </summary>
+    [FluentBuilder.AutoGenerateBuilder]
     public class LogAnalytics
     {
         /// <summary>

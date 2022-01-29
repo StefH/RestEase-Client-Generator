@@ -6,6 +6,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
     /// <summary>
     /// The port exposed on the container instance.
     /// </summary>
+    [FluentBuilder.AutoGenerateBuilder]
     public class ContainerPort
     {
         /// <summary>
