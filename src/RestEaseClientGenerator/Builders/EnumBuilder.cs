@@ -4,6 +4,7 @@ using RestEaseClientGenerator.Models.Internal;
 using RestEaseClientGenerator.Settings;
 using RestEaseClientGenerator.Types;
 using RestEaseClientGenerator.Types.Internal;
+using RestEaseClientGenerator.Utils;
 
 namespace RestEaseClientGenerator.Builders;
 
@@ -46,7 +47,7 @@ internal class EnumBuilder : BaseBuilder
             builder.AppendLine("    /// </summary>");
         }
 
-        var safeValues = restEaseEnum.Values.Select(value => value.ToValidIdentifier());
+        var safeValues = restEaseEnum.Values.Select(IdentifierUtils.CreateValidEnumMember);
 
         builder.AppendLine($"    public enum {restEaseEnum.EnumName}");
         builder.AppendLine("    {");
@@ -67,7 +68,7 @@ internal class EnumBuilder : BaseBuilder
 
         var values = restEaseEnum.Values.Select(value => new
         {
-            name = value.ToValidIdentifier(CasingType.Pascal),
+            name = IdentifierUtils.CreateValidEnumMember(value),
             value
         });
 
