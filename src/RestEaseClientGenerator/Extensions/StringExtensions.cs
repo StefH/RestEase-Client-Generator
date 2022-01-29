@@ -12,7 +12,7 @@ public static class StringExtensions
 {
     internal static string ToValidIdentifier(this string value, CasingType casingType = CasingType.None)
     {
-        return CSharpUtils.CreateValidIdentifier(value, casingType);
+        return IdentifierUtils.CreateValidIdentifier(value, casingType);
     }
 
     public static string? StripHtml(this string? text)

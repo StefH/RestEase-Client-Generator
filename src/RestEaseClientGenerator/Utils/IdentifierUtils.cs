@@ -1,4 +1,6 @@
 using System.Text.RegularExpressions;
+using RestEaseClientGenerator.Extensions;
+using RestEaseClientGenerator.Types.Internal;
 
 namespace RestEaseClientGenerator.Utils;
 
@@ -62,6 +64,7 @@ internal static class IdentifierUtils
 
     private static readonly Dictionary<string, string> Specials = new()
     {
+        { "@", "At" },
         { "-", "Minus" },
         { "+", "Plus" },
         { "=", "Equal" },
@@ -74,6 +77,8 @@ internal static class IdentifierUtils
         { "~", "Approximately" },
         { "~=", "Translingual" }
     };
+
+    private static readonly Regex Regex = new(@"[^\p{Ll}\p{Lu}\p{Lt}\p{Lo}\p{Nd}\p{Nl}\p{Mn}\p{Mc}\p{Cf}\p{Pc}\p{Lm}]");
 
     private static readonly Regex ValidIdentifierRegex = new("^" + IDENTIFIER_OR_KEYWORD + "$", RegexOptions.Compiled);
 
@@ -98,14 +103,14 @@ internal static class IdentifierUtils
 
         var normalizedIdentifier = identifier.Normalize();
 
-        // 1. check that the identifier match the ValidIdentifierRegex and it's not a C# keyword
-        if (ValidIdentifierRegex.IsMatch(normalizedIdentifier) && !Keywords.Contains(normalizedIdentifier))
+        // 1. check if the identifier starts with special --> invalid
+        if (Specials.Keys.Any(k => normalizedIdentifier.StartsWith(k)))
         {
-            return true;
+            return false;
         }
 
-        // 2. check if the identifier starts with @
-        if (normalizedIdentifier.StartsWith("@") && ValidIdentifierRegex.IsMatch(normalizedIdentifier.Substring(1)))
+        // 2. check that the identifier match the ValidIdentifierRegex and it's not a C# keyword
+        if (ValidIdentifierRegex.IsMatch(normalizedIdentifier) && !Keywords.Contains(normalizedIdentifier))
         {
             return true;
         }
@@ -114,17 +119,39 @@ internal static class IdentifierUtils
         return false;
     }
 
-
-    public static string CreateValidIdentifier(string identifier)
+    public static string CreateValidIdentifier(string identifier, CasingType casingType = CasingType.None)
     {
-        if (!IsValidIdentifier(identifier))
+        string casedIdentifier;
+        switch (casingType)
         {
-            return $"x{Guid.NewGuid().ToString().Replace("-", string.Empty)}";
+            case CasingType.Camel:
+                casedIdentifier = identifier.ToCamelCase();
+                break;
+
+            case CasingType.Pascal:
+                casedIdentifier = identifier.ToPascalCase();
+                break;
+
+            default:
+                casedIdentifier = identifier;
+                break;
         }
 
-        var normalizedIdentifier = identifier.Normalize();
+        bool isValid = IsValidIdentifier(casedIdentifier);
 
-        return Keywords.Contains(normalizedIdentifier) ? $"_{normalizedIdentifier}" : identifier;
+        if (!isValid)
+        {
+            // File name contains invalid chars, remove them
+            casedIdentifier = Regex.Replace(casedIdentifier, string.Empty);
+
+            // Class name doesn't begin with a letter, insert an underscore
+            if (!char.IsLetter(casedIdentifier, 0))
+            {
+                casedIdentifier = casedIdentifier.Insert(0, "_");
+            }
+        }
+
+        return casedIdentifier.Replace(" ", string.Empty);
     }
 
     public static string CreateValidEnumMember(string value)
@@ -134,6 +161,6 @@ internal static class IdentifierUtils
             value = value.Replace(special.Key, special.Value);
         }
 
-        return CreateValidIdentifier(value);
+        return CreateValidIdentifier(value, CasingType.Pascal);
     }
 }
