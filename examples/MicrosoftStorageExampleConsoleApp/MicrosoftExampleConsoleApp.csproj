@@ -11,7 +11,7 @@
     <ItemGroup>
         <PackageReference Include="AnyOf.Newtonsoft.Json" Version="0.3.0" />
         <PackageReference Include="AnyOf.System.Text.Json" Version="0.3.0" />
-        <PackageReference Include="FluentBuilder" Version="0.1.2">
+        <PackageReference Include="FluentBuilder" Version="0.2.1">
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>

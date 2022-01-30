@@ -96,21 +96,24 @@ internal class Worker
                 .WithTags(new Dictionary<string, string> { { "Entity", "CG" } })
                 .WithLocation("westeurope")
                 .WithProperties(cgpb => cgpb
-                    .WithContainers(() => new[]
-                    {
-                        new ContainerBuilder()
+                    .WithContainers(cab => cab
+                        .Add(cb => cb
                             .WithName($"container{name}")
                             .WithProperties(cpb => cpb
-                                    .WithImage("nginx")
-                                    .WithResources(resb => resb
-                                        .WithRequests(reqb => reqb
-                                            .WithCpu(1)
-                                            .WithMemoryInGB(1.5)
-                                            .Build())
-                                        .Build())
-                                .Build())
-                            .Build()
-                    })
+                                .WithImage("nginx")
+                                .WithResources(resb => resb
+                                    .WithRequests(reqb => reqb
+                                        .WithCpu(1)
+                                        .WithMemoryInGB(1.5)
+                                        .Build()
+                                    )
+                                    .Build()
+                                )
+                                .Build()
+                            )
+                            .Build())
+                        .Build()
+                    )
                     .WithOsType(ContainerGroupPropertiesOsTypeConstants.Linux)
                     .WithSku(ContainerGroupSkuConstants.Standard)
                     .Build()
