@@ -6,6 +6,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
     /// <summary>
     /// An error response from the Container Instance service.
     /// </summary>
+    [FluentBuilder.AutoGenerateBuilder]
     public class CloudErrorBody
     {
         /// <summary>

@@ -51,6 +51,10 @@ public class GeneratorSettings
     [DisplayName("Extend the class")]
     [Description("Extend the generated Model class if the type has a AnyOf or AllOf, the default value is 'True'.")]
     public bool ExtendClassForAnyOfAllOf { get; set; } = true;
+
+    [DisplayName("Add FluentBuilder")]
+    [Description("Add the FluentBuilder.AutoGenerateBuilder attribute to all models, the default value is 'False'.")]
+    public bool AddFluentBuilder { get; set; }
     #endregion
 
     #region Interface

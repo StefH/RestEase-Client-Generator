@@ -6,6 +6,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
     /// <summary>
     /// The cached image and OS type.
     /// </summary>
+    [FluentBuilder.AutoGenerateBuilder]
     public class CachedImages
     {
         /// <summary>

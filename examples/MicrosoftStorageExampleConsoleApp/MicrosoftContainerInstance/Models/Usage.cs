@@ -6,6 +6,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
     /// <summary>
     /// A single usage result
     /// </summary>
+    [FluentBuilder.AutoGenerateBuilder]
     public class Usage
     {
         /// <summary>

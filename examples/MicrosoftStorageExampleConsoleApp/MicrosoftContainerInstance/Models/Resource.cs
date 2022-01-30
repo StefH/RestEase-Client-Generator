@@ -6,6 +6,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
     /// <summary>
     /// The Resource model definition.
     /// </summary>
+    [FluentBuilder.AutoGenerateBuilder]
     public class Resource
     {
         /// <summary>

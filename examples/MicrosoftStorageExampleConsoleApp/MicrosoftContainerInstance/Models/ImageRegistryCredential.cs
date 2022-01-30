@@ -6,6 +6,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
     /// <summary>
     /// Image registry credential.
     /// </summary>
+    [FluentBuilder.AutoGenerateBuilder]
     public class ImageRegistryCredential
     {
         /// <summary>

@@ -6,6 +6,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
     /// <summary>
     /// The container Http Get settings, for liveness or readiness probe
     /// </summary>
+    [FluentBuilder.AutoGenerateBuilder]
     public class ContainerHttpGet
     {
         /// <summary>

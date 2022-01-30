@@ -6,6 +6,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
     /// <summary>
     /// The display information of the operation.
     /// </summary>
+    [FluentBuilder.AutoGenerateBuilder]
     public class OperationDisplay
     {
         /// <summary>

@@ -6,6 +6,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
     /// <summary>
     /// The container probe, for liveness or readiness
     /// </summary>
+    [FluentBuilder.AutoGenerateBuilder]
     public class ContainerProbe
     {
         /// <summary>

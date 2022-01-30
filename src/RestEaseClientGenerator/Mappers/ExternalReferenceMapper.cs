@@ -87,6 +87,6 @@ internal class ExternalReferenceMapper : BaseMapper
 
         var className = MakeValidReferenceId(reference.Id);
 
-        return (className, generator.FromFileInternal(location, settings, out var x));
+        return (className, generator.FromFileInternal(location, settings, out _));
     }
 }

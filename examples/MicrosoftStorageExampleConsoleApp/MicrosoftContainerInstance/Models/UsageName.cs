@@ -6,6 +6,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
     /// <summary>
     /// The name object of the resource
     /// </summary>
+    [FluentBuilder.AutoGenerateBuilder]
     public class UsageName
     {
         /// <summary>

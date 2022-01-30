@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using CommandLine;
@@ -115,6 +116,12 @@ public class Program
 
         [Option("SupportExtensionXNullable", HelpText = "Support vendor extension 'x-nullable' to indicate a property as nullable for OpenApi 2.0", Default = false)]
         public bool SupportExtensionXNullable { get; set; }
+
+        [Option("ExtendClassForAnyOfAllOf", HelpText = "Extend the generated Model class if the type has a AnyOf or AllOf.", Default = true)]
+        public bool ExtendClassForAnyOfAllOf { get; set; } = true;
+
+        [Option("AddFluentBuilder", HelpText = "Add the FluentBuilder.AutoGenerateBuilder attribute to all models.", Default = false)]
+        public bool AddFluentBuilder { get; set; }
         #endregion
     }
 

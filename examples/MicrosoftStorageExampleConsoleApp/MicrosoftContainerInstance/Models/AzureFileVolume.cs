@@ -6,6 +6,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
     /// <summary>
     /// The properties of the Azure File volume. Azure File shares are mounted as volumes.
     /// </summary>
+    [FluentBuilder.AutoGenerateBuilder]
     public class AzureFileVolume
     {
         /// <summary>

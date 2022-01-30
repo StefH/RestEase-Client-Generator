@@ -3,7 +3,6 @@ using RestEaseClientGenerator.Extensions;
 using RestEaseClientGenerator.Models.Internal;
 using RestEaseClientGenerator.Settings;
 using RestEaseClientGenerator.Types;
-using RestEaseClientGenerator.Types.Internal;
 using RestEaseClientGenerator.Utils;
 
 namespace RestEaseClientGenerator.Builders;

@@ -1,5 +1,6 @@
 using System.Text.Json;
 using AnyOfTypes.System.Text.Json;
+using FluentBuilder;
 using Microsoft.Extensions.Logging;
 using MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Api;
 using MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models;
@@ -60,7 +61,7 @@ internal class Worker
         try
         {
             var name = ("stef" + Guid.NewGuid().ToString().Replace("-", "")).Substring(0, 10);
-            var cg = new ContainerGroup
+            var cg1 = new ContainerGroup
             {
                 Tags = new Dictionary<string, string> { { "Entity", "CG" } },
                 Location = "westeurope",
@@ -90,11 +91,40 @@ internal class Worker
                     Sku = ContainerGroupSkuConstants.Standard
                 }
             };
+
+            var cg2 = new ContainerGroupBuilder()
+                .WithTags(new Dictionary<string, string> { { "Entity", "CG" } })
+                .WithLocation("westeurope")
+                .WithProperties(cgpb => cgpb
+                    .WithContainers(cab => cab
+                        .Add(cb => cb
+                            .WithName($"container{name}")
+                            .WithProperties(cpb => cpb
+                                .WithImage("nginx")
+                                .WithResources(resb => resb
+                                    .WithRequests(reqb => reqb
+                                        .WithCpu(1)
+                                        .WithMemoryInGB(1.5)
+                                        .Build()
+                                    )
+                                    .Build()
+                                )
+                                .Build()
+                            )
+                            .Build())
+                        .Build()
+                    )
+                    .WithOsType(ContainerGroupPropertiesOsTypeConstants.Linux)
+                    .WithSku(ContainerGroupSkuConstants.Standard)
+                    .Build()
+                )
+                .Build();
+
             var aci = await _aci.ContainerGroupsCreateOrUpdateAsync(
                 "2de19637-27a3-42a8-812f-2c2a7f7f935c",
                 "testformanagementsdk",
                 $"aci{name}",
-                cg);
+                cg2);
             _logger.LogInformation("ContainerGroupsListAsync = '{aci}'", JsonSerializer.Serialize(aci.GetContent(), _options));
         }
         catch (Exception ex)

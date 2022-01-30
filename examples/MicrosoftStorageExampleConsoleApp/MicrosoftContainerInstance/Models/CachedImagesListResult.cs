@@ -6,6 +6,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
     /// <summary>
     /// The response containing cached images.
     /// </summary>
+    [FluentBuilder.AutoGenerateBuilder]
     public class CachedImagesListResult
     {
         /// <summary>

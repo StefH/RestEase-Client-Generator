@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
 {
+    [FluentBuilder.AutoGenerateBuilder]
     public class ContainerGroupIdentityUserAssignedIdentities
     {
         /// <summary>

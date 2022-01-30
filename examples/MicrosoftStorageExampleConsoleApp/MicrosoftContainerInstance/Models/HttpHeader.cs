@@ -6,6 +6,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
     /// <summary>
     /// The HTTP header.
     /// </summary>
+    [FluentBuilder.AutoGenerateBuilder]
     public class HttpHeader
     {
         /// <summary>

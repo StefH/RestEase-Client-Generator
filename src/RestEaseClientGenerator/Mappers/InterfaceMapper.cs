@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Text.RegularExpressions;
 using Microsoft.OpenApi.Models;
 using RestEaseClientGenerator.Constants;
@@ -138,7 +139,7 @@ internal class InterfaceMapper : BaseMapper
 
         string methodRestEaseMethodName = GeneratedRestEaseMethodName(path, operation, methodRestEaseForAnnotation);
 
-        var parameters = new ParametersMapper(@interface, _schemaMapper, Settings, directory).Map(operation);
+        var parameters = new ParametersMapper(@interface, Settings, directory).Map(operation);
 
         var headerParameterList = parameters
             .Where(p => p.In == ParameterLocation.Header && p.Schema.GetSchemaType() != SchemaType.Object)
@@ -169,7 +170,7 @@ internal class InterfaceMapper : BaseMapper
             {
                 headers.Add($"[Header(\"{HttpKnownHeaderNames.ContentType}\", \"{requestDetails.DetectedContentType.GetDescription()}\")]");
             }
-            else if (requestDetails.ContentTypes.Count > 1)
+            else if (requestDetails.ContentTypes?.Count > 1)
             {
                 headerParameterList.Add(new RestEaseParameter
                 {
@@ -262,14 +263,7 @@ internal class InterfaceMapper : BaseMapper
                     SupportedContentType.ApplicationJson,
                     out OpenApiMediaType? responseJson, out _))
             {
-                //if (responseJson == null)
-                //{
-                //    // No response defined, just use object;
-                //    returnTypes.Add("object");
-                //    continue;
-                //}
-
-                var returnType = GetReturnType(@interface, responseJson?.Schema, methodRestEaseMethodName, directory);
+                var returnType = GetReturnType(@interface, responseJson.Schema, methodRestEaseMethodName, directory);
                 if (returnType is not null)
                 {
                     returnTypes.Add(FixReservedType(returnType));
@@ -301,8 +295,7 @@ internal class InterfaceMapper : BaseMapper
         }
     }
 
-    // TODO null?
-    private string? GetReturnType(RestEaseInterface @interface, OpenApiSchema? schema, string? methodRestEaseMethodName, string? directory)
+    private string? GetReturnType(RestEaseInterface @interface, OpenApiSchema? schema, string methodRestEaseMethodName, string? directory)
     {
         string nullable = schema?.Nullable == true ? "?" : string.Empty;
 
@@ -394,13 +387,13 @@ internal class InterfaceMapper : BaseMapper
 
                         foreach (var one in schema.OneOf)
                         {
-                            var type = GetReturnType(@interface, one, null, directory);
+                            var type = GetReturnType(@interface, one, string.Empty, directory) ?? "object";
                             dummyOpenApiSchema.Properties.Add(type, one);
                         }
 
                         foreach (var one in schema.AnyOf)
                         {
-                            var type = GetReturnType(@interface, one, null, directory);
+                            var type = GetReturnType(@interface, one, string.Empty, directory) ?? "object";
                             dummyOpenApiSchema.Properties.Add(type, one);
                         }
 
@@ -421,12 +414,12 @@ internal class InterfaceMapper : BaseMapper
         }
     }
 
-    private RequestDetails? MapRequestDetails(
+    private RequestDetails MapRequestDetails(
         RestEaseInterface @interface,
         MediaTypeInfo detected,
         ICollection<RestEaseParameter> bodyParameterList,
         List<RestEaseParameter> extensionMethodParameterList,
-        string? bodyParameterDescription,
+        string bodyParameterDescription,
         string? directory)
     {
         if (detected.Key == SupportedContentType.MultipartFormData)
@@ -567,7 +560,7 @@ internal class InterfaceMapper : BaseMapper
             };
         }
 
-        return null;
+        return new RequestDetails();
     }
 
     private RequestDetails? MapRequest(
@@ -577,14 +570,12 @@ internal class InterfaceMapper : BaseMapper
         List<RestEaseParameter> extensionMethodParameterList,
         string? directory)
     {
-        MediaTypeInfo? detected = null;
-
         var supportedMediaTypeInfoList = new List<MediaTypeInfo>();
         foreach (SupportedContentType key in Enum.GetValues(typeof(SupportedContentType)))
         {
             if (TryGetOpenApiMediaType(operation.RequestBody.Content, key, out var mediaType, out var detectedContentType))
             {
-                supportedMediaTypeInfoList.Add(new MediaTypeInfo { Key = key, Value = mediaType, ContentType = detectedContentType });
+                supportedMediaTypeInfoList.Add(new MediaTypeInfo(key, mediaType, detectedContentType));
             }
         }
 
@@ -593,6 +584,7 @@ internal class InterfaceMapper : BaseMapper
             return null;
         }
 
+        MediaTypeInfo? detected = null;
         if (operation.RequestBody.Content.Count == 1 && supportedMediaTypeInfoList.Count == 1)
         {
             detected = supportedMediaTypeInfoList.First();
@@ -791,9 +783,13 @@ internal class InterfaceMapper : BaseMapper
         return IdentifierUtils.IsReserved(type) ? $"{Settings.ModelsNamespace}.{type}" : type;
     }
 
-    private static bool TryGetOpenApiMediaType(IDictionary<string, OpenApiMediaType?> contentTypes, SupportedContentType contentType, out OpenApiMediaType? mediaType, out string detectedContentType)
+    private static bool TryGetOpenApiMediaType(
+        IDictionary<string, OpenApiMediaType> contentTypes,
+        SupportedContentType contentType,
+        [NotNullWhen(true)] out OpenApiMediaType? mediaType,
+        [NotNullWhen(true)] out string? detectedContentType)
     {
-        var contentTypesIgnoreCase = new Dictionary<string, OpenApiMediaType?>(contentTypes, StringComparer.InvariantCultureIgnoreCase);
+        var contentTypesIgnoreCase = new Dictionary<string, OpenApiMediaType>(contentTypes, StringComparer.InvariantCultureIgnoreCase);
 
         string contentDescription = contentType.GetDescription();
         if (contentTypesIgnoreCase.TryGetValue(contentDescription, out mediaType))
@@ -816,7 +812,7 @@ internal class InterfaceMapper : BaseMapper
         //    return true;
         //}
 
-        detectedContentType = string.Empty;
+        detectedContentType = default;
         return false;
     }
 }

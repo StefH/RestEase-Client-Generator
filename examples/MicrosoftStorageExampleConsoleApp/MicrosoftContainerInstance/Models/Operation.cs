@@ -6,6 +6,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
     /// <summary>
     /// An operation for Azure Container Instance service.
     /// </summary>
+    [FluentBuilder.AutoGenerateBuilder]
     public class Operation
     {
         /// <summary>

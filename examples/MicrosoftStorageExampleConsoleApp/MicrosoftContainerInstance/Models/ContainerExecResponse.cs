@@ -6,6 +6,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
     /// <summary>
     /// The information for the container exec command.
     /// </summary>
+    [FluentBuilder.AutoGenerateBuilder]
     public class ContainerExecResponse
     {
         /// <summary>

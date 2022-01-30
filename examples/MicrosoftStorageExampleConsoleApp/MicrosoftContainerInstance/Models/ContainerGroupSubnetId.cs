@@ -6,6 +6,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
     /// <summary>
     /// Container group subnet information.
     /// </summary>
+    [FluentBuilder.AutoGenerateBuilder]
     public class ContainerGroupSubnetId
     {
         /// <summary>

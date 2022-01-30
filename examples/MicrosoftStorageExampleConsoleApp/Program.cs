@@ -40,7 +40,7 @@ static void GenerateMicrosoftStorage20210401()
     const string x = @"C:\Dev\azure-rest-api-specs\specification\storage\resource-manager\Microsoft.Storage\stable\2021-04-01\storage.json";
     foreach (var file in Directory.GetFiles("../../../MicrosoftStorage/Models", "*.cs"))
     {
-        // File.Delete(file);
+        File.Delete(file);
     }
     foreach (var file in generator.FromFile(x, storageSettings, out OpenApiDiagnostic diagnosticStorage))
     {
@@ -59,14 +59,15 @@ static void GenerateMicrosoftContainerInstance20211001()
         ApiName = "MicrosoftContainerInstance",
         SingleFile = false,
         PreferredSecurityDefinitionType = SecurityDefinitionType.None,
-        ConstantQueryParameters = new Dictionary<string, string> { { "api-version", "2021-10-01" } }
+        ConstantQueryParameters = new Dictionary<string, string> { { "api-version", "2021-10-01" } },
+        AddFluentBuilder = true
     };
 
     const string x = @"C:\Dev\azure-rest-api-specs\specification\containerinstance\resource-manager\Microsoft.ContainerInstance\stable\2021-10-01\containerInstance.json";
 
     foreach (var file in Directory.GetFiles("../../../MicrosoftContainerInstance/Models", "*.cs"))
     {
-       // File.Delete(file);
+       File.Delete(file);
     }
     foreach (var file in generator.FromFile(x, storageSettings, out var xxxx))
     {

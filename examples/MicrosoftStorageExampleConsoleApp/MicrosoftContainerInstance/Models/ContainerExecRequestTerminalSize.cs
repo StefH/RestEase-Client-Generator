@@ -6,6 +6,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
     /// <summary>
     /// The size of the terminal.
     /// </summary>
+    [FluentBuilder.AutoGenerateBuilder]
     public class ContainerExecRequestTerminalSize
     {
         /// <summary>

@@ -6,6 +6,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
     /// <summary>
     /// Container group diagnostic information.
     /// </summary>
+    [FluentBuilder.AutoGenerateBuilder]
     public class ContainerGroupDiagnostics
     {
         /// <summary>

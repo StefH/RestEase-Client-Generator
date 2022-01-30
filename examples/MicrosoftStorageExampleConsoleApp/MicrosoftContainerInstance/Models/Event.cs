@@ -6,6 +6,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
     /// <summary>
     /// A container group or container instance event.
     /// </summary>
+    [FluentBuilder.AutoGenerateBuilder]
     public class Event
     {
         /// <summary>

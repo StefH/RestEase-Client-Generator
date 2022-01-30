@@ -6,6 +6,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
     /// <summary>
     /// Represents a volume that is populated with the contents of a git repository
     /// </summary>
+    [FluentBuilder.AutoGenerateBuilder]
     public class GitRepoVolume
     {
         /// <summary>

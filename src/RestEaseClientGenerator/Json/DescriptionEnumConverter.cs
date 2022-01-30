@@ -20,14 +20,11 @@ public class DescriptionEnumConverter : JsonConverter
         return EnumExtensions.GetEnumByDescription(objectType, enumDescription);
     }
 
-    public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+    public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
     {
-        if (value != null)
+        if (value is Enum sourceEnum)
         {
-            if (value is Enum sourceEnum)
-            {
-                writer.WriteValue(sourceEnum.GetDescription());
-            }
+            writer.WriteValue(sourceEnum.GetDescription());
         }
     }
 }

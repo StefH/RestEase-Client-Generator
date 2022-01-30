@@ -6,6 +6,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
     /// <summary>
     /// The supported capabilities.
     /// </summary>
+    [FluentBuilder.AutoGenerateBuilder]
     public class CapabilitiesCapabilities
     {
         /// <summary>

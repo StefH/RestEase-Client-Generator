@@ -25,18 +25,15 @@ public class DescriptionEnumConverter<T> : JsonConverter where T : struct, IComp
         return EnumExtensions.GetEnumByDescription(typeof(T), enumDescription);
     }
 
-    public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+    public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
     {
         var type = typeof(T);
 
         if (!type.IsEnum) throw new InvalidOperationException();
 
-        if (value != null)
+        if (value is Enum sourceEnum)
         {
-            if (value is Enum sourceEnum)
-            {
-                writer.WriteValue(sourceEnum.GetDescription());
-            }
+            writer.WriteValue(sourceEnum.GetDescription());
         }
     }
 }

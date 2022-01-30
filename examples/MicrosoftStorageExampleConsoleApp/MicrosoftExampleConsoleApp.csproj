@@ -11,6 +11,10 @@
     <ItemGroup>
         <PackageReference Include="AnyOf.Newtonsoft.Json" Version="0.3.0" />
         <PackageReference Include="AnyOf.System.Text.Json" Version="0.3.0" />
+        <PackageReference Include="FluentBuilder" Version="0.2.1">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
         <!--<PackageReference Include="Azure.ResourceManager.Resources" Version="1.0.0-beta.5" />-->
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
         <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="6.0.0" />

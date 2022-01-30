@@ -6,6 +6,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
     /// <summary>
     /// The container instance state.
     /// </summary>
+    [FluentBuilder.AutoGenerateBuilder]
     public class ContainerState
     {
         /// <summary>
