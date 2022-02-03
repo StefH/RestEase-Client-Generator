@@ -5,6 +5,11 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Examples\drc-swagger.json" />
+    <None Remove="Examples\drc.json" />
+  </ItemGroup>
+
     <ItemGroup>
     <Folder Include="Examples\AzureMachineLearning\Api\" />
     <Folder Include="Examples\AzureMachineLearning\Models\" />
@@ -69,9 +74,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Examples\dummy.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Examples\drc.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Examples\FormRecognizerV2.json">

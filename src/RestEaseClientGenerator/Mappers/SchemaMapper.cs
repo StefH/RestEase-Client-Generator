@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using AnyOfTypes;
 using Microsoft.OpenApi;
 using Microsoft.OpenApi.Any;
@@ -112,6 +113,12 @@ internal class SchemaMapper : BaseMapper
                     {
                         var dictionaryType = $"Dictionary<string, {additionalResult.First}>";
                         return new PropertyDto(dictionaryType, parentName, schema.Description);
+                    }
+
+                    if (additionalResult.IsSecond && additionalResult.Second.Count == 0)
+                    {
+                        // "Microsoft.AspNetCore.Mvc.ProblemDetails" has "additionalProperties": { }
+                        return list;
                     }
 
                     throw new InvalidOperationException();
@@ -259,6 +266,12 @@ internal class SchemaMapper : BaseMapper
                     if (local.IsFirst)
                     {
                         return local.First;
+                    }
+
+                    if (local.IsSecond && local.Second.Count == 0)
+                    {
+                        // "Microsoft.AspNetCore.Mvc.ProblemDetails" has "additionalProperties": { }
+                        return null;
                     }
                 }
 

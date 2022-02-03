@@ -13,6 +13,20 @@ namespace RestEaseClientGeneratorConsoleApp
         {
             var generator = new Generator();
 
+            // var drcSettings = new GeneratorSettings
+            // {
+                // Namespace = "RestEaseClientGeneratorConsoleApp.Examples.Drc",
+                // ApiName = "Drc",
+                // ForceContentTypeToApplicationJson = true,
+                // UseOperationIdAsMethodName = false,
+                // SingleFile = false
+            // };
+            // foreach (var file in generator.FromFile(@"c:\dev\drc.json", drcSettings, out var _))
+            // {
+                // File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Drc/{file.Path}/{file.Name}", file.Content);
+            // }
+
+            return;
             //var wiremockOrgSettings = new GeneratorSettings
             //{
             //    Namespace = "WireMockOrg",
