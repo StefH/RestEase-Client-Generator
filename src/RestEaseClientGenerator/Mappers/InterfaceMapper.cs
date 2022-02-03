@@ -344,7 +344,13 @@ internal class InterfaceMapper : BaseMapper
                         return additionalResult.First.Type;
                     }
 
-                    throw new InvalidOperationException($"AdditionalProperties should return a single {nameof(PropertyDto)}");
+                    if (additionalResult.IsSecond && additionalResult.Second.Count == 0)
+                    {
+                        // "Microsoft.AspNetCore.Mvc.ProblemDetails" has "additionalProperties": { }
+                        return null;
+                    }
+
+                    throw new InvalidOperationException($"AdditionalProperties should return a single {nameof(PropertyDto)} or an empty object.");
                 }
                 else
                 {
