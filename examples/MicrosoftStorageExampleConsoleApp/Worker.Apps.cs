@@ -1,6 +1,7 @@
 using System.Text.Json;
 using Microsoft.Extensions.Logging;
-using MicrosoftExampleConsoleApp.MicrosoftWebAppServicePlans.Models;
+using MicrosoftExampleConsoleApp.MicrosoftWebApps.Models;
+
 
 namespace MicrosoftExampleConsoleApp;
 
@@ -17,6 +18,29 @@ internal partial class Worker
         catch (Exception ex)
         {
             Console.WriteLine(ex);
+        }
+
+        try
+        {
+            var site = new Site
+            {
+                Properties = new SiteProperties
+                {
+                    HostNameSslStates = new HostNameSslState[]
+                    {
+                        new HostNameSslState
+                        {
+
+                        }
+                    }
+                }
+            };
+            var x = await _apps.WebAppsCreateOrUpdateAsync("Stef-SmartContract-FunctionApp", "stef-ResourceGroup-WestEuropa", sub, site);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
         }
 
         //try
