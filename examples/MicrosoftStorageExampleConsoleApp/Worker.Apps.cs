@@ -26,16 +26,14 @@ internal partial class Worker
             {
                 Properties = new SiteProperties
                 {
-                    HostNameSslStates = new HostNameSslState[]
-                    {
-                        new HostNameSslState
-                        {
-
-                        }
-                    }
-                }
+                    HttpsOnly = true,
+                    ContainerSize = 1536
+                },
+                Kind = "functionapp",
+                Location = "West Europe"
             };
-            var x = await _apps.WebAppsCreateOrUpdateAsync("Stef-SmartContract-FunctionApp", "stef-ResourceGroup-WestEuropa", sub, site);
+            var x = await _apps.WebAppsCreateOrUpdateAsync("Stef-SmartContract-FunctionApp2", "stef-ResourceGroup-WestEuropa", sub, site);
+            _logger.LogInformation("WebAppsCreateOrUpdateAsync = '{asp}'", JsonSerializer.Serialize(x.GetContent().CurrentValue, _options));
         }
         catch (Exception e)
         {
