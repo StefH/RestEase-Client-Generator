@@ -36,6 +36,8 @@
       <Folder Include="MicrosoftStorage\Models\" />
       <Folder Include="MicrosoftWebAppServicePlans\Api\" />
       <Folder Include="MicrosoftWebAppServicePlans\Models\" />
+      <Folder Include="MicrosoftWebApps\Api\" />
+      <Folder Include="MicrosoftWebApps\Models\" />
     </ItemGroup>
 
     <ItemGroup>

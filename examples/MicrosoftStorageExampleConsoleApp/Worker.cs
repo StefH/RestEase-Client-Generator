@@ -6,6 +6,7 @@ using MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Api;
 using MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models;
 using MicrosoftExampleConsoleApp.MicrosoftStorage.Api;
 using MicrosoftExampleConsoleApp.MicrosoftStorage.Models;
+using MicrosoftExampleConsoleApp.MicrosoftWebApps.Api;
 using MicrosoftExampleConsoleApp.MicrosoftWebAppServicePlans.Api;
 
 namespace MicrosoftExampleConsoleApp;
@@ -22,6 +23,7 @@ internal partial class Worker
     private readonly IMicrosoftStorageApi _storageApi;
     private readonly IMicrosoftContainerInstanceApi _aci;
     private readonly IMicrosoftWebAppServicePlansApi _web;
+    private readonly IMicrosoftWebAppsApi _apps;
     private readonly ILogger<Worker> _logger;
 
     const string sub = "2de19637-27a3-42a8-812f-2c2a7f7f935c";
@@ -31,11 +33,13 @@ internal partial class Worker
         IMicrosoftStorageApi storageApi,
         IMicrosoftContainerInstanceApi aci,
         IMicrosoftWebAppServicePlansApi web,
+        IMicrosoftWebAppsApi apps,
         ILogger<Worker> logger)
     {
         _storageApi = storageApi;
         _aci = aci;
         _web = web;
+        _apps = apps;
 
         _logger = logger;
     }
@@ -43,6 +47,7 @@ internal partial class Worker
     public async Task RunAsync(CancellationToken cancellationToken = default)
     {
         await RunWebAspAsync();
+        await RunWebAppsAsync();
 
         try
         {

@@ -1,0 +1,46 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <LangVersion>10.0</LangVersion>
+        <!--<Nullable>enable</Nullable>-->
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="AnyOf.Newtonsoft.Json" Version="0.3.0" />
+        <PackageReference Include="AnyOf.System.Text.Json" Version="0.3.0" />
+        <PackageReference Include="FluentBuilder" Version="0.2.4">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <!--<PackageReference Include="Azure.ResourceManager.Resources" Version="1.0.0-beta.5" />-->
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="6.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.0" />
+        <PackageReference Include="RestEase.Authentication.Azure" Version="0.0.2" />
+        <PackageReference Include="Serilog.AspNetCore" Version="4.1.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="appsettings.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="MicrosoftContainerInstance\Api\" />
+      <Folder Include="MicrosoftContainerInstance\Models\" />
+      <Folder Include="MicrosoftStorage\Api\" />
+      <Folder Include="MicrosoftStorage\Models\" />
+      <Folder Include="MicrosoftWebAppServicePlans\Api\" />
+      <Folder Include="MicrosoftWebAppServicePlans\Models\" />
+      <Folder Include="MicrosoftWebApps\NewFolder\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\src\RestEaseClientGenerator\RestEaseClientGenerator.csproj" />
+    </ItemGroup>
+
+</Project>
