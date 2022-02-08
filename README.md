@@ -1,10 +1,17 @@
 # RestEase-Client-Generator
 Generate a [RestEase](https://github.com/canton7/RestEase) compatible client (Interface & Models) based on a [Swagger / OpenApi](https://swagger.io/specification/) or [RAML](https://raml.org/) specification.
 
+## :one: NuGet Package
+[![NuGet Badge](https://buildstats.info/nuget/RestEaseClientGenerator)](https://www.nuget.org/packages/RestEaseClientGenerator)
 
 
+## :two: dotnet tool
 
-## :one: Visual Studio Extension
+[![NuGet Badge dotnet-resteaseclientgenerator](https://buildstats.info/nuget/dotnet-resteaseclientgenerator)](https://www.nuget.org/packages/dotnet-resteaseclientgenerator)
+
+#### [Installation & Usage](https://github.com/StefH/RestEase-Client-Generator/wiki/Tool)
+
+## :three: Visual Studio Extension
 
 [![Version](https://vsmarketplacebadge.apphb.com/version/StefHeyenrath.RestEaseClientGenerator.svg)](https://marketplace.visualstudio.com/items?itemName=StefHeyenrath.RestEaseClientGenerator) 
 [![Installs](https://vsmarketplacebadge.apphb.com/downloads-short/StefHeyenrath.RestEaseClientGenerator.svg)](https://marketplace.visualstudio.com/items?itemName=StefHeyenrath.RestEaseClientGenerator) 
@@ -16,15 +23,6 @@ Generate a [RestEase](https://github.com/canton7/RestEase) compatible client (In
 - Define custom namespace for the generated file
 - Auto-updating of generated code file when changes are made to the specification file (.json, .yml, .yaml, .raml)
 - This Visual Studio Extension will automatically add the required nuget packages that the generated code depends on.
-
-## :two: dotnet tool
-
-[![NuGet Badge dotnet-resteaseclientgenerator](https://buildstats.info/nuget/dotnet-resteaseclientgenerator)](https://www.nuget.org/packages/dotnet-resteaseclientgenerator)
-
-#### [Installation & Usage](https://github.com/StefH/RestEase-Client-Generator/wiki/Tool)
-
-## :three: NuGet Package
-[![NuGet Badge](https://buildstats.info/nuget/RestEaseClientGenerator)](https://www.nuget.org/packages/RestEaseClientGenerator)
 
 #### [Installation & Usage](https://github.com/StefH/RestEase-Client-Generator/wiki/NuGet)
 

@@ -6,10 +6,12 @@ using MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Api;
 using MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models;
 using MicrosoftExampleConsoleApp.MicrosoftStorage.Api;
 using MicrosoftExampleConsoleApp.MicrosoftStorage.Models;
+using MicrosoftExampleConsoleApp.MicrosoftWebApps.Api;
+using MicrosoftExampleConsoleApp.MicrosoftWebAppServicePlans.Api;
 
 namespace MicrosoftExampleConsoleApp;
 
-internal class Worker
+internal partial class Worker
 {
     private readonly JsonSerializerOptions _options = new()
     {
@@ -20,27 +22,36 @@ internal class Worker
 
     private readonly IMicrosoftStorageApi _storageApi;
     private readonly IMicrosoftContainerInstanceApi _aci;
+    private readonly IMicrosoftWebAppServicePlansApi _web;
+    private readonly IMicrosoftWebAppsApi _apps;
     private readonly ILogger<Worker> _logger;
+
+    const string sub = "2de19637-27a3-42a8-812f-2c2a7f7f935c";
+    const string rg = "testformanagementsdk";
 
     public Worker(
         IMicrosoftStorageApi storageApi,
         IMicrosoftContainerInstanceApi aci,
+        IMicrosoftWebAppServicePlansApi web,
+        IMicrosoftWebAppsApi apps,
         ILogger<Worker> logger)
     {
         _storageApi = storageApi;
         _aci = aci;
+        _web = web;
+        _apps = apps;
 
         _logger = logger;
     }
 
     public async Task RunAsync(CancellationToken cancellationToken = default)
     {
-        const string sub = "2de19637-27a3-42a8-812f-2c2a7f7f935c";
-        const string rg = "testformanagementsdk";
+        await RunWebAspAsync();
+        await RunWebAppsAsync();
 
         try
         {
-            var aci = await _aci.ContainerGroupsListAsync("2de19637-27a3-42a8-812f-2c2a7f7f935c");
+            var aci = await _aci.ContainerGroupsListAsync(sub);
             _logger.LogInformation("ContainerGroupsListAsync = '{aci}'", JsonSerializer.Serialize(aci.GetContent(), _options));
 
             foreach (var cg in aci.GetContent().First.Value.Where(x => x.Name.StartsWith("acistef")))
@@ -124,13 +135,15 @@ internal class Worker
                 "2de19637-27a3-42a8-812f-2c2a7f7f935c",
                 "testformanagementsdk",
                 $"aci{name}",
-                cg2);
+                cg1);
             _logger.LogInformation("ContainerGroupsListAsync = '{aci}'", JsonSerializer.Serialize(aci.GetContent(), _options));
         }
         catch (Exception ex)
         {
             Console.WriteLine(ex);
         }
+        
+        return;
 
         //try
         //{

@@ -39,8 +39,7 @@ internal class ParametersMapper : BaseMapper
         switch (reference)
         {
             case { IsLocal: true }:
-                var name = MakeValidReferenceId(reference.Id);
-                if (@interface.OpenApiDocument.Components.Parameters.TryGetValue(name, out var parameter))
+                if (@interface.OpenApiDocument.Components.Parameters.TryGetValue(reference.Id, out var parameter))
                 {
                     return parameter;
                 }

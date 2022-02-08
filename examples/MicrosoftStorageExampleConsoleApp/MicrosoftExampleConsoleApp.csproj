@@ -11,7 +11,7 @@
     <ItemGroup>
         <PackageReference Include="AnyOf.Newtonsoft.Json" Version="0.3.0" />
         <PackageReference Include="AnyOf.System.Text.Json" Version="0.3.0" />
-        <PackageReference Include="FluentBuilder" Version="0.2.3">
+        <PackageReference Include="FluentBuilder" Version="0.2.4">
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
@@ -34,6 +34,10 @@
       <Folder Include="MicrosoftContainerInstance\Models\" />
       <Folder Include="MicrosoftStorage\Api\" />
       <Folder Include="MicrosoftStorage\Models\" />
+      <Folder Include="MicrosoftWebAppServicePlans\Api\" />
+      <Folder Include="MicrosoftWebAppServicePlans\Models\" />
+      <Folder Include="MicrosoftWebApps\Api\" />
+      <Folder Include="MicrosoftWebApps\Models\" />
     </ItemGroup>
 
     <ItemGroup>

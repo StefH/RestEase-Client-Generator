@@ -146,9 +146,11 @@ internal class InterfaceMapper : BaseMapper
             .Select(p => BuildValidParameter(@interface, p.Name, p.Schema, p.Required, p.Description, p.In, Array.Empty<string>(), directory))
             .ToList();
 
+        var pathParameterNames = RegexUtils.GetParameterNamesFromPath(path).ToList();
         var pathParameterList = parameters
             .Where(p => p.In == ParameterLocation.Path && p.Schema.GetSchemaType() != SchemaType.Object)
             .Select(p => BuildValidParameter(@interface, p.Name, p.Schema, p.Required, p.Description, p.In, Array.Empty<string>(), directory))
+            .OrderBy(p => pathParameterNames.IndexOf(p.Identifier))
             .ToList();
 
         var queryParameterList = parameters
