@@ -11,7 +11,7 @@ internal partial class Worker
     {
         try
         {
-            var app = await _apps.WebAppsGetAsync("Stef-SmartContract-FunctionApp", "stef-ResourceGroup-WestEuropa", sub);
+            var app = await _apps.WebAppsGetAsync(sub, "stef-ResourceGroup-WestEuropa", "Stef-SmartContract-FunctionApp");
             _logger.LogInformation("WebAppsGetAsync = '{asp}'", JsonSerializer.Serialize(app.GetContent().CurrentValue, _options));
             int x = 0;
         }
@@ -32,7 +32,7 @@ internal partial class Worker
                 Kind = "functionapp",
                 Location = "West Europe"
             };
-            var x = await _apps.WebAppsCreateOrUpdateAsync("Stef-SmartContract-FunctionApp2", "stef-ResourceGroup-WestEuropa", sub, site);
+            var x = await _apps.WebAppsCreateOrUpdateAsync(sub, "stef-ResourceGroup-WestEuropa", "Stef-SmartContract-FunctionApp2", site);
             _logger.LogInformation("WebAppsCreateOrUpdateAsync = '{asp}'", JsonSerializer.Serialize(x.GetContent().CurrentValue, _options));
         }
         catch (Exception e)

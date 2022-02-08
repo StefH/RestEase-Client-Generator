@@ -142,9 +142,7 @@ internal partial class Worker
         {
             Console.WriteLine(ex);
         }
-
-       
-
+        
         return;
 
         //try

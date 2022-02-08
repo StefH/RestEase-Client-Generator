@@ -10,7 +10,7 @@ internal partial class Worker
     {
         try
         {
-            var asp = await _web.AppServicePlansGetAsync("WestEuropePlan", "stef-ResourceGroup-WestEuropa", sub);
+            var asp = await _web.AppServicePlansGetAsync(sub, "stef-ResourceGroup-WestEuropa", "WestEuropePlan");
             _logger.LogInformation("AppServicePlansGetAsync = '{asp}'", JsonSerializer.Serialize(asp.GetContent().CurrentValue, _options));
         }
         catch (Exception ex)
@@ -32,7 +32,7 @@ internal partial class Worker
                 Kind = "functionapp",
                 Location = "West Europe"
             };
-            var asp = await _web.AppServicePlansCreateOrUpdateAsync("RestEaseTestPlan", "stef-ResourceGroup-WestEuropa", sub, plan);
+            var asp = await _web.AppServicePlansCreateOrUpdateAsync(sub, "stef-ResourceGroup-WestEuropa", "RestEaseTestPlan2", plan);
             _logger.LogInformation("AppServicePlansCreateOrUpdateAsync = '{asp}'", JsonSerializer.Serialize(asp.GetContent().CurrentValue, _options));
         }
         catch (Exception ex)

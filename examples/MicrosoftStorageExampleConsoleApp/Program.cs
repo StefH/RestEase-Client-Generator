@@ -14,8 +14,8 @@ using RestEaseClientGenerator.Types;
 using Serilog;
 using Serilog.Sinks.SystemConsole.Themes;
 
-//GenerateMicrosoftWebAppServicePlans();
 //GenerateMicrosoftWebApps();
+//GenerateMicrosoftWebAppServicePlans();
 //GenerateMicrosoftContainerInstance20211001();
 //GenerateMicrosoftStorage20210401();
 

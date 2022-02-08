@@ -114,36 +114,36 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Api
         /// <summary>
         /// Get the logs for a specified container instance.
         /// </summary>
-        /// <param name="containerName">The name of the container instance.</param>
         /// <param name="subscriptionId">Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.</param>
         /// <param name="resourceGroupName">The name of the resource group.</param>
         /// <param name="containerGroupName">The name of the container group.</param>
+        /// <param name="containerName">The name of the container instance.</param>
         /// <param name="tail">The number of lines to show from the tail of the container instance log. If not provided, all available logs are shown up to 4mb.</param>
         /// <param name="timestamps">If true, adds a timestamp at the beginning of every line of log output. If not provided, defaults to false.</param>
         [Get("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}/containers/{containerName}/logs?api-version=2021-10-01")]
-        Task<Response<AnyOf<Logs, CloudError>>> ContainersListLogsAsync([Path] string containerName, [Path] string subscriptionId, [Path] string resourceGroupName, [Path] string containerGroupName, [Query] int? tail, [Query] bool? timestamps);
+        Task<Response<AnyOf<Logs, CloudError>>> ContainersListLogsAsync([Path] string subscriptionId, [Path] string resourceGroupName, [Path] string containerGroupName, [Path] string containerName, [Query] int? tail, [Query] bool? timestamps);
 
         /// <summary>
         /// Executes a command in a specific container instance.
         /// </summary>
-        /// <param name="containerName">The name of the container instance.</param>
         /// <param name="subscriptionId">Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.</param>
         /// <param name="resourceGroupName">The name of the resource group.</param>
         /// <param name="containerGroupName">The name of the container group.</param>
+        /// <param name="containerName">The name of the container instance.</param>
         /// <param name="content">The container exec request.</param>
         [Post("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}/containers/{containerName}/exec?api-version=2021-10-01")]
         [Header("Content-Type", "application/json")]
-        Task<Response<AnyOf<ContainerExecResponse, CloudError>>> ContainersExecuteCommandAsync([Path] string containerName, [Path] string subscriptionId, [Path] string resourceGroupName, [Path] string containerGroupName, [Body] ContainerExecRequest content);
+        Task<Response<AnyOf<ContainerExecResponse, CloudError>>> ContainersExecuteCommandAsync([Path] string subscriptionId, [Path] string resourceGroupName, [Path] string containerGroupName, [Path] string containerName, [Body] ContainerExecRequest content);
 
         /// <summary>
         /// Attach to the output of a specific container instance.
         /// </summary>
-        /// <param name="containerName">The name of the container instance.</param>
         /// <param name="subscriptionId">Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.</param>
         /// <param name="resourceGroupName">The name of the resource group.</param>
         /// <param name="containerGroupName">The name of the container group.</param>
+        /// <param name="containerName">The name of the container instance.</param>
         [Post("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}/containers/{containerName}/attach?api-version=2021-10-01")]
-        Task<Response<AnyOf<ContainerAttachResponse, CloudError>>> ContainersAttachAsync([Path] string containerName, [Path] string subscriptionId, [Path] string resourceGroupName, [Path] string containerGroupName);
+        Task<Response<AnyOf<ContainerAttachResponse, CloudError>>> ContainersAttachAsync([Path] string subscriptionId, [Path] string resourceGroupName, [Path] string containerGroupName, [Path] string containerName);
 
         /// <summary>
         /// Get the list of cached images.
