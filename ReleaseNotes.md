@@ -1,4 +1,4 @@
-# 1.1.0 (06 February 2022)
+# 1.1.0 (08 February 2022)
 - [#29](https://github.com/StefH/RestEase-Client-Generator/pull/29) - Support multiple responses [enhancement] contributed by [StefH](https://github.com/StefH)
 - [#30](https://github.com/StefH/RestEase-Client-Generator/pull/30) - dotnet-resteaseclientgenerator [enhancement] contributed by [StefH](https://github.com/StefH)
 - [#31](https://github.com/StefH/RestEase-Client-Generator/pull/31) - Refactor contributed by [StefH](https://github.com/StefH)
@@ -11,6 +11,7 @@
 - [#38](https://github.com/StefH/RestEase-Client-Generator/pull/38) - Fix Enums contributed by [StefH](https://github.com/StefH)
 - [#39](https://github.com/StefH/RestEase-Client-Generator/pull/39) - Add support for FluentBuilder in Models contributed by [StefH](https://github.com/StefH)
 - [#40](https://github.com/StefH/RestEase-Client-Generator/pull/40) - Fixes for empty additionalProperties contributed by [StefH](https://github.com/StefH)
+- [#41](https://github.com/StefH/RestEase-Client-Generator/pull/41) - Add better support for azure-rest-api-specs [enhancement] contributed by [StefH](https://github.com/StefH)
 
 # 1.0.12 (09 September 2021)
 - [#28](https://github.com/StefH/RestEase-Client-Generator/pull/28) - Fix issue with swagger from WireMock Org [bug] contributed by [StefH](https://github.com/StefH)
