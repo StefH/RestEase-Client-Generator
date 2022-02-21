@@ -291,7 +291,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         /// <param name="content">Collection of combined trip records</param>
         [Post("/pitaneUpdateTripCollection")]
         [Header("Content-Type", "application/json")]
-        Task<object> PostPitaneUpdateTripCollectionAsync([Body] System.Collections.Generic.List`1[RestEaseClientGenerator.Models.Internal.PropertyDto][] content);
+        Task<object> PostPitaneUpdateTripCollectionAsync([Body] ArrayOfCombinedTrips[] content);
 
         /// <summary>
         /// GetPitaneGetmetaInformation (/pitaneGetmetaInformation)
@@ -1911,6 +1911,22 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Models
         public string VatCountryCode { get; set; }
     }
 
+    /// <summary>
+    /// Collection of combined trip records
+    /// </summary>
+    public class ArrayOfCombinedTrips
+    {
+        public int PlaRoute { get; set; }
+
+        public int PlaId { get; set; }
+
+        public int PlaVan { get; set; }
+
+        public int PlaNaar { get; set; }
+
+        public string PlaTijdstipOphalen { get; set; }
+    }
+
     public class Asset
     {
         /// <summary>
@@ -2114,7 +2130,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Models
 
         public int NrAvailable { get; set; }
 
-        public Asset[] Assets { get; set; }
+        public Asset Assets { get; set; }
 
         /// <summary>
         /// These classes are taken from the NeTeX standard, but ALL and UNKNOWN are removed. On the other hand OTHER and PARKING are added.
@@ -2182,9 +2198,9 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Models
         public string State { get; set; }
 
         /// <summary>
-        /// The legs of this booking, generally just one for simple legs, in order of how they will be travelled
+        /// A planned (segment of) a booked trip using one asset type
         /// </summary>
-        public Leg[] Legs { get; set; }
+        public Leg Legs { get; set; }
 
         /// <summary>
         /// The pricing information of the overall booking, in addition to any leg pricing, if not all legs have pricing the booking should have the fare
@@ -2333,10 +2349,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Models
         /// </summary>
         public string AssetClass { get; set; }
 
-        /// <summary>
-        /// references to accepting parties, only if applicable
-        /// </summary>
-        public string[] Acceptors { get; set; }
+        public string Acceptors { get; set; }
     }
 
     /// <summary>
@@ -2614,7 +2627,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Models
 
     public class ConditionRequireBookingData : Condition
     {
-        public string[] RequiredFields { get; set; }
+        public string RequiredFields { get; set; }
     }
 
     /// <summary>
@@ -2637,21 +2650,14 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Models
         /// </summary>
         public Coordinates Coordinates { get; set; }
 
-        /// <summary>
-        /// the return hours of the facility (if different from operating-hours)
-        /// </summary>
-        public SystemHours[] ReturnHours { get; set; }
+        public SystemHours ReturnHours { get; set; }
     }
 
     /// <summary>
     /// area in which the asset should be returned as GeoJSON Polygon coordinates
     /// </summary>
-    public class ConditionReturnAreaReturnArea
+    public class ConditionReturnAreaReturnArea : GeojsonPolygon
     {
-        /// <summary>
-        /// geojson representation of a polygon. First and last point must be equal. See also https://geojson.org/geojson-spec.html#polygon and example https://geojson.org/geojson-spec.html#id4. The order should be lon, lat [[[lon1, lat1], [lon2,lat2], [lon3,lat3], [lon1,lat1]]], the first point should match the last point.
-        /// </summary>
-        public double[][][]  { get; set; }
     }
 
     /// <summary>
@@ -2762,7 +2768,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Models
         /// </summary>
         public string Postfix { get; set; }
 
-        public Phone[] Phones { get; set; }
+        public Phone Phones { get; set; }
 
         /// <summary>
         /// the email address of the customer
@@ -2781,9 +2787,15 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Models
         /// </summary>
         public byte[] Photo { get; set; }
 
-        public Card[] Cards { get; set; }
+        /// <summary>
+        /// Any kind of card that isn't a license, only provide the cards that are required
+        /// </summary>
+        public Card Cards { get; set; }
 
-        public License[] Licenses { get; set; }
+        /// <summary>
+        /// driver or usage license for a specific user. Contains the number and the assetType you're allowed to operate (e.g. driver license for CAR)
+        /// </summary>
+        public License Licenses { get; set; }
     }
 
     /// <summary>
@@ -2929,9 +2941,12 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Models
 
         public string BaseUrl { get; set; }
 
-        public Endpoint[] Endpoints { get; set; }
+        /// <summary>
+        /// a formal description of an endpoint.
+        /// </summary>
+        public Endpoint Endpoints { get; set; }
 
-        public string[] Scenarios { get; set; }
+        public string Scenarios { get; set; }
 
         public ProcessIdentifiers ProcessIdentifiers { get; set; }
     }
@@ -3026,7 +3041,10 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Models
         /// </summary>
         public string Class { get; set; }
 
-        public FarePart[] Parts { get; set; }
+        /// <summary>
+        /// this describes a part of the fare (or discount). It contains a for instance the startup costs (fixed) or the flex part (e.g. 1.25 EUR per 2.0 MILES). The amount is tax included. In case of discounts, the values are negative. With 'MAX' you can specify e.g. a maximum of 15 euro per day. Percentage is mainly added for discounts. The `scale` properties create the ability to communicate scales (e.g. the first 4 kilometers you've to pay EUR 0.35 per kilometer, the kilometers 4 until 8 EUR 0.50 and above it EUR 0.80 per kilometer).
+        /// </summary>
+        public FarePart Parts { get; set; }
     }
 
     /// <summary>
@@ -3068,7 +3086,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Models
 
     public class GetPitaneDataLedgersResult
     {
-        public string[] Result { get; set; }
+        public string Result { get; set; }
     }
 
     /// <summary>
@@ -3197,10 +3215,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Models
         /// </summary>
         public DateTime ArrivalTime { get; set; }
 
-        /// <summary>
-        /// reference to the travelers field of the request. If missing, it is refering to the first (if any). it is an array to facilitate multiple users on one leg (e.g. using a car). If multiple access informations are needed, please create a leg per used asset.
-        /// </summary>
-        public string[] TravelerReferenceNumbers { get; set; }
+        public string TravelerReferenceNumbers { get; set; }
 
         /// <summary>
         /// The asset type used in this leg as determined during booking
@@ -3256,10 +3271,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Models
         /// </summary>
         public string Comment { get; set; }
 
-        /// <summary>
-        /// urls to support the event e.g. pictures justifying the exit conditions
-        /// </summary>
-        public string[] Url { get; set; }
+        public string Url { get; set; }
 
         public Asset Asset { get; set; }
     }
@@ -3434,7 +3446,10 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Models
         /// </summary>
         public string Name { get; set; }
 
-        public StopReference[] StopReference { get; set; }
+        /// <summary>
+        /// reference to a stop (can be nation specific). This can help to specific pinpoint a (bus) stop. Extra information about the stop is not supplied; you should find it elsewhere.
+        /// </summary>
+        public StopReference StopReference { get; set; }
 
         /// <summary>
         /// reference to /operator/stations
@@ -3508,24 +3523,15 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Models
         public int NrOfTravelers { get; set; }
 
         /// <summary>
-        /// Extra information about the people that intend to travel if relevant, length must be less than or equal to nrOftravelers.
+        /// A generic description of a traveler, not including any identifying information
         /// </summary>
-        public Traveler[] Travelers { get; set; }
+        public Traveler Travelers { get; set; }
 
-        /// <summary>
-        /// The specific asset(s) the user wishes to receive leg options for
-        /// </summary>
-        public string[] UseAssets { get; set; }
+        public string UseAssets { get; set; }
 
-        /// <summary>
-        /// Id(s) of user groups that the user belongs to. This provides access to exclusive assets that are hidden to the public. Id's are agreed upon by TO and MP.
-        /// </summary>
-        public string[] UserGroups { get; set; }
+        public string UserGroups { get; set; }
 
-        /// <summary>
-        /// The specific asset type(s) the user wishes to receive leg options for
-        /// </summary>
-        public string[] UseAssetTypes { get; set; }
+        public string UseAssetTypes { get; set; }
     }
 
     /// <summary>
@@ -3560,19 +3566,19 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Models
 
     public class ProcessIdentifiers
     {
-        public string[] OperatorInformation { get; set; }
+        public string OperatorInformation { get; set; }
 
-        public string[] Planning { get; set; }
+        public string Planning { get; set; }
 
-        public string[] Booking { get; set; }
+        public string Booking { get; set; }
 
-        public string[] TripExecution { get; set; }
+        public string TripExecution { get; set; }
 
-        public string[] Support { get; set; }
+        public string Support { get; set; }
 
-        public string[] Payment { get; set; }
+        public string Payment { get; set; }
 
-        public string[] General { get; set; }
+        public string General { get; set; }
     }
 
     /// <summary>
@@ -3809,10 +3815,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Models
 
         public string EndTime { get; set; }
 
-        /// <summary>
-        /// An array of abbreviations (first 3 letters) of English names of the days of the week that this hour object applies to (i.e. ["mon", "tue"]). Each day can only appear once within all of the hours objects in this feed.
-        /// </summary>
-        public string[] Days { get; set; }
+        public string Days { get; set; }
     }
 
     /// <summary>
@@ -3905,14 +3908,14 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Models
         public string ReferenceNumber { get; set; }
 
         /// <summary>
-        /// The kind of cards this traveler possesses
+        /// A generic description of a card, asset class and acceptors is only allowed for DISCOUNT/TRAVEL/OTHER cards
         /// </summary>
-        public CardType[] CardTypes { get; set; }
+        public CardType CardTypes { get; set; }
 
         /// <summary>
-        /// The kind of licenses this traveler possesses
+        /// A category of license to use a certain asset class
         /// </summary>
-        public LicenseType[] LicenseTypes { get; set; }
+        public LicenseType LicenseTypes { get; set; }
 
         /// <summary>
         /// Requirements the users has ((dis)abilities, share [TRUE|FALSE], preferences [TBD]). See also 'https://github.com/TOMP-WG/TOMP-API/blob/master/documents/Woordenboek%20Reizigerskenmerken%20CROW.pdf'
@@ -4637,7 +4640,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Models
         public const string STEP = "STEP";
     }
 
-    public static class ConditionRequireBookingDataConstants
+    public static class ConditionRequireBookingDataRequiredFieldsConstants
     {
         public const string FROMADDRESS = "FROM_ADDRESS";
 
@@ -4735,7 +4738,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Models
         public const string IMPLEMENTED = "IMPLEMENTED";
     }
 
-    public static class EndpointImplementationConstants
+    public static class EndpointImplementationScenariosConstants
     {
         public const string POSTPONEDCOMMIT = "POSTPONED_COMMIT";
 
@@ -5027,7 +5030,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Models
         public const string NONMEMBERS = "NON_MEMBERS";
     }
 
-    public static class SystemHoursConstants
+    public static class SystemHoursDaysConstants
     {
         public const string MON = "MON";
 

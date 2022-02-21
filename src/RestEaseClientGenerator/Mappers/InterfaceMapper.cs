@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.RegularExpressions;
+using Microsoft.OpenApi;
 using Microsoft.OpenApi.Models;
 using RestEaseClientGenerator.Constants;
 using RestEaseClientGenerator.Extensions;
@@ -538,10 +540,28 @@ internal class InterfaceMapper : BaseMapper
             switch (detected.Value.Schema?.GetSchemaType())
             {
                 case SchemaType.Array:
-                    string arrayType = detected.Value.Schema.Items.Reference != null
-                        ? MakeValidReferenceId(detected.Value.Schema.Items.Reference.Id)
-                        : _schemaMapper.MapSchema(@interface, detected.Value.Schema.Items, string.Empty, null, false, true, null, directory).ToString();
-                    bodyParameter = MapArrayType(arrayType);
+                    var property = _schemaMapper.TryMapProperty(@interface,
+                        OpenApiSpecVersion.OpenApi3_0,
+                        detected.Value.Schema, string.Empty, string.Empty, directory);
+
+                    switch (property.Type)
+                    {
+                        case PropertyType.Reference:
+                            bodyParameter = MapArrayType(property.Result.First.Type);
+                            //list.Add(new PropertyDto("not-used", "not-used", allOrAny.Description, property.Result.First.Type));
+                            break;
+
+                        case PropertyType.Normal when property.Result.IsFirst:
+                            bodyParameter = MapArrayType(property.Result.First);
+                            //list.Add(property.Result.First);
+                            break;
+
+                        case PropertyType.Normal:
+                            //list.AddRange(property.Result.Second.Properties);
+                            bodyParameter = MapArrayType("???");
+                            break;
+                    }
+
                     break;
 
                 case SchemaType.Object:

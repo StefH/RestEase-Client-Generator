@@ -30,6 +30,21 @@ internal class ModelsMapper : BaseMapper
     {
         foreach (var entry in schemas.OrderBy(s => s.Key))
         {
+            if (entry.Key == "ArrayOfCombinedTrips")
+            {
+                int stef = 8;
+            }
+
+            if (entry.Key == "farePart")
+            {
+                int stef2 = 8;
+            }
+
+            if (entry.Key == "geojsonLine")
+            {
+                int stef3 = 7;
+            }
+
             var properties = _schemaMapper.MapSchema(_interface, entry.Value, string.Empty, entry.Key, entry.Value.Nullable, true, _openApiSpecVersion, _directory);
 
             if (properties.IsSecond)

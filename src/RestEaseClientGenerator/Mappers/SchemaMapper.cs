@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using AnyOfTypes;
 using Microsoft.OpenApi;
 using Microsoft.OpenApi.Any;
@@ -37,30 +36,10 @@ internal class SchemaMapper : BaseMapper
         switch (schema.GetSchemaType())
         {
             case SchemaType.Array:
-                switch (schema.Items.GetSchemaType())
-                {
-                    case SchemaType.Object:
-                    case SchemaType.Unknown:
-                        var or = TryMapPropertyReference(@interface, schema.Items, "not-used", directory);
-                        return or != null ?
-                            new PropertyDto(MapArrayType(MakeValidClassName(or.Type)), nameCamelCase, schema.Description) :
-                            new PropertyDto(MapArrayType("object"), nameCamelCase, schema.Description);
 
-                    case SchemaType.String:
-                        if (schema.Items.Enum != null && schema.Items.Enum.Any() && Settings.PreferredEnumType == EnumType.Enum)
-                        {
-                            return new PropertyDto(MapArrayType(MakeValidClassName(name)), nameCamelCase, schema.Description);
-                        }
-                        else
-                        {
-                            var sp = MapSchema(@interface, schema.Items, parentName, null, schema.Items.Nullable, true, openApiSpecVersion, directory);
-                            return new PropertyDto(MapArrayType(sp.First.Type), nameCamelCase, schema.Description);
-                        }
 
-                    default:
-                        var p = MapSchema(@interface, schema.Items, parentName, null, schema.Items.Nullable, true, openApiSpecVersion, directory);
-                        return new PropertyDto(MapArrayType(p.First.Type), nameCamelCase, schema.Description);
-                }
+                return MapSchema(@interface, schema.Items, parentName, name, isNullable, pascalCase, openApiSpecVersion, directory);
+
 
             case SchemaType.Boolean:
                 return new PropertyDto($"bool{nullable}", nameCamelCase, schema.Description);
@@ -179,7 +158,7 @@ internal class SchemaMapper : BaseMapper
         }
     }
 
-    private (PropertyType Type, string TypeName, AnyOf<PropertyDto, RestEaseModel> Result) TryMapProperty(
+    public (PropertyType Type, string TypeName, AnyOf<PropertyDto, RestEaseModel> Result) TryMapProperty(
         RestEaseInterface @interface,
         OpenApiSpecVersion? openApiSpecVersion,
         OpenApiSchema schema,
@@ -187,6 +166,17 @@ internal class SchemaMapper : BaseMapper
         string objectName,
         string? directory)
     {
+        if (new[] { SchemaType.Array }.Contains(schema.GetSchemaType()))
+        {
+            var referencedProperty = TryMapPropertyReference(@interface, schema, objectName, directory);
+            if (referencedProperty is not null)
+            {
+                return (PropertyType.Reference, referencedProperty.Name, referencedProperty);
+            }
+
+            return TryMapProperty(@interface, openApiSpecVersion, schema.Items, parentName, objectName, directory);
+        }
+
         if (new[] { SchemaType.Object, SchemaType.Unknown }.Contains(schema.GetSchemaType()))
         {
             var referencedProperty = TryMapPropertyReference(@interface, schema, objectName, directory);

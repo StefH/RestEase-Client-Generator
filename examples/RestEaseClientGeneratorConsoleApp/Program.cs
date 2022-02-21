@@ -12,18 +12,29 @@ namespace RestEaseClientGeneratorConsoleApp
         static void Main(string[] args)
         {
             var generator = new Generator();
+            // Unhandled exceptions on missing results.
+            var pitaneSettings = new GeneratorSettings
+            {
+                SingleFile = true,
+                Namespace = "RestEaseClientGeneratorConsoleApp.Examples.Pitane",
+                ApiName = "Pitane"
+            };
+            foreach (var file in generator.FromFile(@"Examples\Pitane\Pitane.json", pitaneSettings, out _))
+            {
+                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Pitane/{file.Path}/{file.Name}", file.Content);
+            }
 
             // var drcSettings = new GeneratorSettings
             // {
-                // Namespace = "RestEaseClientGeneratorConsoleApp.Examples.Drc",
-                // ApiName = "Drc",
-                // ForceContentTypeToApplicationJson = true,
-                // UseOperationIdAsMethodName = false,
-                // SingleFile = false
+            // Namespace = "RestEaseClientGeneratorConsoleApp.Examples.Drc",
+            // ApiName = "Drc",
+            // ForceContentTypeToApplicationJson = true,
+            // UseOperationIdAsMethodName = false,
+            // SingleFile = false
             // };
             // foreach (var file in generator.FromFile(@"c:\dev\drc.json", drcSettings, out var _))
             // {
-                // File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Drc/{file.Path}/{file.Name}", file.Content);
+            // File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Drc/{file.Path}/{file.Name}", file.Content);
             // }
 
             return;
@@ -284,18 +295,6 @@ namespace RestEaseClientGeneratorConsoleApp
             // PetStoreTests.Run().GetAwaiter().GetResult();
 
             PetStoreOpenApi3ApiTests.RunAsync().GetAwaiter().GetResult();
-
-            // Unhandled exceptions on missing results.
-            var pitaneSettings = new GeneratorSettings
-            {
-                SingleFile = true,
-                Namespace = "RestEaseClientGeneratorConsoleApp.Examples.Pitane",
-                ApiName = "Pitane"
-            };
-            foreach (var file in generator.FromFile(@"Examples\Pitane\Pitane.json", pitaneSettings, out _))
-            {
-                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Pitane/{file.Path}/{file.Name}", file.Content);
-            }
         }
     }
 }
