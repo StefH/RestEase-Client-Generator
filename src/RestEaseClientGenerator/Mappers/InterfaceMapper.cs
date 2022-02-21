@@ -288,7 +288,7 @@ internal class InterfaceMapper : BaseMapper
             case MultipleResponsesType.First:
                 return returnTypes.First();
 
-            case MultipleResponsesType.AnyOf:
+            case MultipleResponsesType.AnyOf when returnTypes.Count > 0:
                 var distinct = returnTypes.Distinct().ToArray();
                 return distinct.Length > 1 ? $"Response<AnyOf<{string.Join(", ", distinct)}>>" : distinct.First();
 
