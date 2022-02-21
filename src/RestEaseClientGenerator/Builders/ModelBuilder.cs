@@ -85,7 +85,10 @@ internal class ModelBuilder : BaseBuilder
                 builder.AppendLine("        /// </summary>");
             }
 
-            var safePropertyName = property.Name.ToValidIdentifier();
+            var safePropertyName = !string.IsNullOrEmpty(property.Name)
+                ? property.Name.ToValidIdentifier()
+                : string.Empty;
+
             if (safePropertyName != property.Name)
             {
                 builder.AppendLine($"        [Newtonsoft.Json.JsonProperty(\"{property.Name}\")]");
