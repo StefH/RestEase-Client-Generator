@@ -284,6 +284,18 @@ namespace RestEaseClientGeneratorConsoleApp
             // PetStoreTests.Run().GetAwaiter().GetResult();
 
             PetStoreOpenApi3ApiTests.RunAsync().GetAwaiter().GetResult();
+
+            // Unhandled exceptions on missing results.
+            var pitaneSettings = new GeneratorSettings
+            {
+                SingleFile = true,
+                Namespace = "RestEaseClientGeneratorConsoleApp.Examples.Pitane",
+                ApiName = "Pitane"
+            };
+            foreach (var file in generator.FromFile(@"Examples\Pitane\Pitane.json", pitaneSettings, out _))
+            {
+                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Pitane/{file.Path}/{file.Name}", file.Content);
+            }
         }
     }
 }
