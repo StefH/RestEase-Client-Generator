@@ -3084,6 +3084,30 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Models
     {
     }
 
+    /// <summary>
+    /// An array  of WGS84 coordinate pairs
+    /// </summary>
+    public class GeojsonLine
+    {
+        public double[][] geojsonLine { get; set; }
+    }
+
+    /// <summary>
+    /// Geojson Coordinate
+    /// </summary>
+    public class GeojsonPoint
+    {
+        public double[] geojsonPoint { get; set; }
+    }
+
+    /// <summary>
+    /// geojson representation of a polygon. First and last point must be equal. See also https://geojson.org/geojson-spec.html#polygon and example https://geojson.org/geojson-spec.html#id4. The order should be lon, lat [[[lon1, lat1], [lon2,lat2], [lon3,lat3], [lon1,lat1]]], the first point should match the last point.
+    /// </summary>
+    public class GeojsonPolygon
+    {
+        public double[][][] geojsonPolygon { get; set; }
+    }
+
     public class GetPitaneDataLedgersResult
     {
         public string Result { get; set; }

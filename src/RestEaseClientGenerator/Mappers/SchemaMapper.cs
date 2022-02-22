@@ -36,11 +36,16 @@ internal class SchemaMapper : BaseMapper
         switch (schema.GetSchemaType())
         {
             case SchemaType.Array:
+                var listItem = MapSchema(@interface, schema.Items, string.Empty, name, isNullable, pascalCase, openApiSpecVersion, directory);
+                if (listItem.IsSecond)
+                {
+                    // It's a annymous type
+                    return listItem;
+                }
 
-
-                return MapSchema(@interface, schema.Items, parentName, name, isNullable, pascalCase, openApiSpecVersion, directory);
-
-
+                // It's an array-item, return the correct type
+                return new PropertyDto($"{listItem.First.Type}[]", name);
+                
             case SchemaType.Boolean:
                 return new PropertyDto($"bool{nullable}", nameCamelCase, schema.Description);
 
