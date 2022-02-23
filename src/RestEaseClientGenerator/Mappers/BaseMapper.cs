@@ -24,16 +24,4 @@ public abstract class BaseMapper
     {
         return MakeValidClassName(id.Split('/').Last());
     }
-
-    protected string MapArrayType(string type)
-    {
-        return Settings.ArrayType switch
-        {
-            ArrayType.IEnumerable => $"IEnumerable<{type}>",
-            ArrayType.ICollection => $"ICollection<{type}>",
-            ArrayType.IList => $"IList<{type}>",
-            ArrayType.List => $"List<{type}>",
-            _ => $"{type}[]"
-        };
-    }
 }

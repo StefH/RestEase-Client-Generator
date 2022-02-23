@@ -44,17 +44,17 @@ internal class ModelsMapper : BaseMapper
                 };
             }
 
-            if (result.IsFirst && result.First.Type.Contains("[]"))
-            {
-                // It's a Array
-                yield return new RestEaseModel
-                {
-                    Description = entry.Value.Description,
-                    Namespace = Settings.Namespace,
-                    ClassName = MakeValidClassName(entry.Key),
-                    Properties = new List<PropertyDto> { result.First }
-                };
-            }
+            //if (result.IsFirst && result.First.Type.Contains("[]"))
+            //{
+            //    // It's a Array
+            //    yield return new RestEaseModel
+            //    {
+            //        Description = entry.Value.Description,
+            //        Namespace = Settings.Namespace,
+            //        ClassName = MakeValidClassName(entry.Key),
+            //        Properties = new List<PropertyDto> { result.First }
+            //    };
+            //}
         }
     }
 }

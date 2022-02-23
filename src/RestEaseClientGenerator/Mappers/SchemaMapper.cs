@@ -7,6 +7,7 @@ using RestEaseClientGenerator.Models.Internal;
 using RestEaseClientGenerator.Settings;
 using RestEaseClientGenerator.Types;
 using RestEaseClientGenerator.Types.Internal;
+using RestEaseClientGenerator.Utils;
 
 namespace RestEaseClientGenerator.Mappers;
 
@@ -44,23 +45,23 @@ internal class SchemaMapper : BaseMapper
                 }
 
                 // It's an array-item, return the correct type
-                return new PropertyDto(MapArrayType(listItem.First.Type), name);
-                
+                return new PropertyDto(ArrayTypeMapper.Map(Settings, listItem.First.Type), name, true);
+
             case SchemaType.Boolean:
-                return new PropertyDto($"bool{nullable}", nameCamelCase, schema.Description);
+                return new PropertyDto($"bool{nullable}", nameCamelCase, false, schema.Description);
 
             case SchemaType.Integer:
                 return schema.GetSchemaFormat() switch
                 {
-                    SchemaFormat.Int64 => new PropertyDto($"long{nullable}", nameCamelCase, schema.Description),
-                    _ => new PropertyDto($"int{nullable}", nameCamelCase, schema.Description)
+                    SchemaFormat.Int64 => new PropertyDto($"long{nullable}", nameCamelCase, false, schema.Description),
+                    _ => new PropertyDto($"int{nullable}", nameCamelCase, false, schema.Description)
                 };
 
             case SchemaType.Number:
                 return schema.GetSchemaFormat() switch
                 {
-                    SchemaFormat.Float => new PropertyDto($"float{nullable}", nameCamelCase, schema.Description),
-                    _ => new PropertyDto($"double{nullable}", nameCamelCase, schema.Description)
+                    SchemaFormat.Float => new PropertyDto($"float{nullable}", nameCamelCase, false, schema.Description),
+                    _ => new PropertyDto($"double{nullable}", nameCamelCase, false, schema.Description)
                 };
 
             case SchemaType.String:
@@ -68,14 +69,14 @@ internal class SchemaMapper : BaseMapper
                 {
                     case SchemaFormat.Date:
                     case SchemaFormat.DateTime:
-                        return new PropertyDto($"{DateTime}{nullable}", nameCamelCase, schema.Description);
+                        return new PropertyDto($"{DateTime}{nullable}", nameCamelCase, false, schema.Description);
 
                     case SchemaFormat.Byte:
                     case SchemaFormat.Binary:
                         return Settings.ApplicationOctetStreamType switch
                         {
-                            ApplicationOctetStreamType.Stream => new PropertyDto("System.IO.Stream", nameCamelCase, schema.Description),
-                            _ => new PropertyDto("byte[]", nameCamelCase, schema.Description)
+                            ApplicationOctetStreamType.Stream => new PropertyDto("System.IO.Stream", nameCamelCase, false, schema.Description),
+                            _ => new PropertyDto("byte[]", nameCamelCase, false, schema.Description)
                         };
 
                     default:
@@ -84,7 +85,7 @@ internal class SchemaMapper : BaseMapper
                             return MapEnumSchema(@interface, schema, parentName, name, nameCamelCase, nullable);
                         }
 
-                        return new PropertyDto("string", nameCamelCase, schema.Description);
+                        return new PropertyDto("string", nameCamelCase, false, schema.Description);
                 }
 
             case SchemaType.Object:
@@ -96,7 +97,7 @@ internal class SchemaMapper : BaseMapper
                     if (additionalResult.IsFirst)
                     {
                         var dictionaryType = $"Dictionary<string, {additionalResult.First}>";
-                        return new PropertyDto(dictionaryType, parentName, schema.Description);
+                        return new PropertyDto(dictionaryType, parentName, false, schema.Description);
                     }
 
                     if (additionalResult.IsSecond && additionalResult.Second.Count == 0)
@@ -121,7 +122,7 @@ internal class SchemaMapper : BaseMapper
                             break;
 
                         case PropertyType.Normal:
-                            list.Add(new PropertyDto(property.TypeName, objectName, openApiSchema.Description));
+                            list.Add(new PropertyDto(property.TypeName, objectName, false, openApiSchema.Description));
                             break;
 
                         case PropertyType.Reference:
@@ -136,7 +137,7 @@ internal class SchemaMapper : BaseMapper
                     switch (property.Type)
                     {
                         case PropertyType.Reference:
-                            list.Add(new PropertyDto("not-used", "not-used", allOrAny.Description, property.Result.First.Type));
+                            list.Add(new PropertyDto("not-used", "not-used", allOrAny.GetSchemaType() == SchemaType.Array, allOrAny.Description, property.Result.First));
                             break;
 
                         case PropertyType.Normal when property.Result.IsFirst:
@@ -154,13 +155,23 @@ internal class SchemaMapper : BaseMapper
             case SchemaType.File:
                 return Settings.MultipartFormDataFileType switch
                 {
-                    MultipartFormDataFileType.Stream => new PropertyDto("System.IO.Stream", nameCamelCase, schema.Description),
-                    _ => new PropertyDto("byte[]", nameCamelCase, schema.Description)
+                    MultipartFormDataFileType.Stream => new PropertyDto("System.IO.Stream", nameCamelCase, false, schema.Description),
+                    _ => new PropertyDto("byte[]", nameCamelCase, false, schema.Description)
                 };
 
             default:
                 throw new InvalidOperationException();
         }
+    }
+
+    private PropertyDto ToArrayPropertyDto(PropertyDto dto, string? description)
+    {
+        return dto with
+        {
+            IsArray = true,
+            Type = ArrayTypeMapper.Map(Settings, dto.Type),
+            Description = description ?? dto.Description
+        };
     }
 
     public (PropertyType Type, string TypeName, AnyOf<PropertyDto, RestEaseModel> Result) TryMapProperty(
@@ -176,13 +187,13 @@ internal class SchemaMapper : BaseMapper
             var referencedProperty = TryMapPropertyReference(@interface, schema, objectName, directory);
             if (referencedProperty is not null)
             {
-                return (PropertyType.Reference, referencedProperty.Name, new PropertyDto(MapArrayType(referencedProperty.Type), referencedProperty.Name, schema.Description));
+                return (PropertyType.Reference, referencedProperty.Name, ToArrayPropertyDto(referencedProperty, schema.Description));
             }
 
             var arrayItem = TryMapProperty(@interface, openApiSpecVersion, schema.Items, parentName, objectName, directory);
             if (arrayItem.Result.IsFirst)
             {
-                return (PropertyType.Normal, arrayItem.TypeName, new PropertyDto(MapArrayType(arrayItem.Result.First.Type), arrayItem.Result.First.Name, schema.Description));
+                return (PropertyType.Normal, arrayItem.TypeName, ToArrayPropertyDto(arrayItem.Result.First, schema.Description));
             }
 
             throw new Exception();
@@ -204,12 +215,12 @@ internal class SchemaMapper : BaseMapper
                 if (additionalPropertiesType.Result.IsFirst)
                 {
                     var dictionaryType = $"Dictionary<string, {additionalPropertiesType.Result.First.Type}>";
-                    return (PropertyType.Normal, objectName, new PropertyDto(dictionaryType, objectName, schema.Description));
+                    return (PropertyType.Normal, objectName, new PropertyDto(dictionaryType, objectName, false, schema.Description));
                 }
                 else
                 {
                     var dictionaryType = $"Dictionary<string, {additionalPropertiesType.TypeName}>";
-                    return (PropertyType.Normal, className, new PropertyDto(dictionaryType, className, schema.Description));
+                    return (PropertyType.Normal, className, new PropertyDto(dictionaryType, className, false, schema.Description));
                 }
             }
 
@@ -239,7 +250,7 @@ internal class SchemaMapper : BaseMapper
             return (PropertyType.Normal, string.Empty, property.First);
         }
 
-        return (PropertyType.None, string.Empty, new PropertyDto("not-used", "not-used", "not-used"));
+        return (PropertyType.None, string.Empty, new PropertyDto("not-used", "not-used", false, "not-used"));
     }
 
     public PropertyDto? TryMapPropertyReference(RestEaseInterface @interface, OpenApiSchema schema, string? name, string? directory)
@@ -252,7 +263,7 @@ internal class SchemaMapper : BaseMapper
                     if (internalSchema.AdditionalProperties == null)
                     {
                         var className = MakeValidClassName(schema.Reference.Id);
-                        return new PropertyDto(className, name ?? className, schema.Description);
+                        return new PropertyDto(className, name ?? className, false, schema.Description);
                     }
 
                     var local = MapSchema(
@@ -280,7 +291,7 @@ internal class SchemaMapper : BaseMapper
 
             case { IsExternal: true }:
                 var externalProperty = new ExternalReferenceMapper(Settings, @interface).MapProperty(schema.Reference, directory);
-                return new PropertyDto(externalProperty.Type, name ?? externalProperty.Name, "not-used");
+                return new PropertyDto(externalProperty.Type, name ?? externalProperty.Name, false, "not-used");
 
             default:
                 return null;
@@ -338,6 +349,6 @@ internal class SchemaMapper : BaseMapper
 
         var type = Settings.PreferredEnumType == EnumType.Enum ? $"{enumName}{nullable}" : "string";
 
-        return new PropertyDto(type, nameCamelCase, schema.Description);
+        return new PropertyDto(type, nameCamelCase, false, schema.Description);
     }
 }

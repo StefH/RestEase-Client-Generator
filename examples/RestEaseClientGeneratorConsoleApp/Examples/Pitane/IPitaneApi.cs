@@ -291,7 +291,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         /// <param name="content">Collection of combined trip records</param>
         [Post("/pitaneUpdateTripCollection")]
         [Header("Content-Type", "application/json")]
-        Task<object> PostPitaneUpdateTripCollectionAsync([Body] ArrayOfCombinedTrips[][] content);
+        Task<object> PostPitaneUpdateTripCollectionAsync([Body] ArrayOfCombinedTrips[] content);
 
         /// <summary>
         /// GetPitaneGetmetaInformation (/pitaneGetmetaInformation)
@@ -2190,7 +2190,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Models
     /// <summary>
     /// The booking information describing the state and details of an agreed upon trip
     /// </summary>
-    public class Booking : BookingRequest
+    public class Booking : BookingRequest 
     {
         /// <summary>
         /// The life-cycle state of the booking (from NEW to FINISHED)
@@ -2231,7 +2231,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Models
     /// <summary>
     /// The pricing information of the overall booking, in addition to any leg pricing, if not all legs have pricing the booking should have the fare
     /// </summary>
-    public class BookingPricing : Fare
+    public class BookingPricing : Fare 
     {
     }
 
@@ -2264,28 +2264,28 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Models
     /// <summary>
     /// The user that wants to make this booking, only to supply when requested in the conditionRequireBookingData
     /// </summary>
-    public class BookingRequestCustomer : Customer
+    public class BookingRequestCustomer : Customer 
     {
     }
 
     /// <summary>
     /// information about the origin, only to supply when requested in the conditionRequireBookingData
     /// </summary>
-    public class BookingRequestFrom : Place
+    public class BookingRequestFrom : Place 
     {
     }
 
     /// <summary>
     /// information about the destination, only to supply when requested in the conditionRequireBookingData
     /// </summary>
-    public class BookingRequestTo : Place
+    public class BookingRequestTo : Place 
     {
     }
 
     /// <summary>
     /// Any kind of card that isn't a license, only provide the cards that are required
     /// </summary>
-    public class Card : CardType
+    public class Card : CardType 
     {
         /// <summary>
         /// description of the card
@@ -2590,7 +2590,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Models
     /// <summary>
     /// in case the TO demands a deposit before usage. Requesting and refunding should be done using the /payment/claim-extra-costs endpoint.
     /// </summary>
-    public class ConditionDeposit : Condition
+    public class ConditionDeposit : Condition 
     {
         /// <summary>
         /// This should be in the base unit as defined by the ISO 4217 currency code with the appropriate number of decimal places and omitting the currency symbol. e.g. if the price is in US Dollars the price would be 9.95. This is inclusive VAT
@@ -2619,16 +2619,16 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Models
     /// <summary>
     /// in case the TO demands a direct payment after usage.
     /// </summary>
-    public class ConditionPayWhenFinished : Condition
+    public class ConditionPayWhenFinished : Condition 
     {
     }
 
-    public class ConditionPostponedCommit : Condition
+    public class ConditionPostponedCommit : Condition 
     {
         public DateTime UltimateResponseTime { get; set; }
     }
 
-    public class ConditionRequireBookingData : Condition
+    public class ConditionRequireBookingData : Condition 
     {
         public string[] RequiredFields { get; set; }
     }
@@ -2636,7 +2636,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Models
     /// <summary>
     /// a return area. In the condition list there can be multiple return area's.
     /// </summary>
-    public class ConditionReturnArea : Condition
+    public class ConditionReturnArea : Condition 
     {
         /// <summary>
         /// station to which the asset should be returned
@@ -2662,14 +2662,14 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Models
     /// <summary>
     /// area in which the asset should be returned as GeoJSON Polygon coordinates
     /// </summary>
-    public class ConditionReturnAreaReturnArea : GeojsonPolygon[]
+    public class ConditionReturnAreaReturnArea //: GeojsonPolygon[] 
     {
     }
 
     /// <summary>
     /// in case the TO demands a upfront payment before usage. The payment should be made in the booking phase.
     /// </summary>
-    public class ConditionUpfrontPayment : Condition
+    public class ConditionUpfrontPayment : Condition 
     {
     }
 
@@ -2735,7 +2735,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Models
     /// <summary>
     /// A MaaS user that wishes to make a booking, only use the fields required by booking conditions
     /// </summary>
-    public class Customer : Traveler
+    public class Customer : Traveler 
     {
         /// <summary>
         /// The identifier MaaS uses to identify the customer
@@ -2793,8 +2793,14 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Models
         /// </summary>
         public byte[] Photo { get; set; }
 
+        /// <summary>
+        /// Any kind of card that isn't a license, only provide the cards that are required
+        /// </summary>
         public Card[] Cards { get; set; }
 
+        /// <summary>
+        /// driver or usage license for a specific user. Contains the number and the assetType you're allowed to operate (e.g. driver license for CAR)
+        /// </summary>
         public License[] Licenses { get; set; }
     }
 
@@ -2941,6 +2947,9 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Models
 
         public string BaseUrl { get; set; }
 
+        /// <summary>
+        /// a formal description of an endpoint.
+        /// </summary>
         public Endpoint[] Endpoints { get; set; }
 
         public string[] Scenarios { get; set; }
@@ -2987,7 +2996,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Models
     /// <summary>
     /// Costs that the TO is charging the MP; credits are negative
     /// </summary>
-    public class ExtraCosts : AmountOfMoney
+    public class ExtraCosts : AmountOfMoney 
     {
         public string Category { get; set; }
 
@@ -3038,13 +3047,16 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Models
         /// </summary>
         public string Class { get; set; }
 
+        /// <summary>
+        /// this describes a part of the fare (or discount). It contains a for instance the startup costs (fixed) or the flex part (e.g. 1.25 EUR per 2.0 MILES). The amount is tax included. In case of discounts, the values are negative. With 'MAX' you can specify e.g. a maximum of 15 euro per day. Percentage is mainly added for discounts. The `scale` properties create the ability to communicate scales (e.g. the first 4 kilometers you've to pay EUR 0.35 per kilometer, the kilometers 4 until 8 EUR 0.50 and above it EUR 0.80 per kilometer).
+        /// </summary>
         public FarePart[] Parts { get; set; }
     }
 
     /// <summary>
     /// this describes a part of the fare (or discount). It contains a for instance the startup costs (fixed) or the flex part (e.g. 1.25 EUR per 2.0 MILES). The amount is tax included. In case of discounts, the values are negative. With 'MAX' you can specify e.g. a maximum of 15 euro per day. Percentage is mainly added for discounts. The `scale` properties create the ability to communicate scales (e.g. the first 4 kilometers you've to pay EUR 0.35 per kilometer, the kilometers 4 until 8 EUR 0.50 and above it EUR 0.80 per kilometer).
     /// </summary>
-    public class FarePart : AmountOfMoney
+    public class FarePart : AmountOfMoney 
     {
         /// <summary>
         /// type of fare part
@@ -3078,30 +3090,6 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Models
     {
     }
 
-    /// <summary>
-    /// An array  of WGS84 coordinate pairs
-    /// </summary>
-    public class GeojsonLine
-    {
-        public double[][] geojsonLine { get; set; }
-    }
-
-    /// <summary>
-    /// Geojson Coordinate
-    /// </summary>
-    public class GeojsonPoint
-    {
-        public double[] geojsonPoint { get; set; }
-    }
-
-    /// <summary>
-    /// geojson representation of a polygon. First and last point must be equal. See also https://geojson.org/geojson-spec.html#polygon and example https://geojson.org/geojson-spec.html#id4. The order should be lon, lat [[[lon1, lat1], [lon2,lat2], [lon3,lat3], [lon1,lat1]]], the first point should match the last point.
-    /// </summary>
-    public class GeojsonPolygon
-    {
-        public double[][][] geojsonPolygon { get; set; }
-    }
-
     public class GetPitaneDataLedgersResult
     {
         public string[] Result { get; set; }
@@ -3132,7 +3120,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Models
         public string Text { get; set; }
     }
 
-    public class JournalEntry : AmountOfMoney
+    public class JournalEntry : AmountOfMoney 
     {
         /// <summary>
         /// id of the entry, leg id can be reused
@@ -3267,14 +3255,14 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Models
     /// <summary>
     /// The concrete asset used for the execution of the leg
     /// </summary>
-    public class LegAsset : Asset
+    public class LegAsset : Asset 
     {
     }
 
     /// <summary>
     /// The asset type used in this leg as determined during booking
     /// </summary>
-    public class LegAssetType : AssetType
+    public class LegAssetType : AssetType 
     {
     }
 
@@ -3303,14 +3291,14 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Models
     /// <summary>
     /// The departure location of this leg, using this asset type
     /// </summary>
-    public class LegFrom : Place
+    public class LegFrom : Place 
     {
     }
 
     /// <summary>
     /// The leg-specific pricing information, all fares are additive, if the booking does not have pricing set all legs should
     /// </summary>
-    public class LegPricing : Fare
+    public class LegPricing : Fare 
     {
     }
 
@@ -3338,14 +3326,14 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Models
     /// <summary>
     /// The destination of this leg, using this asset type
     /// </summary>
-    public class LegTo : Place
+    public class LegTo : Place 
     {
     }
 
     /// <summary>
     /// driver or usage license for a specific user. Contains the number and the assetType you're allowed to operate (e.g. driver license for CAR)
     /// </summary>
-    public class License : LicenseType
+    public class License : LicenseType 
     {
         public string Number { get; set; }
 
@@ -3470,6 +3458,9 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Models
         /// </summary>
         public string Name { get; set; }
 
+        /// <summary>
+        /// reference to a stop (can be nation specific). This can help to specific pinpoint a (bus) stop. Extra information about the stop is not supplied; you should find it elsewhere.
+        /// </summary>
         public StopReference[] StopReference { get; set; }
 
         /// <summary>
