@@ -16,7 +16,7 @@ using Serilog.Sinks.SystemConsole.Themes;
 
 //GenerateMicrosoftWebApps();
 //GenerateMicrosoftWebAppServicePlans();
-//GenerateMicrosoftContainerInstance20211001();
+GenerateMicrosoftContainerInstance20211001();
 //GenerateMicrosoftStorage20210401();
 
 Log.Logger = new LoggerConfiguration()

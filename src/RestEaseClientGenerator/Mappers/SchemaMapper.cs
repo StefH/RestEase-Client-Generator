@@ -176,10 +176,16 @@ internal class SchemaMapper : BaseMapper
             var referencedProperty = TryMapPropertyReference(@interface, schema, objectName, directory);
             if (referencedProperty is not null)
             {
-                return (PropertyType.Reference, referencedProperty.Name, referencedProperty);
+                return (PropertyType.Reference, referencedProperty.Name, new PropertyDto(MapArrayType(referencedProperty.Type), referencedProperty.Name, schema.Description));
             }
 
-            return TryMapProperty(@interface, openApiSpecVersion, schema.Items, parentName, objectName, directory);
+            var arrayItem = TryMapProperty(@interface, openApiSpecVersion, schema.Items, parentName, objectName, directory);
+            if (arrayItem.Result.IsFirst)
+            {
+                return (PropertyType.Normal, arrayItem.TypeName, new PropertyDto(MapArrayType(arrayItem.Result.First.Type), arrayItem.Result.First.Name, schema.Description));
+            }
+
+            throw new Exception();
         }
 
         if (new[] { SchemaType.Object, SchemaType.Unknown }.Contains(schema.GetSchemaType()))
