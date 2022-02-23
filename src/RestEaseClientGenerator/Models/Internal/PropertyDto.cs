@@ -1,6 +1,6 @@
 namespace RestEaseClientGenerator.Models.Internal;
 
-internal record PropertyDto(string Type, string Name, bool IsArray = false, string? Description = null, PropertyDto? Extends = null)
+internal record PropertyDto(string Type, string Name, string? ArrayItemType = null, string? Description = null, PropertyDto? Extends = null)
 {
     public override string ToString()
     {

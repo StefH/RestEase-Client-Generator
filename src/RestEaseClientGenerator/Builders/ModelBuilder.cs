@@ -2,6 +2,8 @@ using System.Text;
 using RestEaseClientGenerator.Extensions;
 using RestEaseClientGenerator.Models.Internal;
 using RestEaseClientGenerator.Settings;
+using RestEaseClientGenerator.Types;
+using RestEaseClientGenerator.Utils;
 
 namespace RestEaseClientGenerator.Builders;
 
@@ -39,7 +41,12 @@ internal class ModelBuilder : BaseBuilder
             int skip = 0;
             if (Settings.ExtendClassForAnyOfAllOf)
             {
-                extendsClass = $" : {extends[0]}";
+                var first = extends[0]!;
+                var extendType = first.ArrayItemType == null
+                    ? first.ToString()
+                    : ArrayTypeMapper.Map(ArrayType.List, first.ArrayItemType);
+
+                extendsClass = $" : {extendType}";
                 skip = 1;
             }
             
@@ -60,8 +67,6 @@ internal class ModelBuilder : BaseBuilder
                 }
             }
         }
-
-       
 
         if (!Settings.SingleFile || isFirst)
         {

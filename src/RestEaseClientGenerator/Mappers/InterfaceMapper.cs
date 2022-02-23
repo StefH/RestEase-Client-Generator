@@ -329,8 +329,7 @@ internal class InterfaceMapper : BaseMapper
                     ? MakeValidReferenceId(schema.Items.Reference.Id)
                     : _schemaMapper.MapSchema(@interface, schema.Items, string.Empty, null, false, true, null, directory).First.Type;
 
-                // return MapArrayType(FixReservedType(arrayType));
-                return ArrayTypeMapper.Map(Settings, FixReservedType(arrayType));
+                return ArrayTypeMapper.Map(Settings.ArrayType, FixReservedType(arrayType));
 
             case SchemaType.Object:
             case SchemaType.Unknown:

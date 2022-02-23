@@ -17,7 +17,8 @@ namespace RestEaseClientGeneratorConsoleApp
             {
                 SingleFile = true,
                 Namespace = "RestEaseClientGeneratorConsoleApp.Examples.Pitane",
-                ApiName = "Pitane"
+                ApiName = "Pitane",
+                // ArrayType = ArrayType.List
             };
             foreach (var file in generator.FromFile(@"Examples\Pitane\Pitane.json", pitaneSettings, out _))
             {

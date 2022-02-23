@@ -45,23 +45,23 @@ internal class SchemaMapper : BaseMapper
                 }
 
                 // It's an array-item, return the correct type
-                return new PropertyDto(ArrayTypeMapper.Map(Settings, listItem.First.Type), name, true);
+                return new PropertyDto(ArrayTypeMapper.Map(Settings.ArrayType, listItem.First.Type), name, listItem.First.Type);
 
             case SchemaType.Boolean:
-                return new PropertyDto($"bool{nullable}", nameCamelCase, false, schema.Description);
+                return new PropertyDto($"bool{nullable}", nameCamelCase, null, schema.Description);
 
             case SchemaType.Integer:
                 return schema.GetSchemaFormat() switch
                 {
-                    SchemaFormat.Int64 => new PropertyDto($"long{nullable}", nameCamelCase, false, schema.Description),
-                    _ => new PropertyDto($"int{nullable}", nameCamelCase, false, schema.Description)
+                    SchemaFormat.Int64 => new PropertyDto($"long{nullable}", nameCamelCase, null, schema.Description),
+                    _ => new PropertyDto($"int{nullable}", nameCamelCase, null, schema.Description)
                 };
 
             case SchemaType.Number:
                 return schema.GetSchemaFormat() switch
                 {
-                    SchemaFormat.Float => new PropertyDto($"float{nullable}", nameCamelCase, false, schema.Description),
-                    _ => new PropertyDto($"double{nullable}", nameCamelCase, false, schema.Description)
+                    SchemaFormat.Float => new PropertyDto($"float{nullable}", nameCamelCase, null, schema.Description),
+                    _ => new PropertyDto($"double{nullable}", nameCamelCase, null, schema.Description)
                 };
 
             case SchemaType.String:
@@ -69,14 +69,14 @@ internal class SchemaMapper : BaseMapper
                 {
                     case SchemaFormat.Date:
                     case SchemaFormat.DateTime:
-                        return new PropertyDto($"{DateTime}{nullable}", nameCamelCase, false, schema.Description);
+                        return new PropertyDto($"{DateTime}{nullable}", nameCamelCase, null, schema.Description);
 
                     case SchemaFormat.Byte:
                     case SchemaFormat.Binary:
                         return Settings.ApplicationOctetStreamType switch
                         {
-                            ApplicationOctetStreamType.Stream => new PropertyDto("System.IO.Stream", nameCamelCase, false, schema.Description),
-                            _ => new PropertyDto("byte[]", nameCamelCase, false, schema.Description)
+                            ApplicationOctetStreamType.Stream => new PropertyDto("System.IO.Stream", nameCamelCase, null, schema.Description),
+                            _ => new PropertyDto("byte[]", nameCamelCase, null, schema.Description)
                         };
 
                     default:
@@ -85,7 +85,7 @@ internal class SchemaMapper : BaseMapper
                             return MapEnumSchema(@interface, schema, parentName, name, nameCamelCase, nullable);
                         }
 
-                        return new PropertyDto("string", nameCamelCase, false, schema.Description);
+                        return new PropertyDto("string", nameCamelCase, null, schema.Description);
                 }
 
             case SchemaType.Object:
@@ -97,7 +97,7 @@ internal class SchemaMapper : BaseMapper
                     if (additionalResult.IsFirst)
                     {
                         var dictionaryType = $"Dictionary<string, {additionalResult.First}>";
-                        return new PropertyDto(dictionaryType, parentName, false, schema.Description);
+                        return new PropertyDto(dictionaryType, parentName, null, schema.Description);
                     }
 
                     if (additionalResult.IsSecond && additionalResult.Second.Count == 0)
@@ -122,7 +122,7 @@ internal class SchemaMapper : BaseMapper
                             break;
 
                         case PropertyType.Normal:
-                            list.Add(new PropertyDto(property.TypeName, objectName, false, openApiSchema.Description));
+                            list.Add(new PropertyDto(property.TypeName, objectName, null, openApiSchema.Description));
                             break;
 
                         case PropertyType.Reference:
@@ -137,7 +137,7 @@ internal class SchemaMapper : BaseMapper
                     switch (property.Type)
                     {
                         case PropertyType.Reference:
-                            list.Add(new PropertyDto("not-used", "not-used", allOrAny.GetSchemaType() == SchemaType.Array, allOrAny.Description, property.Result.First));
+                            list.Add(new PropertyDto("not-used", "not-used", null, allOrAny.Description, property.Result.First));
                             break;
 
                         case PropertyType.Normal when property.Result.IsFirst:
@@ -155,8 +155,8 @@ internal class SchemaMapper : BaseMapper
             case SchemaType.File:
                 return Settings.MultipartFormDataFileType switch
                 {
-                    MultipartFormDataFileType.Stream => new PropertyDto("System.IO.Stream", nameCamelCase, false, schema.Description),
-                    _ => new PropertyDto("byte[]", nameCamelCase, false, schema.Description)
+                    MultipartFormDataFileType.Stream => new PropertyDto("System.IO.Stream", nameCamelCase, null, schema.Description),
+                    _ => new PropertyDto("byte[]", nameCamelCase, null, schema.Description)
                 };
 
             default:
@@ -168,8 +168,8 @@ internal class SchemaMapper : BaseMapper
     {
         return dto with
         {
-            IsArray = true,
-            Type = ArrayTypeMapper.Map(Settings, dto.Type),
+            ArrayItemType = dto.Type,
+            Type = ArrayTypeMapper.Map(Settings.ArrayType, dto.Type),
             Description = description ?? dto.Description
         };
     }
@@ -216,12 +216,12 @@ internal class SchemaMapper : BaseMapper
                 if (additionalPropertiesType.Result.IsFirst)
                 {
                     var dictionaryType = $"Dictionary<string, {additionalPropertiesType.Result.First.Type}>";
-                    return (PropertyType.Normal, objectName, new PropertyDto(dictionaryType, objectName, false, schema.Description));
+                    return (PropertyType.Normal, objectName, new PropertyDto(dictionaryType, objectName, null, schema.Description));
                 }
                 else
                 {
                     var dictionaryType = $"Dictionary<string, {additionalPropertiesType.TypeName}>";
-                    return (PropertyType.Normal, className, new PropertyDto(dictionaryType, className, false, schema.Description));
+                    return (PropertyType.Normal, className, new PropertyDto(dictionaryType, className, null, schema.Description));
                 }
             }
 
@@ -236,7 +236,7 @@ internal class SchemaMapper : BaseMapper
             return (PropertyType.Normal, string.Empty, property.First);
         }
 
-        return (PropertyType.None, string.Empty, new PropertyDto("not-used", "not-used", false, "not-used"));
+        return (PropertyType.None, string.Empty, new PropertyDto("not-used", "not-used", null, "not-used"));
     }
 
     // Object is defined `inline`, create a new Model and use that one.
@@ -276,7 +276,7 @@ internal class SchemaMapper : BaseMapper
                     if (internalSchema.AdditionalProperties == null)
                     {
                         var className = MakeValidClassName(schema.Reference.Id);
-                        return new PropertyDto(className, name ?? className, false, schema.Description);
+                        return new PropertyDto(className, name ?? className, null, schema.Description);
                     }
 
                     var local = MapSchema(
@@ -304,7 +304,7 @@ internal class SchemaMapper : BaseMapper
 
             case { IsExternal: true }:
                 var externalProperty = new ExternalReferenceMapper(Settings, @interface).MapProperty(schema.Reference, directory);
-                return new PropertyDto(externalProperty.Type, name ?? externalProperty.Name, false, "not-used");
+                return new PropertyDto(externalProperty.Type, name ?? externalProperty.Name, null, "not-used");
 
             default:
                 return null;
@@ -362,6 +362,6 @@ internal class SchemaMapper : BaseMapper
 
         var type = Settings.PreferredEnumType == EnumType.Enum ? $"{enumName}{nullable}" : "string";
 
-        return new PropertyDto(type, nameCamelCase, false, schema.Description);
+        return new PropertyDto(type, nameCamelCase, null, schema.Description);
     }
 }
