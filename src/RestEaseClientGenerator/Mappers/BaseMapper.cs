@@ -25,7 +25,7 @@ public abstract class BaseMapper
         return MakeValidClassName(id.Split('/').Last());
     }
 
-    protected string MapArrayType(object? type)
+    protected string MapArrayType(string type)
     {
         return Settings.ArrayType switch
         {

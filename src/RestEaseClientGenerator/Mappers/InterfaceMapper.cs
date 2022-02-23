@@ -552,7 +552,7 @@ internal class InterfaceMapper : BaseMapper
                             break;
 
                         case PropertyType.Normal when property.Result.IsFirst:
-                            bodyParameter = MapArrayType(property.Result.First);
+                            bodyParameter = MapArrayType(property.Result.First.Type);
                             //list.Add(property.Result.First);
                             break;
 
