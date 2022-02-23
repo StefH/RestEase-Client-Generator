@@ -14,10 +14,10 @@ using RestEaseClientGenerator.Types;
 using Serilog;
 using Serilog.Sinks.SystemConsole.Themes;
 
-//GenerateMicrosoftWebApps();
-//GenerateMicrosoftWebAppServicePlans();
+GenerateMicrosoftWebApps();
+GenerateMicrosoftWebAppServicePlans();
 GenerateMicrosoftContainerInstance20211001();
-//GenerateMicrosoftStorage20210401();
+GenerateMicrosoftStorage20210401();
 
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Debug()

@@ -6,7 +6,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Models
     /// <summary>
     /// Site Extension Information.
     /// </summary>
-    public class SiteExtensionInfo : ProxyOnlyResource
+    public class SiteExtensionInfo : ProxyOnlyResource 
     {
         /// <summary>
         /// SiteExtensionInfo resource specific properties

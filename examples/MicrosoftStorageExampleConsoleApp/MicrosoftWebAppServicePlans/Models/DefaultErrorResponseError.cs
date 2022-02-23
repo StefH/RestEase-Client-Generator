@@ -23,7 +23,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebAppServicePlans.Models
         /// </summary>
         public string Target { get; set; }
 
-        public object[] Details { get; set; }
+        public DefaultErrorResponseErrorDetails Details { get; set; }
 
         /// <summary>
         /// More information to debug error.

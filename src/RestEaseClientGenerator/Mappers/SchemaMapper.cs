@@ -196,7 +196,8 @@ internal class SchemaMapper : BaseMapper
                 return (PropertyType.Normal, arrayItem.TypeName, ToArrayPropertyDto(arrayItem.Result.First, schema.Description));
             }
 
-            throw new Exception();
+            var model = MapInlineModel(@interface, schema, parentName, directory, arrayItem.Result.Second.ClassName);
+            return (PropertyType.Normal, arrayItem.Result.Second.ClassName, model);
         }
 
         if (new[] { SchemaType.Object, SchemaType.Unknown }.Contains(schema.GetSchemaType()))
@@ -224,22 +225,7 @@ internal class SchemaMapper : BaseMapper
                 }
             }
 
-            // Object is defined `inline`, create a new Model and use that one.
-            var model = @interface.ExtraModels.FirstOrDefault(m => string.Equals(m.ClassName, className, StringComparison.InvariantCultureIgnoreCase));
-            if (model == null)
-            {
-                var inlineModel = MapSchema(@interface, schema, parentName, className, false, true, null, directory);
-                model = new RestEaseModel
-                {
-                    Description = schema.Description,
-                    Namespace = Settings.Namespace,
-                    ClassName = className,
-                    Properties = inlineModel.Second,
-                    Priority = 1001
-                };
-                @interface.ExtraModels.Add(model);
-            }
-
+            var model = MapInlineModel(@interface, schema, parentName, directory, className);
             return (PropertyType.Normal, className, model);
         }
 
@@ -251,6 +237,33 @@ internal class SchemaMapper : BaseMapper
         }
 
         return (PropertyType.None, string.Empty, new PropertyDto("not-used", "not-used", false, "not-used"));
+    }
+
+    // Object is defined `inline`, create a new Model and use that one.
+    private RestEaseModel MapInlineModel(
+        RestEaseInterface @interface,
+        OpenApiSchema schema,
+        string parentName,
+        string? directory,
+        string className)
+    {
+        var model = @interface.ExtraModels.FirstOrDefault(m =>
+            string.Equals(m.ClassName, className, StringComparison.InvariantCultureIgnoreCase));
+        if (model == null)
+        {
+            var inlineModel = MapSchema(@interface, schema, parentName, className, false, true, null, directory);
+            model = new RestEaseModel
+            {
+                Description = schema.Description,
+                Namespace = Settings.Namespace,
+                ClassName = className,
+                Properties = inlineModel.Second,
+                Priority = 1001
+            };
+            @interface.ExtraModels.Add(model);
+        }
+
+        return model;
     }
 
     public PropertyDto? TryMapPropertyReference(RestEaseInterface @interface, OpenApiSchema schema, string? name, string? directory)

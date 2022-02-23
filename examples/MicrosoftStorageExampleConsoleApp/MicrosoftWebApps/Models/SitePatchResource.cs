@@ -6,7 +6,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Models
     /// <summary>
     /// ARM resource for a site.
     /// </summary>
-    public class SitePatchResource : ProxyOnlyResource
+    public class SitePatchResource : ProxyOnlyResource 
     {
         /// <summary>
         /// SitePatchResource resource specific properties

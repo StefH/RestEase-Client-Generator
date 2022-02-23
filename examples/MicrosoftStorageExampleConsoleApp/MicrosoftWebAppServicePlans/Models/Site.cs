@@ -6,7 +6,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebAppServicePlans.Models
     /// <summary>
     /// A web app, a mobile app backend, or an API app.
     /// </summary>
-    public class Site : Resource
+    public class Site : Resource 
     {
         /// <summary>
         /// Site resource specific properties

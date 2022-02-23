@@ -6,7 +6,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebAppServicePlans.Models
     /// <summary>
     /// A snapshot of an app.
     /// </summary>
-    public class Snapshot : ProxyOnlyResource
+    public class Snapshot : ProxyOnlyResource 
     {
         /// <summary>
         /// Snapshot resource specific properties

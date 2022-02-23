@@ -6,7 +6,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Models
     /// <summary>
     /// Public certificate object
     /// </summary>
-    public class PublicCertificate : ProxyOnlyResource
+    public class PublicCertificate : ProxyOnlyResource 
     {
         /// <summary>
         /// PublicCertificate resource specific properties

@@ -8,8 +8,14 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Models
     /// </summary>
     public class ServiceSpecification
     {
+        /// <summary>
+        /// Definition of a single resource metric.
+        /// </summary>
         public MetricSpecification[] MetricSpecifications { get; set; }
 
+        /// <summary>
+        /// Log Definition of a single resource metric.
+        /// </summary>
         public LogSpecification[] LogSpecifications { get; set; }
     }
 }

@@ -6,7 +6,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Models
     /// <summary>
     /// Triggered Web Job Information.
     /// </summary>
-    public class TriggeredWebJob : ProxyOnlyResource
+    public class TriggeredWebJob : ProxyOnlyResource 
     {
         /// <summary>
         /// TriggeredWebJob resource specific properties

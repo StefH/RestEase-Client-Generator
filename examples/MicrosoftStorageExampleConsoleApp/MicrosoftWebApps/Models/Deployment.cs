@@ -6,7 +6,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Models
     /// <summary>
     /// User credentials used for publishing activity.
     /// </summary>
-    public class Deployment : ProxyOnlyResource
+    public class Deployment : ProxyOnlyResource 
     {
         /// <summary>
         /// Deployment resource specific properties

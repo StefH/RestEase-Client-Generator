@@ -6,7 +6,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Models
     /// <summary>
     /// Premier add-on.
     /// </summary>
-    public class PremierAddOn : Resource
+    public class PremierAddOn : Resource 
     {
         /// <summary>
         /// PremierAddOn resource specific properties

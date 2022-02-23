@@ -6,7 +6,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebAppServicePlans.Models
     /// <summary>
     /// Virtual Network route contract used to pass routing information for a Virtual Network.
     /// </summary>
-    public class VnetRoute : ProxyOnlyResource
+    public class VnetRoute : ProxyOnlyResource 
     {
         /// <summary>
         /// VnetRoute resource specific properties

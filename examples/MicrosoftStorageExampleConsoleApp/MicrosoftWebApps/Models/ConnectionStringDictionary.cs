@@ -6,7 +6,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Models
     /// <summary>
     /// String dictionary resource.
     /// </summary>
-    public class ConnectionStringDictionary : ProxyOnlyResource
+    public class ConnectionStringDictionary : ProxyOnlyResource 
     {
         /// <summary>
         /// Connection strings.

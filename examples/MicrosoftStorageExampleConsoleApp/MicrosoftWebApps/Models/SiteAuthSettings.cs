@@ -6,7 +6,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Models
     /// <summary>
     /// Configuration settings for the Azure App Service Authentication / Authorization feature.
     /// </summary>
-    public class SiteAuthSettings : ProxyOnlyResource
+    public class SiteAuthSettings : ProxyOnlyResource 
     {
         /// <summary>
         /// SiteAuthSettings resource specific properties

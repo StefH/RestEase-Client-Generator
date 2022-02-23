@@ -6,7 +6,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Models
     /// <summary>
     /// Details about restoring a deleted app.
     /// </summary>
-    public class DeletedAppRestoreRequest : ProxyOnlyResource
+    public class DeletedAppRestoreRequest : ProxyOnlyResource 
     {
         /// <summary>
         /// DeletedAppRestoreRequest resource specific properties

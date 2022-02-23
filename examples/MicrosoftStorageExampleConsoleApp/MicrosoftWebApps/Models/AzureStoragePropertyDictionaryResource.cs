@@ -6,7 +6,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Models
     /// <summary>
     /// AzureStorageInfo dictionary resource.
     /// </summary>
-    public class AzureStoragePropertyDictionaryResource : ProxyOnlyResource
+    public class AzureStoragePropertyDictionaryResource : ProxyOnlyResource 
     {
         /// <summary>
         /// Azure storage accounts.

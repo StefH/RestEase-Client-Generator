@@ -6,7 +6,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebAppServicePlans.Models
     /// <summary>
     /// A domain specific resource identifier.
     /// </summary>
-    public class Identifier : ProxyOnlyResource
+    public class Identifier : ProxyOnlyResource 
     {
         /// <summary>
         /// Identifier resource specific properties
