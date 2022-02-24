@@ -6,7 +6,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebAppServicePlans.Models
     /// <summary>
     /// ARM resource for a app service plan.
     /// </summary>
-    public class AppServicePlanPatchResource : ProxyOnlyResource
+    public class AppServicePlanPatchResource : ProxyOnlyResource 
     {
         /// <summary>
         /// AppServicePlanPatchResource resource specific properties

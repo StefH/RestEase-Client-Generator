@@ -6,7 +6,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Models
     /// <summary>
     /// The storage account.
     /// </summary>
-    public class StorageAccount : TrackedResource
+    public class StorageAccount : TrackedResource 
     {
         /// <summary>
         /// not-used

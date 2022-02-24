@@ -6,7 +6,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Models
     /// <summary>
     /// Description of site key vault references.
     /// </summary>
-    public class ApiKVReference : ProxyOnlyResource
+    public class ApiKVReference : ProxyOnlyResource 
     {
         /// <summary>
         /// ApiKVReference resource specific properties

@@ -6,7 +6,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebAppServicePlans.Models
     /// <summary>
     /// App Service plan.
     /// </summary>
-    public class AppServicePlan : Resource
+    public class AppServicePlan : Resource 
     {
         /// <summary>
         /// AppServicePlan resource specific properties

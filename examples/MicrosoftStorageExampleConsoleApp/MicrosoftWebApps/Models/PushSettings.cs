@@ -6,7 +6,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Models
     /// <summary>
     /// Push settings for the App.
     /// </summary>
-    public class PushSettings : ProxyOnlyResource
+    public class PushSettings : ProxyOnlyResource 
     {
         /// <summary>
         /// PushSettings resource specific properties

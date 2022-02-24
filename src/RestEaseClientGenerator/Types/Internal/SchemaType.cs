@@ -1,7 +1,10 @@
 namespace RestEaseClientGenerator.Types.Internal;
 
-internal enum SchemaType
+//[Flags]
+internal enum SchemaType : int
 {
+    Unknown = 0,
+
     Object,
 
     Array,
@@ -14,7 +17,5 @@ internal enum SchemaType
 
     Boolean,
 
-    File,
-
-    Unknown
+    File
 }

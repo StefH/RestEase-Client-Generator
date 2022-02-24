@@ -9,9 +9,11 @@ namespace RestEaseClientGenerator.Extensions;
 /// </summary>
 public static class StringExtensions
 {
-    internal static string ToValidIdentifier(this string value, CasingType casingType = CasingType.None)
+    internal static string ToValidIdentifier(this string? value, CasingType casingType = CasingType.None)
     {
-        return IdentifierUtils.CreateValidIdentifier(value, casingType);
+        return value == null
+            ? string.Empty
+            : IdentifierUtils.CreateValidIdentifier(value, casingType);
     }
 
     public static string? StripHtml(this string? text)

@@ -6,7 +6,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Models
     /// <summary>
     /// Description of the parameters of Private Access for a Web Site.
     /// </summary>
-    public class PrivateAccess : ProxyOnlyResource
+    public class PrivateAccess : ProxyOnlyResource 
     {
         /// <summary>
         /// PrivateAccess resource specific properties

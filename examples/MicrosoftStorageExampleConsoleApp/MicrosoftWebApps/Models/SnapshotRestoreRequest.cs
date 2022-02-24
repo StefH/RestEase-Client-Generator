@@ -6,7 +6,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Models
     /// <summary>
     /// Details about app recovery operation.
     /// </summary>
-    public class SnapshotRestoreRequest : ProxyOnlyResource
+    public class SnapshotRestoreRequest : ProxyOnlyResource 
     {
         /// <summary>
         /// SnapshotRestoreRequest resource specific properties

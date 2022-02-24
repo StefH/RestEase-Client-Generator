@@ -2,6 +2,8 @@ using System.Text;
 using RestEaseClientGenerator.Extensions;
 using RestEaseClientGenerator.Models.Internal;
 using RestEaseClientGenerator.Settings;
+using RestEaseClientGenerator.Types;
+using RestEaseClientGenerator.Utils;
 
 namespace RestEaseClientGenerator.Builders;
 
@@ -29,18 +31,23 @@ internal class ModelBuilder : BaseBuilder
         string extendsClass = string.Empty;
         var extends = restEaseModel.Properties.Where(p => p.Extends is not null).Select(p => p.Extends).ToList();
 
-        if (extends.Any())
+        if (extends.Any(e => e != null))
         {
             int skip = 0;
             if (Settings.ExtendClassForAnyOfAllOf)
             {
-                extendsClass = $" : {extends[0]}";
+                var first = extends[0]!;
+                var extendType = first.ArrayItemType == null
+                    ? first.ToString()
+                    : ArrayTypeMapper.Map(ArrayType.List, first.ArrayItemType); // Hack in case a class extends an array
+
+                extendsClass = $" : {extendType}";
                 skip = 1;
             }
             
             foreach (var extend in extends.Skip(skip))
             {
-                var model = _models.FirstOrDefault(m => string.Equals(m.ClassName, extend, StringComparison.InvariantCultureIgnoreCase));
+                var model = _models.FirstOrDefault(m => string.Equals(m.ClassName, extend?.Type, StringComparison.InvariantCultureIgnoreCase));
                 if (model == null)
                 {
                     throw new InvalidOperationException($"Model with name '{extend}' is not found.");

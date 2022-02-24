@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using AnyOfTypes;
 using Microsoft.OpenApi;
 using Microsoft.OpenApi.Any;
@@ -8,6 +7,7 @@ using RestEaseClientGenerator.Models.Internal;
 using RestEaseClientGenerator.Settings;
 using RestEaseClientGenerator.Types;
 using RestEaseClientGenerator.Types.Internal;
+using RestEaseClientGenerator.Utils;
 
 namespace RestEaseClientGenerator.Mappers;
 
@@ -37,46 +37,31 @@ internal class SchemaMapper : BaseMapper
         switch (schema.GetSchemaType())
         {
             case SchemaType.Array:
-                switch (schema.Items.GetSchemaType())
+                var listItem = MapSchema(@interface, schema.Items, string.Empty, name, isNullable, pascalCase, openApiSpecVersion, directory);
+                if (listItem.IsSecond)
                 {
-                    case SchemaType.Object:
-                    case SchemaType.Unknown:
-                        var or = TryMapPropertyReference(@interface, schema.Items, "not-used", directory);
-                        return or != null ?
-                            new PropertyDto(MapArrayType(MakeValidClassName(or.Type)), nameCamelCase, schema.Description) :
-                            new PropertyDto(MapArrayType("object"), nameCamelCase, schema.Description);
-
-                    case SchemaType.String:
-                        if (schema.Items.Enum != null && schema.Items.Enum.Any() && Settings.PreferredEnumType == EnumType.Enum)
-                        {
-                            return new PropertyDto(MapArrayType(MakeValidClassName(name)), nameCamelCase, schema.Description);
-                        }
-                        else
-                        {
-                            var sp = MapSchema(@interface, schema.Items, parentName, null, schema.Items.Nullable, true, openApiSpecVersion, directory);
-                            return new PropertyDto(MapArrayType(sp.First.Type), nameCamelCase, schema.Description);
-                        }
-
-                    default:
-                        var p = MapSchema(@interface, schema.Items, parentName, null, schema.Items.Nullable, true, openApiSpecVersion, directory);
-                        return new PropertyDto(MapArrayType(p.First.Type), nameCamelCase, schema.Description);
+                    // It's a anonymous type
+                    return listItem;
                 }
 
+                // It's an array-item, return the correct type
+                return new PropertyDto(ArrayTypeMapper.Map(Settings.ArrayType, listItem.First.Type), name, listItem.First.Type);
+
             case SchemaType.Boolean:
-                return new PropertyDto($"bool{nullable}", nameCamelCase, schema.Description);
+                return new PropertyDto($"bool{nullable}", nameCamelCase, null, schema.Description);
 
             case SchemaType.Integer:
                 return schema.GetSchemaFormat() switch
                 {
-                    SchemaFormat.Int64 => new PropertyDto($"long{nullable}", nameCamelCase, schema.Description),
-                    _ => new PropertyDto($"int{nullable}", nameCamelCase, schema.Description)
+                    SchemaFormat.Int64 => new PropertyDto($"long{nullable}", nameCamelCase, null, schema.Description),
+                    _ => new PropertyDto($"int{nullable}", nameCamelCase, null, schema.Description)
                 };
 
             case SchemaType.Number:
                 return schema.GetSchemaFormat() switch
                 {
-                    SchemaFormat.Float => new PropertyDto($"float{nullable}", nameCamelCase, schema.Description),
-                    _ => new PropertyDto($"double{nullable}", nameCamelCase, schema.Description)
+                    SchemaFormat.Float => new PropertyDto($"float{nullable}", nameCamelCase, null, schema.Description),
+                    _ => new PropertyDto($"double{nullable}", nameCamelCase, null, schema.Description)
                 };
 
             case SchemaType.String:
@@ -84,14 +69,14 @@ internal class SchemaMapper : BaseMapper
                 {
                     case SchemaFormat.Date:
                     case SchemaFormat.DateTime:
-                        return new PropertyDto($"{DateTime}{nullable}", nameCamelCase, schema.Description);
+                        return new PropertyDto($"{DateTime}{nullable}", nameCamelCase, null, schema.Description);
 
                     case SchemaFormat.Byte:
                     case SchemaFormat.Binary:
                         return Settings.ApplicationOctetStreamType switch
                         {
-                            ApplicationOctetStreamType.Stream => new PropertyDto("System.IO.Stream", nameCamelCase, schema.Description),
-                            _ => new PropertyDto("byte[]", nameCamelCase, schema.Description)
+                            ApplicationOctetStreamType.Stream => new PropertyDto("System.IO.Stream", nameCamelCase, null, schema.Description),
+                            _ => new PropertyDto("byte[]", nameCamelCase, null, schema.Description)
                         };
 
                     default:
@@ -100,7 +85,7 @@ internal class SchemaMapper : BaseMapper
                             return MapEnumSchema(@interface, schema, parentName, name, nameCamelCase, nullable);
                         }
 
-                        return new PropertyDto("string", nameCamelCase, schema.Description);
+                        return new PropertyDto("string", nameCamelCase, null, schema.Description);
                 }
 
             case SchemaType.Object:
@@ -112,7 +97,7 @@ internal class SchemaMapper : BaseMapper
                     if (additionalResult.IsFirst)
                     {
                         var dictionaryType = $"Dictionary<string, {additionalResult.First}>";
-                        return new PropertyDto(dictionaryType, parentName, schema.Description);
+                        return new PropertyDto(dictionaryType, parentName, null, schema.Description);
                     }
 
                     if (additionalResult.IsSecond && additionalResult.Second.Count == 0)
@@ -137,7 +122,7 @@ internal class SchemaMapper : BaseMapper
                             break;
 
                         case PropertyType.Normal:
-                            list.Add(new PropertyDto(property.TypeName, objectName, openApiSchema.Description));
+                            list.Add(new PropertyDto(property.TypeName, objectName, null, openApiSchema.Description));
                             break;
 
                         case PropertyType.Reference:
@@ -152,7 +137,7 @@ internal class SchemaMapper : BaseMapper
                     switch (property.Type)
                     {
                         case PropertyType.Reference:
-                            list.Add(new PropertyDto("not-used", "not-used", allOrAny.Description, property.Result.First.Type));
+                            list.Add(new PropertyDto("not-used", "not-used", null, allOrAny.Description, property.Result.First));
                             break;
 
                         case PropertyType.Normal when property.Result.IsFirst:
@@ -170,8 +155,8 @@ internal class SchemaMapper : BaseMapper
             case SchemaType.File:
                 return Settings.MultipartFormDataFileType switch
                 {
-                    MultipartFormDataFileType.Stream => new PropertyDto("System.IO.Stream", nameCamelCase, schema.Description),
-                    _ => new PropertyDto("byte[]", nameCamelCase, schema.Description)
+                    MultipartFormDataFileType.Stream => new PropertyDto("System.IO.Stream", nameCamelCase, null, schema.Description),
+                    _ => new PropertyDto("byte[]", nameCamelCase, null, schema.Description)
                 };
 
             default:
@@ -179,7 +164,17 @@ internal class SchemaMapper : BaseMapper
         }
     }
 
-    private (PropertyType Type, string TypeName, AnyOf<PropertyDto, RestEaseModel> Result) TryMapProperty(
+    private PropertyDto ToArrayPropertyDto(PropertyDto dto, string? description)
+    {
+        return dto with
+        {
+            ArrayItemType = dto.Type,
+            Type = ArrayTypeMapper.Map(Settings.ArrayType, dto.Type),
+            Description = description ?? dto.Description
+        };
+    }
+
+    public (PropertyType Type, string TypeName, AnyOf<PropertyDto, RestEaseModel> Result) TryMapProperty(
         RestEaseInterface @interface,
         OpenApiSpecVersion? openApiSpecVersion,
         OpenApiSchema schema,
@@ -187,6 +182,24 @@ internal class SchemaMapper : BaseMapper
         string objectName,
         string? directory)
     {
+        if (new[] { SchemaType.Array }.Contains(schema.GetSchemaType()))
+        {
+            var referencedProperty = TryMapPropertyReference(@interface, schema, objectName, directory);
+            if (referencedProperty is not null)
+            {
+                return (PropertyType.Reference, referencedProperty.Name, ToArrayPropertyDto(referencedProperty, schema.Description));
+            }
+
+            var arrayItem = TryMapProperty(@interface, openApiSpecVersion, schema.Items, parentName, objectName, directory);
+            if (arrayItem.Result.IsFirst)
+            {
+                return (PropertyType.Normal, arrayItem.TypeName, ToArrayPropertyDto(arrayItem.Result.First, schema.Description));
+            }
+
+            var model = MapInlineModel(@interface, schema, parentName, directory, arrayItem.Result.Second.ClassName);
+            return (PropertyType.Normal, arrayItem.Result.Second.ClassName, model);
+        }
+
         if (new[] { SchemaType.Object, SchemaType.Unknown }.Contains(schema.GetSchemaType()))
         {
             var referencedProperty = TryMapPropertyReference(@interface, schema, objectName, directory);
@@ -203,31 +216,16 @@ internal class SchemaMapper : BaseMapper
                 if (additionalPropertiesType.Result.IsFirst)
                 {
                     var dictionaryType = $"Dictionary<string, {additionalPropertiesType.Result.First.Type}>";
-                    return (PropertyType.Normal, objectName, new PropertyDto(dictionaryType, objectName, schema.Description));
+                    return (PropertyType.Normal, objectName, new PropertyDto(dictionaryType, objectName, null, schema.Description));
                 }
                 else
                 {
                     var dictionaryType = $"Dictionary<string, {additionalPropertiesType.TypeName}>";
-                    return (PropertyType.Normal, className, new PropertyDto(dictionaryType, className, schema.Description));
+                    return (PropertyType.Normal, className, new PropertyDto(dictionaryType, className, null, schema.Description));
                 }
             }
 
-            // Object is defined `inline`, create a new Model and use that one.
-            var model = @interface.ExtraModels.FirstOrDefault(m => string.Equals(m.ClassName, className, StringComparison.InvariantCultureIgnoreCase));
-            if (model == null)
-            {
-                var inlineModel = MapSchema(@interface, schema, parentName, className, false, true, null, directory);
-                model = new RestEaseModel
-                {
-                    Description = schema.Description,
-                    Namespace = Settings.Namespace,
-                    ClassName = className,
-                    Properties = inlineModel.Second,
-                    Priority = 1001
-                };
-                @interface.ExtraModels.Add(model);
-            }
-
+            var model = MapInlineModel(@interface, schema, parentName, directory, className);
             return (PropertyType.Normal, className, model);
         }
 
@@ -238,7 +236,34 @@ internal class SchemaMapper : BaseMapper
             return (PropertyType.Normal, string.Empty, property.First);
         }
 
-        return (PropertyType.None, string.Empty, new PropertyDto("not-used", "not-used", "not-used"));
+        return (PropertyType.None, string.Empty, new PropertyDto("not-used", "not-used", null, "not-used"));
+    }
+
+    // Object is defined `inline`, create a new Model and use that one.
+    private RestEaseModel MapInlineModel(
+        RestEaseInterface @interface,
+        OpenApiSchema schema,
+        string parentName,
+        string? directory,
+        string className)
+    {
+        var model = @interface.ExtraModels.FirstOrDefault(m =>
+            string.Equals(m.ClassName, className, StringComparison.InvariantCultureIgnoreCase));
+        if (model == null)
+        {
+            var inlineModel = MapSchema(@interface, schema, parentName, className, false, true, null, directory);
+            model = new RestEaseModel
+            {
+                Description = schema.Description,
+                Namespace = Settings.Namespace,
+                ClassName = className,
+                Properties = inlineModel.Second,
+                Priority = 1001
+            };
+            @interface.ExtraModels.Add(model);
+        }
+
+        return model;
     }
 
     public PropertyDto? TryMapPropertyReference(RestEaseInterface @interface, OpenApiSchema schema, string? name, string? directory)
@@ -251,7 +276,7 @@ internal class SchemaMapper : BaseMapper
                     if (internalSchema.AdditionalProperties == null)
                     {
                         var className = MakeValidClassName(schema.Reference.Id);
-                        return new PropertyDto(className, name ?? className, schema.Description);
+                        return new PropertyDto(className, name ?? className, null, schema.Description);
                     }
 
                     var local = MapSchema(
@@ -261,7 +286,8 @@ internal class SchemaMapper : BaseMapper
                         null,
                         internalSchema.Nullable,
                         true,
-                        OpenApiSpecVersion.OpenApi2_0, directory);
+                        OpenApiSpecVersion.OpenApi3_0, // TODO
+                        directory);
 
                     if (local.IsFirst)
                     {
@@ -279,7 +305,7 @@ internal class SchemaMapper : BaseMapper
 
             case { IsExternal: true }:
                 var externalProperty = new ExternalReferenceMapper(Settings, @interface).MapProperty(schema.Reference, directory);
-                return new PropertyDto(externalProperty.Type, name ?? externalProperty.Name, "not-used");
+                return new PropertyDto(externalProperty.Type, name ?? externalProperty.Name, null, "not-used");
 
             default:
                 return null;
@@ -337,6 +363,6 @@ internal class SchemaMapper : BaseMapper
 
         var type = Settings.PreferredEnumType == EnumType.Enum ? $"{enumName}{nullable}" : "string";
 
-        return new PropertyDto(type, nameCamelCase, schema.Description);
+        return new PropertyDto(type, nameCamelCase, null, schema.Description);
     }
 }

@@ -6,7 +6,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebAppServicePlans.Models
     /// <summary>
     /// Virtual Network information ARM resource.
     /// </summary>
-    public class VnetInfoResource : ProxyOnlyResource
+    public class VnetInfoResource : ProxyOnlyResource 
     {
         /// <summary>
         /// Virtual Network information contract.

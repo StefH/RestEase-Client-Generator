@@ -7,7 +7,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
     /// A container group.
     /// </summary>
     [FluentBuilder.AutoGenerateBuilder]
-    public class ContainerGroup : Resource
+    public class ContainerGroup : Resource 
     {
         /// <summary>
         /// Identity for the container group.

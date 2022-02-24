@@ -6,7 +6,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Models
     /// <summary>
     /// Publishing Credentials Policies parameters.
     /// </summary>
-    public class CsmPublishingCredentialsPoliciesEntity : ProxyOnlyResource
+    public class CsmPublishingCredentialsPoliciesEntity : ProxyOnlyResource 
     {
         /// <summary>
         /// CsmPublishingCredentialsPoliciesEntity resource specific properties

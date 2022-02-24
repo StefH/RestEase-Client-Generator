@@ -6,7 +6,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Models
     /// <summary>
     /// A hostname binding object.
     /// </summary>
-    public class HostNameBinding : ProxyOnlyResource
+    public class HostNameBinding : ProxyOnlyResource 
     {
         /// <summary>
         /// HostNameBinding resource specific properties

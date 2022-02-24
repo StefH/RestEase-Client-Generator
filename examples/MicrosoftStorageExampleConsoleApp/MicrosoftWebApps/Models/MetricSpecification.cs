@@ -32,10 +32,16 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Models
 
         public bool IsInternal { get; set; }
 
+        /// <summary>
+        /// Dimension of a resource metric. For e.g. instance specific HTTP requests for a web app, where instance name is dimension of the metric HTTP request
+        /// </summary>
         public Dimension[] Dimensions { get; set; }
 
         public string Category { get; set; }
 
+        /// <summary>
+        /// Retention policy of a resource metric.
+        /// </summary>
         public MetricAvailability[] Availabilities { get; set; }
 
         public string[] SupportedTimeGrainTypes { get; set; }

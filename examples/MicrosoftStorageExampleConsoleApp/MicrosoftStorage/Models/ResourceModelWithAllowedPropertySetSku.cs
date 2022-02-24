@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Models
 {
-    public class ResourceModelWithAllowedPropertySetSku : Sku
+    public class ResourceModelWithAllowedPropertySetSku : Sku 
     {
     }
 }

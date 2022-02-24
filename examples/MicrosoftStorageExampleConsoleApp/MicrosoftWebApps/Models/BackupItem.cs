@@ -6,7 +6,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Models
     /// <summary>
     /// Backup description.
     /// </summary>
-    public class BackupItem : ProxyOnlyResource
+    public class BackupItem : ProxyOnlyResource 
     {
         /// <summary>
         /// BackupItem resource specific properties

@@ -6,7 +6,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Models
     /// <summary>
     /// The resource model definition for an Azure Resource Manager resource with an etag.
     /// </summary>
-    public class AzureEntityResource : Resource
+    public class AzureEntityResource : Resource 
     {
         /// <summary>
         /// Resource Etag.

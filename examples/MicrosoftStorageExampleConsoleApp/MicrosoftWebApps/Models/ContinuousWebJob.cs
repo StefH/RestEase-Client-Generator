@@ -6,7 +6,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Models
     /// <summary>
     /// Continuous Web Job Information.
     /// </summary>
-    public class ContinuousWebJob : ProxyOnlyResource
+    public class ContinuousWebJob : ProxyOnlyResource 
     {
         /// <summary>
         /// ContinuousWebJob resource specific properties

@@ -6,7 +6,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Models
     /// <summary>
     /// MSDeploy log
     /// </summary>
-    public class MSDeployLog : ProxyOnlyResource
+    public class MSDeployLog : ProxyOnlyResource 
     {
         /// <summary>
         /// MSDeployLog resource specific properties

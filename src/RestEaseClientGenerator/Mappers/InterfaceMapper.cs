@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Text.RegularExpressions;
+using Microsoft.OpenApi;
 using Microsoft.OpenApi.Models;
 using RestEaseClientGenerator.Constants;
 using RestEaseClientGenerator.Extensions;
@@ -288,7 +289,7 @@ internal class InterfaceMapper : BaseMapper
             case MultipleResponsesType.First:
                 return returnTypes.First();
 
-            case MultipleResponsesType.AnyOf:
+            case MultipleResponsesType.AnyOf when returnTypes.Count > 0:
                 var distinct = returnTypes.Distinct().ToArray();
                 return distinct.Length > 1 ? $"Response<AnyOf<{string.Join(", ", distinct)}>>" : distinct.First();
 
@@ -328,7 +329,7 @@ internal class InterfaceMapper : BaseMapper
                     ? MakeValidReferenceId(schema.Items.Reference.Id)
                     : _schemaMapper.MapSchema(@interface, schema.Items, string.Empty, null, false, true, null, directory).First.Type;
 
-                return MapArrayType(FixReservedType(arrayType));
+                return ArrayTypeMapper.Map(Settings.ArrayType, FixReservedType(arrayType));
 
             case SchemaType.Object:
             case SchemaType.Unknown:
@@ -534,29 +535,34 @@ internal class InterfaceMapper : BaseMapper
 
         if (detected.Key is SupportedContentType.ApplicationJson or SupportedContentType.ApplicationXml)
         {
-            string? bodyParameter = null;
+            string? bodyParameterType = null;
             switch (detected.Value.Schema?.GetSchemaType())
             {
                 case SchemaType.Array:
-                    string arrayType = detected.Value.Schema.Items.Reference != null
-                        ? MakeValidReferenceId(detected.Value.Schema.Items.Reference.Id)
-                        : _schemaMapper.MapSchema(@interface, detected.Value.Schema.Items, string.Empty, null, false, true, null, directory).ToString();
-                    bodyParameter = MapArrayType(arrayType);
+                    var property = _schemaMapper.TryMapProperty(
+                        @interface,
+                        OpenApiSpecVersion.OpenApi3_0, // TODO OpenApiSpecVersion
+                        detected.Value.Schema,
+                        string.Empty,
+                        string.Empty,
+                        directory);
+
+                    bodyParameterType = property.Result.First.Type;
                     break;
 
                 case SchemaType.Object:
                 case SchemaType.Unknown:
-                    bodyParameter = detected.Value.Schema.Reference != null ? MakeValidReferenceId(detected.Value.Schema.Reference.Id) : null;
+                    bodyParameterType = detected.Value.Schema.Reference != null ? MakeValidReferenceId(detected.Value.Schema.Reference.Id) : null;
                     break;
             }
 
-            if (!string.IsNullOrEmpty(bodyParameter))
+            if (!string.IsNullOrEmpty(bodyParameterType))
             {
                 bodyParameterList.Add(new RestEaseParameter
                 {
                     Required = true,
                     ValidIdentifier = "content",
-                    IdentifierWithType = new PropertyDto(FixReservedType(bodyParameter!), "content"),
+                    IdentifierWithType = new PropertyDto(FixReservedType(bodyParameterType!), "content"),
                     IdentifierRestEasePrefix = "[Body]",
                     Summary = detected.Value.Schema?.Description ?? bodyParameterDescription
                 });

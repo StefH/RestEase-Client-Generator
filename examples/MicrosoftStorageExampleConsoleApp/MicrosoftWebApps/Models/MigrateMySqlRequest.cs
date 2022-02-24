@@ -6,7 +6,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Models
     /// <summary>
     /// MySQL migration request.
     /// </summary>
-    public class MigrateMySqlRequest : ProxyOnlyResource
+    public class MigrateMySqlRequest : ProxyOnlyResource 
     {
         /// <summary>
         /// MigrateMySqlRequest resource specific properties

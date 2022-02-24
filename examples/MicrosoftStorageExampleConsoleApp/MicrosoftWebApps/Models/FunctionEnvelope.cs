@@ -6,7 +6,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Models
     /// <summary>
     /// Function information.
     /// </summary>
-    public class FunctionEnvelope : ProxyOnlyResource
+    public class FunctionEnvelope : ProxyOnlyResource 
     {
         /// <summary>
         /// FunctionEnvelope resource specific properties

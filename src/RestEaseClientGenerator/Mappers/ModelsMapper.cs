@@ -30,9 +30,9 @@ internal class ModelsMapper : BaseMapper
     {
         foreach (var entry in schemas.OrderBy(s => s.Key))
         {
-            var properties = _schemaMapper.MapSchema(_interface, entry.Value, string.Empty, entry.Key, entry.Value.Nullable, true, _openApiSpecVersion, _directory);
+            var result = _schemaMapper.MapSchema(_interface, entry.Value, string.Empty, entry.Key, entry.Value.Nullable, true, _openApiSpecVersion, _directory);
 
-            if (properties.IsSecond)
+            if (result.IsSecond)
             {
                 // It's a Model
                 yield return new RestEaseModel
@@ -40,7 +40,19 @@ internal class ModelsMapper : BaseMapper
                     Description = entry.Value.Description,
                     Namespace = Settings.Namespace,
                     ClassName = MakeValidClassName(entry.Key),
-                    Properties = properties.Second
+                    Properties = result.Second
+                };
+            }
+
+            if (result.IsFirst && result.First.ArrayItemType != null)
+            {
+                // Class is an Array or extends an Array
+                yield return new RestEaseModel
+                {
+                    Description = entry.Value.Description,
+                    Namespace = Settings.Namespace,
+                    ClassName = MakeValidClassName(entry.Key),
+                    Properties = new List<PropertyDto> { result.First }
                 };
             }
         }

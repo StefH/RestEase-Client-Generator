@@ -6,7 +6,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Models
     /// <summary>
     /// Options for app content migration.
     /// </summary>
-    public class StorageMigrationOptions : ProxyOnlyResource
+    public class StorageMigrationOptions : ProxyOnlyResource 
     {
         /// <summary>
         /// StorageMigrationOptions resource specific properties

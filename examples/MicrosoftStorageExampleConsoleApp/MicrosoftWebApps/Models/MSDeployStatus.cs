@@ -6,7 +6,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Models
     /// <summary>
     /// MSDeploy ARM response
     /// </summary>
-    public class MSDeployStatus : ProxyOnlyResource
+    public class MSDeployStatus : ProxyOnlyResource 
     {
         /// <summary>
         /// MSDeployStatus resource specific properties

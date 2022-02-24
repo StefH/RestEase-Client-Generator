@@ -8,6 +8,9 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebAppServicePlans.Models
     /// </summary>
     public class PrivateLinkResourcesWrapper
     {
+        /// <summary>
+        /// A private link resource
+        /// </summary>
         public PrivateLinkResource[] Value { get; set; }
     }
 }

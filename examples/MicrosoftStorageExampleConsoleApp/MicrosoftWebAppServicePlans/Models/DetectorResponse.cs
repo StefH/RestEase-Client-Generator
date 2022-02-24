@@ -6,7 +6,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebAppServicePlans.Models
     /// <summary>
     /// Class representing Response from Detector
     /// </summary>
-    public class DetectorResponse : ProxyOnlyResource
+    public class DetectorResponse : ProxyOnlyResource 
     {
         /// <summary>
         /// DetectorResponse resource specific properties

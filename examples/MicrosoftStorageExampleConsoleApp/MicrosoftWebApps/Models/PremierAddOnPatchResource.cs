@@ -6,7 +6,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Models
     /// <summary>
     /// ARM resource for a PremierAddOn.
     /// </summary>
-    public class PremierAddOnPatchResource : ProxyOnlyResource
+    public class PremierAddOnPatchResource : ProxyOnlyResource 
     {
         /// <summary>
         /// PremierAddOnPatchResource resource specific properties

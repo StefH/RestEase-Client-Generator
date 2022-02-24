@@ -6,7 +6,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Models
     /// <summary>
     /// Process Thread Information.
     /// </summary>
-    public class ProcessThreadInfo : ProxyOnlyResource
+    public class ProcessThreadInfo : ProxyOnlyResource 
     {
         /// <summary>
         /// ProcessThreadInfo resource specific properties
