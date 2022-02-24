@@ -539,9 +539,13 @@ internal class InterfaceMapper : BaseMapper
             switch (detected.Value.Schema?.GetSchemaType())
             {
                 case SchemaType.Array:
-                    var property = _schemaMapper.TryMapProperty(@interface,
+                    var property = _schemaMapper.TryMapProperty(
+                        @interface,
                         OpenApiSpecVersion.OpenApi3_0, // TODO OpenApiSpecVersion
-                        detected.Value.Schema, string.Empty, string.Empty, directory);
+                        detected.Value.Schema,
+                        string.Empty,
+                        string.Empty,
+                        directory);
 
                     bodyParameterType = property.Result.First.Type;
                     break;

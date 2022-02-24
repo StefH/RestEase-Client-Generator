@@ -31,11 +31,6 @@ internal class ModelBuilder : BaseBuilder
         string extendsClass = string.Empty;
         var extends = restEaseModel.Properties.Where(p => p.Extends is not null).Select(p => p.Extends).ToList();
 
-        if ("ConditionReturnAreaReturnArea" == restEaseModel.ClassName)
-        {
-            var stef = 0;
-        }
-
         if (extends.Any(e => e != null))
         {
             int skip = 0;
@@ -44,7 +39,7 @@ internal class ModelBuilder : BaseBuilder
                 var first = extends[0]!;
                 var extendType = first.ArrayItemType == null
                     ? first.ToString()
-                    : ArrayTypeMapper.Map(ArrayType.List, first.ArrayItemType);
+                    : ArrayTypeMapper.Map(ArrayType.List, first.ArrayItemType); // Hack in case a class extends an array
 
                 extendsClass = $" : {extendType}";
                 skip = 1;

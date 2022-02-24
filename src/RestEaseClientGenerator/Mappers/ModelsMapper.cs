@@ -46,7 +46,7 @@ internal class ModelsMapper : BaseMapper
 
             if (result.IsFirst && result.First.ArrayItemType != null)
             {
-                // It's an Array
+                // Class is an Array or extends an Array
                 yield return new RestEaseModel
                 {
                     Description = entry.Value.Description,

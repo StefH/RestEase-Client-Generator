@@ -286,7 +286,8 @@ internal class SchemaMapper : BaseMapper
                         null,
                         internalSchema.Nullable,
                         true,
-                        OpenApiSpecVersion.OpenApi2_0, directory);
+                        OpenApiSpecVersion.OpenApi3_0, // TODO
+                        directory);
 
                     if (local.IsFirst)
                     {
