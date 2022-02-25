@@ -19,6 +19,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         string PitaneKey { get; set; }
 
         /// <summary>
+        /// Request distance from A to B
+        ///
         /// GetPitaneEasyTravelDistance (/pitaneEasyTravelDistance)
         /// </summary>
         /// <param name="zipFrom"></param>
@@ -27,6 +29,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneEasyTravelDistanceAsync([Query(Name = "zip_from")] string zipFrom, [Query(Name = "zip_to")] string zipTo);
 
         /// <summary>
+        /// Request document authorisation
+        ///
         /// GetPitaneDeviceDocumentsPin (/pitaneDeviceDocumentsPin)
         /// </summary>
         /// <param name="pincode"></param>
@@ -34,12 +38,16 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneDeviceDocumentsPinAsync([Query] string pincode);
 
         /// <summary>
+        /// Check if server is still alive
+        ///
         /// GetPitaneping (/pitaneping)
         /// </summary>
         [Get("/pitaneping")]
         Task<object> GetPitanepingAsync();
 
         /// <summary>
+        /// send trip reservation to Chiron
+        ///
         /// PostPitaneChironSendReservation (/pitaneChironSendReservation)
         /// </summary>
         /// <param name="content">chiron reservation record</param>
@@ -48,6 +56,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitaneChironSendReservationAsync([Body] Chironreservation content);
 
         /// <summary>
+        /// send trip departure to Chiron
+        ///
         /// PostPitaneChironSendDeparture (/pitaneChironSendDeparture)
         /// </summary>
         /// <param name="content">chiron trip departure record</param>
@@ -56,6 +66,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitaneChironSendDepartureAsync([Body] Chirondeparture content);
 
         /// <summary>
+        /// send trip arrival to Chiron
+        ///
         /// PostPitaneChironSendArrival (/pitaneChironSendArrival)
         /// </summary>
         /// <param name="content">chiron trip departure record</param>
@@ -64,6 +76,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitaneChironSendArrivalAsync([Body] Chironarrival content);
 
         /// <summary>
+        /// Send credentials to Chiron
+        ///
         /// GetPitaneChironCredentialTest (/pitaneChironCredentialTest)
         /// </summary>
         /// <param name="pitaneCustomer"></param>
@@ -71,6 +85,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneChironCredentialTestAsync([Query] string pitaneCustomer);
 
         /// <summary>
+        /// Test Header Authentication
+        ///
         /// GetPitaneAuthenticate (/pitaneAuthenticate)
         /// </summary>
         /// <param name="pitaneVersion"></param>
@@ -79,6 +95,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneAuthenticateAsync([Header("pitane-version")] string pitaneVersion, [Header("pitane-username")] string pitaneUsername);
 
         /// <summary>
+        /// Retrieve transport types by customer
+        ///
         /// GetPitaneCustomerTransportTypesRetrievebyID (/pitaneCustomerTransportTypesRetrievebyID)
         /// </summary>
         /// <param name="reiId"></param>
@@ -87,6 +105,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneCustomerTransportTypesRetrievebyIDAsync([Query(Name = "rei_id")] int reiId, [Header("AppVersion")] string appVersion);
 
         /// <summary>
+        /// Retrieve transport types by customer
+        ///
         /// GetPitaneCustomerTransportTypesRetrievebyGUID (/pitaneCustomerTransportTypesRetrievebyGUID)
         /// </summary>
         /// <param name="reiGuid"></param>
@@ -95,6 +115,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneCustomerTransportTypesRetrievebyGUIDAsync([Query(Name = "rei_guid")] string reiGuid, [Header("AppVersion")] string appVersion);
 
         /// <summary>
+        /// Retrieve virtual planning by customer
+        ///
         /// GetPitaneCustomerRetrieveVirtualPlanning (/pitaneCustomerRetrieveVirtualPlanning)
         /// </summary>
         /// <param name="reiId"></param>
@@ -104,6 +126,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneCustomerRetrieveVirtualPlanningAsync([Query(Name = "rei_id")] int reiId, [Query(Name = "pla_datum")] string plaDatum, [Query] int? offset);
 
         /// <summary>
+        /// Retrieve address by customer
+        ///
         /// GetPitaneCustomerAddressRetrievebyID (/pitaneCustomerAddressRetrievebyID)
         /// </summary>
         /// <param name="reiId"></param>
@@ -111,6 +135,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneCustomerAddressRetrievebyIDAsync([Query(Name = "rei_id")] int reiId);
 
         /// <summary>
+        /// Retrieve address by customer
+        ///
         /// GetPitaneCustomerAddressRetrievebyGUID (/pitaneCustomerAddressRetrievebyGUID)
         /// </summary>
         /// <param name="reiGuid"></param>
@@ -118,6 +144,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneCustomerAddressRetrievebyGUIDAsync([Query(Name = "rei_guid")] string reiGuid);
 
         /// <summary>
+        /// Delete customer account
+        ///
         /// PostPitaneCustomerDeleteByGUID (/pitaneCustomerDeleteByGUID)
         /// </summary>
         /// <param name="content">customer guid combination</param>
@@ -126,6 +154,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitaneCustomerDeleteByGUIDAsync([Body] ReiGuid content);
 
         /// <summary>
+        /// Retrieve customers by contact
+        ///
         /// GetPitaneContactsRetrievebyEmail (/pitaneContactsRetrievebyEmail)
         /// </summary>
         /// <param name="cprEmail"></param>
@@ -133,6 +163,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneContactsRetrievebyEmailAsync([Query(Name = "cpr_email")] string cprEmail);
 
         /// <summary>
+        /// Retrieve complains by customer
+        ///
         /// GetPitaneCustomerRetrieveComplainsByGuid (/pitaneCustomerRetrieveComplainsByGuid)
         /// </summary>
         /// <param name="reiGuid"></param>
@@ -140,6 +172,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneCustomerRetrieveComplainsByGuidAsync([Query(Name = "rei_guid")] string reiGuid);
 
         /// <summary>
+        /// Retrieve trips by customer (max. 999 records)
+        ///
         /// GetPitaneCustomerTripDateSetRetrievebyID (/pitaneCustomerTripDateSetRetrievebyID)
         /// </summary>
         /// <param name="reiId"></param>
@@ -152,6 +186,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneCustomerTripDateSetRetrievebyIDAsync([Query(Name = "rei_id")] int reiId, [Query(Name = "rei_startdate")] string reiStartdate, [Query(Name = "rei_enddate")] string reiEnddate, [Query(Name = "pla_status")] string plaStatus, [Query(Name = "pla_soortvervoer")] string plaSoortvervoer, [Query] int? offset);
 
         /// <summary>
+        /// Retrieve trips by customer (max. 999 records)
+        ///
         /// GetPitaneCustomerTripDateSetRetrievebyGUID (/pitaneCustomerTripDateSetRetrievebyGUID)
         /// </summary>
         /// <param name="reiGuid"></param>
@@ -164,6 +200,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneCustomerTripDateSetRetrievebyGUIDAsync([Query(Name = "rei_guid")] string reiGuid, [Query(Name = "rei_startdate")] string reiStartdate, [Query(Name = "rei_enddate")] string reiEnddate, [Query(Name = "pla_status")] string plaStatus, [Query(Name = "pla_soortvervoer")] string plaSoortvervoer, [Query] int? offset);
 
         /// <summary>
+        /// Retrieve customer information by birthday
+        ///
         /// GetPitaneCustomerRetrievebyZipcodeExtBirth (/pitaneCustomerRetrievebyZipcodeExtBirth)
         /// </summary>
         /// <param name="reiGebdatum"></param>
@@ -175,6 +213,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneCustomerRetrievebyZipcodeExtBirthAsync([Query(Name = "rei_gebdatum")] string reiGebdatum, [Query(Name = "adr_postcode")] string adrPostcode, [Query(Name = "adr_huisnummer")] string adrHuisnummer, [Query(Name = "adr_toevoeging")] string adrToevoeging, [Query(Name = "adr_check")] int? adrCheck);
 
         /// <summary>
+        /// Set customer absent indicator
+        ///
         /// PostPitaneSendCustomerAbsent (/pitaneSendCustomerAbsent)
         /// </summary>
         /// <param name="content">create absent record</param>
@@ -183,6 +223,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitaneSendCustomerAbsentAsync([Body] Absentrecord content);
 
         /// <summary>
+        /// Set customer absent indicator
+        ///
         /// PostPitaneSendCustomerAbsentByGUID (/pitaneSendCustomerAbsentByGUID)
         /// </summary>
         /// <param name="content">create absent record</param>
@@ -191,6 +233,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitaneSendCustomerAbsentByGUIDAsync([Body] Absentrecordguid content);
 
         /// <summary>
+        /// calculate trip tariff
+        ///
         /// PostPitaneCalculateTariffArrive (/pitaneCalculateTariffArrive)
         /// </summary>
         /// <param name="content">tariff record Arrive</param>
@@ -199,6 +243,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitaneCalculateTariffArriveAsync([Body] Tariffarrive content);
 
         /// <summary>
+        /// calculate trip tariff
+        ///
         /// PostPitaneCalculateTariff (/pitaneCalculateTariff)
         /// </summary>
         /// <param name="content">tariff record</param>
@@ -207,6 +253,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitaneCalculateTariffAsync([Body] Tariff content);
 
         /// <summary>
+        /// Create or update trip record
+        ///
         /// PostPitaneSendTripInsert (/pitaneSendTripInsert)
         /// </summary>
         /// <param name="content">default trip record</param>
@@ -215,6 +263,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitaneSendTripInsertAsync([Body] Trip content);
 
         /// <summary>
+        /// Create CROW attribute record
+        ///
         /// PostPitaneInsertTripCROW (/pitaneInsertTripCROW)
         /// </summary>
         /// <param name="content">default crow/trip record</param>
@@ -223,6 +273,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitaneInsertTripCROWAsync([Body] Crow content);
 
         /// <summary>
+        /// Update customer absent indicator
+        ///
         /// PostPitaneSendCustomerAbsentUpdate (/pitaneSendCustomerAbsentUpdate)
         /// </summary>
         /// <param name="content">update absent record</param>
@@ -231,6 +283,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitaneSendCustomerAbsentUpdateAsync([Body] AbsentUpdaterecord content);
 
         /// <summary>
+        /// Update customer absent indicator
+        ///
         /// PostPitaneSendCustomerAbsentUpdateByGUID (/pitaneSendCustomerAbsentUpdateByGUID)
         /// </summary>
         /// <param name="content">update absent record</param>
@@ -239,12 +293,16 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitaneSendCustomerAbsentUpdateByGUIDAsync([Body] AbsentUpdaterecordguid content);
 
         /// <summary>
+        /// Article / stock list / extra costs
+        ///
         /// GetPitaneArticleOnlineRetrieve (/pitaneArticleOnlineRetrieve)
         /// </summary>
         [Get("/pitaneArticleOnlineRetrieve")]
         Task<object> GetPitaneArticleOnlineRetrieveAsync();
 
         /// <summary>
+        /// Active absent indicators  (max. 999 records)
+        ///
         /// GetPitaneSendCustomerAbsentSummary (/pitaneSendCustomerAbsentSummary)
         /// </summary>
         /// <param name="ondReiId">Customer ID</param>
@@ -252,6 +310,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneSendCustomerAbsentSummaryAsync([Query(Name = "ond_rei_id")] int ondReiId);
 
         /// <summary>
+        /// Active absent indicators  (max. 999 records)
+        ///
         /// GetPitaneSendCustomerAbsentSummaryByGUID (/pitaneSendCustomerAbsentSummaryByGUID)
         /// </summary>
         /// <param name="reiGuid">Customer ID</param>
@@ -259,6 +319,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneSendCustomerAbsentSummaryByGUIDAsync([Query(Name = "rei_guid")] string reiGuid);
 
         /// <summary>
+        /// Collect trips for combination
+        ///
         /// GetPitaneCollectTrips (/pitaneCollectTrips)
         /// </summary>
         /// <param name="plaDatumtijdFrom">Start date/time collection.</param>
@@ -272,6 +334,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneCollectTripsAsync([Query(Name = "pla_datumtijd_from")] string plaDatumtijdFrom, [Query(Name = "pla_datumtijd_to")] string plaDatumtijdTo, [Query(Name = "pla_soortvervoer")] string plaSoortvervoer, [Query(Name = "pla_rolstoel")] bool plaRolstoel, [Query(Name = "pla_rolstoel_excluded")] bool plaRolstoelExcluded, [Query(Name = "pla_eigenaar_filtered")] bool plaEigenaarFiltered, [Query(Name = "pla_eigenaar")] string plaEigenaar);
 
         /// <summary>
+        /// Collect trips by API
+        ///
         /// GetPitaneCollectTripsByAPI (/pitaneCollectTripsByAPI)
         /// </summary>
         /// <param name="subToken">Start date/time collection.</param>
@@ -287,6 +351,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
 
         /// <summary>
         /// Create route
+        ///
+        /// PostPitaneUpdateTripCollection (/pitaneUpdateTripCollection)
         /// </summary>
         /// <param name="content">Collection of combined trip records</param>
         [Post("/pitaneUpdateTripCollection")]
@@ -294,6 +360,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitaneUpdateTripCollectionAsync([Body] ArrayOfCombinedTrips[] content);
 
         /// <summary>
+        /// Convert text input
+        ///
         /// GetPitaneGetmetaInformation (/pitaneGetmetaInformation)
         /// </summary>
         /// <param name="tablename">Table name - see table definitions</param>
@@ -301,6 +369,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneGetmetaInformationAsync([Query] string tablename);
 
         /// <summary>
+        /// Convert text input
+        ///
         /// PostPitaneHashConvert (/pitaneHashConvert)
         /// </summary>
         /// <param name="content">default input field</param>
@@ -309,6 +379,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitaneHashConvertAsync([Body] Inputfield content);
 
         /// <summary>
+        /// Reset password
+        ///
         /// PostPitaneUserResetPassword (/pitaneUserResetPassword)
         /// </summary>
         /// <param name="content">reset user password request record</param>
@@ -317,6 +389,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitaneUserResetPasswordAsync([Body] Resetuserpassword content);
 
         /// <summary>
+        /// Reset password
+        ///
         /// PostPitaneDriverResetPassword (/pitaneDriverResetPassword)
         /// </summary>
         /// <param name="content">reset driver password request record</param>
@@ -325,6 +399,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitaneDriverResetPasswordAsync([Body] Resetdriverpassword content);
 
         /// <summary>
+        /// Reset password
+        ///
         /// PostPitaneCustomerResetPassword (/pitaneCustomerResetPassword)
         /// </summary>
         /// <param name="content">reset customer password request record</param>
@@ -333,6 +409,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitaneCustomerResetPasswordAsync([Body] Resetcustomerpassword content);
 
         /// <summary>
+        /// Request voice attention
+        ///
         /// PostPitanedevicesendvoicerequest (/pitanedevicesendvoicerequest)
         /// </summary>
         /// <param name="chfEmail">Your personal access key for the SMS provider.</param>
@@ -340,6 +418,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitanedevicesendvoicerequestAsync([Query(Name = "chf_email")] string chfEmail);
 
         /// <summary>
+        /// Send SMS message
+        ///
         /// PostPitaneDeviceSendPushMessageSMS (/pitaneDeviceSendPushMessageSMS)
         /// </summary>
         /// <param name="content">sms record</param>
@@ -348,6 +428,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitaneDeviceSendPushMessageSMSAsync([Body] Sms content);
 
         /// <summary>
+        /// Receive marketing information
+        ///
         /// PostPitaneMarketingTraject (/pitaneMarketingTraject)
         /// </summary>
         /// <param name="content">Receive marketing information</param>
@@ -356,6 +438,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitaneMarketingTrajectAsync([Body] Marketing content);
 
         /// <summary>
+        /// seek address from latitude / longitude
+        ///
         /// PostPitaneAddressFromLatLong (/pitaneAddressFromLatLong)
         /// </summary>
         /// <param name="content">lat/lng record</param>
@@ -364,6 +448,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitaneAddressFromLatLongAsync([Body] Latlng content);
 
         /// <summary>
+        /// seek latitude / longitude from address
+        ///
         /// PostPitaneGetLatLongFromAddress (/pitaneGetLatLongFromAddress)
         /// </summary>
         /// <param name="content">address field</param>
@@ -372,6 +458,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitaneGetLatLongFromAddressAsync([Body] Address content);
 
         /// <summary>
+        /// calculate distance by lat/lng
+        ///
         /// PostPitaneRoutingDistancebyLatLong (/pitaneRoutingDistancebyLatLong)
         /// </summary>
         /// <param name="content">lat/lng routing</param>
@@ -380,6 +468,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitaneRoutingDistancebyLatLongAsync([Body] Distancelatlng content);
 
         /// <summary>
+        /// generate route legs by lat/lng
+        ///
         /// PostPitaneRoutingRouteLegsbyLatLong (/pitaneRoutingRouteLegsbyLatLong)
         /// </summary>
         /// <param name="content">lat/lng routing</param>
@@ -388,6 +478,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitaneRoutingRouteLegsbyLatLongAsync([Body] Distancelatlng content);
 
         /// <summary>
+        /// Retrieve driver information by GSM
+        ///
         /// GetPitaneDeviceRequestDriverAccountbyGSM (/pitaneDeviceRequestDriverAccountbyGSM)
         /// </summary>
         /// <param name="chfMobiel"></param>
@@ -395,6 +487,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneDeviceRequestDriverAccountbyGSMAsync([Query(Name = "chf_mobiel")] string chfMobiel);
 
         /// <summary>
+        /// Confirm received route information
+        ///
         /// PostPitanedevicesendrouteconfirmation (/pitanedevicesendrouteconfirmation)
         /// </summary>
         /// <param name="content">route confirmation record</param>
@@ -403,6 +497,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitanedevicesendrouteconfirmationAsync([Body] Routeconfirmation content);
 
         /// <summary>
+        /// Confirm planning
+        ///
         /// PostPitaneDeviceSendPlanningConfirmation (/pitaneDeviceSendPlanningConfirmation)
         /// </summary>
         /// <param name="content">planning record</param>
@@ -411,6 +507,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitaneDeviceSendPlanningConfirmationAsync([Body] Planning content);
 
         /// <summary>
+        /// Update trip destination by POI
+        ///
         /// PostPitaneDeviceSendDestinationbyPOI (/pitaneDeviceSendDestinationbyPOI)
         /// </summary>
         /// <param name="content">poi code</param>
@@ -419,6 +517,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<Response<object>> PostPitaneDeviceSendDestinationbyPOIAsync([Body] Poi content);
 
         /// <summary>
+        /// Reset driver information by email token
+        ///
         /// PostPitaneCustomerResetPasswordByEmailToken (/pitaneCustomerResetPasswordByEmailToken)
         /// </summary>
         /// <param name="content">password request record</param>
@@ -427,6 +527,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitaneCustomerResetPasswordByEmailTokenAsync([Body] Passwordtoken content);
 
         /// <summary>
+        /// Reset driver information by email token
+        ///
         /// PostPitaneDeviceResetPasswordByEmailToken (/pitaneDeviceResetPasswordByEmailToken)
         /// </summary>
         /// <param name="content">password request record</param>
@@ -435,6 +537,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitaneDeviceResetPasswordByEmailTokenAsync([Body] Passwordtoken content);
 
         /// <summary>
+        /// Reset password information by email token
+        ///
         /// PostPitaneResetPasswordByEmailToken (/pitaneResetPasswordByEmailToken)
         /// </summary>
         /// <param name="content">password request record</param>
@@ -443,6 +547,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitaneResetPasswordByEmailTokenAsync([Body] Passwordtoken content);
 
         /// <summary>
+        /// Send GATE 12 login information by email
+        ///
         /// PostPitanersendloginnamebyemail (/pitanersendloginnamebyemail)
         /// </summary>
         /// <param name="content">loginname request record</param>
@@ -451,6 +557,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitanersendloginnamebyemailAsync([Body] Customeremail content);
 
         /// <summary>
+        /// Start regular driver service
+        ///
         /// PostPitaneDeviceSendServiceStart (/pitaneDeviceSendServiceStart)
         /// </summary>
         /// <param name="content">Service start record</param>
@@ -459,6 +567,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitaneDeviceSendServiceStartAsync([Body] Servicestart content);
 
         /// <summary>
+        /// Start driver service NS bus
+        ///
         /// PostPitaneNSSendServiceStartByNSD (/pitaneNSSendServiceStartByNSD)
         /// </summary>
         /// <param name="lsnWagId"></param>
@@ -475,6 +585,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitaneNSSendServiceStartByNSDAsync([Query(Name = "lsn_wag_id")] int lsnWagId, [Query(Name = "lsn_chf_id")] int lsnChfId, [Query(Name = "lsn_kilometerstand_aanvang")] int lsnKilometerstandAanvang, [Query] double latitude, [Query] double longitude, [Query(Name = "lsn_nsp_id")] int lsnNspId, [Query(Name = "chf_subcentrale")] int chfSubcentrale, [Query(Name = "lsn_nsd_id")] int lsnNsdId, [Query(Name = "dev_imei")] string devImei, [Query(Name = "pla_id")] int plaId);
 
         /// <summary>
+        /// Start driver service NS bus
+        ///
         /// PostPitaneNSSendServiceStart (/pitaneNSSendServiceStart)
         /// </summary>
         /// <param name="lsnWagId"></param>
@@ -491,6 +603,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitaneNSSendServiceStartAsync([Query(Name = "lsn_wag_id")] int lsnWagId, [Query(Name = "lsn_chf_id")] int lsnChfId, [Query(Name = "lsn_kilometerstand_aanvang")] int lsnKilometerstandAanvang, [Query] double latitude, [Query] double longitude, [Query(Name = "lsn_nsp_id")] int lsnNspId, [Query(Name = "chf_subcentrale")] int chfSubcentrale, [Query(Name = "lsn_nsd_id")] int lsnNsdId, [Query(Name = "dev_imei")] string devImei, [Query(Name = "pla_id")] int plaId);
 
         /// <summary>
+        /// Stop driver NS bus service
+        ///
         /// PostPitaneNSSendServiceStop (/pitaneNSSendServiceStop)
         /// </summary>
         /// <param name="lsnId"></param>
@@ -502,6 +616,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitaneNSSendServiceStopAsync([Query(Name = "lsn_id")] int lsnId, [Query(Name = "lsn_kilometerstand_einde")] int lsnKilometerstandEinde, [Query] double? latitude, [Query] double? longitude, [Query(Name = "dev_imei")] string devImei);
 
         /// <summary>
+        /// Stop regular driver service
+        ///
         /// PostPitaneDeviceSendServiceStop (/pitaneDeviceSendServiceStop)
         /// </summary>
         /// <param name="content">Service stop record</param>
@@ -510,6 +626,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitaneDeviceSendServiceStopAsync([Body] Servicestop content);
 
         /// <summary>
+        /// Confirm trip
+        ///
         /// PostPitaneDeviceSendTripConfirmation (/pitaneDeviceSendTripConfirmation)
         /// </summary>
         /// <param name="plaId"></param>
@@ -521,6 +639,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitaneDeviceSendTripConfirmationAsync([Query(Name = "pla_id")] int plaId, [Query] double? latitude, [Query] double? longitude, [Query] int? speed, [Query(Name = "dev_imei")] string devImei);
 
         /// <summary>
+        /// cancel pending or waiting reservation
+        ///
         /// PostPitaneSendTripCancelbyGUID (/pitaneSendTripCancelbyGUID)
         /// </summary>
         /// <param name="content">cancel pending or waiting trip</param>
@@ -529,6 +649,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitaneSendTripCancelbyGUIDAsync([Body] Tripcancel content);
 
         /// <summary>
+        /// update trip confirmation
+        ///
         /// PostPitaneSendTripConfirmation (/pitaneSendTripConfirmation)
         /// </summary>
         /// <param name="content">trip confirmation record</param>
@@ -537,6 +659,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitaneSendTripConfirmationAsync([Body] Tripconfirmation content);
 
         /// <summary>
+        /// Flag trip noshow customer
+        ///
         /// PostPitaneDeviceSendTripNoShow (/pitaneDeviceSendTripNoShow)
         /// </summary>
         /// <param name="plaId"></param>
@@ -549,6 +673,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitaneDeviceSendTripNoShowAsync([Query(Name = "pla_id")] int plaId, [Query(Name = "pla_loosreden")] string plaLoosreden, [Query] double? latitude, [Query] double? longitude, [Query] int? speed, [Query(Name = "dev_imei")] string devImei);
 
         /// <summary>
+        /// Mail trip ticket
+        ///
         /// PostPitaneSendTripTicket (/pitaneSendTripTicket)
         /// </summary>
         /// <param name="content">planning record</param>
@@ -557,6 +683,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitaneSendTripTicketAsync([Body] Tripticket content);
 
         /// <summary>
+        /// Mail trip ticket
+        ///
         /// PostPitaneSendTripTicketByGUID (/pitaneSendTripTicketByGUID)
         /// </summary>
         /// <param name="content">planning record</param>
@@ -565,6 +693,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitaneSendTripTicketByGUIDAsync([Body] Tripticketguid content);
 
         /// <summary>
+        /// Send trip extra cost
+        ///
         /// PostPitaneSendTripCost (/pitaneSendTripCost)
         /// </summary>
         /// <param name="content">planning record</param>
@@ -573,6 +703,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitaneSendTripCostAsync([Body] Costplanning content);
 
         /// <summary>
+        /// Send trip rating 1-5
+        ///
         /// PostPitaneSendTripRating (/pitaneSendTripRating)
         /// </summary>
         /// <param name="content">set trip rating</param>
@@ -581,6 +713,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitaneSendTripRatingAsync([Body] Rating content);
 
         /// <summary>
+        /// Send trip rating 1-5
+        ///
         /// GetPitaneSendCustomerRating (/pitaneSendCustomerRating)
         /// </summary>
         /// <param name="plaGuid"></param>
@@ -589,6 +723,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneSendCustomerRatingAsync([Query(Name = "pla_guid")] string plaGuid, [Query(Name = "pla_punten")] int? plaPunten);
 
         /// <summary>
+        /// Delete extra trip cost
+        ///
         /// PostPitaneSendTripCostDeleted (/pitaneSendTripCostDeleted)
         /// </summary>
         /// <param name="content">delete cost record</param>
@@ -597,6 +733,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitaneSendTripCostDeletedAsync([Body] Costid content);
 
         /// <summary>
+        /// Customer has been called status
+        ///
         /// PostPitaneDeviceSendTripCallCustomer (/pitaneDeviceSendTripCallCustomer)
         /// </summary>
         /// <param name="content">planning record</param>
@@ -605,6 +743,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitaneDeviceSendTripCallCustomerAsync([Body] Planning content);
 
         /// <summary>
+        /// Send chat message
+        ///
         /// PostPitaneDeviceSendChatMessage (/pitaneDeviceSendChatMessage)
         /// </summary>
         /// <param name="content">Chat record</param>
@@ -613,6 +753,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitaneDeviceSendChatMessageAsync([Body] Chatmessage content);
 
         /// <summary>
+        /// Start regular driver service
+        ///
         /// PostPitaneDeviceSendPauseStart (/pitaneDeviceSendPauseStart)
         /// </summary>
         /// <param name="content">pause record</param>
@@ -621,6 +763,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitaneDeviceSendPauseStartAsync([Body] Pauserecord content);
 
         /// <summary>
+        /// Stop regular driver service
+        ///
         /// PostPitaneDeviceSendPauseStop (/pitaneDeviceSendPauseStop)
         /// </summary>
         /// <param name="content">pause record</param>
@@ -629,6 +773,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitaneDeviceSendPauseStopAsync([Body] Pauserecord content);
 
         /// <summary>
+        /// Upload document
+        ///
         /// PostPitaneDeviceSendDocuments (/pitaneDeviceSendDocuments)
         /// </summary>
         /// <param name="content">document record</param>
@@ -637,6 +783,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitaneDeviceSendDocumentsAsync([Body] Document content);
 
         /// <summary>
+        /// Request digital documents
+        ///
         /// GetPitaneDeviceRequestDocuments (/pitaneDeviceRequestDocuments)
         /// </summary>
         /// <param name="docSleutel"></param>
@@ -645,18 +793,24 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneDeviceRequestDocumentsAsync([Query(Name = "doc_sleutel")] int docSleutel, [Query(Name = "doc_type")] int? docType);
 
         /// <summary>
+        /// Request available POI codes
+        ///
         /// GetPitaneDeviceRequestPOI (/pitaneDeviceRequestPOI)
         /// </summary>
         [Get("/pitaneDeviceRequestPOI")]
         Task<object> GetPitaneDeviceRequestPOIAsync();
 
         /// <summary>
+        /// Request available taxi zones
+        ///
         /// GetPitaneDeviceRequestTaxiZones (/pitaneDeviceRequestTaxiZones)
         /// </summary>
         [Get("/pitaneDeviceRequestTaxiZones")]
         Task<object> GetPitaneDeviceRequestTaxiZonesAsync();
 
         /// <summary>
+        /// Request digital document
+        ///
         /// GetPitaneDeviceRequestDocument (/pitaneDeviceRequestDocument)
         /// </summary>
         /// <param name="docApi"></param>
@@ -664,6 +818,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneDeviceRequestDocumentAsync([Query(Name = "doc_api")] string docApi);
 
         /// <summary>
+        /// Send GPS update device
+        ///
         /// PostPitaneDeviceSendGPSbyLicenseplate (/pitaneDeviceSendGPSbyLicenseplate)
         /// </summary>
         /// <param name="content">pause record</param>
@@ -672,12 +828,16 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitaneDeviceSendGPSbyLicenseplateAsync([Body] Gpsbylicense content);
 
         /// <summary>
+        /// Retrieve car types
+        ///
         /// GetPitaneDataCarGroup (/pitaneDataCarGroup)
         /// </summary>
         [Get("/pitaneDataCarGroup")]
         Task<string> GetPitaneDataCarGroupAsync();
 
         /// <summary>
+        /// Retrieve companies by area
+        ///
         /// GetPitaneRetrieveCoverage (/pitaneRetrieveCoverage)
         /// </summary>
         /// <param name="bdlLatitude"></param>
@@ -686,6 +846,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneRetrieveCoverageAsync([Query(Name = "bdl_latitude")] string bdlLatitude, [Query(Name = "bdl_longitude")] string bdlLongitude);
 
         /// <summary>
+        /// Retrieve car information by driver
+        ///
         /// GetPitaneCarRetrieveByDriver (/pitaneCarRetrieveByDriver)
         /// </summary>
         /// <param name="chfId"></param>
@@ -693,6 +855,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneCarRetrieveByDriverAsync([Query(Name = "chf_id")] int? chfId);
 
         /// <summary>
+        /// Request available PRDS information. PRDS is a system that transmits useful information for the driver about his service.
+        ///
         /// GetPitaneDevicePRDS (/pitaneDevicePRDS)
         /// </summary>
         /// <param name="prdsLsnId"></param>
@@ -700,18 +864,24 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneDevicePRDSAsync([Query(Name = "prds_lsn_id")] string prdsLsnId);
 
         /// <summary>
+        /// Retrieve car information by TPL
+        ///
         /// GetPitaneCarRetrieveLicensePlates (/pitaneCarRetrieveLicensePlates)
         /// </summary>
         [Get("/pitaneCarRetrieveLicensePlates")]
         Task<object> GetPitaneCarRetrieveLicensePlatesAsync();
 
         /// <summary>
+        /// Retrieve fleet tariff information
+        ///
         /// GetPitaneRetrieveFleetTariff (/pitaneRetrieveFleetTariff)
         /// </summary>
         [Get("/pitaneRetrieveFleetTariff")]
         Task<object> GetPitaneRetrieveFleetTariffAsync();
 
         /// <summary>
+        /// Retrieve GPS fleet information by fleet token
+        ///
         /// GetPitaneFleetRetrievebyAPI (/pitaneFleetRetrievebyAPI)
         /// </summary>
         /// <param name="subToken"></param>
@@ -719,6 +889,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneFleetRetrievebyAPIAsync([Query(Name = "sub_token")] string subToken);
 
         /// <summary>
+        /// Retrieve car information by subcentrale
+        ///
         /// GetPitaneCarRetrieveLicensePlatesSub (/pitaneCarRetrieveLicensePlatesSub)
         /// </summary>
         /// <param name="wagSubcentrale"></param>
@@ -726,6 +898,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneCarRetrieveLicensePlatesSubAsync([Query(Name = "wag_subcentrale")] int? wagSubcentrale);
 
         /// <summary>
+        /// Retrieve car information from Rijksdienst voor Wegverkeer
+        ///
         /// GetPitaneCarRetrieveLicenseData (/pitaneCarRetrieveLicenseData)
         /// </summary>
         /// <param name="wagKenteken"></param>
@@ -734,6 +908,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneCarRetrieveLicenseDataAsync([Query(Name = "wag_kenteken")] string wagKenteken, [Query(Name = "access_key")] string accessKey);
 
         /// <summary>
+        /// Retrieve BCT information from Rijksdienst voor Wegverkeer
+        ///
         /// GetPitaneCarRetrieveBCTData (/pitaneCarRetrieveBCTData)
         /// </summary>
         /// <param name="wagKenteken"></param>
@@ -742,6 +918,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneCarRetrieveBCTDataAsync([Query(Name = "wag_kenteken")] string wagKenteken, [Query(Name = "access_key")] string accessKey);
 
         /// <summary>
+        /// Retrieve car information by TPL
+        ///
         /// GetPitaneCarRetrieveByTPL (/pitaneCarRetrieveByTPL)
         /// </summary>
         /// <param name="wagPitanelink"></param>
@@ -749,6 +927,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneCarRetrieveByTPLAsync([Query(Name = "wag_pitanelink")] string wagPitanelink);
 
         /// <summary>
+        /// Retrieve car information by number
+        ///
         /// GetPitaneCarRetrieveByNumber (/pitaneCarRetrieveByNumber)
         /// </summary>
         /// <param name="wagTaxis"></param>
@@ -756,6 +936,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneCarRetrieveByNumberAsync([Query(Name = "wag_taxis")] string wagTaxis);
 
         /// <summary>
+        /// Retrieve car information by license
+        ///
         /// GetPitaneCarRetrieveByLicense (/pitaneCarRetrieveByLicense)
         /// </summary>
         /// <param name="wagImei"></param>
@@ -763,6 +945,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneCarRetrieveByLicenseAsync([Query(Name = "wag_imei")] string wagImei);
 
         /// <summary>
+        /// Retrieve car information by imei
+        ///
         /// GetPitaneCarRetrieveByImei (/pitaneCarRetrieveByImei)
         /// </summary>
         /// <param name="wagImei"></param>
@@ -770,6 +954,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneCarRetrieveByImeiAsync([Query(Name = "wag_imei")] string wagImei);
 
         /// <summary>
+        /// Retrieve car information by id
+        ///
         /// GetPitaneCarRetrieveByID (/pitaneCarRetrieveByID)
         /// </summary>
         /// <param name="wagId"></param>
@@ -777,6 +963,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneCarRetrieveByIDAsync([Query(Name = "wag_id")] int? wagId);
 
         /// <summary>
+        /// Set car delay
+        ///
         /// PostPitaneCarSetDelay (/pitaneCarSetDelay)
         /// </summary>
         /// <param name="content">delay record</param>
@@ -785,6 +973,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitaneCarSetDelayAsync([Body] Cardelay content);
 
         /// <summary>
+        /// Confirm received PRDS record.
+        ///
         /// PostPitaneDevicePRDSConfirm (/pitaneDevicePRDSConfirm)
         /// </summary>
         /// <param name="content">PRDS confirmation</param>
@@ -793,6 +983,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitaneDevicePRDSConfirmAsync([Body] Prdsconfirmation content);
 
         /// <summary>
+        /// Change trip GPS status
+        ///
         /// PostPitaneSendTripGPSUpdate (/pitaneSendTripGPSUpdate)
         /// </summary>
         /// <param name="content">Update trip status</param>
@@ -801,6 +993,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitaneSendTripGPSUpdateAsync([Body] Tripstatus content);
 
         /// <summary>
+        /// Change car status
+        ///
         /// PostPitaneCarSetStatus (/pitaneCarSetStatus)
         /// </summary>
         /// <param name="content">Update car status</param>
@@ -809,6 +1003,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitaneCarSetStatusAsync([Body] Carstatus content);
 
         /// <summary>
+        /// Change driver status
+        ///
         /// PostPitaneDriverSetStatus (/pitaneDriverSetStatus)
         /// </summary>
         /// <param name="content">Driver email address</param>
@@ -817,6 +1013,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitaneDriverSetStatusAsync([Body] Driverstatus content);
 
         /// <summary>
+        /// Change notification status
+        ///
         /// PostPitaneDriverNotifyUpdate (/pitaneDriverNotifyUpdate)
         /// </summary>
         /// <param name="content">Driver email address</param>
@@ -825,6 +1023,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitaneDriverNotifyUpdateAsync([Body] Drivernotifystatus content);
 
         /// <summary>
+        /// Change device status
+        ///
         /// PostPitaneDeviceSetStatus (/pitaneDeviceSetStatus)
         /// </summary>
         /// <param name="content">car / device IMEI</param>
@@ -833,6 +1033,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitaneDeviceSetStatusAsync([Body] Devicestatus content);
 
         /// <summary>
+        /// Update taxi zone or sector
+        ///
         /// PostPitaneDeviceSendZoneUpdate (/pitaneDeviceSendZoneUpdate)
         /// </summary>
         /// <param name="content">update taxizone</param>
@@ -841,6 +1043,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitaneDeviceSendZoneUpdateAsync([Body] Devicezonestatus content);
 
         /// <summary>
+        /// Update taxi zone or sector
+        ///
         /// PostPitaneCarSetBatteryLevel (/pitaneCarSetBatteryLevel)
         /// </summary>
         /// <param name="content">Car battery level update</param>
@@ -849,6 +1053,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitaneCarSetBatteryLevelAsync([Body] Batterylevel content);
 
         /// <summary>
+        /// Retrieve NS project information by project number
+        ///
         /// GetPitaneNSRetrieveShiftbyProjectNumber (/pitaneNSRetrieveShiftbyProjectNumber)
         /// </summary>
         /// <param name="nspNummer"></param>
@@ -856,6 +1062,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneNSRetrieveShiftbyProjectNumberAsync([Query(Name = "nsp_nummer")] string nspNummer);
 
         /// <summary>
+        /// Retrieve Netex information by trip id
+        ///
         /// GetPitaneNSRetrieveNetexByTrip (/pitaneNSRetrieveNetexByTrip)
         /// </summary>
         /// <param name="plaId"></param>
@@ -863,6 +1071,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneNSRetrieveNetexByTripAsync([Query(Name = "pla_id")] int plaId);
 
         /// <summary>
+        /// Retrieve Netex information by trip guid
+        ///
         /// GetPitaneNSRetrieveNetexByTripGUID (/pitaneNSRetrieveNetexByTripGUID)
         /// </summary>
         /// <param name="plaGuid"></param>
@@ -870,6 +1080,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneNSRetrieveNetexByTripGUIDAsync([Query(Name = "pla_guid")] string plaGuid);
 
         /// <summary>
+        /// Retrieve Netex information by Netex id
+        ///
         /// GetPitaneNSRetrieveNetexByID (/pitaneNSRetrieveNetexByID)
         /// </summary>
         /// <param name="netId"></param>
@@ -877,6 +1089,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneNSRetrieveNetexByIDAsync([Query(Name = "net_id")] int netId);
 
         /// <summary>
+        /// Retrieve Netex information by Netex GUID
+        ///
         /// GetPitaneNSRetrieveNetexByGUID (/pitaneNSRetrieveNetexByGUID)
         /// </summary>
         /// <param name="netGuid"></param>
@@ -884,6 +1098,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneNSRetrieveNetexByGUIDAsync([Query(Name = "net_guid")] string netGuid);
 
         /// <summary>
+        /// Retrieve trips by NS service id
+        ///
         /// GetPitaneNSRetrieveTripsByNSD (/pitaneNSRetrieveTripsByNSD)
         /// </summary>
         /// <param name="nsdId"></param>
@@ -892,6 +1108,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneNSRetrieveTripsByNSDAsync([Query(Name = "nsd_id")] int nsdId, [Query(Name = "pla_subcentrale")] int plaSubcentrale);
 
         /// <summary>
+        /// Retrieve trips by NS project id
+        ///
         /// GetPitaneNSRetrieveTripsByNSP (/pitaneNSRetrieveTripsByNSP)
         /// </summary>
         /// <param name="nspId"></param>
@@ -899,6 +1117,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneNSRetrieveTripsByNSPAsync([Query(Name = "nsp_id")] int nspId);
 
         /// <summary>
+        /// Retrieve NS shift information by project number
+        ///
         /// GetPitaneNSRetrieveShiftbyProject (/pitaneNSRetrieveShiftbyProject)
         /// </summary>
         /// <param name="nspId"></param>
@@ -906,6 +1126,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneNSRetrieveShiftbyProjectAsync([Query(Name = "nsp_id")] int? nspId);
 
         /// <summary>
+        /// Retrieve NS project(s) information by project number
+        ///
         /// GetPitaneNSRetrieveProjects (/pitaneNSRetrieveProjects)
         /// </summary>
         /// <param name="nspFrom"></param>
@@ -914,6 +1136,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneNSRetrieveProjectsAsync([Query(Name = "nsp_from")] string nspFrom, [Query(Name = "nsp_to")] string nspTo);
 
         /// <summary>
+        /// Retrieve NS busstations information by ID
+        ///
         /// GetPitaneNSRetrieveBusStationsByID (/pitaneNSRetrieveBusStationsByID)
         /// </summary>
         /// <param name="bhaIdFrom"></param>
@@ -922,6 +1146,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneNSRetrieveBusStationsByIDAsync([Query(Name = "bha_id_from")] int? bhaIdFrom, [Query(Name = "bha_id_to")] int? bhaIdTo);
 
         /// <summary>
+        /// Retrieve NS busstations information by GUID
+        ///
         /// GetPitaneNSRetrieveBusStationsByGUID (/pitaneNSRetrieveBusStationsByGUID)
         /// </summary>
         /// <param name="bhaIdFromGuid"></param>
@@ -930,6 +1156,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneNSRetrieveBusStationsByGUIDAsync([Query(Name = "bha_id_from_guid")] string bhaIdFromGuid, [Query(Name = "bha_id_to_guid")] string bhaIdToGuid);
 
         /// <summary>
+        /// Retrieve NS busstations information by station alias
+        ///
         /// GetPitaneNSRetrieveBusStationsByStationAlias (/pitaneNSRetrieveBusStationsByStationAlias)
         /// </summary>
         /// <param name="nssCodeFrom"></param>
@@ -938,6 +1166,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneNSRetrieveBusStationsByStationAliasAsync([Query(Name = "nss_code_from")] string nssCodeFrom, [Query(Name = "nss_code_to")] string nssCodeTo);
 
         /// <summary>
+        /// Retrieve NS project(s) information by project id
+        ///
         /// GetPitaneNSRetrieveProjectsByID (/pitaneNSRetrieveProjectsByID)
         /// </summary>
         /// <param name="nspId"></param>
@@ -945,6 +1175,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneNSRetrieveProjectsByIDAsync([Query(Name = "nsp_id")] int? nspId);
 
         /// <summary>
+        /// Retrieve NS project(s) information by project guid
+        ///
         /// GetPitaneNSRetrieveProjectsByGUID (/pitaneNSRetrieveProjectsByGUID)
         /// </summary>
         /// <param name="nspGuid"></param>
@@ -952,6 +1184,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneNSRetrieveProjectsByGUIDAsync([Query(Name = "nsp_guid")] string nspGuid);
 
         /// <summary>
+        /// Retrieve NS project(s) information by project startdate
+        ///
         /// GetPitaneNSRetrieveProjectsByDate (/pitaneNSRetrieveProjectsByDate)
         /// </summary>
         /// <param name="nspStartdatum"></param>
@@ -960,6 +1194,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneNSRetrieveProjectsByDateAsync([Query(Name = "nsp_startdatum")] string nspStartdatum, [Query] int? offset);
 
         /// <summary>
+        /// Retrieve NS project(s) information by project subcentrale
+        ///
         /// GetPitaneNSRetrieveProjectsBySubcentrale (/pitaneNSRetrieveProjectsBySubcentrale)
         /// </summary>
         /// <param name="nsdStartdatum"></param>
@@ -970,6 +1206,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneNSRetrieveProjectsBySubcentraleAsync([Query(Name = "nsd_startdatum")] string nsdStartdatum, [Query(Name = "chf_subcentrale")] int? chfSubcentrale, [Query(Name = "nsp_id")] int? nspId, [Query] int? offset);
 
         /// <summary>
+        /// Retrieve NS project trips information by project subcentrale
+        ///
         /// GetPitaneNSRetrieveProjectTripsBySubcentrale (/pitaneNSRetrieveProjectTripsBySubcentrale)
         /// </summary>
         /// <param name="nspStartdatum"></param>
@@ -980,12 +1218,16 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneNSRetrieveProjectTripsBySubcentraleAsync([Query(Name = "nsp_startdatum")] string nspStartdatum, [Query(Name = "nsp_id")] int nspId, [Query(Name = "chf_subcentrale")] int chfSubcentrale, [Query] int? offset);
 
         /// <summary>
+        /// Retrieve NS bus status information
+        ///
         /// GetPitaneNSRetrieveBusStatus (/pitaneNSRetrieveBusStatus)
         /// </summary>
         [Get("/pitaneNSRetrieveBusStatus")]
         Task<object> GetPitaneNSRetrieveBusStatusAsync();
 
         /// <summary>
+        /// Retrieve NS stations information by project number
+        ///
         /// GetPitaneNSRetrieveStationsByAlias (/pitaneNSRetrieveStationsByAlias)
         /// </summary>
         /// <param name="nssAliasFrom"></param>
@@ -994,6 +1236,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneNSRetrieveStationsByAliasAsync([Query(Name = "nss_alias_from")] string nssAliasFrom, [Query(Name = "nss_alias_to")] string nssAliasTo);
 
         /// <summary>
+        /// Retrieve NS stations in GPS neighborhood
+        ///
         /// GetPitaneNSRetrieveStationsInNeighborhood (/pitaneNSRetrieveStationsInNeighborhood)
         /// </summary>
         /// <param name="latitude"></param>
@@ -1003,6 +1247,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneNSRetrieveStationsInNeighborhoodAsync([Query] string latitude, [Query] string longitude, [Query] int limit);
 
         /// <summary>
+        /// Retrieve NS shifts by subconcrator information by project number
+        ///
         /// GetPitaneNSRetrieveShiftsbySubcontractor (/pitaneNSRetrieveShiftsbySubcontractor)
         /// </summary>
         /// <param name="nspId"></param>
@@ -1011,6 +1257,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneNSRetrieveShiftsbySubcontractorAsync([Query(Name = "nsp_id")] int? nspId, [Query(Name = "ndr_sub_id")] int? ndrSubId);
 
         /// <summary>
+        /// Retrieve NS shifts by subconcrator information by project guid
+        ///
         /// GetPitaneNSRetrieveShiftsbySubcontractorGUID (/pitaneNSRetrieveShiftsbySubcontractorGUID)
         /// </summary>
         /// <param name="nspGuid"></param>
@@ -1019,6 +1267,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneNSRetrieveShiftsbySubcontractorGUIDAsync([Query(Name = "nsp_guid")] string nspGuid, [Query(Name = "ndr_sub_guid")] string ndrSubGuid);
 
         /// <summary>
+        /// Service summary
+        ///
         /// GetPitaneNSSendServiceSummary (/pitaneNSSendServiceSummary)
         /// </summary>
         /// <param name="lsnId"></param>
@@ -1026,6 +1276,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneNSSendServiceSummaryAsync([Query(Name = "lsn_id")] int lsnId);
 
         /// <summary>
+        /// Service summary
+        ///
         /// GetPitaneDriverSendServiceSummary (/pitaneDriverSendServiceSummary)
         /// </summary>
         /// <param name="lsnId"></param>
@@ -1033,6 +1285,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneDriverSendServiceSummaryAsync([Query(Name = "lsn_id")] int lsnId);
 
         /// <summary>
+        /// NS station departure
+        ///
         /// PostPitaneNSSendStationDeparture (/pitaneNSSendStationDeparture)
         /// </summary>
         /// <param name="plaId"></param>
@@ -1044,6 +1298,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitaneNSSendStationDepartureAsync([Query(Name = "pla_id")] int plaId, [Query(Name = "lsn_id")] int lsnId, [Query(Name = "pla_odo_start")] int plaOdoStart, [Query] double? latitude, [Query] double? longitude);
 
         /// <summary>
+        /// NS station departure
+        ///
         /// PostPitaneNSSendStationDepartureBGUID (/pitaneNSSendStationDepartureBGUID)
         /// </summary>
         /// <param name="plaGuid"></param>
@@ -1055,6 +1311,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitaneNSSendStationDepartureBGUIDAsync([Query(Name = "pla_guid")] string plaGuid, [Query(Name = "lsn_id")] int lsnId, [Query(Name = "pla_odo_start")] int plaOdoStart, [Query] double? latitude, [Query] double? longitude);
 
         /// <summary>
+        /// NS station departure
+        ///
         /// PostPitaneNSSendStationArrival (/pitaneNSSendStationArrival)
         /// </summary>
         /// <param name="plaId"></param>
@@ -1068,6 +1326,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitaneNSSendStationArrivalAsync([Query(Name = "pla_id")] int plaId, [Query(Name = "pla_tijdstip_vrijmelden")] string plaTijdstipVrijmelden, [Query(Name = "pla_odo_stop")] int plaOdoStop, [Query(Name = "lsn_id")] int lsnId, [Query] double? latitude, [Query] double? longitude, [Query(Name = "pla_ns_status")] string plaNsStatus);
 
         /// <summary>
+        /// NS station departure
+        ///
         /// PostPitaneNSSendStationArrivalByGUID (/pitaneNSSendStationArrivalByGUID)
         /// </summary>
         /// <param name="plaGuid"></param>
@@ -1081,6 +1341,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitaneNSSendStationArrivalByGUIDAsync([Query(Name = "pla_guid")] string plaGuid, [Query(Name = "pla_tijdstip_vrijmelden")] string plaTijdstipVrijmelden, [Query(Name = "pla_odo_stop")] int plaOdoStop, [Query(Name = "lsn_id")] int lsnId, [Query] double? latitude, [Query] double? longitude, [Query(Name = "pla_ns_status")] string plaNsStatus);
 
         /// <summary>
+        /// NS station no show registration
+        ///
         /// PostPitaneNSSendStationNoShow (/pitaneNSSendStationNoShow)
         /// </summary>
         /// <param name="plaId"></param>
@@ -1092,6 +1354,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitaneNSSendStationNoShowAsync([Query(Name = "pla_id")] int plaId, [Query(Name = "pla_odo_start")] int plaOdoStart, [Query(Name = "lsn_id")] int lsnId, [Query] double? latitude, [Query] double? longitude);
 
         /// <summary>
+        /// Set vehicle standby for NS project
+        ///
         /// PostPitaneNSSendStandby (/pitaneNSSendStandby)
         /// </summary>
         /// <param name="wagId"></param>
@@ -1103,6 +1367,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitaneNSSendStandbyAsync([Query(Name = "wag_id")] int wagId, [Query] double latitude, [Query] double longitude, [Query(Name = "wag_standby_expiration")] string wagStandbyExpiration, [Query(Name = "nss_code")] string nssCode);
 
         /// <summary>
+        /// Set vehicle standby for NS project
+        ///
         /// PostPitaneNSSendStandbyByGUID (/pitaneNSSendStandbyByGUID)
         /// </summary>
         /// <param name="wagGuid"></param>
@@ -1114,6 +1380,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitaneNSSendStandbyByGUIDAsync([Query(Name = "wag_guid")] string wagGuid, [Query] double latitude, [Query] double longitude, [Query(Name = "wag_standby_expiration")] string wagStandbyExpiration, [Query(Name = "nss_code")] string nssCode);
 
         /// <summary>
+        /// Retrieve route status information by routenumber
+        ///
         /// GetPitaneRouteStatusRetrievebyID (/pitaneRouteStatusRetrievebyID)
         /// </summary>
         /// <param name="plaRoute"></param>
@@ -1121,6 +1389,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneRouteStatusRetrievebyIDAsync([Query(Name = "pla_route")] int? plaRoute);
 
         /// <summary>
+        /// Retrieve route information by routenumber
+        ///
         /// GetPitaneRouteRetrievebyID (/pitaneRouteRetrievebyID)
         /// </summary>
         /// <param name="plaRoute"></param>
@@ -1128,6 +1398,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneRouteRetrievebyIDAsync([Query(Name = "pla_route")] int? plaRoute);
 
         /// <summary>
+        /// Retrieve extra cost information by trip
+        ///
         /// GetPitaneTripRetrieveCostByID (/pitaneTripRetrieveCostByID)
         /// </summary>
         /// <param name="plaId"></param>
@@ -1135,6 +1407,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneTripRetrieveCostByIDAsync([Query(Name = "pla_id")] int? plaId);
 
         /// <summary>
+        /// Retrieve trip information by external number
+        ///
         /// GetPitaneTripRetrievebyExternalID (/pitaneTripRetrievebyExternalID)
         /// </summary>
         /// <param name="plaExternRitnummer"></param>
@@ -1142,6 +1416,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneTripRetrievebyExternalIDAsync([Query(Name = "pla_extern_ritnummer")] int? plaExternRitnummer);
 
         /// <summary>
+        /// Returns all the journal entries that should be paid per leg
+        ///
         /// GetPaymentJournalEntry (/payment/journal-entry)
         /// </summary>
         /// <param name="acceptLanguage">list of the languages/localizations the user would like to see</param>
@@ -1158,6 +1434,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPaymentJournalEntryAsync([Header("Accept-Language")] string acceptLanguage, [Header("Api")] string api, [Header("Api-Version")] string apiVersion, [Query] DateTime? from, [Query] DateTime? to, [Query] string state, [Query] string id, [Query] string category, [Query] double? offset, [Query] double? limit);
 
         /// <summary>
+        /// This section contains functionality to book a leg (part of a trip) for one asset (or assetType), including the non-happy paths (cancel, expire etc).
+        ///
         /// PostBookings (/bookings)
         /// </summary>
         /// <param name="acceptLanguage">list of the languages/localizations the user would like to see</param>
@@ -1169,6 +1447,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostBookingsAsync([Header("Accept-Language")] string acceptLanguage, [Header("Api")] string api, [Header("Api-Version")] string apiVersion, [Body] BookingRequest content);
 
         /// <summary>
+        /// Returns plannings for the given travel plan.
+        ///
         /// PostPlannings (/plannings)
         /// </summary>
         /// <param name="acceptLanguage">list of the languages/localizations the user would like to see</param>
@@ -1180,6 +1460,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<Response<AnyOf<Planning, object>>> PostPlanningsAsync([Header("Accept-Language")] string acceptLanguage, [Header("Api")] string api, [Header("Api-Version")] string apiVersion, [Body] PlanningRequest content);
 
         /// <summary>
+        /// returns the booking by ID
+        ///
         /// GetBookingsById (/bookings/{id})
         /// </summary>
         /// <param name="acceptLanguage">list of the languages/localizations the user would like to see</param>
@@ -1190,6 +1472,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<Response<AnyOf<Booking, object>>> GetBookingsByIdAsync([Header("Accept-Language")] string acceptLanguage, [Header("Api")] string api, [Header("Api-Version")] string apiVersion, [Path] string id);
 
         /// <summary>
+        /// Optional - This endpoint should be used to adjust the parameters of the booking. Changes not acceptable to the TO should return 400. If a booking is started and can no longer be adjusted the TO should return 403. The state of the booking should **never** be adjusted using this method. Use /bookings/{id}/events for that. See also (7.2) in the flow diagram - booking.
+        ///
         /// PutBookingsById (/bookings/{id})
         /// </summary>
         /// <param name="acceptLanguage">list of the languages/localizations the user would like to see</param>
@@ -1202,6 +1486,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PutBookingsByIdAsync([Header("Accept-Language")] string acceptLanguage, [Header("Api")] string api, [Header("Api-Version")] string apiVersion, [Path] string id, [Body] Booking content);
 
         /// <summary>
+        /// Optional - subscribe to a specific booking (=leg & (type of) asset). This is an optional endpoint
+        ///
         /// DeleteBookingsById (/bookings/{id})
         /// </summary>
         /// <param name="acceptLanguage">list of the languages/localizations the user would like to see</param>
@@ -1224,6 +1510,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostBookingsByIdEventsAsync([Header("Accept-Language")] string acceptLanguage, [Header("Api")] string api, [Header("Api-Version")] string apiVersion, [Path] string id, [Body] BookingOperation content);
 
         /// <summary>
+        /// extra costs that the TO has to charge to the MP or vice versa.
+        ///
         /// PostPaymentByIdClaimExtraCosts (/payment/{id}/claim-extra-costs)
         /// </summary>
         /// <param name="acceptLanguage">list of the languages/localizations the user would like to see</param>
@@ -1236,6 +1524,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPaymentByIdClaimExtraCostsAsync([Header("Accept-Language")] string acceptLanguage, [Header("Api")] string api, [Header("Api-Version")] string apiVersion, [Path] string id, [Body] ExtraCosts content);
 
         /// <summary>
+        /// Retrieve available assets (e.g. cars or taxis's)
+        ///
         /// GetPlanningsBookingIntent (/plannings/booking-intent)
         /// </summary>
         /// <param name="fromLat"></param>
@@ -1249,6 +1539,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPlanningsBookingIntentAsync([Query(Name = "from_lat")] string fromLat, [Query(Name = "from_lng")] string fromLng, [Query(Name = "to_lat")] string toLat, [Query(Name = "to_lng")] string toLng, [Query] string startTime, [Query] string endTime, [Query] int travellers);
 
         /// <summary>
+        /// Retrieve trip fare information by ID
+        ///
         /// GetPitaneTripFare (/pitaneTripFare)
         /// </summary>
         /// <param name="plaGuid"></param>
@@ -1256,6 +1548,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneTripFareAsync([Query(Name = "pla_guid")] string plaGuid);
 
         /// <summary>
+        /// Retrieve trip information by number
+        ///
         /// GetPitaneTripRetrieveByID (/pitaneTripRetrieveByID)
         /// </summary>
         /// <param name="plaId"></param>
@@ -1263,6 +1557,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneTripRetrieveByIDAsync([Query(Name = "pla_id")] int? plaId);
 
         /// <summary>
+        /// Retrieve trips information by customer guid
+        ///
         /// GetPitaneTripRetrieveByCustomerGUID (/pitaneTripRetrieveByCustomerGUID)
         /// </summary>
         /// <param name="reiGuid"></param>
@@ -1273,6 +1569,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneTripRetrieveByCustomerGUIDAsync([Query(Name = "rei_guid")] string reiGuid, [Query(Name = "pla_datum_from")] string plaDatumFrom, [Query(Name = "pla_datum_to")] string plaDatumTo, [Query] int? offset);
 
         /// <summary>
+        /// Update trip price information by trip GUID
+        ///
         /// GetPitaneTripWMOGate12ByGUID (/pitaneTripWMO_gate12ByGUID)
         /// </summary>
         /// <param name="plaGuid"></param>
@@ -1280,6 +1578,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneTripWMOGate12ByGUIDAsync([Query(Name = "pla_guid")] string plaGuid);
 
         /// <summary>
+        /// Retrieve trip information by trip guid
+        ///
         /// GetPitaneTripRetrieveByGUID (/pitaneTripRetrieveByGUID)
         /// </summary>
         /// <param name="plaGuid"></param>
@@ -1288,6 +1588,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneTripRetrieveByGUIDAsync([Query(Name = "pla_guid")] string plaGuid, [Query] int? offset);
 
         /// <summary>
+        /// Retrieve trip status information by number
+        ///
         /// GetPitaneTripStatusRetrieveByID (/pitaneTripStatusRetrieveByID)
         /// </summary>
         /// <param name="plaId"></param>
@@ -1295,6 +1597,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneTripStatusRetrieveByIDAsync([Query(Name = "pla_id")] int? plaId);
 
         /// <summary>
+        /// Retrieve trip status information by GUID
+        ///
         /// GetPitaneTripStatusRetrieveByGUID (/pitaneTripStatusRetrieveByGUID)
         /// </summary>
         /// <param name="plaGuid"></param>
@@ -1302,6 +1606,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneTripStatusRetrieveByGUIDAsync([Query(Name = "pla_guid")] string plaGuid);
 
         /// <summary>
+        /// update trip record
+        ///
         /// PostPitaneSendTripAssigned (/pitaneSendTripAssigned)
         /// </summary>
         /// <param name="content">trip status update record</param>
@@ -1310,6 +1616,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitaneSendTripAssignedAsync([Body] TripStatusUpdateAssigned content);
 
         /// <summary>
+        /// update trip sector dropoff
+        ///
         /// PostPitaneSendDropoffSector (/pitaneSendDropoffSector)
         /// </summary>
         /// <param name="content">trip sector update record</param>
@@ -1318,6 +1626,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitaneSendDropoffSectorAsync([Body] Tripstatusupdatesector content);
 
         /// <summary>
+        /// update trip record
+        ///
         /// PostPitaneSendTripPickup (/pitaneSendTripPickup)
         /// </summary>
         /// <param name="content">trip status update record</param>
@@ -1326,6 +1636,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitaneSendTripPickupAsync([Body] Tripstatusupdatepickup content);
 
         /// <summary>
+        /// update trip record
+        ///
         /// PostPitaneSendTripPickupByGUID (/pitaneSendTripPickupByGUID)
         /// </summary>
         /// <param name="content">trip status update record</param>
@@ -1334,6 +1646,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitaneSendTripPickupByGUIDAsync([Body] Tripstatusupdatepickupbyguid content);
 
         /// <summary>
+        /// update trip record
+        ///
         /// PostPitaneSendTripDropOff (/pitaneSendTripDropOff)
         /// </summary>
         /// <param name="content">trip status update record</param>
@@ -1342,6 +1656,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitaneSendTripDropOffAsync([Body] Tripstatusupdatedropoff content);
 
         /// <summary>
+        /// update trip record
+        ///
         /// PostPitaneSendTripDropOffByGUID (/pitaneSendTripDropOffByGUID)
         /// </summary>
         /// <param name="content">trip status update record</param>
@@ -1350,6 +1666,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitaneSendTripDropOffByGUIDAsync([Body] Tripstatusupdatedropoffbyguid content);
 
         /// <summary>
+        /// update trip payment record
+        ///
         /// PostPitaneSendTripPayment (/pitaneSendTripPayment)
         /// </summary>
         /// <param name="content">trip payment update record</param>
@@ -1358,6 +1676,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitaneSendTripPaymentAsync([Body] Tripstatusupdatepayment content);
 
         /// <summary>
+        /// update trip payment record
+        ///
         /// PostPitaneSendTripPaymentByGuid (/pitaneSendTripPaymentByGuid)
         /// </summary>
         /// <param name="content">trip payment update record</param>
@@ -1366,6 +1686,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitaneSendTripPaymentByGuidAsync([Body] Tripstatusupdatepaymentguid content);
 
         /// <summary>
+        /// update trip record
+        ///
         /// PostPitaneSendTripNoShow (/pitaneSendTripNoShow)
         /// </summary>
         /// <param name="content">trip status update record</param>
@@ -1374,6 +1696,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitaneSendTripNoShowAsync([Body] Tripstatusupdatenoshow content);
 
         /// <summary>
+        /// update trip record
+        ///
         /// PostPitaneSendTripNoShowByGUID (/pitaneSendTripNoShowByGUID)
         /// </summary>
         /// <param name="content">trip status update record</param>
@@ -1382,12 +1706,16 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitaneSendTripNoShowByGUIDAsync([Body] Tripstatusupdatenoshowbyguid content);
 
         /// <summary>
+        /// Retrieve indications
+        ///
         /// GetPitaneCustomerMobilityIndications (/pitaneCustomerMobilityIndications)
         /// </summary>
         [Get("/pitaneCustomerMobilityIndications")]
         Task<string> GetPitaneCustomerMobilityIndicationsAsync();
 
         /// <summary>
+        /// Retrieve customer specific mobility indications
+        ///
         /// GetPitaneMobilityIndicationsByCustomer (/pitaneMobilityIndicationsByCustomer)
         /// </summary>
         /// <param name="reiId"></param>
@@ -1395,12 +1723,16 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<string> GetPitaneMobilityIndicationsByCustomerAsync([Query(Name = "rei_id")] int? reiId);
 
         /// <summary>
+        /// Retrieve customer specific tools
+        ///
         /// GetPitaneCustomerMobilityTools (/pitaneCustomerMobilityTools)
         /// </summary>
         [Get("/pitaneCustomerMobilityTools")]
         Task<string> GetPitaneCustomerMobilityToolsAsync();
 
         /// <summary>
+        /// Retrieve trips by customer email address
+        ///
         /// GetPitaneCustomerActiveTripRetrievebyEmail (/pitaneCustomerActiveTripRetrievebyEmail)
         /// </summary>
         /// <param name="plaEmail"></param>
@@ -1408,6 +1740,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<string> GetPitaneCustomerActiveTripRetrievebyEmailAsync([Query(Name = "pla_email")] string plaEmail);
 
         /// <summary>
+        /// Retrieve customer specific mobility tools
+        ///
         /// GetPitaneMobilityToolsByCustomer (/pitaneMobilityToolsByCustomer)
         /// </summary>
         /// <param name="reiId"></param>
@@ -1415,18 +1749,24 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<string> GetPitaneMobilityToolsByCustomerAsync([Query(Name = "rei_id")] int? reiId);
 
         /// <summary>
+        /// Retrieve news items
+        ///
         /// GetPitaneDataRetrieveNews (/pitaneDataRetrieveNews)
         /// </summary>
         [Get("/pitaneDataRetrieveNews")]
         Task<string> GetPitaneDataRetrieveNewsAsync();
 
         /// <summary>
+        /// Retrieve main news items
+        ///
         /// GetPitaneDataRetrieveMainNews (/pitaneDataRetrieveMainNews)
         /// </summary>
         [Get("/pitaneDataRetrieveMainNews")]
         Task<string> GetPitaneDataRetrieveMainNewsAsync();
 
         /// <summary>
+        /// Retrieve airport / tariff items
+        ///
         /// GetPitaneDataAirportsCarTypes (/pitaneDataAirportsCarTypes)
         /// </summary>
         /// <param name="airIata"></param>
@@ -1434,18 +1774,24 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<string> GetPitaneDataAirportsCarTypesAsync([Query(Name = "air_iata")] string airIata);
 
         /// <summary>
+        /// Retrieve ledgers
+        ///
         /// GetPitaneDataLedgers (/pitaneDataLedgers)
         /// </summary>
         [Get("/pitaneDataLedgers")]
         Task<GetPitaneDataLedgersResult> GetPitaneDataLedgersAsync();
 
         /// <summary>
+        /// Retrieve subcentrales items
+        ///
         /// GetPitaneRetrieveSubcentrales (/pitaneRetrieveSubcentrales)
         /// </summary>
         [Get("/pitaneRetrieveSubcentrales")]
         Task<object> GetPitaneRetrieveSubcentralesAsync();
 
         /// <summary>
+        /// Retrieve subcentrales items
+        ///
         /// GetPitaneRetrieveSubcentralesByPin (/pitaneRetrieveSubcentralesByPin)
         /// </summary>
         /// <param name="pin"></param>
@@ -1453,30 +1799,40 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneRetrieveSubcentralesByPinAsync([Query] string pin);
 
         /// <summary>
+        /// Retrieve company items
+        ///
         /// GetPitaneDataCompanies (/pitaneDataCompanies)
         /// </summary>
         [Get("/pitaneDataCompanies")]
         Task<string> GetPitaneDataCompaniesAsync();
 
         /// <summary>
+        /// Retrieve country items
+        ///
         /// GetPitaneDataCountries (/pitaneDataCountries)
         /// </summary>
         [Get("/pitaneDataCountries")]
         Task<object> GetPitaneDataCountriesAsync();
 
         /// <summary>
+        /// Retrieve CROW indications
+        ///
         /// GetPitaneDataCrow (/pitaneDataCrow)
         /// </summary>
         [Get("/pitaneDataCrow")]
         Task<object> GetPitaneDataCrowAsync();
 
         /// <summary>
+        /// Retrieve costcenters
+        ///
         /// GetPitaneDataCostcenters (/pitaneDataCostcenters)
         /// </summary>
         [Get("/pitaneDataCostcenters")]
         Task<string> GetPitaneDataCostcentersAsync();
 
         /// <summary>
+        /// Retrieve WMO zipcodes
+        ///
         /// GetPitanePostalZoneInternal (/pitanePostalZoneInternal)
         /// </summary>
         /// <param name="reiGuid"></param>
@@ -1486,30 +1842,40 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitanePostalZoneInternalAsync([Query(Name = "rei_guid")] string reiGuid, [Query(Name = "pickup_postalcode")] string pickupPostalcode, [Query(Name = "destination_postalcode")] string destinationPostalcode);
 
         /// <summary>
+        /// Retrieve VAT codes
+        ///
         /// GetPitaneDataVAT (/pitaneDataVAT)
         /// </summary>
         [Get("/pitaneDataVAT")]
         Task<string> GetPitaneDataVATAsync();
 
         /// <summary>
+        /// Auto generated using Swagger Inspector
+        ///
         /// GetPitaneDataTripTypes (/pitaneDataTripTypes)
         /// </summary>
         [Get("/pitaneDataTripTypes")]
         Task<string> GetPitaneDataTripTypesAsync();
 
         /// <summary>
+        /// Auto generated using Swagger Inspector
+        ///
         /// GetPitaneDataAirports (/pitaneDataAirports)
         /// </summary>
         [Get("/pitaneDataAirports")]
         Task<string> GetPitaneDataAirportsAsync();
 
         /// <summary>
+        /// Auto generated using Swagger Inspector
+        ///
         /// GetPitaneDataTripStatus (/pitaneDataTripStatus)
         /// </summary>
         [Get("/pitaneDataTripStatus")]
         Task<string> GetPitaneDataTripStatusAsync();
 
         /// <summary>
+        /// Retrieve driver information by password
+        ///
         /// GetPitaneDriverRetrieveAccessbyPassword (/pitaneDriverRetrieveAccessbyPassword)
         /// </summary>
         /// <param name="chfEmail"></param>
@@ -1518,6 +1884,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneDriverRetrieveAccessbyPasswordAsync([Query(Name = "chf_email")] string chfEmail, [Query(Name = "chf_app_paswoord")] string chfAppPaswoord);
 
         /// <summary>
+        /// Retrieve customer information by password
+        ///
         /// GetPitaneCustomerRetrieveAccessbyPassword (/pitaneCustomerRetrieveAccessbyPassword)
         /// </summary>
         /// <param name="reiEmail"></param>
@@ -1526,6 +1894,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneCustomerRetrieveAccessbyPasswordAsync([Query(Name = "rei_email")] string reiEmail, [Query(Name = "rei_app_paswoord")] string reiAppPaswoord);
 
         /// <summary>
+        /// Retrieve driver information by access token
+        ///
         /// GetPitaneDriverRetrieveAccessbyToken (/pitaneDriverRetrieveAccessbyToken)
         /// </summary>
         /// <param name="chfEmail"></param>
@@ -1535,6 +1905,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneDriverRetrieveAccessbyTokenAsync([Query(Name = "chf_email")] string chfEmail, [Query(Name = "chf_verificatie")] string chfVerificatie, [Query] int? offset);
 
         /// <summary>
+        /// Retrieve customer information by email
+        ///
         /// GetPitaneCustomerRetrieveByEmail (/pitaneCustomerRetrieveByEmail)
         /// </summary>
         /// <param name="reiEmail"></param>
@@ -1544,6 +1916,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneCustomerRetrieveByEmailAsync([Query(Name = "rei_email")] string reiEmail, [Query(Name = "rei_app_paswoord")] string reiAppPaswoord, [Query] int? offset);
 
         /// <summary>
+        /// Check customer account by email
+        ///
         /// GetPitaneCustomerCheckByEmail (/pitaneCustomerCheckByEmail)
         /// </summary>
         /// <param name="reiEmail"></param>
@@ -1552,6 +1926,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneCustomerCheckByEmailAsync([Query(Name = "rei_email")] string reiEmail, [Query] int? offset);
 
         /// <summary>
+        /// Retrieve customer information by guid
+        ///
         /// GetPitaneCustomerRetrieveByGuid (/pitaneCustomerRetrieveByGuid)
         /// </summary>
         /// <param name="reiGuid"></param>
@@ -1560,6 +1936,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneCustomerRetrieveByGuidAsync([Query(Name = "rei_guid")] string reiGuid, [Query] int? offset);
 
         /// <summary>
+        /// Retrieve customer CROW information by guid
+        ///
         /// GetPitaneCustomerRetrieveCrowByGuid (/pitaneCustomerRetrieveCrowByGuid)
         /// </summary>
         /// <param name="reiGuid"></param>
@@ -1568,6 +1946,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneCustomerRetrieveCrowByGuidAsync([Query(Name = "rei_guid")] string reiGuid, [Query] int? offset);
 
         /// <summary>
+        /// Retrieve customer relations information by guid
+        ///
         /// GetPitaneCustomerRetrieveRelationsByGuid (/pitaneCustomerRetrieveRelationsByGuid)
         /// </summary>
         /// <param name="reiGuid"></param>
@@ -1576,6 +1956,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneCustomerRetrieveRelationsByGuidAsync([Query(Name = "rei_guid")] string reiGuid, [Query] int? offset);
 
         /// <summary>
+        /// Delete driver account
+        ///
         /// PostPitaneDriverDeleteByGUID (/pitaneDriverDeleteByGUID)
         /// </summary>
         /// <param name="content">driver guid combination</param>
@@ -1584,6 +1966,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitaneDriverDeleteByGUIDAsync([Body] ChfGuid content);
 
         /// <summary>
+        /// Retrieve driver information by email
+        ///
         /// GetPitaneDriverRetrievebyEmail (/pitaneDriverRetrievebyEmail)
         /// </summary>
         /// <param name="chfEmail"></param>
@@ -1592,6 +1976,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneDriverRetrievebyEmailAsync([Query(Name = "chf_email")] string chfEmail, [Query] int? offset);
 
         /// <summary>
+        /// Retrieve driver shift information by email
+        ///
         /// GetPitaneDriverRetrieveStatusByEmail (/pitaneDriverRetrieveStatusByEmail)
         /// </summary>
         /// <param name="chfEmail"></param>
@@ -1600,6 +1986,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneDriverRetrieveStatusByEmailAsync([Query(Name = "chf_email")] string chfEmail, [Query] int? offset);
 
         /// <summary>
+        /// Retrieve driver shift information by email
+        ///
         /// GetPitaneDriverRetrieveShiftByEmail (/pitaneDriverRetrieveShiftByEmail)
         /// </summary>
         /// <param name="chfEmail"></param>
@@ -1609,6 +1997,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneDriverRetrieveShiftByEmailAsync([Query(Name = "chf_email")] string chfEmail, [Query(Name = "lsn_aanvang")] string lsnAanvang, [Query] int? offset);
 
         /// <summary>
+        /// Retrieve driver shift information by service
+        ///
         /// GetPitaneDriverRetrieveTripsbyShift (/pitaneDriverRetrieveTripsbyShift)
         /// </summary>
         /// <param name="chfEmail"></param>
@@ -1618,6 +2008,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneDriverRetrieveTripsbyShiftAsync([Query(Name = "chf_email")] string chfEmail, [Query(Name = "lsn_id")] int lsnId, [Query] int? offset);
 
         /// <summary>
+        /// Retrieve driver shift information
+        ///
         /// GetPitaneDriverRetrieveShiftbyID (/pitaneDriverRetrieveShiftbyID)
         /// </summary>
         /// <param name="chfId"></param>
@@ -1626,6 +2018,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneDriverRetrieveShiftbyIDAsync([Query(Name = "chf_id")] int chfId, [Query] int? offset);
 
         /// <summary>
+        /// Retrieve driver shift traject information by service
+        ///
         /// GetPitaneDriverRetrieveTripsTrajectByShift (/pitaneDriverRetrieveTripsTrajectByShift)
         /// </summary>
         /// <param name="lsnId"></param>
@@ -1634,6 +2028,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneDriverRetrieveTripsTrajectByShiftAsync([Query(Name = "lsn_id")] int lsnId, [Query] int? offset);
 
         /// <summary>
+        /// Retrieve driver planning availability
+        ///
         /// GetPitaneDriverRetrieveFinishedTripsbyShift (/pitaneDriverRetrieveFinishedTripsbyShift)
         /// </summary>
         /// <param name="chfId"></param>
@@ -1643,6 +2039,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneDriverRetrieveFinishedTripsbyShiftAsync([Query(Name = "chf_id")] int chfId, [Query(Name = "lsn_id")] int lsnId, [Query] int? offset);
 
         /// <summary>
+        /// Retrieve driver planning availability
+        ///
         /// GetPitaneDriverRetrievePlannedTripsbyDriver (/pitaneDriverRetrievePlannedTripsbyDriver)
         /// </summary>
         /// <param name="chfId"></param>
@@ -1652,6 +2050,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitaneDriverRetrievePlannedTripsbyDriverAsync([Query(Name = "chf_id")] int chfId, [Query(Name = "pla_datum")] string plaDatum, [Query] int? offset);
 
         /// <summary>
+        /// Retrieve driver fleet availability
+        ///
         /// GetPitaneFleetRetrieveByAvailability (/pitaneFleetRetrieveByAvailability)
         /// </summary>
         /// <param name="chfId"></param>
@@ -1660,36 +2060,48 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<Drivers> GetPitaneFleetRetrieveByAvailabilityAsync([Query(Name = "chf_id")] int chfId, [Query] int? offset);
 
         /// <summary>
+        /// Create driver record - see table definitions
+        ///
         /// PostPitaneCreateDriver (/pitaneCreateDriver)
         /// </summary>
         [Post("/pitaneCreateDriver")]
         Task<object> PostPitaneCreateDriverAsync();
 
         /// <summary>
+        /// Create customer record - see table definitions
+        ///
         /// PostPitaneCreateCustomer (/pitaneCreateCustomer)
         /// </summary>
         [Post("/pitaneCreateCustomer")]
         Task<object> PostPitaneCreateCustomerAsync();
 
         /// <summary>
+        /// Create customer address record - see table definitions
+        ///
         /// PostPitaneCreateAddress (/pitaneCreateAddress)
         /// </summary>
         [Post("/pitaneCreateAddress")]
         Task<object> PostPitaneCreateAddressAsync();
 
         /// <summary>
+        /// Update customer record - see table definitions
+        ///
         /// PostPitaneUpdateCustomer (/pitaneUpdateCustomer)
         /// </summary>
         [Post("/pitaneUpdateCustomer")]
         Task<object> PostPitaneUpdateCustomerAsync();
 
         /// <summary>
+        /// Update customer address record - see table definitions
+        ///
         /// PostPitaneUpdateAddress (/pitaneUpdateAddress)
         /// </summary>
         [Post("/pitaneUpdateAddress")]
         Task<object> PostPitaneUpdateAddressAsync();
 
         /// <summary>
+        /// Update customer record with PaXX group identifier - see table definitions
+        ///
         /// PostPitanePaxxGroup (/pitanePaxxGroup)
         /// </summary>
         /// <param name="content">customer paxx group update</param>
@@ -1698,6 +2110,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitanePaxxGroupAsync([Body] Paxxgroup content);
 
         /// <summary>
+        /// Update customer record with PaXX group identifier - see table definitions
+        ///
         /// PostPitanePaxxGroupByGUID (/pitanePaxxGroupByGUID)
         /// </summary>
         /// <param name="content">customer paxx group update</param>
@@ -1706,6 +2120,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitanePaxxGroupByGUIDAsync([Body] Paxxgroupguid content);
 
         /// <summary>
+        /// Remove customer record from PaXX group identifier - see table definitions
+        ///
         /// PostPitanePaxxUnGroup (/pitanePaxxUnGroup)
         /// </summary>
         /// <param name="content">customer paxx group update</param>
@@ -1714,6 +2130,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitanePaxxUnGroupAsync([Body] Paxxgroup content);
 
         /// <summary>
+        /// Remove customer record from PaXX group identifier - see table definitions
+        ///
         /// PostPitanePaxxUnGroupByGUID (/pitanePaxxUnGroupByGUID)
         /// </summary>
         /// <param name="content">customer paxx group update</param>
@@ -1722,6 +2140,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> PostPitanePaxxUnGroupByGUIDAsync([Body] Paxxgroupguid content);
 
         /// <summary>
+        /// Retrieve trip status by Paxx group
+        ///
         /// GetPitanePaxxTripStatus (/pitanePaxxTripStatus)
         /// </summary>
         /// <param name="reiPaxLevel"></param>
@@ -1733,12 +2153,16 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
         Task<object> GetPitanePaxxTripStatusAsync([Query(Name = "rei_pax_level")] int reiPaxLevel, [Query(Name = "rei_pax_identifier")] string reiPaxIdentifier, [Query(Name = "pla_datum")] string plaDatum, [Query(Name = "pla_status")] string plaStatus, [Query] int? offset);
 
         /// <summary>
+        /// Update driver record - see table definitions
+        ///
         /// PostPitaneUpdateDriver (/pitaneUpdateDriver)
         /// </summary>
         [Post("/pitaneUpdateDriver")]
         Task<object> PostPitaneUpdateDriverAsync();
 
         /// <summary>
+        /// Delete driver record - see table definitions
+        ///
         /// DeletePitaneDeleteDriver (/pitaneDeleteDriver)
         /// </summary>
         /// <param name="chfId"></param>

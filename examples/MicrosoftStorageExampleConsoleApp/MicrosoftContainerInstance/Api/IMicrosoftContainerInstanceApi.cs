@@ -17,6 +17,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Api
     {
         /// <summary>
         /// Get a list of container groups in the specified subscription.
+        ///
+        /// ContainerGroupsList (/subscriptions/{subscriptionId}/providers/Microsoft.ContainerInstance/containerGroups)
         /// </summary>
         /// <param name="subscriptionId">Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.</param>
         [Get("/subscriptions/{subscriptionId}/providers/Microsoft.ContainerInstance/containerGroups?api-version=2021-10-01")]
@@ -24,6 +26,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Api
 
         /// <summary>
         /// Get a list of container groups in the specified subscription and resource group.
+        ///
+        /// ContainerGroupsListByResourceGroup (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups)
         /// </summary>
         /// <param name="subscriptionId">Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.</param>
         /// <param name="resourceGroupName">The name of the resource group.</param>
@@ -32,6 +36,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Api
 
         /// <summary>
         /// Get the properties of the specified container group.
+        ///
+        /// ContainerGroupsGet (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName})
         /// </summary>
         /// <param name="subscriptionId">Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.</param>
         /// <param name="resourceGroupName">The name of the resource group.</param>
@@ -41,6 +47,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Api
 
         /// <summary>
         /// Create or update container groups.
+        ///
+        /// ContainerGroupsCreateOrUpdate (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName})
         /// </summary>
         /// <param name="subscriptionId">Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.</param>
         /// <param name="resourceGroupName">The name of the resource group.</param>
@@ -52,6 +60,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Api
 
         /// <summary>
         /// Update container groups.
+        ///
+        /// ContainerGroupsUpdate (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName})
         /// </summary>
         /// <param name="subscriptionId">Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.</param>
         /// <param name="resourceGroupName">The name of the resource group.</param>
@@ -63,6 +73,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Api
 
         /// <summary>
         /// Delete the specified container group.
+        ///
+        /// ContainerGroupsDelete (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName})
         /// </summary>
         /// <param name="subscriptionId">Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.</param>
         /// <param name="resourceGroupName">The name of the resource group.</param>
@@ -72,6 +84,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Api
 
         /// <summary>
         /// Restarts all containers in a container group.
+        ///
+        /// ContainerGroupsRestart (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}/restart)
         /// </summary>
         /// <param name="subscriptionId">Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.</param>
         /// <param name="resourceGroupName">The name of the resource group.</param>
@@ -81,6 +95,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Api
 
         /// <summary>
         /// Stops all containers in a container group.
+        ///
+        /// ContainerGroupsStop (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}/stop)
         /// </summary>
         /// <param name="subscriptionId">Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.</param>
         /// <param name="resourceGroupName">The name of the resource group.</param>
@@ -90,6 +106,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Api
 
         /// <summary>
         /// Starts all containers in a container group.
+        ///
+        /// ContainerGroupsStart (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}/start)
         /// </summary>
         /// <param name="subscriptionId">Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.</param>
         /// <param name="resourceGroupName">The name of the resource group.</param>
@@ -98,12 +116,16 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Api
         Task<Response<AnyOf<object, CloudError>>> ContainerGroupsStartAsync([Path] string subscriptionId, [Path] string resourceGroupName, [Path] string containerGroupName);
 
         /// <summary>
+        /// List the operations for Azure Container Instance service.
+        ///
         /// OperationsList (/providers/Microsoft.ContainerInstance/operations)
         /// </summary>
         [Get("/providers/Microsoft.ContainerInstance/operations?api-version=2021-10-01")]
         Task<Response<AnyOf<OperationListResult, CloudError>>> OperationsListAsync();
 
         /// <summary>
+        /// Get the usage for a subscription
+        ///
         /// LocationListUsage (/subscriptions/{subscriptionId}/providers/Microsoft.ContainerInstance/locations/{location}/usages)
         /// </summary>
         /// <param name="subscriptionId">Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.</param>
@@ -113,6 +135,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Api
 
         /// <summary>
         /// Get the logs for a specified container instance.
+        ///
+        /// ContainersListLogs (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}/containers/{containerName}/logs)
         /// </summary>
         /// <param name="subscriptionId">Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.</param>
         /// <param name="resourceGroupName">The name of the resource group.</param>
@@ -125,6 +149,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Api
 
         /// <summary>
         /// Executes a command in a specific container instance.
+        ///
+        /// ContainersExecuteCommand (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}/containers/{containerName}/exec)
         /// </summary>
         /// <param name="subscriptionId">Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.</param>
         /// <param name="resourceGroupName">The name of the resource group.</param>
@@ -137,6 +163,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Api
 
         /// <summary>
         /// Attach to the output of a specific container instance.
+        ///
+        /// ContainersAttach (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}/containers/{containerName}/attach)
         /// </summary>
         /// <param name="subscriptionId">Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.</param>
         /// <param name="resourceGroupName">The name of the resource group.</param>
@@ -147,6 +175,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Api
 
         /// <summary>
         /// Get the list of cached images.
+        ///
+        /// LocationListCachedImages (/subscriptions/{subscriptionId}/providers/Microsoft.ContainerInstance/locations/{location}/cachedImages)
         /// </summary>
         /// <param name="subscriptionId">Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.</param>
         /// <param name="location">The identifier for the physical azure location.</param>
@@ -155,6 +185,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Api
 
         /// <summary>
         /// Get the list of capabilities of the location.
+        ///
+        /// LocationListCapabilities (/subscriptions/{subscriptionId}/providers/Microsoft.ContainerInstance/locations/{location}/capabilities)
         /// </summary>
         /// <param name="subscriptionId">Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.</param>
         /// <param name="location">The identifier for the physical azure location.</param>
@@ -163,6 +195,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Api
 
         /// <summary>
         /// Get all network dependencies for container group.
+        ///
+        /// ContainerGroupsGetOutboundNetworkDependenciesEndpoints (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroups/{containerGroupName}/outboundNetworkDependenciesEndpoints)
         /// </summary>
         /// <param name="subscriptionId">Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call.</param>
         /// <param name="resourceGroupName">The name of the resource group.</param>

@@ -44,7 +44,7 @@ internal class ModelBuilder : BaseBuilder
                 extendsClass = $" : {extendType}";
                 skip = 1;
             }
-            
+
             foreach (var extend in extends.Skip(skip))
             {
                 var model = _models.FirstOrDefault(m => string.Equals(m.ClassName, extend?.Type, StringComparison.InvariantCultureIgnoreCase));
@@ -91,6 +91,16 @@ internal class ModelBuilder : BaseBuilder
                 builder.AppendLine($"        /// {property.Description.StripHtml()}");
                 builder.AppendLine("        /// </summary>");
             }
+
+            //string propertyType;
+            //if (property.ArrayItemType == null)
+            //{
+            //    propertyType = property.Type;
+            //}
+            //else
+            //{
+            //    propertyType = ArrayTypeMapper.Map(Settings.ArrayType, property.ArrayItemType); // Hack in case this property extends an array
+            //}
 
             var safePropertyName = property.Name.ToValidIdentifier();
             if (safePropertyName != property.Name)

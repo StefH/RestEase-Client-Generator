@@ -16,12 +16,16 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Api
     public interface IMicrosoftStorageApi
     {
         /// <summary>
+        /// Lists all of the available Storage Rest API operations.
+        ///
         /// OperationsList (/providers/Microsoft.Storage/operations)
         /// </summary>
         [Get("/providers/Microsoft.Storage/operations?api-version=2021-04-01")]
         Task<OperationListResult> OperationsListAsync();
 
         /// <summary>
+        /// Lists the available SKUs supported by Microsoft.Storage for given subscription.
+        ///
         /// SkusList (/subscriptions/{subscriptionId}/providers/Microsoft.Storage/skus)
         /// </summary>
         /// <param name="subscriptionId">The ID of the target subscription.</param>
@@ -29,6 +33,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Api
         Task<StorageSkuListResult> SkusListAsync([Path] string subscriptionId);
 
         /// <summary>
+        /// Checks that the storage account name is valid and is not already in use.
+        ///
         /// StorageAccountsCheckNameAvailability (/subscriptions/{subscriptionId}/providers/Microsoft.Storage/checkNameAvailability)
         /// </summary>
         /// <param name="subscriptionId">The ID of the target subscription.</param>
@@ -38,6 +44,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Api
         Task<CheckNameAvailabilityResult> StorageAccountsCheckNameAvailabilityAsync([Path] string subscriptionId, [Body] StorageAccountCheckNameAvailabilityParameters content);
 
         /// <summary>
+        /// Asynchronously creates a new storage account with the specified parameters. If an account is already created and a subsequent create request is issued with different properties, the account properties will be updated. If an account is already created and a subsequent create or update request is issued with the exact same set of properties, the request will succeed.
+        ///
         /// StorageAccountsCreate (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName})
         /// </summary>
         /// <param name="subscriptionId">The ID of the target subscription.</param>
@@ -49,6 +57,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Api
         Task<Response<AnyOf<StorageAccount, object>>> StorageAccountsCreateAsync([Path] string subscriptionId, [Path] string resourceGroupName, [Path] string accountName, [Body] StorageAccountCreateParameters content);
 
         /// <summary>
+        /// Deletes a storage account in Microsoft Azure.
+        ///
         /// StorageAccountsDelete (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName})
         /// </summary>
         /// <param name="subscriptionId">The ID of the target subscription.</param>
@@ -58,6 +68,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Api
         Task<object> StorageAccountsDeleteAsync([Path] string subscriptionId, [Path] string resourceGroupName, [Path] string accountName);
 
         /// <summary>
+        /// Returns the properties for the specified storage account including but not limited to name, SKU name, location, and account status. The ListKeys operation should be used to retrieve storage keys.
+        ///
         /// StorageAccountsGetProperties (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName})
         /// </summary>
         /// <param name="subscriptionId">The ID of the target subscription.</param>
@@ -68,6 +80,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Api
         Task<StorageAccount> StorageAccountsGetPropertiesAsync([Path] string subscriptionId, [Path] string resourceGroupName, [Path] string accountName, [Query(Name = "$expand")] string expand);
 
         /// <summary>
+        /// The update operation can be used to update the SKU, encryption, access tier, or tags for a storage account. It can also be used to map the account to a custom domain. Only one custom domain is supported per storage account; the replacement/change of custom domain is not supported. In order to replace an old custom domain, the old value must be cleared/unregistered before a new value can be set. The update of multiple properties is supported. This call does not change the storage keys for the account. If you want to change the storage account keys, use the regenerate keys operation. The location and name of the storage account cannot be changed after creation.
+        ///
         /// StorageAccountsUpdate (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName})
         /// </summary>
         /// <param name="subscriptionId">The ID of the target subscription.</param>
@@ -79,6 +93,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Api
         Task<StorageAccount> StorageAccountsUpdateAsync([Path] string subscriptionId, [Path] string resourceGroupName, [Path] string accountName, [Body] StorageAccountUpdateParameters content);
 
         /// <summary>
+        /// Lists deleted accounts under the subscription.
+        ///
         /// DeletedAccountsList (/subscriptions/{subscriptionId}/providers/Microsoft.Storage/deletedAccounts)
         /// </summary>
         /// <param name="subscriptionId">The ID of the target subscription.</param>
@@ -86,6 +102,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Api
         Task<Response<AnyOf<DeletedAccountListResult, ErrorResponse>>> DeletedAccountsListAsync([Path] string subscriptionId);
 
         /// <summary>
+        /// Get properties of specified deleted account resource.
+        ///
         /// DeletedAccountsGet (/subscriptions/{subscriptionId}/providers/Microsoft.Storage/locations/{location}/deletedAccounts/{deletedAccountName})
         /// </summary>
         /// <param name="subscriptionId">The ID of the target subscription.</param>
@@ -95,6 +113,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Api
         Task<Response<AnyOf<DeletedAccount, ErrorResponse>>> DeletedAccountsGetAsync([Path] string subscriptionId, [Path] string location, [Path] string deletedAccountName);
 
         /// <summary>
+        /// Lists all the storage accounts available under the subscription. Note that storage keys are not returned; use the ListKeys operation for this.
+        ///
         /// StorageAccountsList (/subscriptions/{subscriptionId}/providers/Microsoft.Storage/storageAccounts)
         /// </summary>
         /// <param name="subscriptionId">The ID of the target subscription.</param>
@@ -102,6 +122,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Api
         Task<StorageAccountListResult> StorageAccountsListAsync([Path] string subscriptionId);
 
         /// <summary>
+        /// Lists all the storage accounts available under the given resource group. Note that storage keys are not returned; use the ListKeys operation for this.
+        ///
         /// StorageAccountsListByResourceGroup (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts)
         /// </summary>
         /// <param name="subscriptionId">The ID of the target subscription.</param>
@@ -110,6 +132,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Api
         Task<StorageAccountListResult> StorageAccountsListByResourceGroupAsync([Path] string subscriptionId, [Path] string resourceGroupName);
 
         /// <summary>
+        /// Lists the access keys or Kerberos keys (if active directory enabled) for the specified storage account.
+        ///
         /// StorageAccountsListKeys (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/listKeys)
         /// </summary>
         /// <param name="subscriptionId">The ID of the target subscription.</param>
@@ -120,6 +144,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Api
         Task<StorageAccountListKeysResult> StorageAccountsListKeysAsync([Path] string subscriptionId, [Path] string resourceGroupName, [Path] string accountName, [Query(Name = "$expand")] string expand);
 
         /// <summary>
+        /// Regenerates one of the access keys or Kerberos keys for the specified storage account.
+        ///
         /// StorageAccountsRegenerateKey (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/regenerateKey)
         /// </summary>
         /// <param name="subscriptionId">The ID of the target subscription.</param>
@@ -131,6 +157,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Api
         Task<StorageAccountListKeysResult> StorageAccountsRegenerateKeyAsync([Path] string subscriptionId, [Path] string resourceGroupName, [Path] string accountName, [Body] StorageAccountRegenerateKeyParameters content);
 
         /// <summary>
+        /// Gets the current usage count and the limit for the resources of the location under the subscription.
+        ///
         /// UsagesListByLocation (/subscriptions/{subscriptionId}/providers/Microsoft.Storage/locations/{location}/usages)
         /// </summary>
         /// <param name="subscriptionId">The ID of the target subscription.</param>
@@ -139,6 +167,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Api
         Task<UsageListResult> UsagesListByLocationAsync([Path] string subscriptionId, [Path] string location);
 
         /// <summary>
+        /// List SAS credentials of a storage account.
+        ///
         /// StorageAccountsListAccountSAS (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/ListAccountSas)
         /// </summary>
         /// <param name="subscriptionId">The ID of the target subscription.</param>
@@ -150,6 +180,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Api
         Task<ListAccountSasResponse> StorageAccountsListAccountSASAsync([Path] string subscriptionId, [Path] string resourceGroupName, [Path] string accountName, [Body] AccountSasParameters content);
 
         /// <summary>
+        /// List service SAS credentials of a specific resource.
+        ///
         /// StorageAccountsListServiceSAS (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/ListServiceSas)
         /// </summary>
         /// <param name="subscriptionId">The ID of the target subscription.</param>
@@ -161,6 +193,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Api
         Task<ListServiceSasResponse> StorageAccountsListServiceSASAsync([Path] string subscriptionId, [Path] string resourceGroupName, [Path] string accountName, [Body] ServiceSasParameters content);
 
         /// <summary>
+        /// Failover request can be triggered for a storage account in case of availability issues. The failover occurs from the storage account's primary cluster to secondary cluster for RA-GRS accounts. The secondary cluster will become primary after failover.
+        ///
         /// StorageAccountsFailover (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/failover)
         /// </summary>
         /// <param name="subscriptionId">The ID of the target subscription.</param>
@@ -170,6 +204,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Api
         Task<object> StorageAccountsFailoverAsync([Path] string subscriptionId, [Path] string resourceGroupName, [Path] string accountName);
 
         /// <summary>
+        /// Restore blobs in the specified blob ranges
+        ///
         /// StorageAccountsRestoreBlobRanges (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/restoreBlobRanges)
         /// </summary>
         /// <param name="subscriptionId">The ID of the target subscription.</param>
@@ -181,6 +217,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Api
         Task<BlobRestoreStatus> StorageAccountsRestoreBlobRangesAsync([Path] string subscriptionId, [Path] string resourceGroupName, [Path] string accountName, [Body] BlobRestoreParameters content);
 
         /// <summary>
+        /// Gets the managementpolicy associated with the specified storage account.
+        ///
         /// ManagementPoliciesGet (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/managementPolicies/{managementPolicyName})
         /// </summary>
         /// <param name="subscriptionId">The ID of the target subscription.</param>
@@ -191,6 +229,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Api
         Task<ManagementPolicy> ManagementPoliciesGetAsync([Path] string subscriptionId, [Path] string resourceGroupName, [Path] string accountName, [Path] string managementPolicyName);
 
         /// <summary>
+        /// Sets the managementpolicy to the specified storage account.
+        ///
         /// ManagementPoliciesCreateOrUpdate (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/managementPolicies/{managementPolicyName})
         /// </summary>
         /// <param name="subscriptionId">The ID of the target subscription.</param>
@@ -203,6 +243,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Api
         Task<ManagementPolicy> ManagementPoliciesCreateOrUpdateAsync([Path] string subscriptionId, [Path] string resourceGroupName, [Path] string accountName, [Path] string managementPolicyName, [Body] ManagementPolicy content);
 
         /// <summary>
+        /// Deletes the managementpolicy associated with the specified storage account.
+        ///
         /// ManagementPoliciesDelete (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/managementPolicies/{managementPolicyName})
         /// </summary>
         /// <param name="subscriptionId">The ID of the target subscription.</param>
@@ -213,6 +255,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Api
         Task<object> ManagementPoliciesDeleteAsync([Path] string subscriptionId, [Path] string resourceGroupName, [Path] string accountName, [Path] string managementPolicyName);
 
         /// <summary>
+        /// Gets the blob inventory policy associated with the specified storage account.
+        ///
         /// BlobInventoryPoliciesGet (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/inventoryPolicies/{blobInventoryPolicyName})
         /// </summary>
         /// <param name="subscriptionId">The ID of the target subscription.</param>
@@ -223,6 +267,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Api
         Task<Response<AnyOf<BlobInventoryPolicy, ErrorResponse>>> BlobInventoryPoliciesGetAsync([Path] string subscriptionId, [Path] string resourceGroupName, [Path] string accountName, [Path] string blobInventoryPolicyName);
 
         /// <summary>
+        /// Sets the blob inventory policy to the specified storage account.
+        ///
         /// BlobInventoryPoliciesCreateOrUpdate (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/inventoryPolicies/{blobInventoryPolicyName})
         /// </summary>
         /// <param name="subscriptionId">The ID of the target subscription.</param>
@@ -235,6 +281,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Api
         Task<Response<AnyOf<BlobInventoryPolicy, ErrorResponse>>> BlobInventoryPoliciesCreateOrUpdateAsync([Path] string subscriptionId, [Path] string resourceGroupName, [Path] string accountName, [Path] string blobInventoryPolicyName, [Body] BlobInventoryPolicy content);
 
         /// <summary>
+        /// Deletes the blob inventory policy associated with the specified storage account.
+        ///
         /// BlobInventoryPoliciesDelete (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/inventoryPolicies/{blobInventoryPolicyName})
         /// </summary>
         /// <param name="subscriptionId">The ID of the target subscription.</param>
@@ -245,6 +293,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Api
         Task<Response<AnyOf<object, ErrorResponse>>> BlobInventoryPoliciesDeleteAsync([Path] string subscriptionId, [Path] string resourceGroupName, [Path] string accountName, [Path] string blobInventoryPolicyName);
 
         /// <summary>
+        /// Gets the blob inventory policy associated with the specified storage account.
+        ///
         /// BlobInventoryPoliciesList (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/inventoryPolicies)
         /// </summary>
         /// <param name="subscriptionId">The ID of the target subscription.</param>
@@ -254,6 +304,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Api
         Task<Response<AnyOf<ListBlobInventoryPolicy, ErrorResponse>>> BlobInventoryPoliciesListAsync([Path] string subscriptionId, [Path] string resourceGroupName, [Path] string accountName);
 
         /// <summary>
+        /// List all the private endpoint connections associated with the storage account.
+        ///
         /// PrivateEndpointConnectionsList (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/privateEndpointConnections)
         /// </summary>
         /// <param name="subscriptionId">The ID of the target subscription.</param>
@@ -263,6 +315,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Api
         Task<PrivateEndpointConnectionListResult> PrivateEndpointConnectionsListAsync([Path] string subscriptionId, [Path] string resourceGroupName, [Path] string accountName);
 
         /// <summary>
+        /// Gets the specified private endpoint connection associated with the storage account.
+        ///
         /// PrivateEndpointConnectionsGet (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/privateEndpointConnections/{privateEndpointConnectionName})
         /// </summary>
         /// <param name="subscriptionId">The ID of the target subscription.</param>
@@ -273,6 +327,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Api
         Task<Response<AnyOf<PrivateEndpointConnection, ErrorResponse>>> PrivateEndpointConnectionsGetAsync([Path] string subscriptionId, [Path] string resourceGroupName, [Path] string accountName, [Path] string privateEndpointConnectionName);
 
         /// <summary>
+        /// Update the state of specified private endpoint connection associated with the storage account.
+        ///
         /// PrivateEndpointConnectionsPut (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/privateEndpointConnections/{privateEndpointConnectionName})
         /// </summary>
         /// <param name="subscriptionId">The ID of the target subscription.</param>
@@ -285,6 +341,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Api
         Task<Response<AnyOf<PrivateEndpointConnection, ErrorResponse>>> PrivateEndpointConnectionsPutAsync([Path] string subscriptionId, [Path] string resourceGroupName, [Path] string accountName, [Path] string privateEndpointConnectionName, [Body] PrivateEndpointConnection content);
 
         /// <summary>
+        /// Deletes the specified private endpoint connection associated with the storage account.
+        ///
         /// PrivateEndpointConnectionsDelete (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/privateEndpointConnections/{privateEndpointConnectionName})
         /// </summary>
         /// <param name="subscriptionId">The ID of the target subscription.</param>
@@ -295,6 +353,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Api
         Task<Response<AnyOf<object, ErrorResponse>>> PrivateEndpointConnectionsDeleteAsync([Path] string subscriptionId, [Path] string resourceGroupName, [Path] string accountName, [Path] string privateEndpointConnectionName);
 
         /// <summary>
+        /// Gets the private link resources that need to be created for a storage account.
+        ///
         /// PrivateLinkResourcesListByStorageAccount (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/privateLinkResources)
         /// </summary>
         /// <param name="subscriptionId">The ID of the target subscription.</param>
@@ -304,6 +364,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Api
         Task<PrivateLinkResourceListResult> PrivateLinkResourcesListByStorageAccountAsync([Path] string subscriptionId, [Path] string resourceGroupName, [Path] string accountName);
 
         /// <summary>
+        /// List the object replication policies associated with the storage account.
+        ///
         /// ObjectReplicationPoliciesList (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/objectReplicationPolicies)
         /// </summary>
         /// <param name="subscriptionId">The ID of the target subscription.</param>
@@ -313,6 +375,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Api
         Task<Response<AnyOf<ObjectReplicationPolicies, ErrorResponse>>> ObjectReplicationPoliciesListAsync([Path] string subscriptionId, [Path] string resourceGroupName, [Path] string accountName);
 
         /// <summary>
+        /// Get the object replication policy of the storage account by policy ID.
+        ///
         /// ObjectReplicationPoliciesGet (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/objectReplicationPolicies/{objectReplicationPolicyId})
         /// </summary>
         /// <param name="subscriptionId">The ID of the target subscription.</param>
@@ -323,6 +387,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Api
         Task<Response<AnyOf<ObjectReplicationPolicy, ErrorResponse>>> ObjectReplicationPoliciesGetAsync([Path] string subscriptionId, [Path] string resourceGroupName, [Path] string accountName, [Path] string objectReplicationPolicyId);
 
         /// <summary>
+        /// Create or update the object replication policy of the storage account.
+        ///
         /// ObjectReplicationPoliciesCreateOrUpdate (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/objectReplicationPolicies/{objectReplicationPolicyId})
         /// </summary>
         /// <param name="subscriptionId">The ID of the target subscription.</param>
@@ -335,6 +401,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Api
         Task<Response<AnyOf<ObjectReplicationPolicy, ErrorResponse>>> ObjectReplicationPoliciesCreateOrUpdateAsync([Path] string subscriptionId, [Path] string resourceGroupName, [Path] string accountName, [Path] string objectReplicationPolicyId, [Body] ObjectReplicationPolicy content);
 
         /// <summary>
+        /// Deletes the object replication policy associated with the specified storage account.
+        ///
         /// ObjectReplicationPoliciesDelete (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/objectReplicationPolicies/{objectReplicationPolicyId})
         /// </summary>
         /// <param name="subscriptionId">The ID of the target subscription.</param>
@@ -345,6 +413,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Api
         Task<Response<AnyOf<object, ErrorResponse>>> ObjectReplicationPoliciesDeleteAsync([Path] string subscriptionId, [Path] string resourceGroupName, [Path] string accountName, [Path] string objectReplicationPolicyId);
 
         /// <summary>
+        /// Revoke user delegation keys.
+        ///
         /// StorageAccountsRevokeUserDelegationKeys (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/revokeUserDelegationKeys)
         /// </summary>
         /// <param name="subscriptionId">The ID of the target subscription.</param>
@@ -354,6 +424,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Api
         Task<object> StorageAccountsRevokeUserDelegationKeysAsync([Path] string subscriptionId, [Path] string resourceGroupName, [Path] string accountName);
 
         /// <summary>
+        /// Synchronously creates or updates an encryption scope under the specified storage account. If an encryption scope is already created and a subsequent request is issued with different properties, the encryption scope properties will be updated per the specified request.
+        ///
         /// EncryptionScopesPut (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/encryptionScopes/{encryptionScopeName})
         /// </summary>
         /// <param name="subscriptionId">The ID of the target subscription.</param>
@@ -366,6 +438,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Api
         Task<Response<AnyOf<EncryptionScope, ErrorResponse>>> EncryptionScopesPutAsync([Path] string subscriptionId, [Path] string resourceGroupName, [Path] string accountName, [Path] string encryptionScopeName, [Body] EncryptionScope content);
 
         /// <summary>
+        /// Update encryption scope properties as specified in the request body. Update fails if the specified encryption scope does not already exist.
+        ///
         /// EncryptionScopesPatch (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/encryptionScopes/{encryptionScopeName})
         /// </summary>
         /// <param name="subscriptionId">The ID of the target subscription.</param>
@@ -378,6 +452,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Api
         Task<Response<AnyOf<EncryptionScope, ErrorResponse>>> EncryptionScopesPatchAsync([Path] string subscriptionId, [Path] string resourceGroupName, [Path] string accountName, [Path] string encryptionScopeName, [Body] EncryptionScope content);
 
         /// <summary>
+        /// Returns the properties for the specified encryption scope.
+        ///
         /// EncryptionScopesGet (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/encryptionScopes/{encryptionScopeName})
         /// </summary>
         /// <param name="subscriptionId">The ID of the target subscription.</param>
@@ -388,6 +464,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Api
         Task<Response<AnyOf<EncryptionScope, ErrorResponse>>> EncryptionScopesGetAsync([Path] string subscriptionId, [Path] string resourceGroupName, [Path] string accountName, [Path] string encryptionScopeName);
 
         /// <summary>
+        /// Lists all the encryption scopes available under the specified storage account.
+        ///
         /// EncryptionScopesList (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/encryptionScopes)
         /// </summary>
         /// <param name="subscriptionId">The ID of the target subscription.</param>

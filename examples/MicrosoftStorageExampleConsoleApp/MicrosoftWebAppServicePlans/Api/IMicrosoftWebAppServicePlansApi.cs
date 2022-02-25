@@ -17,6 +17,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebAppServicePlans.Api
     {
         /// <summary>
         /// Get all App Service plans for a subscription.
+        ///
+        /// AppServicePlansList (/subscriptions/{subscriptionId}/providers/Microsoft.Web/serverfarms)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="detailed">Specify true to return all App Service plan properties. The default is false, which returns a subset of the properties. Retrieval of all properties may increase the API latency.</param>
@@ -25,6 +27,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebAppServicePlans.Api
 
         /// <summary>
         /// Get all App Service plans in a resource group.
+        ///
+        /// AppServicePlansListByResourceGroup (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -33,6 +37,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebAppServicePlans.Api
 
         /// <summary>
         /// Get an App Service plan.
+        ///
+        /// AppServicePlansGet (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -42,6 +48,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebAppServicePlans.Api
 
         /// <summary>
         /// Creates or updates an App Service Plan.
+        ///
+        /// AppServicePlansCreateOrUpdate (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -53,6 +61,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebAppServicePlans.Api
 
         /// <summary>
         /// Delete an App Service plan.
+        ///
+        /// AppServicePlansDelete (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -62,6 +72,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebAppServicePlans.Api
 
         /// <summary>
         /// Creates or updates an App Service Plan.
+        ///
+        /// AppServicePlansUpdate (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -73,6 +85,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebAppServicePlans.Api
 
         /// <summary>
         /// List all capabilities of an App Service plan.
+        ///
+        /// AppServicePlansListCapabilities (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/capabilities)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -82,6 +96,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebAppServicePlans.Api
 
         /// <summary>
         /// Retrieve a Hybrid Connection in use in an App Service plan.
+        ///
+        /// AppServicePlansGetHybridConnection (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -93,6 +109,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebAppServicePlans.Api
 
         /// <summary>
         /// Delete a Hybrid Connection in use in an App Service plan.
+        ///
+        /// AppServicePlansDeleteHybridConnection (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -104,6 +122,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebAppServicePlans.Api
 
         /// <summary>
         /// Get the send key name and value of a Hybrid Connection.
+        ///
+        /// AppServicePlansListHybridConnectionKeys (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}/listKeys)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -115,6 +135,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebAppServicePlans.Api
 
         /// <summary>
         /// Get all apps that use a Hybrid Connection in an App Service Plan.
+        ///
+        /// AppServicePlansListWebAppsByHybridConnection (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}/sites)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -126,6 +148,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebAppServicePlans.Api
 
         /// <summary>
         /// Get the maximum number of Hybrid Connections allowed in an App Service plan.
+        ///
+        /// AppServicePlansGetHybridConnectionPlanLimit (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionPlanLimits/limit)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -135,6 +159,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebAppServicePlans.Api
 
         /// <summary>
         /// Retrieve all Hybrid Connections in use in an App Service plan.
+        ///
+        /// AppServicePlansListHybridConnections (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionRelays)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -144,6 +170,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebAppServicePlans.Api
 
         /// <summary>
         /// Restart all apps in an App Service plan.
+        ///
+        /// AppServicePlansRestartWebApps (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/restartSites)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -154,6 +182,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebAppServicePlans.Api
 
         /// <summary>
         /// Get all apps associated with an App Service plan.
+        ///
+        /// AppServicePlansListWebApps (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/sites)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -166,6 +196,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebAppServicePlans.Api
 
         /// <summary>
         /// Gets all selectable SKUs for a given App Service Plan
+        ///
+        /// AppServicePlansGetServerFarmSkus (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/skus)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -175,6 +207,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebAppServicePlans.Api
 
         /// <summary>
         /// Gets server farm usage information
+        ///
+        /// AppServicePlansListUsages (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/usages)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -185,6 +219,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebAppServicePlans.Api
 
         /// <summary>
         /// Get all Virtual Networks associated with an App Service plan.
+        ///
+        /// AppServicePlansListVnets (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -194,6 +230,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebAppServicePlans.Api
 
         /// <summary>
         /// Get a Virtual Network associated with an App Service plan.
+        ///
+        /// AppServicePlansGetVnetFromServerFarm (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -204,6 +242,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebAppServicePlans.Api
 
         /// <summary>
         /// Get a Virtual Network gateway.
+        ///
+        /// AppServicePlansGetVnetGateway (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -215,6 +255,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebAppServicePlans.Api
 
         /// <summary>
         /// Update a Virtual Network gateway.
+        ///
+        /// AppServicePlansUpdateVnetGateway (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -228,6 +270,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebAppServicePlans.Api
 
         /// <summary>
         /// Get all routes that are associated with a Virtual Network in an App Service plan.
+        ///
+        /// AppServicePlansListRoutesForVnet (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}/routes)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -238,6 +282,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebAppServicePlans.Api
 
         /// <summary>
         /// Get a Virtual Network route in an App Service plan.
+        ///
+        /// AppServicePlansGetRouteForVnet (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}/routes/{routeName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -249,6 +295,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebAppServicePlans.Api
 
         /// <summary>
         /// Create or update a Virtual Network route in an App Service plan.
+        ///
+        /// AppServicePlansCreateOrUpdateVnetRoute (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}/routes/{routeName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -262,6 +310,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebAppServicePlans.Api
 
         /// <summary>
         /// Delete a Virtual Network route in an App Service plan.
+        ///
+        /// AppServicePlansDeleteVnetRoute (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}/routes/{routeName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -273,6 +323,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebAppServicePlans.Api
 
         /// <summary>
         /// Create or update a Virtual Network route in an App Service plan.
+        ///
+        /// AppServicePlansUpdateVnetRoute (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}/routes/{routeName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -286,6 +338,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebAppServicePlans.Api
 
         /// <summary>
         /// Reboot a worker machine in an App Service plan.
+        ///
+        /// AppServicePlansRebootWorker (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/workers/{workerName}/reboot)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>

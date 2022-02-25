@@ -4,7 +4,9 @@ namespace RestEaseClientGenerator.Models.Internal;
 
 internal class RestEaseInterfaceMethodDetails
 {
-    public string Summary { get; set; }
+    public string? Summary { get; set; }
+
+    public string Path { get; set; } = null!;
 
     public ICollection<RestEaseSummaryParameter> SummaryParameters { get; set; } = new List<RestEaseSummaryParameter>();
 

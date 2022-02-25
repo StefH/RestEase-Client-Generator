@@ -17,6 +17,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
     {
         /// <summary>
         /// Get all apps for a subscription.
+        ///
+        /// WebAppsList (/subscriptions/{subscriptionId}/providers/Microsoft.Web/sites)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         [Get("/subscriptions/{subscriptionId}/providers/Microsoft.Web/sites?api-version=2021-03-01")]
@@ -24,6 +26,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets all web, mobile, and API apps in the specified resource group.
+        ///
+        /// WebAppsListByResourceGroup (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -33,6 +37,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets the details of a web, mobile, or API app.
+        ///
+        /// WebAppsGet (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -42,6 +48,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Creates a new web, mobile, or API app in an existing resource group, or updates an existing app.
+        ///
+        /// WebAppsCreateOrUpdate (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -53,6 +61,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Deletes a web, mobile, or API app, or one of the deployment slots.
+        ///
+        /// WebAppsDelete (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -64,6 +74,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Creates a new web, mobile, or API app in an existing resource group, or updates an existing app.
+        ///
+        /// WebAppsUpdate (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -75,6 +87,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Analyze a custom hostname.
+        ///
+        /// WebAppsAnalyzeCustomHostname (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/analyzeCustomHostname)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -85,6 +99,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Applies the configuration settings from the target slot onto the current slot.
+        ///
+        /// WebAppsApplySlotConfigToProduction (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/applySlotConfig)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -96,6 +112,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Creates a backup of an app.
+        ///
+        /// WebAppsBackup (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/backup)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -107,6 +125,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets existing backups of an app.
+        ///
+        /// WebAppsListBackups (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/backups)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -116,6 +136,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets a backup of an app by its ID.
+        ///
+        /// WebAppsGetBackupStatus (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/backups/{backupId})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -126,6 +148,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Deletes a backup of an app by its ID.
+        ///
+        /// WebAppsDeleteBackup (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/backups/{backupId})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -136,6 +160,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets status of a web app backup that may be in progress, including secrets associated with the backup, such as the Azure Storage SAS URL. Also can be used to update the SAS URL for the backup if a new URL is passed in the request body.
+        ///
+        /// WebAppsListBackupStatusSecrets (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/backups/{backupId}/list)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -148,6 +174,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Restores a specific backup to another app (or deployment slot, if specified).
+        ///
+        /// WebAppsRestore (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/backups/{backupId}/restore)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -160,6 +188,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Returns whether Scm basic auth is allowed and whether Ftp is allowed for a given site.
+        ///
+        /// WebAppsListBasicPublishingCredentialsPolicies (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/basicPublishingCredentialsPolicies)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -169,6 +199,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Returns whether FTP is allowed on the site or not.
+        ///
+        /// WebAppsGetFtpAllowed (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/basicPublishingCredentialsPolicies/ftp)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -178,6 +210,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Updates whether FTP is allowed on the site or not.
+        ///
+        /// WebAppsUpdateFtpAllowed (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/basicPublishingCredentialsPolicies/ftp)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -189,6 +223,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Returns whether Scm basic auth is allowed on the site or not.
+        ///
+        /// WebAppsGetScmAllowed (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/basicPublishingCredentialsPolicies/scm)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -198,6 +234,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Updates whether user publishing credentials are allowed on the site or not.
+        ///
+        /// WebAppsUpdateScmAllowed (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/basicPublishingCredentialsPolicies/scm)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -209,6 +247,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// List the configurations of an app
+        ///
+        /// WebAppsListConfigurations (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -218,6 +258,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Replaces the application settings of an app.
+        ///
+        /// WebAppsUpdateApplicationSettings (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/appsettings)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -229,6 +271,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets the application settings of an app.
+        ///
+        /// WebAppsListApplicationSettings (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/appsettings/list)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -238,6 +282,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Updates the Authentication / Authorization settings associated with web app.
+        ///
+        /// WebAppsUpdateAuthSettings (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/authsettings)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -249,6 +295,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets the Authentication/Authorization settings of an app.
+        ///
+        /// WebAppsGetAuthSettings (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/authsettings/list)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -258,6 +306,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets site's Authentication / Authorization settings for apps via the V2 format
+        ///
+        /// WebAppsGetAuthSettingsV2WithoutSecrets (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/authsettingsV2)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -267,6 +317,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Updates site's Authentication / Authorization settings for apps via the V2 format
+        ///
+        /// WebAppsUpdateAuthSettingsV2 (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/authsettingsV2)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -278,6 +330,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets site's Authentication / Authorization settings for apps via the V2 format
+        ///
+        /// WebAppsGetAuthSettingsV2 (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/authsettingsV2/list)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -287,6 +341,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Updates the Azure storage account configurations of an app.
+        ///
+        /// WebAppsUpdateAzureStorageAccounts (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/azurestorageaccounts)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -298,6 +354,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets the Azure storage account configurations of an app.
+        ///
+        /// WebAppsListAzureStorageAccounts (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/azurestorageaccounts/list)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -307,6 +365,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Updates the backup configuration of an app.
+        ///
+        /// WebAppsUpdateBackupConfiguration (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/backup)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -318,6 +378,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Deletes the backup configuration of an app.
+        ///
+        /// WebAppsDeleteBackupConfiguration (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/backup)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -327,6 +389,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets the backup configuration of an app.
+        ///
+        /// WebAppsGetBackupConfiguration (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/backup/list)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -336,6 +400,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets the config reference app settings and status of an app
+        ///
+        /// WebAppsGetAppSettingsKeyVaultReferences (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/configreferences/appsettings)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -345,6 +411,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets the config reference and status of an app
+        ///
+        /// WebAppsGetAppSettingKeyVaultReference (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/configreferences/appsettings/{appSettingKey})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -355,6 +423,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets the config reference app settings and status of an app
+        ///
+        /// WebAppsGetSiteConnectionStringKeyVaultReferences (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/configreferences/connectionstrings)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -364,6 +434,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets the config reference and status of an app
+        ///
+        /// WebAppsGetSiteConnectionStringKeyVaultReference (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/configreferences/connectionstrings/{connectionStringKey})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -374,6 +446,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Replaces the connection strings of an app.
+        ///
+        /// WebAppsUpdateConnectionStrings (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/connectionstrings)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -385,6 +459,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets the connection strings of an app.
+        ///
+        /// WebAppsListConnectionStrings (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/connectionstrings/list)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -394,6 +470,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets the logging configuration of an app.
+        ///
+        /// WebAppsGetDiagnosticLogsConfiguration (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/logs)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -403,6 +481,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Updates the logging configuration of an app.
+        ///
+        /// WebAppsUpdateDiagnosticLogsConfig (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/logs)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -414,6 +494,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Replaces the metadata of an app.
+        ///
+        /// WebAppsUpdateMetadata (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/metadata)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -425,6 +507,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets the metadata of an app.
+        ///
+        /// WebAppsListMetadata (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/metadata/list)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -434,6 +518,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets the Git/FTP publishing credentials of an app.
+        ///
+        /// WebAppsListPublishingCredentials (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/publishingcredentials/list)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -443,6 +529,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Updates the Push settings associated with web app.
+        ///
+        /// WebAppsUpdateSitePushSettings (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/pushsettings)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -454,6 +542,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets the Push settings associated with web app.
+        ///
+        /// WebAppsListSitePushSettings (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/pushsettings/list)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -463,6 +553,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets the names of app settings and connection strings that stick to the slot (not swapped).
+        ///
+        /// WebAppsListSlotConfigurationNames (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/slotConfigNames)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -472,6 +564,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Updates the names of application settings and connection string that remain with the slot during swap operation.
+        ///
+        /// WebAppsUpdateSlotConfigurationNames (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/slotConfigNames)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -483,6 +577,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets the configuration of an app, such as platform version and bitness, default documents, virtual applications, Always On, etc.
+        ///
+        /// WebAppsGetConfiguration (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/web)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -492,6 +588,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Updates the configuration of an app.
+        ///
+        /// WebAppsCreateOrUpdateConfiguration (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/web)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -503,6 +601,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Updates the configuration of an app.
+        ///
+        /// WebAppsUpdateConfiguration (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/web)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -514,6 +614,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets a list of web app configuration snapshots identifiers. Each element of the list contains a timestamp and the ID of the snapshot.
+        ///
+        /// WebAppsListConfigurationSnapshotInfo (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/web/snapshots)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -523,6 +625,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets a snapshot of the configuration of an app at a previous point in time.
+        ///
+        /// WebAppsGetConfigurationSnapshot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/web/snapshots/{snapshotId})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -533,6 +637,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Reverts the configuration of an app to a previous snapshot.
+        ///
+        /// WebAppsRecoverSiteConfigurationSnapshot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/web/snapshots/{snapshotId}/recover)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -543,6 +649,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets the last lines of docker logs for the given site
+        ///
+        /// WebAppsGetWebSiteContainerLogs (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/containerlogs)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -552,6 +660,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets the ZIP archived docker log files for the given site
+        ///
+        /// WebAppsGetContainerLogsZip (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/containerlogs/zip/download)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -561,6 +671,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// List continuous web jobs for an app, or a deployment slot.
+        ///
+        /// WebAppsListContinuousWebJobs (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/continuouswebjobs)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -570,6 +682,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets a continuous web job by its ID for an app, or a deployment slot.
+        ///
+        /// WebAppsGetContinuousWebJob (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/continuouswebjobs/{webJobName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -580,6 +694,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Delete a continuous web job by its ID for an app, or a deployment slot.
+        ///
+        /// WebAppsDeleteContinuousWebJob (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/continuouswebjobs/{webJobName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -590,6 +706,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Start a continuous web job for an app, or a deployment slot.
+        ///
+        /// WebAppsStartContinuousWebJob (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/continuouswebjobs/{webJobName}/start)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -600,6 +718,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Stop a continuous web job for an app, or a deployment slot.
+        ///
+        /// WebAppsStopContinuousWebJob (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/continuouswebjobs/{webJobName}/stop)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -610,6 +730,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// List deployments for an app, or a deployment slot.
+        ///
+        /// WebAppsListDeployments (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/deployments)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -619,6 +741,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Get a deployment by its ID for an app, or a deployment slot.
+        ///
+        /// WebAppsGetDeployment (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/deployments/{id})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -629,6 +753,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Create a deployment for an app, or a deployment slot.
+        ///
+        /// WebAppsCreateDeployment (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/deployments/{id})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -641,6 +767,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Delete a deployment by its ID for an app, or a deployment slot.
+        ///
+        /// WebAppsDeleteDeployment (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/deployments/{id})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -651,6 +779,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// List deployment log for specific deployment for an app, or a deployment slot.
+        ///
+        /// WebAppsListDeploymentLog (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/deployments/{id}/log)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -661,6 +791,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Discovers an existing app backup that can be restored from a blob in Azure storage. Use this to get information about the databases stored in a backup.
+        ///
+        /// WebAppsDiscoverBackup (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/discoverbackup)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -672,6 +804,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Lists ownership identifiers for domain associated with web app.
+        ///
+        /// WebAppsListDomainOwnershipIdentifiers (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/domainOwnershipIdentifiers)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -681,6 +815,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Get domain ownership identifier for web app.
+        ///
+        /// WebAppsGetDomainOwnershipIdentifier (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/domainOwnershipIdentifiers/{domainOwnershipIdentifierName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -691,6 +827,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Creates a domain ownership identifier for web app, or updates an existing ownership identifier.
+        ///
+        /// WebAppsCreateOrUpdateDomainOwnershipIdentifier (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/domainOwnershipIdentifiers/{domainOwnershipIdentifierName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -703,6 +841,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Deletes a domain ownership identifier for a web app.
+        ///
+        /// WebAppsDeleteDomainOwnershipIdentifier (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/domainOwnershipIdentifiers/{domainOwnershipIdentifierName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -713,6 +853,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Creates a domain ownership identifier for web app, or updates an existing ownership identifier.
+        ///
+        /// WebAppsUpdateDomainOwnershipIdentifier (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/domainOwnershipIdentifiers/{domainOwnershipIdentifierName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -725,6 +867,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Get the status of the last MSDeploy operation.
+        ///
+        /// WebAppsGetMSDeployStatus (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/extensions/MSDeploy)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -734,6 +878,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Invoke the MSDeploy web app extension.
+        ///
+        /// WebAppsCreateMSDeployOperation (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/extensions/MSDeploy)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -745,6 +891,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Get the MSDeploy Log for the last MSDeploy operation.
+        ///
+        /// WebAppsGetMSDeployLog (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/extensions/MSDeploy/log)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -754,6 +902,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Invoke onedeploy status API /api/deployments and gets the deployment status for the site
+        ///
+        /// WebAppsGetOneDeployStatus (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/extensions/onedeploy)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -763,6 +913,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Invoke the OneDeploy publish web app extension.
+        ///
+        /// WebAppsCreateOneDeployOperation (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/extensions/onedeploy)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -772,6 +924,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// List the functions for a web site, or a deployment slot.
+        ///
+        /// WebAppsListFunctions (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/functions)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -781,6 +935,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Fetch a short lived token that can be exchanged for a master key.
+        ///
+        /// WebAppsGetFunctionsAdminToken (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/functions/admin/token)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -790,6 +946,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Get function information by its ID for web site, or a deployment slot.
+        ///
+        /// WebAppsGetFunction (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/functions/{functionName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -800,6 +958,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Create function for web site, or a deployment slot.
+        ///
+        /// WebAppsCreateFunction (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/functions/{functionName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -812,6 +972,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Delete a function for web site, or a deployment slot.
+        ///
+        /// WebAppsDeleteFunction (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/functions/{functionName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -822,6 +984,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Add or update a function secret.
+        ///
+        /// WebAppsCreateOrUpdateFunctionSecret (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/functions/{functionName}/keys/{keyName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -835,6 +999,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Delete a function secret.
+        ///
+        /// WebAppsDeleteFunctionSecret (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/functions/{functionName}/keys/{keyName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -846,6 +1012,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Get function keys for a function in a web site, or a deployment slot.
+        ///
+        /// WebAppsListFunctionKeys (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/functions/{functionName}/listkeys)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -856,6 +1024,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Get function secrets for a function in a web site, or a deployment slot.
+        ///
+        /// WebAppsListFunctionSecrets (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/functions/{functionName}/listsecrets)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -866,6 +1036,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Get host secrets for a function app.
+        ///
+        /// WebAppsListHostKeys (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/host/default/listkeys)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -875,6 +1047,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// This is to allow calling via powershell and ARM template.
+        ///
+        /// WebAppsListSyncStatus (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/host/default/listsyncstatus)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -884,6 +1058,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Syncs function trigger metadata to the management database
+        ///
+        /// WebAppsSyncFunctions (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/host/default/sync)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -893,6 +1069,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Add or update a host level secret.
+        ///
+        /// WebAppsCreateOrUpdateHostSecret (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/host/default/{keyType}/{keyName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -906,6 +1084,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Delete a host level secret.
+        ///
+        /// WebAppsDeleteHostSecret (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/host/default/{keyType}/{keyName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -917,6 +1097,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Get hostname bindings for an app or a deployment slot.
+        ///
+        /// WebAppsListHostNameBindings (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostNameBindings)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -926,6 +1108,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Get the named hostname binding for an app (or deployment slot, if specified).
+        ///
+        /// WebAppsGetHostNameBinding (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostNameBindings/{hostName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -936,6 +1120,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Creates a hostname binding for an app.
+        ///
+        /// WebAppsCreateOrUpdateHostNameBinding (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostNameBindings/{hostName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -948,6 +1134,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Deletes a hostname binding for an app.
+        ///
+        /// WebAppsDeleteHostNameBinding (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostNameBindings/{hostName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -958,6 +1146,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Retrieves a specific Service Bus Hybrid Connection used by this Web App.
+        ///
+        /// WebAppsGetHybridConnection (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -969,6 +1159,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Creates a new Hybrid Connection using a Service Bus relay.
+        ///
+        /// WebAppsCreateOrUpdateHybridConnection (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -982,6 +1174,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Removes a Hybrid Connection from this site.
+        ///
+        /// WebAppsDeleteHybridConnection (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -993,6 +1187,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Creates a new Hybrid Connection using a Service Bus relay.
+        ///
+        /// WebAppsUpdateHybridConnection (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1006,6 +1202,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Retrieves all Service Bus Hybrid Connections used by this Web App.
+        ///
+        /// WebAppsListHybridConnections (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridConnectionRelays)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1015,6 +1213,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets hybrid connections configured for an app (or deployment slot, if specified).
+        ///
+        /// WebAppsListRelayServiceConnections (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridconnection)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1024,6 +1224,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets a hybrid connection configuration by its name.
+        ///
+        /// WebAppsGetRelayServiceConnection (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridconnection/{entityName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1034,6 +1236,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Creates a new hybrid connection configuration (PUT), or updates an existing one (PATCH).
+        ///
+        /// WebAppsCreateOrUpdateRelayServiceConnection (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridconnection/{entityName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1046,6 +1250,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Deletes a relay service connection by its name.
+        ///
+        /// WebAppsDeleteRelayServiceConnection (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridconnection/{entityName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1056,6 +1262,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Creates a new hybrid connection configuration (PUT), or updates an existing one (PATCH).
+        ///
+        /// WebAppsUpdateRelayServiceConnection (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridconnection/{entityName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1068,6 +1276,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets all scale-out instances of an app.
+        ///
+        /// WebAppsListInstanceIdentifiers (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1077,6 +1287,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets all scale-out instances of an app.
+        ///
+        /// WebAppsGetInstanceInfo (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1087,6 +1299,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Get the status of the last MSDeploy operation.
+        ///
+        /// WebAppsGetInstanceMsDeployStatus (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}/extensions/MSDeploy)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1097,6 +1311,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Invoke the MSDeploy web app extension.
+        ///
+        /// WebAppsCreateInstanceMSDeployOperation (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}/extensions/MSDeploy)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1109,6 +1325,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Get the MSDeploy Log for the last MSDeploy operation.
+        ///
+        /// WebAppsGetInstanceMSDeployLog (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}/extensions/MSDeploy/log)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1119,6 +1337,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Get list of processes for a web site, or a deployment slot, or for a specific scaled-out instance in a web site.
+        ///
+        /// WebAppsListInstanceProcesses (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}/processes)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1129,6 +1349,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Get process information by its ID for a specific scaled-out instance in a web site.
+        ///
+        /// WebAppsGetInstanceProcess (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}/processes/{processId})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1140,6 +1362,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Terminate a process by its ID for a web site, or a deployment slot, or specific scaled-out instance in a web site.
+        ///
+        /// WebAppsDeleteInstanceProcess (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}/processes/{processId})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1151,6 +1375,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Get a memory dump of a process by its ID for a specific scaled-out instance in a web site.
+        ///
+        /// WebAppsGetInstanceProcessDump (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}/processes/{processId}/dump)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1162,6 +1388,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// List module information for a process by its ID for a specific scaled-out instance in a web site.
+        ///
+        /// WebAppsListInstanceProcessModules (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}/processes/{processId}/modules)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1173,6 +1401,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Get process information by its ID for a specific scaled-out instance in a web site.
+        ///
+        /// WebAppsGetInstanceProcessModule (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}/processes/{processId}/modules/{baseAddress})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1185,6 +1415,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// List the threads in a process by its ID for a specific scaled-out instance in a web site.
+        ///
+        /// WebAppsListInstanceProcessThreads (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}/processes/{processId}/threads)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1196,6 +1428,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Shows whether an app can be cloned to another resource group or subscription.
+        ///
+        /// WebAppsIsCloneable (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/iscloneable)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1205,6 +1439,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets existing backups of an app.
+        ///
+        /// WebAppsListSiteBackups (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/listbackups)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1214,6 +1450,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// This is to allow calling via powershell and ARM template.
+        ///
+        /// WebAppsListSyncFunctionTriggers (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/listsyncfunctiontriggerstatus)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1223,6 +1461,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Restores a web app.
+        ///
+        /// WebAppsMigrateStorage (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/migrate)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1235,6 +1475,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Migrates a local (in-app) MySql database to a remote MySql database.
+        ///
+        /// WebAppsMigrateMySql (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/migratemysql)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1246,6 +1488,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Returns the status of MySql in app migration, if one is active, and whether or not MySql in app is enabled
+        ///
+        /// WebAppsGetMigrateMySqlStatus (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/migratemysql/status)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1255,6 +1499,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets a Swift Virtual Network connection.
+        ///
+        /// WebAppsGetSwiftVirtualNetworkConnection (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/networkConfig/virtualNetwork)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1264,6 +1510,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Integrates this Web App with a Virtual Network. This requires that 1) "swiftSupported" is true when doing a GET against this resource, and 2) that the target Subnet has already been delegated, and is notin use by another App Service Plan other than the one this App is in.
+        ///
+        /// WebAppsCreateOrUpdateSwiftVirtualNetworkConnectionWithCheck (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/networkConfig/virtualNetwork)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1275,6 +1523,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Deletes a Swift Virtual Network connection from an app (or deployment slot).
+        ///
+        /// WebAppsDeleteSwiftVirtualNetwork (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/networkConfig/virtualNetwork)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1284,6 +1534,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Integrates this Web App with a Virtual Network. This requires that 1) "swiftSupported" is true when doing a GET against this resource, and 2) that the target Subnet has already been delegated, and is notin use by another App Service Plan other than the one this App is in.
+        ///
+        /// WebAppsUpdateSwiftVirtualNetworkConnectionWithCheck (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/networkConfig/virtualNetwork)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1295,6 +1547,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets all network features used by the app (or deployment slot, if specified).
+        ///
+        /// WebAppsListNetworkFeatures (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/networkFeatures/{view})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1305,6 +1559,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets a named operation for a network trace capturing (or deployment slot, if specified).
+        ///
+        /// WebAppsGetNetworkTraceOperation (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/networkTrace/operationresults/{operationId})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1315,6 +1571,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Start capturing network packets for the site (To be deprecated).
+        ///
+        /// WebAppsStartWebSiteNetworkTrace (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/networkTrace/start)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1327,6 +1585,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Start capturing network packets for the site.
+        ///
+        /// WebAppsStartWebSiteNetworkTraceOperation (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/networkTrace/startOperation)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1339,6 +1599,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Stop ongoing capturing network packets for the site.
+        ///
+        /// WebAppsStopWebSiteNetworkTrace (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/networkTrace/stop)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1348,6 +1610,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets a named operation for a network trace capturing (or deployment slot, if specified).
+        ///
+        /// WebAppsGetNetworkTraces (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/networkTrace/{operationId})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1358,6 +1622,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets a named operation for a network trace capturing (or deployment slot, if specified).
+        ///
+        /// WebAppsGetNetworkTraceOperationV2 (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/networkTraces/current/operationresults/{operationId})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1368,6 +1634,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets a named operation for a network trace capturing (or deployment slot, if specified).
+        ///
+        /// WebAppsGetNetworkTracesV2 (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/networkTraces/{operationId})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1378,6 +1646,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Generates a new publishing password for an app (or deployment slot, if specified).
+        ///
+        /// WebAppsGenerateNewSitePublishingPassword (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/newpassword)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1387,6 +1657,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets perfmon counters for web app.
+        ///
+        /// WebAppsListPerfMonCounters (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/perfcounters)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1397,6 +1669,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets web app's event logs.
+        ///
+        /// WebAppsGetSitePhpErrorLogFlag (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/phplogging)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1406,6 +1680,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets the premier add-ons of an app.
+        ///
+        /// WebAppsListPremierAddOns (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/premieraddons)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1415,6 +1691,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets a named add-on of an app.
+        ///
+        /// WebAppsGetPremierAddOn (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/premieraddons/{premierAddOnName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1425,6 +1703,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Updates a named add-on of an app.
+        ///
+        /// WebAppsAddPremierAddOn (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/premieraddons/{premierAddOnName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1437,6 +1717,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Delete a premier add-on from an app.
+        ///
+        /// WebAppsDeletePremierAddOn (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/premieraddons/{premierAddOnName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1447,6 +1729,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Updates a named add-on of an app.
+        ///
+        /// WebAppsUpdatePremierAddOn (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/premieraddons/{premierAddOnName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1459,6 +1743,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets data around private site access enablement and authorized Virtual Networks that can access the site.
+        ///
+        /// WebAppsGetPrivateAccess (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/privateAccess/virtualNetworks)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1468,6 +1754,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Sets data around private site access enablement and authorized Virtual Networks that can access the site.
+        ///
+        /// WebAppsPutPrivateAccessVnet (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/privateAccess/virtualNetworks)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1479,6 +1767,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets the list of private endpoint connections associated with a site
+        ///
+        /// WebAppsGetPrivateEndpointConnectionList (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/privateEndpointConnections)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1488,6 +1778,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets a private endpoint connection
+        ///
+        /// WebAppsGetPrivateEndpointConnection (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/privateEndpointConnections/{privateEndpointConnectionName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1498,6 +1790,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Approves or rejects a private endpoint connection
+        ///
+        /// WebAppsApproveOrRejectPrivateEndpointConnection (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/privateEndpointConnections/{privateEndpointConnectionName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1510,6 +1804,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Deletes a private endpoint connection
+        ///
+        /// WebAppsDeletePrivateEndpointConnection (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/privateEndpointConnections/{privateEndpointConnectionName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1520,6 +1816,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets the private link resources
+        ///
+        /// WebAppsGetPrivateLinkResources (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/privateLinkResources)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1529,6 +1827,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Get list of processes for a web site, or a deployment slot, or for a specific scaled-out instance in a web site.
+        ///
+        /// WebAppsListProcesses (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/processes)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1538,6 +1838,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Get process information by its ID for a specific scaled-out instance in a web site.
+        ///
+        /// WebAppsGetProcess (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/processes/{processId})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1548,6 +1850,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Terminate a process by its ID for a web site, or a deployment slot, or specific scaled-out instance in a web site.
+        ///
+        /// WebAppsDeleteProcess (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/processes/{processId})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1558,6 +1862,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Get a memory dump of a process by its ID for a specific scaled-out instance in a web site.
+        ///
+        /// WebAppsGetProcessDump (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/processes/{processId}/dump)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1568,6 +1874,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// List module information for a process by its ID for a specific scaled-out instance in a web site.
+        ///
+        /// WebAppsListProcessModules (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/processes/{processId}/modules)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1578,6 +1886,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Get process information by its ID for a specific scaled-out instance in a web site.
+        ///
+        /// WebAppsGetProcessModule (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/processes/{processId}/modules/{baseAddress})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1589,6 +1899,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// List the threads in a process by its ID for a specific scaled-out instance in a web site.
+        ///
+        /// WebAppsListProcessThreads (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/processes/{processId}/threads)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1599,6 +1911,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Get public certificates for an app or a deployment slot.
+        ///
+        /// WebAppsListPublicCertificates (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/publicCertificates)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1608,6 +1922,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Get the named public certificate for an app (or deployment slot, if specified).
+        ///
+        /// WebAppsGetPublicCertificate (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/publicCertificates/{publicCertificateName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1618,6 +1934,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Creates a hostname binding for an app.
+        ///
+        /// WebAppsCreateOrUpdatePublicCertificate (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/publicCertificates/{publicCertificateName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1630,6 +1948,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Deletes a hostname binding for an app.
+        ///
+        /// WebAppsDeletePublicCertificate (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/publicCertificates/{publicCertificateName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1640,6 +1960,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets the publishing profile for an app (or deployment slot, if specified).
+        ///
+        /// WebAppsListPublishingProfileXmlWithSecrets (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/publishxml)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1651,6 +1973,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Resets the configuration settings of the current slot if they were previously modified by calling the API with POST.
+        ///
+        /// WebAppsResetProductionSlotConfig (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/resetSlotConfig)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1660,6 +1984,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Restarts an app (or deployment slot, if specified).
+        ///
+        /// WebAppsRestart (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/restart)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1671,6 +1997,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Restores an app from a backup blob in Azure Storage.
+        ///
+        /// WebAppsRestoreFromBackupBlob (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/restoreFromBackupBlob)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1682,6 +2010,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Restores a deleted web app to this web app.
+        ///
+        /// WebAppsRestoreFromDeletedApp (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/restoreFromDeletedApp)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1693,6 +2023,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Restores a web app from a snapshot.
+        ///
+        /// WebAppsRestoreSnapshot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/restoreSnapshot)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1704,6 +2036,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Get list of siteextensions for a web site, or a deployment slot.
+        ///
+        /// WebAppsListSiteExtensions (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/siteextensions)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1713,6 +2047,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Get site extension information by its ID for a web site, or a deployment slot.
+        ///
+        /// WebAppsGetSiteExtension (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/siteextensions/{siteExtensionId})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1723,6 +2059,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Install site extension on a web site, or a deployment slot.
+        ///
+        /// WebAppsInstallSiteExtension (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/siteextensions/{siteExtensionId})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1733,6 +2071,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Remove a site extension from a web site, or a deployment slot.
+        ///
+        /// WebAppsDeleteSiteExtension (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/siteextensions/{siteExtensionId})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1743,6 +2083,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets an app's deployment slots.
+        ///
+        /// WebAppsListSlots (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1752,6 +2094,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets the details of a web, mobile, or API app.
+        ///
+        /// WebAppsGetSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1762,6 +2106,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Creates a new web, mobile, or API app in an existing resource group, or updates an existing app.
+        ///
+        /// WebAppsCreateOrUpdateSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1774,6 +2120,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Deletes a web, mobile, or API app, or one of the deployment slots.
+        ///
+        /// WebAppsDeleteSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1786,6 +2134,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Creates a new web, mobile, or API app in an existing resource group, or updates an existing app.
+        ///
+        /// WebAppsUpdateSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1798,6 +2148,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Analyze a custom hostname.
+        ///
+        /// WebAppsAnalyzeCustomHostnameSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/analyzeCustomHostname)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1809,6 +2161,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Applies the configuration settings from the target slot onto the current slot.
+        ///
+        /// WebAppsApplySlotConfigurationSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/applySlotConfig)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1821,6 +2175,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Creates a backup of an app.
+        ///
+        /// WebAppsBackupSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/backup)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1833,6 +2189,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets existing backups of an app.
+        ///
+        /// WebAppsListBackupsSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/backups)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1843,6 +2201,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets a backup of an app by its ID.
+        ///
+        /// WebAppsGetBackupStatusSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/backups/{backupId})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1854,6 +2214,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Deletes a backup of an app by its ID.
+        ///
+        /// WebAppsDeleteBackupSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/backups/{backupId})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1865,6 +2227,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets status of a web app backup that may be in progress, including secrets associated with the backup, such as the Azure Storage SAS URL. Also can be used to update the SAS URL for the backup if a new URL is passed in the request body.
+        ///
+        /// WebAppsListBackupStatusSecretsSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/backups/{backupId}/list)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1878,6 +2242,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Restores a specific backup to another app (or deployment slot, if specified).
+        ///
+        /// WebAppsRestoreSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/backups/{backupId}/restore)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1891,6 +2257,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Returns whether Scm basic auth is allowed and whether Ftp is allowed for a given site.
+        ///
+        /// WebAppsListBasicPublishingCredentialsPoliciesSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/basicPublishingCredentialsPolicies)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1901,6 +2269,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Returns whether FTP is allowed on the site or not.
+        ///
+        /// WebAppsGetFtpAllowedSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/basicPublishingCredentialsPolicies/ftp)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1911,6 +2281,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Updates whether FTP is allowed on the site or not.
+        ///
+        /// WebAppsUpdateFtpAllowedSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/basicPublishingCredentialsPolicies/ftp)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1923,6 +2295,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Returns whether Scm basic auth is allowed on the site or not.
+        ///
+        /// WebAppsGetScmAllowedSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/basicPublishingCredentialsPolicies/scm)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1933,6 +2307,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Updates whether user publishing credentials are allowed on the site or not.
+        ///
+        /// WebAppsUpdateScmAllowedSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/basicPublishingCredentialsPolicies/scm)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1945,6 +2321,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// List the configurations of an app
+        ///
+        /// WebAppsListConfigurationsSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1955,6 +2333,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Replaces the application settings of an app.
+        ///
+        /// WebAppsUpdateApplicationSettingsSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/appsettings)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1967,6 +2347,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets the application settings of an app.
+        ///
+        /// WebAppsListApplicationSettingsSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/appsettings/list)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1977,6 +2359,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Updates the Authentication / Authorization settings associated with web app.
+        ///
+        /// WebAppsUpdateAuthSettingsSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/authsettings)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1989,6 +2373,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets the Authentication/Authorization settings of an app.
+        ///
+        /// WebAppsGetAuthSettingsSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/authsettings/list)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -1999,6 +2385,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Updates site's Authentication / Authorization settings for apps via the V2 format
+        ///
+        /// WebAppsUpdateAuthSettingsV2Slot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/authsettingsV2)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2011,6 +2399,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets site's Authentication / Authorization settings for apps via the V2 format
+        ///
+        /// WebAppsGetAuthSettingsV2Slot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/authsettingsV2/list)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2021,6 +2411,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Updates the Azure storage account configurations of an app.
+        ///
+        /// WebAppsUpdateAzureStorageAccountsSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/azurestorageaccounts)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2033,6 +2425,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets the Azure storage account configurations of an app.
+        ///
+        /// WebAppsListAzureStorageAccountsSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/azurestorageaccounts/list)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2043,6 +2437,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Updates the backup configuration of an app.
+        ///
+        /// WebAppsUpdateBackupConfigurationSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/backup)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2055,6 +2451,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Deletes the backup configuration of an app.
+        ///
+        /// WebAppsDeleteBackupConfigurationSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/backup)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2065,6 +2463,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets the backup configuration of an app.
+        ///
+        /// WebAppsGetBackupConfigurationSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/backup/list)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2075,6 +2475,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets the config reference app settings and status of an app
+        ///
+        /// WebAppsGetAppSettingsKeyVaultReferencesSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/configreferences/appsettings)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2085,6 +2487,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets the config reference and status of an app
+        ///
+        /// WebAppsGetAppSettingKeyVaultReferenceSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/configreferences/appsettings/{appSettingKey})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2096,6 +2500,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets the config reference app settings and status of an app
+        ///
+        /// WebAppsGetSiteConnectionStringKeyVaultReferencesSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/configreferences/connectionstrings)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2106,6 +2512,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets the config reference and status of an app
+        ///
+        /// WebAppsGetSiteConnectionStringKeyVaultReferenceSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/configreferences/connectionstrings/{connectionStringKey})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2117,6 +2525,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Replaces the connection strings of an app.
+        ///
+        /// WebAppsUpdateConnectionStringsSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/connectionstrings)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2129,6 +2539,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets the connection strings of an app.
+        ///
+        /// WebAppsListConnectionStringsSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/connectionstrings/list)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2139,6 +2551,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets the logging configuration of an app.
+        ///
+        /// WebAppsGetDiagnosticLogsConfigurationSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/logs)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2149,6 +2563,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Updates the logging configuration of an app.
+        ///
+        /// WebAppsUpdateDiagnosticLogsConfigSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/logs)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2161,6 +2577,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Replaces the metadata of an app.
+        ///
+        /// WebAppsUpdateMetadataSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/metadata)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2173,6 +2591,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets the metadata of an app.
+        ///
+        /// WebAppsListMetadataSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/metadata/list)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2183,6 +2603,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets the Git/FTP publishing credentials of an app.
+        ///
+        /// WebAppsListPublishingCredentialsSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/publishingcredentials/list)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2193,6 +2615,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Updates the Push settings associated with web app.
+        ///
+        /// WebAppsUpdateSitePushSettingsSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/pushsettings)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2205,6 +2629,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets the Push settings associated with web app.
+        ///
+        /// WebAppsListSitePushSettingsSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/pushsettings/list)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2215,6 +2641,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets the configuration of an app, such as platform version and bitness, default documents, virtual applications, Always On, etc.
+        ///
+        /// WebAppsGetConfigurationSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2225,6 +2653,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Updates the configuration of an app.
+        ///
+        /// WebAppsCreateOrUpdateConfigurationSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2237,6 +2667,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Updates the configuration of an app.
+        ///
+        /// WebAppsUpdateConfigurationSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2249,6 +2681,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets a list of web app configuration snapshots identifiers. Each element of the list contains a timestamp and the ID of the snapshot.
+        ///
+        /// WebAppsListConfigurationSnapshotInfoSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web/snapshots)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2259,6 +2693,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets a snapshot of the configuration of an app at a previous point in time.
+        ///
+        /// WebAppsGetConfigurationSnapshotSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web/snapshots/{snapshotId})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2270,6 +2706,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Reverts the configuration of an app to a previous snapshot.
+        ///
+        /// WebAppsRecoverSiteConfigurationSnapshotSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web/snapshots/{snapshotId}/recover)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2281,6 +2719,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets the last lines of docker logs for the given site
+        ///
+        /// WebAppsGetWebSiteContainerLogsSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/containerlogs)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2291,6 +2731,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets the ZIP archived docker log files for the given site
+        ///
+        /// WebAppsGetContainerLogsZipSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/containerlogs/zip/download)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2301,6 +2743,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// List continuous web jobs for an app, or a deployment slot.
+        ///
+        /// WebAppsListContinuousWebJobsSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/continuouswebjobs)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2311,6 +2755,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets a continuous web job by its ID for an app, or a deployment slot.
+        ///
+        /// WebAppsGetContinuousWebJobSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/continuouswebjobs/{webJobName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2322,6 +2768,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Delete a continuous web job by its ID for an app, or a deployment slot.
+        ///
+        /// WebAppsDeleteContinuousWebJobSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/continuouswebjobs/{webJobName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2333,6 +2781,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Start a continuous web job for an app, or a deployment slot.
+        ///
+        /// WebAppsStartContinuousWebJobSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/continuouswebjobs/{webJobName}/start)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2344,6 +2794,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Stop a continuous web job for an app, or a deployment slot.
+        ///
+        /// WebAppsStopContinuousWebJobSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/continuouswebjobs/{webJobName}/stop)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2355,6 +2807,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// List deployments for an app, or a deployment slot.
+        ///
+        /// WebAppsListDeploymentsSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/deployments)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2365,6 +2819,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Get a deployment by its ID for an app, or a deployment slot.
+        ///
+        /// WebAppsGetDeploymentSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/deployments/{id})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2376,6 +2832,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Create a deployment for an app, or a deployment slot.
+        ///
+        /// WebAppsCreateDeploymentSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/deployments/{id})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2389,6 +2847,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Delete a deployment by its ID for an app, or a deployment slot.
+        ///
+        /// WebAppsDeleteDeploymentSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/deployments/{id})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2400,6 +2860,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// List deployment log for specific deployment for an app, or a deployment slot.
+        ///
+        /// WebAppsListDeploymentLogSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/deployments/{id}/log)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2411,6 +2873,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Discovers an existing app backup that can be restored from a blob in Azure storage. Use this to get information about the databases stored in a backup.
+        ///
+        /// WebAppsDiscoverBackupSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/discoverbackup)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2423,6 +2887,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Lists ownership identifiers for domain associated with web app.
+        ///
+        /// WebAppsListDomainOwnershipIdentifiersSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/domainOwnershipIdentifiers)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2433,6 +2899,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Get domain ownership identifier for web app.
+        ///
+        /// WebAppsGetDomainOwnershipIdentifierSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/domainOwnershipIdentifiers/{domainOwnershipIdentifierName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2444,6 +2912,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Creates a domain ownership identifier for web app, or updates an existing ownership identifier.
+        ///
+        /// WebAppsCreateOrUpdateDomainOwnershipIdentifierSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/domainOwnershipIdentifiers/{domainOwnershipIdentifierName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2457,6 +2927,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Deletes a domain ownership identifier for a web app.
+        ///
+        /// WebAppsDeleteDomainOwnershipIdentifierSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/domainOwnershipIdentifiers/{domainOwnershipIdentifierName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2468,6 +2940,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Creates a domain ownership identifier for web app, or updates an existing ownership identifier.
+        ///
+        /// WebAppsUpdateDomainOwnershipIdentifierSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/domainOwnershipIdentifiers/{domainOwnershipIdentifierName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2481,6 +2955,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Get the status of the last MSDeploy operation.
+        ///
+        /// WebAppsGetMSDeployStatusSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/extensions/MSDeploy)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2491,6 +2967,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Invoke the MSDeploy web app extension.
+        ///
+        /// WebAppsCreateMSDeployOperationSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/extensions/MSDeploy)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2503,6 +2981,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Get the MSDeploy Log for the last MSDeploy operation.
+        ///
+        /// WebAppsGetMSDeployLogSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/extensions/MSDeploy/log)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2513,6 +2993,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// List the functions for a web site, or a deployment slot.
+        ///
+        /// WebAppsListInstanceFunctionsSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2523,6 +3005,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Fetch a short lived token that can be exchanged for a master key.
+        ///
+        /// WebAppsGetFunctionsAdminTokenSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions/admin/token)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2533,6 +3017,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Get function information by its ID for web site, or a deployment slot.
+        ///
+        /// WebAppsGetInstanceFunctionSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions/{functionName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2544,6 +3030,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Create function for web site, or a deployment slot.
+        ///
+        /// WebAppsCreateInstanceFunctionSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions/{functionName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2557,6 +3045,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Delete a function for web site, or a deployment slot.
+        ///
+        /// WebAppsDeleteInstanceFunctionSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions/{functionName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2568,6 +3058,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Add or update a function secret.
+        ///
+        /// WebAppsCreateOrUpdateFunctionSecretSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions/{functionName}/keys/{keyName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2582,6 +3074,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Delete a function secret.
+        ///
+        /// WebAppsDeleteFunctionSecretSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions/{functionName}/keys/{keyName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2594,6 +3088,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Get function keys for a function in a web site, or a deployment slot.
+        ///
+        /// WebAppsListFunctionKeysSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions/{functionName}/listkeys)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2605,6 +3101,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Get function secrets for a function in a web site, or a deployment slot.
+        ///
+        /// WebAppsListFunctionSecretsSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions/{functionName}/listsecrets)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2616,6 +3114,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Get host secrets for a function app.
+        ///
+        /// WebAppsListHostKeysSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/host/default/listkeys)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2626,6 +3126,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// This is to allow calling via powershell and ARM template.
+        ///
+        /// WebAppsListSyncStatusSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/host/default/listsyncstatus)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2636,6 +3138,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Syncs function trigger metadata to the management database
+        ///
+        /// WebAppsSyncFunctionsSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/host/default/sync)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2646,6 +3150,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Add or update a host level secret.
+        ///
+        /// WebAppsCreateOrUpdateHostSecretSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/host/default/{keyType}/{keyName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2660,6 +3166,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Delete a host level secret.
+        ///
+        /// WebAppsDeleteHostSecretSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/host/default/{keyType}/{keyName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2672,6 +3180,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Get hostname bindings for an app or a deployment slot.
+        ///
+        /// WebAppsListHostNameBindingsSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hostNameBindings)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2682,6 +3192,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Get the named hostname binding for an app (or deployment slot, if specified).
+        ///
+        /// WebAppsGetHostNameBindingSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hostNameBindings/{hostName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2693,6 +3205,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Creates a hostname binding for an app.
+        ///
+        /// WebAppsCreateOrUpdateHostNameBindingSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hostNameBindings/{hostName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2706,6 +3220,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Deletes a hostname binding for an app.
+        ///
+        /// WebAppsDeleteHostNameBindingSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hostNameBindings/{hostName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2717,6 +3233,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Retrieves a specific Service Bus Hybrid Connection used by this Web App.
+        ///
+        /// WebAppsGetHybridConnectionSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2729,6 +3247,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Creates a new Hybrid Connection using a Service Bus relay.
+        ///
+        /// WebAppsCreateOrUpdateHybridConnectionSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2743,6 +3263,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Removes a Hybrid Connection from this site.
+        ///
+        /// WebAppsDeleteHybridConnectionSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2755,6 +3277,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Creates a new Hybrid Connection using a Service Bus relay.
+        ///
+        /// WebAppsUpdateHybridConnectionSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2769,6 +3293,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Retrieves all Service Bus Hybrid Connections used by this Web App.
+        ///
+        /// WebAppsListHybridConnectionsSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridConnectionRelays)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2779,6 +3305,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets hybrid connections configured for an app (or deployment slot, if specified).
+        ///
+        /// WebAppsListRelayServiceConnectionsSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridconnection)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2789,6 +3317,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets a hybrid connection configuration by its name.
+        ///
+        /// WebAppsGetRelayServiceConnectionSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridconnection/{entityName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2800,6 +3330,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Creates a new hybrid connection configuration (PUT), or updates an existing one (PATCH).
+        ///
+        /// WebAppsCreateOrUpdateRelayServiceConnectionSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridconnection/{entityName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2813,6 +3345,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Deletes a relay service connection by its name.
+        ///
+        /// WebAppsDeleteRelayServiceConnectionSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridconnection/{entityName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2824,6 +3358,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Creates a new hybrid connection configuration (PUT), or updates an existing one (PATCH).
+        ///
+        /// WebAppsUpdateRelayServiceConnectionSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridconnection/{entityName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2837,6 +3373,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets all scale-out instances of an app.
+        ///
+        /// WebAppsListInstanceIdentifiersSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2847,6 +3385,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets all scale-out instances of an app.
+        ///
+        /// WebAppsGetInstanceInfoSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2858,6 +3398,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Get the status of the last MSDeploy operation.
+        ///
+        /// WebAppsGetInstanceMsDeployStatusSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}/extensions/MSDeploy)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2869,6 +3411,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Invoke the MSDeploy web app extension.
+        ///
+        /// WebAppsCreateInstanceMSDeployOperationSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}/extensions/MSDeploy)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2882,6 +3426,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Get the MSDeploy Log for the last MSDeploy operation.
+        ///
+        /// WebAppsGetInstanceMSDeployLogSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}/extensions/MSDeploy/log)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2893,6 +3439,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Get list of processes for a web site, or a deployment slot, or for a specific scaled-out instance in a web site.
+        ///
+        /// WebAppsListInstanceProcessesSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}/processes)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2904,6 +3452,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Get process information by its ID for a specific scaled-out instance in a web site.
+        ///
+        /// WebAppsGetInstanceProcessSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}/processes/{processId})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2916,6 +3466,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Terminate a process by its ID for a web site, or a deployment slot, or specific scaled-out instance in a web site.
+        ///
+        /// WebAppsDeleteInstanceProcessSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}/processes/{processId})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2928,6 +3480,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Get a memory dump of a process by its ID for a specific scaled-out instance in a web site.
+        ///
+        /// WebAppsGetInstanceProcessDumpSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}/processes/{processId}/dump)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2940,6 +3494,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// List module information for a process by its ID for a specific scaled-out instance in a web site.
+        ///
+        /// WebAppsListInstanceProcessModulesSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}/processes/{processId}/modules)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2952,6 +3508,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Get process information by its ID for a specific scaled-out instance in a web site.
+        ///
+        /// WebAppsGetInstanceProcessModuleSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}/processes/{processId}/modules/{baseAddress})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2965,6 +3523,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// List the threads in a process by its ID for a specific scaled-out instance in a web site.
+        ///
+        /// WebAppsListInstanceProcessThreadsSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}/processes/{processId}/threads)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2977,6 +3537,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Shows whether an app can be cloned to another resource group or subscription.
+        ///
+        /// WebAppsIsCloneableSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/iscloneable)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2987,6 +3549,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets existing backups of an app.
+        ///
+        /// WebAppsListSiteBackupsSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/listbackups)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -2997,6 +3561,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// This is to allow calling via powershell and ARM template.
+        ///
+        /// WebAppsListSyncFunctionTriggersSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/listsyncfunctiontriggerstatus)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3007,6 +3573,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Returns the status of MySql in app migration, if one is active, and whether or not MySql in app is enabled
+        ///
+        /// WebAppsGetMigrateMySqlStatusSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/migratemysql/status)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3017,6 +3585,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets a Swift Virtual Network connection.
+        ///
+        /// WebAppsGetSwiftVirtualNetworkConnectionSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/networkConfig/virtualNetwork)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3027,6 +3597,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Integrates this Web App with a Virtual Network. This requires that 1) "swiftSupported" is true when doing a GET against this resource, and 2) that the target Subnet has already been delegated, and is notin use by another App Service Plan other than the one this App is in.
+        ///
+        /// WebAppsCreateOrUpdateSwiftVirtualNetworkConnectionWithCheckSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/networkConfig/virtualNetwork)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3039,6 +3611,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Deletes a Swift Virtual Network connection from an app (or deployment slot).
+        ///
+        /// WebAppsDeleteSwiftVirtualNetworkSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/networkConfig/virtualNetwork)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3049,6 +3623,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Integrates this Web App with a Virtual Network. This requires that 1) "swiftSupported" is true when doing a GET against this resource, and 2) that the target Subnet has already been delegated, and is notin use by another App Service Plan other than the one this App is in.
+        ///
+        /// WebAppsUpdateSwiftVirtualNetworkConnectionWithCheckSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/networkConfig/virtualNetwork)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3061,6 +3637,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets all network features used by the app (or deployment slot, if specified).
+        ///
+        /// WebAppsListNetworkFeaturesSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/networkFeatures/{view})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3072,6 +3650,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets a named operation for a network trace capturing (or deployment slot, if specified).
+        ///
+        /// WebAppsGetNetworkTraceOperationSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/networkTrace/operationresults/{operationId})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3083,6 +3663,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Start capturing network packets for the site (To be deprecated).
+        ///
+        /// WebAppsStartWebSiteNetworkTraceSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/networkTrace/start)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3096,6 +3678,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Start capturing network packets for the site.
+        ///
+        /// WebAppsStartWebSiteNetworkTraceOperationSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/networkTrace/startOperation)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3109,6 +3693,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Stop ongoing capturing network packets for the site.
+        ///
+        /// WebAppsStopWebSiteNetworkTraceSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/networkTrace/stop)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3119,6 +3705,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets a named operation for a network trace capturing (or deployment slot, if specified).
+        ///
+        /// WebAppsGetNetworkTracesSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/networkTrace/{operationId})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3130,6 +3718,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets a named operation for a network trace capturing (or deployment slot, if specified).
+        ///
+        /// WebAppsGetNetworkTraceOperationSlotV2 (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/networkTraces/current/operationresults/{operationId})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3141,6 +3731,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets a named operation for a network trace capturing (or deployment slot, if specified).
+        ///
+        /// WebAppsGetNetworkTracesSlotV2 (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/networkTraces/{operationId})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3152,6 +3744,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Generates a new publishing password for an app (or deployment slot, if specified).
+        ///
+        /// WebAppsGenerateNewSitePublishingPasswordSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/newpassword)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3162,6 +3756,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets perfmon counters for web app.
+        ///
+        /// WebAppsListPerfMonCountersSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/perfcounters)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3173,6 +3769,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets web app's event logs.
+        ///
+        /// WebAppsGetSitePhpErrorLogFlagSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/phplogging)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3183,6 +3781,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets the premier add-ons of an app.
+        ///
+        /// WebAppsListPremierAddOnsSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/premieraddons)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3193,6 +3793,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets a named add-on of an app.
+        ///
+        /// WebAppsGetPremierAddOnSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/premieraddons/{premierAddOnName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3204,6 +3806,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Updates a named add-on of an app.
+        ///
+        /// WebAppsAddPremierAddOnSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/premieraddons/{premierAddOnName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3217,6 +3821,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Delete a premier add-on from an app.
+        ///
+        /// WebAppsDeletePremierAddOnSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/premieraddons/{premierAddOnName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3228,6 +3834,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Updates a named add-on of an app.
+        ///
+        /// WebAppsUpdatePremierAddOnSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/premieraddons/{premierAddOnName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3241,6 +3849,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets data around private site access enablement and authorized Virtual Networks that can access the site.
+        ///
+        /// WebAppsGetPrivateAccessSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/privateAccess/virtualNetworks)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3251,6 +3861,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Sets data around private site access enablement and authorized Virtual Networks that can access the site.
+        ///
+        /// WebAppsPutPrivateAccessVnetSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/privateAccess/virtualNetworks)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3263,6 +3875,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets the list of private endpoint connections associated with a site
+        ///
+        /// WebAppsGetPrivateEndpointConnectionListSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/privateEndpointConnections)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3273,6 +3887,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets a private endpoint connection
+        ///
+        /// WebAppsGetPrivateEndpointConnectionSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/privateEndpointConnections/{privateEndpointConnectionName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3284,6 +3900,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Approves or rejects a private endpoint connection
+        ///
+        /// WebAppsApproveOrRejectPrivateEndpointConnectionSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/privateEndpointConnections/{privateEndpointConnectionName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3297,6 +3915,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Deletes a private endpoint connection
+        ///
+        /// WebAppsDeletePrivateEndpointConnectionSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/privateEndpointConnections/{privateEndpointConnectionName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3308,6 +3928,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets the private link resources
+        ///
+        /// WebAppsGetPrivateLinkResourcesSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/privateLinkResources)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3318,6 +3940,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Get list of processes for a web site, or a deployment slot, or for a specific scaled-out instance in a web site.
+        ///
+        /// WebAppsListProcessesSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/processes)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3328,6 +3952,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Get process information by its ID for a specific scaled-out instance in a web site.
+        ///
+        /// WebAppsGetProcessSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/processes/{processId})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3339,6 +3965,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Terminate a process by its ID for a web site, or a deployment slot, or specific scaled-out instance in a web site.
+        ///
+        /// WebAppsDeleteProcessSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/processes/{processId})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3350,6 +3978,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Get a memory dump of a process by its ID for a specific scaled-out instance in a web site.
+        ///
+        /// WebAppsGetProcessDumpSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/processes/{processId}/dump)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3361,6 +3991,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// List module information for a process by its ID for a specific scaled-out instance in a web site.
+        ///
+        /// WebAppsListProcessModulesSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/processes/{processId}/modules)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3372,6 +4004,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Get process information by its ID for a specific scaled-out instance in a web site.
+        ///
+        /// WebAppsGetProcessModuleSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/processes/{processId}/modules/{baseAddress})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3384,6 +4018,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// List the threads in a process by its ID for a specific scaled-out instance in a web site.
+        ///
+        /// WebAppsListProcessThreadsSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/processes/{processId}/threads)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3395,6 +4031,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Get public certificates for an app or a deployment slot.
+        ///
+        /// WebAppsListPublicCertificatesSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/publicCertificates)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3405,6 +4043,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Get the named public certificate for an app (or deployment slot, if specified).
+        ///
+        /// WebAppsGetPublicCertificateSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/publicCertificates/{publicCertificateName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3416,6 +4056,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Creates a hostname binding for an app.
+        ///
+        /// WebAppsCreateOrUpdatePublicCertificateSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/publicCertificates/{publicCertificateName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3429,6 +4071,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Deletes a hostname binding for an app.
+        ///
+        /// WebAppsDeletePublicCertificateSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/publicCertificates/{publicCertificateName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3440,6 +4084,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets the publishing profile for an app (or deployment slot, if specified).
+        ///
+        /// WebAppsListPublishingProfileXmlWithSecretsSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/publishxml)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3452,6 +4098,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Resets the configuration settings of the current slot if they were previously modified by calling the API with POST.
+        ///
+        /// WebAppsResetSlotConfigurationSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/resetSlotConfig)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3462,6 +4110,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Restarts an app (or deployment slot, if specified).
+        ///
+        /// WebAppsRestartSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/restart)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3474,6 +4124,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Restores an app from a backup blob in Azure Storage.
+        ///
+        /// WebAppsRestoreFromBackupBlobSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/restoreFromBackupBlob)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3486,6 +4138,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Restores a deleted web app to this web app.
+        ///
+        /// WebAppsRestoreFromDeletedAppSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/restoreFromDeletedApp)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3498,6 +4152,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Restores a web app from a snapshot.
+        ///
+        /// WebAppsRestoreSnapshotSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/restoreSnapshot)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3510,6 +4166,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Get list of siteextensions for a web site, or a deployment slot.
+        ///
+        /// WebAppsListSiteExtensionsSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/siteextensions)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3520,6 +4178,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Get site extension information by its ID for a web site, or a deployment slot.
+        ///
+        /// WebAppsGetSiteExtensionSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/siteextensions/{siteExtensionId})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3531,6 +4191,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Install site extension on a web site, or a deployment slot.
+        ///
+        /// WebAppsInstallSiteExtensionSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/siteextensions/{siteExtensionId})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3542,6 +4204,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Remove a site extension from a web site, or a deployment slot.
+        ///
+        /// WebAppsDeleteSiteExtensionSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/siteextensions/{siteExtensionId})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3553,6 +4217,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Get the difference in configuration settings between two web app slots.
+        ///
+        /// WebAppsListSlotDifferencesSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/slotsdiffs)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3565,6 +4231,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Swaps two deployment slots of an app.
+        ///
+        /// WebAppsSwapSlotSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/slotsswap)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3577,6 +4245,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Returns all Snapshots to the user.
+        ///
+        /// WebAppsListSnapshotsSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/snapshots)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3587,6 +4257,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Returns all Snapshots to the user from DRSecondary endpoint.
+        ///
+        /// WebAppsListSnapshotsFromDRSecondarySlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/snapshotsdr)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3597,6 +4269,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets the source control configuration of an app.
+        ///
+        /// WebAppsGetSourceControlSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/sourcecontrols/web)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3607,6 +4281,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Updates the source control configuration of an app.
+        ///
+        /// WebAppsCreateOrUpdateSourceControlSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/sourcecontrols/web)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3619,6 +4295,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Deletes the source control configuration of an app.
+        ///
+        /// WebAppsDeleteSourceControlSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/sourcecontrols/web)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3630,6 +4308,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Updates the source control configuration of an app.
+        ///
+        /// WebAppsUpdateSourceControlSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/sourcecontrols/web)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3642,6 +4322,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Starts an app (or deployment slot, if specified).
+        ///
+        /// WebAppsStartSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/start)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3652,6 +4334,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Start capturing network packets for the site.
+        ///
+        /// WebAppsStartNetworkTraceSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/startNetworkTrace)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3665,6 +4349,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Stops an app (or deployment slot, if specified).
+        ///
+        /// WebAppsStopSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/stop)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3675,6 +4361,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Stop ongoing capturing network packets for the site.
+        ///
+        /// WebAppsStopNetworkTraceSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/stopNetworkTrace)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3685,6 +4373,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Sync web app repository.
+        ///
+        /// WebAppsSyncRepositorySlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/sync)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3695,6 +4385,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Syncs function trigger metadata to the management database
+        ///
+        /// WebAppsSyncFunctionTriggersSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/syncfunctiontriggers)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3705,6 +4397,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// List triggered web jobs for an app, or a deployment slot.
+        ///
+        /// WebAppsListTriggeredWebJobsSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/triggeredwebjobs)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3715,6 +4409,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets a triggered web job by its ID for an app, or a deployment slot.
+        ///
+        /// WebAppsGetTriggeredWebJobSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/triggeredwebjobs/{webJobName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3726,6 +4422,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Delete a triggered web job by its ID for an app, or a deployment slot.
+        ///
+        /// WebAppsDeleteTriggeredWebJobSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/triggeredwebjobs/{webJobName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3737,6 +4435,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// List a triggered web job's history for an app, or a deployment slot.
+        ///
+        /// WebAppsListTriggeredWebJobHistorySlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/triggeredwebjobs/{webJobName}/history)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3748,6 +4448,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets a triggered web job's history by its ID for an app, , or a deployment slot.
+        ///
+        /// WebAppsGetTriggeredWebJobHistorySlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/triggeredwebjobs/{webJobName}/history/{id})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3760,6 +4462,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Run a triggered web job for an app, or a deployment slot.
+        ///
+        /// WebAppsRunTriggeredWebJobSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/triggeredwebjobs/{webJobName}/run)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3771,6 +4475,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets the quota usage information of an app (or deployment slot, if specified).
+        ///
+        /// WebAppsListUsagesSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/usages)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3782,6 +4488,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets the virtual networks the app (or deployment slot) is connected to.
+        ///
+        /// WebAppsListVnetConnectionsSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3792,6 +4500,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets a virtual network the app (or deployment slot) is connected to by name.
+        ///
+        /// WebAppsGetVnetConnectionSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections/{vnetName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3803,6 +4513,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Adds a Virtual Network connection to an app or slot (PUT) or updates the connection properties (PATCH).
+        ///
+        /// WebAppsCreateOrUpdateVnetConnectionSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections/{vnetName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3816,6 +4528,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Deletes a connection from an app (or deployment slot to a named virtual network.
+        ///
+        /// WebAppsDeleteVnetConnectionSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections/{vnetName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3827,6 +4541,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Adds a Virtual Network connection to an app or slot (PUT) or updates the connection properties (PATCH).
+        ///
+        /// WebAppsUpdateVnetConnectionSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections/{vnetName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3840,6 +4556,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets an app's Virtual Network gateway.
+        ///
+        /// WebAppsGetVnetConnectionGatewaySlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3852,6 +4570,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Adds a gateway to a connected Virtual Network (PUT) or updates it (PATCH).
+        ///
+        /// WebAppsCreateOrUpdateVnetConnectionGatewaySlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3866,6 +4586,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Adds a gateway to a connected Virtual Network (PUT) or updates it (PATCH).
+        ///
+        /// WebAppsUpdateVnetConnectionGatewaySlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3880,6 +4602,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// List webjobs for an app, or a deployment slot.
+        ///
+        /// WebAppsListWebJobsSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/webjobs)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3890,6 +4614,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Get webjob information for an app, or a deployment slot.
+        ///
+        /// WebAppsGetWebJobSlot (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/webjobs/{webJobName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3901,6 +4627,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Get the difference in configuration settings between two web app slots.
+        ///
+        /// WebAppsListSlotDifferencesFromProduction (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slotsdiffs)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3912,6 +4640,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Swaps two deployment slots of an app.
+        ///
+        /// WebAppsSwapSlotWithProduction (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slotsswap)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3923,6 +4653,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Returns all Snapshots to the user.
+        ///
+        /// WebAppsListSnapshots (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/snapshots)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3932,6 +4664,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Returns all Snapshots to the user from DRSecondary endpoint.
+        ///
+        /// WebAppsListSnapshotsFromDRSecondary (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/snapshotsdr)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3941,6 +4675,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets the source control configuration of an app.
+        ///
+        /// WebAppsGetSourceControl (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/sourcecontrols/web)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3950,6 +4686,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Updates the source control configuration of an app.
+        ///
+        /// WebAppsCreateOrUpdateSourceControl (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/sourcecontrols/web)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3961,6 +4699,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Deletes the source control configuration of an app.
+        ///
+        /// WebAppsDeleteSourceControl (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/sourcecontrols/web)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3971,6 +4711,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Updates the source control configuration of an app.
+        ///
+        /// WebAppsUpdateSourceControl (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/sourcecontrols/web)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3982,6 +4724,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Starts an app (or deployment slot, if specified).
+        ///
+        /// WebAppsStart (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/start)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -3991,6 +4735,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Start capturing network packets for the site.
+        ///
+        /// WebAppsStartNetworkTrace (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/startNetworkTrace)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -4003,6 +4749,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Stops an app (or deployment slot, if specified).
+        ///
+        /// WebAppsStop (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/stop)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -4012,6 +4760,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Stop ongoing capturing network packets for the site.
+        ///
+        /// WebAppsStopNetworkTrace (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/stopNetworkTrace)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -4021,6 +4771,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Sync web app repository.
+        ///
+        /// WebAppsSyncRepository (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/sync)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -4030,6 +4782,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Syncs function trigger metadata to the management database
+        ///
+        /// WebAppsSyncFunctionTriggers (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/syncfunctiontriggers)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -4039,6 +4793,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// List triggered web jobs for an app, or a deployment slot.
+        ///
+        /// WebAppsListTriggeredWebJobs (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -4048,6 +4804,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets a triggered web job by its ID for an app, or a deployment slot.
+        ///
+        /// WebAppsGetTriggeredWebJob (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -4058,6 +4816,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Delete a triggered web job by its ID for an app, or a deployment slot.
+        ///
+        /// WebAppsDeleteTriggeredWebJob (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -4068,6 +4828,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// List a triggered web job's history for an app, or a deployment slot.
+        ///
+        /// WebAppsListTriggeredWebJobHistory (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}/history)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -4078,6 +4840,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets a triggered web job's history by its ID for an app, , or a deployment slot.
+        ///
+        /// WebAppsGetTriggeredWebJobHistory (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}/history/{id})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -4089,6 +4853,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Run a triggered web job for an app, or a deployment slot.
+        ///
+        /// WebAppsRunTriggeredWebJob (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}/run)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -4099,6 +4865,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets the quota usage information of an app (or deployment slot, if specified).
+        ///
+        /// WebAppsListUsages (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/usages)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -4109,6 +4877,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets the virtual networks the app (or deployment slot) is connected to.
+        ///
+        /// WebAppsListVnetConnections (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -4118,6 +4888,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets a virtual network the app (or deployment slot) is connected to by name.
+        ///
+        /// WebAppsGetVnetConnection (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -4128,6 +4900,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Adds a Virtual Network connection to an app or slot (PUT) or updates the connection properties (PATCH).
+        ///
+        /// WebAppsCreateOrUpdateVnetConnection (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -4140,6 +4914,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Deletes a connection from an app (or deployment slot to a named virtual network.
+        ///
+        /// WebAppsDeleteVnetConnection (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -4150,6 +4926,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Adds a Virtual Network connection to an app or slot (PUT) or updates the connection properties (PATCH).
+        ///
+        /// WebAppsUpdateVnetConnection (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -4162,6 +4940,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Gets an app's Virtual Network gateway.
+        ///
+        /// WebAppsGetVnetConnectionGateway (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -4173,6 +4953,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Adds a gateway to a connected Virtual Network (PUT) or updates it (PATCH).
+        ///
+        /// WebAppsCreateOrUpdateVnetConnectionGateway (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -4186,6 +4968,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Adds a gateway to a connected Virtual Network (PUT) or updates it (PATCH).
+        ///
+        /// WebAppsUpdateVnetConnectionGateway (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -4199,6 +4983,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// List webjobs for an app, or a deployment slot.
+        ///
+        /// WebAppsListWebJobs (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/webjobs)
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>
@@ -4208,6 +4994,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 
         /// <summary>
         /// Get webjob information for an app, or a deployment slot.
+        ///
+        /// WebAppsGetWebJob (/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/webjobs/{webJobName})
         /// </summary>
         /// <param name="subscriptionId">Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000).</param>
         /// <param name="resourceGroupName">Name of the resource group to which the resource belongs.</param>

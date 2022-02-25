@@ -45,13 +45,11 @@ internal class InterfaceMapper : BaseMapper
             var header = security.Definitions.FirstOrDefault(sd => sd.Type == SecurityDefinitionType.Header);
             var query = security.Definitions.FirstOrDefault(sd => sd.Type == SecurityDefinitionType.Query);
 
-            if (header != null &&
-                Settings.PreferredSecurityDefinitionType is SecurityDefinitionType.Automatic or SecurityDefinitionType.Header)
+            if (header != null && Settings.PreferredSecurityDefinitionType is SecurityDefinitionType.Automatic or SecurityDefinitionType.Header)
             {
                 @interface.VariableHeaders.Add(new RestEaseInterfaceHeader(header.IdentifierName, header.Name));
             }
-            else if (query != null &&
-                     (Settings.PreferredSecurityDefinitionType == SecurityDefinitionType.Automatic || Settings.PreferredSecurityDefinitionType == SecurityDefinitionType.Query))
+            else if (query != null && (Settings.PreferredSecurityDefinitionType == SecurityDefinitionType.Automatic || Settings.PreferredSecurityDefinitionType == SecurityDefinitionType.Query))
             {
                 @interface.ConstantQueryParameters.Add(new RestEaseInterfaceQueryParameter
                 {
@@ -201,7 +199,8 @@ internal class InterfaceMapper : BaseMapper
         var method = new RestEaseInterfaceMethodDetails
         {
             Headers = headers,
-            Summary = operation.Summary ?? $"{methodRestEaseMethodName} ({path})",
+            Summary = operation.Summary ?? operation.Description,
+            Path = $"{methodRestEaseMethodName} ({path})",
             SummaryParameters = methodParameterList.Select(mp => new RestEaseSummaryParameter
             {
                 ValidIdentifier = mp.ValidIdentifier,
@@ -778,7 +777,7 @@ internal class InterfaceMapper : BaseMapper
             ValidIdentifier = identifier,
             SchemaType = schema.GetSchemaType(),
             SchemaFormat = schema.GetSchemaFormat(),
-            IdentifierWithType = identifierWithType, // 
+            IdentifierWithType = identifierWithType,
             IdentifierRestEasePrefix = $"[{restEaseParameterAnnotation}{extraAttributesBetweenParentheses}]",
             IsNullPostfix = isNullPostfix,
             Summary = description

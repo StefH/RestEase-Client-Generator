@@ -65,7 +65,13 @@ internal class InterfaceBuilder : BaseBuilder
             string asyncPostfix = Settings.AppendAsync ? "Async" : string.Empty;
 
             builder.AppendLine("        /// <summary>");
-            builder.AppendLine($"        /// {method.Summary.StripHtml()}");
+            if (method.Summary != null)
+            {
+                builder.AppendLine($"        /// {method.Summary.StripHtml()}");
+                builder.AppendLine("        ///");
+            }
+
+            builder.AppendLine($"        /// {method.Path}");
             builder.AppendLine("        /// </summary>");
             foreach (var sp in method.SummaryParameters)
             {
