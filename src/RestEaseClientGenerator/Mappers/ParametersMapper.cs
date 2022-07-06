@@ -18,11 +18,11 @@ internal class ParametersMapper : BaseMapper
         _directory = directory;
     }
 
-    public IList<OpenApiParameter> Map(OpenApiOperation operation)
+    public IReadOnlyList<OpenApiParameter> Map(IList<OpenApiParameter> parameters)
     {
-        var allOpenApiParameters = operation.Parameters.Where(p => p.Reference is null).ToList();
+        var allOpenApiParameters = parameters.Where(p => p.Reference is null).ToList();
 
-        foreach (var parameterWithReference in operation.Parameters.Where(p => p.Reference is not null))
+        foreach (var parameterWithReference in parameters.Where(p => p.Reference is not null))
         {
             var foundParameter = TryMapParameterReference(_interface, parameterWithReference.Reference, _directory);
             if (foundParameter is not null)

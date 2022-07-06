@@ -126,19 +126,24 @@ internal class InterfaceMapper : BaseMapper
 
     private void MapPath(RestEaseInterface @interface, string path, OpenApiPathItem pathItem, string? directory)
     {
-        foreach (var restEaseInterfaceMethodDetails in pathItem.Operations.Select(o => MapOperationToMappingModel(@interface, path, o.Key.ToString(), o.Value, directory)))
+        // The pathItem can also have common parameters (e.g. wiremock.org)
+        var commonParameters = new ParametersMapper(@interface, Settings, directory).Map(pathItem.Parameters);
+
+        var methodDetails = pathItem.Operations.Select(o => MapOperationToMappingModel(@interface, path, o.Key.ToString(), o.Value, commonParameters, directory));
+        foreach (var restEaseInterfaceMethodDetails in methodDetails)
         {
             @interface.Methods.Add(restEaseInterfaceMethodDetails);
         }
     }
 
-    private RestEaseInterfaceMethodDetails MapOperationToMappingModel(RestEaseInterface @interface, string path, string httpMethod, OpenApiOperation operation, string? directory)
+    private RestEaseInterfaceMethodDetails MapOperationToMappingModel(RestEaseInterface @interface, string path, string httpMethod, OpenApiOperation operation, IReadOnlyList<OpenApiParameter> commonParameters, string? directory)
     {
         string methodRestEaseForAnnotation = httpMethod.ToPascalCase();
 
         string methodRestEaseMethodName = GeneratedRestEaseMethodName(path, operation, methodRestEaseForAnnotation);
 
-        var parameters = new ParametersMapper(@interface, Settings, directory).Map(operation);
+        var parametersFromOperation = new ParametersMapper(@interface, Settings, directory).Map(operation.Parameters);
+        var parameters = parametersFromOperation.Union(commonParameters).Distinct().ToList();
 
         var headerParameterList = parameters
             .Where(p => p.In == ParameterLocation.Header && p.Schema.GetSchemaType() != SchemaType.Object)

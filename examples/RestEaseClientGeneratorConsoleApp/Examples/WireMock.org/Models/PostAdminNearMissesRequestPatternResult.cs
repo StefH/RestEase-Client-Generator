@@ -5,6 +5,6 @@ namespace WireMockOrg.Models
 {
     public class PostAdminNearMissesRequestPatternResult
     {
-        public object[] NearMisses { get; set; }
+        public NearMisses NearMisses { get; set; }
     }
 }
