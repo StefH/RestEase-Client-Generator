@@ -6,6 +6,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Examples\WireMock.org\Models\**" />
+    <EmbeddedResource Remove="Examples\WireMock.org\Models\**" />
+    <None Remove="Examples\WireMock.org\Models\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Examples\drc-swagger.json" />
     <None Remove="Examples\drc.json" />
   </ItemGroup>
@@ -31,8 +37,8 @@
     <Folder Include="Examples\SharedQuery\Models\" />
     <Folder Include="Examples\SpeechServices\Api\" />
     <Folder Include="Examples\SpeechServices\Models\" />
-    <Folder Include="Examples\WireMock.org\Api\" />
-    <Folder Include="Examples\WireMock.org\Models\" />
+    <Folder Include="Examples\WireMock.org\Abstractions\" />
+    <Folder Include="Examples\WireMock.org\RestClient\" />
     <Folder Include="Examples\wpraml\Api\" />
     <Folder Include="Examples\wpraml\Models\" />
   </ItemGroup>

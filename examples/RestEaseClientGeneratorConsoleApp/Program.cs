@@ -15,8 +15,10 @@ namespace RestEaseClientGeneratorConsoleApp
 
             var wiremockOrgSettings = new GeneratorSettings
             {
-                Namespace = "WireMockOrg",
+                Namespace = "WireMock.Org",
                 ApiName = "WireMockOrg",
+                ModelsNamespace = "Abstractions",
+                ApiNamespace = "RestClient",
                 SingleFile = false
             };
             foreach (var file in generator.FromFile("Examples\\WireMock.org\\wiremock.json", wiremockOrgSettings, out OpenApiDiagnostic diagnosticWeather))
