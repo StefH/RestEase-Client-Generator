@@ -25,7 +25,7 @@ namespace RestEaseClientGeneratorConsoleApp
             //{
             //    File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Pitane/{file.Path}/{file.Name}", file.Content);
             //}
-            
+            //return;
 
             var wiremockOrgSettings = new GeneratorSettings
             {
@@ -78,6 +78,7 @@ namespace RestEaseClientGeneratorConsoleApp
             {
                 File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Jira/{file.Path}/{file.Name}", file.Content);
             }
+
             return;
 
             //var petStoreJsonSettings = new GeneratorSettings

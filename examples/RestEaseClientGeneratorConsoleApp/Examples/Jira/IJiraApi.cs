@@ -4765,7 +4765,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Api
         /// <param name="contentType">The Content-Type</param>
         /// <param name="id">The ID of the filter.</param>
         /// <param name="content"></param>
-        public static Task<Response<AnyOf<SetColumnsResult, object>>> SetColumnsAsync(this IJiraApi api, string contentType, long id, string Content)
+        public static Task<Response<AnyOf<SetColumnsResult, object>>> SetColumnsAsync(this IJiraApi api, string contentType, long id, string content)
         {
             return api.SetColumnsAsync(contentType, id, content);
         }
@@ -4788,7 +4788,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Api
         /// <param name="api">The Api</param>
         /// <param name="contentType">The Content-Type</param>
         /// <param name="content"></param>
-        public static Task<Response<AnyOf<SetIssueNavigatorDefaultColumnsResult, object>>> SetIssueNavigatorDefaultColumnsAsync(this IJiraApi api, string contentType, string Content)
+        public static Task<Response<AnyOf<SetIssueNavigatorDefaultColumnsResult, object>>> SetIssueNavigatorDefaultColumnsAsync(this IJiraApi api, string contentType, string content)
         {
             return api.SetIssueNavigatorDefaultColumnsAsync(contentType, content);
         }
@@ -4800,7 +4800,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Api
         /// <param name="contentType">The Content-Type</param>
         /// <param name="accountId">The account ID of the user, which uniquely identifies the user across all Atlassian products. For example, *5b10ac8d82e05b22cc7d4ef5*.</param>
         /// <param name="content"></param>
-        public static Task<Response<AnyOf<SetUserColumnsResult, object>>> SetUserColumnsAsync(this IJiraApi api, string contentType, string accountId, string Content)
+        public static Task<Response<AnyOf<SetUserColumnsResult, object>>> SetUserColumnsAsync(this IJiraApi api, string contentType, string accountId, string content)
         {
             return api.SetUserColumnsAsync(contentType, content, accountId);
         }
