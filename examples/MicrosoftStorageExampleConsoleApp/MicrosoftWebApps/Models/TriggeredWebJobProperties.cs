@@ -56,6 +56,6 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Models
         /// <summary>
         /// Job settings.
         /// </summary>
-        public Dictionary<string, TriggeredWebJobPropertiesSettings> TriggeredWebJobPropertiesSettings { get; set; }
+        public Dictionary<string, object> Settings { get; set; }
     }
 }

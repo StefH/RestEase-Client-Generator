@@ -11,7 +11,9 @@ using MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models;
 namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Api
 {
     /// <summary>
-    /// MicrosoftContainerInstance
+    /// Summary: MicrosoftContainerInstance
+    /// Title  : ContainerInstanceManagementClient
+    /// Version: 2021-10-01
     /// </summary>
     public interface IMicrosoftContainerInstanceApi
     {

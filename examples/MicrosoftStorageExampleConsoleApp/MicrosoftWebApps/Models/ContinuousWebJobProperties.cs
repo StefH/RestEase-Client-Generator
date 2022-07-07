@@ -56,6 +56,6 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Models
         /// <summary>
         /// Job settings.
         /// </summary>
-        public Dictionary<string, ContinuousWebJobPropertiesSettings> ContinuousWebJobPropertiesSettings { get; set; }
+        public Dictionary<string, object> Settings { get; set; }
     }
 }

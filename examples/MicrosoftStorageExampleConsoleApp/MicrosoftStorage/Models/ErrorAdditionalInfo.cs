@@ -16,6 +16,6 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Models
         /// <summary>
         /// The additional info.
         /// </summary>
-        public ErrorAdditionalInfoInfo Info { get; set; }
+        public object Info { get; set; }
     }
 }

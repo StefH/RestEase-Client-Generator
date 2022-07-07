@@ -26,7 +26,7 @@ Log.Logger = new LoggerConfiguration()
 
 await using ServiceProvider serviceProvider = RegisterServices(args);
 
-await serviceProvider.GetRequiredService<Worker>().RunAsync(CancellationToken.None);
+// await serviceProvider.GetRequiredService<Worker>().RunAsync(CancellationToken.None);
 
 static void GenerateMicrosoftStorage20210401()
 {
@@ -44,11 +44,11 @@ static void GenerateMicrosoftStorage20210401()
     const string x = @"C:\Dev\azure-rest-api-specs\specification\storage\resource-manager\Microsoft.Storage\stable\2021-04-01\storage.json";
     foreach (var file in Directory.GetFiles("../../../MicrosoftStorage/Models", "*.cs"))
     {
-        // File.Delete(file);
+        File.Delete(file);
     }
     foreach (var file in generator.FromFile(x, storageSettings, out OpenApiDiagnostic diagnosticStorage))
     {
-        // Console.WriteLine("Generating file-type '{0}': {1}\\{2}", file.FileType, file.Path, file.Name);
+        Console.WriteLine("Generating file-type '{0}': {1}\\{2}", file.FileType, file.Path, file.Name);
         File.WriteAllText($"../../../MicrosoftStorage/{file.Path}/{file.Name}", file.Content);
     }
 }
@@ -71,7 +71,7 @@ static void GenerateMicrosoftContainerInstance20211001()
 
     foreach (var file in Directory.GetFiles("../../../MicrosoftContainerInstance/Models", "*.cs"))
     {
-       // File.Delete(file);
+       File.Delete(file);
     }
     foreach (var file in generator.FromFile(x, storageSettings, out var xxxx))
     {
@@ -100,7 +100,7 @@ static void GenerateMicrosoftWebAppServicePlans()
 
     foreach (var file in Directory.GetFiles($"../../../{folder}/Models", "*.cs"))
     {
-        // File.Delete(file);
+        File.Delete(file);
     }
     foreach (var file in generator.FromFile(x, storageSettings, out var xxxx))
     {
@@ -129,7 +129,7 @@ static void GenerateMicrosoftWebApps()
 
     foreach (var file in Directory.GetFiles($"../../../{folder}/Models", "*.cs"))
     {
-        // File.Delete(file);
+        File.Delete(file);
     }
     foreach (var file in generator.FromFile(x, storageSettings, out var xxxx))
     {

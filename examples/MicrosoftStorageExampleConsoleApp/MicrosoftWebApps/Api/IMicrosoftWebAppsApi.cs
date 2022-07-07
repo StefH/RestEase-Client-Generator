@@ -11,7 +11,9 @@ using MicrosoftExampleConsoleApp.MicrosoftWebApps.Models;
 namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Api
 {
     /// <summary>
-    /// MicrosoftWebApps
+    /// Summary: MicrosoftWebApps
+    /// Title  : WebApps API Client
+    /// Version: 2021-03-01
     /// </summary>
     public interface IMicrosoftWebAppsApi
     {

@@ -46,7 +46,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Models
         /// <summary>
         /// Config information.
         /// </summary>
-        public FunctionEnvelopePropertiesConfig Config { get; set; }
+        public object Config { get; set; }
 
         /// <summary>
         /// File list.

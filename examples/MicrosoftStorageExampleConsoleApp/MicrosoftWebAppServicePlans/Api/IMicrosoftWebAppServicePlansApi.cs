@@ -11,7 +11,9 @@ using MicrosoftExampleConsoleApp.MicrosoftWebAppServicePlans.Models;
 namespace MicrosoftExampleConsoleApp.MicrosoftWebAppServicePlans.Api
 {
     /// <summary>
-    /// MicrosoftWebAppServicePlans
+    /// Summary: MicrosoftWebAppServicePlans
+    /// Title  : AppServicePlans API Client
+    /// Version: 2021-03-01
     /// </summary>
     public interface IMicrosoftWebAppServicePlansApi
     {

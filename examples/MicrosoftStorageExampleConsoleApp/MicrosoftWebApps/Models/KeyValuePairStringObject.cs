@@ -7,6 +7,6 @@ namespace MicrosoftExampleConsoleApp.MicrosoftWebApps.Models
     {
         public string Key { get; set; }
 
-        public KeyValuePairStringObjectValue Value { get; set; }
+        public object Value { get; set; }
     }
 }

@@ -22,7 +22,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftContainerInstance.Models
         /// <summary>
         /// The additional properties.
         /// </summary>
-        public OperationProperties Properties { get; set; }
+        public object Properties { get; set; }
 
         /// <summary>
         /// The intended executor of the operation.

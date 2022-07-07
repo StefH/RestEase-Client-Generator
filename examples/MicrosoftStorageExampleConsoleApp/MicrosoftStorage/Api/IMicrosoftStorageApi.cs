@@ -11,7 +11,9 @@ using MicrosoftExampleConsoleApp.MicrosoftStorage.Models;
 namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Api
 {
     /// <summary>
-    /// The Azure Storage Management API.
+    /// Summary: The Azure Storage Management API.
+    /// Title  : StorageManagementClient
+    /// Version: 2021-04-01
     /// </summary>
     public interface IMicrosoftStorageApi
     {
