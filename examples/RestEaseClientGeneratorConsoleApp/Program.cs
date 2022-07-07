@@ -39,9 +39,7 @@ namespace RestEaseClientGeneratorConsoleApp
             {
                 File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/WireMock.org/{file.Path}/{file.Name}", file.Content);
             }
-            
 
-            
 
             // var drcSettings = new GeneratorSettings
             // {
@@ -55,29 +53,29 @@ namespace RestEaseClientGeneratorConsoleApp
             // {
             // File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Drc/{file.Path}/{file.Name}", file.Content);
             // }
-            
-            var weatherSettings = new GeneratorSettings
-            {
-                Namespace = "Weather",
-                ApiName = "Weather",
-                ForceContentTypeToApplicationJson = true
-            };
-            foreach (var file in generator.FromFile("Examples\\Weather\\WeatherForecast.json", weatherSettings, out OpenApiDiagnostic diagnosticWeather))
-            {
-                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Weather/{file.Path}/{file.Name}", file.Content);
-            }
-            
-            var jiraSettings = new GeneratorSettings
-            {
-                Namespace = "RestEaseClientGeneratorConsoleApp.Examples.Jira",
-                ApiName = "Jira",
-                SingleFile = true,
-                PreferredMultipleResponsesType = MultipleResponsesType.AnyOf
-            };
-            foreach (var file in generator.FromFile("Examples\\Jira\\swagger-v3.v3.json", jiraSettings, out OpenApiDiagnostic diagnosticJira))
-            {
-                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Jira/{file.Path}/{file.Name}", file.Content);
-            }
+
+            //var weatherSettings = new GeneratorSettings
+            //{
+            //    Namespace = "Weather",
+            //    ApiName = "Weather",
+            //    ForceContentTypeToApplicationJson = true
+            //};
+            //foreach (var file in generator.FromFile("Examples\\Weather\\WeatherForecast.json", weatherSettings, out OpenApiDiagnostic diagnosticWeather))
+            //{
+            //    File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Weather/{file.Path}/{file.Name}", file.Content);
+            //}
+
+            //var jiraSettings = new GeneratorSettings
+            //{
+            //    Namespace = "RestEaseClientGeneratorConsoleApp.Examples.Jira",
+            //    ApiName = "Jira",
+            //    SingleFile = true,
+            //    PreferredMultipleResponsesType = MultipleResponsesType.AnyOf
+            //};
+            //foreach (var file in generator.FromFile("Examples\\Jira\\swagger-v3.v3.json", jiraSettings, out OpenApiDiagnostic diagnosticJira))
+            //{
+            //    File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Jira/{file.Path}/{file.Name}", file.Content);
+            //}
 
             return;
 

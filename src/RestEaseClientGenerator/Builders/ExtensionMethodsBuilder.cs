@@ -42,14 +42,14 @@ internal class ExtensionMethodsBuilder : BaseBuilder
         builder.AppendLine($"    public static class {apiName.Substring(1)}Extensions");
         builder.AppendLine("    {");
 
-        foreach (var method in methods)
+        foreach (var method in methods.Where(m => m.ExtensionMethodDetails != null))
         {
             string asyncPostfix = Settings.AppendAsync ? "Async" : string.Empty;
 
             builder.AppendLine("        /// <summary>");
             builder.AppendLine($"        /// {method.ExtensionMethodDetails?.Summary.StripHtml()}");
             builder.AppendLine("        /// </summary>");
-            foreach (var sp in method.ExtensionMethodDetails.SummaryParameters)
+            foreach (var sp in method.ExtensionMethodDetails!.SummaryParameters)
             {
                 builder.AppendLine($"        /// <param name=\"{sp.ValidIdentifier}\">{sp.Summary.StripHtml()}</param>");
             }
