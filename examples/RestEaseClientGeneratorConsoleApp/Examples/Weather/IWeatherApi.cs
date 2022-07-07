@@ -11,7 +11,9 @@ using Weather.Models;
 namespace Weather.Api
 {
     /// <summary>
-    /// Weather
+    /// Summary: Weather
+    /// Title  : WebApplicationSwagger
+    /// Version: v1
     /// </summary>
     public interface IWeatherApi
     {

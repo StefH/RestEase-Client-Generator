@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
@@ -43,11 +43,11 @@
     <Folder Include="Examples\wpraml\Models\" />
   </ItemGroup>
 
-  <ItemGroup>
+  <!--<ItemGroup>
     <OpenApiReference Include="Examples\AzureMachineLearning\ml-swagger.json" CodeGenerator="NSwagCSharp" Namespace="MachineLearningOpenAPIExample" ClassName="MachineLearningService">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </OpenApiReference>
-  </ItemGroup>
+  </ItemGroup>-->
 
   <ItemGroup>
     <PackageReference Include="AnyOf" Version="0.3.0" />
@@ -58,10 +58,10 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-    <PackageReference Include="NSwag.ApiDescription.Client" Version="13.0.5">
+    <!--<PackageReference Include="NSwag.ApiDescription.Client" Version="13.0.5">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
+    </PackageReference>-->
     <PackageReference Include="RestEase" Version="1.5.5" />
   </ItemGroup>
 

@@ -37,6 +37,12 @@ internal class SchemaMapper : BaseMapper
         switch (schema.GetSchemaType())
         {
             case SchemaType.Array:
+                var result = TryMapProperty(@interface, openApiSpecVersion, schema.Items, parentName, name, directory);
+                if (result.Result.IsFirst)
+                {
+                    return result.Result.First;
+                }
+                
                 var listItem = MapSchema(@interface, schema.Items, string.Empty, name, isNullable, pascalCase, openApiSpecVersion, directory);
                 if (listItem.IsSecond)
                 {
@@ -208,12 +214,8 @@ internal class SchemaMapper : BaseMapper
                 return (PropertyType.Reference, referencedProperty.Name, referencedProperty);
             }
 
-            // In case this schema does not have any properties or AdditionalProperties:
-            // Don't make a new class but just return "object". 
-            if (!schema.AnyOf.Any() &&
-                !schema.AllOf.Any() &&
-                !schema.Properties.Any() &&
-                schema.AdditionalProperties == null)
+            // In case this schema does not have any properties or AdditionalProperties: don't make a new class but just return "object". 
+            if (schema.IsJustAnObject())
             {
                 return (PropertyType.Normal, "object", new PropertyDto("object", objectName, null, schema.Description));
             }
@@ -257,8 +259,7 @@ internal class SchemaMapper : BaseMapper
         string? directory,
         string className)
     {
-        var model = @interface.ExtraModels.FirstOrDefault(m =>
-            string.Equals(m.ClassName, className, StringComparison.InvariantCultureIgnoreCase));
+        var model = @interface.ExtraModels.FirstOrDefault(m => string.Equals(m.ClassName, className, StringComparison.InvariantCultureIgnoreCase));
         if (model == null)
         {
             var inlineModel = MapSchema(@interface, schema, parentName, className, false, true, null, directory);

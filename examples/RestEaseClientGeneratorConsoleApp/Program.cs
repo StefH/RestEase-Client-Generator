@@ -13,6 +13,20 @@ namespace RestEaseClientGeneratorConsoleApp
         {
             var generator = new Generator();
 
+            // Unhandled exceptions on missing results.
+            //var pitaneSettings = new GeneratorSettings
+            //{
+            //    SingleFile = true,
+            //    Namespace = "RestEaseClientGeneratorConsoleApp.Examples.Pitane",
+            //    ApiName = "Pitane",
+            //    // ArrayType = ArrayType.List
+            //};
+            //foreach (var file in generator.FromFile(@"Examples\Pitane\Pitane.json", pitaneSettings, out _))
+            //{
+            //    File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Pitane/{file.Path}/{file.Name}", file.Content);
+            //}
+            
+
             var wiremockOrgSettings = new GeneratorSettings
             {
                 Namespace = "WireMock.Org",
@@ -25,20 +39,9 @@ namespace RestEaseClientGeneratorConsoleApp
             {
                 File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/WireMock.org/{file.Path}/{file.Name}", file.Content);
             }
-            return;
+            
 
-            // Unhandled exceptions on missing results.
-            var pitaneSettings = new GeneratorSettings
-            {
-                SingleFile = true,
-                Namespace = "RestEaseClientGeneratorConsoleApp.Examples.Pitane",
-                ApiName = "Pitane",
-                // ArrayType = ArrayType.List
-            };
-            foreach (var file in generator.FromFile(@"Examples\Pitane\Pitane.json", pitaneSettings, out _))
-            {
-                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Pitane/{file.Path}/{file.Name}", file.Content);
-            }
+            
 
             // var drcSettings = new GeneratorSettings
             // {
@@ -52,19 +55,7 @@ namespace RestEaseClientGeneratorConsoleApp
             // {
             // File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Drc/{file.Path}/{file.Name}", file.Content);
             // }
-
-            return;
-            //var wiremockOrgSettings = new GeneratorSettings
-            //{
-            //    Namespace = "WireMockOrg",
-            //    ApiName = "WireMockOrg",
-            //    SingleFile = false
-            //};
-            //foreach (var file in generator.FromFile("Examples\\WireMock.org\\wiremock.json", wiremockOrgSettings, out OpenApiDiagnostic diagnosticWeather))
-            //{
-            //    File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/WireMock.org/{file.Path}/{file.Name}", file.Content);
-            //}
-
+            
             var weatherSettings = new GeneratorSettings
             {
                 Namespace = "Weather",
@@ -75,8 +66,7 @@ namespace RestEaseClientGeneratorConsoleApp
             {
                 File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Weather/{file.Path}/{file.Name}", file.Content);
             }
-            //return;
-
+            
             var jiraSettings = new GeneratorSettings
             {
                 Namespace = "RestEaseClientGeneratorConsoleApp.Examples.Jira",

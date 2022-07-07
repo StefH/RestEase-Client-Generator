@@ -23,6 +23,14 @@ internal static class OpenApiSchemaExtensions
         return false;
     }
 
+    /// <summary>
+    /// Check if this schema does not have any properties or AdditionalProperties, so it's just a an object.
+    /// </summary>
+    public static bool IsJustAnObject(this OpenApiSchema schema)
+    {
+        return !schema.AnyOf.Any() && !schema.AllOf.Any() && !schema.Properties.Any() && schema.AdditionalProperties == null;
+    }
+
     public static SchemaType GetSchemaType(this OpenApiSchema schema)
     {
         switch (schema.Type)

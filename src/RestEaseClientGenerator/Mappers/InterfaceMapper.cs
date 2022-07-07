@@ -269,12 +269,10 @@ internal class InterfaceMapper : BaseMapper
 
         foreach (var response in responses.Where(r => r.Value != null))
         {
-            if (TryGetOpenApiMediaType(
-                    response.Value.Content,
-                    SupportedContentType.ApplicationJson,
-                    out OpenApiMediaType? responseJson, out _))
+            var contentTypes = response.Value.Content;
+            if (TryGetOpenApiMediaType(contentTypes, SupportedContentType.ApplicationJson, out var mediaTypeFromResponse, out _) && mediaTypeFromResponse != null)
             {
-                var returnType = GetReturnType(@interface, responseJson.Schema, methodRestEaseMethodName, directory);
+                var returnType = GetReturnType(@interface, mediaTypeFromResponse.Schema, methodRestEaseMethodName, directory);
                 if (returnType is not null)
                 {
                     returnTypes.Add(FixReservedType(returnType));
@@ -595,7 +593,7 @@ internal class InterfaceMapper : BaseMapper
         var supportedMediaTypeInfoList = new List<MediaTypeInfo>();
         foreach (SupportedContentType key in Enum.GetValues(typeof(SupportedContentType)))
         {
-            if (TryGetOpenApiMediaType(operation.RequestBody.Content, key, out var mediaType, out var detectedContentType))
+            if (TryGetOpenApiMediaType(operation.RequestBody.Content, key, out var mediaType, out var detectedContentType) && mediaType != null)
             {
                 supportedMediaTypeInfoList.Add(new MediaTypeInfo(key, mediaType, detectedContentType));
             }
@@ -773,6 +771,12 @@ internal class InterfaceMapper : BaseMapper
             };
         }
 
+        if (description ==
+            "EXPERIMENTAL. A list of project properties to return for the project. This parameter accepts a comma-separated list. Invalid property names are ignored.")
+        {
+            int yyy = 5;
+        }
+
         string extraAttributesBetweenParentheses = extraAttributes.Length == 0 ? string.Empty : $"({string.Join(", ", extraAttributes)})";
         identifierWithType = _schemaMapper.MapSchema(@interface, schema, string.Empty, identifier, !required, false, null, directory);
 
@@ -808,7 +812,7 @@ internal class InterfaceMapper : BaseMapper
     private static bool TryGetOpenApiMediaType(
         IDictionary<string, OpenApiMediaType> contentTypes,
         SupportedContentType contentType,
-        [NotNullWhen(true)] out OpenApiMediaType? mediaType,
+        out OpenApiMediaType? mediaType,
         [NotNullWhen(true)] out string? detectedContentType)
     {
         var contentTypesIgnoreCase = new Dictionary<string, OpenApiMediaType>(contentTypes, StringComparer.InvariantCultureIgnoreCase);
