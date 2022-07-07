@@ -47,7 +47,7 @@ internal class ExtensionMethodsBuilder : BaseBuilder
             string asyncPostfix = Settings.AppendAsync ? "Async" : string.Empty;
 
             builder.AppendLine("        /// <summary>");
-            builder.AppendLine($"        /// {method.ExtensionMethodDetails.Summary.StripHtml()}");
+            builder.AppendLine($"        /// {method.ExtensionMethodDetails?.Summary.StripHtml()}");
             builder.AppendLine("        /// </summary>");
             foreach (var sp in method.ExtensionMethodDetails.SummaryParameters)
             {

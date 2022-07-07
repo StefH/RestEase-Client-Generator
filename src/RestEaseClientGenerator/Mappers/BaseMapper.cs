@@ -1,6 +1,5 @@
 using RestEaseClientGenerator.Extensions;
 using RestEaseClientGenerator.Settings;
-using RestEaseClientGenerator.Types;
 
 namespace RestEaseClientGenerator.Mappers;
 

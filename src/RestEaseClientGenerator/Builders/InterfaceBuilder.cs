@@ -31,7 +31,9 @@ internal class InterfaceBuilder : BaseBuilder
         builder.AppendLine($"namespace {AppendApiNamespace(@interface.Namespace)}");
         builder.AppendLine("{");
         builder.AppendLine("    /// <summary>");
-        builder.AppendLine($"    /// {@interface.Summary.StripHtml()}");
+        builder.AppendLine($"    /// Summary: {@interface.Summary.StripHtml()}");
+        builder.AppendLine($"    /// Title  : {@interface.Title.StripHtml()}");
+        builder.AppendLine($"    /// Version: {@interface.Version}");
         builder.AppendLine("    /// </summary>");
         builder.AppendLine($"    public interface {@interface.Name}");
         builder.AppendLine("    {");

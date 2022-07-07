@@ -26,12 +26,16 @@ internal class InterfaceMapper : BaseMapper
         string name = Settings.ApiName.ToValidIdentifier(CasingType.Pascal);
         string interfaceName = $"I{name}Api";
 
+        var info = openApiDocument.Info!;
+
         var @interface = new RestEaseInterface
         (
             openApiDocument,
             interfaceName,
             Settings.Namespace,
-            openApiDocument.Info?.Description ?? name
+            info.Description ?? name,
+            info.Title,
+            info.Version
         );
 
         foreach (var path in openApiDocument.Paths)

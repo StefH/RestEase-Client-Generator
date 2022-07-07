@@ -2,7 +2,7 @@ using Microsoft.OpenApi.Models;
 
 namespace RestEaseClientGenerator.Models.Internal;
 
-internal record RestEaseInterface(OpenApiDocument OpenApiDocument, string Name, string Namespace, string Summary)
+internal record RestEaseInterface(OpenApiDocument OpenApiDocument, string Name, string Namespace, string Summary, string Title, string Version)
 {
     public List<RestEaseInterfaceHeader> VariableHeaders { get; set; } = new();
 

@@ -208,6 +208,16 @@ internal class SchemaMapper : BaseMapper
                 return (PropertyType.Reference, referencedProperty.Name, referencedProperty);
             }
 
+            // In case this schema does not have any properties or AdditionalProperties:
+            // Don't make a new class but just return "object". 
+            if (!schema.AnyOf.Any() &&
+                !schema.AllOf.Any() &&
+                !schema.Properties.Any() &&
+                schema.AdditionalProperties == null)
+            {
+                return (PropertyType.Normal, "object", new PropertyDto("object", objectName, null, schema.Description));
+            }
+
             var className = MakeValidClassName($"{parentName}{objectName}");
 
             if (schema.AdditionalProperties != null)

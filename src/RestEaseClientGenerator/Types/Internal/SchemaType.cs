@@ -1,7 +1,7 @@
 namespace RestEaseClientGenerator.Types.Internal;
 
 //[Flags]
-internal enum SchemaType : int
+internal enum SchemaType
 {
     Unknown = 0,
 
