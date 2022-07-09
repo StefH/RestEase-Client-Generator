@@ -37,12 +37,11 @@ internal class SchemaMapper : BaseMapper
         switch (schema.GetSchemaType())
         {
             case SchemaType.Array:
-                //var (_, n, result) = TryMapProperty(@interface, openApiSpecVersion, schema.Items, parentName, name, directory);
-                //if (result.IsFirst)
-                //{
-                //    // It's an array-item, return the correct type
-                //    return new PropertyDto(ArrayTypeMapper.Map(Settings.ArrayType, result.First.Type), result.First.Name, result.First.Type);
-                //}
+                var (_, _, result) = TryMapProperty(@interface, openApiSpecVersion, schema.Items, parentName, name, directory);
+                if (result.IsFirst)
+                {
+                    return result.First;
+                }
 
                 var listItem = MapSchema(@interface, schema.Items, string.Empty, name, isNullable, pascalCase, openApiSpecVersion, directory);
                 if (listItem.IsSecond)

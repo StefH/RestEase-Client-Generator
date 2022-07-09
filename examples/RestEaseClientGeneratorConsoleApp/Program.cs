@@ -13,18 +13,18 @@ namespace RestEaseClientGeneratorConsoleApp
         {
             var generator = new Generator();
 
-            var pitaneSettings = new GeneratorSettings
-            {
-                SingleFile = true,
-                Namespace = "RestEaseClientGeneratorConsoleApp.Examples.Pitane",
-                ApiName = "Pitane",
-                // ArrayType = ArrayType.List
-            };
-            foreach (var file in generator.FromFile(@"Examples\Pitane\Pitane.json", pitaneSettings, out _))
-            {
-                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Pitane/{file.Path}/{file.Name}", file.Content);
-            }
-            return;
+            //var pitaneSettings = new GeneratorSettings
+            //{
+            //    SingleFile = true,
+            //    Namespace = "RestEaseClientGeneratorConsoleApp.Examples.Pitane",
+            //    ApiName = "Pitane",
+            //    // ArrayType = ArrayType.List
+            //};
+            //foreach (var file in generator.FromFile(@"Examples\Pitane\Pitane.json", pitaneSettings, out _))
+            //{
+            //    File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Pitane/{file.Path}/{file.Name}", file.Content);
+            //}
+            //return;
 
             var wiremockOrgSettings = new GeneratorSettings
             {
@@ -53,16 +53,16 @@ namespace RestEaseClientGeneratorConsoleApp
             // File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Drc/{file.Path}/{file.Name}", file.Content);
             // }
 
-            //var weatherSettings = new GeneratorSettings
-            //{
-            //    Namespace = "Weather",
-            //    ApiName = "Weather",
-            //    ForceContentTypeToApplicationJson = true
-            //};
-            //foreach (var file in generator.FromFile("Examples\\Weather\\WeatherForecast.json", weatherSettings, out OpenApiDiagnostic diagnosticWeather))
-            //{
-            //    File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Weather/{file.Path}/{file.Name}", file.Content);
-            //}
+            var weatherSettings = new GeneratorSettings
+            {
+                Namespace = "Weather",
+                ApiName = "Weather",
+                ForceContentTypeToApplicationJson = true
+            };
+            foreach (var file in generator.FromFile("Examples\\Weather\\WeatherForecast.json", weatherSettings, out OpenApiDiagnostic diagnosticWeather))
+            {
+                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Weather/{file.Path}/{file.Name}", file.Content);
+            }
 
             //var jiraSettings = new GeneratorSettings
             //{
@@ -76,24 +76,25 @@ namespace RestEaseClientGeneratorConsoleApp
             //    File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Jira/{file.Path}/{file.Name}", file.Content);
             //}
 
-            return;
+            var petStoreJsonSettings = new GeneratorSettings
+            {
+                SingleFile = true,
+                ArrayType = ArrayType.IEnumerable,
+                Namespace = "RestEaseClientGeneratorConsoleApp.Examples.PetStoreJson",
+                ApiName = "PetStoreJson",
+                UseDateTimeOffset = true,
+                MethodReturnType = MethodReturnType.Type,
+                MultipartFormDataFileType = MultipartFormDataFileType.Stream,
+                ApiNamespace = "Test123",
+                ModelsNamespace = "Models"
+            };
+            foreach (var file in generator.FromFile("Examples\\petstore.json", petStoreJsonSettings, out OpenApiDiagnostic diagnosticPetStore1))
+            {
+                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/PetStoreJson/{file.Name}", file.Content);
+            }
 
-            //var petStoreJsonSettings = new GeneratorSettings
-            //{
-            //    SingleFile = true,
-            //    ArrayType = ArrayType.IEnumerable,
-            //    Namespace = "RestEaseClientGeneratorConsoleApp.Examples.PetStoreJson",
-            //    ApiName = "PetStoreJson",
-            //    UseDateTimeOffset = true,
-            //    MethodReturnType = MethodReturnType.Type,
-            //    MultipartFormDataFileType = MultipartFormDataFileType.Stream,
-            //    ApiNamespace = "Test123",
-            //    ModelsNamespace = "Models"
-            //};
-            //foreach (var file in generator.FromFile("Examples\\petstore.json", petStoreJsonSettings, out OpenApiDiagnostic diagnosticPetStore1))
-            //{
-            //    File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/PetStoreJson/{file.Name}", file.Content);
-            //}
+
+            return;
 
             var petStoreOpenApi3Settings = new GeneratorSettings
             {
@@ -146,6 +147,7 @@ namespace RestEaseClientGeneratorConsoleApp
             //}
             return;
 
+
             var mlSettings = new GeneratorSettings
             {
                 Namespace = "AzureMachineLearning",
@@ -158,7 +160,6 @@ namespace RestEaseClientGeneratorConsoleApp
                 File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/AzureMachineLearning/{file.Path}/{file.Name}", file.Content);
             }
             return;
-
 
 
             // Corrupte enums
