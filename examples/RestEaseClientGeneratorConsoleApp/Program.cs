@@ -13,19 +13,18 @@ namespace RestEaseClientGeneratorConsoleApp
         {
             var generator = new Generator();
 
-            // Unhandled exceptions on missing results.
-            //var pitaneSettings = new GeneratorSettings
-            //{
-            //    SingleFile = true,
-            //    Namespace = "RestEaseClientGeneratorConsoleApp.Examples.Pitane",
-            //    ApiName = "Pitane",
-            //    // ArrayType = ArrayType.List
-            //};
-            //foreach (var file in generator.FromFile(@"Examples\Pitane\Pitane.json", pitaneSettings, out _))
-            //{
-            //    File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Pitane/{file.Path}/{file.Name}", file.Content);
-            //}
-            //return;
+            var pitaneSettings = new GeneratorSettings
+            {
+                SingleFile = true,
+                Namespace = "RestEaseClientGeneratorConsoleApp.Examples.Pitane",
+                ApiName = "Pitane",
+                // ArrayType = ArrayType.List
+            };
+            foreach (var file in generator.FromFile(@"Examples\Pitane\Pitane.json", pitaneSettings, out _))
+            {
+                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Pitane/{file.Path}/{file.Name}", file.Content);
+            }
+            return;
 
             var wiremockOrgSettings = new GeneratorSettings
             {
@@ -160,7 +159,7 @@ namespace RestEaseClientGeneratorConsoleApp
             }
             return;
 
-            
+
 
             // Corrupte enums
             var computerVisionSettings = new GeneratorSettings

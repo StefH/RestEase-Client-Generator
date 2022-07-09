@@ -11,7 +11,9 @@ using RestEaseClientGeneratorConsoleApp.Examples.Pitane.Models;
 namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Api
 {
     /// <summary>
-    /// Pitane Network API v3.0.1 - Pitane B.V.  Pitane API - MaaS Mobility Provider - TOMP API support Last update - 2022-01-26 - [More information](https://pitane.dev) 
+    /// Summary: Pitane Network API v3.0.1 - Pitane B.V.  Pitane API - MaaS Mobility Provider - TOMP API support Last update - 2022-01-26 - [More information](https://pitane.dev) 
+    /// Title  : Pitane Mobility
+    /// Version: 3.0.1
     /// </summary>
     public interface IPitaneApi
     {
@@ -2530,14 +2532,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Models
         /// <summary>
         /// this object can contain extra information about the type of asset. For instance values from the 'Woordenboek Reizigerskenmerken'. [https://github.com/efel85/TOMP-API/issues/17]. These values can also be used in the planning.
         /// </summary>
-        public AssetPropertiesMeta Meta { get; set; }
-    }
-
-    /// <summary>
-    /// this object can contain extra information about the type of asset. For instance values from the 'Woordenboek Reizigerskenmerken'. [https://github.com/efel85/TOMP-API/issues/17]. These values can also be used in the planning.
-    /// </summary>
-    public class AssetPropertiesMeta
-    {
+        public object Meta { get; set; }
     }
 
     public class AssetType
@@ -2634,14 +2629,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Models
         /// <summary>
         /// Arbitrary information that a TO can add
         /// </summary>
-        public BookingExtraData ExtraData { get; set; }
-    }
-
-    /// <summary>
-    /// Arbitrary information that a TO can add
-    /// </summary>
-    public class BookingExtraData
-    {
+        public object ExtraData { get; set; }
     }
 
     /// <summary>
@@ -3441,14 +3429,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Models
         /// <summary>
         /// Arbitrary metadata that a TO can add, like voucher codes
         /// </summary>
-        public ExtraCostsMeta Meta { get; set; }
-    }
-
-    /// <summary>
-    /// Arbitrary metadata that a TO can add, like voucher codes
-    /// </summary>
-    public class ExtraCostsMeta
-    {
+        public object Meta { get; set; }
     }
 
     /// <summary>
@@ -3507,11 +3488,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Models
 
         public string Class { get; set; }
 
-        public FarePartMeta Meta { get; set; }
-    }
-
-    public class FarePartMeta
-    {
+        public object Meta { get; set; }
     }
 
     /// <summary>
@@ -3583,7 +3560,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Models
         /// <summary>
         /// the number of the invoice. Should be filled in when invoiced.
         /// </summary>
-        public JournalEntryInvoiceId InvoiceId { get; set; }
+        public object InvoiceId { get; set; }
 
         public DateTime InvoiceDate { get; set; }
 
@@ -3610,21 +3587,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Models
         /// <summary>
         /// the specification of the amount; how is it composed.
         /// </summary>
-        public JournalEntryDetails Details { get; set; }
-    }
-
-    /// <summary>
-    /// the specification of the amount; how is it composed.
-    /// </summary>
-    public class JournalEntryDetails
-    {
-    }
-
-    /// <summary>
-    /// the number of the invoice. Should be filled in when invoiced.
-    /// </summary>
-    public class JournalEntryInvoiceId
-    {
+        public object Details { get; set; }
     }
 
     /// <summary>
@@ -3926,11 +3889,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Models
         /// </summary>
         public Address PhysicalAddress { get; set; }
 
-        public PlaceExtraInfo ExtraInfo { get; set; }
-    }
-
-    public class PlaceExtraInfo
-    {
+        public object ExtraInfo { get; set; }
     }
 
     /// <summary>
@@ -4179,15 +4138,11 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Models
 
         public double Latitude { get; set; }
 
-        public ServicestopLongitude Longitude { get; set; }
+        public object Longitude { get; set; }
 
         public int Speed { get; set; }
 
         public string DevImei { get; set; }
-    }
-
-    public class ServicestopLongitude
-    {
     }
 
     /// <summary>
@@ -4349,14 +4304,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Pitane.Models
         /// <summary>
         /// Arbitrary data the TO may pass along the ticket to the client (e.g. a booking code, base64 encoded binary, QR code), later will be one of several types
         /// </summary>
-        public TokenTokenData TokenData { get; set; }
-    }
-
-    /// <summary>
-    /// Arbitrary data the TO may pass along the ticket to the client (e.g. a booking code, base64 encoded binary, QR code), later will be one of several types
-    /// </summary>
-    public class TokenTokenData
-    {
+        public object TokenData { get; set; }
     }
 
     /// <summary>

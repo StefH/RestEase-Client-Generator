@@ -1,5 +1,6 @@
 using AnyOfTypes;
 using Microsoft.OpenApi;
+using System.Collections.Generic;
 using Microsoft.OpenApi.Models;
 using RestEaseClientGenerator.Models.Internal;
 using RestEaseClientGenerator.Settings;
@@ -26,35 +27,50 @@ internal class ModelsMapper : BaseMapper
         _directory = directory;
     }
 
-    public IEnumerable<AnyOf<RestEaseModel, RestEaseEnum>> Map(IDictionary<string, OpenApiSchema> schemas)
+    public IReadOnlyList<AnyOf<RestEaseModel, RestEaseEnum>> Map(IDictionary<string, OpenApiSchema> schemas)
     {
-        foreach (var entry in schemas.OrderBy(s => s.Key))
+        var entries = schemas.OrderBy(s => s.Key).ToList();
+        var list = new List<AnyOf<RestEaseModel, RestEaseEnum>>();
+
+        foreach (var entry in entries)
         {
+            if (entry.Key == "geojsonPoint")
+            {
+                int yuuu = 8;
+            }
+
             var result = _schemaMapper.MapSchema(_interface, entry.Value, string.Empty, entry.Key, entry.Value.Nullable, true, _openApiSpecVersion, _directory);
 
             if (result.IsSecond)
             {
                 // It's a Model
-                yield return new RestEaseModel
+                list.Add(new RestEaseModel
                 {
                     Description = entry.Value.Description,
                     Namespace = Settings.Namespace,
                     ClassName = MakeValidClassName(entry.Key),
                     Properties = result.Second
-                };
+                });
+            }
+
+            if (result.IsFirst)
+            {
+                int vvvv = 9;
             }
 
             if (result.IsFirst && result.First.ArrayItemType != null)
             {
                 // Class is an Array or extends an Array
-                yield return new RestEaseModel
+                list.Add(new RestEaseModel
                 {
                     Description = entry.Value.Description,
                     Namespace = Settings.Namespace,
                     ClassName = MakeValidClassName(entry.Key),
                     Properties = new List<PropertyDto> { result.First }
-                };
+                });
             }
         }
+
+        return list;
     }
 }
