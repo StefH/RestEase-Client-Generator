@@ -27,31 +27,31 @@ namespace RestEaseClientGeneratorConsoleApp
 
             // return;
 
-            var pitaneSettings = new GeneratorSettings
-            {
-                SingleFile = true,
-                Namespace = "RestEaseClientGeneratorConsoleApp.Examples.Pitane",
-                ApiName = "Pitane",
-                // ArrayType = ArrayType.List
-            };
-            foreach (var file in generator.FromFile(@"Examples\Pitane\Pitane.json", pitaneSettings, out _))
-            {
-                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Pitane/{file.Path}/{file.Name}", file.Content);
-            }
-            return;
+            //var pitaneSettings = new GeneratorSettings
+            //{
+            //    SingleFile = true,
+            //    Namespace = "RestEaseClientGeneratorConsoleApp.Examples.Pitane",
+            //    ApiName = "Pitane",
+            //    // ArrayType = ArrayType.List
+            //};
+            //foreach (var file in generator.FromFile(@"Examples\Pitane\Pitane.json", pitaneSettings, out _))
+            //{
+            //    File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Pitane/{file.Path}/{file.Name}", file.Content);
+            //}
+            //return;
 
-            var wiremockOrgSettings = new GeneratorSettings
-            {
-                Namespace = "WireMock.Org",
-                ApiName = "WireMockOrg",
-                ModelsNamespace = "Abstractions",
-                ApiNamespace = "RestClient",
-                SingleFile = false
-            };
-            foreach (var file in generator.FromFile("Examples\\WireMock.org\\wiremock.json", wiremockOrgSettings, out OpenApiDiagnostic diagnosticWeather))
-            {
-                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/WireMock.org/{file.Path}/{file.Name}", file.Content);
-            }
+            //var wiremockOrgSettings = new GeneratorSettings
+            //{
+            //    Namespace = "WireMock.Org",
+            //    ApiName = "WireMockOrg",
+            //    ModelsNamespace = "Abstractions",
+            //    ApiNamespace = "RestClient",
+            //    SingleFile = false
+            //};
+            //foreach (var file in generator.FromFile("Examples\\WireMock.org\\wiremock.json", wiremockOrgSettings, out OpenApiDiagnostic diagnosticWeather))
+            //{
+            //    File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/WireMock.org/{file.Path}/{file.Name}", file.Content);
+            //}
 
 
             // var drcSettings = new GeneratorSettings
@@ -67,16 +67,16 @@ namespace RestEaseClientGeneratorConsoleApp
             // File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Drc/{file.Path}/{file.Name}", file.Content);
             // }
 
-            var weatherSettings = new GeneratorSettings
-            {
-                Namespace = "Weather",
-                ApiName = "Weather",
-                ForceContentTypeToApplicationJson = true
-            };
-            foreach (var file in generator.FromFile("Examples\\Weather\\WeatherForecast.json", weatherSettings, out OpenApiDiagnostic diagnosticWeather))
-            {
-                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Weather/{file.Path}/{file.Name}", file.Content);
-            }
+            //var weatherSettings = new GeneratorSettings
+            //{
+            //    Namespace = "Weather",
+            //    ApiName = "Weather",
+            //    ForceContentTypeToApplicationJson = true
+            //};
+            //foreach (var file in generator.FromFile("Examples\\Weather\\WeatherForecast.json", weatherSettings, out OpenApiDiagnostic diagnosticWeather))
+            //{
+            //    File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Weather/{file.Path}/{file.Name}", file.Content);
+            //}
 
             
 

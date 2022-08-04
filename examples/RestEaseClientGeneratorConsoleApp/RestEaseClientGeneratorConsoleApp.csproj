@@ -53,16 +53,21 @@
     <PackageReference Include="AnyOf" Version="0.3.0" />
     <PackageReference Include="AnyOf.Newtonsoft.Json" Version="0.3.0" />
     <!--<PackageReference Include="AnyOf.Newtonsoft.Json" Version="0.2.0" />-->
-    <PackageReference Include="Microsoft.Extensions.ApiDescription.Client" Version="3.0.0">
+    <PackageReference Include="Microsoft.Extensions.ApiDescription.Client" Version="6.0.7">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="NSwag.ApiDescription.Client" Version="13.16.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="NSwag.Generation" Version="13.16.1" />
     <!--<PackageReference Include="NSwag.ApiDescription.Client" Version="13.0.5">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>-->
-    <PackageReference Include="RestEase" Version="1.5.5" />
+    <PackageReference Include="RestEase" Version="1.5.7" />
   </ItemGroup>
 
   <ItemGroup>
@@ -115,6 +120,9 @@
     <None Update="Examples\MicrosoftStorage\*.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Examples\Pitane\Pitane.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Examples\SharedQueryParamsWithExtensionMethod.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -141,9 +149,6 @@
     </None>
     <None Update="Examples\wp.raml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Examples\Pitane\Pitane.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 
