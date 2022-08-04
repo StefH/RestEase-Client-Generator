@@ -45,6 +45,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleAppServiceReference"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestEaseClientGeneratorV2", "src\RestEaseClientGeneratorV2\RestEaseClientGeneratorV2.csproj", "{6AF2D411-55B6-4EE9-8904-0899CFD98C54}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleAppV2", "examples\ConsoleAppV2\ConsoleAppV2.csproj", "{7C1897F0-D278-45EE-AE11-79C8FB5091C2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +89,10 @@ Global
 		{6AF2D411-55B6-4EE9-8904-0899CFD98C54}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6AF2D411-55B6-4EE9-8904-0899CFD98C54}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6AF2D411-55B6-4EE9-8904-0899CFD98C54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C1897F0-D278-45EE-AE11-79C8FB5091C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C1897F0-D278-45EE-AE11-79C8FB5091C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C1897F0-D278-45EE-AE11-79C8FB5091C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C1897F0-D278-45EE-AE11-79C8FB5091C2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -102,6 +108,7 @@ Global
 		{E3EB59F1-146D-4724-B30D-D9E45F924FD2} = {E238CBB6-3B84-472C-9F0C-3946E4815398}
 		{B2C8CB66-E540-4617-A19C-E4CC49664CB6} = {51587962-74F5-415F-AA57-FEC39EF78DBC}
 		{6AF2D411-55B6-4EE9-8904-0899CFD98C54} = {B929A431-00E4-4054-8796-A6F1DF7AC3EA}
+		{7C1897F0-D278-45EE-AE11-79C8FB5091C2} = {51587962-74F5-415F-AA57-FEC39EF78DBC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D9B883AA-56BD-4B76-A679-C82E766F4C2D}
