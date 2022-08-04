@@ -5028,7 +5028,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Api
         /// <param name="content"></param>
         public static Task<Response<AnyOf<SetColumnsResult, object>>> SetColumnsAsync(this IJiraApi api, string contentType, long id, string Content)
         {
-            return api.SetColumnsAsync(contentType, id, content);
+            return null;//api.SetColumnsAsync(contentType, id, content);
         }
 
         /// <summary>
@@ -5051,7 +5051,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Api
         /// <param name="content"></param>
         public static Task<Response<AnyOf<SetIssueNavigatorDefaultColumnsResult, object>>> SetIssueNavigatorDefaultColumnsAsync(this IJiraApi api, string contentType, string Content)
         {
-            return api.SetIssueNavigatorDefaultColumnsAsync(contentType, content);
+            return null;//  api.SetIssueNavigatorDefaultColumnsAsync(contentType, content);
         }
 
         /// <summary>
@@ -5063,7 +5063,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Api
         /// <param name="content"></param>
         public static Task<Response<AnyOf<SetUserColumnsResult, object>>> SetUserColumnsAsync(this IJiraApi api, string contentType, string accountId, string Content)
         {
-            return api.SetUserColumnsAsync(contentType, content, accountId);
+            return null;//api.SetUserColumnsAsync(contentType, content, accountId);
         }
     }
 }

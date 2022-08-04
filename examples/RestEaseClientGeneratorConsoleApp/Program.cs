@@ -13,32 +13,32 @@ namespace RestEaseClientGeneratorConsoleApp
         {
             var generator = new Generator();
 
-            var jiraSettings = new GeneratorSettings
-            {
-                Namespace = "RestEaseClientGeneratorConsoleApp.Examples.Jira",
-                ApiName = "Jira",
-                SingleFile = true,
-                PreferredMultipleResponsesType = MultipleResponsesType.AnyOf
-            };
-            foreach (var file in generator.FromFile("Examples\\Jira\\swagger-v3.v3.json", jiraSettings, out OpenApiDiagnostic diagnosticJira))
-            {
-                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Jira/{file.Path}/{file.Name}", file.Content);
-            }
-
-            return;
-
-            //var pitaneSettings = new GeneratorSettings
+            //var jiraSettings = new GeneratorSettings
             //{
+            //    Namespace = "RestEaseClientGeneratorConsoleApp.Examples.Jira",
+            //    ApiName = "Jira",
             //    SingleFile = true,
-            //    Namespace = "RestEaseClientGeneratorConsoleApp.Examples.Pitane",
-            //    ApiName = "Pitane",
-            //    // ArrayType = ArrayType.List
+            //    PreferredMultipleResponsesType = MultipleResponsesType.AnyOf
             //};
-            //foreach (var file in generator.FromFile(@"Examples\Pitane\Pitane.json", pitaneSettings, out _))
+            //foreach (var file in generator.FromFile("Examples\\Jira\\swagger-v3.v3.json", jiraSettings, out OpenApiDiagnostic diagnosticJira))
             //{
-            //    File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Pitane/{file.Path}/{file.Name}", file.Content);
+            //    File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Jira/{file.Path}/{file.Name}", file.Content);
             //}
-            //return;
+
+            // return;
+
+            var pitaneSettings = new GeneratorSettings
+            {
+                SingleFile = true,
+                Namespace = "RestEaseClientGeneratorConsoleApp.Examples.Pitane",
+                ApiName = "Pitane",
+                // ArrayType = ArrayType.List
+            };
+            foreach (var file in generator.FromFile(@"Examples\Pitane\Pitane.json", pitaneSettings, out _))
+            {
+                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Pitane/{file.Path}/{file.Name}", file.Content);
+            }
+            return;
 
             var wiremockOrgSettings = new GeneratorSettings
             {
