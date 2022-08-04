@@ -18,6 +18,24 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Api
     public interface IJiraApi
     {
         /// <summary>
+        /// Get announcement banner configuration
+        ///
+        /// GetBanner (/rest/api/3/announcementBanner)
+        /// </summary>
+        [Get("/rest/api/3/announcementBanner")]
+        Task<Response<AnyOf<AnnouncementBannerConfiguration, ErrorCollection>>> GetBannerAsync();
+
+        /// <summary>
+        /// Update announcement banner configuration
+        ///
+        /// SetBanner (/rest/api/3/announcementBanner)
+        /// </summary>
+        /// <param name="content">Configuration of the announcement banner.</param>
+        [Put("/rest/api/3/announcementBanner")]
+        [Header("Content-Type", "application/json")]
+        Task<Response<AnyOf<SetBannerResult, ErrorCollection>>> SetBannerAsync([Body] AnnouncementBannerConfigurationUpdate content);
+
+        /// <summary>
         /// Update custom fields
         ///
         /// UpdateMultipleCustomFieldValues (/rest/api/3/app/field/value)
@@ -35,15 +53,14 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Api
         /// </summary>
         /// <param name="fieldIdOrKey">The ID or key of the custom field, for example `customfield_10000`.</param>
         /// <param name="id">The list of configuration IDs. To include multiple configurations, separate IDs with an ampersand: `id=10000&id=10001`. Can't be provided with `fieldContextId`, `issueId`, `projectKeyOrId`, or `issueTypeId`.</param>
-        /// <param name="contextId">DEPRECATED. Do not use.</param>
         /// <param name="fieldContextId">The list of field context IDs. To include multiple field contexts, separate IDs with an ampersand: `fieldContextId=10000&fieldContextId=10001`. Can't be provided with `id`, `issueId`, `projectKeyOrId`, or `issueTypeId`.</param>
-        /// <param name="issueId">The ID of the issue to filter results by. If the issue doesn't exist, an empty list is returned. Can't be provided with `contextIds`, `projectKeyOrId`, or `issueTypeId`.</param>
-        /// <param name="projectKeyOrId">The ID or key of the project to filter results by. Must be provided with `issueTypeId`. Can't be provided with `contextIds` or `issueId`.</param>
-        /// <param name="issueTypeId">The ID of the issue type to filter results by. Must be provided with `projectKeyOrId`. Can't be provided with `contextIds` or `issueId`.</param>
+        /// <param name="issueId">The ID of the issue to filter results by. If the issue doesn't exist, an empty list is returned. Can't be provided with `projectKeyOrId`, or `issueTypeId`.</param>
+        /// <param name="projectKeyOrId">The ID or key of the project to filter results by. Must be provided with `issueTypeId`. Can't be provided with `issueId`.</param>
+        /// <param name="issueTypeId">The ID of the issue type to filter results by. Must be provided with `projectKeyOrId`. Can't be provided with `issueId`.</param>
         /// <param name="startAt">The index of the first item to return in a page of results (page offset).</param>
         /// <param name="maxResults">The maximum number of items to return per page.</param>
         [Get("/rest/api/3/app/field/{fieldIdOrKey}/context/configuration")]
-        Task<Response<AnyOf<PageBeanContextualConfiguration, object>>> GetCustomFieldConfigurationAsync([Path] string fieldIdOrKey, [Query] long Id, [Query] long ContextId, [Query] long FieldContextId, [Query] long? issueId, [Query] string projectKeyOrId, [Query] string issueTypeId, [Query] long? startAt, [Query] int? maxResults);
+        Task<Response<AnyOf<PageBeanContextualConfiguration, object>>> GetCustomFieldConfigurationAsync([Path] string fieldIdOrKey, [Query] long Id, [Query] long FieldContextId, [Query] long? issueId, [Query] string projectKeyOrId, [Query] string issueTypeId, [Query] long? startAt, [Query] int? maxResults);
 
         /// <summary>
         /// Update custom field configurations
@@ -387,6 +404,14 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Api
         Task<Response<AnyOf<Dashboard, ErrorCollection>>> CreateDashboardAsync([Body] DashboardDetails content);
 
         /// <summary>
+        /// Get available gadgets
+        ///
+        /// GetAllAvailableDashboardGadgets (/rest/api/3/dashboard/gadgets)
+        /// </summary>
+        [Get("/rest/api/3/dashboard/gadgets")]
+        Task<Response<AnyOf<AvailableDashboardGadgetsResponse, ErrorCollection>>> GetAllAvailableDashboardGadgetsAsync();
+
+        /// <summary>
         /// Search for dashboards
         ///
         /// GetDashboardsPaginated (/rest/api/3/dashboard/search)
@@ -394,14 +419,61 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Api
         /// <param name="dashboardName">String used to perform a case-insensitive partial match with `name`.</param>
         /// <param name="accountId">User account ID used to return dashboards with the matching `owner.accountId`. This parameter cannot be used with the `owner` parameter.</param>
         /// <param name="owner">This parameter is deprecated because of privacy changes. Use `accountId` instead. See the [migration guide](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details. User name used to return dashboards with the matching `owner.name`. This parameter cannot be used with the `accountId` parameter.</param>
-        /// <param name="groupname">Group name used to returns dashboards that are shared with a group that matches `sharePermissions.group.name`.</param>
+        /// <param name="groupname">As a group's name can change, use of `groupId` is recommended. Group name used to return dashboards that are shared with a group that matches `sharePermissions.group.name`. This parameter cannot be used with the `groupId` parameter.</param>
+        /// <param name="groupId">Group ID used to return dashboards that are shared with a group that matches `sharePermissions.group.groupId`. This parameter cannot be used with the `groupname` parameter.</param>
         /// <param name="projectId">Project ID used to returns dashboards that are shared with a project that matches `sharePermissions.project.id`.</param>
         /// <param name="orderBy">[Order](#ordering) the results by a field: *  `description` Sorts by dashboard description. Note that this sort works independently of whether the expand to display the description field is in use. *  `favourite_count` Sorts by dashboard popularity. *  `id` Sorts by dashboard ID. *  `is_favourite` Sorts by whether the dashboard is marked as a favorite. *  `name` Sorts by dashboard name. *  `owner` Sorts by dashboard owner name.</param>
         /// <param name="startAt">The index of the first item to return in a page of results (page offset).</param>
         /// <param name="maxResults">The maximum number of items to return per page.</param>
+        /// <param name="status">The status to filter by. It may be active, archived or deleted.</param>
         /// <param name="expand">Use [expand](#expansion) to include additional information about dashboard in the response. This parameter accepts a comma-separated list. Expand options include: *  `description` Returns the description of the dashboard. *  `owner` Returns the owner of the dashboard. *  `viewUrl` Returns the URL that is used to view the dashboard. *  `favourite` Returns `isFavourite`, an indicator of whether the user has set the dashboard as a favorite. *  `favouritedCount` Returns `popularity`, a count of how many users have set this dashboard as a favorite. *  `sharePermissions` Returns details of the share permissions defined for the dashboard. *  `editPermissions` Returns details of the edit permissions defined for the dashboard. *  `isWritable` Returns whether the current user has permission to edit the dashboard.</param>
         [Get("/rest/api/3/dashboard/search")]
-        Task<Response<AnyOf<PageBeanDashboard, ErrorCollection>>> GetDashboardsPaginatedAsync([Query] string dashboardName, [Query] string accountId, [Query] string owner, [Query] string groupname, [Query] long? projectId, [Query] string orderBy, [Query] long? startAt, [Query] int? maxResults, [Query] string expand);
+        Task<Response<AnyOf<PageBeanDashboard, ErrorCollection>>> GetDashboardsPaginatedAsync([Query] string dashboardName, [Query] string accountId, [Query] string owner, [Query] string groupname, [Query] string groupId, [Query] long? projectId, [Query] string orderBy, [Query] long? startAt, [Query] int? maxResults, [Query] string status, [Query] string expand);
+
+        /// <summary>
+        /// Get gadgets
+        ///
+        /// GetAllGadgets (/rest/api/3/dashboard/{dashboardId}/gadget)
+        /// </summary>
+        /// <param name="dashboardId">The ID of the dashboard.</param>
+        /// <param name="moduleKey">The list of gadgets module keys. To include multiple module keys, separate module keys with ampersand: `moduleKey=key:one&moduleKey=key:two`.</param>
+        /// <param name="uri">The list of gadgets URIs. To include multiple URIs, separate URIs with ampersand: `uri=/rest/example/uri/1&uri=/rest/example/uri/2`.</param>
+        /// <param name="gadgetId">The list of gadgets IDs. To include multiple IDs, separate IDs with ampersand: `gadgetId=10000&gadgetId=10001`.</param>
+        [Get("/rest/api/3/dashboard/{dashboardId}/gadget")]
+        Task<Response<AnyOf<DashboardGadgetResponse, object, ErrorCollection>>> GetAllGadgetsAsync([Path] long dashboardId, [Query] string ModuleKey, [Query] string Uri, [Query] long GadgetId);
+
+        /// <summary>
+        /// Add gadget to dashboard
+        ///
+        /// AddGadget (/rest/api/3/dashboard/{dashboardId}/gadget)
+        /// </summary>
+        /// <param name="dashboardId">The ID of the dashboard.</param>
+        /// <param name="content">Details of the settings for a dashboard gadget.</param>
+        [Post("/rest/api/3/dashboard/{dashboardId}/gadget")]
+        [Header("Content-Type", "application/json")]
+        Task<Response<AnyOf<DashboardGadget, ErrorCollection, object>>> AddGadgetAsync([Path] long dashboardId, [Body] DashboardGadgetSettings content);
+
+        /// <summary>
+        /// Update gadget on dashboard
+        ///
+        /// UpdateGadget (/rest/api/3/dashboard/{dashboardId}/gadget/{gadgetId})
+        /// </summary>
+        /// <param name="dashboardId">The ID of the dashboard.</param>
+        /// <param name="gadgetId">The ID of the gadget.</param>
+        /// <param name="content">The details of the gadget to update.</param>
+        [Put("/rest/api/3/dashboard/{dashboardId}/gadget/{gadgetId}")]
+        [Header("Content-Type", "application/json")]
+        Task<Response<AnyOf<UpdateGadgetResult, ErrorCollection, object>>> UpdateGadgetAsync([Path] long dashboardId, [Path] long gadgetId, [Body] DashboardGadgetUpdateRequest content);
+
+        /// <summary>
+        /// Remove gadget from dashboard
+        ///
+        /// RemoveGadget (/rest/api/3/dashboard/{dashboardId}/gadget/{gadgetId})
+        /// </summary>
+        /// <param name="dashboardId">The ID of the dashboard.</param>
+        /// <param name="gadgetId">The ID of the gadget.</param>
+        [Delete("/rest/api/3/dashboard/{dashboardId}/gadget/{gadgetId}")]
+        Task<Response<AnyOf<RemoveGadgetResult, object, ErrorCollection>>> RemoveGadgetAsync([Path] long dashboardId, [Path] long gadgetId);
 
         /// <summary>
         /// Get dashboard item property keys
@@ -431,7 +503,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Api
         /// </summary>
         /// <param name="dashboardId">The ID of the dashboard.</param>
         /// <param name="itemId">The ID of the dashboard item.</param>
-        /// <param name="propertyKey">The key of the dashboard item property. The maximum length is 255 characters.</param>
+        /// <param name="propertyKey">The key of the dashboard item property. The maximum length is 255 characters. For dashboard items with a spec URI and no complete module key, if the provided propertyKey is equal to "config", the request body's JSON must be an object with all keys and values as strings.</param>
         [Put("/rest/api/3/dashboard/{dashboardId}/items/{itemId}/properties/{propertyKey}")]
         [Header("Content-Type", "application/json")]
         Task<Response<AnyOf<SetDashboardItemPropertyResult, object>>> SetDashboardItemPropertyAsync([Path] string dashboardId, [Path] string itemId, [Path] string propertyKey);
@@ -545,10 +617,23 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Api
         /// <param name="type">The type of fields to search.</param>
         /// <param name="id">The IDs of the custom fields to return or, where `query` is specified, filter.</param>
         /// <param name="query">String used to perform a case-insensitive partial match with field names or descriptions.</param>
-        /// <param name="orderBy">[Order](#ordering) the results by a field: *  `contextsCount` Sorts by the number of contexts related to a field. *  `lastUsed` Sorts by the date when the value of the field last changed. *  `name` Sorts by the field name. *  `screensCount` Sorts by the number of screens related to a field.</param>
-        /// <param name="expand">Use [expand](#expansion) to include additional information in the response. This parameter accepts a comma-separated list. Expand options include: *  `key` Returns the key for each field. *  `lastUsed` Returns the date when the value of the field last changed. *  `screensCount` Returns the number of screens related to a field. *  `contextsCount` Returns the number of contexts related to a field. *  `isLocked` Returns information about whether the field is [locked](https://confluence.atlassian.com/x/ZSN7Og). *  `searcherKey` Returns the searcher key for each custom field.</param>
+        /// <param name="orderBy">[Order](#ordering) the results by a field: *  `contextsCount` sorts by the number of contexts related to a field *  `lastUsed` sorts by the date when the value of the field last changed *  `name` sorts by the field name *  `screensCount` sorts by the number of screens related to a field</param>
+        /// <param name="expand">Use [expand](#expansion) to include additional information in the response. This parameter accepts a comma-separated list. Expand options include: *  `key` returns the key for each field *  `lastUsed` returns the date when the value of the field last changed *  `screensCount` returns the number of screens related to a field *  `contextsCount` returns the number of contexts related to a field *  `isLocked` returns information about whether the field is [locked](https://confluence.atlassian.com/x/ZSN7Og) *  `searcherKey` returns the searcher key for each custom field</param>
         [Get("/rest/api/3/field/search")]
         Task<Response<AnyOf<PageBeanField, ErrorCollection, object>>> GetFieldsPaginatedAsync([Query] long? startAt, [Query] int? maxResults, [Query] string Type, [Query] string Id, [Query] string query, [Query] string orderBy, [Query] string expand);
+
+        /// <summary>
+        /// Get fields in trash paginated
+        ///
+        /// GetTrashedFieldsPaginated (/rest/api/3/field/search/trashed)
+        /// </summary>
+        /// <param name="startAt">The index of the first item to return in a page of results (page offset).</param>
+        /// <param name="maxResults">The maximum number of items to return per page.</param>
+        /// <param name="id"></param>
+        /// <param name="query">String used to perform a case-insensitive partial match with field names or descriptions.</param>
+        /// <param name="orderBy">[Order](#ordering) the results by a field: *  `name` sorts by the field name *  `trashDate` sorts by the date the field was moved to the trash *  `plannedDeletionDate` sorts by the planned deletion date</param>
+        [Get("/rest/api/3/field/search/trashed")]
+        Task<Response<AnyOf<PageBeanField, ErrorCollection, object>>> GetTrashedFieldsPaginatedAsync([Query] long? startAt, [Query] int? maxResults, [Query] string Id, [Query] string query, [Query] string orderBy);
 
         /// <summary>
         /// Update custom field
@@ -887,8 +972,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Api
         /// <param name="optionId">The ID of the option to be deselected.</param>
         /// <param name="replaceWith">The ID of the option that will replace the currently selected option.</param>
         /// <param name="jql">A JQL query that specifies the issues to be updated. For example, *project=10000*.</param>
-        /// <param name="overrideScreenSecurity">Whether screen security is overridden to enable hidden fields to be edited. Available to Connect app users with admin permission and Forge app users with the `manage:jira-configuration` scope.</param>
-        /// <param name="overrideEditableFlag">Whether screen security is overridden to enable uneditable fields to be edited. Available to Connect app users with admin permission and Forge app users with the `manage:jira-configuration` scope.</param>
+        /// <param name="overrideScreenSecurity">Whether screen security is overridden to enable hidden fields to be edited. Available to Connect and Forge app users with admin permission.</param>
+        /// <param name="overrideEditableFlag">Whether screen security is overridden to enable uneditable fields to be edited. Available to Connect and Forge app users with *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).</param>
         [Delete("/rest/api/3/field/{fieldKey}/option/{optionId}/issue")]
         Task<Response<AnyOf<TaskProgressBeanRemoveOptionFromIssuesResult, object>>> ReplaceIssueFieldOptionAsync([Path] string fieldKey, [Path] long optionId, [Query] long? replaceWith, [Query] string jql, [Query] bool? overrideScreenSecurity, [Query] bool? overrideEditableFlag);
 
@@ -899,7 +984,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Api
         /// </summary>
         /// <param name="id">The ID of a custom field.</param>
         [Delete("/rest/api/3/field/{id}")]
-        Task<Response<AnyOf<DeleteCustomFieldResult, ErrorCollection>>> DeleteCustomFieldAsync([Path] string id);
+        Task<Response<AnyOf<TaskProgressBeanObject, ErrorCollection>>> DeleteCustomFieldAsync([Path] string id);
 
         /// <summary>
         /// Restore custom field from trash
@@ -1086,7 +1171,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Api
         /// </summary>
         /// <param name="expand">Use [expand](#expansion) to include additional information about filter in the response. This parameter accepts a comma-separated list. Expand options include: *  `sharedUsers` Returns the users that the filter is shared with. This includes users that can browse projects that the filter is shared with. If you don't specify `sharedUsers`, then the `sharedUsers` object is returned but it doesn't list any users. The list of users returned is limited to 1000, to access additional users append `[start-index:end-index]` to the expand request. For example, to access the next 1000 users, use `?expand=sharedUsers[1001:2000]`. *  `subscriptions` Returns the users that are subscribed to the filter. If you don't specify `subscriptions`, the `subscriptions` object is returned but it doesn't list any subscriptions. The list of subscriptions returned is limited to 1000, to access additional subscriptions append `[start-index:end-index]` to the expand request. For example, to access the next 1000 subscriptions, use `?expand=subscriptions[1001:2000]`.</param>
         [Get("/rest/api/3/filter")]
-        Task<Response<AnyOf<Models.Filter[], object>>> GetFiltersAsync([Query] string expand);
+        Task<Models.Filter[]> GetFiltersAsync([Query] string expand);
 
         /// <summary>
         /// Create filter
@@ -1095,9 +1180,10 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Api
         /// </summary>
         /// <param name="content">Details about a filter.</param>
         /// <param name="expand">Use [expand](#expansion) to include additional information about filter in the response. This parameter accepts a comma-separated list. Expand options include: *  `sharedUsers` Returns the users that the filter is shared with. This includes users that can browse projects that the filter is shared with. If you don't specify `sharedUsers`, then the `sharedUsers` object is returned but it doesn't list any users. The list of users returned is limited to 1000, to access additional users append `[start-index:end-index]` to the expand request. For example, to access the next 1000 users, use `?expand=sharedUsers[1001:2000]`. *  `subscriptions` Returns the users that are subscribed to the filter. If you don't specify `subscriptions`, the `subscriptions` object is returned but it doesn't list any subscriptions. The list of subscriptions returned is limited to 1000, to access additional subscriptions append `[start-index:end-index]` to the expand request. For example, to access the next 1000 subscriptions, use `?expand=subscriptions[1001:2000]`.</param>
+        /// <param name="overrideSharePermissions">EXPERIMENTAL: Whether share permissions are overridden to enable filters with any share permissions to be created. Available to users with *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).</param>
         [Post("/rest/api/3/filter")]
         [Header("Content-Type", "application/json")]
-        Task<Response<AnyOf<Models.Filter, object>>> CreateFilterAsync([Body] Models.Filter content, [Query] string expand);
+        Task<Response<AnyOf<Models.Filter, object>>> CreateFilterAsync([Body] Models.Filter content, [Query] string expand, [Query] bool? overrideSharePermissions);
 
         /// <summary>
         /// Get default share scope
@@ -1144,15 +1230,17 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Api
         /// <param name="filterName">String used to perform a case-insensitive partial match with `name`.</param>
         /// <param name="accountId">User account ID used to return filters with the matching `owner.accountId`. This parameter cannot be used with `owner`.</param>
         /// <param name="owner">This parameter is deprecated because of privacy changes. Use `accountId` instead. See the [migration guide](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details. User name used to return filters with the matching `owner.name`. This parameter cannot be used with `accountId`.</param>
-        /// <param name="groupname">Group name used to returns filters that are shared with a group that matches `sharePermissions.group.groupname`.</param>
+        /// <param name="groupname">As a group's name can change, use of `groupId` is recommended to identify a group. Group name used to returns filters that are shared with a group that matches `sharePermissions.group.groupname`. This parameter cannot be used with the `groupId` parameter.</param>
+        /// <param name="groupId">Group ID used to returns filters that are shared with a group that matches `sharePermissions.group.groupId`. This parameter cannot be used with the `groupname` parameter.</param>
         /// <param name="projectId">Project ID used to returns filters that are shared with a project that matches `sharePermissions.project.id`.</param>
         /// <param name="id">The list of filter IDs. To include multiple IDs, provide an ampersand-separated list. For example, `id=10000&id=10001`.</param>
         /// <param name="orderBy">[Order](#ordering) the results by a field: *  `description` Sorts by filter description. Note that this sorting works independently of whether the expand to display the description field is in use. *  `favourite_count` Sorts by the count of how many users have this filter as a favorite. *  `is_favourite` Sorts by whether the filter is marked as a favorite. *  `id` Sorts by filter ID. *  `name` Sorts by filter name. *  `owner` Sorts by the ID of the filter owner. *  `is_shared` Sorts by whether the filter is shared.</param>
         /// <param name="startAt">The index of the first item to return in a page of results (page offset).</param>
         /// <param name="maxResults">The maximum number of items to return per page.</param>
         /// <param name="expand">Use [expand](#expansion) to include additional information about filter in the response. This parameter accepts a comma-separated list. Expand options include: *  `description` Returns the description of the filter. *  `favourite` Returns an indicator of whether the user has set the filter as a favorite. *  `favouritedCount` Returns a count of how many users have set this filter as a favorite. *  `jql` Returns the JQL query that the filter uses. *  `owner` Returns the owner of the filter. *  `searchUrl` Returns a URL to perform the filter's JQL query. *  `sharePermissions` Returns the share permissions defined for the filter. *  `editPermissions` Returns the edit permissions defined for the filter. *  `isWritable` Returns whether the current user has permission to edit the filter. *  `subscriptions` Returns the users that are subscribed to the filter. *  `viewUrl` Returns a URL to view the filter.</param>
+        /// <param name="overrideSharePermissions">EXPERIMENTAL: Whether share permissions are overridden to enable filters with any share permissions to be returned. Available to users with *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).</param>
         [Get("/rest/api/3/filter/search")]
-        Task<Response<AnyOf<PageBeanFilterDetails, ErrorCollection, object>>> GetFiltersPaginatedAsync([Query] string filterName, [Query] string accountId, [Query] string owner, [Query] string groupname, [Query] long? projectId, [Query] long Id, [Query] string orderBy, [Query] long? startAt, [Query] int? maxResults, [Query] string expand);
+        Task<Response<AnyOf<PageBeanFilterDetails, ErrorCollection, object>>> GetFiltersPaginatedAsync([Query] string filterName, [Query] string accountId, [Query] string owner, [Query] string groupname, [Query] string groupId, [Query] long? projectId, [Query] long Id, [Query] string orderBy, [Query] long? startAt, [Query] int? maxResults, [Query] string expand, [Query] bool? overrideSharePermissions);
 
         /// <summary>
         /// Get filter
@@ -1161,8 +1249,9 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Api
         /// </summary>
         /// <param name="id">The ID of the filter to return.</param>
         /// <param name="expand">Use [expand](#expansion) to include additional information about filter in the response. This parameter accepts a comma-separated list. Expand options include: *  `sharedUsers` Returns the users that the filter is shared with. This includes users that can browse projects that the filter is shared with. If you don't specify `sharedUsers`, then the `sharedUsers` object is returned but it doesn't list any users. The list of users returned is limited to 1000, to access additional users append `[start-index:end-index]` to the expand request. For example, to access the next 1000 users, use `?expand=sharedUsers[1001:2000]`. *  `subscriptions` Returns the users that are subscribed to the filter. If you don't specify `subscriptions`, the `subscriptions` object is returned but it doesn't list any subscriptions. The list of subscriptions returned is limited to 1000, to access additional subscriptions append `[start-index:end-index]` to the expand request. For example, to access the next 1000 subscriptions, use `?expand=subscriptions[1001:2000]`.</param>
+        /// <param name="overrideSharePermissions">EXPERIMENTAL: Whether share permissions are overridden to enable filters with any share permissions to be returned. Available to users with *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).</param>
         [Get("/rest/api/3/filter/{id}")]
-        Task<Response<AnyOf<Models.Filter, object>>> GetFilterAsync([Path] long id, [Query] string expand);
+        Task<Response<AnyOf<Models.Filter, object>>> GetFilterAsync([Path] long id, [Query] string expand, [Query] bool? overrideSharePermissions);
 
         /// <summary>
         /// Update filter
@@ -1172,9 +1261,10 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Api
         /// <param name="id">The ID of the filter to update.</param>
         /// <param name="content">Details about a filter.</param>
         /// <param name="expand">Use [expand](#expansion) to include additional information about filter in the response. This parameter accepts a comma-separated list. Expand options include: *  `sharedUsers` Returns the users that the filter is shared with. This includes users that can browse projects that the filter is shared with. If you don't specify `sharedUsers`, then the `sharedUsers` object is returned but it doesn't list any users. The list of users returned is limited to 1000, to access additional users append `[start-index:end-index]` to the expand request. For example, to access the next 1000 users, use `?expand=sharedUsers[1001:2000]`. *  `subscriptions` Returns the users that are subscribed to the filter. If you don't specify `subscriptions`, the `subscriptions` object is returned but it doesn't list any subscriptions. The list of subscriptions returned is limited to 1000, to access additional subscriptions append `[start-index:end-index]` to the expand request. For example, to access the next 1000 subscriptions, use `?expand=subscriptions[1001:2000]`.</param>
+        /// <param name="overrideSharePermissions">EXPERIMENTAL: Whether share permissions are overridden to enable the addition of any share permissions to filters. Available to users with *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).</param>
         [Put("/rest/api/3/filter/{id}")]
         [Header("Content-Type", "application/json")]
-        Task<Response<AnyOf<Models.Filter, object>>> UpdateFilterAsync([Path] long id, [Body] Models.Filter content, [Query] string expand);
+        Task<Response<AnyOf<Models.Filter, object>>> UpdateFilterAsync([Path] long id, [Body] Models.Filter content, [Query] string expand, [Query] bool? overrideSharePermissions);
 
         /// <summary>
         /// Delete filter
@@ -1235,6 +1325,17 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Api
         Task<Response<AnyOf<Models.Filter, object>>> DeleteFavouriteForFilterAsync([Path] long id, [Query] string expand);
 
         /// <summary>
+        /// Change filter owner
+        ///
+        /// ChangeFilterOwner (/rest/api/3/filter/{id}/owner)
+        /// </summary>
+        /// <param name="id">The ID of the filter to update.</param>
+        /// <param name="content">The account ID of the new owner.</param>
+        [Put("/rest/api/3/filter/{id}/owner")]
+        [Header("Content-Type", "application/json")]
+        Task<Response<AnyOf<ChangeFilterOwnerResult, object>>> ChangeFilterOwnerAsync([Path] long id, [Body] ChangeFilterOwner content);
+
+        /// <summary>
         /// Get share permissions
         ///
         /// GetSharePermissions (/rest/api/3/filter/{id}/permission)
@@ -1279,10 +1380,11 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Api
         ///
         /// GetGroup (/rest/api/3/group)
         /// </summary>
-        /// <param name="groupname">The name of the group.</param>
+        /// <param name="groupname">As a group's name can change, use of `groupId` is recommended to identify a group.  The name of the group. This parameter cannot be used with the `groupId` parameter.</param>
+        /// <param name="groupId">The ID of the group. This parameter cannot be used with the `groupName` parameter.</param>
         /// <param name="expand">List of fields to expand.</param>
         [Get("/rest/api/3/group")]
-        Task<Response<AnyOf<Group, object>>> GetGroupAsync([Query] string groupname, [Query] string expand);
+        Task<Response<AnyOf<Group, object>>> GetGroupAsync([Query] string groupname, [Query] string groupId, [Query] string expand);
 
         /// <summary>
         /// Create group
@@ -1299,10 +1401,12 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Api
         ///
         /// RemoveGroup (/rest/api/3/group)
         /// </summary>
-        /// <param name="groupname">The name of the group.</param>
-        /// <param name="swapGroup">The group to transfer restrictions to. Only comments and worklogs are transferred. If restrictions are not transferred, comments and worklogs are inaccessible after the deletion.</param>
+        /// <param name="groupname">As a group's name can change, use of `groupId` is recommended to identify a group.  The name of the group. This parameter cannot be used with the `groupId` parameter.</param>
+        /// <param name="groupId">The ID of the group. This parameter cannot be used with the `groupName` parameter.</param>
+        /// <param name="swapGroup">As a group's name can change, use of `swapGroupId` is recommended to identify a group.  The group to transfer restrictions to. Only comments and worklogs are transferred. If restrictions are not transferred, comments and worklogs are inaccessible after the deletion. This parameter cannot be used with the `swapGroupId` parameter.</param>
+        /// <param name="swapGroupId">The ID of the group to transfer restrictions to. Only comments and worklogs are transferred. If restrictions are not transferred, comments and worklogs are inaccessible after the deletion. This parameter cannot be used with the `swapGroup` parameter.</param>
         [Delete("/rest/api/3/group")]
-        Task<object> RemoveGroupAsync([Query] string groupname, [Query] string swapGroup);
+        Task<object> RemoveGroupAsync([Query] string groupname, [Query] string groupId, [Query] string swapGroup, [Query] string swapGroupId);
 
         /// <summary>
         /// Bulk get groups
@@ -1321,12 +1425,13 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Api
         ///
         /// GetUsersFromGroup (/rest/api/3/group/member)
         /// </summary>
-        /// <param name="groupname">The name of the group.</param>
+        /// <param name="groupname">As a group's name can change, use of `groupId` is recommended to identify a group.  The name of the group. This parameter cannot be used with the `groupId` parameter.</param>
+        /// <param name="groupId">The ID of the group. This parameter cannot be used with the `groupName` parameter.</param>
         /// <param name="includeInactiveUsers">Include inactive users.</param>
         /// <param name="startAt">The index of the first item to return in a page of results (page offset).</param>
         /// <param name="maxResults">The maximum number of items to return per page.</param>
         [Get("/rest/api/3/group/member")]
-        Task<Response<AnyOf<PageBeanUserDetails, object>>> GetUsersFromGroupAsync([Query] string groupname, [Query] bool? includeInactiveUsers, [Query] long? startAt, [Query] int? maxResults);
+        Task<Response<AnyOf<PageBeanUserDetails, object>>> GetUsersFromGroupAsync([Query] string groupname, [Query] string groupId, [Query] bool? includeInactiveUsers, [Query] long? startAt, [Query] int? maxResults);
 
         /// <summary>
         /// Add user to group
@@ -1334,21 +1439,23 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Api
         /// AddUserToGroup (/rest/api/3/group/user)
         /// </summary>
         /// <param name="content">The user to add to the group.</param>
-        /// <param name="groupname">The name of the group (case sensitive).</param>
+        /// <param name="groupname">As a group's name can change, use of `groupId` is recommended to identify a group.  The name of the group. This parameter cannot be used with the `groupId` parameter.</param>
+        /// <param name="groupId">The ID of the group. This parameter cannot be used with the `groupName` parameter.</param>
         [Post("/rest/api/3/group/user")]
         [Header("Content-Type", "application/json")]
-        Task<Response<AnyOf<Group, object>>> AddUserToGroupAsync([Body] UpdateUserToGroupBean content, [Query] string groupname);
+        Task<Response<AnyOf<Group, object>>> AddUserToGroupAsync([Body] UpdateUserToGroupBean content, [Query] string groupname, [Query] string groupId);
 
         /// <summary>
         /// Remove user from group
         ///
         /// RemoveUserFromGroup (/rest/api/3/group/user)
         /// </summary>
-        /// <param name="groupname">The name of the group.</param>
         /// <param name="accountId">The account ID of the user, which uniquely identifies the user across all Atlassian products. For example, *5b10ac8d82e05b22cc7d4ef5*.</param>
+        /// <param name="groupname">As a group's name can change, use of `groupId` is recommended to identify a group.  The name of the group. This parameter cannot be used with the `groupId` parameter.</param>
+        /// <param name="groupId">The ID of the group. This parameter cannot be used with the `groupName` parameter.</param>
         /// <param name="username">This parameter is no longer available. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.</param>
         [Delete("/rest/api/3/group/user")]
-        Task<object> RemoveUserFromGroupAsync([Query] string groupname, [Query] string accountId, [Query] string username);
+        Task<object> RemoveUserFromGroupAsync([Query] string accountId, [Query] string groupname, [Query] string groupId, [Query] string username);
 
         /// <summary>
         /// Find groups
@@ -1357,11 +1464,12 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Api
         /// </summary>
         /// <param name="accountId">This parameter is deprecated, setting it does not affect the results. To find groups containing a particular user, use [Get user groups](#api-rest-api-3-user-groups-get).</param>
         /// <param name="query">The string to find in group names.</param>
-        /// <param name="exclude">A group to exclude from the result. To exclude multiple groups, provide an ampersand-separated list. For example, `exclude=group1&exclude=group2`.</param>
+        /// <param name="exclude">As a group's name can change, use of `excludeGroupIds` is recommended to identify a group.  A group to exclude from the result. To exclude multiple groups, provide an ampersand-separated list. For example, `exclude=group1&exclude=group2`. This parameter cannot be used with the `excludeGroupIds` parameter.</param>
+        /// <param name="excludeId">A group ID to exclude from the result. To exclude multiple groups, provide an ampersand-separated list. For example, `excludeId=group1-id&excludeId=group2-id`. This parameter cannot be used with the `excludeGroups` parameter.</param>
         /// <param name="maxResults">The maximum number of groups to return. The maximum number of groups that can be returned is limited by the system property `jira.ajax.autocomplete.limit`.</param>
         /// <param name="userName">This parameter is no longer available. See the [deprecation notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/) for details.</param>
         [Get("/rest/api/3/groups/picker")]
-        Task<FoundGroups> FindGroupsAsync([Query] string accountId, [Query] string query, [Query] string Exclude, [Query] int? maxResults, [Query] string userName);
+        Task<FoundGroups> FindGroupsAsync([Query] string accountId, [Query] string query, [Query] string Exclude, [Query] string ExcludeId, [Query] int? maxResults, [Query] string userName);
 
         /// <summary>
         /// Find users and groups
@@ -1510,8 +1618,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Api
         /// <param name="issueIdOrKey">The ID or key of the issue.</param>
         /// <param name="content">Details of an issue update request.</param>
         /// <param name="notifyUsers">Whether a notification email about the issue update is sent to all watchers. To disable the notification, administer Jira or administer project permissions are required. If the user doesn't have the necessary permission the request is ignored.</param>
-        /// <param name="overrideScreenSecurity">Whether screen security is overridden to enable hidden fields to be edited. Available to Connect app users with admin permission and Forge app users with the `manage:jira-configuration` scope.</param>
-        /// <param name="overrideEditableFlag">Whether screen security is overridden to enable uneditable fields to be edited. Available to Connect app users with admin permission and Forge app users with the `manage:jira-configuration` scope.</param>
+        /// <param name="overrideScreenSecurity">Whether screen security is overridden to enable hidden fields to be edited. Available to Connect app users with *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg) and Forge apps acting on behalf of users with *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).</param>
+        /// <param name="overrideEditableFlag">Whether screen security is overridden to enable uneditable fields to be edited. Available to Connect app users with *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg) and Forge apps acting on behalf of users with *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).</param>
         [Put("/rest/api/3/issue/{issueIdOrKey}")]
         [Header("Content-Type", "application/json")]
         Task<Response<AnyOf<EditIssueResult, object>>> EditIssueAsync([Path] string issueIdOrKey, [Body] IssueUpdateDetails content, [Query] bool? notifyUsers, [Query] bool? overrideScreenSecurity, [Query] bool? overrideEditableFlag);
@@ -1614,11 +1722,12 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Api
         /// <param name="issueIdOrKey">The ID or key of the issue.</param>
         /// <param name="id">The ID of the comment.</param>
         /// <param name="content">A comment.</param>
-        /// <param name="notifyUsers">Set to false to stop users being notified that a comment is updated</param>
+        /// <param name="notifyUsers">Whether users are notified when a comment is updated.</param>
+        /// <param name="overrideEditableFlag">Whether screen security is overridden to enable uneditable fields to be edited. Available to Connect app users with the *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg) and Forge apps acting on behalf of users with *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).</param>
         /// <param name="expand">Use [expand](#expansion) to include additional information about comments in the response. This parameter accepts `renderedBody`, which returns the comment body rendered in HTML.</param>
         [Put("/rest/api/3/issue/{issueIdOrKey}/comment/{id}")]
         [Header("Content-Type", "application/json")]
-        Task<Response<AnyOf<Comment, object>>> UpdateCommentAsync([Path] string issueIdOrKey, [Path] string id, [Body] Comment content, [Query] bool? notifyUsers, [Query] string expand);
+        Task<Response<AnyOf<Comment, object>>> UpdateCommentAsync([Path] string issueIdOrKey, [Path] string id, [Body] Comment content, [Query] bool? notifyUsers, [Query] bool? overrideEditableFlag, [Query] string expand);
 
         /// <summary>
         /// Delete comment
@@ -1636,8 +1745,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Api
         /// GetEditIssueMeta (/rest/api/3/issue/{issueIdOrKey}/editmeta)
         /// </summary>
         /// <param name="issueIdOrKey">The ID or key of the issue.</param>
-        /// <param name="overrideScreenSecurity">Whether hidden fields are returned. Available to Connect app users with admin permission and Forge app users with the `manage:jira-configuration` scope.</param>
-        /// <param name="overrideEditableFlag">Whether non-editable fields are returned. Available to Connect app users with admin permission and Forge app users with the `manage:jira-configuration` scope.</param>
+        /// <param name="overrideScreenSecurity">Whether hidden fields are returned. Available to Connect app users with *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg) and Forge apps acting on behalf of users with *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).</param>
+        /// <param name="overrideEditableFlag">Whether non-editable fields are returned. Available to Connect app users with *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg) and Forge apps acting on behalf of users with *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg).</param>
         [Get("/rest/api/3/issue/{issueIdOrKey}/editmeta")]
         Task<Response<AnyOf<IssueUpdateMetadata, object>>> GetEditIssueMetaAsync([Path] string issueIdOrKey, [Query] bool? overrideScreenSecurity, [Query] bool? overrideEditableFlag);
 
@@ -1863,7 +1972,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Api
         /// <param name="newEstimate">The value to set as the issue's remaining time estimate, as days (\#d), hours (\#h), or minutes (\#m or \#). For example, *2d*. Required when `adjustEstimate` is `new`.</param>
         /// <param name="reduceBy">The amount to reduce the issue's remaining estimate by, as days (\#d), hours (\#h), or minutes (\#m). For example, *2d*. Required when `adjustEstimate` is `manual`.</param>
         /// <param name="expand">Use [expand](#expansion) to include additional information about work logs in the response. This parameter accepts `properties`, which returns worklog properties.</param>
-        /// <param name="overrideEditableFlag">Whether the worklog entry should be added to the issue even if the issue is not editable, because jira.issue.editable set to false or missing. For example, the issue is closed. Connect app users with admin permission and Forge app users with the `manage:jira-configuration` scope can use this flag.</param>
+        /// <param name="overrideEditableFlag">Whether the worklog entry should be added to the issue even if the issue is not editable, because jira.issue.editable set to false or missing. For example, the issue is closed. Connect and Forge app users with *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg) can use this flag.</param>
         [Post("/rest/api/3/issue/{issueIdOrKey}/worklog")]
         [Header("Content-Type", "application/json")]
         Task<Response<AnyOf<Worklog, object>>> AddWorklogAsync([Path] string issueIdOrKey, [Body] Worklog content, [Query] bool? notifyUsers, [Query] string adjustEstimate, [Query] string newEstimate, [Query] string reduceBy, [Query] string expand, [Query] bool? overrideEditableFlag);
@@ -1891,7 +2000,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Api
         /// <param name="adjustEstimate">Defines how to update the issue's time estimate, the options are: *  `new` Sets the estimate to a specific value, defined in `newEstimate`. *  `leave` Leaves the estimate unchanged. *  `auto` Updates the estimate by the difference between the original and updated value of `timeSpent` or `timeSpentSeconds`.</param>
         /// <param name="newEstimate">The value to set as the issue's remaining time estimate, as days (\#d), hours (\#h), or minutes (\#m or \#). For example, *2d*. Required when `adjustEstimate` is `new`.</param>
         /// <param name="expand">Use [expand](#expansion) to include additional information about worklogs in the response. This parameter accepts `properties`, which returns worklog properties.</param>
-        /// <param name="overrideEditableFlag">Whether the worklog should be added to the issue even if the issue is not editable. For example, because the issue is closed. Connect app users with admin permission and Forge app users with the `manage:jira-configuration` scope can use this flag.</param>
+        /// <param name="overrideEditableFlag">Whether the worklog should be added to the issue even if the issue is not editable. For example, because the issue is closed. Connect and Forge app users with *Administer Jira* [global permission](https://confluence.atlassian.com/x/x4dKLg) can use this flag.</param>
         [Put("/rest/api/3/issue/{issueIdOrKey}/worklog/{id}")]
         [Header("Content-Type", "application/json")]
         Task<Response<AnyOf<Worklog, object>>> UpdateWorklogAsync([Path] string issueIdOrKey, [Path] string id, [Body] Worklog content, [Query] bool? notifyUsers, [Query] string adjustEstimate, [Query] string newEstimate, [Query] string expand, [Query] bool? overrideEditableFlag);
@@ -1907,7 +2016,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Api
         /// <param name="adjustEstimate">Defines how to update the issue's time estimate, the options are: *  `new` Sets the estimate to a specific value, defined in `newEstimate`. *  `leave` Leaves the estimate unchanged. *  `manual` Increases the estimate by amount specified in `increaseBy`. *  `auto` Reduces the estimate by the value of `timeSpent` in the worklog.</param>
         /// <param name="newEstimate">The value to set as the issue's remaining time estimate, as days (\#d), hours (\#h), or minutes (\#m or \#). For example, *2d*. Required when `adjustEstimate` is `new`.</param>
         /// <param name="increaseBy">The amount to increase the issue's remaining estimate by, as days (\#d), hours (\#h), or minutes (\#m or \#). For example, *2d*. Required when `adjustEstimate` is `manual`.</param>
-        /// <param name="overrideEditableFlag">Whether the work log entry should be added to the issue even if the issue is not editable, because jira.issue.editable set to false or missing. For example, the issue is closed. Connect app users with admin permission and Forge app users with the `manage:jira-configuration` scope can use this flag.</param>
+        /// <param name="overrideEditableFlag">Whether the work log entry should be added to the issue even if the issue is not editable, because jira.issue.editable set to false or missing. For example, the issue is closed. Connect and Forge app users with admin permission can use this flag.</param>
         [Delete("/rest/api/3/issue/{issueIdOrKey}/worklog/{id}")]
         Task<object> DeleteWorklogAsync([Path] string issueIdOrKey, [Path] string id, [Query] bool? notifyUsers, [Query] string adjustEstimate, [Query] string newEstimate, [Query] string increaseBy, [Query] bool? overrideEditableFlag);
 
@@ -2187,8 +2296,11 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Api
         /// <param name="startAt">The index of the first item to return in a page of results (page offset).</param>
         /// <param name="maxResults">The maximum number of items to return per page.</param>
         /// <param name="id">The list of issue type schemes IDs. To include multiple IDs, provide an ampersand-separated list. For example, `id=10000&id=10001`.</param>
+        /// <param name="orderBy">[Order](#ordering) the results by a field: *  `name` Sorts by issue type scheme name. *  `id` Sorts by issue type scheme ID.</param>
+        /// <param name="expand">Use [expand](#expansion) to include additional information in the response. This parameter accepts a comma-separated list. Expand options include: *  `projects` For each issue type schemes, returns information about the projects the issue type scheme is assigned to. *  `issueTypes` For each issue type schemes, returns information about the issueTypes the issue type scheme have.</param>
+        /// <param name="queryString">String used to perform a case-insensitive partial match with issue type scheme name.</param>
         [Get("/rest/api/3/issuetypescheme")]
-        Task<Response<AnyOf<PageBeanIssueTypeScheme, object>>> GetAllIssueTypeSchemesAsync([Query] long? startAt, [Query] int? maxResults, [Query] long Id);
+        Task<Response<AnyOf<PageBeanIssueTypeScheme, object>>> GetAllIssueTypeSchemesAsync([Query] long? startAt, [Query] int? maxResults, [Query] long Id, [Query] string orderBy, [Query] string expand, [Query] string queryString);
 
         /// <summary>
         /// Create issue type scheme
@@ -2292,8 +2404,11 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Api
         /// <param name="startAt">The index of the first item to return in a page of results (page offset).</param>
         /// <param name="maxResults">The maximum number of items to return per page.</param>
         /// <param name="id">The list of issue type screen scheme IDs. To include multiple IDs, provide an ampersand-separated list. For example, `id=10000&id=10001`.</param>
+        /// <param name="queryString">String used to perform a case-insensitive partial match with issue type screen scheme name.</param>
+        /// <param name="orderBy">[Order](#ordering) the results by a field: *  `name` Sorts by issue type screen scheme name. *  `id` Sorts by issue type screen scheme ID.</param>
+        /// <param name="expand">Use [expand](#expansion) to include additional information in the response. This parameter accepts `projects` that, for each issue type screen schemes, returns information about the projects the issue type screen scheme is assigned to.</param>
         [Get("/rest/api/3/issuetypescreenscheme")]
-        Task<Response<AnyOf<PageBeanIssueTypeScreenScheme, object>>> GetIssueTypeScreenSchemesAsync([Query] long? startAt, [Query] int? maxResults, [Query] long Id);
+        Task<Response<AnyOf<PageBeanIssueTypeScreenScheme, object>>> GetIssueTypeScreenSchemesAsync([Query] long? startAt, [Query] int? maxResults, [Query] long Id, [Query] string queryString, [Query] string orderBy, [Query] string expand);
 
         /// <summary>
         /// Create issue type screen scheme
@@ -2398,8 +2513,9 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Api
         /// <param name="issueTypeScreenSchemeId">The ID of the issue type screen scheme.</param>
         /// <param name="startAt">The index of the first item to return in a page of results (page offset).</param>
         /// <param name="maxResults">The maximum number of items to return per page.</param>
+        /// <param name="query"></param>
         [Get("/rest/api/3/issuetypescreenscheme/{issueTypeScreenSchemeId}/project")]
-        Task<Response<AnyOf<PageBeanProjectDetails, object>>> GetProjectsForIssueTypeScreenSchemeAsync([Path] long issueTypeScreenSchemeId, [Query] long? startAt, [Query] int? maxResults);
+        Task<Response<AnyOf<PageBeanProjectDetails, object>>> GetProjectsForIssueTypeScreenSchemeAsync([Path] long issueTypeScreenSchemeId, [Query] long? startAt, [Query] int? maxResults, [Query] string query);
 
         /// <summary>
         /// Get field reference data (GET)
@@ -2463,6 +2579,16 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Api
         Task<Response<AnyOf<ConvertedJQLQueries, object>>> MigrateQueriesAsync([Body] JQLPersonalDataMigrationRequest content);
 
         /// <summary>
+        /// Sanitize JQL queries
+        ///
+        /// SanitiseJqlQueries (/rest/api/3/jql/sanitize)
+        /// </summary>
+        /// <param name="content">The list of JQL queries to sanitize for the given account IDs.</param>
+        [Post("/rest/api/3/jql/sanitize")]
+        [Header("Content-Type", "application/json")]
+        Task<Response<AnyOf<SanitizedJqlQueries, ErrorCollection>>> SanitiseJqlQueriesAsync([Body] JqlQueriesToSanitize content);
+
+        /// <summary>
         /// Get all labels
         ///
         /// GetAllLabels (/rest/api/3/label)
@@ -2484,8 +2610,9 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Api
         /// <param name="permissions">A list of permission keys. (Required) This parameter accepts a comma-separated list. To get the list of available permissions, use [Get all permissions](#api-rest-api-3-permissions-get).</param>
         /// <param name="projectUuid"></param>
         /// <param name="projectConfigurationUuid"></param>
+        /// <param name="commentId">The ID of the comment.</param>
         [Get("/rest/api/3/mypermissions")]
-        Task<Response<AnyOf<Permissions, ErrorCollection>>> GetMyPermissionsAsync([Query] string projectKey, [Query] string projectId, [Query] string issueKey, [Query] string issueId, [Query] string permissions, [Query] string projectUuid, [Query] string projectConfigurationUuid);
+        Task<Response<AnyOf<Permissions, ErrorCollection>>> GetMyPermissionsAsync([Query] string projectKey, [Query] string projectId, [Query] string issueKey, [Query] string issueId, [Query] string permissions, [Query] string projectUuid, [Query] string projectConfigurationUuid, [Query] string commentId);
 
         /// <summary>
         /// Get preference
@@ -2702,6 +2829,28 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Api
         Task<Response<AnyOf<Priority[], object>>> GetPrioritiesAsync();
 
         /// <summary>
+        /// Create priority
+        ///
+        /// CreatePriority (/rest/api/3/priority)
+        /// </summary>
+        /// <param name="content">Details of an issue priority.</param>
+        [Post("/rest/api/3/priority")]
+        [Header("Content-Type", "application/json")]
+        Task<Response<AnyOf<PriorityId, ErrorCollection>>> CreatePriorityAsync([Body] CreatePriorityDetails content);
+
+        /// <summary>
+        /// Search priorities
+        ///
+        /// SearchPriorities (/rest/api/3/priority/search)
+        /// </summary>
+        /// <param name="startAt">The index of the first item to return in a page of results (page offset).</param>
+        /// <param name="maxResults">The maximum number of items to return per page.</param>
+        /// <param name="id">The list of priority IDs. To include multiple IDs, provide an ampersand-separated list. For example, `id=2&id=3`.</param>
+        /// <param name="onlyDefault">Whether only the default priority is returned.</param>
+        [Get("/rest/api/3/priority/search")]
+        Task<Response<AnyOf<PageBeanPriority, ErrorCollection>>> SearchPrioritiesAsync([Query] long? startAt, [Query] int? maxResults, [Query] string Id, [Query] bool? onlyDefault);
+
+        /// <summary>
         /// Get priority
         ///
         /// GetPriority (/rest/api/3/priority/{id})
@@ -2709,6 +2858,17 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Api
         /// <param name="id">The ID of the issue priority.</param>
         [Get("/rest/api/3/priority/{id}")]
         Task<Response<AnyOf<Priority, object>>> GetPriorityAsync([Path] string id);
+
+        /// <summary>
+        /// Update priority
+        ///
+        /// UpdatePriority (/rest/api/3/priority/{id})
+        /// </summary>
+        /// <param name="id">The ID of the issue priority.</param>
+        /// <param name="content">Details of an issue priority.</param>
+        [Put("/rest/api/3/priority/{id}")]
+        [Header("Content-Type", "application/json")]
+        Task<Response<AnyOf<UpdatePriorityResult, ErrorCollection>>> UpdatePriorityAsync([Path] string id, [Body] UpdatePriorityDetails content);
 
         /// <summary>
         /// Get all projects
@@ -2997,8 +3157,9 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Api
         /// </summary>
         /// <param name="projectIdOrKey">The project ID or project key (case sensitive).</param>
         /// <param name="id">The ID of the project role. Use [Get all project roles](#api-rest-api-3-role-get) to get a list of project role IDs.</param>
+        /// <param name="excludeInactiveUsers">Exclude inactive users.</param>
         [Get("/rest/api/3/project/{projectIdOrKey}/role/{id}")]
-        Task<Response<AnyOf<ProjectRole, object>>> GetProjectRoleAsync([Path] string projectIdOrKey, [Path] long id);
+        Task<Response<AnyOf<ProjectRole, object>>> GetProjectRoleAsync([Path] string projectIdOrKey, [Path] long id, [Query] bool? excludeInactiveUsers);
 
         /// <summary>
         /// Set actors for project role
@@ -3007,7 +3168,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Api
         /// </summary>
         /// <param name="projectIdOrKey">The project ID or project key (case sensitive).</param>
         /// <param name="id">The ID of the project role. Use [Get all project roles](#api-rest-api-3-role-get) to get a list of project role IDs.</param>
-        /// <param name="content">The groups or users to associate with the project role for this project. Provide the user account ID or group name.</param>
+        /// <param name="content">The groups or users to associate with the project role for this project. Provide the user account ID, group name, or group ID. As a group's name can change, use of group ID is recommended.</param>
         [Put("/rest/api/3/project/{projectIdOrKey}/role/{id}")]
         [Header("Content-Type", "application/json")]
         Task<Response<AnyOf<ProjectRole, object>>> SetActorsAsync([Path] string projectIdOrKey, [Path] long id, [Body] ProjectRoleActorsUpdateBean content);
@@ -3019,7 +3180,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Api
         /// </summary>
         /// <param name="projectIdOrKey">The project ID or project key (case sensitive).</param>
         /// <param name="id">The ID of the project role. Use [Get all project roles](#api-rest-api-3-role-get) to get a list of project role IDs.</param>
-        /// <param name="content">The groups or users to associate with the project role for this project. Provide the user account ID or group name.</param>
+        /// <param name="content">The groups or users to associate with the project role for this project. Provide the user account ID, group name, or group ID. As a group's name can change, use of group ID is recommended.</param>
         [Post("/rest/api/3/project/{projectIdOrKey}/role/{id}")]
         [Header("Content-Type", "application/json")]
         Task<Response<AnyOf<ProjectRole, object>>> AddActorUsersAsync([Path] string projectIdOrKey, [Path] long id, [Body] ActorsMap content);
@@ -3032,9 +3193,10 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Api
         /// <param name="projectIdOrKey">The project ID or project key (case sensitive).</param>
         /// <param name="id">The ID of the project role. Use [Get all project roles](#api-rest-api-3-role-get) to get a list of project role IDs.</param>
         /// <param name="user">The user account ID of the user to remove from the project role.</param>
-        /// <param name="group">The name of the group to remove from the project role.</param>
+        /// <param name="group">The name of the group to remove from the project role. This parameter cannot be used with the `groupId` parameter. As a group's name can change, use of `groupId` is recommended.</param>
+        /// <param name="groupId">The ID of the group to remove from the project role. This parameter cannot be used with the `group` parameter.</param>
         [Delete("/rest/api/3/project/{projectIdOrKey}/role/{id}")]
-        Task<object> DeleteActorAsync([Path] string projectIdOrKey, [Path] long id, [Query] string user, [Query] string group);
+        Task<object> DeleteActorAsync([Path] string projectIdOrKey, [Path] long id, [Query] string user, [Query] string group, [Query] string groupId);
 
         /// <summary>
         /// Get project role details
@@ -3347,9 +3509,10 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Api
         /// </summary>
         /// <param name="id">The ID of the project role. Use [Get all project roles](#api-rest-api-3-role-get) to get a list of project role IDs.</param>
         /// <param name="user">The user account ID of the user to remove as a default actor.</param>
-        /// <param name="group">The group name of the group to be removed as a default actor.</param>
+        /// <param name="groupId">The group ID of the group to be removed as a default actor. This parameter cannot be used with the `group` parameter.</param>
+        /// <param name="group">The group name of the group to be removed as a default actor.This parameter cannot be used with the `groupId` parameter. As a group's name can change, use of `groupId` is recommended.</param>
         [Delete("/rest/api/3/role/{id}/actors")]
-        Task<Response<AnyOf<ProjectRole, object>>> DeleteProjectRoleActorsFromRoleAsync([Path] long id, [Query] string user, [Query] string group);
+        Task<Response<AnyOf<ProjectRole, object>>> DeleteProjectRoleActorsFromRoleAsync([Path] long id, [Query] string user, [Query] string groupId, [Query] string group);
 
         /// <summary>
         /// Get screens
@@ -3359,8 +3522,11 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Api
         /// <param name="startAt">The index of the first item to return in a page of results (page offset).</param>
         /// <param name="maxResults">The maximum number of items to return per page.</param>
         /// <param name="id">The list of screen IDs. To include multiple IDs, provide an ampersand-separated list. For example, `id=10000&id=10001`.</param>
+        /// <param name="queryString">String used to perform a case-insensitive partial match with screen name.</param>
+        /// <param name="scope">The scope filter string. To filter by multiple scope, provide an ampersand-separated list. For example, `scope=GLOBAL&scope=PROJECT`.</param>
+        /// <param name="orderBy">[Order](#ordering) the results by a field: *  `id` Sorts by screen ID. *  `name` Sorts by screen name.</param>
         [Get("/rest/api/3/screens")]
-        Task<Response<AnyOf<PageBeanScreen, object>>> GetScreensAsync([Query] long? startAt, [Query] int? maxResults, [Query] long Id);
+        Task<Response<AnyOf<PageBeanScreen, object>>> GetScreensAsync([Query] long? startAt, [Query] int? maxResults, [Query] long Id, [Query] string queryString, [Query] string Scope, [Query] string orderBy);
 
         /// <summary>
         /// Create screen
@@ -3519,8 +3685,11 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Api
         /// <param name="startAt">The index of the first item to return in a page of results (page offset).</param>
         /// <param name="maxResults">The maximum number of items to return per page.</param>
         /// <param name="id">The list of screen scheme IDs. To include multiple IDs, provide an ampersand-separated list. For example, `id=10000&id=10001`.</param>
+        /// <param name="expand">Use [expand](#expansion) include additional information in the response. This parameter accepts `issueTypeScreenSchemes` that, for each screen schemes, returns information about the issue type screen scheme the screen scheme is assigned to.</param>
+        /// <param name="queryString">String used to perform a case-insensitive partial match with screen scheme name.</param>
+        /// <param name="orderBy">[Order](#ordering) the results by a field: *  `id` Sorts by screen scheme ID. *  `name` Sorts by screen scheme name.</param>
         [Get("/rest/api/3/screenscheme")]
-        Task<Response<AnyOf<PageBeanScreenScheme, object>>> GetScreenSchemesAsync([Query] long? startAt, [Query] int? maxResults, [Query] long Id);
+        Task<Response<AnyOf<PageBeanScreenScheme, object>>> GetScreenSchemesAsync([Query] long? startAt, [Query] int? maxResults, [Query] long Id, [Query] string expand, [Query] string queryString, [Query] string orderBy);
 
         /// <summary>
         /// Create screen scheme
@@ -3648,6 +3817,59 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Api
         Task<Response<AnyOf<StatusCategory, object>>> GetStatusCategoryAsync([Path] string idOrKey);
 
         /// <summary>
+        /// Bulk get statuses
+        ///
+        /// GetStatusesById (/rest/api/3/statuses)
+        /// </summary>
+        /// <param name="expand">Use [expand](#expansion) to include additional information in the response. This parameter accepts a comma-separated list. Expand options include: *  `usages` Returns the project and issue types that use the status in their workflow.</param>
+        /// <param name="id">The list of status IDs. To include multiple IDs, provide an ampersand-separated list. For example, id=10000&id=10001.Min items `1`, Max items `50`</param>
+        [Get("/rest/api/3/statuses")]
+        Task<Response<AnyOf<JiraStatus[], object>>> GetStatusesByIdAsync([Query] string expand, [Query] string Id);
+
+        /// <summary>
+        /// Bulk update statuses
+        ///
+        /// UpdateStatuses (/rest/api/3/statuses)
+        /// </summary>
+        /// <param name="content">The list of statuses that will be updated.</param>
+        [Put("/rest/api/3/statuses")]
+        [Header("Content-Type", "application/json")]
+        Task<Response<AnyOf<UpdateStatusesResult, object>>> UpdateStatusesAsync([Body] StatusUpdateRequest content);
+
+        /// <summary>
+        /// Bulk create statuses
+        ///
+        /// CreateStatuses (/rest/api/3/statuses)
+        /// </summary>
+        /// <param name="content">Details of the statuses being created and their scope.</param>
+        [Post("/rest/api/3/statuses")]
+        [Header("Content-Type", "application/json")]
+        Task<Response<AnyOf<JiraStatus[], object>>> CreateStatusesAsync([Body] StatusCreateRequest content);
+
+        /// <summary>
+        /// Bulk delete Statuses
+        ///
+        /// DeleteStatusesById (/rest/api/3/statuses)
+        /// </summary>
+        /// <param name="id">The list of status IDs. To include multiple IDs, provide an ampersand-separated list. For example, id=10000&id=10001.Min items `1`, Max items `50`</param>
+        [Delete("/rest/api/3/statuses")]
+        Task<Response<AnyOf<DeleteStatusesByIdResult, object>>> DeleteStatusesByIdAsync([Query] string Id);
+
+        /// <summary>
+        /// Search statuses paginated
+        ///
+        /// Search (/rest/api/3/statuses/search)
+        /// </summary>
+        /// <param name="expand">Use [expand](#expansion) to include additional information in the response. This parameter accepts a comma-separated list. Expand options include: *  `usages` Returns the project and issue types that use the status in their workflow.</param>
+        /// <param name="projectId">The project the status is part of or null for global statuses.</param>
+        /// <param name="startAt">The index of the first item to return in a page of results (page offset).</param>
+        /// <param name="maxResults">The maximum number of items to return per page.</param>
+        /// <param name="searchString">Term to match status names against or null to search for all statuses in the search scope.</param>
+        /// <param name="statusCategory">Category of the status to filter by. The supported values are: `TODO`, `IN_PROGRESS`, and `DONE`.</param>
+        [Get("/rest/api/3/statuses/search")]
+        Task<Response<AnyOf<PageOfStatuses, object>>> SearchAsync([Query] string expand, [Query] string projectId, [Query] long? startAt, [Query] int? maxResults, [Query] string searchString, [Query] string statusCategory);
+
+        /// <summary>
         /// Get task
         ///
         /// GetTask (/rest/api/3/task/{taskId})
@@ -3664,6 +3886,47 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Api
         /// <param name="taskId">The ID of the task.</param>
         [Post("/rest/api/3/task/{taskId}/cancel")]
         Task<Response<AnyOf<CancelTaskResult, string[]>>> CancelTaskAsync([Path] string taskId);
+
+        /// <summary>
+        /// Get UI modifications
+        ///
+        /// GetUiModifications (/rest/api/3/uiModifications)
+        /// </summary>
+        /// <param name="startAt">The index of the first item to return in a page of results (page offset).</param>
+        /// <param name="maxResults">The maximum number of items to return per page.</param>
+        /// <param name="expand">Use expand to include additional information in the response. This parameter accepts a comma-separated list. Expand options include: *  `data` Returns UI modification data. *  `contexts` Returns UI modification contexts.</param>
+        [Get("/rest/api/3/uiModifications")]
+        Task<Response<AnyOf<PageBeanUiModificationDetails, object>>> GetUiModificationsAsync([Query] long? startAt, [Query] int? maxResults, [Query] string expand);
+
+        /// <summary>
+        /// Create UI modification
+        ///
+        /// CreateUiModification (/rest/api/3/uiModifications)
+        /// </summary>
+        /// <param name="content">The details of a UI modification.</param>
+        [Post("/rest/api/3/uiModifications")]
+        [Header("Content-Type", "application/json")]
+        Task<Response<AnyOf<UiModificationIdentifiers, object>>> CreateUiModificationAsync([Body] CreateUiModificationDetails content);
+
+        /// <summary>
+        /// Update UI modification
+        ///
+        /// UpdateUiModification (/rest/api/3/uiModifications/{uiModificationId})
+        /// </summary>
+        /// <param name="uiModificationId">The ID of the UI modification.</param>
+        /// <param name="content">The details of a UI modification.</param>
+        [Put("/rest/api/3/uiModifications/{uiModificationId}")]
+        [Header("Content-Type", "application/json")]
+        Task<Response<AnyOf<UpdateUiModificationResult, object>>> UpdateUiModificationAsync([Path] string uiModificationId, [Body] UpdateUiModificationDetails content);
+
+        /// <summary>
+        /// Delete UI modification
+        ///
+        /// DeleteUiModification (/rest/api/3/uiModifications/{uiModificationId})
+        /// </summary>
+        /// <param name="uiModificationId">The ID of the UI modification.</param>
+        [Delete("/rest/api/3/uiModifications/{uiModificationId}")]
+        Task<Response<AnyOf<DeleteUiModificationResult, object>>> DeleteUiModificationAsync([Path] string uiModificationId);
 
         /// <summary>
         /// Get avatars
@@ -3971,7 +4234,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Api
         /// <param name="query">A query string that is matched against user attributes ( `displayName`, and `emailAddress`) to find relevant users. The string can match the prefix of the attribute's value. For example, *query=john* matches a user with a `displayName` of *John Smith* and a user with an `emailAddress` of *johnson@example.com*. Required, unless `accountId` or `property` is specified.</param>
         /// <param name="username"></param>
         /// <param name="accountId">A query string that is matched exactly against a user `accountId`. Required, unless `query` or `property` is specified.</param>
-        /// <param name="startAt">The index of the first item to return in a page of results (page offset).</param>
+        /// <param name="startAt">The index of the first item to return in a page of filtered results (page offset).</param>
         /// <param name="maxResults">The maximum number of items to return per page.</param>
         /// <param name="property">A query string used to search properties. Property keys are specified by path, so property keys containing dot (.) or equals (=) characters cannot be used. The query string cannot be specified using a JSON object. Example: To search for the value of `nested` from `{"something":{"nested":1,"other":2}}` use `thepropertykey.something.nested=1`. Required, unless `accountId` or `query` is specified.</param>
         [Get("/rest/api/3/user/search")]
@@ -4375,7 +4638,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Api
         /// </summary>
         /// <param name="id">The ID of the workflow scheme. Find this ID by editing the desired workflow scheme in Jira. The ID is shown in the URL as `schemeId`. For example, *schemeId=10301*.</param>
         [Delete("/rest/api/3/workflowscheme/{id}")]
-        Task<object> DeleteWorkflowSchemeAsync([Path] long id);
+        Task<Response<AnyOf<DeleteWorkflowSchemeResult, object>>> DeleteWorkflowSchemeAsync([Path] long id);
 
         /// <summary>
         /// Create draft workflow scheme
@@ -4722,11 +4985,10 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Api
         /// AppIssueFieldValueUpdateResourceUpdateIssueFieldsPut (/rest/atlassian-connect/1/migration/field)
         /// </summary>
         /// <param name="atlassianTransferId">The ID of the transfer.</param>
-        /// <param name="atlassianAccountId">The Atlassian account ID of the impersonated user. This user must be a member of the site admin group.</param>
         /// <param name="content">Details of updates for a custom field.</param>
         [Put("/rest/atlassian-connect/1/migration/field")]
         [Header("Content-Type", "application/json")]
-        Task<Response<AnyOf<AppIssueFieldValueUpdateResourceUpdateIssueFieldsPutResult, object>>> AppIssueFieldValueUpdateResourceUpdateIssueFieldsPutAsync([Header("Atlassian-Transfer-Id")] string atlassianTransferId, [Header("Atlassian-Account-Id")] string atlassianAccountId, [Body] ConnectCustomFieldValues content);
+        Task<Response<AnyOf<AppIssueFieldValueUpdateResourceUpdateIssueFieldsPutResult, object>>> AppIssueFieldValueUpdateResourceUpdateIssueFieldsPutAsync([Header("Atlassian-Transfer-Id")] string atlassianTransferId, [Body] ConnectCustomFieldValues content);
 
         /// <summary>
         /// Bulk update entity properties
@@ -4734,12 +4996,11 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Api
         /// MigrationResourceUpdateEntityPropertiesValuePut (/rest/atlassian-connect/1/migration/properties/{entityType})
         /// </summary>
         /// <param name="atlassianTransferId">The app migration transfer ID.</param>
-        /// <param name="atlassianAccountId">The Atlassian account ID of the impersonated user. This user must be a member of the site admin group.</param>
         /// <param name="entityType">The type indicating the object that contains the entity properties.</param>
         /// <param name="content"></param>
         [Put("/rest/atlassian-connect/1/migration/properties/{entityType}")]
         [Header("Content-Type", "application/json")]
-        Task<object> MigrationResourceUpdateEntityPropertiesValuePutAsync([Header("Atlassian-Transfer-Id")] string atlassianTransferId, [Header("Atlassian-Account-Id")] string atlassianAccountId, [Path] string entityType, [Body] EntityPropertyDetails[] content);
+        Task<object> MigrationResourceUpdateEntityPropertiesValuePutAsync([Header("Atlassian-Transfer-Id")] string atlassianTransferId, [Path] string entityType, [Body] EntityPropertyDetails[] content);
 
         /// <summary>
         /// Get workflow transition rule configurations
@@ -4765,7 +5026,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Api
         /// <param name="contentType">The Content-Type</param>
         /// <param name="id">The ID of the filter.</param>
         /// <param name="content"></param>
-        public static Task<Response<AnyOf<SetColumnsResult, object>>> SetColumnsAsync(this IJiraApi api, string contentType, long id, string content)
+        public static Task<Response<AnyOf<SetColumnsResult, object>>> SetColumnsAsync(this IJiraApi api, string contentType, long id, string Content)
         {
             return api.SetColumnsAsync(contentType, id, content);
         }
@@ -4788,7 +5049,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Api
         /// <param name="api">The Api</param>
         /// <param name="contentType">The Content-Type</param>
         /// <param name="content"></param>
-        public static Task<Response<AnyOf<SetIssueNavigatorDefaultColumnsResult, object>>> SetIssueNavigatorDefaultColumnsAsync(this IJiraApi api, string contentType, string content)
+        public static Task<Response<AnyOf<SetIssueNavigatorDefaultColumnsResult, object>>> SetIssueNavigatorDefaultColumnsAsync(this IJiraApi api, string contentType, string Content)
         {
             return api.SetIssueNavigatorDefaultColumnsAsync(contentType, content);
         }
@@ -4800,7 +5061,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Api
         /// <param name="contentType">The Content-Type</param>
         /// <param name="accountId">The account ID of the user, which uniquely identifies the user across all Atlassian products. For example, *5b10ac8d82e05b22cc7d4ef5*.</param>
         /// <param name="content"></param>
-        public static Task<Response<AnyOf<SetUserColumnsResult, object>>> SetUserColumnsAsync(this IJiraApi api, string contentType, string accountId, string content)
+        public static Task<Response<AnyOf<SetUserColumnsResult, object>>> SetUserColumnsAsync(this IJiraApi api, string contentType, string accountId, string Content)
         {
             return api.SetUserColumnsAsync(contentType, content, accountId);
         }
@@ -4817,7 +5078,12 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
         public string[] User { get; set; }
 
         /// <summary>
-        /// The name of the group to add as a default actor. This parameter accepts a comma-separated list. For example, `"group":["project-admin", "jira-developers"]`.
+        /// The ID of the group to add as a default actor. This parameter cannot be used with the `group` parameter This parameter accepts a comma-separated list. For example, `"groupId":["77f6ab39-e755-4570-a6ae-2d7a8df0bcb8", "0c011f85-69ed-49c4-a801-3b18d0f771bc"]`.
+        /// </summary>
+        public string[] GroupId { get; set; }
+
+        /// <summary>
+        /// The name of the group to add as a default actor. This parameter cannot be used with the `groupId` parameter. As a group's name can change,use of `groupId` is recommended. This parameter accepts a comma-separated list. For example, `"group":["project-admin", "jira-developers"]`.
         /// </summary>
         public string[] Group { get; set; }
     }
@@ -4830,9 +5096,14 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
         public string[] User { get; set; }
 
         /// <summary>
-        /// The name of the group to add.
+        /// The name of the group to add. This parameter cannot be used with the `groupId` parameter. As a group's name can change, use of `groupId` is recommended.
         /// </summary>
         public string[] Group { get; set; }
+
+        /// <summary>
+        /// The ID of the group to add. This parameter cannot be used with the `group` parameter.
+        /// </summary>
+        public string[] GroupId { get; set; }
     }
 
     public class AddFieldBean
@@ -4869,6 +5140,63 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
 
     public class AddWatcherResult
     {
+    }
+
+    /// <summary>
+    /// Announcement banner configuration.
+    /// </summary>
+    public class AnnouncementBannerConfiguration
+    {
+        /// <summary>
+        /// The text on the announcement banner.
+        /// </summary>
+        public string Message { get; set; }
+
+        /// <summary>
+        /// Flag indicating if the announcement banner can be dismissed by the user.
+        /// </summary>
+        public bool IsDismissible { get; set; }
+
+        /// <summary>
+        /// Flag indicating if the announcement banner is enabled or not.
+        /// </summary>
+        public bool IsEnabled { get; set; }
+
+        /// <summary>
+        /// Hash of the banner data. The client detects updates by comparing hash IDs.
+        /// </summary>
+        public string HashId { get; set; }
+
+        /// <summary>
+        /// Visibility of the announcement banner.
+        /// </summary>
+        public string Visibility { get; set; }
+    }
+
+    /// <summary>
+    /// Configuration of the announcement banner.
+    /// </summary>
+    public class AnnouncementBannerConfigurationUpdate
+    {
+        /// <summary>
+        /// The text on the announcement banner.
+        /// </summary>
+        public string Message { get; set; }
+
+        /// <summary>
+        /// Flag indicating if the announcement banner can be dismissed by the user.
+        /// </summary>
+        public bool IsDismissible { get; set; }
+
+        /// <summary>
+        /// Flag indicating if the announcement banner is enabled or not.
+        /// </summary>
+        public bool IsEnabled { get; set; }
+
+        /// <summary>
+        /// Visibility of the announcement banner. Can be public or private.
+        /// </summary>
+        public string Visibility { get; set; }
     }
 
     public class AppendMappingsForIssueTypeScreenSchemeResult
@@ -4954,9 +5282,14 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
         public string Key { get; set; }
 
         /// <summary>
-        /// The groups associated with the application role.
+        /// The groups associated with the application role. As a group's name can change, use of `groupDetails` is recommended to identify a groups.
         /// </summary>
         public string[] Groups { get; set; }
+
+        /// <summary>
+        /// The groups associated with the application role.
+        /// </summary>
+        public GroupName[] GroupDetails { get; set; }
 
         /// <summary>
         /// The display name of the application role.
@@ -4964,9 +5297,14 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// The groups that are granted default access for this application role.
+        /// The groups that are granted default access for this application role. As a group's name can change, use of `defaultGroupsDetails` is recommended to identify a groups.
         /// </summary>
         public string[] DefaultGroups { get; set; }
+
+        /// <summary>
+        /// The groups that are granted default access for this application role.
+        /// </summary>
+        public GroupName[] DefaultGroupsDetails { get; set; }
 
         /// <summary>
         /// Determines whether this application role should be selected by default on user creation.
@@ -5140,11 +5478,11 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
 
     public class AttachmentArchiveEntry
     {
-        public long EntryIndex { get; set; }
+        public string MediaType { get; set; }
 
         public string AbbreviatedName { get; set; }
 
-        public string MediaType { get; set; }
+        public long EntryIndex { get; set; }
 
         public string Name { get; set; }
 
@@ -5287,11 +5625,6 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
         /// The URL of a thumbnail representing the attachment.
         /// </summary>
         public string Thumbnail { get; set; }
-
-        /// <summary>
-        /// \[EXPERIMENTAL\] - The file ID of the attachment in the media store.
-        /// </summary>
-        public string MediaApiFileId { get; set; }
     }
 
     /// <summary>
@@ -5429,6 +5762,38 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
         /// The list of suggested item.
         /// </summary>
         public AutoCompleteSuggestion[] Results { get; set; }
+    }
+
+    /// <summary>
+    /// The details of the available dashboard gadget.
+    /// </summary>
+    public class AvailableDashboardGadget
+    {
+        /// <summary>
+        /// The module key of the gadget type.
+        /// </summary>
+        public string ModuleKey { get; set; }
+
+        /// <summary>
+        /// The URI of the gadget type.
+        /// </summary>
+        public string Uri { get; set; }
+
+        /// <summary>
+        /// The title of the gadget.
+        /// </summary>
+        public string Title { get; set; }
+    }
+
+    /// <summary>
+    /// The list of available gadgets.
+    /// </summary>
+    public class AvailableDashboardGadgetsResponse
+    {
+        /// <summary>
+        /// The list of available gadgets.
+        /// </summary>
+        public AvailableDashboardGadget[] Gadgets { get; set; }
     }
 
     /// <summary>
@@ -5788,6 +6153,21 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
     }
 
     /// <summary>
+    /// The account ID of the new owner.
+    /// </summary>
+    public class ChangeFilterOwner
+    {
+        /// <summary>
+        /// The account ID of the new owner.
+        /// </summary>
+        public string AccountId { get; set; }
+    }
+
+    public class ChangeFilterOwnerResult
+    {
+    }
+
+    /// <summary>
     /// A changelog.
     /// </summary>
     public class Changelog
@@ -5904,7 +6284,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
         public bool JsdPublic { get; set; }
 
         /// <summary>
-        /// Whether the comment is made by an outsider who is not part of the issue.
+        /// Whether the comment was added from an email sent by a person who is not part of the issue. See [Allow external emails to be added as comments on issues](https://support.atlassian.com/jira-service-management-cloud/docs/allow-external-emails-to-be-added-as-comments-on-issues/)for information on setting up this feature.
         /// </summary>
         public bool JsdAuthorCanSeeRequest { get; set; }
 
@@ -5962,6 +6342,41 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
         public long IssueCount { get; set; }
 
         /// <summary>
+        /// The description for the component.
+        /// </summary>
+        public string Description { get; set; }
+
+        /// <summary>
+        /// The URL for this count of the issues contained in the component.
+        /// </summary>
+        public string Self { get; set; }
+
+        /// <summary>
+        /// The key of the project to which the component is assigned.
+        /// </summary>
+        public string Project { get; set; }
+
+        /// <summary>
+        /// The nominal user type used to determine the assignee for issues created with this component. See `realAssigneeType` for details on how the type of the user, and hence the user, assigned to issues is determined. Takes the following values: *  `PROJECT_LEAD` the assignee to any issues created with this component is nominally the lead for the project the component is in. *  `COMPONENT_LEAD` the assignee to any issues created with this component is nominally the lead for the component. *  `UNASSIGNED` an assignee is not set for issues created with this component. *  `PROJECT_DEFAULT` the assignee to any issues created with this component is nominally the default assignee for the project that the component is in.
+        /// </summary>
+        public string AssigneeType { get; set; }
+
+        /// <summary>
+        /// The user details for the component's lead user.
+        /// </summary>
+        public ComponentWithIssueCountLead Lead { get; set; }
+
+        /// <summary>
+        /// Not used.
+        /// </summary>
+        public long ProjectId { get; set; }
+
+        /// <summary>
+        /// The details of the user associated with `assigneeType`, if any. See `realAssignee` for details of the user assigned to issues created with this component.
+        /// </summary>
+        public ComponentWithIssueCountAssignee Assignee { get; set; }
+
+        /// <summary>
         /// The user assigned to issues created with this component, when `assigneeType` does not identify a valid assignee.
         /// </summary>
         public ComponentWithIssueCountRealAssignee RealAssignee { get; set; }
@@ -5975,41 +6390,6 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
         /// The type of the assignee that is assigned to issues created with this component, when an assignee cannot be set from the `assigneeType`. For example, `assigneeType` is set to `COMPONENT_LEAD` but no component lead is set. This property is set to one of the following values: *  `PROJECT_LEAD` when `assigneeType` is `PROJECT_LEAD` and the project lead has permission to be assigned issues in the project that the component is in. *  `COMPONENT_LEAD` when `assignee`Type is `COMPONENT_LEAD` and the component lead has permission to be assigned issues in the project that the component is in. *  `UNASSIGNED` when `assigneeType` is `UNASSIGNED` and Jira is configured to allow unassigned issues. *  `PROJECT_DEFAULT` when none of the preceding cases are true.
         /// </summary>
         public string RealAssigneeType { get; set; }
-
-        /// <summary>
-        /// The key of the project to which the component is assigned.
-        /// </summary>
-        public string Project { get; set; }
-
-        /// <summary>
-        /// Not used.
-        /// </summary>
-        public long ProjectId { get; set; }
-
-        /// <summary>
-        /// The details of the user associated with `assigneeType`, if any. See `realAssignee` for details of the user assigned to issues created with this component.
-        /// </summary>
-        public ComponentWithIssueCountAssignee Assignee { get; set; }
-
-        /// <summary>
-        /// The user details for the component's lead user.
-        /// </summary>
-        public ComponentWithIssueCountLead Lead { get; set; }
-
-        /// <summary>
-        /// The nominal user type used to determine the assignee for issues created with this component. See `realAssigneeType` for details on how the type of the user, and hence the user, assigned to issues is determined. Takes the following values: *  `PROJECT_LEAD` the assignee to any issues created with this component is nominally the lead for the project the component is in. *  `COMPONENT_LEAD` the assignee to any issues created with this component is nominally the lead for the component. *  `UNASSIGNED` an assignee is not set for issues created with this component. *  `PROJECT_DEFAULT` the assignee to any issues created with this component is nominally the default assignee for the project that the component is in.
-        /// </summary>
-        public string AssigneeType { get; set; }
-
-        /// <summary>
-        /// The description for the component.
-        /// </summary>
-        public string Description { get; set; }
-
-        /// <summary>
-        /// The URL for this count of the issues contained in the component.
-        /// </summary>
-        public string Self { get; set; }
 
         /// <summary>
         /// The name for the component.
@@ -6315,11 +6695,6 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
         public string Id { get; set; }
 
         /// <summary>
-        /// Deprecated, do not use.
-        /// </summary>
-        public long ContextId { get; set; }
-
-        /// <summary>
         /// The ID of the field context the configuration is associated with.
         /// </summary>
         public string FieldContextId { get; set; }
@@ -6432,6 +6807,32 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
     }
 
     /// <summary>
+    /// Details of an issue priority.
+    /// </summary>
+    public class CreatePriorityDetails
+    {
+        /// <summary>
+        /// The name of the priority. Must be unique.
+        /// </summary>
+        public string Name { get; set; }
+
+        /// <summary>
+        /// The description of the priority.
+        /// </summary>
+        public string Description { get; set; }
+
+        /// <summary>
+        /// The URL of an icon for the priority. Accepted protocols are HTTP and HTTPS. Built in icons can also be used.
+        /// </summary>
+        public string IconUrl { get; set; }
+
+        /// <summary>
+        /// The status color of the priority in 3-digit or 6-digit hexadecimal format.
+        /// </summary>
+        public string StatusColor { get; set; }
+    }
+
+    /// <summary>
     /// Details about the project.
     /// </summary>
     public class CreateProjectDetails
@@ -6525,6 +6926,32 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
         /// The ID of the field configuration scheme for the project. Use the [Get all field configuration schemes](#api-rest-api-3-fieldconfigurationscheme-get) operation to get a list of field configuration scheme IDs. If you specify the field configuration scheme you cannot specify the project template key.
         /// </summary>
         public long FieldConfigurationScheme { get; set; }
+    }
+
+    /// <summary>
+    /// The details of a UI modification.
+    /// </summary>
+    public class CreateUiModificationDetails
+    {
+        /// <summary>
+        /// The name of the UI modification. The maximum length is 255 characters.
+        /// </summary>
+        public string Name { get; set; }
+
+        /// <summary>
+        /// The description of the UI modification. The maximum length is 255 characters.
+        /// </summary>
+        public string Description { get; set; }
+
+        /// <summary>
+        /// The data of the UI modification. The maximum size of the data is 50000 characters.
+        /// </summary>
+        public string Data { get; set; }
+
+        /// <summary>
+        /// List of contexts of the UI modification. The maximum number of contexts is 1000.
+        /// </summary>
+        public UiModificationContextDetails[] Contexts { get; set; }
     }
 
     public class CreateUpdateRoleRequestBean
@@ -6695,12 +7122,12 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
         public CreateWorkflowTransitionRulesDetailsConditions Conditions { get; set; }
 
         /// <summary>
-        /// The workflow validators.
+        /// The workflow validators.**Note:** The default permission validator is always added to the *initial* transition, as in:    "validators": [        {            "type": "PermissionValidator",            "configuration": {                "permissionKey": "CREATE_ISSUES"            }        }    ]
         /// </summary>
         public CreateWorkflowTransitionRule[] Validators { get; set; }
 
         /// <summary>
-        /// The workflow post functions.
+        /// The workflow post functions.**Note:** The default post functions are always added to the *initial* transition, as in:    "postFunctions": [        {            "type": "IssueCreateFunction"        },        {            "type": "IssueReindexFunction"        },        {            "type": "FireIssueEventFunction",            "configuration": {                "event": {                    "id": "1",                    "name": "issue_created"                }            }        }    ]**Note:** The default post functions are always added to the *global* and *directed* transitions, as in:    "postFunctions": [        {            "type": "UpdateIssueStatusFunction"        },        {            "type": "CreateCommentFunction"        },        {            "type": "GenerateChangeHistoryFunction"        },        {            "type": "IssueReindexFunction"        },        {            "type": "FireIssueEventFunction",            "configuration": {                "event": {                    "id": "13",                    "name": "issue_generic"                }            }        }    ]
         /// </summary>
         public CreateWorkflowTransitionRule[] PostFunctions { get; set; }
     }
@@ -6847,6 +7274,139 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
         public double Number { get; set; }
 
         public string Type { get; set; }
+    }
+
+    /// <summary>
+    /// The default value for a Forge date time custom field.
+    /// </summary>
+    public class CustomFieldContextDefaultValueForgeDateTimeField
+    {
+        /// <summary>
+        /// The default date-time in ISO format. Ignored if `useCurrent` is true.
+        /// </summary>
+        public string DateTime { get; set; }
+
+        /// <summary>
+        /// Whether to use the current date.
+        /// </summary>
+        public bool UseCurrent { get; set; }
+    }
+
+    /// <summary>
+    /// The default value for a Forge group custom field.
+    /// </summary>
+    public class CustomFieldContextDefaultValueForgeGroupField
+    {
+        /// <summary>
+        /// The ID of the context.
+        /// </summary>
+        public string ContextId { get; set; }
+
+        /// <summary>
+        /// The ID of the the default group.
+        /// </summary>
+        public string GroupId { get; set; }
+    }
+
+    /// <summary>
+    /// The default value for a Forge collection of groups custom field.
+    /// </summary>
+    public class CustomFieldContextDefaultValueForgeMultiGroupField
+    {
+        /// <summary>
+        /// The ID of the context.
+        /// </summary>
+        public string ContextId { get; set; }
+
+        /// <summary>
+        /// The IDs of the default groups.
+        /// </summary>
+        public string[] GroupIds { get; set; }
+    }
+
+    /// <summary>
+    /// The default text for a Forge collection of strings custom field.
+    /// </summary>
+    public class CustomFieldContextDefaultValueForgeMultiStringField
+    {
+        /// <summary>
+        /// List of string values. The maximum length for a value is 254 characters.
+        /// </summary>
+        public string[] Values { get; set; }
+
+        public string Type { get; set; }
+    }
+
+    /// <summary>
+    /// Defaults for a Forge collection of users custom field.
+    /// </summary>
+    public class CustomFieldContextDefaultValueForgeMultiUserField
+    {
+        /// <summary>
+        /// The ID of the context.
+        /// </summary>
+        public string ContextId { get; set; }
+
+        /// <summary>
+        /// The IDs of the default users.
+        /// </summary>
+        public string[] AccountIds { get; set; }
+    }
+
+    /// <summary>
+    /// Default value for a Forge number custom field.
+    /// </summary>
+    public class CustomFieldContextDefaultValueForgeNumberField
+    {
+        /// <summary>
+        /// The default floating-point number.
+        /// </summary>
+        public double Number { get; set; }
+    }
+
+    /// <summary>
+    /// The default value for a Forge object custom field.
+    /// </summary>
+    public class CustomFieldContextDefaultValueForgeObjectField
+    {
+        /// <summary>
+        /// The default JSON object.
+        /// </summary>
+        public object Object { get; set; }
+
+        public string Type { get; set; }
+    }
+
+    /// <summary>
+    /// The default text for a Forge string custom field.
+    /// </summary>
+    public class CustomFieldContextDefaultValueForgeStringField
+    {
+        /// <summary>
+        /// The default text. The maximum length is 254 characters.
+        /// </summary>
+        public string Text { get; set; }
+    }
+
+    /// <summary>
+    /// Defaults for a Forge user custom field.
+    /// </summary>
+    public class CustomFieldContextDefaultValueForgeUserField
+    {
+        /// <summary>
+        /// The ID of the context.
+        /// </summary>
+        public string ContextId { get; set; }
+
+        /// <summary>
+        /// The ID of the default user.
+        /// </summary>
+        public string AccountId { get; set; }
+
+        /// <summary>
+        /// Filter for a User Picker (single) custom field.
+        /// </summary>
+        public UserFilter UserFilter { get; set; }
     }
 
     /// <summary>
@@ -7287,7 +7847,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
         public long[] IssueIds { get; set; }
 
         /// <summary>
-        /// The value for the custom field. The value must be compatible with the [custom field type](https://developer.atlassian.com/platform/forge/manifest-reference/modules/jira-custom-field/#data-types) as follows: *  `string` the value must be a string. *  `number` the value must be a number. *  `datetime` the value must be a string that represents a date in the ISO format, for example `"2021-01-18T12:00:00-03:00"`. *  `user` the value must be an object that contains the `accountId` field. *  `group` the value must be an object that contains the group `name` field.A list of appropriate values must be provided if the field is of the `list` [collection type](https://developer.atlassian.com/platform/forge/manifest-reference/modules/jira-custom-field/#collection-types).
+        /// The value for the custom field. The value must be compatible with the [custom field type](https://developer.atlassian.com/platform/forge/manifest-reference/modules/jira-custom-field/#data-types) as follows: *  `string` the value must be a string. *  `number` the value must be a number. *  `datetime` the value must be a string that represents a date in the ISO format or the simplified extended ISO format. For example, `"2023-01-18T12:00:00-03:00"` or `"2023-01-18T12:00:00.000Z"`. However, the milliseconds part is ignored. *  `user` the value must be an object that contains the `accountId` field. *  `group` the value must be an object that contains the group `name` or `groupId` field. Because group names can change, we recommend using `groupId`.A list of appropriate values must be provided if the field is of the `list` [collection type](https://developer.atlassian.com/platform/forge/manifest-reference/modules/jira-custom-field/#collection-types).
         /// </summary>
         public object Value { get; set; }
     }
@@ -7356,6 +7916,11 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
         public SharePermission[] EditPermissions { get; set; }
 
         /// <summary>
+        /// The automatic refresh interval for the dashboard in milliseconds.
+        /// </summary>
+        public int AutomaticRefreshMs { get; set; }
+
+        /// <summary>
         /// The URL of the dashboard.
         /// </summary>
         public string View { get; set; }
@@ -7390,6 +7955,134 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
         /// The edit permissions for the dashboard.
         /// </summary>
         public SharePermission[] EditPermissions { get; set; }
+    }
+
+    /// <summary>
+    /// Details of a gadget.
+    /// </summary>
+    public class DashboardGadget
+    {
+        /// <summary>
+        /// The ID of the gadget instance.
+        /// </summary>
+        public long Id { get; set; }
+
+        /// <summary>
+        /// The module key of the gadget type.
+        /// </summary>
+        public string ModuleKey { get; set; }
+
+        /// <summary>
+        /// The URI of the gadget type.
+        /// </summary>
+        public string Uri { get; set; }
+
+        /// <summary>
+        /// The color of the gadget. Should be one of `blue`, `red`, `yellow`, `green`, `cyan`, `purple`, `gray`, or `white`.
+        /// </summary>
+        public string Color { get; set; }
+
+        /// <summary>
+        /// The position of the gadget.
+        /// </summary>
+        public DashboardGadgetPosition Position { get; set; }
+
+        /// <summary>
+        /// The title of the gadget.
+        /// </summary>
+        public string Title { get; set; }
+    }
+
+    /// <summary>
+    /// Details of a gadget position.
+    /// </summary>
+    public class DashboardGadgetPosition
+    {
+        public int TheRowPositionOfTheGadget { get; set; }
+
+        public int TheColumnPositionOfTheGadget { get; set; }
+    }
+
+    /// <summary>
+    /// The list of gadgets on the dashboard.
+    /// </summary>
+    public class DashboardGadgetResponse
+    {
+        /// <summary>
+        /// The list of gadgets.
+        /// </summary>
+        public DashboardGadget[] Gadgets { get; set; }
+    }
+
+    /// <summary>
+    /// Details of the settings for a dashboard gadget.
+    /// </summary>
+    public class DashboardGadgetSettings
+    {
+        /// <summary>
+        /// The module key of the gadget type. Can't be provided with `uri`.
+        /// </summary>
+        public string ModuleKey { get; set; }
+
+        /// <summary>
+        /// The URI of the gadget type. Can't be provided with `moduleKey`.
+        /// </summary>
+        public string Uri { get; set; }
+
+        /// <summary>
+        /// The color of the gadget. Should be one of `blue`, `red`, `yellow`, `green`, `cyan`, `purple`, `gray`, or `white`.
+        /// </summary>
+        public string Color { get; set; }
+
+        /// <summary>
+        /// The position of the gadget. When the gadget is placed into the position, other gadgets in the same column are moved down to accommodate it.
+        /// </summary>
+        public DashboardGadgetSettingsPosition Position { get; set; }
+
+        /// <summary>
+        /// The title of the gadget.
+        /// </summary>
+        public string Title { get; set; }
+
+        /// <summary>
+        /// Whether to ignore the validation of module key and URI. For example, when a gadget is created that is a part of an application that isn't installed.
+        /// </summary>
+        public bool IgnoreUriAndModuleKeyValidation { get; set; }
+    }
+
+    /// <summary>
+    /// The position of the gadget. When the gadget is placed into the position, other gadgets in the same column are moved down to accommodate it.
+    /// </summary>
+    public class DashboardGadgetSettingsPosition : DashboardGadgetPosition 
+    {
+    }
+
+    /// <summary>
+    /// The details of the gadget to update.
+    /// </summary>
+    public class DashboardGadgetUpdateRequest
+    {
+        /// <summary>
+        /// The title of the gadget.
+        /// </summary>
+        public string Title { get; set; }
+
+        /// <summary>
+        /// The color of the gadget. Should be one of `blue`, `red`, `yellow`, `green`, `cyan`, `purple`, `gray`, or `white`.
+        /// </summary>
+        public string Color { get; set; }
+
+        /// <summary>
+        /// The position of the gadget.
+        /// </summary>
+        public DashboardGadgetUpdateRequestPosition Position { get; set; }
+    }
+
+    /// <summary>
+    /// The position of the gadget.
+    /// </summary>
+    public class DashboardGadgetUpdateRequestPosition : DashboardGadgetPosition 
+    {
     }
 
     /// <summary>
@@ -7452,10 +8145,6 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
     {
     }
 
-    public class DeleteCustomFieldResult
-    {
-    }
-
     public class DeleteFieldConfigurationResult
     {
     }
@@ -7477,6 +8166,18 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
     }
 
     public class DeleteLocaleResult
+    {
+    }
+
+    public class DeleteStatusesByIdResult
+    {
+    }
+
+    public class DeleteUiModificationResult
+    {
+    }
+
+    public class DeleteWorkflowSchemeResult
     {
     }
 
@@ -7619,9 +8320,14 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
         public string NotificationType { get; set; }
 
         /// <summary>
-        /// The value of the `notificationType`: *  `User` The `parameter` is the user account ID. *  `Group` The `parameter` is the group name. *  `ProjectRole` The `parameter` is the project role ID. *  `UserCustomField` The `parameter` is the ID of the custom field. *  `GroupCustomField` The `parameter` is the ID of the custom field.
+        /// As a group's name can change, use of `recipient` is recommended. The identifier associated with the `notificationType` value that defines the receiver of the notification, where the receiver isn't implied by `notificationType` value. So, when `notificationType` is: *  `User` The `parameter` is the user account ID. *  `Group` The `parameter` is the group name. *  `ProjectRole` The `parameter` is the project role ID. *  `UserCustomField` The `parameter` is the ID of the custom field. *  `GroupCustomField` The `parameter` is the ID of the custom field.
         /// </summary>
         public string Parameter { get; set; }
+
+        /// <summary>
+        /// The identifier associated with the `notificationType` value that defines the receiver of the notification, where the receiver isn't implied by the `notificationType` value. So, when `notificationType` is: *  `User`, `recipient` is the user account ID. *  `Group`, `recipient` is the group ID. *  `ProjectRole`, `recipient` is the project role ID. *  `UserCustomField`, `recipient` is the ID of the custom field. *  `GroupCustomField`, `recipient` is the ID of the custom field.
+        /// </summary>
+        public string Recipient { get; set; }
 
         /// <summary>
         /// The specified group.
@@ -8115,6 +8821,11 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
         /// The default value of the field.
         /// </summary>
         public object DefaultValue { get; set; }
+
+        /// <summary>
+        /// The configuration properties.
+        /// </summary>
+        public Dictionary<string, object> Configuration { get; set; }
     }
 
     /// <summary>
@@ -8571,7 +9282,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
     public class FoundGroup
     {
         /// <summary>
-        /// The name of the group.
+        /// The name of the group. The name of a group is mutable, to reliably identify a group use ``groupId`.`
         /// </summary>
         public string Name { get; set; }
 
@@ -8586,7 +9297,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
         public GroupLabel[] Labels { get; set; }
 
         /// <summary>
-        /// The ID of the group, if available, which uniquely identifies the group across all Atlassian products. For example, *952d12c3-5b5b-4d04-bb32-44d383afc4b2*.
+        /// The ID of the group, which uniquely identifies the group across all Atlassian products. For example, *952d12c3-5b5b-4d04-bb32-44d383afc4b2*.
         /// </summary>
         public string GroupId { get; set; }
     }
@@ -8731,6 +9442,11 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
         public string Name { get; set; }
 
         /// <summary>
+        /// The ID of the group, which uniquely identifies the group across all Atlassian products. For example, *952d12c3-5b5b-4d04-bb32-44d383afc4b2*.
+        /// </summary>
+        public string GroupId { get; set; }
+
+        /// <summary>
         /// The URL for these group details.
         /// </summary>
         public string Self { get; set; }
@@ -8757,7 +9473,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// The ID of the group, if available, which uniquely identifies the group across all Atlassian products. For example, *952d12c3-5b5b-4d04-bb32-44d383afc4b2*.
+        /// The ID of the group, which uniquely identifies the group across all Atlassian products. For example, *952d12c3-5b5b-4d04-bb32-44d383afc4b2*.
         /// </summary>
         public string GroupId { get; set; }
     }
@@ -8784,7 +9500,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
     }
 
     /// <summary>
-    /// Details about a group name.
+    /// Details about a group.
     /// </summary>
     public class GroupName
     {
@@ -8792,6 +9508,11 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
         /// The name of group.
         /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// The ID of the group, which uniquely identifies the group across all Atlassian products. For example, *952d12c3-5b5b-4d04-bb32-44d383afc4b2*.
+        /// </summary>
+        public string GroupId { get; set; }
 
         /// <summary>
         /// The URL for these group details.
@@ -8840,52 +9561,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
         /// <summary>
         /// Details about the hierarchy level.
         /// </summary>
-        public HierarchyLevel[] Levels { get; set; }
-    }
-
-    public class HierarchyLevel
-    {
-        /// <summary>
-        /// The ID of the hierarchy level. This property is deprecated, see [Change notice: Removing hierarchy level IDs from next-gen APIs](https://developer.atlassian.com/cloud/jira/platform/change-notice-removing-hierarchy-level-ids-from-next-gen-apis/).
-        /// </summary>
-        public long Id { get; set; }
-
-        /// <summary>
-        /// The name of this hierarchy level.
-        /// </summary>
-        public string Name { get; set; }
-
-        /// <summary>
-        /// The ID of the level above this one in the hierarchy. This property is deprecated, see [Change notice: Removing hierarchy level IDs from next-gen APIs](https://developer.atlassian.com/cloud/jira/platform/change-notice-removing-hierarchy-level-ids-from-next-gen-apis/).
-        /// </summary>
-        public long AboveLevelId { get; set; }
-
-        /// <summary>
-        /// The ID of the level below this one in the hierarchy. This property is deprecated, see [Change notice: Removing hierarchy level IDs from next-gen APIs](https://developer.atlassian.com/cloud/jira/platform/change-notice-removing-hierarchy-level-ids-from-next-gen-apis/).
-        /// </summary>
-        public long BelowLevelId { get; set; }
-
-        /// <summary>
-        /// The ID of the project configuration. This property is deprecated, see [Change oticen: Removing hierarchy level IDs from next-gen APIs](https://developer.atlassian.com/cloud/jira/platform/change-notice-removing-hierarchy-level-ids-from-next-gen-apis/).
-        /// </summary>
-        public long ProjectConfigurationId { get; set; }
-
-        /// <summary>
-        /// The level of this item in the hierarchy.
-        /// </summary>
-        public int Level { get; set; }
-
-        /// <summary>
-        /// The issue types available in this hierarchy level.
-        /// </summary>
-        public long[] IssueTypeIds { get; set; }
-
-        /// <summary>
-        /// The external UUID of the hierarchy level. This property is deprecated, see [Change notice: Removing hierarchy level IDs from next-gen APIs](https://developer.atlassian.com/cloud/jira/platform/change-notice-removing-hierarchy-level-ids-from-next-gen-apis/).
-        /// </summary>
-        public string ExternalUuid { get; set; }
-
-        public string GlobalHierarchyLevel { get; set; }
+        public SimplifiedHierarchyLevel[] Levels { get; set; }
     }
 
     /// <summary>
@@ -9071,11 +9747,11 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
 
     public class IncludedFields
     {
+        public string[] ActuallyIncluded { get; set; }
+
         public string[] Excluded { get; set; }
 
         public string[] Included { get; set; }
-
-        public string[] ActuallyIncluded { get; set; }
     }
 
     /// <summary>
@@ -9428,25 +10104,25 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
         public IssueLinkType Type { get; set; }
 
         /// <summary>
-        /// The issue the link joins to.
+        /// Provides details about the linked issue. If presenting this link in a user interface, use the `inward` field of the issue link type to label the link.
         /// </summary>
         public IssueLinkInwardIssue InwardIssue { get; set; }
 
         /// <summary>
-        /// The issue the link originates from.
+        /// Provides details about the linked issue. If presenting this link in a user interface, use the `outward` field of the issue link type to label the link.
         /// </summary>
         public IssueLinkOutwardIssue OutwardIssue { get; set; }
     }
 
     /// <summary>
-    /// The issue the link joins to.
+    /// Provides details about the linked issue. If presenting this link in a user interface, use the `inward` field of the issue link type to label the link.
     /// </summary>
     public class IssueLinkInwardIssue : LinkedIssue 
     {
     }
 
     /// <summary>
-    /// The issue the link originates from.
+    /// Provides details about the linked issue. If presenting this link in a user interface, use the `outward` field of the issue link type to label the link.
     /// </summary>
     public class IssueLinkOutwardIssue : LinkedIssue 
     {
@@ -9747,7 +10423,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
         public string Description { get; set; }
 
         /// <summary>
-        /// Deprecated. Use `hierarchyLevel` instead.Whether the issue type is `subtype` or `standard`. Defaults to `standard`.
+        /// Deprecated. Use `hierarchyLevel` instead. See the [deprecation notice](https://community.developer.atlassian.com/t/deprecation-of-the-epic-link-parent-link-and-other-related-fields-in-rest-apis-and-webhooks/54048) for details.Whether the issue type is `subtype` or `standard`. Defaults to `standard`.
         /// </summary>
         public string Type { get; set; }
 
@@ -10404,9 +11080,6 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
     /// </summary>
     public class IssueUpdateMetadata
     {
-        /// <summary>
-        /// A list of editable field details.
-        /// </summary>
         public Dictionary<string, FieldMetadata> Fields { get; set; }
     }
 
@@ -10758,6 +11431,42 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
     }
 
     /// <summary>
+    /// Details of a status.
+    /// </summary>
+    public class JiraStatus
+    {
+        /// <summary>
+        /// The ID of the status.
+        /// </summary>
+        public string Id { get; set; }
+
+        /// <summary>
+        /// The name of the status.
+        /// </summary>
+        public string Name { get; set; }
+
+        /// <summary>
+        /// The category of the status.
+        /// </summary>
+        public string StatusCategory { get; set; }
+
+        /// <summary>
+        /// The scope of the status.
+        /// </summary>
+        public StatusScope Scope { get; set; }
+
+        /// <summary>
+        /// The description of the status.
+        /// </summary>
+        public string Description { get; set; }
+
+        /// <summary>
+        /// Projects and issue types where the status is used. Only available if the `usages` expand is requested.
+        /// </summary>
+        public ProjectIssueTypes[] Usages { get; set; }
+    }
+
+    /// <summary>
     /// The JQL queries to be converted.
     /// </summary>
     public class JQLPersonalDataMigrationRequest
@@ -10777,6 +11486,17 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
         /// A list of queries to parse.
         /// </summary>
         public string[] Queries { get; set; }
+    }
+
+    /// <summary>
+    /// The list of JQL queries to sanitize for the given account IDs.
+    /// </summary>
+    public class JqlQueriesToSanitize
+    {
+        /// <summary>
+        /// The list of JQL queries to sanitize. Must contain unique values. Maximum of 20 queries.
+        /// </summary>
+        public JqlQueryToSanitize[] Queries { get; set; }
     }
 
     /// <summary>
@@ -10935,6 +11655,22 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
     }
 
     /// <summary>
+    /// The JQL query to sanitize for the account ID. If the account ID is null, sanitizing is performed for an anonymous user.
+    /// </summary>
+    public class JqlQueryToSanitize
+    {
+        /// <summary>
+        /// The account ID of the user, which uniquely identifies the user across all Atlassian products. For example, *5b10ac8d82e05b22cc7d4ef5*.
+        /// </summary>
+        public string AccountId { get; set; }
+
+        /// <summary>
+        /// The query to sanitize.
+        /// </summary>
+        public string Query { get; set; }
+    }
+
+    /// <summary>
     /// An operand that can be part of a list operand.
     /// </summary>
     public class JqlQueryUnitaryOperand : ValueOperand 
@@ -11011,8 +11747,6 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
 
     public class JsonNode
     {
-        public bool FloatingPointNumber { get; set; }
-
         public object Elements { get; set; }
 
         public bool Pojo { get; set; }
@@ -11020,6 +11754,8 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
         public bool Number { get; set; }
 
         public bool IntegralNumber { get; set; }
+
+        public bool FloatingPointNumber { get; set; }
 
         public bool Int { get; set; }
 
@@ -11071,11 +11807,11 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
 
         public bool ValueAsBoolean { get; set; }
 
-        public object FieldNames { get; set; }
-
         public string TextValue { get; set; }
 
         public string ValueAsText { get; set; }
+
+        public object FieldNames { get; set; }
 
         public bool Array { get; set; }
 
@@ -11328,7 +12064,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
         public long[] IssueIds { get; set; }
 
         /// <summary>
-        /// The value for the custom field. The value must be compatible with the [custom field type](https://developer.atlassian.com/platform/forge/manifest-reference/modules/jira-custom-field/#data-types) as follows: *  `string` the value must be a string. *  `number` the value must be a number. *  `datetime` the value must be a string that represents a date in the ISO format, for example `"2021-01-18T12:00:00-03:00"`. *  `user` the value must be an object that contains the `accountId` field. *  `group` the value must be an object that contains the group `name` field.A list of appropriate values must be provided if the field is of the `list` [collection type](https://developer.atlassian.com/platform/forge/manifest-reference/modules/jira-custom-field/#collection-types).
+        /// The value for the custom field. The value must be compatible with the [custom field type](https://developer.atlassian.com/platform/forge/manifest-reference/modules/jira-custom-field/#data-types) as follows: *  `string` the value must be a string. *  `number` the value must be a number. *  `datetime` the value must be a string that represents a date in the ISO format or the simplified extended ISO format. For example, `"2023-01-18T12:00:00-03:00"` or `"2023-01-18T12:00:00.000Z"`. However, the milliseconds part is ignored. *  `user` the value must be an object that contains the `accountId` field. *  `group` the value must be an object that contains the group `name` or `groupId` field. Because group names can change, we recommend using `groupId`.A list of appropriate values must be provided if the field is of the `list` [collection type](https://developer.atlassian.com/platform/forge/manifest-reference/modules/jira-custom-field/#collection-types).
         /// </summary>
         public object Value { get; set; }
     }
@@ -11385,7 +12121,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
         public string EmailAddress { get; set; }
 
         /// <summary>
-        /// A suggested display name for the user. If the user has an Atlassian account, their display name is not changed. If the user does not have an Atlassian account, this display name is used as a suggestion for creating an account. The user is sent an email asking them to set their display name and privacy preferences.
+        /// This property is no longer available. If the user has an Atlassian account, their display name is not changed. If the user does not have an Atlassian account, they are sent an email asking them set up an account.
         /// </summary>
         public string DisplayName { get; set; }
 
@@ -11493,6 +12229,11 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
         /// List of groups to receive the notification.
         /// </summary>
         public GroupName[] Groups { get; set; }
+
+        /// <summary>
+        /// List of groupIds to receive the notification.
+        /// </summary>
+        public string[] GroupIds { get; set; }
     }
 
     /// <summary>
@@ -11504,6 +12245,11 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
         /// List of group memberships required to receive the notification.
         /// </summary>
         public GroupName[] Groups { get; set; }
+
+        /// <summary>
+        /// List of groupId memberships required to receive the notification.
+        /// </summary>
+        public string[] GroupIds { get; set; }
 
         /// <summary>
         /// List of permissions required to receive the notification.
@@ -12848,6 +13594,47 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
     /// <summary>
     /// A page of items.
     /// </summary>
+    public class PageBeanPriority
+    {
+        /// <summary>
+        /// The URL of the page.
+        /// </summary>
+        public string Self { get; set; }
+
+        /// <summary>
+        /// If there is another page of results, the URL of the next page.
+        /// </summary>
+        public string NextPage { get; set; }
+
+        /// <summary>
+        /// The maximum number of items that could be returned.
+        /// </summary>
+        public int MaxResults { get; set; }
+
+        /// <summary>
+        /// The index of the first item returned.
+        /// </summary>
+        public long StartAt { get; set; }
+
+        /// <summary>
+        /// The number of items returned.
+        /// </summary>
+        public long Total { get; set; }
+
+        /// <summary>
+        /// Whether this is the last page.
+        /// </summary>
+        public bool IsLast { get; set; }
+
+        /// <summary>
+        /// The list of items.
+        /// </summary>
+        public Priority[] Values { get; set; }
+    }
+
+    /// <summary>
+    /// A page of items.
+    /// </summary>
     public class PageBeanProject
     {
         /// <summary>
@@ -13089,6 +13876,47 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
         /// The list of items.
         /// </summary>
         public string[] Values { get; set; }
+    }
+
+    /// <summary>
+    /// A page of items.
+    /// </summary>
+    public class PageBeanUiModificationDetails
+    {
+        /// <summary>
+        /// The URL of the page.
+        /// </summary>
+        public string Self { get; set; }
+
+        /// <summary>
+        /// If there is another page of results, the URL of the next page.
+        /// </summary>
+        public string NextPage { get; set; }
+
+        /// <summary>
+        /// The maximum number of items that could be returned.
+        /// </summary>
+        public int MaxResults { get; set; }
+
+        /// <summary>
+        /// The index of the first item returned.
+        /// </summary>
+        public long StartAt { get; set; }
+
+        /// <summary>
+        /// The number of items returned.
+        /// </summary>
+        public long Total { get; set; }
+
+        /// <summary>
+        /// Whether this is the last page.
+        /// </summary>
+        public bool IsLast { get; set; }
+
+        /// <summary>
+        /// The list of items.
+        /// </summary>
+        public UiModificationDetails[] Values { get; set; }
     }
 
     /// <summary>
@@ -13538,6 +14366,44 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
         public Dashboard[] Dashboards { get; set; }
     }
 
+    public class PageOfStatuses
+    {
+        /// <summary>
+        /// The index of the first item returned on the page.
+        /// </summary>
+        public long StartAt { get; set; }
+
+        /// <summary>
+        /// Number of items that satisfy the search.
+        /// </summary>
+        public long Total { get; set; }
+
+        /// <summary>
+        /// Whether this is the last page.
+        /// </summary>
+        public bool IsLast { get; set; }
+
+        /// <summary>
+        /// The maximum number of items that could be returned.
+        /// </summary>
+        public int MaxResults { get; set; }
+
+        /// <summary>
+        /// The list of items.
+        /// </summary>
+        public JiraStatus[] Values { get; set; }
+
+        /// <summary>
+        /// The URL of this page.
+        /// </summary>
+        public string Self { get; set; }
+
+        /// <summary>
+        /// The URL of the next page of results, if any.
+        /// </summary>
+        public string NextPage { get; set; }
+    }
+
     /// <summary>
     /// Paginated list of worklog details
     /// </summary>
@@ -13568,14 +14434,14 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
     {
         public long Total { get; set; }
 
-        public int MaxResults { get; set; }
-
-        public long StartAt { get; set; }
-
         /// <summary>
         /// A comment.
         /// </summary>
         public Comment[] Results { get; set; }
+
+        public int MaxResults { get; set; }
+
+        public long StartAt { get; set; }
     }
 
     /// <summary>
@@ -13633,7 +14499,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
         public string Self { get; set; }
 
         /// <summary>
-        /// The user or group being granted the permission. It consists of a `type` and a type-dependent `parameter`. See [Holder object](../api-group-permission-schemes/#holder-object) in *Get all permission schemes* for more information.
+        /// The user or group being granted the permission. It consists of a `type`, a type-dependent `parameter` and a type-dependent `value`. See [Holder object](../api-group-permission-schemes/#holder-object) in *Get all permission schemes* for more information.
         /// </summary>
         public PermissionGrantHolder Holder { get; set; }
 
@@ -13644,7 +14510,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
     }
 
     /// <summary>
-    /// The user or group being granted the permission. It consists of a `type` and a type-dependent `parameter`. See [Holder object](../api-group-permission-schemes/#holder-object) in *Get all permission schemes* for more information.
+    /// The user or group being granted the permission. It consists of a `type`, a type-dependent `parameter` and a type-dependent `value`. See [Holder object](../api-group-permission-schemes/#holder-object) in *Get all permission schemes* for more information.
     /// </summary>
     public class PermissionGrantHolder : PermissionHolder 
     {
@@ -13677,9 +14543,14 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
         public string Type { get; set; }
 
         /// <summary>
-        /// The identifier of permission holder.
+        /// As a group's name can change, use of `value` is recommended. The identifier associated withthe `type` value that defines the holder of the permission.
         /// </summary>
         public string Parameter { get; set; }
+
+        /// <summary>
+        /// The identifier associated with the `type` value that defines the holder of the permission.
+        /// </summary>
+        public string Value { get; set; }
 
         /// <summary>
         /// Expand options that include additional permission holder details in the response.
@@ -13808,6 +14679,22 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
         /// </summary>
         public string Name { get; set; }
 
+        /// <summary>
+        /// The ID of the issue priority.
+        /// </summary>
+        public string Id { get; set; }
+
+        /// <summary>
+        /// Whether this priority is the default.
+        /// </summary>
+        public bool IsDefault { get; set; }
+    }
+
+    /// <summary>
+    /// The ID of an issue priority.
+    /// </summary>
+    public class PriorityId
+    {
         /// <summary>
         /// The ID of the issue priority.
         /// </summary>
@@ -14284,6 +15171,17 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
     }
 
     /// <summary>
+    /// Project ID details.
+    /// </summary>
+    public class ProjectId
+    {
+        /// <summary>
+        /// The ID of the project.
+        /// </summary>
+        public string Id { get; set; }
+    }
+
+    /// <summary>
     /// The identifiers for a project.
     /// </summary>
     public class ProjectIdentifierBean
@@ -14451,6 +15349,22 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
     }
 
     /// <summary>
+    /// Projects and issue types where the status is used. Only available if the `usages` expand is requested.
+    /// </summary>
+    public class ProjectIssueTypes
+    {
+        /// <summary>
+        /// Project ID details.
+        /// </summary>
+        public ProjectId Project { get; set; }
+
+        /// <summary>
+        /// IDs of the issue types
+        /// </summary>
+        public string[] IssueTypes { get; set; }
+    }
+
+    /// <summary>
     /// Details of an issue type hierarchy level.
     /// </summary>
     public class ProjectIssueTypesHierarchyLevel
@@ -14484,9 +15398,21 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
 
         public string ProjectType { get; set; }
 
+        public bool Simplified { get; set; }
+
         public long BoardId { get; set; }
 
-        public bool Simplified { get; set; }
+        public string BoardName { get; set; }
+
+        public bool SimpleBoard { get; set; }
+
+        public long QueueId { get; set; }
+
+        public string QueueName { get; set; }
+
+        public string QueueCategory { get; set; }
+
+        public Dictionary<string, string> Attributes { get; set; }
     }
 
     /// <summary>
@@ -14583,7 +15509,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
         public long Id { get; set; }
 
         /// <summary>
-        /// The actors to add to the project role. Add groups using `atlassian-group-role-actor` and a list of group names. For example, `"atlassian-group-role-actor":["another","administrators"]}`. Add users using `atlassian-user-role-actor` and a list of account IDs. For example, `"atlassian-user-role-actor":["12345678-9abc-def1-2345-6789abcdef12", "abcdef12-3456-789a-bcde-f123456789ab"]`.
+        /// The actors to add to the project role.Add groups using: *  `atlassian-group-role-actor` and a list of group names. *  `atlassian-group-role-actor-id` and a list of group IDs.As a group's name can change, use of `atlassian-group-role-actor-id` is recommended. For example, `"atlassian-group-role-actor-id":["eef79f81-0b89-4fca-a736-4be531a10869","77f6ab39-e755-4570-a6ae-2d7a8df0bcb8"]`.Add users using `atlassian-user-role-actor` and a list of account IDs. For example, `"atlassian-user-role-actor":["12345678-9abc-def1-2345-6789abcdef12", "abcdef12-3456-789a-bcde-f123456789ab"]`.
         /// </summary>
         public Dictionary<string, string[]> CategorisedActors { get; set; }
     }
@@ -14657,9 +15583,14 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
         public string DisplayName { get; set; }
 
         /// <summary>
-        /// The name of the group
+        /// The name of the group. As a group's name can change, use of `groupId` is recommended to identify the group.
         /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// The ID of the group.
+        /// </summary>
+        public string GroupId { get; set; }
     }
 
     /// <summary>
@@ -14949,6 +15880,10 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
     {
     }
 
+    public class RemoveGadgetResult
+    {
+    }
+
     public class RemoveIssueTypeFromIssueTypeSchemeResult
     {
     }
@@ -15046,11 +15981,13 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
 
     public class RichText
     {
-        public bool ValueSet { get; set; }
+        public bool EmptyAdf { get; set; }
 
         public bool Finalised { get; set; }
 
-        public bool EmptyAdf { get; set; }
+        public bool ValueSet { get; set; }
+
+        public bool Empty { get; set; }
     }
 
     /// <summary>
@@ -15115,6 +16052,50 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
         /// EXPERIMENTAL: A tag used to filter rules in [Get workflow transition rule configurations](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-workflow-transition-rules/#api-rest-api-3-workflow-rule-config-get).
         /// </summary>
         public string Tag { get; set; }
+    }
+
+    /// <summary>
+    /// The sanitized JQL queries for the given account IDs.
+    /// </summary>
+    public class SanitizedJqlQueries
+    {
+        /// <summary>
+        /// The list of sanitized JQL queries.
+        /// </summary>
+        public SanitizedJqlQuery[] Queries { get; set; }
+    }
+
+    /// <summary>
+    /// Details of the sanitized JQL query.
+    /// </summary>
+    public class SanitizedJqlQuery
+    {
+        /// <summary>
+        /// The initial query.
+        /// </summary>
+        public string InitialQuery { get; set; }
+
+        /// <summary>
+        /// The sanitized query, if there were no errors.
+        /// </summary>
+        public string SanitizedQuery { get; set; }
+
+        /// <summary>
+        /// The list of errors.
+        /// </summary>
+        public SanitizedJqlQueryErrors Errors { get; set; }
+
+        /// <summary>
+        /// The account ID of the user for whom sanitization was performed.
+        /// </summary>
+        public string AccountId { get; set; }
+    }
+
+    /// <summary>
+    /// The list of errors.
+    /// </summary>
+    public class SanitizedJqlQueryErrors : ErrorCollection 
+    {
     }
 
     /// <summary>
@@ -15614,6 +16595,19 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
         public HealthCheckResult[] HealthChecks { get; set; }
     }
 
+    public class ServiceManagementNavigationInfo
+    {
+        public long QueueId { get; set; }
+
+        public string QueueName { get; set; }
+
+        public string QueueCategory { get; set; }
+    }
+
+    public class SetBannerResult
+    {
+    }
+
     public class SetColumnsResult
     {
     }
@@ -15696,7 +16690,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
         public SharePermissionRole Role { get; set; }
 
         /// <summary>
-        /// The group that the filter is shared with. For a request, specify the `name` property for the group.
+        /// The group that the filter is shared with. For a request, specify the `groupId` or `name` property for the group. As a group's name can change, use of `groupId` is recommended.
         /// </summary>
         public SharePermissionGroup Group { get; set; }
 
@@ -15707,7 +16701,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
     }
 
     /// <summary>
-    /// The group that the filter is shared with. For a request, specify the `name` property for the group.
+    /// The group that the filter is shared with. For a request, specify the `groupId` or `name` property for the group. As a group's name can change, use of `groupId` is recommended.
     /// </summary>
     public class SharePermissionGroup : GroupName 
     {
@@ -15726,7 +16720,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
         public string ProjectId { get; set; }
 
         /// <summary>
-        /// The name of the group to share the filter with. Set `type` to `group`.
+        /// The name of the group to share the filter with. Set `type` to `group`. Please note that the name of a group is mutable, to reliably identify a group use `groupId`.
         /// </summary>
         public string Groupname { get; set; }
 
@@ -15744,6 +16738,11 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
         /// The rights for the share permission.
         /// </summary>
         public int Rights { get; set; }
+
+        /// <summary>
+        /// The ID of the group, which uniquely identifies the group across all Atlassian products.For example, *952d12c3-5b5b-4d04-bb32-44d383afc4b2*. Cannot be provided with `groupname`.
+        /// </summary>
+        public string GroupId { get; set; }
     }
 
     /// <summary>
@@ -15836,7 +16835,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
         public int Size { get; set; }
 
         /// <summary>
-        /// Details about a group name.
+        /// Details about a group.
         /// </summary>
         public GroupName[] Items { get; set; }
 
@@ -15845,6 +16844,60 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
         public ListWrapperCallbackGroupName Callback { get; set; }
 
         public int MaxResults { get; set; }
+    }
+
+    public class SimplifiedHierarchyLevel
+    {
+        /// <summary>
+        /// The ID of the hierarchy level. This property is deprecated, see [Change notice: Removing hierarchy level IDs from next-gen APIs](https://developer.atlassian.com/cloud/jira/platform/change-notice-removing-hierarchy-level-ids-from-next-gen-apis/).
+        /// </summary>
+        public long Id { get; set; }
+
+        /// <summary>
+        /// The name of this hierarchy level.
+        /// </summary>
+        public string Name { get; set; }
+
+        /// <summary>
+        /// The ID of the level above this one in the hierarchy. This property is deprecated, see [Change notice: Removing hierarchy level IDs from next-gen APIs](https://developer.atlassian.com/cloud/jira/platform/change-notice-removing-hierarchy-level-ids-from-next-gen-apis/).
+        /// </summary>
+        public long AboveLevelId { get; set; }
+
+        /// <summary>
+        /// The ID of the level below this one in the hierarchy. This property is deprecated, see [Change notice: Removing hierarchy level IDs from next-gen APIs](https://developer.atlassian.com/cloud/jira/platform/change-notice-removing-hierarchy-level-ids-from-next-gen-apis/).
+        /// </summary>
+        public long BelowLevelId { get; set; }
+
+        /// <summary>
+        /// The ID of the project configuration. This property is deprecated, see [Change oticen: Removing hierarchy level IDs from next-gen APIs](https://developer.atlassian.com/cloud/jira/platform/change-notice-removing-hierarchy-level-ids-from-next-gen-apis/).
+        /// </summary>
+        public long ProjectConfigurationId { get; set; }
+
+        /// <summary>
+        /// The level of this item in the hierarchy.
+        /// </summary>
+        public int Level { get; set; }
+
+        /// <summary>
+        /// The issue types available in this hierarchy level.
+        /// </summary>
+        public long[] IssueTypeIds { get; set; }
+
+        /// <summary>
+        /// The external UUID of the hierarchy level. This property is deprecated, see [Change notice: Removing hierarchy level IDs from next-gen APIs](https://developer.atlassian.com/cloud/jira/platform/change-notice-removing-hierarchy-level-ids-from-next-gen-apis/).
+        /// </summary>
+        public string ExternalUuid { get; set; }
+
+        public string GlobalHierarchyLevel { get; set; }
+    }
+
+    public class SoftwareNavigationInfo
+    {
+        public long BoardId { get; set; }
+
+        public string BoardName { get; set; }
+
+        public bool SimpleBoard { get; set; }
     }
 
     /// <summary>
@@ -15892,6 +16945,43 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
         /// The name of the status category.
         /// </summary>
         public string Name { get; set; }
+    }
+
+    /// <summary>
+    /// Details of the status being created.
+    /// </summary>
+    public class StatusCreate
+    {
+        /// <summary>
+        /// The name of the status.
+        /// </summary>
+        public string Name { get; set; }
+
+        /// <summary>
+        /// The category of the status.
+        /// </summary>
+        public string StatusCategory { get; set; }
+
+        /// <summary>
+        /// The description of the status.
+        /// </summary>
+        public string Description { get; set; }
+    }
+
+    /// <summary>
+    /// Details of the statuses being created and their scope.
+    /// </summary>
+    public class StatusCreateRequest
+    {
+        /// <summary>
+        /// Details of the statuses being created.
+        /// </summary>
+        public StatusCreate[] Statuses { get; set; }
+
+        /// <summary>
+        /// The scope of the status.
+        /// </summary>
+        public StatusScope Scope { get; set; }
     }
 
     /// <summary>
@@ -15963,6 +17053,59 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
         /// The ID of the new status.
         /// </summary>
         public string NewStatusId { get; set; }
+    }
+
+    /// <summary>
+    /// The scope of the status.
+    /// </summary>
+    public class StatusScope
+    {
+        /// <summary>
+        /// The scope of the status. `GLOBAL` for company-managed projects and `PROJECT` for team-managed projects.
+        /// </summary>
+        public string Type { get; set; }
+
+        /// <summary>
+        /// Project ID details.
+        /// </summary>
+        public ProjectId Project { get; set; }
+    }
+
+    /// <summary>
+    /// Details of the status being updated.
+    /// </summary>
+    public class StatusUpdate
+    {
+        /// <summary>
+        /// The ID of the status.
+        /// </summary>
+        public string Id { get; set; }
+
+        /// <summary>
+        /// The name of the status.
+        /// </summary>
+        public string Name { get; set; }
+
+        /// <summary>
+        /// The category of the status.
+        /// </summary>
+        public string StatusCategory { get; set; }
+
+        /// <summary>
+        /// The description of the status.
+        /// </summary>
+        public string Description { get; set; }
+    }
+
+    /// <summary>
+    /// The list of statuses that will be updated.
+    /// </summary>
+    public class StatusUpdateRequest
+    {
+        /// <summary>
+        /// The list of statuses that will be updated.
+        /// </summary>
+        public StatusUpdate[] Statuses { get; set; }
     }
 
     public class StringList
@@ -16336,6 +17479,89 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
     {
     }
 
+    /// <summary>
+    /// The details of a UI modification's context, which define where to activate the UI modification.
+    /// </summary>
+    public class UiModificationContextDetails
+    {
+        /// <summary>
+        /// The ID of the UI modification context.
+        /// </summary>
+        public string Id { get; set; }
+
+        /// <summary>
+        /// The project ID of the context.
+        /// </summary>
+        public string ProjectId { get; set; }
+
+        /// <summary>
+        /// The issue type ID of the context.
+        /// </summary>
+        public string IssueTypeId { get; set; }
+
+        /// <summary>
+        /// The view type of the context. Only `GIC` (Global Issue Create) is supported.
+        /// </summary>
+        public string ViewType { get; set; }
+
+        /// <summary>
+        /// Whether a context is available. For example, when a project is deleted the context becomes unavailable.
+        /// </summary>
+        public bool IsAvailable { get; set; }
+    }
+
+    /// <summary>
+    /// The details of a UI modification.
+    /// </summary>
+    public class UiModificationDetails
+    {
+        /// <summary>
+        /// The ID of the UI modification.
+        /// </summary>
+        public string Id { get; set; }
+
+        /// <summary>
+        /// The name of the UI modification. The maximum length is 255 characters.
+        /// </summary>
+        public string Name { get; set; }
+
+        /// <summary>
+        /// The description of the UI modification. The maximum length is 255 characters.
+        /// </summary>
+        public string Description { get; set; }
+
+        /// <summary>
+        /// The URL of the UI modification.
+        /// </summary>
+        public string Self { get; set; }
+
+        /// <summary>
+        /// The data of the UI modification. The maximum size of the data is 50000 characters.
+        /// </summary>
+        public string Data { get; set; }
+
+        /// <summary>
+        /// List of contexts of the UI modification. The maximum number of contexts is 1000.
+        /// </summary>
+        public UiModificationContextDetails[] Contexts { get; set; }
+    }
+
+    /// <summary>
+    /// Identifiers for a UI modification.
+    /// </summary>
+    public class UiModificationIdentifiers
+    {
+        /// <summary>
+        /// The ID of the UI modification.
+        /// </summary>
+        public string Id { get; set; }
+
+        /// <summary>
+        /// The URL of the UI modification.
+        /// </summary>
+        public string Self { get; set; }
+    }
+
     public class UnrestrictedUserEmail
     {
         /// <summary>
@@ -16455,6 +17681,10 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
     {
     }
 
+    public class UpdateGadgetResult
+    {
+    }
+
     public class UpdateIssueTypeSchemeResult
     {
     }
@@ -16464,6 +17694,36 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
     }
 
     public class UpdateMultipleCustomFieldValuesResult
+    {
+    }
+
+    /// <summary>
+    /// Details of an issue priority.
+    /// </summary>
+    public class UpdatePriorityDetails
+    {
+        /// <summary>
+        /// The name of the priority. Must be unique.
+        /// </summary>
+        public string Name { get; set; }
+
+        /// <summary>
+        /// The description of the priority.
+        /// </summary>
+        public string Description { get; set; }
+
+        /// <summary>
+        /// The URL of an icon for the priority. Accepted protocols are HTTP and HTTPS. Built in icons can also be used.
+        /// </summary>
+        public string IconUrl { get; set; }
+
+        /// <summary>
+        /// The status color of the priority in 3-digit or 6-digit hexadecimal format.
+        /// </summary>
+        public string StatusColor { get; set; }
+    }
+
+    public class UpdatePriorityResult
     {
     }
 
@@ -16619,6 +17879,40 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
         public string Default { get; set; }
     }
 
+    public class UpdateStatusesResult
+    {
+    }
+
+    /// <summary>
+    /// The details of a UI modification.
+    /// </summary>
+    public class UpdateUiModificationDetails
+    {
+        /// <summary>
+        /// The name of the UI modification. The maximum length is 255 characters.
+        /// </summary>
+        public string Name { get; set; }
+
+        /// <summary>
+        /// The description of the UI modification. The maximum length is 255 characters.
+        /// </summary>
+        public string Description { get; set; }
+
+        /// <summary>
+        /// The data of the UI modification. The maximum size of the data is 50000 characters.
+        /// </summary>
+        public string Data { get; set; }
+
+        /// <summary>
+        /// List of contexts of the UI modification. The maximum number of contexts is 1000. If provided, replaces all existing contexts.
+        /// </summary>
+        public UiModificationContextDetails[] Contexts { get; set; }
+    }
+
+    public class UpdateUiModificationResult
+    {
+    }
+
     public class UpdateUserToGroupBean
     {
         /// <summary>
@@ -16763,16 +18057,16 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
     public class UserBeanAvatarUrls
     {
         /// <summary>
-        /// The URL of the user's 16x16 pixel avatar.
-        /// </summary>
-        [Newtonsoft.Json.JsonProperty("16x16")]
-        public string _16x16 { get; set; }
-
-        /// <summary>
         /// The URL of the user's 32x32 pixel avatar.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("32x32")]
         public string _32x32 { get; set; }
+
+        /// <summary>
+        /// The URL of the user's 16x16 pixel avatar.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("16x16")]
+        public string _16x16 { get; set; }
 
         /// <summary>
         /// The URL of the user's 48x48 pixel avatar.
@@ -17259,9 +18553,14 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
         public string Type { get; set; }
 
         /// <summary>
-        /// The name of the group or role to which visibility of this item is restricted.
+        /// The name of the group or role that visibility of this item is restricted to. Please note that the name of a group is mutable, to reliably identify a group use `identifier`.
         /// </summary>
         public string Value { get; set; }
+
+        /// <summary>
+        /// The ID of the group or the name of the role that visibility of this item is restricted to.
+        /// </summary>
+        public string Identifier { get; set; }
     }
 
     /// <summary>
@@ -17349,7 +18648,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
         public string[] Events { get; set; }
 
         /// <summary>
-        /// The date after which the webhook will stop being sent. Use the "Extend webhook life" resource to extend it.
+        /// The date after which the webhook is no longer sent. Use [Extend webhook life](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-webhooks/#api-rest-api-3-webhook-refresh-put) to extend the date.
         /// </summary>
         public long ExpirationDate { get; set; }
     }
@@ -17391,18 +18690,18 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
         public WebhookDetails[] Webhooks { get; set; }
 
         /// <summary>
-        /// The URL that specifies where to send the webhooks. This URL must use the same base URL as the Connect app.
+        /// The URL that specifies where to send the webhooks. This URL must use the same base URL as the Connect app. Only a single URL per app is allowed to be registered.
         /// </summary>
         public string Url { get; set; }
     }
 
     /// <summary>
-    /// The date the newly refreshed webhooks expire.
+    /// The date the refreshed webhooks expire.
     /// </summary>
     public class WebhooksExpirationDate
     {
         /// <summary>
-        /// The new expiration date of all refreshed webhooks: 30 days from now.
+        /// The expiration date of all the refreshed webhooks.
         /// </summary>
         public long ExpirationDate { get; set; }
     }
@@ -17546,11 +18845,6 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
     /// </summary>
     public class WorkflowRules
     {
-        /// <summary>
-        /// The workflow conditions. ([Deprecated](https://community.developer.atlassian.com/t/deprecation-of-conditions-body-param/48884))
-        /// </summary>
-        public WorkflowTransitionRule[] Conditions { get; set; }
-
         /// <summary>
         /// The workflow transition rule conditions tree.
         /// </summary>
@@ -18026,6 +19320,11 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
     public class WorklogVisibility : Visibility 
     {
     }
+
+    public class WorkManagementNavigationInfo
+    {
+        public string BoardName { get; set; }
+    }
 }
 namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
 {
@@ -18084,6 +19383,15 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
         public const string Plusowner = "+owner";
     }
 
+    public static class StatusConstants
+    {
+        public const string Active = "active";
+
+        public const string Archived = "archived";
+
+        public const string Deleted = "deleted";
+    }
+
     public static class CheckConstants
     {
         public const string Syntax = "syntax";
@@ -18128,6 +19436,27 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
     }
 
     public static class OrderByConstants2
+    {
+        public const string Name = "name";
+
+        public const string Minusname = "-name";
+
+        public const string Plusname = "+name";
+
+        public const string TrashDate = "trashDate";
+
+        public const string MinustrashDate = "-trashDate";
+
+        public const string PlustrashDate = "+trashDate";
+
+        public const string PlannedDeletionDate = "plannedDeletionDate";
+
+        public const string MinusplannedDeletionDate = "-plannedDeletionDate";
+
+        public const string PlusplannedDeletionDate = "+plannedDeletionDate";
+    }
+
+    public static class OrderByConstants3
     {
         public const string Description = "description";
 
@@ -18224,7 +19553,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
         public const string False = "false";
     }
 
-    public static class OrderByConstants3
+    public static class OrderByConstants4
     {
         public const string Created = "created";
 
@@ -18244,6 +19573,21 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
         public const string Auto = "auto";
     }
 
+    public static class OrderByConstants5
+    {
+        public const string Name = "name";
+
+        public const string Minusname = "-name";
+
+        public const string Plusname = "+name";
+
+        public const string Id = "id";
+
+        public const string Minusid = "-id";
+
+        public const string Plusid = "+id";
+    }
+
     public static class ValidationConstants
     {
         public const string Strict = "strict";
@@ -18253,7 +19597,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
         public const string None = "none";
     }
 
-    public static class OrderByConstants4
+    public static class OrderByConstants6
     {
         public const string Category = "category";
 
@@ -18313,7 +19657,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
         public const string Edit = "edit";
     }
 
-    public static class StatusConstants
+    public static class StatusConstants1
     {
         public const string Live = "live";
 
@@ -18333,7 +19677,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
         public const string ProductDiscovery = "product_discovery";
     }
 
-    public static class OrderByConstants5
+    public static class OrderByConstants7
     {
         public const string Description = "description";
 
@@ -18369,7 +19713,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
         public const string Business = "business";
     }
 
-    public static class OrderByConstants6
+    public static class OrderByConstants8
     {
         public const string Description = "description";
 
@@ -18400,6 +19744,15 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
         public const string MinusstartDate = "-startDate";
 
         public const string PlusstartDate = "+startDate";
+    }
+
+    public static class ScopeConstants
+    {
+        public const string GLOBAL = "GLOBAL";
+
+        public const string TEMPLATE = "TEMPLATE";
+
+        public const string PROJECT = "PROJECT";
     }
 
     public static class ValidateQueryConstants
@@ -18458,7 +19811,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
         public const string Validator = "validator";
     }
 
-    public static class OrderByConstants7
+    public static class OrderByConstants9
     {
         public const string Name = "name";
 
@@ -18508,9 +19861,19 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
     }
 
     /// <summary>
-    /// The type of the assignee that is assigned to issues created with this component, when an assignee cannot be set from the `assigneeType`. For example, `assigneeType` is set to `COMPONENT_LEAD` but no component lead is set. This property is set to one of the following values: *  `PROJECT_LEAD` when `assigneeType` is `PROJECT_LEAD` and the project lead has permission to be assigned issues in the project that the component is in. *  `COMPONENT_LEAD` when `assignee`Type is `COMPONENT_LEAD` and the component lead has permission to be assigned issues in the project that the component is in. *  `UNASSIGNED` when `assigneeType` is `UNASSIGNED` and Jira is configured to allow unassigned issues. *  `PROJECT_DEFAULT` when none of the preceding cases are true.
+    /// Visibility of the announcement banner.
     /// </summary>
-    public static class ComponentWithIssueCountRealAssigneeTypeConstants
+    public static class AnnouncementBannerConfigurationVisibilityConstants
+    {
+        public const string PUBLIC = "PUBLIC";
+
+        public const string PRIVATE = "PRIVATE";
+    }
+
+    /// <summary>
+    /// The nominal user type used to determine the assignee for issues created with this component. See `realAssigneeType` for details on how the type of the user, and hence the user, assigned to issues is determined. Takes the following values: *  `PROJECT_LEAD` the assignee to any issues created with this component is nominally the lead for the project the component is in. *  `COMPONENT_LEAD` the assignee to any issues created with this component is nominally the lead for the component. *  `UNASSIGNED` an assignee is not set for issues created with this component. *  `PROJECT_DEFAULT` the assignee to any issues created with this component is nominally the default assignee for the project that the component is in.
+    /// </summary>
+    public static class ComponentWithIssueCountAssigneeTypeConstants
     {
         public const string PROJECTDEFAULT = "PROJECT_DEFAULT";
 
@@ -18522,9 +19885,9 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
     }
 
     /// <summary>
-    /// The nominal user type used to determine the assignee for issues created with this component. See `realAssigneeType` for details on how the type of the user, and hence the user, assigned to issues is determined. Takes the following values: *  `PROJECT_LEAD` the assignee to any issues created with this component is nominally the lead for the project the component is in. *  `COMPONENT_LEAD` the assignee to any issues created with this component is nominally the lead for the component. *  `UNASSIGNED` an assignee is not set for issues created with this component. *  `PROJECT_DEFAULT` the assignee to any issues created with this component is nominally the default assignee for the project that the component is in.
+    /// The type of the assignee that is assigned to issues created with this component, when an assignee cannot be set from the `assigneeType`. For example, `assigneeType` is set to `COMPONENT_LEAD` but no component lead is set. This property is set to one of the following values: *  `PROJECT_LEAD` when `assigneeType` is `PROJECT_LEAD` and the project lead has permission to be assigned issues in the project that the component is in. *  `COMPONENT_LEAD` when `assignee`Type is `COMPONENT_LEAD` and the component lead has permission to be assigned issues in the project that the component is in. *  `UNASSIGNED` when `assigneeType` is `UNASSIGNED` and Jira is configured to allow unassigned issues. *  `PROJECT_DEFAULT` when none of the preceding cases are true.
     /// </summary>
-    public static class ComponentWithIssueCountAssigneeTypeConstants
+    public static class ComponentWithIssueCountRealAssigneeTypeConstants
     {
         public const string PROJECTDEFAULT = "PROJECT_DEFAULT";
 
@@ -18563,6 +19926,32 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
         public const string MultiSelectIssueField = "MultiSelectIssueField";
 
         public const string TextIssueField = "TextIssueField";
+    }
+
+    /// <summary>
+    /// The URL of an icon for the priority. Accepted protocols are HTTP and HTTPS. Built in icons can also be used.
+    /// </summary>
+    public static class CreatePriorityDetailsIconUrlConstants
+    {
+        public const string ImagesIconsPrioritiesBlockerPng = "/images/icons/priorities/blocker.png";
+
+        public const string ImagesIconsPrioritiesCriticalPng = "/images/icons/priorities/critical.png";
+
+        public const string ImagesIconsPrioritiesHighPng = "/images/icons/priorities/high.png";
+
+        public const string ImagesIconsPrioritiesHighestPng = "/images/icons/priorities/highest.png";
+
+        public const string ImagesIconsPrioritiesLowPng = "/images/icons/priorities/low.png";
+
+        public const string ImagesIconsPrioritiesLowestPng = "/images/icons/priorities/lowest.png";
+
+        public const string ImagesIconsPrioritiesMajorPng = "/images/icons/priorities/major.png";
+
+        public const string ImagesIconsPrioritiesMediumPng = "/images/icons/priorities/medium.png";
+
+        public const string ImagesIconsPrioritiesMinorPng = "/images/icons/priorities/minor.png";
+
+        public const string ImagesIconsPrioritiesTrivialPng = "/images/icons/priorities/trivial.png";
     }
 
     /// <summary>
@@ -18605,6 +19994,10 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
         public const string ComAtlassianServicedeskSimplifiedMinusitMinusserviceMinusmanagement = "com.atlassian.servicedesk:simplified-it-service-management";
 
         public const string ComAtlassianServicedeskSimplifiedMinusgeneralMinusserviceMinusdesk = "com.atlassian.servicedesk:simplified-general-service-desk";
+
+        public const string ComAtlassianServicedeskSimplifiedMinusgeneralMinusserviceMinusdeskMinusit = "com.atlassian.servicedesk:simplified-general-service-desk-it";
+
+        public const string ComAtlassianServicedeskSimplifiedMinusgeneralMinusserviceMinusdeskMinusbusiness = "com.atlassian.servicedesk:simplified-general-service-desk-business";
 
         public const string ComAtlassianServicedeskSimplifiedMinusinternalMinusserviceMinusdesk = "com.atlassian.servicedesk:simplified-internal-service-desk";
 
@@ -18685,6 +20078,28 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
         public const string ComAtlassianJiraPluginSystemCustomfieldtypesUserpickergroupsearcher = "com.atlassian.jira.plugin.system.customfieldtypes:userpickergroupsearcher";
 
         public const string ComAtlassianJiraPluginSystemCustomfieldtypesVersionsearcher = "com.atlassian.jira.plugin.system.customfieldtypes:versionsearcher";
+    }
+
+    /// <summary>
+    /// The color of the gadget. Should be one of `blue`, `red`, `yellow`, `green`, `cyan`, `purple`, `gray`, or `white`.
+    /// </summary>
+    public static class DashboardGadgetColorConstants
+    {
+        public const string Blue = "blue";
+
+        public const string Red = "red";
+
+        public const string Yellow = "yellow";
+
+        public const string Green = "green";
+
+        public const string Cyan = "cyan";
+
+        public const string Purple = "purple";
+
+        public const string Gray = "gray";
+
+        public const string White = "white";
     }
 
     /// <summary>
@@ -18852,15 +20267,6 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
         public const string MULTIPLE = "MULTIPLE";
     }
 
-    public static class HierarchyLevelGlobalHierarchyLevelConstants
-    {
-        public const string SUBTASK = "SUBTASK";
-
-        public const string BASE = "BASE";
-
-        public const string EPIC = "EPIC";
-    }
-
     public static class IssueFieldOptionConfigurationAttributesConstants
     {
         public const string NotSelectable = "notSelectable";
@@ -18869,7 +20275,7 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
     }
 
     /// <summary>
-    /// Deprecated. Use `hierarchyLevel` instead.Whether the issue type is `subtype` or `standard`. Defaults to `standard`.
+    /// Deprecated. Use `hierarchyLevel` instead. See the [deprecation notice](https://community.developer.atlassian.com/t/deprecation-of-the-epic-link-parent-link-and-other-related-fields-in-rest-apis-and-webhooks/54048) for details.Whether the issue type is `subtype` or `standard`. Defaults to `standard`.
     /// </summary>
     public static class IssueTypeCreateBeanTypeConstants
     {
@@ -18900,6 +20306,18 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
         public const string Type = "type";
 
         public const string Other = "other";
+    }
+
+    /// <summary>
+    /// The category of the status.
+    /// </summary>
+    public static class JiraStatusStatusCategoryConstants
+    {
+        public const string TODO = "TODO";
+
+        public const string INPROGRESS = "IN_PROGRESS";
+
+        public const string DONE = "DONE";
     }
 
     /// <summary>
@@ -19196,6 +20614,49 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
         public const string Authenticated = "authenticated";
     }
 
+    public static class SimplifiedHierarchyLevelGlobalHierarchyLevelConstants
+    {
+        public const string SUBTASK = "SUBTASK";
+
+        public const string BASE = "BASE";
+
+        public const string EPIC = "EPIC";
+    }
+
+    /// <summary>
+    /// The category of the status.
+    /// </summary>
+    public static class StatusCreateStatusCategoryConstants
+    {
+        public const string TODO = "TODO";
+
+        public const string INPROGRESS = "IN_PROGRESS";
+
+        public const string DONE = "DONE";
+    }
+
+    /// <summary>
+    /// The scope of the status. `GLOBAL` for company-managed projects and `PROJECT` for team-managed projects.
+    /// </summary>
+    public static class StatusScopeTypeConstants
+    {
+        public const string PROJECT = "PROJECT";
+
+        public const string GLOBAL = "GLOBAL";
+    }
+
+    /// <summary>
+    /// The category of the status.
+    /// </summary>
+    public static class StatusUpdateStatusCategoryConstants
+    {
+        public const string TODO = "TODO";
+
+        public const string INPROGRESS = "IN_PROGRESS";
+
+        public const string DONE = "DONE";
+    }
+
     /// <summary>
     /// The status of the task.
     /// </summary>
@@ -19304,6 +20765,32 @@ namespace RestEaseClientGeneratorConsoleApp.Examples.Jira.Models
         public const string ComAtlassianJiraPluginSystemCustomfieldtypesUserpickergroupsearcher = "com.atlassian.jira.plugin.system.customfieldtypes:userpickergroupsearcher";
 
         public const string ComAtlassianJiraPluginSystemCustomfieldtypesVersionsearcher = "com.atlassian.jira.plugin.system.customfieldtypes:versionsearcher";
+    }
+
+    /// <summary>
+    /// The URL of an icon for the priority. Accepted protocols are HTTP and HTTPS. Built in icons can also be used.
+    /// </summary>
+    public static class UpdatePriorityDetailsIconUrlConstants
+    {
+        public const string ImagesIconsPrioritiesBlockerPng = "/images/icons/priorities/blocker.png";
+
+        public const string ImagesIconsPrioritiesCriticalPng = "/images/icons/priorities/critical.png";
+
+        public const string ImagesIconsPrioritiesHighPng = "/images/icons/priorities/high.png";
+
+        public const string ImagesIconsPrioritiesHighestPng = "/images/icons/priorities/highest.png";
+
+        public const string ImagesIconsPrioritiesLowPng = "/images/icons/priorities/low.png";
+
+        public const string ImagesIconsPrioritiesLowestPng = "/images/icons/priorities/lowest.png";
+
+        public const string ImagesIconsPrioritiesMajorPng = "/images/icons/priorities/major.png";
+
+        public const string ImagesIconsPrioritiesMediumPng = "/images/icons/priorities/medium.png";
+
+        public const string ImagesIconsPrioritiesMinorPng = "/images/icons/priorities/minor.png";
+
+        public const string ImagesIconsPrioritiesTrivialPng = "/images/icons/priorities/trivial.png";
     }
 
     /// <summary>

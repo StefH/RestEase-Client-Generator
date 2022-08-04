@@ -13,6 +13,20 @@ namespace RestEaseClientGeneratorConsoleApp
         {
             var generator = new Generator();
 
+            var jiraSettings = new GeneratorSettings
+            {
+                Namespace = "RestEaseClientGeneratorConsoleApp.Examples.Jira",
+                ApiName = "Jira",
+                SingleFile = true,
+                PreferredMultipleResponsesType = MultipleResponsesType.AnyOf
+            };
+            foreach (var file in generator.FromFile("Examples\\Jira\\swagger-v3.v3.json", jiraSettings, out OpenApiDiagnostic diagnosticJira))
+            {
+                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Jira/{file.Path}/{file.Name}", file.Content);
+            }
+
+            return;
+
             //var pitaneSettings = new GeneratorSettings
             //{
             //    SingleFile = true,
@@ -64,17 +78,7 @@ namespace RestEaseClientGeneratorConsoleApp
                 File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Weather/{file.Path}/{file.Name}", file.Content);
             }
 
-            //var jiraSettings = new GeneratorSettings
-            //{
-            //    Namespace = "RestEaseClientGeneratorConsoleApp.Examples.Jira",
-            //    ApiName = "Jira",
-            //    SingleFile = true,
-            //    PreferredMultipleResponsesType = MultipleResponsesType.AnyOf
-            //};
-            //foreach (var file in generator.FromFile("Examples\\Jira\\swagger-v3.v3.json", jiraSettings, out OpenApiDiagnostic diagnosticJira))
-            //{
-            //    File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Jira/{file.Path}/{file.Name}", file.Content);
-            //}
+            
 
             var petStoreJsonSettings = new GeneratorSettings
             {
