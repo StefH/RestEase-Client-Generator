@@ -30,6 +30,10 @@
     <ItemGroup>
         <PackageReference Include="AnyOf" Version="0.3.0" />
         <PackageReference Include="Flurl" Version="3.0.4" />
+        <PackageReference Include="IsExternalInit" Version="1.0.3">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
         <PackageReference Include="Microsoft.OpenApi" Version="1.2.3" />
         <PackageReference Include="Microsoft.OpenApi.Readers" Version="1.2.3" />
         <PackageReference Include="RamlToOpenApiConverter" Version="0.6.1" />
