@@ -58,12 +58,13 @@ internal class SchemaMapper
 
     private PropertyDto MapArray(string name, string parentName, OpenApiSchema schema)
     {
-        var arrayItem = Map(string.Empty, name, schema.Items);
+        var arrayItem = Map(name, name, schema.Items);
         var type = arrayItem.CurrentType switch
         {
             AnyOfType.First => arrayItem.First.Type,
             AnyOfType.Second => arrayItem.Second.Type,
-            AnyOfType.Third => arrayItem.Third.Type
+            AnyOfType.Third => arrayItem.Third.Type,
+            _ => throw new ArgumentOutOfRangeException()
         };
 
         return new PropertyDto(ArrayTypeMapper.Map(_settings.ArrayType, type), name, schema.Nullable, type, schema.Description);

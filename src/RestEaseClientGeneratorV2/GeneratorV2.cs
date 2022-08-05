@@ -30,7 +30,7 @@ public class GeneratorV2
                 case AnyOfType.First:
                     if (propertyOrModelOrEnum.First.ArrayItemType != null)
                     {
-                        // it's an enum
+                        // it's an array
                         int vvv = 9;
                     }
                     else
