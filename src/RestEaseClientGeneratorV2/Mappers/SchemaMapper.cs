@@ -48,6 +48,10 @@ internal class SchemaMapper
                 var @object = MapObject(name, parentName, schema, extraModels);
                 return @object.IsFirst ? @object.First : @object.Second;
 
+            case SchemaType.Reference:
+                var reference = MapReference(name, parentName, schema, extraModels);
+                return reference.IsFirst ? reference.First : reference.Second;
+
             case SchemaType.String:
                 var @string = MapString(name, parentName, schema);
                 return @string.IsFirst ? @string.First : @string.Second;
@@ -120,9 +124,22 @@ internal class SchemaMapper
         foreach (var schemaProperty in schema.Properties)
         {
             var propertyOrModel = Map(schemaProperty.Key, parentName, schemaProperty.Value, extraModels);
-            if (propertyOrModel.IsFirst)
+            switch (propertyOrModel.CurrentType)
             {
-                list.Add(propertyOrModel.First);
+                case AnyOfType.First:
+                    list.Add(propertyOrModel.First);
+                    break;
+
+                case AnyOfType.Second:
+                    list.Add(propertyOrModel.Second.ToPropertyDto(schema.Nullable));
+                    break;
+
+                case AnyOfType.Third:
+                    list.Add(propertyOrModel.Third.ToPropertyDto(schema.Nullable));
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
 
@@ -168,6 +185,11 @@ internal class SchemaMapper
         return new EnumDto(type, enumName, schema.Nullable, enumValues, schema.Description);
     }
 
+    private AnyOf<PropertyDto, ModelDto> MapReference(string name, string parentName, OpenApiSchema schema, ICollection<ModelDto> extraModels)
+    {
+        return MapObject(name, parentName, schema, extraModels);
+    }
+
     private AnyOf<PropertyDto, ModelDto, EnumDto> MapUnknown(string name, string parentName, OpenApiSchema schema, ICollection<ModelDto> extraModels)
     {
         if (schema.Properties.Any())
@@ -183,20 +205,34 @@ internal class SchemaMapper
         }
 
         var allOfOrAnyOfSchemas = schema.AllOf.Union(schema.AnyOf).ToList();
-        if (allOfOrAnyOfSchemas.Any())
+        if (allOfOrAnyOfSchemas.Count == 1)
         {
-            var list = new List<ModelDto>();
+            return Map(name, parentName, allOfOrAnyOfSchemas[0], extraModels);
+        }
+
+        if (allOfOrAnyOfSchemas.Count > 1)
+        {
+            var properties = new List<PropertyDto>();
             foreach (var childSchema in allOfOrAnyOfSchemas)
             {
-                var childName = TryGetReferenceId(childSchema, out var id) ? id : string.Empty;
-                var childModel = Map(childName, parentName, childSchema, extraModels);
+                //var childName = TryGetReferenceId(childSchema, out var id) ? id : string.Empty;
+                var childModel = Map(string.Empty, parentName, childSchema, extraModels);
+                switch (childModel.CurrentType)
+                {
+                    case AnyOfType.First:
+                        properties.Add(childModel.First);
+                        break;
 
-                list.Add(childModel);
+                    case AnyOfType.Second:
+                        properties.AddRange(childModel.Second.Properties);
+                        break;
 
-                AddToExtraModels(childModel, extraModels);
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
             }
 
-            return new ModelDto(BuildModeType(name), name, new List<PropertyDto>(), schema.Description);
+            return new ModelDto(BuildModeType(name), name, properties, schema.Description);
         }
 
         return new PropertyDto("xxx", name, schema.Nullable, null, schema.Description);

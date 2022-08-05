@@ -35,7 +35,8 @@ public class GeneratorV2
                     }
                     else
                     {
-                        throw new ArgumentOutOfRangeException();
+                        // it's an (string) enum
+                        int aaa = 0;
                     }
                     break;
 

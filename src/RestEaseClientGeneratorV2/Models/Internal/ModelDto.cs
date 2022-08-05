@@ -6,4 +6,9 @@ internal record ModelDto(string Type, string Name, IList<PropertyDto> Properties
     {
         return $"{Type} {Name}";
     }
+
+    public PropertyDto ToPropertyDto(bool nullable)
+    {
+        return new PropertyDto(Type, Name, nullable, null, Description);
+    }
 }

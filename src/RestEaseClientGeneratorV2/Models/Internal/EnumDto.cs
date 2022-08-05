@@ -6,4 +6,9 @@ internal record EnumDto(string Type, string Name, bool Nullable, IList<string> V
     {
         return $"{Type} {Name}";
     }
+
+    public PropertyDto ToPropertyDto(bool nullable)
+    {
+        return new PropertyDto(Type, Name, nullable, null, Description);
+    }
 }

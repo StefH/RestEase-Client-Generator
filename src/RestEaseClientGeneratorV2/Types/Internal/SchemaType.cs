@@ -17,5 +17,7 @@ internal enum SchemaType
 
     Boolean,
 
-    File
+    File,
+
+    Reference
 }
