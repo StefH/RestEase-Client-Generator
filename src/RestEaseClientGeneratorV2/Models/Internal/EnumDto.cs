@@ -1,0 +1,9 @@
+namespace RestEaseClientGenerator.Models.Internal;
+
+internal record EnumDto(string Type, string Name, bool Nullable, IList<string> Values, string? Description = null)
+{
+    public override string ToString()
+    {
+        return $"{Type} {Name}";
+    }
+}

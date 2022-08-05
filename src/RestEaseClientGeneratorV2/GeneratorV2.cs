@@ -1,71 +1,54 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using Microsoft.OpenApi.Models;
-using Microsoft.OpenApi.Readers.Interface;
+using AnyOfTypes;
 using Microsoft.OpenApi.Readers;
-using RestEaseClientGenerator.Extensions;
-using RestEaseClientGenerator.Types.Internal;
+using RestEaseClientGenerator.Models.Internal;
+using RestEaseClientGenerator.Settings;
+using RestEaseClientGeneratorV2.Mappers;
 
 namespace RestEaseClientGeneratorV2;
 
 public class GeneratorV2
 {
-    public void X(string path)
+    public void Map(string path)
     {
         var reader = new OpenApiStreamReader();
         var document = reader.Read(File.OpenRead(path), out var diagnostic);
 
         var schemas = document.Components.Schemas.OrderBy(s => s.Key).ToList();
 
+        var mapper = new SchemaMapper(new GeneratorSettings
+        {
+
+        });
+
+        var models = new List<ModelDto>();
+        var enums = new List<EnumDto>();
         foreach (var schema in schemas)
         {
-            MapSchema(schema.Key, schema.Value);
+            var propertyOrModelOrEnum = mapper.Map(schema.Key, string.Empty, schema.Value);
+            switch (propertyOrModelOrEnum.CurrentType)
+            {
+                case AnyOfType.First:
+                    if (propertyOrModelOrEnum.First.ArrayItemType != null)
+                    {
+                        // it's an enum
+                        int vvv = 9;
+                    }
+                    else
+                    {
+                        throw new ArgumentOutOfRangeException();
+                    }
+                    break;
+
+                case AnyOfType.Second:
+                    models.Add(propertyOrModelOrEnum.Second);
+                    break;
+
+                case AnyOfType.Third:
+                    enums.Add(propertyOrModelOrEnum.Third);
+                    break;
+            }
         }
+        
         int y = 9;
-    }
-
-    private static void MapSchema(string key, OpenApiSchema schema)
-    {
-        switch (schema.GetSchemaType())
-        {
-            case SchemaType.Unknown:
-                break;
-
-            case SchemaType.Object:
-                MapSchemaObject(key, schema);
-                break;
-
-            case SchemaType.Array:
-                break;
-
-            case SchemaType.String:
-                break;
-
-            case SchemaType.Integer:
-                break;
-
-            case SchemaType.Number:
-                break;
-
-            case SchemaType.Boolean:
-                break;
-
-            case SchemaType.File:
-                break;
-
-            default:
-                throw new ArgumentOutOfRangeException();
-        }
-    }
-
-    private static void MapSchemaObject(string key, OpenApiSchema schema)
-    {
-        foreach (var schemaProperty in schema.Properties)
-        {
-            MapSchema(schemaProperty.Key, schemaProperty.Value);
-        }
     }
 }

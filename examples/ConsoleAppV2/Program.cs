@@ -15,4 +15,4 @@ var g2 = new GeneratorV2();
 //    ModelsNamespace = "Models"
 //};
 
-g2.X("Examples\\petstore.json");
+g2.Map("Examples\\pitane.json");

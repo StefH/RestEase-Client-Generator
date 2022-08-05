@@ -12,7 +12,7 @@ internal class RestEaseParameter
 
     public string ValidIdentifier { get; set; }
 
-    public PropertyDto IdentifierWithTypePascalCase => new(IdentifierWithType.Type, IdentifierWithType.Name.ToPascalCase());
+    public PropertyDto IdentifierWithTypePascalCase => new(IdentifierWithType.Type, IdentifierWithType.Name.ToPascalCase(), IsNullable);
 
     public PropertyDto IdentifierWithType { get; set; }
 
@@ -31,4 +31,6 @@ internal class RestEaseParameter
     public bool Required { get; set; }
 
     public bool IsSpecial { get; set; }
+
+    public bool IsNullable { get; set; }
 }
