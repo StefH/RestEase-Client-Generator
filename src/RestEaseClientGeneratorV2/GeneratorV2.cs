@@ -24,7 +24,7 @@ public class GeneratorV2
         var enums = new List<EnumDto>();
         foreach (var schema in schemas)
         {
-            var propertyOrModelOrEnum = mapper.Map(schema.Key, string.Empty, schema.Value);
+            var propertyOrModelOrEnum = mapper.Map(schema.Key, string.Empty, schema.Value, models);
             switch (propertyOrModelOrEnum.CurrentType)
             {
                 case AnyOfType.First:

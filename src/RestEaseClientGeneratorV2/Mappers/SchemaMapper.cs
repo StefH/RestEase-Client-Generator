@@ -1,4 +1,8 @@
+using System.Diagnostics.CodeAnalysis;
+using System.IO;
+using System.Runtime;
 using AnyOfTypes;
+using Microsoft.OpenApi;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
 using RestEaseClientGenerator.Extensions;
@@ -19,14 +23,14 @@ internal class SchemaMapper
         _settings = settings;
     }
 
-    public AnyOf<PropertyDto, ModelDto, EnumDto> Map(string key, string parentName, OpenApiSchema schema)
+    public AnyOf<PropertyDto, ModelDto, EnumDto> Map(string key, string parentName, OpenApiSchema schema, ICollection<ModelDto> extraModels)
     {
         var name = key.ToPascalCase();
 
         switch (schema.GetSchemaType())
         {
             case SchemaType.Array:
-                return MapArray(name, parentName, schema);
+                return MapArray(name, parentName, schema, extraModels);
 
             case SchemaType.Boolean:
                 return MapBoolean(name, schema);
@@ -41,7 +45,7 @@ internal class SchemaMapper
                 return MapNumber(name, schema);
 
             case SchemaType.Object:
-                var @object = MapObject(name, parentName, schema);
+                var @object = MapObject(name, parentName, schema, extraModels);
                 return @object.IsFirst ? @object.First : @object.Second;
 
             case SchemaType.String:
@@ -49,23 +53,40 @@ internal class SchemaMapper
                 return @string.IsFirst ? @string.First : @string.Second;
 
             case SchemaType.Unknown:
-                return MapUnknown(name, parentName, schema);
+                return MapUnknown(name, parentName, schema, extraModels);
 
             default:
                 throw new ArgumentOutOfRangeException();
         }
     }
 
-    private PropertyDto MapArray(string name, string parentName, OpenApiSchema schema)
+    private PropertyDto MapArray(string name, string parentName, OpenApiSchema schema, ICollection<ModelDto> extraModels)
     {
-        var arrayItem = Map(name, name, schema.Items);
-        var type = arrayItem.CurrentType switch
+        var arrayItem = Map(name, name, schema.Items, extraModels);
+        string? type;
+        switch (arrayItem.CurrentType)
         {
-            AnyOfType.First => arrayItem.First.Type,
-            AnyOfType.Second => arrayItem.Second.Type,
-            AnyOfType.Third => arrayItem.Third.Type,
-            _ => throw new ArgumentOutOfRangeException()
-        };
+            case AnyOfType.First:
+                type = arrayItem.First.Type;
+                break;
+
+            case AnyOfType.Second:
+                type = $"{arrayItem.Second.Type}{_settings.InlineModelPostFix}";
+                var updatedModel = arrayItem.Second with
+                {
+                    Type = type,
+                    Description = schema.Description
+                };
+                AddToExtraModels(updatedModel, extraModels);
+                break;
+
+            case AnyOfType.Third:
+                type = arrayItem.Third.Type;
+                break;
+
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
 
         return new PropertyDto(ArrayTypeMapper.Map(_settings.ArrayType, type), name, schema.Nullable, type, schema.Description);
     }
@@ -93,12 +114,12 @@ internal class SchemaMapper
         };
     }
 
-    private AnyOf<PropertyDto, ModelDto> MapObject(string name, string parentName, OpenApiSchema schema)
+    private AnyOf<PropertyDto, ModelDto> MapObject(string name, string parentName, OpenApiSchema schema, ICollection<ModelDto> extraModels)
     {
         var list = new List<PropertyDto>();
         foreach (var schemaProperty in schema.Properties)
         {
-            var propertyOrModel = Map(schemaProperty.Key, parentName, schemaProperty.Value);
+            var propertyOrModel = Map(schemaProperty.Key, parentName, schemaProperty.Value, extraModels);
             if (propertyOrModel.IsFirst)
             {
                 list.Add(propertyOrModel.First);
@@ -147,12 +168,12 @@ internal class SchemaMapper
         return new EnumDto(type, enumName, schema.Nullable, enumValues, schema.Description);
     }
 
-    private AnyOf<PropertyDto, ModelDto, EnumDto> MapUnknown(string name, string parentName, OpenApiSchema schema)
+    private AnyOf<PropertyDto, ModelDto, EnumDto> MapUnknown(string name, string parentName, OpenApiSchema schema, ICollection<ModelDto> extraModels)
     {
         if (schema.Properties.Any())
         {
             // It's an inline object-model
-            var @object = MapObject(name, parentName, schema);
+            var @object = MapObject(name, parentName, schema, extraModels);
             if (@object.IsSecond)
             {
                 return @object.Second;
@@ -161,7 +182,43 @@ internal class SchemaMapper
             throw new ArgumentOutOfRangeException();
         }
 
+        var allOfOrAnyOfSchemas = schema.AllOf.Union(schema.AnyOf).ToList();
+        if (allOfOrAnyOfSchemas.Any())
+        {
+            foreach (var childSchema in allOfOrAnyOfSchemas)
+            {
+                var childName = TryGetReferenceId(childSchema, out var id) ? id : string.Empty;
+                var childModel = Map(childName, parentName, childSchema, extraModels);
+                AddToExtraModels(childModel, extraModels);
+            }
+        }
+
         return new PropertyDto("xxx", name, schema.Nullable, null, schema.Description);
+    }
+
+    private void AddToExtraModels(ModelDto model, ICollection<ModelDto> extraModels)
+    {
+        if (!extraModels.Any(m => m.Name == model.Name && m.Type == model.Type))
+        {
+            extraModels.Add(model);
+        }
+    }
+
+    private bool TryGetReferenceId(OpenApiSchema schema, [NotNullWhen(true)] out string? id)
+    {
+        switch (schema.Reference)
+        {
+            case { IsLocal: true }:
+                id = schema.Reference.Id;
+                return true;
+
+            case { IsExternal: true }:
+                throw new NotSupportedException();
+
+            default:
+                id = default;
+                return false;
+        }
     }
 
     private string FixReservedType(string type)

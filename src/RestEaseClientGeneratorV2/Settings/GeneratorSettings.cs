@@ -55,6 +55,10 @@ public class GeneratorSettings
     [DisplayName("Add FluentBuilder")]
     [Description("Add the FluentBuilder.AutoGenerateBuilder attribute to all models, the default value is 'False'.")]
     public bool AddFluentBuilder { get; set; }
+
+    [DisplayName("Inline Model PostFix")]
+    [Description("In case an inline model is found, add this PostFix, the default value is 'Model'.")]
+    public string InlineModelPostFix { get; set; } = "Model";
     #endregion
 
     #region Interface
