@@ -71,7 +71,7 @@ internal class SchemaMapper
                 break;
 
             case AnyOfType.Second:
-                type = $"{arrayItem.Second.Type}{_settings.InlineModelPostFix}";
+                type = BuildModeType(arrayItem.Second.Type);
                 var updatedModel = arrayItem.Second with
                 {
                     Type = type,
@@ -185,12 +185,18 @@ internal class SchemaMapper
         var allOfOrAnyOfSchemas = schema.AllOf.Union(schema.AnyOf).ToList();
         if (allOfOrAnyOfSchemas.Any())
         {
+            var list = new List<ModelDto>();
             foreach (var childSchema in allOfOrAnyOfSchemas)
             {
                 var childName = TryGetReferenceId(childSchema, out var id) ? id : string.Empty;
                 var childModel = Map(childName, parentName, childSchema, extraModels);
+
+                list.Add(childModel);
+
                 AddToExtraModels(childModel, extraModels);
             }
+
+            return new ModelDto(BuildModeType(name), name, new List<PropertyDto>(), schema.Description);
         }
 
         return new PropertyDto("xxx", name, schema.Nullable, null, schema.Description);
@@ -219,6 +225,11 @@ internal class SchemaMapper
                 id = default;
                 return false;
         }
+    }
+
+    private string BuildModeType(string type)
+    {
+        return $"{type}{_settings.InlineModelPostFix}";
     }
 
     private string FixReservedType(string type)
