@@ -20,11 +20,11 @@ internal class SchemaMapper
         _settings = settings;
     }
 
-    public BaseDto Map(string key, string parentName, OpenApiSchema schema, bool r, ICollection<ModelDto> extraModels)
+    public BaseDto Map(string key, string parentName, OpenApiSchema schema, bool isProperty, ICollection<ModelDto> extraModels)
     {
         var name = key.ToPascalCase();
 
-        if (r && TryGetReferenceId(schema, out var referenceId))
+        if (isProperty && TryGetReferenceId(schema, out var referenceId))
         {
             return MapReference(referenceId, schema, extraModels);
         }
@@ -53,7 +53,7 @@ internal class SchemaMapper
                 return MapString(name, parentName, schema);
 
             case SchemaType.Unknown:
-                return MapUnknown(name, parentName, schema, extraModels);
+                return MapUnknown(name, parentName, schema, isProperty, extraModels);
 
             default:
                 throw new ArgumentOutOfRangeException();
@@ -120,6 +120,11 @@ internal class SchemaMapper
 
     private BaseDto MapObject(string name, string parentName, OpenApiSchema schema, ICollection<ModelDto> extraModels)
     {
+        if (!schema.Properties.Any())
+        {
+            return new PropertyDto("object", name, schema.Nullable, null, schema.Description);
+        }
+
         var list = new List<PropertyDto>();
         foreach (var schemaProperty in schema.Properties)
         {
@@ -147,7 +152,7 @@ internal class SchemaMapper
                     break;
 
                 case ReferenceDto referenceDto:
-                    list.Add(new PropertyDto(referenceDto.Type, propertyName, schema.Nullable, referenceDto.Description));
+                    list.Add(referenceDto.ToPropertyDto(propertyName, schema.Nullable));
                     break;
 
                 default:
@@ -197,9 +202,9 @@ internal class SchemaMapper
         return new EnumDto(type, enumName, schema.Nullable, enumValues, schema.Description);
     }
 
-    private BaseDto MapUnknown(string name, string parentName, OpenApiSchema schema, ICollection<ModelDto> extraModels)
+    private BaseDto MapUnknown(string name, string parentName, OpenApiSchema schema, bool isProperty, ICollection<ModelDto> extraModels)
     {
-        if (TryGetReferenceId(schema, out var referenceId))
+        if (isProperty && TryGetReferenceId(schema, out var referenceId))
         {
             // It's a reference
             return MapReference(referenceId, schema, extraModels);
@@ -240,6 +245,11 @@ internal class SchemaMapper
                         properties.AddRange(modelDto.Properties);
                         break;
 
+                    case ReferenceDto:
+                        // skip
+                        //properties.Add(referenceDto.ToPropertyDto("todo", schema.Nullable));
+                        break;
+
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
@@ -254,17 +264,36 @@ internal class SchemaMapper
 
     private BaseDto MapReference(string referenceId, OpenApiSchema schema, ICollection<ModelDto> extraModels)
     {
-        string referenceType;
+        string referenceType = "object";
         if (schema.GetSchemaType() is SchemaType.Object or SchemaType.Unknown)
         {
-            referenceType = FixReservedType(referenceId.ToPascalCase());
+            if (schema.Properties.Any())
+            {
+                referenceType = FixReservedType(referenceId.ToPascalCase());
+            }
+
+            if (referenceType == "Requirements")
+            {
+                int tt = 9;
+            }
         }
         else
         {
-            var result = Map(string.Empty, string.Empty, schema, false,
-                extraModels); // Just call Map to get the CSharp Type
+            if (schema.Description?.StartsWith("Requirements the users has ((dis)") == true)
+            {
+                int y = 9;
+            }
+
+            var result = Map(string.Empty, string.Empty, schema, false, extraModels);
             referenceType = result.Type;
+
+            if (referenceType == "Requirements")
+            {
+                int tt = 9;
+            }
         }
+
+        
 
         return new ReferenceDto(referenceType, schema.Description);
     }

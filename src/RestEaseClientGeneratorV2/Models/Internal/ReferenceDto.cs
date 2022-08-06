@@ -9,4 +9,9 @@ internal record ReferenceDto(string Type, string? Description = null) : BaseDto(
     //    string nullable = Nullable ? "?" : string.Empty;
     //    return $"{Id}{nullable} {Name}";
     //}
+
+    public PropertyDto ToPropertyDto(string propertyName, bool nullable)
+    {
+        return new PropertyDto(Type, propertyName, nullable, Description);
+    }
 }
