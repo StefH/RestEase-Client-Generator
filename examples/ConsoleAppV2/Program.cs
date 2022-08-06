@@ -1,18 +1,15 @@
-using RestEaseClientGenerator.Types;
+using RestEaseClientGenerator.Settings;
 using RestEaseClientGeneratorV2;
 
-var g2 = new GeneratorV2();
-//var petStoreJsonSettings = new GeneratorSettings
-//{
-//    SingleFile = true,
-//    ArrayType = ArrayType.IEnumerable,
-//    Namespace = "RestEaseClientGeneratorConsoleApp.Examples.PetStoreJson",
-//    ApiName = "PetStoreJson",
-//    UseDateTimeOffset = true,
-//    MethodReturnType = MethodReturnType.Type,
-//    MultipartFormDataFileType = MultipartFormDataFileType.Stream,
-//    ApiNamespace = "Test123",
-//    ModelsNamespace = "Models"
-//};
+var generatorV2 = new GeneratorV2();
 
-g2.Map("Examples\\pitane.json");
+var settings = new GeneratorSettings
+{
+    SingleFile = true,
+    Namespace = "ConsoleAppV2.Examples.Pitane",
+    ApiName = "Pitane",
+};
+foreach (var file in generatorV2.Map(settings, @"Examples\Pitane\Pitane.json", out var pitaneDiag))
+{
+    File.WriteAllText($"../../../../ConsoleAppV2/Examples/Pitane/{file.Path}/{file.Name}", file.Content);
+}

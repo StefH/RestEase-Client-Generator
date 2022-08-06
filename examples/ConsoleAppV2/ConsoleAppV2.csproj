@@ -15,9 +15,13 @@
     <None Update="Examples\PetStore.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Examples\Pitane.json">
+    <None Update="Examples\Pitane\Pitane.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Examples\Pitane\Models\" />
   </ItemGroup>
 
 </Project>

@@ -19,5 +19,5 @@ internal enum SchemaType
 
     File,
 
-    Reference
+    // Reference
 }

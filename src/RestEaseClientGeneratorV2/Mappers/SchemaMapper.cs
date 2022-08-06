@@ -1,8 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
-using System.IO;
-using System.Runtime;
 using AnyOfTypes;
-using Microsoft.OpenApi;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
 using RestEaseClientGenerator.Extensions;
@@ -48,9 +45,9 @@ internal class SchemaMapper
                 var @object = MapObject(name, parentName, schema, extraModels);
                 return @object.IsFirst ? @object.First : @object.Second;
 
-            case SchemaType.Reference:
-                var reference = MapReference(name, parentName, schema, extraModels);
-                return reference.IsFirst ? reference.First : reference.Second;
+            //case SchemaType.Reference:
+            //    var reference = MapReference(name, parentName, schema, extraModels);
+            //    return reference.IsFirst ? reference.First : reference.Second;
 
             case SchemaType.String:
                 var @string = MapString(name, parentName, schema);
@@ -235,12 +232,13 @@ internal class SchemaMapper
             return new ModelDto(BuildModeType(name), name, properties, schema.Description);
         }
 
-        return new PropertyDto("xxx", name, schema.Nullable, null, schema.Description);
+        // It's not an inline-object (no properties) and does not have AllOf or AnyOf, so just assume it's an object
+        return new PropertyDto("object", name, schema.Nullable, null, schema.Description);
     }
 
     private void AddToExtraModels(ModelDto model, ICollection<ModelDto> extraModels)
     {
-        if (!extraModels.Any(m => m.Name == model.Name && m.Type == model.Type))
+        if (!extraModels.Any(m => m.ClassName == model.ClassName && m.Type == model.Type))
         {
             extraModels.Add(model);
         }

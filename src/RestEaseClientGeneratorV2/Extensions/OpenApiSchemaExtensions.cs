@@ -42,7 +42,8 @@ internal static class OpenApiSchemaExtensions
             "boolean" => SchemaType.Boolean,
             "string" => SchemaType.String,
             "file" => SchemaType.File,
-            _ => schema.Reference != null ? SchemaType.Reference : SchemaType.Unknown
+            _ => SchemaType.Unknown
+            // _ => schema.Reference != null ? SchemaType.Reference : SchemaType.Unknown
         };
     }
 
