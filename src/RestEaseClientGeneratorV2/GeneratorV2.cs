@@ -30,11 +30,11 @@ public class GeneratorV2
         var enums = new List<EnumDto>();
         foreach (var schema in schemas)
         {
-            var propertyOrModelOrEnum = mapper.Map(schema.Key, string.Empty, schema.Value, models);
-            switch (propertyOrModelOrEnum.CurrentType)
+            var result = mapper.Map(schema.Key, string.Empty, schema.Value, false, models);
+            switch (result)
             {
-                case AnyOfType.First:
-                    if (propertyOrModelOrEnum.First.ArrayItemType != null)
+                case PropertyDto propertyDto:
+                    if (propertyDto.ArrayItemType != null)
                     {
                         // it's an array
                         int vvv = 9;
@@ -46,12 +46,12 @@ public class GeneratorV2
                     }
                     break;
 
-                case AnyOfType.Second:
-                    models.Add(propertyOrModelOrEnum.Second);
+                case ModelDto modelDto:
+                    models.Add(modelDto);
                     break;
 
-                case AnyOfType.Third:
-                    enums.Add(propertyOrModelOrEnum.Third);
+                case EnumDto enumDto:
+                    enums.Add(enumDto);
                     break;
             }
         }

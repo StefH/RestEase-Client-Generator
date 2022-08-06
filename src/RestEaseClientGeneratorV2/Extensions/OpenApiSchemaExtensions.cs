@@ -43,7 +43,6 @@ internal static class OpenApiSchemaExtensions
             "string" => SchemaType.String,
             "file" => SchemaType.File,
             _ => SchemaType.Unknown
-            // _ => schema.Reference != null ? SchemaType.Reference : SchemaType.Unknown
         };
     }
 
@@ -63,4 +62,19 @@ internal static class OpenApiSchemaExtensions
             _ => SchemaFormat.Undefined
         };
     }
+
+    //public static SchemaType GetCSharpType(this OpenApiSchema schema)
+    //{
+    //    return schema.Type switch
+    //    {
+    //        "object" => SchemaType.Object,
+    //        "array" => SchemaType.Array,
+    //        "integer" => SchemaType.Integer,
+    //        "number" => SchemaType.Number,
+    //        "boolean" => SchemaType.Boolean,
+    //        "string" => SchemaType.String,
+    //        "file" => SchemaType.File,
+    //        _ => SchemaType.Unknown
+    //    };
+    //}
 }

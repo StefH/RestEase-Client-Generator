@@ -1,5 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using AnyOfTypes;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
 using RestEaseClientGenerator.Extensions;
@@ -8,6 +7,7 @@ using RestEaseClientGenerator.Settings;
 using RestEaseClientGenerator.Types;
 using RestEaseClientGenerator.Types.Internal;
 using RestEaseClientGenerator.Utils;
+using RestEaseClientGeneratorV2.Models.Internal;
 
 namespace RestEaseClientGeneratorV2.Mappers;
 
@@ -20,9 +20,14 @@ internal class SchemaMapper
         _settings = settings;
     }
 
-    public AnyOf<PropertyDto, ModelDto, EnumDto> Map(string key, string parentName, OpenApiSchema schema, ICollection<ModelDto> extraModels)
+    public BaseDto Map(string key, string parentName, OpenApiSchema schema, bool r, ICollection<ModelDto> extraModels)
     {
         var name = key.ToPascalCase();
+
+        if (r && TryGetReferenceId(schema, out var referenceId))
+        {
+            return MapReference(referenceId, schema, extraModels);
+        }
 
         switch (schema.GetSchemaType())
         {
@@ -42,16 +47,10 @@ internal class SchemaMapper
                 return MapNumber(name, schema);
 
             case SchemaType.Object:
-                var @object = MapObject(name, parentName, schema, extraModels);
-                return @object.IsFirst ? @object.First : @object.Second;
-
-            //case SchemaType.Reference:
-            //    var reference = MapReference(name, parentName, schema, extraModels);
-            //    return reference.IsFirst ? reference.First : reference.Second;
+                return MapObject(name, parentName, schema, extraModels);
 
             case SchemaType.String:
-                var @string = MapString(name, parentName, schema);
-                return @string.IsFirst ? @string.First : @string.Second;
+                return MapString(name, parentName, schema);
 
             case SchemaType.Unknown:
                 return MapUnknown(name, parentName, schema, extraModels);
@@ -63,17 +62,17 @@ internal class SchemaMapper
 
     private PropertyDto MapArray(string name, string parentName, OpenApiSchema schema, ICollection<ModelDto> extraModels)
     {
-        var arrayItem = Map(name, name, schema.Items, extraModels);
+        var arrayItem = Map(name, name, schema.Items, true, extraModels);
         string? type;
-        switch (arrayItem.CurrentType)
+        switch (arrayItem)
         {
-            case AnyOfType.First:
-                type = arrayItem.First.Type;
+            case PropertyDto propertyDto:
+                type = propertyDto.Type;
                 break;
 
-            case AnyOfType.Second:
-                type = BuildModeType(arrayItem.Second.Type);
-                var updatedModel = arrayItem.Second with
+            case ModelDto modelDto:
+                type = BuildModelType(modelDto.Type);
+                var updatedModel = modelDto with
                 {
                     Type = type,
                     Description = schema.Description
@@ -81,8 +80,12 @@ internal class SchemaMapper
                 AddToExtraModels(updatedModel, extraModels);
                 break;
 
-            case AnyOfType.Third:
-                type = arrayItem.Third.Type;
+            case EnumDto enumDto:
+                type = enumDto.Type;
+                break;
+
+            case ReferenceDto referenceDto:
+                type = referenceDto.Type;
                 break;
 
             default:
@@ -115,24 +118,36 @@ internal class SchemaMapper
         };
     }
 
-    private AnyOf<PropertyDto, ModelDto> MapObject(string name, string parentName, OpenApiSchema schema, ICollection<ModelDto> extraModels)
+    private BaseDto MapObject(string name, string parentName, OpenApiSchema schema, ICollection<ModelDto> extraModels)
     {
         var list = new List<PropertyDto>();
         foreach (var schemaProperty in schema.Properties)
         {
-            var propertyOrModel = Map(schemaProperty.Key, parentName, schemaProperty.Value, extraModels);
-            switch (propertyOrModel.CurrentType)
+            var propertyName = schemaProperty.Key.ToPascalCase();
+
+            if (propertyName == "OverriddenProperties")
             {
-                case AnyOfType.First:
-                    list.Add(propertyOrModel.First);
+                int y = 9;
+            }
+
+            var result = Map(propertyName, parentName, schemaProperty.Value, true, extraModels);
+
+            switch (result)
+            {
+                case PropertyDto propertyDto:
+                    list.Add(propertyDto);
                     break;
 
-                case AnyOfType.Second:
-                    list.Add(propertyOrModel.Second.ToPropertyDto(schema.Nullable));
+                case ModelDto modelDto:
+                    list.Add(new PropertyDto(modelDto.Type, propertyName, schema.Nullable, modelDto.Description));
                     break;
 
-                case AnyOfType.Third:
-                    list.Add(propertyOrModel.Third.ToPropertyDto(schema.Nullable));
+                case EnumDto enumDto:
+                    list.Add(new PropertyDto(enumDto.Type, propertyName, schema.Nullable, enumDto.Description));
+                    break;
+
+                case ReferenceDto referenceDto:
+                    list.Add(new PropertyDto(referenceDto.Type, propertyName, schema.Nullable, referenceDto.Description));
                     break;
 
                 default:
@@ -143,7 +158,7 @@ internal class SchemaMapper
         return new ModelDto(name, name, list, schema.Description);
     }
 
-    private AnyOf<PropertyDto, EnumDto> MapString(string name, string parentName, OpenApiSchema schema)
+    private BaseDto MapString(string name, string parentName, OpenApiSchema schema)
     {
         switch (schema.GetSchemaFormat())
         {
@@ -182,20 +197,21 @@ internal class SchemaMapper
         return new EnumDto(type, enumName, schema.Nullable, enumValues, schema.Description);
     }
 
-    private AnyOf<PropertyDto, ModelDto> MapReference(string name, string parentName, OpenApiSchema schema, ICollection<ModelDto> extraModels)
+    private BaseDto MapUnknown(string name, string parentName, OpenApiSchema schema, ICollection<ModelDto> extraModels)
     {
-        return MapObject(name, parentName, schema, extraModels);
-    }
+        if (TryGetReferenceId(schema, out var referenceId))
+        {
+            // It's a reference
+            return MapReference(referenceId, schema, extraModels);
+        }
 
-    private AnyOf<PropertyDto, ModelDto, EnumDto> MapUnknown(string name, string parentName, OpenApiSchema schema, ICollection<ModelDto> extraModels)
-    {
         if (schema.Properties.Any())
         {
             // It's an inline object-model
             var @object = MapObject(name, parentName, schema, extraModels);
-            if (@object.IsSecond)
+            if (@object is ModelDto)
             {
-                return @object.Second;
+                return @object;
             }
 
             throw new ArgumentOutOfRangeException();
@@ -204,7 +220,7 @@ internal class SchemaMapper
         var allOfOrAnyOfSchemas = schema.AllOf.Union(schema.AnyOf).ToList();
         if (allOfOrAnyOfSchemas.Count == 1)
         {
-            return Map(name, parentName, allOfOrAnyOfSchemas[0], extraModels);
+            return Map(name, parentName, allOfOrAnyOfSchemas[0], true, extraModels);
         }
 
         if (allOfOrAnyOfSchemas.Count > 1)
@@ -213,15 +229,15 @@ internal class SchemaMapper
             foreach (var childSchema in allOfOrAnyOfSchemas)
             {
                 //var childName = TryGetReferenceId(childSchema, out var id) ? id : string.Empty;
-                var childModel = Map(string.Empty, parentName, childSchema, extraModels);
-                switch (childModel.CurrentType)
+                var childModel = Map(string.Empty, parentName, childSchema, true, extraModels);
+                switch (childModel)
                 {
-                    case AnyOfType.First:
-                        properties.Add(childModel.First);
+                    case PropertyDto propertyDto:
+                        properties.Add(propertyDto);
                         break;
 
-                    case AnyOfType.Second:
-                        properties.AddRange(childModel.Second.Properties);
+                    case ModelDto modelDto:
+                        properties.AddRange(modelDto.Properties);
                         break;
 
                     default:
@@ -229,11 +245,28 @@ internal class SchemaMapper
                 }
             }
 
-            return new ModelDto(BuildModeType(name), name, properties, schema.Description);
+            return new ModelDto(BuildModelType(name), name, properties, schema.Description);
         }
 
         // It's not an inline-object (no properties) and does not have AllOf or AnyOf, so just assume it's an object
         return new PropertyDto("object", name, schema.Nullable, null, schema.Description);
+    }
+
+    private BaseDto MapReference(string referenceId, OpenApiSchema schema, ICollection<ModelDto> extraModels)
+    {
+        string referenceType;
+        if (schema.GetSchemaType() is SchemaType.Object or SchemaType.Unknown)
+        {
+            referenceType = FixReservedType(referenceId.ToPascalCase());
+        }
+        else
+        {
+            var result = Map(string.Empty, string.Empty, schema, false,
+                extraModels); // Just call Map to get the CSharp Type
+            referenceType = result.Type;
+        }
+
+        return new ReferenceDto(referenceType, schema.Description);
     }
 
     private void AddToExtraModels(ModelDto model, ICollection<ModelDto> extraModels)
@@ -261,7 +294,7 @@ internal class SchemaMapper
         }
     }
 
-    private string BuildModeType(string type)
+    private string BuildModelType(string type)
     {
         return $"{type}{_settings.InlineModelPostFix}";
     }
