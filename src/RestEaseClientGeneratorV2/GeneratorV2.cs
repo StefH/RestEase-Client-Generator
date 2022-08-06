@@ -1,5 +1,3 @@
-using System.Runtime;
-using AnyOfTypes;
 using Microsoft.OpenApi.Readers;
 using RestEaseClientGenerator.Builders;
 using RestEaseClientGenerator.Extensions;
@@ -19,6 +17,44 @@ public class GeneratorV2
         string name = settings.ApiName.ToValidIdentifier(CasingType.Pascal);
         string interfaceName = $"I{name}Api";
 
+        var models = new List<ModelDto>();
+
+        var internalDto = MapInternal(settings, path, out diagnostic, models);
+
+        var modelBuilder = new ModelBuilder(settings, models);
+
+        var files = new List<GeneratedFile>();
+        files.AddRange(models.Select(model => new GeneratedFile
+        (
+            FileType.Model,
+            settings.ModelsNamespace,
+            $"{model.ClassName}.cs",
+            model.ClassName,
+            modelBuilder.Build(model, model == models.First(), model == models.Last())
+        )));
+
+        if (settings.SingleFile)
+        {
+            var content = files
+                .GroupBy(f => f.ClassOrInterface)
+                .Distinct()
+                .Select(f => f.First().Content);
+
+            return new[] { new GeneratedFile
+            (
+                FileType.ApiAndModels,
+                string.Empty,
+                $"{interfaceName}.cs",
+                interfaceName,
+                string.Join("\r\n", content)
+            )};
+        }
+
+        return files;
+    }
+
+    internal InternalDto MapInternal(GeneratorSettings settings, string path, out OpenApiDiagnostic diagnostic, List<ModelDto> models)
+    {
         var reader = new OpenApiStreamReader();
         var document = reader.Read(File.OpenRead(path), out diagnostic);
 
@@ -26,7 +62,7 @@ public class GeneratorV2
 
         var mapper = new SchemaMapper(settings);
 
-        var models = new List<ModelDto>();
+        
         var enums = new List<EnumDto>();
         foreach (var schema in schemas)
         {
@@ -56,36 +92,6 @@ public class GeneratorV2
             }
         }
 
-        var files = new List<GeneratedFile>();
-
-        var modelBuilder = new ModelBuilder(settings, models);
-
-        files.AddRange(models.Select(model => new GeneratedFile
-        (
-            FileType.Model,
-            settings.ModelsNamespace,
-            $"{model.ClassName}.cs",
-            model.ClassName,
-            modelBuilder.Build(model, model == models.First(), model == models.Last())
-        )));
-
-        if (settings.SingleFile)
-        {
-            var content = files
-                .GroupBy(f => f.ClassOrInterface)
-                .Distinct()
-                .Select(f => f.First().Content);
-
-            return new[] { new GeneratedFile
-            (
-                FileType.ApiAndModels,
-                string.Empty,
-                $"{interfaceName}.cs",
-                interfaceName,
-                string.Join("\r\n", content)
-            )};
-        }
-
-        return files;
+        return new InternalDto(null, models, enums);
     }
 }

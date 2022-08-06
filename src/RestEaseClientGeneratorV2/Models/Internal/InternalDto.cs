@@ -2,8 +2,8 @@ namespace RestEaseClientGenerator.Models.Internal;
 
 internal record InternalDto
 (
-    RestEaseInterface Interface,
-    IList<RestEaseModel> Models,
-    IList<RestEaseEnum> Enums
+    RestEaseInterface? Interface,
+    IReadOnlyList<ModelDto> Models,
+    IReadOnlyList<EnumDto> Enums
     //IDictionary<string, OpenApiParameter> Parameters
 );

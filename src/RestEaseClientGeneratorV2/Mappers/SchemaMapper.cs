@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
 using RestEaseClientGenerator.Extensions;
+using RestEaseClientGenerator.Mappers;
 using RestEaseClientGenerator.Models.Internal;
 using RestEaseClientGenerator.Settings;
 using RestEaseClientGenerator.Types;
@@ -11,11 +12,11 @@ using RestEaseClientGeneratorV2.Models.Internal;
 
 namespace RestEaseClientGeneratorV2.Mappers;
 
-internal class SchemaMapper
+internal class SchemaMapper : BaseMapper
 {
     private readonly GeneratorSettings _settings;
 
-    public SchemaMapper(GeneratorSettings settings)
+    public SchemaMapper(GeneratorSettings settings) : base(settings)
     {
         _settings = settings;
     }
