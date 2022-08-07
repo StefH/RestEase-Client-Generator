@@ -15,17 +15,23 @@ namespace RestEaseClientGeneratorV2.Mappers;
 
 internal class SchemaMapper : BaseMapper
 {
-    private readonly InternalDto _dto = new InternalDto(new List<ModelDto>(), new List<EnumDto>());
     private readonly GeneratorSettings _settings;
+    private readonly InternalDto _dto;
 
-    public SchemaMapper(GeneratorSettings settings) : base(settings)
+    public SchemaMapper(GeneratorSettings settings, InternalDto dto) : base(settings)
     {
         _settings = settings;
+        _dto = dto;
     }
 
     public BaseDto Map(string key, string parentName, OpenApiSchema schema, bool isProperty, string? directory)
     {
         var name = key.ToPascalCase();
+
+        if (key == "Display")
+        {
+            int d = 8;
+        }
 
         if (isProperty && TryGetReferenceId(schema, directory, out var referenceId))
         {
@@ -50,7 +56,7 @@ internal class SchemaMapper : BaseMapper
                 return MapNumber(name, schema);
 
             case SchemaType.Object:
-                return MapObject(name, parentName, schema, directory);
+                return MapObject(name, parentName, schema, isProperty, directory);
 
             case SchemaType.String:
                 return MapString(name, parentName, schema);
@@ -121,14 +127,14 @@ internal class SchemaMapper : BaseMapper
         };
     }
 
-    private BaseDto MapObject(string name, string parentName, OpenApiSchema schema, string?  directory)
+    private BaseDto MapObject(string name, string parentName, OpenApiSchema schema, bool isProperty, string?  directory)
     {
         if (!schema.Properties.Any())
         {
             return new PropertyDto("object", name, schema.Nullable, null, schema.Description);
         }
 
-        var list = new List<PropertyDto>();
+        var properties = new List<PropertyDto>();
         foreach (var schemaProperty in schema.Properties)
         {
             var propertyName = schemaProperty.Key.ToPascalCase();
@@ -143,19 +149,19 @@ internal class SchemaMapper : BaseMapper
             switch (result)
             {
                 case PropertyDto propertyDto:
-                    list.Add(propertyDto);
+                    properties.Add(propertyDto);
                     break;
 
                 case ModelDto modelDto:
-                    list.Add(new PropertyDto(modelDto.Type, propertyName, schema.Nullable, modelDto.Description));
+                    properties.Add(new PropertyDto(modelDto.Type, propertyName, schema.Nullable, modelDto.Description));
                     break;
 
                 case EnumDto enumDto:
-                    list.Add(new PropertyDto(enumDto.Type, propertyName, schema.Nullable, enumDto.Description));
+                    properties.Add(new PropertyDto(enumDto.Type, propertyName, schema.Nullable, enumDto.Description));
                     break;
 
                 case ReferenceDto referenceDto:
-                    list.Add(referenceDto.ToPropertyDto(propertyName, schema.Nullable));
+                    properties.Add(referenceDto.ToPropertyDto(propertyName, schema.Nullable));
                     break;
 
                 default:
@@ -163,7 +169,15 @@ internal class SchemaMapper : BaseMapper
             }
         }
 
-        return new ModelDto(name, name, list, schema.Description);
+        var model =  new ModelDto(name, name, properties, schema.Description);
+
+        // In case this object is a property, which means that it's defined 'inline', add it to the models.
+        if (isProperty)
+        {
+            _dto.AddModel(model);
+        }
+
+        return model;
     }
 
     private BaseDto MapString(string name, string parentName, OpenApiSchema schema)
@@ -216,7 +230,7 @@ internal class SchemaMapper : BaseMapper
         if (schema.Properties.Any())
         {
             // It's an inline object-model
-            var @object = MapObject(name, parentName, schema, directory);
+            var @object = MapObject(name, parentName, schema, isProperty, directory);
             if (@object is ModelDto)
             {
                 return @object;
@@ -298,6 +312,11 @@ internal class SchemaMapper : BaseMapper
             referenceType = result.Type;
 
             if (referenceType == "Requirements")
+            {
+                int tt = 9;
+            }
+
+            if (referenceType == "Sku")
             {
                 int tt = 9;
             }

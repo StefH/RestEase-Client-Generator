@@ -34,20 +34,19 @@ internal class ExternalReferenceMapper : BaseMapper
     {
         var (className, dto) = CallFromFileInternal(reference, directory);
 
+        if (className == "Display")
+        {
+            int yyy = 0;
+        }
+
         foreach (var item in dto.Models)
         {
-            if (_internalDto.Models.FirstOrDefault(m => string.Equals(m.ClassName, item.ClassName, StringComparison.InvariantCultureIgnoreCase)) is null)
-            {
-                _internalDto.Models.Add(item);
-            }
+            _internalDto.AddModel(item);
         }
 
         foreach (var item in dto.Enums)
         {
-            if (_internalDto.Enums.FirstOrDefault(m => string.Equals(m.Name, item.Name, StringComparison.InvariantCultureIgnoreCase)) is null)
-            {
-                _internalDto.Enums.Add(item);
-            }
+            _internalDto.AddEnum(item);
         }
 
         var foundModel = _internalDto.Models.FirstOrDefault(m => string.Equals(m.ClassName, className, StringComparison.InvariantCultureIgnoreCase));

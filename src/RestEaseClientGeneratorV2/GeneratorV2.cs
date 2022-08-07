@@ -19,6 +19,11 @@ public class GeneratorV2
 
         var internalDto = MapInternal(settings, path, out diagnostic);
 
+        if (internalDto.Models.Any(m => m.ClassName == "Sku"))
+        {
+            int yyyy = 9;
+        }
+
         var modelBuilder = new ModelBuilder(settings, internalDto.Models);
 
         var files = new List<GeneratedFile>();
@@ -55,15 +60,16 @@ public class GeneratorV2
     {
         var directory = Path.GetDirectoryName(path);
 
+        var dto = new InternalDto(new List<ModelDto>(), new List<EnumDto>());
+        
+        var mapper = new SchemaMapper(settings, dto);
+
+        //var models = new List<ModelDto>(); 
+       // var enums = new List<EnumDto>();
+
         var reader = new OpenApiStreamReader();
         var document = reader.Read(File.OpenRead(path), out diagnostic);
-
         var schemas = document.Components.Schemas.OrderBy(s => s.Key).ToList();
-
-        var mapper = new SchemaMapper(settings);
-
-        var models = new List<ModelDto>(); 
-        var enums = new List<EnumDto>();
         foreach (var schema in schemas)
         {
             var result = mapper.Map(schema.Key, string.Empty, schema.Value, false, directory);
@@ -83,15 +89,15 @@ public class GeneratorV2
                     break;
 
                 case ModelDto modelDto:
-                    models.Add(modelDto);
+                    dto.AddModel(modelDto);
                     break;
 
                 case EnumDto enumDto:
-                    enums.Add(enumDto);
+                    dto.AddEnum(enumDto);
                     break;
             }
         }
 
-        return new InternalDto(models, enums);
+        return dto;
     }
 }
