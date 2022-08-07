@@ -15,7 +15,7 @@ namespace RestEaseClientGeneratorV2.Mappers;
 
 internal class SchemaMapper : BaseMapper
 {
-    private readonly InternalDto _dto;
+    private readonly InternalDto _dto = new InternalDto(new List<ModelDto>(), new List<EnumDto>());
     private readonly GeneratorSettings _settings;
 
     public SchemaMapper(GeneratorSettings settings) : base(settings)
@@ -27,15 +27,15 @@ internal class SchemaMapper : BaseMapper
     {
         var name = key.ToPascalCase();
 
-        if (isProperty && TryGetReferenceId(schema, out var referenceId))
+        if (isProperty && TryGetReferenceId(schema, directory, out var referenceId))
         {
-            return MapReference(referenceId, schema, extraModels);
+            return MapReference(referenceId, schema, directory);
         }
 
         switch (schema.GetSchemaType())
         {
             case SchemaType.Array:
-                return MapArray(name, parentName, schema, extraModels);
+                return MapArray(name, parentName, schema, directory);
 
             case SchemaType.Boolean:
                 return MapBoolean(name, schema);
@@ -50,22 +50,22 @@ internal class SchemaMapper : BaseMapper
                 return MapNumber(name, schema);
 
             case SchemaType.Object:
-                return MapObject(name, parentName, schema, extraModels);
+                return MapObject(name, parentName, schema, directory);
 
             case SchemaType.String:
                 return MapString(name, parentName, schema);
 
             case SchemaType.Unknown:
-                return MapUnknown(name, parentName, schema, isProperty, extraModels);
+                return MapUnknown(name, parentName, schema, isProperty, directory);
 
             default:
                 throw new ArgumentOutOfRangeException();
         }
     }
 
-    private PropertyDto MapArray(string name, string parentName, OpenApiSchema schema, ICollection<ModelDto> extraModels)
+    private PropertyDto MapArray(string name, string parentName, OpenApiSchema schema, string? directory)
     {
-        var arrayItem = Map(name, name, schema.Items, true, extraModels);
+        var arrayItem = Map(name, name, schema.Items, true, directory);
         string? type;
         switch (arrayItem)
         {
@@ -80,7 +80,7 @@ internal class SchemaMapper : BaseMapper
                     Type = type,
                     Description = schema.Description
                 };
-                AddToExtraModels(updatedModel, extraModels);
+                AddToExtraModels(updatedModel, _dto.Models);
                 break;
 
             case EnumDto enumDto:
@@ -121,7 +121,7 @@ internal class SchemaMapper : BaseMapper
         };
     }
 
-    private BaseDto MapObject(string name, string parentName, OpenApiSchema schema, ICollection<ModelDto> extraModels)
+    private BaseDto MapObject(string name, string parentName, OpenApiSchema schema, string?  directory)
     {
         if (!schema.Properties.Any())
         {
@@ -138,7 +138,7 @@ internal class SchemaMapper : BaseMapper
                 int y = 9;
             }
 
-            var result = Map(propertyName, parentName, schemaProperty.Value, true, extraModels);
+            var result = Map(propertyName, parentName, schemaProperty.Value, true, directory);
 
             switch (result)
             {
@@ -205,18 +205,18 @@ internal class SchemaMapper : BaseMapper
         return new EnumDto(type, enumName, schema.Nullable, enumValues, schema.Description);
     }
 
-    private BaseDto MapUnknown(string name, string parentName, OpenApiSchema schema, bool isProperty, ICollection<ModelDto> extraModels)
+    private BaseDto MapUnknown(string name, string parentName, OpenApiSchema schema, bool isProperty, string? directory)
     {
-        if (isProperty && TryGetReferenceId(schema, out var referenceId))
+        if (isProperty && TryGetReferenceId(schema, directory, out var referenceId))
         {
             // It's a reference
-            return MapReference(referenceId, schema, extraModels);
+            return MapReference(referenceId, schema, directory);
         }
 
         if (schema.Properties.Any())
         {
             // It's an inline object-model
-            var @object = MapObject(name, parentName, schema, extraModels);
+            var @object = MapObject(name, parentName, schema, directory);
             if (@object is ModelDto)
             {
                 return @object;
@@ -228,7 +228,7 @@ internal class SchemaMapper : BaseMapper
         var allOfOrAnyOfSchemas = schema.AllOf.Union(schema.AnyOf).ToList();
         if (allOfOrAnyOfSchemas.Count == 1)
         {
-            return Map(name, parentName, allOfOrAnyOfSchemas[0], true, extraModels);
+            return Map(name, parentName, allOfOrAnyOfSchemas[0], true, directory);
         }
 
         if (allOfOrAnyOfSchemas.Count > 1)
@@ -237,7 +237,7 @@ internal class SchemaMapper : BaseMapper
             foreach (var childSchema in allOfOrAnyOfSchemas)
             {
                 //var childName = TryGetReferenceId(childSchema, out var id) ? id : string.Empty;
-                var childModel = Map(string.Empty, parentName, childSchema, true, extraModels);
+                var childModel = Map(string.Empty, parentName, childSchema, true, directory);
                 switch (childModel)
                 {
                     case PropertyDto propertyDto:
@@ -265,7 +265,7 @@ internal class SchemaMapper : BaseMapper
         return new PropertyDto("object", name, schema.Nullable, null, schema.Description);
     }
 
-    private BaseDto MapReference(string referenceId, OpenApiSchema schema, ICollection<ModelDto> extraModels)
+    private BaseDto MapReference(string referenceId, OpenApiSchema schema, string? directory)
     {
         string referenceType = "object";
         if (schema.GetSchemaType() is SchemaType.Object or SchemaType.Unknown)
@@ -287,7 +287,7 @@ internal class SchemaMapper : BaseMapper
                 int y = 9;
             }
 
-            var result = Map(string.Empty, string.Empty, schema, false, extraModels);
+            var result = Map(string.Empty, string.Empty, schema, false, directory);
             referenceType = result.Type;
 
             if (referenceType == "Requirements")
