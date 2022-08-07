@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
 using RestEaseClientGenerator.Extensions;
@@ -14,6 +15,7 @@ namespace RestEaseClientGeneratorV2.Mappers;
 
 internal class SchemaMapper : BaseMapper
 {
+    private readonly InternalDto _dto;
     private readonly GeneratorSettings _settings;
 
     public SchemaMapper(GeneratorSettings settings) : base(settings)
@@ -307,7 +309,7 @@ internal class SchemaMapper : BaseMapper
         }
     }
 
-    private bool TryGetReferenceId(OpenApiSchema schema, [NotNullWhen(true)] out string? id)
+    private bool TryGetReferenceId(OpenApiSchema schema, [NotNullWhen(true)] out string? id, string? directory)
     {
         switch (schema.Reference)
         {
@@ -316,7 +318,9 @@ internal class SchemaMapper : BaseMapper
                 return true;
 
             case { IsExternal: true }:
-                throw new NotSupportedException();
+
+                var externalProperty = new ExternalReferenceMapper(Settings, @interface).MapProperty(schema.Reference, directory);
+                return new PropertyDto(externalProperty.Type, name ?? externalProperty.Name, null, "not-used");
 
             default:
                 id = default;

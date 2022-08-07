@@ -1,5 +1,4 @@
 using Microsoft.OpenApi.Models;
-using RestEaseClientGenerator.Models.External;
 using RestEaseClientGenerator.Models.Internal;
 using RestEaseClientGenerator.Settings;
 using RestEaseClientGenerator.Types;
@@ -11,12 +10,12 @@ namespace RestEaseClientGenerator.Mappers;
 internal class ExternalReferenceMapper : BaseMapper
 {
     private readonly GeneratorSettings _settings;
-    private readonly RestEaseInterface _interface;
+    private readonly InternalDto _internalDto;
 
-    public ExternalReferenceMapper(GeneratorSettings settings, RestEaseInterface @interface) : base(settings)
+    public ExternalReferenceMapper(GeneratorSettings settings, InternalDto internalDto) : base(settings)
     {
         _settings = settings;
-        _interface = @interface;
+        _internalDto = internalDto;
     }
 
     //public OpenApiParameter? MapParameter(OpenApiReference reference, string? directory)
@@ -35,23 +34,23 @@ internal class ExternalReferenceMapper : BaseMapper
     {
         var (className, dto) = CallFromFileInternal(reference, directory);
 
-        //foreach (var item in dto.Models)
-        //{
-        //    if (_interface.ExtraModels.FirstOrDefault(m => string.Equals(m.ClassName, item.ClassName, StringComparison.InvariantCultureIgnoreCase)) is null)
-        //    {
-        //        _interface.ExtraModels.Add(item);
-        //    }
-        //}
+        foreach (var item in dto.Models)
+        {
+            if (_internalDto.Models.FirstOrDefault(m => string.Equals(m.ClassName, item.ClassName, StringComparison.InvariantCultureIgnoreCase)) is null)
+            {
+                _internalDto.Models.Add(item);
+            }
+        }
 
-        //foreach (var item in dto.Enums)
-        //{
-        //    if (_interface.ExtraEnums.FirstOrDefault(m => string.Equals(m.EnumName, item.Name, StringComparison.InvariantCultureIgnoreCase)) is null)
-        //    {
-        //        _interface.ExtraEnums.Add(item);
-        //    }
-        //}
+        foreach (var item in dto.Enums)
+        {
+            if (_internalDto.Enums.FirstOrDefault(m => string.Equals(m.Name, item.Name, StringComparison.InvariantCultureIgnoreCase)) is null)
+            {
+                _internalDto.Enums.Add(item);
+            }
+        }
 
-        var foundModel = _interface.ExtraModels.FirstOrDefault(m => string.Equals(m.ClassName, className, StringComparison.InvariantCultureIgnoreCase));
+        var foundModel = _internalDto.Models.FirstOrDefault(m => string.Equals(m.ClassName, className, StringComparison.InvariantCultureIgnoreCase));
         if (foundModel is not null)
         {
             return new PropertyDto(foundModel.ClassName, foundModel.ClassName, false, null);
@@ -59,10 +58,10 @@ internal class ExternalReferenceMapper : BaseMapper
 
         if (_settings.PreferredEnumType == EnumType.Enum)
         {
-            var foundEnum = _interface.ExtraEnums.FirstOrDefault(m => string.Equals(m.EnumName, className, StringComparison.InvariantCultureIgnoreCase));
+            var foundEnum = _internalDto.Enums.FirstOrDefault(m => string.Equals(m.Name, className, StringComparison.InvariantCultureIgnoreCase));
             if (foundEnum is not null)
             {
-                return new PropertyDto(foundEnum.EnumName, foundEnum.EnumName, false, null);
+                return new PropertyDto(foundEnum.Name, foundEnum.Name, false, null);
             }
         }
         else
