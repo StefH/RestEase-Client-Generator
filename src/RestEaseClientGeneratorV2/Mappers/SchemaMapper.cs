@@ -23,7 +23,7 @@ internal class SchemaMapper : BaseMapper
         _settings = settings;
     }
 
-    public BaseDto Map(string key, string parentName, OpenApiSchema schema, bool isProperty, ICollection<ModelDto> extraModels)
+    public BaseDto Map(string key, string parentName, OpenApiSchema schema, bool isProperty, string? directory)
     {
         var name = key.ToPascalCase();
 
@@ -309,7 +309,7 @@ internal class SchemaMapper : BaseMapper
         }
     }
 
-    private bool TryGetReferenceId(OpenApiSchema schema, [NotNullWhen(true)] out string? id, string? directory)
+    private bool TryGetReferenceId(OpenApiSchema schema, string? directory, [NotNullWhen(true)] out string? id)
     {
         switch (schema.Reference)
         {
@@ -319,8 +319,9 @@ internal class SchemaMapper : BaseMapper
 
             case { IsExternal: true }:
 
-                var externalProperty = new ExternalReferenceMapper(Settings, @interface).MapProperty(schema.Reference, directory);
-                return new PropertyDto(externalProperty.Type, name ?? externalProperty.Name, null, "not-used");
+                var externalProperty = new ExternalReferenceMapper(Settings, _dto).MapProperty(schema.Reference, directory);
+                id = "stef";
+                return true; //new PropertyDto(externalProperty.Type, name ?? externalProperty.Name, null, "not-used");
 
             default:
                 id = default;
