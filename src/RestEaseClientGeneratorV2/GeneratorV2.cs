@@ -17,20 +17,18 @@ public class GeneratorV2
         string name = settings.ApiName.ToValidIdentifier(CasingType.Pascal);
         string interfaceName = $"I{name}Api";
 
-        var models = new List<ModelDto>();
+        var internalDto = MapInternal(settings, path, out diagnostic);
 
-        var internalDto = MapInternal(settings, path, out diagnostic, models);
-
-        var modelBuilder = new ModelBuilder(settings, models);
+        var modelBuilder = new ModelBuilder(settings, internalDto.Models);
 
         var files = new List<GeneratedFile>();
-        files.AddRange(models.Select(model => new GeneratedFile
+        files.AddRange(internalDto.Models.Select(model => new GeneratedFile
         (
             FileType.Model,
             settings.ModelsNamespace,
             $"{model.ClassName}.cs",
             model.ClassName,
-            modelBuilder.Build(model, model == models.First(), model == models.Last())
+            modelBuilder.Build(model, model == internalDto.Models.First(), model == internalDto.Models.Last())
         )));
 
         if (settings.SingleFile)
@@ -53,8 +51,10 @@ public class GeneratorV2
         return files;
     }
 
-    internal InternalDto MapInternal(GeneratorSettings settings, string path, out OpenApiDiagnostic diagnostic, List<ModelDto> models)
+    internal InternalDto MapInternal(GeneratorSettings settings, string path, out OpenApiDiagnostic diagnostic)
     {
+        var directory = Path.GetDirectoryName(path);
+
         var reader = new OpenApiStreamReader();
         var document = reader.Read(File.OpenRead(path), out diagnostic);
 
@@ -62,11 +62,11 @@ public class GeneratorV2
 
         var mapper = new SchemaMapper(settings);
 
-        
+        var models = new List<ModelDto>(); 
         var enums = new List<EnumDto>();
         foreach (var schema in schemas)
         {
-            var result = mapper.Map(schema.Key, string.Empty, schema.Value, false, models);
+            var result = mapper.Map(schema.Key, string.Empty, schema.Value, false, directory);
             switch (result)
             {
                 case PropertyDto propertyDto:
@@ -92,6 +92,6 @@ public class GeneratorV2
             }
         }
 
-        return new InternalDto(null, models, enums);
+        return new InternalDto(models, enums);
     }
 }

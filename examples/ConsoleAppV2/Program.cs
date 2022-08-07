@@ -5,26 +5,27 @@ using RestEaseClientGeneratorV2;
 
 var generator = new GeneratorV2();
 
-var settings = new GeneratorSettings
-{
-    SingleFile = true,
-    Namespace = "ConsoleAppV2.Examples.Pitane",
-    ApiName = "Pitane",
-};
-foreach (var file in generator.Map(settings, @"Examples\Pitane\Pitane.json", out var pitaneDiag))
-{
-    File.WriteAllText($"../../../../ConsoleAppV2/Examples/Pitane/{file.Path}/{file.Name}", file.Content);
-}
+//var settings = new GeneratorSettings
+//{
+//    SingleFile = true,
+//    Namespace = "ConsoleAppV2.Examples.Pitane",
+//    ApiName = "Pitane",
+//};
+//foreach (var file in generator.Map(settings, @"Examples\Pitane\Pitane.json", out var pitaneDiag))
+//{
+//    File.WriteAllText($"../../../../ConsoleAppV2/Examples/Pitane/{file.Path}/{file.Name}", file.Content);
+//}
 
 var storageSettings = new GeneratorSettings
 {
     Namespace = "MicrosoftExampleConsoleApp.MicrosoftStorage",
     ApiName = "MicrosoftStorage",
-    SingleFile = false,
+    SingleFile = true,
     PreferredSecurityDefinitionType = SecurityDefinitionType.None,
     ConstantQueryParameters = new Dictionary<string, string> { { "api-version", "2021-04-01" } }
 };
 
+generator = new GeneratorV2();
 const string x = @"C:\Dev\azure-rest-api-specs\specification\storage\resource-manager\Microsoft.Storage\stable\2021-04-01\storage.json";
 //foreach (var file in Directory.GetFiles("../../../MicrosoftStorage/Models", "*.cs"))
 //{

@@ -154,22 +154,6 @@ namespace Models.Models
         public string VatCountryCode { get; set; }
     }
 
-    /// <summary>
-    /// Collection of combined trip records
-    /// </summary>
-    public class ArrayOfCombinedTrips
-    {
-        public int PlaRoute { get; set; }
-
-        public int PlaId { get; set; }
-
-        public int PlaVan { get; set; }
-
-        public int PlaNaar { get; set; }
-
-        public string PlaTijdstipOphalen { get; set; }
-    }
-
     public class Asset
     {
         /// <summary>

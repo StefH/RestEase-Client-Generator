@@ -30,7 +30,7 @@ internal class ExternalReferenceMapper : BaseMapper
     //    return null;
     //}
 
-    public PropertyDto MapProperty(OpenApiReference reference, string? directory)
+    public ReferenceDto MapReference(OpenApiReference reference, string? directory)
     {
         var (className, dto) = CallFromFileInternal(reference, directory);
 
@@ -53,7 +53,7 @@ internal class ExternalReferenceMapper : BaseMapper
         var foundModel = _internalDto.Models.FirstOrDefault(m => string.Equals(m.ClassName, className, StringComparison.InvariantCultureIgnoreCase));
         if (foundModel is not null)
         {
-            return new PropertyDto(foundModel.ClassName, foundModel.ClassName, false, null);
+            return new ReferenceDto(foundModel.ClassName, false, foundModel.Description);
         }
 
         if (_settings.PreferredEnumType == EnumType.Enum)
@@ -61,15 +61,15 @@ internal class ExternalReferenceMapper : BaseMapper
             var foundEnum = _internalDto.Enums.FirstOrDefault(m => string.Equals(m.Name, className, StringComparison.InvariantCultureIgnoreCase));
             if (foundEnum is not null)
             {
-                return new PropertyDto(foundEnum.Name, foundEnum.Name, false, null);
+                return new ReferenceDto(foundEnum.Name, false, foundEnum.Description);
             }
         }
         else
         {
-            return new PropertyDto("string", className, false, null);
+            return new ReferenceDto("string", false, null);
         }
 
-        throw new InvalidOperationException($"External model/enum with name '{className}' not found in local or external ({reference.ExternalResource}).");
+        throw new InvalidOperationException($"External model/enum with name '{className}' not found in external ({reference.ExternalResource}).");
     }
 
     private (string className, InternalDto internalDto) CallFromFileInternal(OpenApiReference reference, string? directory)
@@ -88,6 +88,6 @@ internal class ExternalReferenceMapper : BaseMapper
 
         var className = MakeValidReferenceId(reference.Id);
 
-        return (className, generator.MapInternal(settings, location, out _, new List<ModelDto>()));
+        return (className, generator.MapInternal(settings, location, out _));
     }
 }

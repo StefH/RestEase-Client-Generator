@@ -265,15 +265,22 @@ internal class SchemaMapper : BaseMapper
         return new PropertyDto("object", name, schema.Nullable, null, schema.Description);
     }
 
-    private BaseDto MapReference(string referenceId, OpenApiSchema schema, string? directory)
+    private BaseDto MapReference(ReferenceDto referenceId, OpenApiSchema schema, string? directory)
     {
         string referenceType = "object";
         if (schema.GetSchemaType() is SchemaType.Object or SchemaType.Unknown)
         {
+            if (!referenceId.@internal)
+            {
+                return referenceId;
+            }
+
             if (schema.Properties.Any())
             {
-                referenceType = FixReservedType(referenceId.ToPascalCase());
+                return referenceId; //referenceType = FixReservedType(referenceId.ToPascalCase());
             }
+
+            throw new InvalidOperationException();
 
             if (referenceType == "Requirements")
             {
@@ -296,9 +303,7 @@ internal class SchemaMapper : BaseMapper
             }
         }
 
-        
-
-        return new ReferenceDto(referenceType, schema.Description);
+        return new ReferenceDto(referenceType, false, schema.Description);
     }
 
     private void AddToExtraModels(ModelDto model, ICollection<ModelDto> extraModels)
@@ -309,19 +314,17 @@ internal class SchemaMapper : BaseMapper
         }
     }
 
-    private bool TryGetReferenceId(OpenApiSchema schema, string? directory, [NotNullWhen(true)] out string? id)
+    private bool TryGetReferenceId(OpenApiSchema schema, string? directory, [NotNullWhen(true)] out ReferenceDto? id)
     {
         switch (schema.Reference)
         {
             case { IsLocal: true }:
-                id = schema.Reference.Id;
+                id = new ReferenceDto(FixReservedType(schema.Reference.Id.ToPascalCase()), true);
                 return true;
 
             case { IsExternal: true }:
-
-                var externalProperty = new ExternalReferenceMapper(Settings, _dto).MapProperty(schema.Reference, directory);
-                id = "stef";
-                return true; //new PropertyDto(externalProperty.Type, name ?? externalProperty.Name, null, "not-used");
+                id = new ExternalReferenceMapper(Settings, _dto).MapReference(schema.Reference, directory);
+                return true;
 
             default:
                 id = default;
