@@ -65,7 +65,7 @@ internal class ModelBuilder : BaseBuilder
 
         if (!Settings.SingleFile || isFirst)
         {
-            builder.AppendLine($"namespace {AppendModelsNamespace(Settings.ModelsNamespace)}");
+            builder.AppendLine($"namespace {AppendModelsNamespace(Settings.Namespace)}");
             builder.AppendLine("{");
         }
 

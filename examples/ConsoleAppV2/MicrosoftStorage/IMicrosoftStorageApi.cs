@@ -1,4 +1,4 @@
-namespace Models.Models
+namespace ConsoleAppV2.MicrosoftStorage.Models
 {
     /// <summary>
     /// The parameters to list SAS credentials of a storage account.
