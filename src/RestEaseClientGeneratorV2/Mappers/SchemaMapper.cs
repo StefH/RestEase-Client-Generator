@@ -239,7 +239,7 @@ internal class SchemaMapper : BaseMapper
             throw new ArgumentOutOfRangeException();
         }
 
-        var allOfOrAnyOfSchemas = schema.AllOf.Union(schema.AnyOf).ToList();
+        var allOfOrAnyOfSchemas = schema.GetAllOfAndAnyOf();
         if (allOfOrAnyOfSchemas.Count == 1)
         {
             return Map(name, parentName, allOfOrAnyOfSchemas[0], true, directory);
@@ -281,25 +281,26 @@ internal class SchemaMapper : BaseMapper
 
     private BaseDto MapReference(ReferenceDto referenceId, OpenApiSchema schema, string? directory)
     {
-        string referenceType = "object";
+        // string referenceType = "object";
         if (schema.GetSchemaType() is SchemaType.Object or SchemaType.Unknown)
         {
-            if (!referenceId.@internal)
-            {
-                return referenceId;
-            }
+            return referenceId;
+            //if (!referenceId.@internal)
+            //{
+            //    return referenceId;
+            //}
 
-            if (schema.Properties.Any())
-            {
-                return referenceId; //referenceType = FixReservedType(referenceId.ToPascalCase());
-            }
+            //if (schema.Properties.Any() || schema.GetAllOfAndAnyOf().Any())
+            //{
+            //    return referenceId; //referenceType = FixReservedType(referenceId.ToPascalCase());
+            //}
 
-            throw new InvalidOperationException();
+            //throw new InvalidOperationException();
 
-            if (referenceType == "Requirements")
-            {
-                int tt = 9;
-            }
+            //if (referenceType == "Requirements")
+            //{
+            //    int tt = 9;
+            //}
         }
         else
         {
@@ -309,20 +310,23 @@ internal class SchemaMapper : BaseMapper
             }
 
             var result = Map(string.Empty, string.Empty, schema, false, directory);
-            referenceType = result.Type;
+            return result;
+            //var referenceType = result.Type;
 
-            if (referenceType == "Requirements")
-            {
-                int tt = 9;
-            }
+            //if (referenceType == "Requirements")
+            //{
+            //    int tt = 9;
+            //}
 
-            if (referenceType == "Sku")
-            {
-                int tt = 9;
-            }
+            //if (referenceType == "Sku")
+            //{
+            //    int tt = 9;
+            //}
+
+            //return new ReferenceDto(referenceType, false, schema.Description);
         }
 
-        return new ReferenceDto(referenceType, false, schema.Description);
+        
     }
 
     private void AddToExtraModels(ModelDto model, ICollection<ModelDto> extraModels)

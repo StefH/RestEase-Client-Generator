@@ -31,6 +31,11 @@ internal static class OpenApiSchemaExtensions
         return !schema.AnyOf.Any() && !schema.AllOf.Any() && !schema.Properties.Any() && schema.AdditionalProperties == null;
     }
 
+    public static IReadOnlyList<OpenApiSchema> GetAllOfAndAnyOf(this OpenApiSchema schema)
+    {
+        return schema.AllOf.Union(schema.AnyOf).ToList();
+    }
+
     public static SchemaType GetSchemaType(this OpenApiSchema schema)
     {
         return schema.Type switch
