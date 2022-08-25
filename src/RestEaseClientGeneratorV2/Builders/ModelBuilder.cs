@@ -18,6 +18,11 @@ internal class ModelBuilder : BaseBuilder
 
     public string Build(ModelDto restEaseModel, bool isFirst, bool isLast)
     {
+        if (restEaseModel.ClassName == "AccountSasParameters")
+        {
+            int x = 8;
+        }
+
         var builder = new StringBuilder();
         if (!Settings.SingleFile)
         {

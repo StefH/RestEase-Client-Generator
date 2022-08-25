@@ -1,5 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using System.IO;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
 using RestEaseClientGenerator.Extensions;
@@ -72,49 +71,52 @@ internal class SchemaMapper : BaseMapper
     private PropertyDto MapArray(string name, string parentName, OpenApiSchema schema, string? directory)
     {
         var arrayItem = Map(name, name, schema.Items, true, directory);
-        string? type;
+        string? arrayItemType;
         switch (arrayItem)
         {
             case PropertyDto propertyDto:
-                type = propertyDto.Type;
+                arrayItemType = propertyDto.Type;
                 break;
 
             case ModelDto modelDto:
-                type = BuildModelType(modelDto.Type);
+                arrayItemType = BuildModelType(modelDto.Type);
                 var updatedModel = modelDto with
                 {
-                    Type = type,
+                    Type = arrayItemType,
                     Description = schema.Description
                 };
                 AddToExtraModels(updatedModel, _dto.Models);
                 break;
 
             case EnumDto enumDto:
-                type = enumDto.Type;
+                arrayItemType = enumDto.Type;
                 break;
 
             case ReferenceDto referenceDto:
-                type = referenceDto.Type;
+                arrayItemType = referenceDto.Type;
                 break;
 
             default:
                 throw new ArgumentOutOfRangeException();
         }
 
-        return new PropertyDto(ArrayTypeMapper.Map(_settings.ArrayType, type), name, schema.Nullable, type, schema.Description);
+        return new PropertyDto(ArrayTypeMapper.Map(_settings.ArrayType, arrayItemType), name, schema.Nullable, schema.Description)
+        {
+            ArrayItemType = arrayItemType
+        };
     }
 
     private static PropertyDto MapBoolean(string name, OpenApiSchema schema)
     {
-        return new PropertyDto("bool", name, schema.Nullable, null, schema.Description);
+        return new PropertyDto("bool", name, schema.Nullable, schema.Description);
     }
 
     private static PropertyDto MapInteger(string name, OpenApiSchema schema)
     {
         return schema.GetSchemaFormat() switch
         {
-            SchemaFormat.Int64 => new PropertyDto("long", name, schema.Nullable, null, schema.Description),
-            _ => new PropertyDto("int", name, schema.Nullable, null, schema.Description)
+            SchemaFormat.Int64 => new PropertyDto("long", name, schema.Nullable, schema.Description),
+            _ => new PropertyDto("int", name, schema.Nullable, schema.Description)
         };
     }
 
@@ -127,11 +129,11 @@ internal class SchemaMapper : BaseMapper
         };
     }
 
-    private BaseDto MapObject(string name, string parentName, OpenApiSchema schema, bool isProperty, string?  directory)
+    private BaseDto MapObject(string name, string parentName, OpenApiSchema schema, bool isProperty, string? directory)
     {
         if (!schema.Properties.Any())
         {
-            return new PropertyDto("object", name, schema.Nullable, null, schema.Description);
+            return new PropertyDto("object", name, schema.Nullable, schema.Description);
         }
 
         var properties = new List<PropertyDto>();
@@ -169,7 +171,7 @@ internal class SchemaMapper : BaseMapper
             }
         }
 
-        var model =  new ModelDto(name, name, properties, schema.Description);
+        var model = new ModelDto(name, name, properties, schema.Description);
 
         // In case this object is a property, which means that it's defined 'inline', add it to the models.
         if (isProperty)
@@ -186,14 +188,14 @@ internal class SchemaMapper : BaseMapper
         {
             case SchemaFormat.Date:
             case SchemaFormat.DateTime:
-                return new PropertyDto("DateTime", name, schema.Nullable, null, schema.Description);
+                return new PropertyDto("DateTime", name, schema.Nullable, schema.Description);
 
             case SchemaFormat.Byte:
             case SchemaFormat.Binary:
                 return _settings.ApplicationOctetStreamType switch
                 {
-                    ApplicationOctetStreamType.Stream => new PropertyDto("System.IO.Stream", name, schema.Nullable, null, schema.Description),
-                    _ => new PropertyDto("byte[]", name, schema.Nullable, null, schema.Description)
+                    ApplicationOctetStreamType.Stream => new PropertyDto("System.IO.Stream", name, schema.Nullable, schema.Description),
+                    _ => new PropertyDto("byte[]", name, schema.Nullable, schema.Description)
                 };
 
             default:
@@ -202,7 +204,7 @@ internal class SchemaMapper : BaseMapper
                     return MapEnum(name, parentName, schema);
                 }
 
-                return new PropertyDto("string", name, schema.Nullable, null, schema.Description);
+                return new PropertyDto("string", name, schema.Nullable, schema.Description);
         }
     }
 
@@ -276,7 +278,7 @@ internal class SchemaMapper : BaseMapper
         }
 
         // It's not an inline-object (no properties) and does not have AllOf or AnyOf, so just assume it's an object
-        return new PropertyDto("object", name, schema.Nullable, null, schema.Description);
+        return new PropertyDto("object", name, schema.Nullable, schema.Description);
     }
 
     private BaseDto MapReference(ReferenceDto referenceId, OpenApiSchema schema, string? directory)
@@ -326,7 +328,7 @@ internal class SchemaMapper : BaseMapper
             //return new ReferenceDto(referenceType, false, schema.Description);
         }
 
-        
+
     }
 
     private void AddToExtraModels(ModelDto model, ICollection<ModelDto> extraModels)

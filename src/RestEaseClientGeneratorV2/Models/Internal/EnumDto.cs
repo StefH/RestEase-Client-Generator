@@ -11,6 +11,6 @@ internal record EnumDto(string Type, string Name, bool Nullable, IList<string> V
 
     public PropertyDto ToPropertyDto(bool nullable)
     {
-        return new PropertyDto(Type, Name, nullable, null, Description);
+        return new PropertyDto(Type, Name, nullable, Description);
     }
 }

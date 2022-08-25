@@ -5,10 +5,19 @@ namespace ConsoleAppV2.MicrosoftStorage.Models
     /// </summary>
     public class AccountSasParameters
     {
+        /// <summary>
+        /// The signed services accessible with the account SAS. Possible values include: Blob (b), Queue (q), Table (t), File (f).
+        /// </summary>
         public string SignedServices { get; set; }
 
+        /// <summary>
+        /// The signed resource types that are accessible with the account SAS. Service (s): Access to service-level APIs; Container (c): Access to container-level APIs; Object (o): Access to object-level APIs for blobs, queue messages, table entities, and files.
+        /// </summary>
         public string SignedResourceTypes { get; set; }
 
+        /// <summary>
+        /// The signed permissions for the account SAS. Possible values include: Read (r), Write (w), Delete (d), List (l), Add (a), Create (c), Update (u) and Process (p).
+        /// </summary>
         public string SignedPermission { get; set; }
 
         /// <summary>
@@ -16,6 +25,9 @@ namespace ConsoleAppV2.MicrosoftStorage.Models
         /// </summary>
         public string SignedIp { get; set; }
 
+        /// <summary>
+        /// The protocol permitted for a request made with the account SAS.
+        /// </summary>
         public string SignedProtocol { get; set; }
 
         /// <summary>
@@ -75,10 +87,16 @@ namespace ConsoleAppV2.MicrosoftStorage.Models
     /// </summary>
     public class AzureFilesIdentityBasedAuthentication
     {
+        /// <summary>
+        /// Indicates the directory service used.
+        /// </summary>
         public string DirectoryServiceOptions { get; set; }
 
         public ActiveDirectoryProperties ActiveDirectoryProperties { get; set; }
 
+        /// <summary>
+        /// Default share permission for users using Kerberos authentication if RBAC role is not assigned.
+        /// </summary>
         public string DefaultSharePermission { get; set; }
     }
 
@@ -119,6 +137,9 @@ namespace ConsoleAppV2.MicrosoftStorage.Models
         /// </summary>
         public bool NameAvailable { get; set; }
 
+        /// <summary>
+        /// The reason why the given name is not available.
+        /// </summary>
         public string Reason { get; set; }
 
         /// <summary>
@@ -132,6 +153,9 @@ namespace ConsoleAppV2.MicrosoftStorage.Models
     /// </summary>
     public class EncryptionProperties
     {
+        /// <summary>
+        /// Indicates whether or not the encryption is enabled for container registry.
+        /// </summary>
         public string Status { get; set; }
 
         public KeyVaultProperties KeyVaultProperties { get; set; }
@@ -207,6 +231,9 @@ namespace ConsoleAppV2.MicrosoftStorage.Models
         /// </summary>
         public string TenantId { get; set; }
 
+        /// <summary>
+        /// The identity type.
+        /// </summary>
         public string Type { get; set; }
     }
 
@@ -290,10 +317,19 @@ namespace ConsoleAppV2.MicrosoftStorage.Models
         /// </summary>
         public bool IsDataAction { get; set; }
 
+        /// <summary>
+        /// Localized display information for this particular operation.
+        /// </summary>
         public Display Display { get; set; }
 
+        /// <summary>
+        /// The intended executor of the operation; as in Resource Based Access Control (RBAC) and audit logs UX. Default value is "user,system"
+        /// </summary>
         public string Origin { get; set; }
 
+        /// <summary>
+        /// Enum. Indicates the action type. "Internal" refers to actions that are for internal only APIs.
+        /// </summary>
         public string ActionType { get; set; }
     }
 
@@ -333,6 +369,9 @@ namespace ConsoleAppV2.MicrosoftStorage.Models
         /// </summary>
         public string Status { get; set; }
 
+        /// <summary>
+        /// Percent of the operation that is complete.
+        /// </summary>
         public double PercentComplete { get; set; }
 
         /// <summary>
@@ -467,6 +506,9 @@ namespace ConsoleAppV2.MicrosoftStorage.Models
         /// </summary>
         public string Name { get; set; }
 
+        /// <summary>
+        /// This field is required to be implemented by the Resource Provider if the service has more than one tier, but is not required on a PUT.
+        /// </summary>
         public string Tier { get; set; }
 
         /// <summary>
@@ -495,6 +537,9 @@ namespace ConsoleAppV2.MicrosoftStorage.Models
         /// </summary>
         public string CreatedBy { get; set; }
 
+        /// <summary>
+        /// The type of identity that created the resource.
+        /// </summary>
         public string CreatedByType { get; set; }
 
         /// <summary>
@@ -507,6 +552,9 @@ namespace ConsoleAppV2.MicrosoftStorage.Models
         /// </summary>
         public string LastModifiedBy { get; set; }
 
+        /// <summary>
+        /// The type of identity that last modified the resource.
+        /// </summary>
         public string LastModifiedByType { get; set; }
 
         /// <summary>
@@ -538,6 +586,9 @@ namespace ConsoleAppV2.MicrosoftStorage.Models
     {
         public BlobInventoryPolicyProperties Properties { get; set; }
 
+        /// <summary>
+        /// Metadata pertaining to creation and last modification of the resource.
+        /// </summary>
         public SystemData SystemData { get; set; }
     }
 
@@ -548,10 +599,19 @@ namespace ConsoleAppV2.MicrosoftStorage.Models
     {
         public BlobInventoryPolicyFilter Filters { get; set; }
 
+        /// <summary>
+        /// This is a required field, it specifies the format for the inventory files.
+        /// </summary>
         public string Format { get; set; }
 
+        /// <summary>
+        /// This is a required field. This field is used to schedule an inventory formation.
+        /// </summary>
         public string Schedule { get; set; }
 
+        /// <summary>
+        /// This is a required field. This field specifies the scope of the inventory created either at the blob or container level.
+        /// </summary>
         public string ObjectType { get; set; }
 
         /// <summary>
@@ -632,6 +692,9 @@ namespace ConsoleAppV2.MicrosoftStorage.Models
         /// </summary>
         public bool Enabled { get; set; }
 
+        /// <summary>
+        /// The valid value is Inventory
+        /// </summary>
         public string Type { get; set; }
 
         /// <summary>
@@ -677,6 +740,9 @@ namespace ConsoleAppV2.MicrosoftStorage.Models
     /// </summary>
     public class BlobRestoreStatus
     {
+        /// <summary>
+        /// The status of blob restore progress. Possible values are: - InProgress: Indicates that blob restore is ongoing. - Complete: Indicates that blob restore has been completed successfully. - Failed: Indicates that blob restore is failed.
+        /// </summary>
         public string Status { get; set; }
 
         /// <summary>
@@ -702,6 +768,9 @@ namespace ConsoleAppV2.MicrosoftStorage.Models
         /// </summary>
         public bool NameAvailable { get; set; }
 
+        /// <summary>
+        /// Gets the reason that a storage account name could not be used. The Reason element is only returned if NameAvailable is false.
+        /// </summary>
         public string Reason { get; set; }
 
         /// <summary>
@@ -731,6 +800,9 @@ namespace ConsoleAppV2.MicrosoftStorage.Models
     /// </summary>
     public class DateAfterCreation
     {
+        /// <summary>
+        /// Value indicating the age in days after creation
+        /// </summary>
         public double DaysAfterCreationGreaterThan { get; set; }
     }
 
@@ -739,8 +811,14 @@ namespace ConsoleAppV2.MicrosoftStorage.Models
     /// </summary>
     public class DateAfterModification
     {
+        /// <summary>
+        /// Value indicating the age in days after last modification
+        /// </summary>
         public double DaysAfterModificationGreaterThan { get; set; }
 
+        /// <summary>
+        /// Value indicating the age in days after last blob access. This property can only be used in conjunction with last access time tracking policy
+        /// </summary>
         public double DaysAfterLastAccessTimeGreaterThan { get; set; }
     }
 
@@ -822,6 +900,9 @@ namespace ConsoleAppV2.MicrosoftStorage.Models
     {
         public EncryptionServices Services { get; set; }
 
+        /// <summary>
+        /// The encryption keySource (provider). Possible values (case-insensitive):  Microsoft.Storage, Microsoft.Keyvault
+        /// </summary>
         public string KeySource { get; set; }
 
         /// <summary>
@@ -895,8 +976,14 @@ namespace ConsoleAppV2.MicrosoftStorage.Models
     /// </summary>
     public class EncryptionScopeProperties
     {
+        /// <summary>
+        /// The provider for the encryption scope. Possible values (case-insensitive):  Microsoft.Storage, Microsoft.KeyVault.
+        /// </summary>
         public string Source { get; set; }
 
+        /// <summary>
+        /// The state of the encryption scope. Possible values (case-insensitive):  Enabled, Disabled.
+        /// </summary>
         public string State { get; set; }
 
         /// <summary>
@@ -932,6 +1019,9 @@ namespace ConsoleAppV2.MicrosoftStorage.Models
         /// </summary>
         public DateTime LastEnabledTime { get; set; }
 
+        /// <summary>
+        /// Encryption key type to be used for the encryption service. 'Account' key type implies that an account-scoped encryption key will be used. 'Service' key type implies that a default service key is used.
+        /// </summary>
         public string KeyType { get; set; }
     }
 
@@ -1015,6 +1105,9 @@ namespace ConsoleAppV2.MicrosoftStorage.Models
         /// </summary>
         public string Name { get; set; }
 
+        /// <summary>
+        /// The type of extendedLocation.
+        /// </summary>
         public string Type { get; set; }
     }
 
@@ -1023,6 +1116,9 @@ namespace ConsoleAppV2.MicrosoftStorage.Models
     /// </summary>
     public class GeoReplicationStats
     {
+        /// <summary>
+        /// The status of the secondary location. Possible values are: - Live: Indicates that the secondary location is active and operational. - Bootstrap: Indicates initial synchronization from the primary location to the secondary location is in progress.This typically occurs when replication is first enabled. - Unavailable: Indicates that the secondary location is temporarily unavailable.
+        /// </summary>
         public string Status { get; set; }
 
         /// <summary>
@@ -1046,6 +1142,9 @@ namespace ConsoleAppV2.MicrosoftStorage.Models
         /// </summary>
         public string Value { get; set; }
 
+        /// <summary>
+        /// The action of IP ACL rule.
+        /// </summary>
         public string Action { get; set; }
     }
 
@@ -1199,6 +1298,9 @@ namespace ConsoleAppV2.MicrosoftStorage.Models
         /// </summary>
         public string Name { get; set; }
 
+        /// <summary>
+        /// The valid value is Lifecycle
+        /// </summary>
         public string Type { get; set; }
 
         public ManagementPolicyDefinition Definition { get; set; }
@@ -1295,6 +1397,9 @@ namespace ConsoleAppV2.MicrosoftStorage.Models
     /// </summary>
     public class NetworkRuleSet
     {
+        /// <summary>
+        /// Specifies whether traffic is bypassed for Logging/Metrics/AzureServices. Possible values are any combination of Logging|Metrics|AzureServices (For example, "Logging, Metrics"), or None to bypass none of those traffics.
+        /// </summary>
         public string Bypass { get; set; }
 
         /// <summary>
@@ -1312,6 +1417,9 @@ namespace ConsoleAppV2.MicrosoftStorage.Models
         /// </summary>
         public IPRule[] IpRules { get; set; }
 
+        /// <summary>
+        /// Specifies the default action of allow or deny when no other rules match.
+        /// </summary>
         public string DefaultAction { get; set; }
     }
 
@@ -1443,6 +1551,9 @@ namespace ConsoleAppV2.MicrosoftStorage.Models
         /// </summary>
         public string[] Values { get; set; }
 
+        /// <summary>
+        /// The reason for the restriction. As of now this can be "QuotaId" or "NotAvailableForSubscription". Quota Id is set when the SKU has requiredQuotas parameter as the subscription does not belong to that quota. The "NotAvailableForSubscription" is related to capacity at DC.
+        /// </summary>
         public string ReasonCode { get; set; }
     }
 
@@ -1451,6 +1562,9 @@ namespace ConsoleAppV2.MicrosoftStorage.Models
     /// </summary>
     public class RoutingPreference
     {
+        /// <summary>
+        /// Routing Choice defines the kind of network routing opted by the user.
+        /// </summary>
         public string RoutingChoice { get; set; }
 
         /// <summary>
@@ -1474,6 +1588,9 @@ namespace ConsoleAppV2.MicrosoftStorage.Models
         /// </summary>
         public string SasExpirationPeriod { get; set; }
 
+        /// <summary>
+        /// The SAS expiration action. Can only be Log.
+        /// </summary>
         public string ExpirationAction { get; set; }
     }
 
@@ -1487,8 +1604,14 @@ namespace ConsoleAppV2.MicrosoftStorage.Models
         /// </summary>
         public string CanonicalizedResource { get; set; }
 
+        /// <summary>
+        /// The signed services accessible with the service SAS. Possible values include: Blob (b), Container (c), File (f), Share (s).
+        /// </summary>
         public string SignedResource { get; set; }
 
+        /// <summary>
+        /// The signed permissions for the service SAS. Possible values include: Read (r), Write (w), Delete (d), List (l), Add (a), Create (c), Update (u) and Process (p).
+        /// </summary>
         public string SignedPermission { get; set; }
 
         /// <summary>
@@ -1496,6 +1619,9 @@ namespace ConsoleAppV2.MicrosoftStorage.Models
         /// </summary>
         public string SignedIp { get; set; }
 
+        /// <summary>
+        /// The protocol permitted for a request made with the account SAS.
+        /// </summary>
         public string SignedProtocol { get; set; }
 
         /// <summary>
@@ -1664,6 +1790,9 @@ namespace ConsoleAppV2.MicrosoftStorage.Models
         /// </summary>
         public string ResourceType { get; set; }
 
+        /// <summary>
+        /// Indicates the type of storage account.
+        /// </summary>
         public string Kind { get; set; }
 
         /// <summary>
@@ -1687,8 +1816,14 @@ namespace ConsoleAppV2.MicrosoftStorage.Models
     /// </summary>
     public class StorageAccount
     {
+        /// <summary>
+        /// The resource model definition representing SKU
+        /// </summary>
         public Sku Sku { get; set; }
 
+        /// <summary>
+        /// Gets the Kind.
+        /// </summary>
         public string Kind { get; set; }
 
         public Identity Identity { get; set; }
@@ -1708,6 +1843,9 @@ namespace ConsoleAppV2.MicrosoftStorage.Models
         /// </summary>
         public string Name { get; set; }
 
+        /// <summary>
+        /// The type of resource, Microsoft.Storage/storageAccounts
+        /// </summary>
         public string Type { get; set; }
     }
 
@@ -1716,8 +1854,14 @@ namespace ConsoleAppV2.MicrosoftStorage.Models
     /// </summary>
     public class StorageAccountCreateParameters
     {
+        /// <summary>
+        /// The resource model definition representing SKU
+        /// </summary>
         public Sku Sku { get; set; }
 
+        /// <summary>
+        /// Required. Indicates the type of storage account.
+        /// </summary>
         public string Kind { get; set; }
 
         /// <summary>
@@ -1778,6 +1922,9 @@ namespace ConsoleAppV2.MicrosoftStorage.Models
         /// </summary>
         public string Value { get; set; }
 
+        /// <summary>
+        /// Permissions for the key -- read-only or full permissions.
+        /// </summary>
         public string Permissions { get; set; }
 
         /// <summary>
@@ -1888,6 +2035,9 @@ namespace ConsoleAppV2.MicrosoftStorage.Models
 
         public PrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
 
+        /// <summary>
+        /// The current provisioning state.
+        /// </summary>
         public string ProvisioningState { get; set; }
     }
 
@@ -1936,6 +2086,9 @@ namespace ConsoleAppV2.MicrosoftStorage.Models
     /// </summary>
     public class PrivateLinkServiceConnectionState
     {
+        /// <summary>
+        /// The private endpoint connection status.
+        /// </summary>
         public string Status { get; set; }
 
         /// <summary>
@@ -1954,6 +2107,9 @@ namespace ConsoleAppV2.MicrosoftStorage.Models
     /// </summary>
     public class StorageAccountProperties
     {
+        /// <summary>
+        /// Gets the status of the storage account at the time the operation was called.
+        /// </summary>
         public string ProvisioningState { get; set; }
 
         public Endpoints PrimaryEndpoints { get; set; }
@@ -1963,6 +2119,9 @@ namespace ConsoleAppV2.MicrosoftStorage.Models
         /// </summary>
         public string PrimaryLocation { get; set; }
 
+        /// <summary>
+        /// Gets the status indicating whether the primary location of the storage account is available or unavailable.
+        /// </summary>
         public string StatusOfPrimary { get; set; }
 
         /// <summary>
@@ -1975,6 +2134,9 @@ namespace ConsoleAppV2.MicrosoftStorage.Models
         /// </summary>
         public string SecondaryLocation { get; set; }
 
+        /// <summary>
+        /// Gets the status indicating whether the secondary location of the storage account is available or unavailable. Only available if the SKU name is Standard_GRS or Standard_RAGRS.
+        /// </summary>
         public string StatusOfSecondary { get; set; }
 
         /// <summary>
@@ -1994,6 +2156,9 @@ namespace ConsoleAppV2.MicrosoftStorage.Models
 
         public Encryption Encryption { get; set; }
 
+        /// <summary>
+        /// Required for storage accounts where kind = BlobStorage. The access tier used for billing.
+        /// </summary>
         public string AccessTier { get; set; }
 
         public AzureFilesIdentityBasedAuthentication AzureFilesIdentityBasedAuthentication { get; set; }
@@ -2017,6 +2182,9 @@ namespace ConsoleAppV2.MicrosoftStorage.Models
         /// </summary>
         public bool FailoverInProgress { get; set; }
 
+        /// <summary>
+        /// Allow large file shares if sets to Enabled. It cannot be disabled once it is enabled.
+        /// </summary>
         public string LargeFileSharesState { get; set; }
 
         /// <summary>
@@ -2033,6 +2201,9 @@ namespace ConsoleAppV2.MicrosoftStorage.Models
         /// </summary>
         public bool AllowBlobPublicAccess { get; set; }
 
+        /// <summary>
+        /// Set the minimum TLS version to be permitted on requests to storage. The default interpretation is TLS 1.0 for this property.
+        /// </summary>
         public string MinimumTlsVersion { get; set; }
 
         /// <summary>
@@ -2066,6 +2237,9 @@ namespace ConsoleAppV2.MicrosoftStorage.Models
 
         public NetworkRuleSet NetworkAcls { get; set; }
 
+        /// <summary>
+        /// Required for storage accounts where kind = BlobStorage. The access tier used for billing.
+        /// </summary>
         public string AccessTier { get; set; }
 
         public AzureFilesIdentityBasedAuthentication AzureFilesIdentityBasedAuthentication { get; set; }
@@ -2080,6 +2254,9 @@ namespace ConsoleAppV2.MicrosoftStorage.Models
         /// </summary>
         public bool IsHnsEnabled { get; set; }
 
+        /// <summary>
+        /// Allow large file shares if sets to Enabled. It cannot be disabled once it is enabled.
+        /// </summary>
         public string LargeFileSharesState { get; set; }
 
         public RoutingPreference RoutingPreference { get; set; }
@@ -2089,6 +2266,9 @@ namespace ConsoleAppV2.MicrosoftStorage.Models
         /// </summary>
         public bool AllowBlobPublicAccess { get; set; }
 
+        /// <summary>
+        /// Set the minimum TLS version to be permitted on requests to storage. The default interpretation is TLS 1.0 for this property.
+        /// </summary>
         public string MinimumTlsVersion { get; set; }
 
         /// <summary>
@@ -2120,6 +2300,9 @@ namespace ConsoleAppV2.MicrosoftStorage.Models
 
         public KeyPolicy KeyPolicy { get; set; }
 
+        /// <summary>
+        /// Required for storage accounts where kind = BlobStorage. The access tier used for billing.
+        /// </summary>
         public string AccessTier { get; set; }
 
         public AzureFilesIdentityBasedAuthentication AzureFilesIdentityBasedAuthentication { get; set; }
@@ -2131,6 +2314,9 @@ namespace ConsoleAppV2.MicrosoftStorage.Models
 
         public NetworkRuleSet NetworkAcls { get; set; }
 
+        /// <summary>
+        /// Allow large file shares if sets to Enabled. It cannot be disabled once it is enabled.
+        /// </summary>
         public string LargeFileSharesState { get; set; }
 
         public RoutingPreference RoutingPreference { get; set; }
@@ -2140,6 +2326,9 @@ namespace ConsoleAppV2.MicrosoftStorage.Models
         /// </summary>
         public bool AllowBlobPublicAccess { get; set; }
 
+        /// <summary>
+        /// Set the minimum TLS version to be permitted on requests to storage. The default interpretation is TLS 1.0 for this property.
+        /// </summary>
         public string MinimumTlsVersion { get; set; }
 
         /// <summary>
@@ -2169,6 +2358,9 @@ namespace ConsoleAppV2.MicrosoftStorage.Models
     /// </summary>
     public class StorageAccountUpdateParameters
     {
+        /// <summary>
+        /// The resource model definition representing SKU
+        /// </summary>
         public Sku Sku { get; set; }
 
         /// <summary>
@@ -2180,6 +2372,9 @@ namespace ConsoleAppV2.MicrosoftStorage.Models
 
         public StorageAccountPropertiesUpdateParameters Properties { get; set; }
 
+        /// <summary>
+        /// Optional. Indicates the type of storage account. Currently only StorageV2 value supported by server.
+        /// </summary>
         public string Kind { get; set; }
     }
 
@@ -2220,6 +2415,9 @@ namespace ConsoleAppV2.MicrosoftStorage.Models
     /// </summary>
     public class Usage
     {
+        /// <summary>
+        /// Gets the unit of measurement.
+        /// </summary>
         public string Unit { get; set; }
 
         /// <summary>
@@ -2288,8 +2486,14 @@ namespace ConsoleAppV2.MicrosoftStorage.Models
         /// </summary>
         public string Id { get; set; }
 
+        /// <summary>
+        /// The action of virtual network rule.
+        /// </summary>
         public string Action { get; set; }
 
+        /// <summary>
+        /// Gets the state of virtual network rule.
+        /// </summary>
         public string State { get; set; }
     }
 }
