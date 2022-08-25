@@ -20,17 +20,17 @@ var storageSettings = new GeneratorSettings
 {
     Namespace = "ConsoleAppV2.MicrosoftStorage",
     ApiName = "MicrosoftStorage",
-    SingleFile = true,
+    SingleFile = false,
     PreferredSecurityDefinitionType = SecurityDefinitionType.None,
     ConstantQueryParameters = new Dictionary<string, string> { { "api-version", "2021-04-01" } }
 };
 
 generator = new GeneratorV2();
 const string x = @"C:\Dev\azure-rest-api-specs\specification\storage\resource-manager\Microsoft.Storage\stable\2021-04-01\storage.json";
-//foreach (var file in Directory.GetFiles("../../../MicrosoftStorage/Models", "*.cs"))
-//{
-//    File.Delete(file);
-//}
+foreach (var file in Directory.GetFiles("../../../MicrosoftStorage/Models", "*.cs"))
+{
+    File.Delete(file);
+}
 foreach (var file in generator.Map(storageSettings, x, out OpenApiDiagnostic diagnosticStorage))
 {
     Console.WriteLine("Generating file-type '{0}': {1}\\{2}", file.FileType, file.Path, file.Name);
