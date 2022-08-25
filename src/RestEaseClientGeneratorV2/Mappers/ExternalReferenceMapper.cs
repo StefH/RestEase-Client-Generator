@@ -4,6 +4,7 @@ using RestEaseClientGenerator.Settings;
 using RestEaseClientGenerator.Types;
 using RestEaseClientGenerator.Utils;
 using RestEaseClientGeneratorV2;
+using RestEaseClientGeneratorV2.Utils;
 
 namespace RestEaseClientGenerator.Mappers;
 
@@ -55,18 +56,27 @@ internal class ExternalReferenceMapper : BaseMapper
             return new ReferenceDto(foundModel.ClassName, false, foundModel.Description);
         }
 
-        if (_settings.PreferredEnumType == EnumType.Enum)
+        var enumClassName = EnumHelper.GetEnumClassName(_settings, className, string.Empty);
+        var foundEnum = _internalDto.Enums.FirstOrDefault(m => string.Equals(m.Name, enumClassName, StringComparison.InvariantCultureIgnoreCase));
+        if (foundEnum is not null)
         {
-            var foundEnum = _internalDto.Enums.FirstOrDefault(m => string.Equals(m.Name, className, StringComparison.InvariantCultureIgnoreCase));
-            if (foundEnum is not null)
-            {
-                return new ReferenceDto(foundEnum.Name, false, foundEnum.Description);
-            }
+            return _settings.PreferredEnumType == EnumType.Enum ?
+                new ReferenceDto(foundEnum.Name, false, foundEnum.Description) :
+                new ReferenceDto("string", false, foundEnum.Description);
         }
-        else
-        {
-            return new ReferenceDto("string", false, null);
-        }
+
+        //if (_settings.PreferredEnumType == EnumType.Enum)
+        //{
+        //    var foundEnum = _internalDto.Enums.FirstOrDefault(m => string.Equals(m.Name, className, StringComparison.InvariantCultureIgnoreCase));
+        //    if (foundEnum is not null)
+        //    {
+        //        return new ReferenceDto(foundEnum.Name, false, foundEnum.Description);
+        //    }
+        //}
+        //else
+        //{
+            
+        //}
 
         throw new InvalidOperationException($"External model/enum with name '{className}' not found in external ({reference.ExternalResource}).");
     }

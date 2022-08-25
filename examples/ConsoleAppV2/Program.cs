@@ -18,7 +18,7 @@ var generator = new GeneratorV2();
 
 var storageSettings = new GeneratorSettings
 {
-    Namespace = "ConsoleAppV2.MicrosoftStorage",
+    Namespace = "MicrosoftExampleConsoleApp.MicrosoftStorage",
     ApiName = "MicrosoftStorage",
     SingleFile = false,
     PreferredSecurityDefinitionType = SecurityDefinitionType.None,

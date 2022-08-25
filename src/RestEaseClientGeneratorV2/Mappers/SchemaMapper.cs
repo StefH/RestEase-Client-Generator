@@ -9,6 +9,7 @@ using RestEaseClientGenerator.Types;
 using RestEaseClientGenerator.Types.Internal;
 using RestEaseClientGenerator.Utils;
 using RestEaseClientGeneratorV2.Models.Internal;
+using RestEaseClientGeneratorV2.Utils;
 
 namespace RestEaseClientGeneratorV2.Mappers;
 
@@ -30,6 +31,11 @@ internal class SchemaMapper : BaseMapper
         if (key == "Display")
         {
             int d = 8;
+        }
+
+        if (key == "Usage")
+        {
+            int u = 8;
         }
 
         if (isProperty && TryGetReferenceId(schema, directory, out var referenceId))
@@ -210,15 +216,14 @@ internal class SchemaMapper : BaseMapper
 
     private EnumDto MapEnum(string name, string parentName, OpenApiSchema schema)
     {
-        var enumNamePostfix = _settings.PreferredEnumType == EnumType.Enum ? "EnumType" : "Constants";
-        var enumName = $"{parentName}{name}{enumNamePostfix}".ToPascalCase();
+        var enumClassName = EnumHelper.GetEnumClassName(_settings, name, parentName);
         var enumValues = schema.Enum.OfType<OpenApiString>()
             .SelectMany(str => str.Value.Split(new[] { '|' }, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()))
             .ToList();
 
-        var type = _settings.PreferredEnumType == EnumType.Enum ? enumName : "string";
+        var type = _settings.PreferredEnumType == EnumType.Enum ? enumClassName : "string";
 
-        return new EnumDto(type, enumName, schema.Nullable, enumValues, schema.Description);
+        return new EnumDto(type, enumClassName, schema.Nullable, enumValues, schema.Description);
     }
 
     private BaseDto MapUnknown(string name, string parentName, OpenApiSchema schema, bool isProperty, string? directory)
@@ -344,7 +349,7 @@ internal class SchemaMapper : BaseMapper
         switch (schema.Reference)
         {
             case { IsLocal: true }:
-                id = new ReferenceDto(FixReservedType(schema.Reference.Id.ToPascalCase()), true);
+                id = new ReferenceDto(FixReservedType(schema.Reference.Id.ToPascalCase()), true, schema.Description);
                 return true;
 
             case { IsExternal: true }:
