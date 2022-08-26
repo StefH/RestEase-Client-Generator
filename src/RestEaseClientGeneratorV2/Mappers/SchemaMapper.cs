@@ -222,8 +222,12 @@ internal class SchemaMapper : BaseMapper
             .ToList();
 
         var type = _settings.PreferredEnumType == EnumType.Enum ? enumClassName : "string";
+        
+        var @enum =  new EnumDto(type, enumClassName, schema.Nullable, enumValues, schema.Description);
 
-        return new EnumDto(type, enumClassName, schema.Nullable, enumValues, schema.Description);
+        _dto.AddEnum(@enum);
+
+        return @enum;
     }
 
     private BaseDto MapUnknown(string name, string parentName, OpenApiSchema schema, bool isProperty, string? directory)

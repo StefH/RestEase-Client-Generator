@@ -24,17 +24,45 @@ public class GeneratorV2
             int yyyy = 9;
         }
 
-        var modelBuilder = new ModelBuilder(settings, internalDto.Models);
-
         var files = new List<GeneratedFile>();
-        files.AddRange(internalDto.Models.Select(model => new GeneratedFile
-        (
-            FileType.Model,
-            settings.ModelsNamespace,
-            $"{model.ClassName}.cs",
-            model.ClassName,
-            modelBuilder.Build(model, model == internalDto.Models.First(), model == internalDto.Models.Last())
-        )));
+
+        // Add Models
+        var modelBuilder = new ModelBuilder(settings, internalDto.Models);
+        if (internalDto.Models.Any())
+        {
+            var firstModel = internalDto.Models.First();
+            var lastModel = internalDto.Models.Last();
+            files.AddRange(internalDto.Models.Select(model => new GeneratedFile
+            (
+                FileType.Model,
+                settings.ModelsNamespace,
+                $"{model.ClassName}.cs",
+                model.ClassName,
+                modelBuilder.Build(model, model == firstModel, model == lastModel)
+            )));
+        }
+
+        // Add Enums
+        var enumBuilder = new EnumBuilder(settings);
+        if (internalDto.Enums.Any())
+        {
+            var allEnums = internalDto.Enums
+                .GroupBy(r => r.Name)
+                .SelectMany(r => r)
+                .OrderBy(r => r.Name)
+                .ToList();
+            var firstEnum = allEnums.First();
+            var lastEnum = allEnums.Last();
+
+            files.AddRange(allEnums.Select(@enum => new GeneratedFile
+            (
+                FileType.Model,
+                settings.ModelsNamespace,
+                $"{@enum.Name}.cs",
+                @enum.Name,
+                enumBuilder.Build(@enum, @enum == firstEnum, @enum == lastEnum)
+            )));
+        }
 
         if (settings.SingleFile)
         {

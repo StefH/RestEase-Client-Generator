@@ -1,2 +1,3 @@
 public class AzureEntityResource extends Resource
-UsageName description mist
+
+constante bestanden voor enum

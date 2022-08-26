@@ -13,7 +13,7 @@ internal class EnumBuilder : BaseBuilder
     {
     }
 
-    public string Build(RestEaseEnum restEaseEnum, bool isFirst, bool isLast)
+    public string Build(EnumDto restEaseEnum, bool isFirst, bool isLast)
     {
         if (Settings.PreferredEnumType == EnumType.Enum)
         {
@@ -23,7 +23,7 @@ internal class EnumBuilder : BaseBuilder
         return BuildAsString(restEaseEnum, isFirst, isLast);
     }
 
-    private string BuildAsEnum(RestEaseEnum restEaseEnum, bool isFirst, bool isLast)
+    private string BuildAsEnum(EnumDto restEaseEnum, bool isFirst, bool isLast)
     {
         var builder = new StringBuilder();
         if (!Settings.SingleFile)
@@ -35,7 +35,7 @@ internal class EnumBuilder : BaseBuilder
 
         if (!Settings.SingleFile || isFirst)
         {
-            builder.AppendLine($"namespace {AppendModelsNamespace(restEaseEnum.Namespace)}");
+            builder.AppendLine($"namespace {AppendModelsNamespace(Settings.Namespace)}");
             builder.AppendLine("{");
         }
 
@@ -48,7 +48,7 @@ internal class EnumBuilder : BaseBuilder
 
         var safeValues = restEaseEnum.Values.Select(IdentifierUtils.CreateValidEnumMember);
 
-        builder.AppendLine($"    public enum {restEaseEnum.EnumName}");
+        builder.AppendLine($"    public enum {restEaseEnum.Name}");
         builder.AppendLine("    {");
         builder.AppendLine(string.Join(",\r\n", safeValues.Select(enumValue => $"        {enumValue}")));
         builder.AppendLine("    }");
@@ -61,7 +61,7 @@ internal class EnumBuilder : BaseBuilder
         return builder.ToString();
     }
 
-    private string BuildAsString(RestEaseEnum restEaseEnum, bool isFirst, bool isLast)
+    private string BuildAsString(EnumDto restEaseEnum, bool isFirst, bool isLast)
     {
         var builder = new StringBuilder();
 
@@ -73,7 +73,7 @@ internal class EnumBuilder : BaseBuilder
 
         if (!Settings.SingleFile || isFirst)
         {
-            builder.AppendLine($"namespace {AppendModelsNamespace(restEaseEnum.Namespace)}");
+            builder.AppendLine($"namespace {AppendModelsNamespace(Settings.Namespace)}");
             builder.AppendLine("{");
         }
 
@@ -84,7 +84,7 @@ internal class EnumBuilder : BaseBuilder
             builder.AppendLine("    /// </summary>");
         }
 
-        builder.AppendLine($"    public static class {restEaseEnum.EnumName}");
+        builder.AppendLine($"    public static class {restEaseEnum.Name}");
         builder.AppendLine("    {");
         builder.AppendLine(string.Join("\r\n\r\n", values.Select(x => $"        public const string {x.name} = \"{x.value}\";")));
         builder.AppendLine("    }");
