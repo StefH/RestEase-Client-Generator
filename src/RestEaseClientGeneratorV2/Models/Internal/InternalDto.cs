@@ -17,18 +17,19 @@ internal record InternalDto
 
     public EnumDto? AddEnum(EnumDto enumDto)
     {
-        if (Enums.FirstOrDefault(m => string.Equals(m.Name, enumDto.Name, StringComparison.InvariantCultureIgnoreCase)) is null)
+        var existingEnums = Enums.Where(e => string.Equals(e.Name, enumDto.Name, StringComparison.InvariantCultureIgnoreCase)).ToList();
+        if (!existingEnums.Any())
         {
             Enums.Add(enumDto);
             return enumDto;
         }
 
-        var existingEnumWithSameValues = Enums.SingleOrDefault(existingEnum => existingEnum.Values.SequenceEqual(enumDto.Values));
+        var existingEnumWithSameValues = existingEnums.SingleOrDefault(e => e.Values.SequenceEqual(enumDto.Values));
         if (existingEnumWithSameValues is null)
         {
             var newEnum = enumDto with
             {
-                Name = $"{enumDto.Name}{Enums.Count}"
+                Name = $"{enumDto.Name}{existingEnums.Count}"
             };
 
             Enums.Add(newEnum);
