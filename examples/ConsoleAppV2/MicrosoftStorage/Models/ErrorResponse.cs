@@ -4,13 +4,13 @@ using System.Collections.Generic;
 namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Models
 {
     /// <summary>
-    /// An error response from the storage resource provider.
+    /// Common error response for all Azure Resource Manager APIs to return error details for failed operations. (This also follows the OData error response format.).
     /// </summary>
     public class ErrorResponse
     {
         /// <summary>
-        /// Error response body contract.
+        /// The error detail.
         /// </summary>
-        public ErrorResponseBody Error { get; set; }
+        public ErrorDetail Error { get; set; }
     }
 }

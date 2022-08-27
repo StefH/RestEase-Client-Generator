@@ -6,17 +6,16 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Models
     /// <summary>
     /// The resource model definition for an Azure Resource Manager tracked top level resource which has 'tags' and a 'location'
     /// </summary>
-    public class TrackedResource : Resource 
+    public class TrackedResource : Resource
     {
         /// <summary>
         /// Resource tags.
         /// </summary>
-        public Dictionary<string, string> Tags { get; set; }
+        public object Tags { get; set; }
 
         /// <summary>
         /// The geo-location where the resource lives
         /// </summary>
         public string Location { get; set; }
-
     }
 }

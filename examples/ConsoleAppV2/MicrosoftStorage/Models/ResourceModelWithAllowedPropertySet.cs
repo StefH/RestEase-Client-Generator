@@ -46,12 +46,21 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Models
         /// <summary>
         /// Resource tags.
         /// </summary>
-        public Dictionary<string, string> Tags { get; set; }
+        public object Tags { get; set; }
 
-        public ResourceModelWithAllowedPropertySetIdentity Identity { get; set; }
+        /// <summary>
+        /// Identity for the resource.
+        /// </summary>
+        public Identity Identity { get; set; }
 
-        public ResourceModelWithAllowedPropertySetSku Sku { get; set; }
+        /// <summary>
+        /// The resource model definition representing SKU
+        /// </summary>
+        public Sku Sku { get; set; }
 
-        public ResourceModelWithAllowedPropertySetPlan Plan { get; set; }
+        /// <summary>
+        /// Plan for the resource.
+        /// </summary>
+        public Plan Plan { get; set; }
     }
 }

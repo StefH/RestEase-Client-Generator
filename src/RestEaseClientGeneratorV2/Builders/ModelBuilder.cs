@@ -16,9 +16,9 @@ internal class ModelBuilder : BaseBuilder
         _models = models;
     }
 
-    public string Build(ModelDto restEaseModel, bool isFirst, bool isLast)
+    public string Build(ModelDto modelDto, bool isFirst, bool isLast)
     {
-        if (restEaseModel.ClassName == "AccountSasParameters")
+        if (modelDto.ClassName == "AccountSasParameters")
         {
             int x = 8;
         }
@@ -31,41 +31,40 @@ internal class ModelBuilder : BaseBuilder
             builder.AppendLine();
         }
 
-        var properties = restEaseModel.Properties.Where(p => p.Extends is null).ToList();
+        var properties = modelDto.Properties.ToList();
 
         string extendsClass = string.Empty;
-        var extends = restEaseModel.Properties.Where(p => p.Extends is not null).Select(p => p.Extends).ToList();
-
-        if (extends.Any(e => e != null))
+        
+        if (modelDto.Extends?.Any() == true)
         {
             int skip = 0;
             if (Settings.ExtendClassForAnyOfAllOf)
             {
-                var first = extends[0]!;
-                var extendType = first.ArrayItemType == null
-                    ? first.ToString()
-                    : ArrayTypeMapper.Map(ArrayType.List, first.ArrayItemType); // Hack in case a class extends an array
+                var first = modelDto.Extends[0];
+                //var extendType = first.ArrayItemType == null
+                //    ? first.ToString()
+                //    : ArrayTypeMapper.Map(ArrayType.List, first.ArrayItemType); // Hack in case a class extends an array
 
-                extendsClass = $" : {extendType}";
+                extendsClass = $" : {first.Type}";
                 skip = 1;
             }
 
-            //foreach (var extend in extends.Skip(skip))
-            //{
-            //    var model = _models.FirstOrDefault(m => string.Equals(m.ClassName, extend?.Type, StringComparison.InvariantCultureIgnoreCase));
-            //    if (model == null)
-            //    {
-            //        throw new InvalidOperationException($"Model with name '{extend}' is not found.");
-            //    }
-
-            //    foreach (var extraProperty in model.Properties)
-            //    {
-            //        if (!properties.Select(p => p.Name).Contains(extraProperty.Name))
-            //        {
-            //            properties.Add(extraProperty);
-            //        }
-            //    }
-            //}
+            foreach (var extend in modelDto.Extends.Skip(skip))
+            {
+                var model = _models.FirstOrDefault(m => string.Equals(m.ClassName, extend?.Type, StringComparison.InvariantCultureIgnoreCase));
+                if (model == null)
+                {
+                    throw new InvalidOperationException($"Model with name '{extend}' is not found.");
+                }
+                
+                foreach (var extraProperty in model.Properties)
+                {
+                    if (!properties.Select(p => p.Name).Contains(extraProperty.Name))
+                    {
+                        properties.Add(extraProperty);
+                    }
+                }
+            }
         }
 
         if (!Settings.SingleFile || isFirst)
@@ -74,10 +73,10 @@ internal class ModelBuilder : BaseBuilder
             builder.AppendLine("{");
         }
 
-        if (!string.IsNullOrEmpty(restEaseModel.Description))
+        if (!string.IsNullOrEmpty(modelDto.Description))
         {
             builder.AppendLine("    /// <summary>");
-            builder.AppendLine($"    /// {restEaseModel.Description.StripHtml()}");
+            builder.AppendLine($"    /// {modelDto.Description.StripHtml()}");
             builder.AppendLine("    /// </summary>");
         }
 
@@ -86,7 +85,7 @@ internal class ModelBuilder : BaseBuilder
             builder.AppendLine("    [FluentBuilder.AutoGenerateBuilder]");
         }
 
-        builder.AppendLine($"    public class {restEaseModel.ClassName}{extendsClass}");
+        builder.AppendLine($"    public class {modelDto.ClassName}{extendsClass}");
         builder.AppendLine("    {");
         foreach (var property in properties)
         {
@@ -115,7 +114,7 @@ internal class ModelBuilder : BaseBuilder
             }
             else
             {
-                if (safePropertyName == restEaseModel.ClassName)
+                if (safePropertyName == modelDto.ClassName)
                 {
                     builder.AppendLine($"        [Newtonsoft.Json.JsonProperty(\"{safePropertyName}\")]");
                     builder.AppendLine($"        public {property.Type} {safePropertyName}_ {{ get; set; }}");
@@ -126,7 +125,7 @@ internal class ModelBuilder : BaseBuilder
                 }
             }
 
-            if (property != restEaseModel.Properties.Last())
+            if (property != modelDto.Properties.Last())
             {
                 builder.AppendLine();
             }

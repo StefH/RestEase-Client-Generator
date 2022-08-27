@@ -2,7 +2,7 @@ using RestEaseClientGeneratorV2.Models.Internal;
 
 namespace RestEaseClientGenerator.Models.Internal;
 
-internal record PropertyDto(string Type, string Name, bool Nullable, string? Description = null, PropertyDto? Extends = null) : BaseDto(Type, Description)
+internal record PropertyDto(string Type, string Name, bool Nullable, string? Description = null) : BaseDto(Type, Description)
 {
     public string? ArrayItemType { get; set; }
 

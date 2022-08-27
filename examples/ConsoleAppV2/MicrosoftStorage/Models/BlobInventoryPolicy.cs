@@ -6,7 +6,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Models
     /// <summary>
     /// The storage account blob inventory policy.
     /// </summary>
-    public class BlobInventoryPolicy : Resource 
+    public class BlobInventoryPolicy : Resource
     {
         /// <summary>
         /// The storage account blob inventory policy properties.
@@ -14,9 +14,8 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Models
         public BlobInventoryPolicyProperties Properties { get; set; }
 
         /// <summary>
-        /// not-used
+        /// Metadata pertaining to creation and last modification of the resource.
         /// </summary>
         public SystemData SystemData { get; set; }
-
     }
 }

@@ -9,14 +9,14 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Models
     public class StorageAccountUpdateParameters
     {
         /// <summary>
-        /// not-used
+        /// The resource model definition representing SKU
         /// </summary>
         public Sku Sku { get; set; }
 
         /// <summary>
         /// Gets or sets a list of key value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key no greater in length than 128 characters and a value no greater in length than 256 characters.
         /// </summary>
-        public Dictionary<string, string> Tags { get; set; }
+        public object Tags { get; set; }
 
         /// <summary>
         /// Identity for the resource.

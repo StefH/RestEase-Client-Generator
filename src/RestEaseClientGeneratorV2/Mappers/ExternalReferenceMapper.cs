@@ -97,6 +97,11 @@ internal class ExternalReferenceMapper : BaseMapper
 
         var className = MakeValidReferenceId(reference.Id);
 
+        if (className == "ProxyResource")
+        {
+            int p = 6;
+        }
+
         return (className, generator.MapInternal(settings, location, out _));
     }
 }

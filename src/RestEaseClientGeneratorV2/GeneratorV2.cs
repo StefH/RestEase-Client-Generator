@@ -100,6 +100,11 @@ public class GeneratorV2
         var schemas = document.Components.Schemas.OrderBy(s => s.Key).ToList();
         foreach (var schema in schemas)
         {
+            if (schema.Key == "ProxyResource")
+            {
+                int yyyy = 8;
+            }
+
             var result = mapper.Map(schema.Key, string.Empty, schema.Value, false, directory);
             switch (result)
             {

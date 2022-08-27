@@ -28,9 +28,9 @@ internal class SchemaMapper : BaseMapper
     {
         var name = key.ToPascalCase();
 
-        if (key == "Display")
+        if (key == "AzureEntityResource")
         {
-            int d = 8;
+            int AzureEntityResource = 8;
         }
 
         if (key == "Usage")
@@ -137,7 +137,8 @@ internal class SchemaMapper : BaseMapper
 
     private BaseDto MapObject(string name, string parentName, OpenApiSchema schema, bool isProperty, string? directory)
     {
-        if (!schema.Properties.Any())
+        var allOfOrAnyOfSchemas = schema.GetAllOfAndAnyOf();
+        if (!schema.Properties.Any() && !allOfOrAnyOfSchemas.Any())
         {
             return new PropertyDto("object", name, schema.Nullable, schema.Description);
         }
@@ -178,6 +179,21 @@ internal class SchemaMapper : BaseMapper
         }
 
         var model = new ModelDto(name, name, properties, schema.Description);
+
+        if (allOfOrAnyOfSchemas.Any())
+        {
+            // This object extends another
+            var extendList = new List<BaseDto>();
+            foreach (var extends in allOfOrAnyOfSchemas)
+            {
+                if (TryGetReferenceId(extends, directory, out var referenceId))
+                {
+                    extendList.Add(MapReference(referenceId, schema, directory));
+                }
+            }
+
+            model.Extends = extendList;
+        }
 
         // In case this object is a property, which means that it's defined 'inline', add it to the models.
         if (isProperty)
@@ -222,8 +238,8 @@ internal class SchemaMapper : BaseMapper
             .ToList();
 
         var type = _settings.PreferredEnumType == EnumType.Enum ? enumClassName : "string";
-        
-        var @enum =  new EnumDto(type, enumClassName, schema.Nullable, enumValues, schema.Description);
+
+        var @enum = new EnumDto(type, enumClassName, schema.Nullable, enumValues, schema.Description);
 
         _dto.AddEnum(@enum);
 

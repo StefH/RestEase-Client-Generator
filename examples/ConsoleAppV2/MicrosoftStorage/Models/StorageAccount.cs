@@ -6,10 +6,10 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Models
     /// <summary>
     /// The storage account.
     /// </summary>
-    public class StorageAccount : TrackedResource 
+    public class StorageAccount : TrackedResource
     {
         /// <summary>
-        /// not-used
+        /// The resource model definition representing SKU
         /// </summary>
         public Sku Sku { get; set; }
 
@@ -32,6 +32,5 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Models
         /// Properties of the storage account.
         /// </summary>
         public StorageAccountProperties Properties { get; set; }
-
     }
 }

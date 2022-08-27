@@ -9,12 +9,12 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Models
     public class SkuInformation
     {
         /// <summary>
-        /// not-used
+        /// The SKU name. Required for account creation; optional for update. Note that in older versions, SKU name was called accountType.
         /// </summary>
         public string Name { get; set; }
 
         /// <summary>
-        /// not-used
+        /// This field is required to be implemented by the Resource Provider if the service has more than one tier, but is not required on a PUT.
         /// </summary>
         public string Tier { get; set; }
 
