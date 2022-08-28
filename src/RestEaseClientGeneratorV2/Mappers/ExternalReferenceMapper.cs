@@ -31,9 +31,9 @@ internal class ExternalReferenceMapper : BaseMapper
     //    return null;
     //}
 
-    public ReferenceDto MapReference(OpenApiReference reference, string? directory)
+    public ReferenceDto MapReference(OpenApiReference reference, string path)
     {
-        var (className, dto) = CallFromFileInternal(reference, directory);
+        var (className, dto) = CallFromFileInternal(reference, path);
 
         if (className == "Display")
         {
@@ -47,7 +47,7 @@ internal class ExternalReferenceMapper : BaseMapper
 
         foreach (var item in dto.Enums)
         {
-            _internalDto.AddEnum(item);
+            _internalDto.AddEnum(item, path);
         }
 
         var foundModel = _internalDto.Models.FirstOrDefault(m => string.Equals(m.ClassName, className, StringComparison.InvariantCultureIgnoreCase));
@@ -81,19 +81,19 @@ internal class ExternalReferenceMapper : BaseMapper
         throw new InvalidOperationException($"External model/enum with name '{className}' not found in external ({reference.ExternalResource}).");
     }
 
-    private (string className, InternalDto internalDto) CallFromFileInternal(OpenApiReference reference, string? directory)
+    private (string className, InternalDto internalDto) CallFromFileInternal(OpenApiReference reference, string path)
     {
-        if (directory is null)
-        {
-            throw new InvalidOperationException($"This schema contains an external reference ({reference.ExternalResource}) but no value for 'directory' is provided.");
-        }
+        //if (path is null)
+        //{
+        //    throw new InvalidOperationException($"This schema contains an external reference ({reference.ExternalResource}) but no value for 'directory' is provided.");
+        //}
 
         var generator = new GeneratorV2();
 
         var settings = TinyMapperUtils.Instance.Map<GeneratorSettings>(_settings);
         settings.GenerationType = GenerationType.Models;
 
-        var location = Path.Combine(directory, reference.ExternalResource);
+        var location = Path.Combine(Path.GetDirectoryName(path)!, reference.ExternalResource);
 
         var className = MakeValidReferenceId(reference.Id);
 

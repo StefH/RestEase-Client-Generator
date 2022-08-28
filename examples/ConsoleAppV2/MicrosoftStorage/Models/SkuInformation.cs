@@ -14,7 +14,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// This field is required to be implemented by the Resource Provider if the service has more than one tier, but is not required on a PUT.
+        /// The SKU tier. This is based on the SKU name.
         /// </summary>
         public string Tier { get; set; }
 

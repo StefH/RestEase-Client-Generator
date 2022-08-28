@@ -15,7 +15,7 @@ internal record InternalDto
         }
     }
 
-    public EnumDto? AddEnum(EnumDto enumDto)
+    public EnumDto? AddEnum(EnumDto enumDto, string path, int? count = null)
     {
         var existingEnums = Enums.Where(e => string.Equals(e.Name, enumDto.Name, StringComparison.InvariantCultureIgnoreCase)).ToList();
         if (!existingEnums.Any())
@@ -27,13 +27,26 @@ internal record InternalDto
         var existingEnumWithSameValues = existingEnums.SingleOrDefault(e => e.Values.SequenceEqual(enumDto.Values));
         if (existingEnumWithSameValues is null)
         {
+            var prefix = Path.GetFileNameWithoutExtension(path);
             var newEnum = enumDto with
             {
-                Name = $"{enumDto.Name}{existingEnums.Count}"
+                Name = $"{prefix}{enumDto.Name}"
             };
 
-            Enums.Add(newEnum);
-            return newEnum;
+            var existingEnumsWithNewName = Enums.Where(e => string.Equals(e.Name, newEnum.Name, StringComparison.InvariantCultureIgnoreCase)).ToList();
+            if (!existingEnumsWithNewName.Any())
+            {
+                Enums.Add(enumDto);
+                return enumDto;
+            }
+
+            var newEnumWithCount = enumDto with
+            {
+                Name = $"{newEnum.Name}{existingEnums.Count}"
+            };
+            
+            Enums.Add(newEnumWithCount);
+            return newEnumWithCount;
         }
 
         return null;

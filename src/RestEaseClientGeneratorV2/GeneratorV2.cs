@@ -86,7 +86,7 @@ public class GeneratorV2
 
     internal InternalDto MapInternal(GeneratorSettings settings, string path, out OpenApiDiagnostic diagnostic)
     {
-        var directory = Path.GetDirectoryName(path);
+        // var directory = Path.GetDirectoryName(path);
 
         var dto = new InternalDto(new List<ModelDto>(), new List<EnumDto>());
         
@@ -105,7 +105,7 @@ public class GeneratorV2
                 int yyyy = 8;
             }
 
-            var result = mapper.Map(schema.Key, string.Empty, schema.Value, false, directory);
+            var result = mapper.Map(schema.Key, string.Empty, schema.Value, false, 0, path);
             switch (result)
             {
                 case PropertyDto propertyDto:
@@ -126,7 +126,7 @@ public class GeneratorV2
                     break;
 
                 case EnumDto enumDto:
-                    dto.AddEnum(enumDto);
+                    dto.AddEnum(enumDto, path);
                     break;
             }
         }
