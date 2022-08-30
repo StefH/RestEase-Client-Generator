@@ -1,8 +1,9 @@
+using Microsoft.OpenApi.Models;
 using RestEaseClientGeneratorV2.Models.Internal;
 
 namespace RestEaseClientGenerator.Models.Internal;
 
-internal record ReferenceDto(string Type, bool @internal, string? Description = null) : BaseDto(Type, Description)
+internal record ReferenceDto(string Type, string Id, bool @internal, string? Description = null) : BaseDto(Type, Id, Description)
 {
     //public override string ToString()
     //{

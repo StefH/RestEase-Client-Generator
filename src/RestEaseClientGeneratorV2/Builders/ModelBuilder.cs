@@ -18,7 +18,7 @@ internal class ModelBuilder : BaseBuilder
 
     public string Build(ModelDto modelDto, bool isFirst, bool isLast)
     {
-        if (modelDto.ClassName == "AccountSasParameters")
+        if (modelDto.Name == "AccountSasParameters")
         {
             int x = 8;
         }
@@ -51,7 +51,7 @@ internal class ModelBuilder : BaseBuilder
 
             foreach (var extend in modelDto.Extends.Skip(skip))
             {
-                var model = _models.FirstOrDefault(m => string.Equals(m.ClassName, extend?.Type, StringComparison.InvariantCultureIgnoreCase));
+                var model = _models.FirstOrDefault(m => string.Equals(m.Name, extend?.Type, StringComparison.InvariantCultureIgnoreCase));
                 if (model == null)
                 {
                     throw new InvalidOperationException($"Model with name '{extend}' is not found.");
@@ -85,7 +85,7 @@ internal class ModelBuilder : BaseBuilder
             builder.AppendLine("    [FluentBuilder.AutoGenerateBuilder]");
         }
 
-        builder.AppendLine($"    public class {modelDto.ClassName}{extendsClass}");
+        builder.AppendLine($"    public class {modelDto.Name}{extendsClass}");
         builder.AppendLine("    {");
         foreach (var property in properties)
         {
@@ -114,7 +114,7 @@ internal class ModelBuilder : BaseBuilder
             }
             else
             {
-                if (safePropertyName == modelDto.ClassName)
+                if (safePropertyName == modelDto.Name)
                 {
                     builder.AppendLine($"        [Newtonsoft.Json.JsonProperty(\"{safePropertyName}\")]");
                     builder.AppendLine($"        public {property.Type} {safePropertyName}_ {{ get; set; }}");

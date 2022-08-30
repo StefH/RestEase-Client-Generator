@@ -19,26 +19,19 @@ internal class ExternalReferenceMapper : BaseMapper
         _internalDto = internalDto;
     }
 
-    //public OpenApiParameter? MapParameter(OpenApiReference reference, string? directory)
-    //{
-    //    var (className, dto) = CallFromFileInternal(reference, directory);
-
-    //    if (dto.Interface.OpenApiDocument.Components.Parameters.TryGetValue(className, out var parameter))
-    //    {
-    //        return parameter;
-    //    }
-
-    //    return null;
-    //}
-
-    public ReferenceDto MapReference(OpenApiReference reference, string path)
+    public OpenApiParameter? MapParameter(OpenApiReference reference, string path)
     {
         var (className, dto) = CallFromFileInternal(reference, path);
 
-        if (className == "Display")
-        {
-            int yyy = 0;
-        }
+        return dto.OpenApiDocument.Components.Parameters.TryGetValue(className, out var parameter) ?
+            parameter :
+            null;
+    }
+
+    public ReferenceDto MapReference(OpenApiReference reference, string path)
+    {
+        var id = MakeValidReferenceId(reference.Id);
+        var (className, dto) = CallFromFileInternal(reference, path);
 
         foreach (var item in dto.Models)
         {
@@ -50,10 +43,10 @@ internal class ExternalReferenceMapper : BaseMapper
             _internalDto.AddEnum(item, path);
         }
 
-        var foundModel = _internalDto.Models.FirstOrDefault(m => string.Equals(m.ClassName, className, StringComparison.InvariantCultureIgnoreCase));
+        var foundModel = _internalDto.Models.FirstOrDefault(m => string.Equals(m.Name, className, StringComparison.InvariantCultureIgnoreCase));
         if (foundModel is not null)
         {
-            return new ReferenceDto(foundModel.ClassName, false, foundModel.Description);
+            return new ReferenceDto(foundModel.Name, id, false, foundModel.Description);
         }
 
         var enumClassName = EnumHelper.GetEnumClassName(_settings, className, string.Empty);
@@ -61,22 +54,9 @@ internal class ExternalReferenceMapper : BaseMapper
         if (foundEnum is not null)
         {
             return _settings.PreferredEnumType == EnumType.Enum ?
-                new ReferenceDto(foundEnum.Name, false, foundEnum.Description) :
-                new ReferenceDto("string", false, foundEnum.Description);
+                new ReferenceDto(foundEnum.Name, id, false, foundEnum.Description) :
+                new ReferenceDto("string", id, false, foundEnum.Description);
         }
-
-        //if (_settings.PreferredEnumType == EnumType.Enum)
-        //{
-        //    var foundEnum = _internalDto.Enums.FirstOrDefault(m => string.Equals(m.Name, className, StringComparison.InvariantCultureIgnoreCase));
-        //    if (foundEnum is not null)
-        //    {
-        //        return new ReferenceDto(foundEnum.Name, false, foundEnum.Description);
-        //    }
-        //}
-        //else
-        //{
-            
-        //}
 
         throw new InvalidOperationException($"External model/enum with name '{className}' not found in external ({reference.ExternalResource}).");
     }
@@ -97,11 +77,8 @@ internal class ExternalReferenceMapper : BaseMapper
 
         var className = MakeValidReferenceId(reference.Id);
 
-        if (className == "ProxyResource")
-        {
-            int p = 6;
-        }
+        var (internalDto, _) = generator.MapInternal(settings, location, out _);
 
-        return (className, generator.MapInternal(settings, location, out _));
+        return (className, internalDto);
     }
 }

@@ -1,6 +1,7 @@
 using Microsoft.OpenApi.Readers;
 using RestEaseClientGenerator.Builders;
 using RestEaseClientGenerator.Extensions;
+using RestEaseClientGenerator.Mappers;
 using RestEaseClientGenerator.Models.External;
 using RestEaseClientGenerator.Models.Internal;
 using RestEaseClientGenerator.Settings;
@@ -15,14 +16,9 @@ public class GeneratorV2
     public IReadOnlyList<GeneratedFile> Map(GeneratorSettings settings, string path, out OpenApiDiagnostic diagnostic)
     {
         string name = settings.ApiName.ToValidIdentifier(CasingType.Pascal);
-        string interfaceName = $"I{name}Api";
+        //string interfaceName = $"I{name}Api";
 
-        var internalDto = MapInternal(settings, path, out diagnostic);
-
-        if (internalDto.Models.Any(m => m.ClassName == "Sku"))
-        {
-            int yyyy = 9;
-        }
+        var (internalDto, restEaseInterface) = MapInternal(settings, path, out diagnostic);
 
         var files = new List<GeneratedFile>();
 
@@ -36,8 +32,8 @@ public class GeneratorV2
             (
                 FileType.Model,
                 settings.ModelsNamespace,
-                $"{model.ClassName}.cs",
-                model.ClassName,
+                $"{model.Name}.cs",
+                model.Name,
                 modelBuilder.Build(model, model == firstModel, model == lastModel)
             )));
         }
@@ -64,6 +60,18 @@ public class GeneratorV2
             )));
         }
 
+        var anyModels = internalDto.Models.Any() || internalDto.Enums.Any();
+
+        // Add Interface
+        files.Add(new GeneratedFile
+        (
+            FileType.Api,
+            settings.ApiNamespace,
+            $"{restEaseInterface.Name}.cs",
+            restEaseInterface.Name,
+            new InterfaceBuilder(settings).Build(restEaseInterface, anyModels)
+        ));
+
         if (settings.SingleFile)
         {
             var content = files
@@ -75,8 +83,8 @@ public class GeneratorV2
             (
                 FileType.ApiAndModels,
                 string.Empty,
-                $"{interfaceName}.cs",
-                interfaceName,
+                $"{restEaseInterface}.cs",
+                restEaseInterface.Name,
                 string.Join("\r\n", content)
             )};
         }
@@ -84,40 +92,33 @@ public class GeneratorV2
         return files;
     }
 
-    internal InternalDto MapInternal(GeneratorSettings settings, string path, out OpenApiDiagnostic diagnostic)
+    internal (InternalDto InternalDto, RestEaseInterface Interface) MapInternal(GeneratorSettings settings, string path, out OpenApiDiagnostic diagnostic)
     {
-        // var directory = Path.GetDirectoryName(path);
-
-        var dto = new InternalDto(new List<ModelDto>(), new List<EnumDto>());
-        
-        var mapper = new SchemaMapper(settings, dto);
-
-        //var models = new List<ModelDto>(); 
-       // var enums = new List<EnumDto>();
-
         var reader = new OpenApiStreamReader();
         var document = reader.Read(File.OpenRead(path), out diagnostic);
+
+        var dto = new InternalDto(document, new List<ModelDto>(), new List<EnumDto>());
+        
+        var mapper = new SchemaMapper(settings, dto);
+        
         var schemas = document.Components.Schemas.OrderBy(s => s.Key).ToList();
         foreach (var schema in schemas)
         {
-            if (schema.Key == "ProxyResource")
-            {
-                int yyyy = 8;
-            }
-
-            var result = mapper.Map(schema.Key, string.Empty, schema.Value, false, 0, path);
+            var result = mapper.Map(schema.Key, string.Empty, schema.Value, false, path);
             switch (result)
             {
                 case PropertyDto propertyDto:
                     if (propertyDto.ArrayItemType != null)
                     {
                         // it's an array
+                        throw new ApplicationException();
                         int vvv = 9;
                     }
                     else
                     {
                         // it's an (string) enum
                         int aaa = 0;
+                        throw new ApplicationException();
                     }
                     break;
 
@@ -131,6 +132,9 @@ public class GeneratorV2
             }
         }
 
-        return dto;
+
+        var @interface = new InterfaceMapper(settings, mapper).Map(document, dto, path);
+
+        return (dto, @interface);
     }
 }

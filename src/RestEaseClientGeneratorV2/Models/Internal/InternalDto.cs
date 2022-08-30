@@ -1,7 +1,10 @@
+using Microsoft.OpenApi.Models;
+
 namespace RestEaseClientGenerator.Models.Internal;
 
 internal record InternalDto
 (
+    OpenApiDocument OpenApiDocument,
     List<ModelDto> Models,
     List<EnumDto> Enums
 //IDictionary<string, OpenApiParameter> Parameters
@@ -9,7 +12,7 @@ internal record InternalDto
 {
     public void AddModel(ModelDto modelDto)
     {
-        if (Models.FirstOrDefault(m => string.Equals(m.ClassName, modelDto.ClassName, StringComparison.InvariantCultureIgnoreCase)) is null)
+        if (Models.FirstOrDefault(m => string.Equals(m.Name, modelDto.Name, StringComparison.InvariantCultureIgnoreCase)) is null)
         {
             Models.Add(modelDto);
         }

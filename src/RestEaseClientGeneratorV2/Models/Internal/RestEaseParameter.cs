@@ -1,6 +1,7 @@
 using Microsoft.OpenApi.Models;
 using RestEaseClientGenerator.Extensions;
 using RestEaseClientGenerator.Types.Internal;
+using RestEaseClientGeneratorV2.Models.Internal;
 
 namespace RestEaseClientGenerator.Models.Internal;
 
@@ -14,7 +15,7 @@ internal class RestEaseParameter
 
     public PropertyDto IdentifierWithTypePascalCase => new(IdentifierWithType.Type, IdentifierWithType.Name.ToPascalCase(), IsNullable);
 
-    public PropertyDto IdentifierWithType { get; set; }
+    public BaseDto IdentifierWithType { get; set; }
 
     public string IdentifierRestEasePrefix { get; set; }
 
