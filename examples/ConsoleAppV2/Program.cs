@@ -30,7 +30,7 @@ generator = new GeneratorV2();
 const string x = @"C:\Dev\azure-rest-api-specs\specification\storage\resource-manager\Microsoft.Storage\stable\2021-04-01\storage.json";
 foreach (var file in Directory.GetFiles("../../../MicrosoftStorage/Models", "*.cs"))
 {
-    File.Delete(file);
+    //File.Delete(file);
 }
 foreach (var file in generator.Map(storageSettings, x, out OpenApiDiagnostic diagnosticStorage))
 {

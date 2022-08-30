@@ -7,8 +7,18 @@ namespace RestEaseClientGenerator.Extensions;
 /// <summary>
 /// Some code copied from https://raw.githubusercontent.com/andeart/CaseConversions/master/CaseConversions/CaseConversion.cs
 /// </summary>
-public static class StringExtensions
+internal static class StringExtensions
 {
+    internal static string Case(this string str, CasingType casing)
+    {
+        return casing switch
+        {
+            CasingType.Pascal => str.ToPascalCase(),
+            CasingType.Camel => str.ToCamelCase(),
+            _ => str
+        };
+    }
+
     internal static string ToValidIdentifier(this string? value, CasingType casingType = CasingType.None)
     {
         return value == null

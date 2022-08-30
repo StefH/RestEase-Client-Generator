@@ -24,11 +24,11 @@ internal class SchemaMapper : BaseMapper
         _dto = dto;
     }
 
-    public BaseDto Map(string key, string parentName, OpenApiSchema schema, bool isProperty, string path)
+    public BaseDto Map(string key, string parentName, OpenApiSchema schema, bool isProperty, string path, CasingType casingType = CasingType.Pascal)
     {
-        var name = key.ToPascalCase();
+        var name = key.Case(casingType);
 
-        if (isProperty && TryGetReferenceId(schema, path, out var referenceId))
+        if (isProperty && TryGetReferenceId(schema, path, casingType, out var referenceId))
         {
             return MapReference(referenceId, schema, path);
         }
@@ -51,13 +51,13 @@ internal class SchemaMapper : BaseMapper
                 return MapNumber(name, schema);
 
             case SchemaType.Object:
-                return MapObject(name, parentName, schema, isProperty, path);
+                return MapObject(name, parentName, schema, isProperty, path, casingType);
 
             case SchemaType.String:
-                return MapString(name, parentName, schema, path);
+                return MapString(name, parentName, schema, path, casingType);
 
             case SchemaType.Unknown:
-                return MapUnknown(name, parentName, schema, isProperty, path);
+                return MapUnknown(name, parentName, schema, isProperty, path, casingType);
 
             default:
                 throw new ArgumentOutOfRangeException();
@@ -125,7 +125,7 @@ internal class SchemaMapper : BaseMapper
         };
     }
 
-    private BaseDto MapObject(string name, string parentName, OpenApiSchema schema, bool isProperty, string path)
+    private BaseDto MapObject(string name, string parentName, OpenApiSchema schema, bool isProperty, string path, CasingType casingType)
     {
         var allOfOrAnyOfSchemas = schema.GetAllOfAndAnyOf();
         if (!schema.Properties.Any() && !allOfOrAnyOfSchemas.Any())
@@ -171,7 +171,7 @@ internal class SchemaMapper : BaseMapper
             var extendList = new List<BaseDto>();
             foreach (var extends in allOfOrAnyOfSchemas)
             {
-                if (TryGetReferenceId(extends, path, out var referenceId))
+                if (TryGetReferenceId(extends, path, casingType, out var referenceId))
                 {
                     extendList.Add(MapReference(referenceId, schema, path));
                 }
@@ -189,7 +189,7 @@ internal class SchemaMapper : BaseMapper
         return model;
     }
 
-    private BaseDto MapString(string name, string parentName, OpenApiSchema schema, string path)
+    private BaseDto MapString(string name, string parentName, OpenApiSchema schema, string path, CasingType casingType)
     {
         switch (schema.GetSchemaFormat())
         {
@@ -208,16 +208,16 @@ internal class SchemaMapper : BaseMapper
             default:
                 if (schema.Enum != null && schema.Enum.Any())
                 {
-                    return MapEnum(name, parentName, schema, path);
+                    return MapEnum(name, parentName, schema, path, casingType);
                 }
 
                 return new PropertyDto("string", name, schema.Nullable, schema.Description);
         }
     }
 
-    private EnumDto MapEnum(string name, string parentName, OpenApiSchema schema, string path)
+    private EnumDto MapEnum(string name, string parentName, OpenApiSchema schema, string path, CasingType casingType)
     {
-        var enumClassName = EnumHelper.GetEnumClassName(_settings, name, parentName);
+        var enumClassName = EnumHelper.GetEnumClassName(_settings, name, parentName, casingType);
         var enumValues = schema.Enum.OfType<OpenApiString>()
             .SelectMany(str => str.Value.Split(new[] { '|' }, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()))
             .ToList();
@@ -231,9 +231,9 @@ internal class SchemaMapper : BaseMapper
         return @enum;
     }
 
-    private BaseDto MapUnknown(string name, string parentName, OpenApiSchema schema, bool isProperty, string path)
+    private BaseDto MapUnknown(string name, string parentName, OpenApiSchema schema, bool isProperty, string path, CasingType casingType)
     {
-        if (isProperty && TryGetReferenceId(schema, path, out var referenceId))
+        if (isProperty && TryGetReferenceId(schema, path, casingType, out var referenceId))
         {
             // It's a reference
             return MapReference(referenceId, schema, path);
@@ -242,7 +242,7 @@ internal class SchemaMapper : BaseMapper
         if (schema.Properties.Any())
         {
             // It's an inline object-model
-            var @object = MapObject(name, parentName, schema, isProperty, path);
+            var @object = MapObject(name, parentName, schema, isProperty, path, casingType);
             if (@object is ModelDto)
             {
                 return @object;
@@ -341,7 +341,7 @@ internal class SchemaMapper : BaseMapper
         }
     }
 
-    private bool TryGetReferenceId(OpenApiSchema schema, string path, [NotNullWhen(true)] out ReferenceDto? referenceDto)
+    private bool TryGetReferenceId(OpenApiSchema schema, string path, CasingType casingType, [NotNullWhen(true)] out ReferenceDto? referenceDto)
     {
 
         switch (schema.Reference)
@@ -352,7 +352,7 @@ internal class SchemaMapper : BaseMapper
                 return true;
 
             case { IsExternal: true }:
-                referenceDto = new ExternalReferenceMapper(Settings, _dto).MapReference(schema.Reference, path);
+                referenceDto = new ExternalReferenceMapper(Settings, _dto).MapReference(schema.Reference, path, casingType);
                 return true;
 
             default:

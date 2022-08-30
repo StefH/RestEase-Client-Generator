@@ -759,7 +759,7 @@ internal class InterfaceMapper : BaseMapper
 
             attributes.AddRange(extraAttributes);
 
-            identifierWithType = _schemaMapper.Map(validIdentifier, string.Empty, schema, true, filepath);
+            identifierWithType = _schemaMapper.Map(validIdentifier, string.Empty, schema, true, filepath, CasingType.None);
 
             identifierWithType = FixReservedType(identifierWithType);
 
@@ -779,7 +779,7 @@ internal class InterfaceMapper : BaseMapper
         }
 
         string extraAttributesBetweenParentheses = extraAttributes.Length == 0 ? string.Empty : $"({string.Join(", ", extraAttributes)})";
-        identifierWithType = _schemaMapper.Map(identifier, string.Empty, schema, true, filepath);
+        identifierWithType = _schemaMapper.Map(identifier, string.Empty, schema, true, filepath, CasingType.None);
 
         identifierWithType = FixReservedType(identifierWithType);
 

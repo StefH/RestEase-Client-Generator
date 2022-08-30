@@ -2,6 +2,7 @@ using Microsoft.OpenApi.Models;
 using RestEaseClientGenerator.Models.Internal;
 using RestEaseClientGenerator.Settings;
 using RestEaseClientGenerator.Types;
+using RestEaseClientGenerator.Types.Internal;
 using RestEaseClientGenerator.Utils;
 using RestEaseClientGeneratorV2;
 using RestEaseClientGeneratorV2.Utils;
@@ -28,7 +29,7 @@ internal class ExternalReferenceMapper : BaseMapper
             null;
     }
 
-    public ReferenceDto MapReference(OpenApiReference reference, string path)
+    public ReferenceDto MapReference(OpenApiReference reference, string path, CasingType casing)
     {
         var id = MakeValidReferenceId(reference.Id);
         var (className, dto) = CallFromFileInternal(reference, path);
@@ -49,7 +50,7 @@ internal class ExternalReferenceMapper : BaseMapper
             return new ReferenceDto(foundModel.Name, id, false, foundModel.Description);
         }
 
-        var enumClassName = EnumHelper.GetEnumClassName(_settings, className, string.Empty);
+        var enumClassName = EnumHelper.GetEnumClassName(_settings, className, string.Empty, casing);
         var foundEnum = _internalDto.Enums.FirstOrDefault(m => string.Equals(m.Name, enumClassName, StringComparison.InvariantCultureIgnoreCase));
         if (foundEnum is not null)
         {

@@ -1,6 +1,6 @@
 namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Models
 {
-    public static class BlobInventoryPolicyNameConstants
+    public static class blobInventoryPolicyNameConstants
     {
         public const string Default = "default";
     }
