@@ -159,19 +159,19 @@ internal class InterfaceMapper : BaseMapper
 
         var headerParameterList = parameters
             .Where(p => p.In == ParameterLocation.Header && p.Schema.GetSchemaType() != SchemaType.Object)
-            .Select(p => BuildValidParameter(@interface, p.Name, p.Schema, p.Required, p.Description, p.In, Array.Empty<string>(), filepath))
+            .Select(p => BuildValidParameter(p.Name, p.Schema, p.Required, p.Description, p.In, Array.Empty<string>(), filepath))
             .ToList();
 
         var pathParameterNames = RegexUtils.GetParameterNamesFromPath(path).ToList();
         var pathParameterList = parameters
             .Where(p => p.In == ParameterLocation.Path && p.Schema.GetSchemaType() != SchemaType.Object)
-            .Select(p => BuildValidParameter(@interface, p.Name, p.Schema, p.Required, p.Description, p.In, Array.Empty<string>(), filepath))
+            .Select(p => BuildValidParameter(p.Name, p.Schema, p.Required, p.Description, p.In, Array.Empty<string>(), filepath))
             .OrderBy(p => pathParameterNames.IndexOf(p.Identifier))
             .ToList();
 
         var queryParameterList = parameters
             .Where(p => p.In == ParameterLocation.Query && p.Schema.GetSchemaType() != SchemaType.Object)
-            .Select(p => BuildValidParameter(@interface, p.Name, p.Schema, p.Required, p.Description, p.In, Array.Empty<string>(), filepath))
+            .Select(p => BuildValidParameter(p.Name, p.Schema, p.Required, p.Description, p.In, Array.Empty<string>(), filepath))
             .ToList();
 
         var extensionMethodParameterList = new List<RestEaseParameter>();
@@ -436,7 +436,6 @@ internal class InterfaceMapper : BaseMapper
     }
 
     private RequestDetails MapRequestDetails(
-        RestEaseInterface @interface,
         MediaTypeInfo detected,
         ICollection<RestEaseParameter> bodyParameterList,
         List<RestEaseParameter> extensionMethodParameterList,
@@ -458,11 +457,11 @@ internal class InterfaceMapper : BaseMapper
 
                 if (schema.Properties.Any())
                 {
-                    extensionMethodParameterList.AddRange(schema.Properties.Select(p => BuildValidParameter(@interface, p.Key, p.Value, p.Value.Nullable, p.Value.Description, null, Array.Empty<string>(), filepath)));
+                    extensionMethodParameterList.AddRange(schema.Properties.Select(p => BuildValidParameter(p.Key, p.Value, p.Value.Nullable, p.Value.Description, null, Array.Empty<string>(), filepath)));
                 }
                 else if (schema.GetSchemaType() == SchemaType.Array)
                 {
-                    extensionMethodParameterList.Add(BuildValidParameter(@interface, "content", schema, schema.Nullable, schema.Description, null, Array.Empty<string>(), filepath));
+                    extensionMethodParameterList.Add(BuildValidParameter("content", schema, schema.Nullable, schema.Description, null, Array.Empty<string>(), filepath));
                 }
             }
 
@@ -493,9 +492,9 @@ internal class InterfaceMapper : BaseMapper
             else
             {
                 httpContentDescription = "An extension method is generated to support the exact parameters.";
-                var extensionParameter = BuildValidParameter(@interface, "file", detected.Value.Schema, true, "The content.", null, Array.Empty<string>(), filepath);
+                var extensionParameter = BuildValidParameter("file", detected.Value.Schema, true, "The content.", null, Array.Empty<string>(), filepath);
                 extensionMethodParameterList.Add(extensionParameter);
-                extensionMethodParameterList.AddRange(detected.Value.Schema.Properties.Select(p => BuildValidParameter(@interface, p.Key, p.Value, p.Value.Nullable, p.Value.Description, null, Array.Empty<string>(), filepath)));
+                extensionMethodParameterList.AddRange(detected.Value.Schema.Properties.Select(p => BuildValidParameter(p.Key, p.Value, p.Value.Nullable, p.Value.Description, null, Array.Empty<string>(), filepath)));
             }
 
             bodyParameterList.Add(new RestEaseParameter
@@ -525,7 +524,7 @@ internal class InterfaceMapper : BaseMapper
             else
             {
                 description = "An extension method is generated to support the exact parameters.";
-                extensionMethodParameterList.AddRange(detected.Value.Schema.Properties.Select(p => BuildValidParameter(@interface, p.Key, p.Value, p.Value.Nullable, p.Value.Description, null, Array.Empty<string>(), filepath)));
+                extensionMethodParameterList.AddRange(detected.Value.Schema.Properties.Select(p => BuildValidParameter(p.Key, p.Value, p.Value.Nullable, p.Value.Description, null, Array.Empty<string>(), filepath)));
             }
 
             bodyParameterList.Add(new RestEaseParameter
@@ -636,7 +635,7 @@ internal class InterfaceMapper : BaseMapper
                     supportedMediaTypeInfoList.FirstOrDefault(m => m.Key == SupportedContentType.ApplicationJson) ??
                     supportedMediaTypeInfoList.First();
 
-                var requestDetails = MapRequestDetails(@interface, detected, bodyParameterList, extensionMethodParameterList, operation.RequestBody.Description, filepath);
+                var requestDetails = MapRequestDetails(detected, bodyParameterList, extensionMethodParameterList, operation.RequestBody.Description, filepath);
                 requestDetails.ContentTypes = new List<string>();
                 requestDetails.DetectedContentType = SupportedContentType.ApplicationJson;
 
@@ -646,7 +645,7 @@ internal class InterfaceMapper : BaseMapper
             {
                 detected = supportedMediaTypeInfoList.First();
 
-                var requestDetails = MapRequestDetails(@interface, detected, bodyParameterList, extensionMethodParameterList, operation.RequestBody.Description, filepath);
+                var requestDetails = MapRequestDetails(detected, bodyParameterList, extensionMethodParameterList, operation.RequestBody.Description, filepath);
                 requestDetails.ContentTypes = operation.RequestBody.Content.Keys;
                 requestDetails.DetectedContentType = null;
 
@@ -654,7 +653,7 @@ internal class InterfaceMapper : BaseMapper
             }
         }
 
-        return MapRequestDetails(@interface, detected, bodyParameterList, extensionMethodParameterList, operation.RequestBody.Description, filepath);
+        return MapRequestDetails(detected, bodyParameterList, extensionMethodParameterList, operation.RequestBody.Description, filepath);
     }
 
     private string GeneratedRestEaseMethodName(string path, OpenApiOperation operation, string httpMethodPascalCased)
@@ -723,7 +722,6 @@ internal class InterfaceMapper : BaseMapper
     }
 
     private RestEaseParameter BuildValidParameter(
-        RestEaseInterface @interface,
         string identifier,
         OpenApiSchema schema,
         bool required,
@@ -760,8 +758,10 @@ internal class InterfaceMapper : BaseMapper
             attributes.AddRange(extraAttributes);
 
             identifierWithType = _schemaMapper.Map(validIdentifier, string.Empty, schema, true, filepath, CasingType.None);
-
-            identifierWithType = FixReservedType(identifierWithType);
+            identifierWithType = FixReservedType(identifierWithType) with
+            {
+                Name = validIdentifier // We need to overwrite the name in case it's an enum.
+            };
 
             return new RestEaseParameter
             {
@@ -780,9 +780,10 @@ internal class InterfaceMapper : BaseMapper
 
         string extraAttributesBetweenParentheses = extraAttributes.Length == 0 ? string.Empty : $"({string.Join(", ", extraAttributes)})";
         identifierWithType = _schemaMapper.Map(identifier, string.Empty, schema, true, filepath, CasingType.None);
-
-        identifierWithType = FixReservedType(identifierWithType);
-
+        identifierWithType = FixReservedType(identifierWithType) with
+        {
+            Name = validIdentifier // We need to overwrite the name in case it's an enum.
+        };
         return new RestEaseParameter
         {
             ParameterLocation = parameterLocation,

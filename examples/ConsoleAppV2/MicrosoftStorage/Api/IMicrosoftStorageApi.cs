@@ -82,7 +82,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Api
         /// <param name="accountName">The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only.</param>
         /// <param name="expand">May be used to expand the properties within account's properties. By default, data is not included when fetching properties. Currently we only support geoReplicationStats and blobRestoreStatus.</param>
         [Get("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}")]
-        Task<StorageAccount> StorageAccountsGetPropertiesAsync([Path] string subscriptionId, [Path] string resourceGroupName, [Path] string accountName, [Query(Name = "$expand")] string expandConstants);
+        Task<StorageAccount> StorageAccountsGetPropertiesAsync([Path] string subscriptionId, [Path] string resourceGroupName, [Path] string accountName, [Query(Name = "$expand")] string expand);
 
         /// <summary>
         /// The update operation can be used to update the SKU, encryption, access tier, or tags for a storage account. It can also be used to map the account to a custom domain. Only one custom domain is supported per storage account; the replacement/change of custom domain is not supported. In order to replace an old custom domain, the old value must be cleared/unregistered before a new value can be set. The update of multiple properties is supported. This call does not change the storage keys for the account. If you want to change the storage account keys, use the regenerate keys operation. The location and name of the storage account cannot be changed after creation.
@@ -146,7 +146,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Api
         /// <param name="accountName">The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only.</param>
         /// <param name="expand">Specifies type of the key to be listed. Possible value is kerb.</param>
         [Post("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/listKeys")]
-        Task<StorageAccountListKeysResult> StorageAccountsListKeysAsync([Path] string subscriptionId, [Path] string resourceGroupName, [Path] string accountName, [Query(Name = "$expand")] string expandConstants);
+        Task<StorageAccountListKeysResult> StorageAccountsListKeysAsync([Path] string subscriptionId, [Path] string resourceGroupName, [Path] string accountName, [Query(Name = "$expand")] string expand);
 
         /// <summary>
         /// Regenerates one of the access keys or Kerberos keys for the specified storage account.
@@ -231,7 +231,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Api
         /// <param name="accountName">The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only.</param>
         /// <param name="managementPolicyName">The name of the Storage Account Management Policy. It should always be 'default'</param>
         [Get("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/managementPolicies/{managementPolicyName}")]
-        Task<ManagementPolicy> ManagementPoliciesGetAsync([Path] string subscriptionId, [Path] string resourceGroupName, [Path] string accountName, [Path] string managementPolicyNameConstants);
+        Task<ManagementPolicy> ManagementPoliciesGetAsync([Path] string subscriptionId, [Path] string resourceGroupName, [Path] string accountName, [Path] string managementPolicyName);
 
         /// <summary>
         /// Sets the managementpolicy to the specified storage account.
@@ -245,7 +245,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Api
         /// <param name="content">The Get Storage Account ManagementPolicies operation response.</param>
         [Put("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/managementPolicies/{managementPolicyName}")]
         [Header("Content-Type", "application/json")]
-        Task<ManagementPolicy> ManagementPoliciesCreateOrUpdateAsync([Path] string subscriptionId, [Path] string resourceGroupName, [Path] string accountName, [Path] string managementPolicyNameConstants, [Body] ManagementPolicy content);
+        Task<ManagementPolicy> ManagementPoliciesCreateOrUpdateAsync([Path] string subscriptionId, [Path] string resourceGroupName, [Path] string accountName, [Path] string managementPolicyName, [Body] ManagementPolicy content);
 
         /// <summary>
         /// Deletes the managementpolicy associated with the specified storage account.
@@ -257,7 +257,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Api
         /// <param name="accountName">The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only.</param>
         /// <param name="managementPolicyName">The name of the Storage Account Management Policy. It should always be 'default'</param>
         [Delete("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/managementPolicies/{managementPolicyName}")]
-        Task<object> ManagementPoliciesDeleteAsync([Path] string subscriptionId, [Path] string resourceGroupName, [Path] string accountName, [Path] string managementPolicyNameConstants);
+        Task<object> ManagementPoliciesDeleteAsync([Path] string subscriptionId, [Path] string resourceGroupName, [Path] string accountName, [Path] string managementPolicyName);
 
         /// <summary>
         /// Gets the blob inventory policy associated with the specified storage account.
@@ -269,7 +269,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Api
         /// <param name="accountName">The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only.</param>
         /// <param name="blobInventoryPolicyName">The name of the storage account blob inventory policy. It should always be 'default'</param>
         [Get("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/inventoryPolicies/{blobInventoryPolicyName}")]
-        Task<Response<AnyOf<BlobInventoryPolicy, ErrorResponse>>> BlobInventoryPoliciesGetAsync([Path] string subscriptionId, [Path] string resourceGroupName, [Path] string accountName, [Path] string blobInventoryPolicyNameConstants);
+        Task<Response<AnyOf<BlobInventoryPolicy, ErrorResponse>>> BlobInventoryPoliciesGetAsync([Path] string subscriptionId, [Path] string resourceGroupName, [Path] string accountName, [Path] string blobInventoryPolicyName);
 
         /// <summary>
         /// Sets the blob inventory policy to the specified storage account.
@@ -283,7 +283,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Api
         /// <param name="content">The storage account blob inventory policy.</param>
         [Put("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/inventoryPolicies/{blobInventoryPolicyName}")]
         [Header("Content-Type", "application/json")]
-        Task<Response<AnyOf<BlobInventoryPolicy, ErrorResponse>>> BlobInventoryPoliciesCreateOrUpdateAsync([Path] string subscriptionId, [Path] string resourceGroupName, [Path] string accountName, [Path] string blobInventoryPolicyNameConstants, [Body] BlobInventoryPolicy content);
+        Task<Response<AnyOf<BlobInventoryPolicy, ErrorResponse>>> BlobInventoryPoliciesCreateOrUpdateAsync([Path] string subscriptionId, [Path] string resourceGroupName, [Path] string accountName, [Path] string blobInventoryPolicyName, [Body] BlobInventoryPolicy content);
 
         /// <summary>
         /// Deletes the blob inventory policy associated with the specified storage account.
@@ -295,7 +295,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Api
         /// <param name="accountName">The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only.</param>
         /// <param name="blobInventoryPolicyName">The name of the storage account blob inventory policy. It should always be 'default'</param>
         [Delete("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/inventoryPolicies/{blobInventoryPolicyName}")]
-        Task<Response<AnyOf<object, ErrorResponse>>> BlobInventoryPoliciesDeleteAsync([Path] string subscriptionId, [Path] string resourceGroupName, [Path] string accountName, [Path] string blobInventoryPolicyNameConstants);
+        Task<Response<AnyOf<object, ErrorResponse>>> BlobInventoryPoliciesDeleteAsync([Path] string subscriptionId, [Path] string resourceGroupName, [Path] string accountName, [Path] string blobInventoryPolicyName);
 
         /// <summary>
         /// Gets the blob inventory policy associated with the specified storage account.
