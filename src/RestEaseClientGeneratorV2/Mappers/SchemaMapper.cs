@@ -42,7 +42,7 @@ internal class SchemaMapper : BaseMapper
                 return MapBoolean(name, schema);
 
             case SchemaType.File:
-                throw new ArgumentOutOfRangeException();
+                return MapFile(name, schema);
 
             case SchemaType.Integer:
                 return MapInteger(name, schema);
@@ -105,6 +105,15 @@ internal class SchemaMapper : BaseMapper
     private static PropertyDto MapBoolean(string name, OpenApiSchema schema)
     {
         return new PropertyDto("bool", name, schema.Nullable, schema.Description);
+    }
+
+    private PropertyDto MapFile(string name, OpenApiSchema schema)
+    {
+        return Settings.MultipartFormDataFileType switch
+        {
+            MultipartFormDataFileType.Stream => new PropertyDto("System.IO.Stream", name, false, schema.Description),
+            _ => new PropertyDto("byte[]", name, false, schema.Description)
+        };
     }
 
     private static PropertyDto MapInteger(string name, OpenApiSchema schema)

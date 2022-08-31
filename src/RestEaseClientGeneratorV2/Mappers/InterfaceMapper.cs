@@ -45,47 +45,47 @@ internal class InterfaceMapper : BaseMapper
             MapPath(@interface, path.Key, path.Value, filepath);
         }
 
-        //var security = new SecurityMapper(Settings).Map(openApiDocument);
-        //if (security != null && Settings.PreferredSecurityDefinitionType != SecurityDefinitionType.None)
-        //{
-        //    var header = security.Definitions.FirstOrDefault(sd => sd.Type == SecurityDefinitionType.Header);
-        //    var query = security.Definitions.FirstOrDefault(sd => sd.Type == SecurityDefinitionType.Query);
+        var security = new SecurityMapper(Settings).Map(openApiDocument);
+        if (security != null && Settings.PreferredSecurityDefinitionType != SecurityDefinitionType.None)
+        {
+            var header = security.Definitions.FirstOrDefault(sd => sd.Type == SecurityDefinitionType.Header);
+            var query = security.Definitions.FirstOrDefault(sd => sd.Type == SecurityDefinitionType.Query);
 
-        //    if (header != null && Settings.PreferredSecurityDefinitionType is SecurityDefinitionType.Automatic or SecurityDefinitionType.Header)
-        //    {
-        //        @interface.VariableHeaders.Add(new RestEaseInterfaceHeader(header.IdentifierName, header.Name));
-        //    }
-        //    else if (query != null && Settings.PreferredSecurityDefinitionType is SecurityDefinitionType.Automatic or SecurityDefinitionType.Query)
-        //    {
-        //        @interface.ConstantQueryParameters.Add(new RestEaseInterfaceQueryParameter
-        //        {
-        //            Name = query.Name,
-        //            IdentifierWithType = new PropertyDto("string", query.IdentifierName, false)
-        //        });
-        //    }
-        //}
+            if (header != null && Settings.PreferredSecurityDefinitionType is SecurityDefinitionType.Automatic or SecurityDefinitionType.Header)
+            {
+                @interface.VariableHeaders.Add(new RestEaseInterfaceHeader(header.IdentifierName, header.Name));
+            }
+            else if (query != null && Settings.PreferredSecurityDefinitionType is SecurityDefinitionType.Automatic or SecurityDefinitionType.Query)
+            {
+                @interface.ConstantQueryParameters.Add(new RestEaseInterfaceQueryParameter
+                {
+                    Name = query.Name,
+                    IdentifierWithType = new PropertyDto("string", query.IdentifierName, false)
+                });
+            }
+        }
 
         // Select all common optional and mandatory headers from all methods
-        //if (Settings.DefineAllMethodHeadersOnInterface)
-        //{
-        //    var headerParameters = @interface.Methods
-        //        .SelectMany(m => m.RestEaseMethod.Parameters.Where(p => p.ParameterLocation == ParameterLocation.Header))
-        //        .Distinct()
-        //        .ToList();
+        if (Settings.DefineAllMethodHeadersOnInterface)
+        {
+            var headerParameters = @interface.Methods
+                .SelectMany(m => m.RestEaseMethod.Parameters.Where(p => p.ParameterLocation == ParameterLocation.Header))
+                .Distinct()
+                .ToList();
 
-        //    foreach (var parameter in headerParameters)
-        //    {
-        //        foreach (var method in @interface.Methods)
-        //        {
-        //            method.RestEaseMethod.Parameters = method.RestEaseMethod.Parameters.Where(p => p != parameter).ToList();
-        //        }
+            foreach (var parameter in headerParameters)
+            {
+                foreach (var method in @interface.Methods)
+                {
+                    method.RestEaseMethod.Parameters = method.RestEaseMethod.Parameters.Where(p => p != parameter).ToList();
+                }
 
-        //        if (@interface.VariableHeaders.All(v => v.Name != parameter.Identifier))
-        //        {
-        //            @interface.VariableHeaders.Add(new RestEaseInterfaceHeader(parameter.Identifier, parameter.ValidIdentifier));
-        //        }
-        //    }
-        //}
+                if (@interface.VariableHeaders.All(v => v.Name != parameter.Identifier))
+                {
+                    @interface.VariableHeaders.Add(new RestEaseInterfaceHeader(parameter.Identifier, parameter.ValidIdentifier));
+                }
+            }
+        }
 
         if (!Settings.DefineSharedMethodQueryParametersOnInterface)
         {

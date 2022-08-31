@@ -1,12 +1,10 @@
 using Microsoft.OpenApi.Readers;
 using RestEaseClientGenerator.Builders;
-using RestEaseClientGenerator.Extensions;
 using RestEaseClientGenerator.Mappers;
 using RestEaseClientGenerator.Models.External;
 using RestEaseClientGenerator.Models.Internal;
 using RestEaseClientGenerator.Settings;
 using RestEaseClientGenerator.Types;
-using RestEaseClientGenerator.Types.Internal;
 using RestEaseClientGeneratorV2.Mappers;
 
 namespace RestEaseClientGeneratorV2;
@@ -15,62 +13,88 @@ public class GeneratorV2
 {
     public IReadOnlyList<GeneratedFile> Map(GeneratorSettings settings, string path, out OpenApiDiagnostic diagnostic)
     {
-        string name = settings.ApiName.ToValidIdentifier(CasingType.Pascal);
-        //string interfaceName = $"I{name}Api";
-
         var (internalDto, restEaseInterface) = MapInternal(settings, path, out diagnostic);
+
+        if (settings.ConstantQueryParameters != null)
+        {
+            foreach (var queryParameter in restEaseInterface.ConstantQueryParameters)
+            {
+                if (settings.ConstantQueryParameters.TryGetValue(queryParameter.Name, out var value))
+                {
+                    queryParameter.Value = value;
+                }
+            }
+        }
+
+        if (settings.ConstantHeaderParameters != null)
+        {
+            foreach (var header in restEaseInterface.VariableHeaders)
+            {
+                if (settings.ConstantHeaderParameters.TryGetValue(header.Name, out var value))
+                {
+                    header.Value = value;
+                }
+            }
+        }
+
 
         var files = new List<GeneratedFile>();
 
-        // Add Models
-        var modelBuilder = new ModelBuilder(settings, internalDto.Models);
-        if (internalDto.Models.Any())
+        if (settings.GenerationType.HasFlag(GenerationType.Models))
         {
-            var firstModel = internalDto.Models.First();
-            var lastModel = internalDto.Models.Last();
-            files.AddRange(internalDto.Models.Select(model => new GeneratedFile
-            (
-                FileType.Model,
-                settings.ModelsNamespace,
-                $"{model.Name}.cs",
-                model.Name,
-                modelBuilder.Build(model, model == firstModel, model == lastModel)
-            )));
+            // Add Models
+            var modelBuilder = new ModelBuilder(settings, internalDto.Models);
+            if (internalDto.Models.Any())
+            {
+                var firstModel = internalDto.Models.First();
+                var lastModel = internalDto.Models.Last();
+                files.AddRange(internalDto.Models.Select(model => new GeneratedFile
+                (
+                    FileType.Model,
+                    settings.ModelsNamespace,
+                    $"{model.Name}.cs",
+                    model.Name,
+                    modelBuilder.Build(model, model == firstModel, model == lastModel)
+                )));
+            }
+
+            // Add Enums
+            var enumBuilder = new EnumBuilder(settings);
+            if (internalDto.Enums.Any())
+            {
+                var allEnums = internalDto.Enums
+                    .GroupBy(r => r.Name)
+                    .SelectMany(r => r)
+                    .OrderBy(r => r.Name)
+                    .ToList();
+                var firstEnum = allEnums.First();
+                var lastEnum = allEnums.Last();
+
+                files.AddRange(allEnums.Select(@enum => new GeneratedFile
+                (
+                    FileType.Model,
+                    settings.ModelsNamespace,
+                    $"{@enum.Name}.cs",
+                    @enum.Name,
+                    enumBuilder.Build(@enum, @enum == firstEnum, @enum == lastEnum)
+                )));
+            }
         }
 
-        // Add Enums
-        var enumBuilder = new EnumBuilder(settings);
-        if (internalDto.Enums.Any())
+        if (settings.GenerationType.HasFlag(GenerationType.Api))
         {
-            var allEnums = internalDto.Enums
-                .GroupBy(r => r.Name)
-                .SelectMany(r => r)
-                .OrderBy(r => r.Name)
-                .ToList();
-            var firstEnum = allEnums.First();
-            var lastEnum = allEnums.Last();
+            var anyModels = internalDto.Models.Any() || internalDto.Enums.Any();
 
-            files.AddRange(allEnums.Select(@enum => new GeneratedFile
+            // Add Interface
+            files.Add(new GeneratedFile
             (
-                FileType.Model,
-                settings.ModelsNamespace,
-                $"{@enum.Name}.cs",
-                @enum.Name,
-                enumBuilder.Build(@enum, @enum == firstEnum, @enum == lastEnum)
-            )));
+                FileType.Api,
+                settings.ApiNamespace,
+                $"{restEaseInterface.Name}.cs",
+                restEaseInterface.Name,
+                new InterfaceBuilder(settings).Build(restEaseInterface, anyModels)
+            ));
         }
-
-        var anyModels = internalDto.Models.Any() || internalDto.Enums.Any();
-
-        // Add Interface
-        files.Add(new GeneratedFile
-        (
-            FileType.Api,
-            settings.ApiNamespace,
-            $"{restEaseInterface.Name}.cs",
-            restEaseInterface.Name,
-            new InterfaceBuilder(settings).Build(restEaseInterface, anyModels)
-        ));
 
         if (settings.SingleFile)
         {
@@ -98,9 +122,9 @@ public class GeneratorV2
         var document = reader.Read(File.OpenRead(path), out diagnostic);
 
         var dto = new InternalDto(document, new List<ModelDto>(), new List<EnumDto>());
-        
+
         var mapper = new SchemaMapper(settings, dto);
-        
+
         var schemas = document.Components.Schemas.OrderBy(s => s.Key).ToList();
         foreach (var schema in schemas)
         {

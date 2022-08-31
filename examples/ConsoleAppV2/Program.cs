@@ -22,7 +22,6 @@ var storageSettings = new GeneratorSettings
     ApiName = "MicrosoftStorage",
     SingleFile = false,
     PreferredSecurityDefinitionType = SecurityDefinitionType.None,
-    // PreferredEnumType = EnumType.Enum,
     ConstantQueryParameters = new Dictionary<string, string> { { "api-version", "2021-04-01" } }
 };
 
