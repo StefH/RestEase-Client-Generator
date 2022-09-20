@@ -224,6 +224,10 @@ internal class SchemaMapper : BaseMapper
             default:
                 if (schema.Enum != null && schema.Enum.Any())
                 {
+                    if (name == "ExtendedLocationType")
+                    {
+                        int y = 9;
+                    }
                     return MapEnum(typeof(string), name, parentName, schema, path, casingType);
                 }
 
