@@ -7,6 +7,7 @@ var generator = new GeneratorV2();
 
 var settingsStableDiffusionModel = new GeneratorSettings
 {
+    SingleFile = false,
     Namespace = "ConsoleAppV2.Examples.Replicate",
     ApiName = "StableDiffusion"
 };
