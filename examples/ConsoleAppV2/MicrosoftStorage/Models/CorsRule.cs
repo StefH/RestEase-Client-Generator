@@ -21,7 +21,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Models
         /// <summary>
         /// Required if CorsRule element is present. The number of seconds that the client/browser should cache a preflight response.
         /// </summary>
-        public int MaxAgeInSeconds { get; set; }
+        public System.Int32 MaxAgeInSeconds { get; set; }
 
         /// <summary>
         /// Required if CorsRule element is present. A list of response headers to expose to CORS clients.

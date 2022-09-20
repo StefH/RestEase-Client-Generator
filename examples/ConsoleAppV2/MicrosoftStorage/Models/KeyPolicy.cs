@@ -11,6 +11,6 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Models
         /// <summary>
         /// The key expiration period in days.
         /// </summary>
-        public int KeyExpirationPeriodInDays { get; set; }
+        public System.Int32 KeyExpirationPeriodInDays { get; set; }
     }
 }
