@@ -45,7 +45,7 @@ internal class SchemaMapper : BaseMapper
                 return MapFile(name, schema);
 
             case SchemaType.Integer:
-                return MapInteger(name, schema);
+                return MapInteger(name, parentName, schema, path, casingType);
 
             case SchemaType.Number:
                 return MapNumber(name, schema);
@@ -116,13 +116,20 @@ internal class SchemaMapper : BaseMapper
         };
     }
 
-    private static PropertyDto MapInteger(string name, OpenApiSchema schema)
+    private BaseDto MapInteger(string name, string parentName, OpenApiSchema schema, string path, CasingType casingType)
     {
-        return schema.GetSchemaFormat() switch
+        var type = schema.GetSchemaFormat() switch
         {
-            SchemaFormat.Int64 => new PropertyDto("long", name, schema.Nullable, schema.Description),
-            _ => new PropertyDto("int", name, schema.Nullable, schema.Description)
+            SchemaFormat.Int64 => typeof(long),
+            _ => typeof(int)
         };
+
+        if (schema.Enum != null && schema.Enum.Any())
+        {
+            return MapEnum(type, name, parentName, schema, path, casingType);
+        }
+
+        return new PropertyDto(type.ToString(), name, schema.Nullable, schema.Description);
     }
 
     private static PropertyDto MapNumber(string name, OpenApiSchema schema)
@@ -217,23 +224,43 @@ internal class SchemaMapper : BaseMapper
             default:
                 if (schema.Enum != null && schema.Enum.Any())
                 {
-                    return MapEnum(name, parentName, schema, path, casingType);
+                    return MapEnum(typeof(string), name, parentName, schema, path, casingType);
                 }
 
                 return new PropertyDto("string", name, schema.Nullable, schema.Description);
         }
     }
 
-    private EnumDto MapEnum(string name, string parentName, OpenApiSchema schema, string path, CasingType casingType)
+    private EnumDto MapEnum(Type type, string name, string parentName, OpenApiSchema schema, string path, CasingType casingType)
     {
         var enumClassName = EnumHelper.GetEnumClassName(_settings, name, parentName, casingType);
-        var enumValues = schema.Enum.OfType<OpenApiString>()
-            .SelectMany(str => str.Value.Split(new[] { '|' }, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()))
-            .ToList();
 
-        var type = _settings.PreferredEnumType == EnumType.Enum ? enumClassName : "string";
+        List<string> enumValues;
+        switch (Type.GetTypeCode(type))
+        {
+            case TypeCode.UInt32:
+            case TypeCode.Int32:
+                enumValues = schema.Enum.OfType<OpenApiInteger>().Select(x => x.Value.ToString()).ToList();
+                break;
 
-        var @enum = new EnumDto(type, enumClassName, schema.Nullable, enumValues, schema.Description);
+            case TypeCode.UInt64:
+            case TypeCode.Int64:
+                enumValues = schema.Enum.OfType<OpenApiLong>().Select(x => x.Value.ToString()).ToList();
+                break;
+
+            case TypeCode.String:
+                enumValues = schema.Enum.OfType<OpenApiString>()
+                    .SelectMany(str => str.Value.Split(new[] { '|' }, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()))
+                    .ToList();
+                break;
+
+            default:
+                throw new NotSupportedException();
+        }
+
+        var enumType = _settings.PreferredEnumType == EnumType.Enum ? enumClassName : "string";
+
+        var @enum = new EnumDto(enumType, enumClassName, schema.Nullable, enumValues, schema.Description);
 
         _dto.AddEnum(@enum, path);
 
@@ -302,7 +329,7 @@ internal class SchemaMapper : BaseMapper
     private BaseDto MapReference(ReferenceDto referenceId, OpenApiSchema schema, string path)
     {
         // string referenceType = "object";
-        if (schema.GetSchemaType() is SchemaType.Object or SchemaType.Unknown)
+        if (schema.GetSchemaType() is SchemaType.Object or SchemaType.Unknown || schema.Enum is not null)
         {
             return referenceId;
             //if (!referenceId.@internal)

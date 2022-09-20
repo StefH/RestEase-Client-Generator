@@ -5,6 +5,16 @@ using RestEaseClientGeneratorV2;
 
 var generator = new GeneratorV2();
 
+var settingsStableDiffusionModel = new GeneratorSettings
+{
+    Namespace = "ConsoleAppV2.Examples.Replicate",
+    ApiName = "StableDiffusion"
+};
+foreach (var file in generator.Map(settingsStableDiffusionModel, @"Examples\Replicate\stable.json", out var stableDiag))
+{
+    File.WriteAllText($"../../../../ConsoleAppV2/Examples/Replicate/{file.Path}/{file.Name}", file.Content);
+}
+
 //var settings = new GeneratorSettings
 //{
 //    SingleFile = true,

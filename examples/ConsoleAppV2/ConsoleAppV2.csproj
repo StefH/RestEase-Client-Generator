@@ -18,9 +18,14 @@
     <None Update="Examples\Pitane\Pitane.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Examples\Replicate\stable.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Examples\Replicate\Api\" />
+    <Folder Include="Examples\Replicate\Models\" />
     <Folder Include="MicrosoftStorage\Api\" />
     <Folder Include="MicrosoftStorage\Models\" />
   </ItemGroup>

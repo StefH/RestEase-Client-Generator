@@ -132,18 +132,18 @@ public class GeneratorV2
             switch (result)
             {
                 case PropertyDto propertyDto:
-                    if (propertyDto.ArrayItemType != null)
-                    {
-                        // it's an array
-                        throw new ApplicationException();
-                        int vvv = 9;
-                    }
-                    else
-                    {
-                        // it's an (string) enum
-                        int aaa = 0;
-                        throw new ApplicationException();
-                    }
+                    //if (propertyDto.ArrayItemType != null)
+                    //{
+                    //    // it's an array
+                    //    throw new ApplicationException();
+                    //    int vvv = 9;
+                    //}
+                    //else
+                    //{
+                    //    // it's an (string) enum
+                    //    int aaa = 0;
+                    //    throw new ApplicationException();
+                    //}
                     break;
 
                 case ModelDto modelDto:
