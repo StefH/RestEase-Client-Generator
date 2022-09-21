@@ -7,10 +7,11 @@ namespace RestEaseClientGeneratorV2.Utils;
 
 internal static class EnumHelper
 {
-    public static string GetEnumClassName(GeneratorSettings settings, string name, string parentName, CasingType casing)
+    public static (string ClassName, string PostFix) GetEnumClassName(GeneratorSettings settings, string name, string parentName, CasingType casing)
     {
-        var enumNamePostfix = settings.PreferredEnumType == EnumType.Enum ? "EnumType" : "Constants";
-        var x = $"{parentName}{name.Case(casing)}";
-        return $"{x.Case(casing)}{enumNamePostfix}";
+        var postFix = settings.PreferredEnumType == EnumType.Enum ? "EnumType" : "Constants";
+        var className = $"{parentName}{name.Case(casing)}";
+
+        return ($"{className.Case(casing)}", postFix);
     }
 }

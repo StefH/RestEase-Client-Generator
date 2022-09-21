@@ -237,7 +237,7 @@ internal class SchemaMapper : BaseMapper
 
     private EnumDto MapEnum(Type type, string name, string parentName, OpenApiSchema schema, string path, CasingType casingType)
     {
-        var enumClassName = EnumHelper.GetEnumClassName(_settings, name, parentName, casingType);
+        var (enumClassName, enumPostFix) = EnumHelper.GetEnumClassName(_settings, name, parentName, casingType);
 
         List<string> enumValues;
         switch (Type.GetTypeCode(type))
@@ -264,7 +264,7 @@ internal class SchemaMapper : BaseMapper
 
         var enumType = _settings.PreferredEnumType == EnumType.Enum ? enumClassName : "string";
 
-        var @enum = new EnumDto(enumType, enumClassName, schema.Nullable, enumValues, schema.Description);
+        var @enum = new EnumDto(enumType, enumClassName, enumPostFix, schema.Nullable, enumValues, schema.Description);
 
         _dto.AddEnum(@enum, path);
 
@@ -281,7 +281,6 @@ internal class SchemaMapper : BaseMapper
 
         if (schema.Properties.Any())
         {
-            // It's an inline object-model
             var @object = MapObject(name, parentName, schema, isProperty, path, casingType);
             if (@object is ModelDto)
             {
@@ -335,7 +334,9 @@ internal class SchemaMapper : BaseMapper
     private BaseDto MapReference(ReferenceDto referenceId, OpenApiSchema schema, string path)
     {
         // string referenceType = "object";
-        if (schema.GetSchemaType() is SchemaType.Object or SchemaType.Unknown || schema.Enum is not null)
+        var schemaType = schema.GetSchemaType();
+
+        if (schemaType is SchemaType.Object or SchemaType.Unknown)
         {
             return referenceId;
             //if (!referenceId.@internal)
@@ -354,6 +355,10 @@ internal class SchemaMapper : BaseMapper
             //{
             //    int tt = 9;
             //}
+        }
+        else if (schema.Enum is not null)
+        {
+            throw new ArgumentOutOfRangeException();
         }
         else
         {

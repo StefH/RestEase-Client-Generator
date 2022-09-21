@@ -2,7 +2,7 @@ using RestEaseClientGeneratorV2.Models.Internal;
 
 namespace RestEaseClientGenerator.Models.Internal;
 
-internal record EnumDto(string Type, string Name, bool Nullable, IList<string> Values, string? Description = null) : BaseDto(Type, Name, Description)
+internal record EnumDto(string Type, string ClassName, string PostFix, bool Nullable, IList<string> Values, string? Description = null) : BaseDto(Type, string.Concat(ClassName, PostFix), Description)
 {
     public override string ToString()
     {

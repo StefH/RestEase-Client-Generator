@@ -125,7 +125,7 @@ public class GeneratorV2
 
         var mapper = new SchemaMapper(settings, dto);
 
-        var schemas = document.Components.Schemas.OrderBy(s => s.Key).ToList();
+        var schemas = document.Components.Schemas.ToList();
         foreach (var schema in schemas)
         {
             var result = mapper.Map(schema.Key, string.Empty, schema.Value, false, path);

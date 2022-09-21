@@ -50,8 +50,9 @@ internal class ExternalReferenceMapper : BaseMapper
             return new ReferenceDto(foundModel.Name, id, false, foundModel.Description);
         }
 
-        var enumClassName = EnumHelper.GetEnumClassName(_settings, className, string.Empty, casing);
-        var foundEnum = _internalDto.Enums.FirstOrDefault(m => string.Equals(m.Name, enumClassName, StringComparison.InvariantCultureIgnoreCase));
+        var (enumClassName, enumPostFix) = EnumHelper.GetEnumClassName(_settings, className, string.Empty, casing);
+        var fullName = string.Concat(enumClassName, enumPostFix);
+        var foundEnum = _internalDto.Enums.FirstOrDefault(m => string.Equals(m.Name, fullName, StringComparison.InvariantCultureIgnoreCase));
         if (foundEnum is not null)
         {
             return _settings.PreferredEnumType == EnumType.Enum ?
