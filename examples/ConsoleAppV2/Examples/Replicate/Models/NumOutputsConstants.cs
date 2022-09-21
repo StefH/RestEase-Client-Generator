@@ -7,6 +7,6 @@ namespace ConsoleAppV2.Examples.Replicate.Models
     {
         public const int _1 = 1;
 
-      
+        public const int _4 = 4;
     }
 }
