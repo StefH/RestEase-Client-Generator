@@ -135,7 +135,7 @@ internal class SchemaMapper : BaseMapper
             return MapEnum(type, name, parentName, schema, path, casingType);
         }
 
-        return new PropertyDto(type.ToString(), name, schema.Nullable, schema.Description);
+        return new PropertyDto(type.GetFriendlyName(), name, schema.Nullable, schema.Description);
     }
 
     private static PropertyDto MapNumber(string name, OpenApiSchema schema)
@@ -326,9 +326,10 @@ internal class SchemaMapper : BaseMapper
                 }
             }
 
-            var distinctAnyOfTypes = properties.Select(p => p.Type).Distinct().ToList();
-            return new PropertyDto($"AnyOf<{string.Join(", ", distinctAnyOfTypes)}>", name, schema.Nullable, schema.Description);
-            //return new ModelDto(BuildModelType(name), name, properties, schema.Description);
+            //var distinctAnyOfTypes = properties.Select(p => p.Type).Distinct().ToList();
+            //return new PropertyDto($"AnyOf<{string.Join(", ", distinctAnyOfTypes)}>", name, schema.Nullable, schema.Description);
+
+            return new PropertyDto("object", name, schema.Nullable, schema.Description + "TODO : Use AnyOf");
         }
 
         // It's not an inline-object (no properties) and does not have AllOf or AnyOf, so just assume it's an object
@@ -337,7 +338,6 @@ internal class SchemaMapper : BaseMapper
 
     private BaseDto MapReference(ReferenceDto referenceId, OpenApiSchema schema, string path, CasingType casingType)
     {
-        // string referenceType = "object";
         var schemaType = schema.GetSchemaType();
 
         if (schemaType is SchemaType.Object or SchemaType.Unknown)
@@ -363,7 +363,6 @@ internal class SchemaMapper : BaseMapper
 
     private bool TryGetReferenceId(OpenApiSchema schema, string path, CasingType casingType, [NotNullWhen(true)] out ReferenceDto? referenceDto)
     {
-
         switch (schema.Reference)
         {
             case { IsLocal: true }:

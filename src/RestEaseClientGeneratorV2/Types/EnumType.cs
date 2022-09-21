@@ -6,9 +6,9 @@ namespace RestEaseClientGenerator.Types;
 [TypeConverter(typeof(EnumDescriptionConverter))]
 public enum EnumType
 {
-    [Description("string")]
-    String,
+    [Description("ItemType")]
+    ItemType,
 
-    [Description("enum")]
+    [Description("Enum")]
     Enum
 }

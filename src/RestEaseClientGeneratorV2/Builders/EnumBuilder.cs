@@ -61,11 +61,11 @@ internal class EnumBuilder : BaseBuilder
         return builder.ToString();
     }
 
-    private string BuildAsString(EnumDto restEaseEnum, bool isFirst, bool isLast)
+    private string BuildAsString(EnumDto enumDto, bool isFirst, bool isLast)
     {
         var builder = new StringBuilder();
 
-        var values = restEaseEnum.Values.Select(value => new
+        var values = enumDto.Values.Select(value => new
         {
             name = IdentifierUtils.CreateValidEnumMember(value),
             value
@@ -77,16 +77,16 @@ internal class EnumBuilder : BaseBuilder
             builder.AppendLine("{");
         }
 
-        if (!string.IsNullOrEmpty(restEaseEnum.Description))
+        if (!string.IsNullOrEmpty(enumDto.Description))
         {
             builder.AppendLine("    /// <summary>");
-            builder.AppendLine($"    /// {restEaseEnum.Description.StripHtml()}");
+            builder.AppendLine($"    /// {enumDto.Description.StripHtml()}");
             builder.AppendLine("    /// </summary>");
         }
 
-        builder.AppendLine($"    public static class {restEaseEnum.Name}");
+        builder.AppendLine($"    public static class {enumDto.Name}");
         builder.AppendLine("    {");
-        builder.AppendLine(string.Join("\r\n\r\n", values.Select(x => $"        public const string {x.name} = \"{x.value}\";")));
+        builder.AppendLine(string.Join("\r\n\r\n", values.Select(x => $"        public const {enumDto.Type} {x.name} = \"{x.value}\";")));
         builder.AppendLine("    }");
 
         if (!Settings.SingleFile || isLast)

@@ -35,8 +35,8 @@ public class GeneratorSettings
     public GenerationType GenerationType { get; set; } = GenerationType.Both;
 
     [DisplayName("Preferred Enum Type to generate.")]
-    [Description("Preferred Enum Type to generate. The default value is 'string'.")]
-    public EnumType PreferredEnumType { get; set; } = EnumType.String;
+    [Description("Preferred Enum Type to generate. Default the type of the item is used.")]
+    public EnumType PreferredEnumType { get; set; } = EnumType.ItemType;
     #endregion
 
     #region Models
@@ -62,9 +62,10 @@ public class GeneratorSettings
     #endregion
 
     #region Interface
+
     [DisplayName("Api FileName")]
     [Description("The base FileName of the generated .cs files.")]
-    public string ApiName { get; set; }
+    public string ApiName { get; set; } = null!;
 
     [DisplayName("Method ReturnType")]
     [Description("The ReturnType to use for the methods. The default value is 'T'. For more details see https://github.com/canton7/RestEase#return-types.")]

@@ -16,6 +16,6 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Models
         /// <summary>
         /// Indicates the number of days that the deleted item should be retained. The minimum specified value can be 1 and the maximum value can be 365.
         /// </summary>
-        public System.Int32 Days { get; set; }
+        public int Days { get; set; }
     }
 }
