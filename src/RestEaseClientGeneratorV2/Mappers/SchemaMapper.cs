@@ -242,12 +242,10 @@ internal class SchemaMapper : BaseMapper
         List<string> enumValues;
         switch (Type.GetTypeCode(type))
         {
-            case TypeCode.UInt32:
             case TypeCode.Int32:
                 enumValues = schema.Enum.OfType<OpenApiInteger>().Select(x => x.Value.ToString()).ToList();
                 break;
 
-            case TypeCode.UInt64:
             case TypeCode.Int64:
                 enumValues = schema.Enum.OfType<OpenApiLong>().Select(x => x.Value.ToString()).ToList();
                 break;
@@ -262,7 +260,7 @@ internal class SchemaMapper : BaseMapper
                 throw new NotSupportedException();
         }
 
-        var enumType = _settings.PreferredEnumType == EnumType.Enum ? enumClassName : "string";
+        var enumType = _settings.PreferredEnumType == EnumType.Enum ? enumClassName : type.ToString();
 
         var @enum = new EnumDto(enumType, enumClassName, enumPostFix, schema.Nullable, enumValues, schema.Description);
 
