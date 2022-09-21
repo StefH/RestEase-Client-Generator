@@ -11,7 +11,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Models
         /// <summary>
         /// The private endpoint connection status.
         /// </summary>
-        public int Status { get; set; }
+        public string Status { get; set; }
 
         /// <summary>
         /// The reason for approval/rejection of the connection.

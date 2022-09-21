@@ -29,9 +29,14 @@ internal class SchemaMapper : BaseMapper
     {
         var name = key.Case(casingType);
 
+        if (key == "PrivateEndpointConnectionProperties")
+        {
+            int c = 9;
+        }
+
         if (isProperty && TryGetReferenceId(schema, path, casingType, out var referenceId))
         {
-            return MapReference(referenceId, schema, path);
+            return MapReference(referenceId, schema, path, casingType);
         }
 
         switch (schema.GetSchemaType())
@@ -190,7 +195,7 @@ internal class SchemaMapper : BaseMapper
             {
                 if (TryGetReferenceId(extends, path, casingType, out var referenceId))
                 {
-                    extendList.Add(MapReference(referenceId, schema, path));
+                    extendList.Add(MapReference(referenceId, schema, path, casingType));
                 }
             }
 
@@ -275,7 +280,7 @@ internal class SchemaMapper : BaseMapper
         if (isProperty && TryGetReferenceId(schema, path, casingType, out var referenceId))
         {
             // It's a reference
-            return MapReference(referenceId, schema, path);
+            return MapReference(referenceId, schema, path, casingType);
         }
 
         if (schema.Properties.Any())
@@ -330,7 +335,7 @@ internal class SchemaMapper : BaseMapper
         return new PropertyDto("object", name, schema.Nullable, schema.Description);
     }
 
-    private BaseDto MapReference(ReferenceDto referenceId, OpenApiSchema schema, string path)
+    private BaseDto MapReference(ReferenceDto referenceId, OpenApiSchema schema, string path, CasingType casingType)
     {
         // string referenceType = "object";
         var schemaType = schema.GetSchemaType();
@@ -342,11 +347,10 @@ internal class SchemaMapper : BaseMapper
 
         if (schema.Enum is not null)
         {
-            return referenceId;
+            return Map(referenceId.Id, string.Empty, schema, false, path, casingType);
         }
 
-        var result = Map(string.Empty, string.Empty, schema, false, path);
-        return result;
+        return Map(referenceId.Id, string.Empty, schema, false, path, casingType);
     }
 
     private void AddToExtraModels(ModelDto model, ICollection<ModelDto> extraModels)

@@ -21,6 +21,6 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Models
         /// <summary>
         /// The current provisioning state.
         /// </summary>
-        public int ProvisioningState { get; set; }
+        public string ProvisioningState { get; set; }
     }
 }

@@ -16,6 +16,6 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Models
         /// <summary>
         /// The type of extendedLocation.
         /// </summary>
-        public int Type { get; set; }
+        public string Type { get; set; }
     }
 }
