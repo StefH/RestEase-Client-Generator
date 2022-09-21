@@ -8,6 +8,7 @@ using RestEaseClientGenerator.Settings;
 using RestEaseClientGenerator.Types;
 using RestEaseClientGenerator.Types.Internal;
 using RestEaseClientGenerator.Utils;
+using RestEaseClientGeneratorV2.Extensions;
 using RestEaseClientGeneratorV2.Models.Internal;
 using RestEaseClientGeneratorV2.Utils;
 
@@ -260,7 +261,7 @@ internal class SchemaMapper : BaseMapper
                 throw new NotSupportedException();
         }
 
-        var enumType = _settings.PreferredEnumType == EnumType.Enum ? enumClassName : type.ToString();
+        var enumType = _settings.PreferredEnumType == EnumType.Enum ? enumClassName : type.GetFriendlyName();
 
         var @enum = new EnumDto(enumType, enumClassName, enumPostFix, schema.Nullable, enumValues, schema.Description);
 
