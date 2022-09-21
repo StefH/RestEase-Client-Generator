@@ -1,4 +1,6 @@
+using System.Reflection;
 using System.Text;
+using Newtonsoft.Json;
 using RestEaseClientGenerator.Extensions;
 using RestEaseClientGenerator.Models.Internal;
 using RestEaseClientGenerator.Settings;
@@ -86,7 +88,7 @@ internal class EnumBuilder : BaseBuilder
 
         builder.AppendLine($"    public static class {enumDto.Name}");
         builder.AppendLine("    {");
-        builder.AppendLine(string.Join("\r\n\r\n", values.Select(x => $"        public const {enumDto.Type} {x.name} = \"{x.value}\";")));
+        builder.AppendLine(string.Join("\r\n\r\n", values.Select(x => $"        public const {enumDto.Type} {x.name} = {ToDefinedValue(x.value)};")));
         builder.AppendLine("    }");
 
         if (!Settings.SingleFile || isLast)
@@ -95,5 +97,10 @@ internal class EnumBuilder : BaseBuilder
         }
 
         return builder.ToString();
+    }
+
+    private static string ToDefinedValue(object value)
+    {
+        return JsonConvert.SerializeObject(value);
     }
 }

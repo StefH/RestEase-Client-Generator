@@ -154,13 +154,14 @@ internal static class IdentifierUtils
         return casedIdentifier.Replace(" ", string.Empty);
     }
 
-    public static string CreateValidEnumMember(string value)
+    public static string CreateValidEnumMember(object value)
     {
+        var valueAsString = value.ToString();
         foreach (var special in Specials)
         {
-            value = value.Replace(special.Key, special.Value);
+            valueAsString = valueAsString.Replace(special.Key, special.Value);
         }
 
-        return CreateValidIdentifier(value, CasingType.Pascal);
+        return CreateValidIdentifier(valueAsString, CasingType.Pascal);
     }
 }

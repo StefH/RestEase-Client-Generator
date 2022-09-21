@@ -245,20 +245,20 @@ internal class SchemaMapper : BaseMapper
     {
         var (enumClassName, enumPostFix) = EnumHelper.GetEnumClassName(_settings, name, parentName, casingType);
 
-        List<string> enumValues;
+        List<object> enumValues;
         switch (Type.GetTypeCode(type))
         {
             case TypeCode.Int32:
-                enumValues = schema.Enum.OfType<OpenApiInteger>().Select(x => x.Value.ToString()).ToList();
+                enumValues = schema.Enum.OfType<OpenApiInteger>().Select(x => (object)x.Value).ToList();
                 break;
 
             case TypeCode.Int64:
-                enumValues = schema.Enum.OfType<OpenApiLong>().Select(x => x.Value.ToString()).ToList();
+                enumValues = schema.Enum.OfType<OpenApiLong>().Select(x => (object)x.Value).ToList();
                 break;
 
             case TypeCode.String:
                 enumValues = schema.Enum.OfType<OpenApiString>()
-                    .SelectMany(str => str.Value.Split(new[] { '|' }, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()))
+                    .SelectMany(str => str.Value.Split(new[] { '|' }, StringSplitOptions.RemoveEmptyEntries).Select(x => (object)x.Trim()))
                     .ToList();
                 break;
 
