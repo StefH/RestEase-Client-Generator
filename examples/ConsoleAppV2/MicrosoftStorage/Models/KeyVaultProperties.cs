@@ -3,16 +3,34 @@ using System.Collections.Generic;
 
 namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Models
 {
+    /// <summary>
+    /// Properties of key vault.
+    /// </summary>
     public class KeyVaultProperties
     {
         /// <summary>
-        /// Key vault uri to access the encryption key.
+        /// The name of KeyVault key.
         /// </summary>
-        public string KeyIdentifier { get; set; }
+        public string Keyname { get; set; }
 
         /// <summary>
-        /// The client ID of the identity which will be used to access key vault.
+        /// The version of KeyVault key.
         /// </summary>
-        public string Identity { get; set; }
+        public string Keyversion { get; set; }
+
+        /// <summary>
+        /// The Uri of KeyVault.
+        /// </summary>
+        public string Keyvaulturi { get; set; }
+
+        /// <summary>
+        /// The object identifier of the current versioned Key Vault Key in use.
+        /// </summary>
+        public string CurrentVersionedKeyIdentifier { get; set; }
+
+        /// <summary>
+        /// Timestamp of last rotation of the Key Vault Key.
+        /// </summary>
+        public DateTime LastKeyRotationTimestamp { get; set; }
     }
 }

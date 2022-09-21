@@ -9,7 +9,7 @@ namespace MicrosoftExampleConsoleApp.MicrosoftStorage.Models
     public class StorageAccountUpdateParameters
     {
         /// <summary>
-        /// The resource model definition representing SKU
+        /// The SKU of the storage account.
         /// </summary>
         public Sku Sku { get; set; }
 
