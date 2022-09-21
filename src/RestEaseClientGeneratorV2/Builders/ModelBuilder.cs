@@ -96,7 +96,11 @@ internal class ModelBuilder : BaseBuilder
                 builder.AppendLine("        /// </summary>");
             }
 
-            //string propertyType;
+            string propertyType;
+            //if (property is EnumDto @enum)
+            //{
+
+            //}
             //if (property.ArrayItemType == null)
             //{
             //    propertyType = property.Type;

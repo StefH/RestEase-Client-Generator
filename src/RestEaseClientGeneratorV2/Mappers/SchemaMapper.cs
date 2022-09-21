@@ -337,45 +337,15 @@ internal class SchemaMapper : BaseMapper
         if (schemaType is SchemaType.Object or SchemaType.Unknown)
         {
             return referenceId;
-            //if (!referenceId.@internal)
-            //{
-            //    return referenceId;
-            //}
-
-            //if (schema.Properties.Any() || schema.GetAllOfAndAnyOf().Any())
-            //{
-            //    return referenceId; //referenceType = FixReservedType(referenceId.ToPascalCase());
-            //}
-
-            //throw new InvalidOperationException();
-
-            //if (referenceType == "Requirements")
-            //{
-            //    int tt = 9;
-            //}
         }
-        else if (schema.Enum is not null)
+
+        if (schema.Enum is not null)
         {
-            throw new ArgumentOutOfRangeException();
+            return referenceId;
         }
-        else
-        {
-            var result = Map(string.Empty, string.Empty, schema, false, path);
-            return result;
-            //var referenceType = result.Type;
 
-            //if (referenceType == "Requirements")
-            //{
-            //    int tt = 9;
-            //}
-
-            //if (referenceType == "Sku")
-            //{
-            //    int tt = 9;
-            //}
-
-            //return new ReferenceDto(referenceType, false, schema.Description);
-        }
+        var result = Map(string.Empty, string.Empty, schema, false, path);
+        return result;
     }
 
     private void AddToExtraModels(ModelDto model, ICollection<ModelDto> extraModels)
