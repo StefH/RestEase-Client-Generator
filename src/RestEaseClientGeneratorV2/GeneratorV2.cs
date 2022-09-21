@@ -107,7 +107,7 @@ public class GeneratorV2
             (
                 FileType.ApiAndModels,
                 string.Empty,
-                $"{restEaseInterface}.cs",
+                $"{restEaseInterface.Name}.cs",
                 restEaseInterface.Name,
                 string.Join("\r\n", content)
             )};
