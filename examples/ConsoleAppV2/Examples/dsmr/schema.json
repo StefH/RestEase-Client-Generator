@@ -1,0 +1,1833 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "DSMR-reader API",
+    "version": "v5.9",
+    "description": "# Postman collection\n- Download current collection [here](/static/dsmr_frontend/postman/collection.json).\n- Download current variables [here](/static/dsmr_frontend/postman/variables.json)."
+  },
+  "paths": {
+    "/api/v2/datalogger/dsmrreading": {
+      "get": {
+        "operationId": "DSMR readings: List",
+        "description": "Retrieves any readings stored. The readings are either constructed from incoming telegrams or were created using\nthis API.\n\n### Query parameters\n- *Only mandatory when explicitly marked with the **required** label. Can be omitted otherwise.*\n- ``limit`` / ``offset``: Pagination for iterating when having large result sets.\n- ``ordering``: Order by either ``timestamp`` (ASC) or ``-timestamp`` (DESC).\n- ``timestamp__gte`` / ``timestamp__lte``: Can be used for generic filtering the results     returned by reading timestamp with the given datetime as placeholder `X` below. Note the ``Y-m-d HH:MM:SS``     format for `X`, in the local timezone. **Should be changed to ISO 8601 some day, supporting timezone hints.**\n- ⚠️ **Deprecated** ~``timestamp``: Reading timestamp must **exactly match** the given value (``Y-m-d HH:MM:SS``).~\n\n### Changes\n- Deprecated the ``timestamp`` query parameter in DSMR-reader v5.3, will be dropped completely in v6.x\n\n### Request samples\n```\n// Fetching the latest reading created.\nGET /api/v2/consumption/energy-supplier-prices?ordering=-timestamp&limit=1\n\n// Get all readings of a specific \"day\", presuming that day is 15 January 2022.\nGET /api/v2/datalogger/dsmrreading?timestamp__gte=2022-01-15 00:00:00&timestamp__lte=2022-01-15 23:59:59\n```",
+        "parameters": [
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "Number of results to return per page.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "offset",
+            "required": false,
+            "in": "query",
+            "description": "The initial index from which to return the results.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "ordering",
+            "required": false,
+            "in": "query",
+            "description": "Which field to use when ordering the results.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "timestamp",
+            "required": false,
+            "in": "query",
+            "description": "timestamp",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "timestamp__gte",
+            "required": false,
+            "in": "query",
+            "description": "Reading timestamp must be after or equal to `X`",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "timestamp__lte",
+            "required": false,
+            "in": "query",
+            "description": "Reading timestamp must be before or equal to `X`",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "integer",
+                      "example": 123
+                    },
+                    "next": {
+                      "type": "string",
+                      "nullable": true,
+                      "format": "uri",
+                      "example": "http://api.example.org/accounts/?offset=400&limit=100"
+                    },
+                    "previous": {
+                      "type": "string",
+                      "nullable": true,
+                      "format": "uri",
+                      "example": "http://api.example.org/accounts/?offset=200&limit=100"
+                    },
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/DsmrReading"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "api"
+        ]
+      },
+      "post": {
+        "operationId": "DSMR readings: Create",
+        "description": "Creates a reading from separate values, omitting the need for the original telegram.\n\n### Notes\n- This requires you to **manually parse** any telegrams, e.g. when using ``dsmr_parser`` or a similar tool.\n- Readings are processed *simultaneously* by the background process. So inserting readings retroactively *might*\ncause undesired results due to side effects. *If your stats are not correctly after regenerating, see below,\ntry it again while having your datalogger disabled.*\n- Inserting historic data might require you to **delete all aggregated data** as well, using:\n\n```\nsudo su - postgres\npsql dsmrreader\n\ntruncate dsmr_consumption_electricityconsumption;\ntruncate dsmr_consumption_gasconsumption;\ntruncate dsmr_stats_daystatistics;\ntruncate dsmr_stats_hourstatistics;\n\n// This query can take a long time!\nupdate dsmr_datalogger_dsmrreading set processed = False;\n\n// This will process all readings again, from the very first start, and aggregate them once more.\n// It might take a long time, depending on your total reading count stored and hardware used.\n```",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DsmrReading"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/DsmrReading"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/DsmrReading"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DsmrReading"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "api"
+        ]
+      }
+    },
+    "/api/v2/datalogger/meter-statistics": {
+      "get": {
+        "operationId": "Meter statistics: Get",
+        "description": "Retrieve meter statistics extracted by the datalogger. Also contains the latest telegram read for convenience.\n\n### Query parameters\n- *Only mandatory when explicitly marked with the **required** label. Can be omitted otherwise.*\n- Do **not use** ``ordering``, as it's a faulty query parameter that should not be there nor works at all!",
+        "parameters": [
+          {
+            "name": "ordering",
+            "required": false,
+            "in": "query",
+            "description": "Which field to use when ordering the results.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MeterStatistics"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "api"
+        ]
+      },
+      "patch": {
+        "operationId": "Meter statistics: Partial update",
+        "description": "Manually update any meter statistics fields.\n\n### Notes\n- Only use this when you're **not** using the built-in datalogger **nor** the v1 telegram API.     *It should auto-update otherwise!*",
+        "parameters": [
+          {
+            "name": "ordering",
+            "required": false,
+            "in": "query",
+            "description": "Which field to use when ordering the results.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MeterStatistics"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/MeterStatistics"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/MeterStatistics"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MeterStatistics"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "api"
+        ]
+      }
+    },
+    "/api/v2/consumption/energy-supplier-prices": {
+      "get": {
+        "operationId": "Energy supplier prices: List",
+        "description": "Retrieves the energy supplier prices (contracts).\n\n### Notes\n- These are the contracts manually entered in DSMR-reader's admin interface. Can be used for manual\ncalculations.\n\n> *E.g. fetching any contracts active today, then fetch all day statistics filtered by the contract's start/end,\nfinally summing up the total consumption for that contract. Similar to DSMR-reader's GUI regarding contact totals.*\n\n### Query parameters\n- *Only mandatory when explicitly marked with the **required** label. Can be omitted otherwise.*\n- ``limit`` / ``offset``: Optional pagination. Probably not needed unless you have *a lot* of contracts.\n- ``ordering``: Order by either ``start`` (ASC), ``-start`` (DESC), ``end`` (ASC) or ``-end`` (DESC).\n- ``start__gte`` / ``start__lte`` / ``end__gte`` / ``end__lte``: Can be used for generic filtering the results     returned by contracts' start/end with the given date as placeholder `X` below. Note the ``Y-m-d`` format for `X`.\n\n### Changes\n- This endpoint was added in DSMR-reader v5.3\n\n### Request samples\n```\n// Get the most recent contract, based on its start date.\nGET /api/v2/consumption/energy-supplier-prices?ordering=-start&limit=1\n\n// Get all contracts active/applying to \"today\", presuming \"today\" is 15 June 2022.\nGET /api/v2/consumption/energy-supplier-prices?start__lte=2022-06-15&end__gte=2022-06-15\n```",
+        "parameters": [
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "Number of results to return per page.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "offset",
+            "required": false,
+            "in": "query",
+            "description": "The initial index from which to return the results.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "ordering",
+            "required": false,
+            "in": "query",
+            "description": "Which field to use when ordering the results.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "start__gte",
+            "required": false,
+            "in": "query",
+            "description": "Contract start date must be after or equal to `X`",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "start__lte",
+            "required": false,
+            "in": "query",
+            "description": "Contract start date must be before or equal to `X`",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "end__gte",
+            "required": false,
+            "in": "query",
+            "description": "Contract end date must be after or equal to `X`",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "end__lte",
+            "required": false,
+            "in": "query",
+            "description": "Contract end date must be before or equal to `X`",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "integer",
+                      "example": 123
+                    },
+                    "next": {
+                      "type": "string",
+                      "nullable": true,
+                      "format": "uri",
+                      "example": "http://api.example.org/accounts/?offset=400&limit=100"
+                    },
+                    "previous": {
+                      "type": "string",
+                      "nullable": true,
+                      "format": "uri",
+                      "example": "http://api.example.org/accounts/?offset=200&limit=100"
+                    },
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/EnergySupplierPrice"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "api"
+        ]
+      }
+    },
+    "/api/v2/consumption/electricity": {
+      "get": {
+        "operationId": "Electricity consumption: List",
+        "description": "Retrieves any data regarding electricity consumption. This is based on the readings processed.\n\n### Query parameters\n- *Only mandatory when explicitly marked with the **required** label. Can be omitted otherwise.*\n- ``limit`` / ``offset``: Pagination for iterating when having large result sets.\n- ``ordering``: Order by either ``read_at`` (ASC) or ``-read_at`` (DESC).\n- ``read_at__gte`` / ``read_at__lte``: Can be used for generic filtering the results     returned by consumption timestamp with the given datetime as placeholder `X` below. Note the ``Y-m-d HH:MM:SS``     format for `X`, in the local timezone. **Should be changed to ISO 8601 some day, supporting timezone hints.**\n- ⚠️ **Deprecated** ~`read_at`: Consumption timestamp must **exactly match** the given value (``Y-m-d HH:MM:SS``).~\n\n### Changes\n- Deprecated the ``read_at`` query parameter in DSMR-reader v5.3, will be dropped completely in v6.x",
+        "parameters": [
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "Number of results to return per page.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "offset",
+            "required": false,
+            "in": "query",
+            "description": "The initial index from which to return the results.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "ordering",
+            "required": false,
+            "in": "query",
+            "description": "Which field to use when ordering the results.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "read_at",
+            "required": false,
+            "in": "query",
+            "description": "read_at",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "read_at__gte",
+            "required": false,
+            "in": "query",
+            "description": "Consumption timestamp must be after or equal to `X`",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "read_at__lte",
+            "required": false,
+            "in": "query",
+            "description": "Consumption timestamp must be before or equal to `X`",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "integer",
+                      "example": 123
+                    },
+                    "next": {
+                      "type": "string",
+                      "nullable": true,
+                      "format": "uri",
+                      "example": "http://api.example.org/accounts/?offset=400&limit=100"
+                    },
+                    "previous": {
+                      "type": "string",
+                      "nullable": true,
+                      "format": "uri",
+                      "example": "http://api.example.org/accounts/?offset=200&limit=100"
+                    },
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ElectricityConsumption"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "api"
+        ]
+      }
+    },
+    "/api/v2/consumption/quarter-hour-peak-electricity": {
+      "get": {
+        "operationId": "Quarter-hour peak electricity consumption: List",
+        "description": "Retrieves any data regarding quarter-hour peak electricity consumption. This is based on the readings processed.\n\n### Query parameters\n- *Only mandatory when explicitly marked with the **required** label. Can be omitted otherwise.*\n- ``limit`` / ``offset``: Pagination for iterating when having large result sets.\n- ``ordering``: Order by either ``read_at_start`` (ASC), ``-read_at_start`` (DESC), ``average_delivered`` (ASC) or     ``-average_delivered`` (DESC).\n- ``read_at_start__gte`` / ``read_at_start__lte``: Can be used for generic filtering the results     returned by quarter-hour peak electricity START timestamp with the given datetime as placeholder `X` below.     Note the ``Y-m-d HH:MM:SS`` format for `X`, in the local timezone.     **Should be changed to ISO 8601 some day, supporting timezone hints.**\n- ``average_delivered__gte`` / ``average_delivered__lte``: Can be used for generic filtering the results     returned by the average calculated (In kW).",
+        "parameters": [
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "Number of results to return per page.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "offset",
+            "required": false,
+            "in": "query",
+            "description": "The initial index from which to return the results.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "ordering",
+            "required": false,
+            "in": "query",
+            "description": "Which field to use when ordering the results.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "read_at_start__gte",
+            "required": false,
+            "in": "query",
+            "description": "Quarter-hour peak consumption start timestamp must be after or equal to `X`",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "read_at_start__lte",
+            "required": false,
+            "in": "query",
+            "description": "Quarter-hour peak consumption start timestamp must be before or equal to `X`",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "average_delivered__gte",
+            "required": false,
+            "in": "query",
+            "description": "Quarter-hour peak consumption average must be higher or equal to `X`",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "average_delivered__lte",
+            "required": false,
+            "in": "query",
+            "description": "Quarter-hour peak consumption average must be lower or equal to `X`",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "integer",
+                      "example": 123
+                    },
+                    "next": {
+                      "type": "string",
+                      "nullable": true,
+                      "format": "uri",
+                      "example": "http://api.example.org/accounts/?offset=400&limit=100"
+                    },
+                    "previous": {
+                      "type": "string",
+                      "nullable": true,
+                      "format": "uri",
+                      "example": "http://api.example.org/accounts/?offset=200&limit=100"
+                    },
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/QuarterHourPeakElectricityConsumption"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "api"
+        ]
+      }
+    },
+    "/api/v2/consumption/electricity-live": {
+      "get": {
+        "operationId": "Electricity consumption: Live",
+        "description": "Returns the live electricity consumption, containing the same data as the Dashboard header.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {}
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "api"
+        ]
+      }
+    },
+    "/api/v2/consumption/gas": {
+      "get": {
+        "operationId": "Gas consumption: List",
+        "description": "Retrieves any data regarding gas consumption. This is based on the readings processed.\n\n### Query parameters\n- *Only mandatory when explicitly marked with the **required** label. Can be omitted otherwise.*\n- ``limit`` / ``offset``: Pagination for iterating when having large result sets.\n- ``ordering``: Order by either ``read_at`` (ASC) or ``-read_at`` (DESC).\n- ``read_at__gte`` / ``read_at__lte``: Can be used for generic filtering the results     returned by consumption timestamp with the given datetime as placeholder `X` below. Note the ``Y-m-d HH:MM:SS``     format for `X`, in the local timezone. **Should be changed to ISO 8601 some day, supporting timezone hints.**\n- ⚠️ **Deprecated** ~`read_at`: Consumption timestamp must **exactly match** the given value (``Y-m-d HH:MM:SS``).~\n\n### Changes\n- Deprecated the ``read_at`` query parameter in DSMR-reader v5.3, will be dropped completely in v6.x",
+        "parameters": [
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "Number of results to return per page.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "offset",
+            "required": false,
+            "in": "query",
+            "description": "The initial index from which to return the results.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "ordering",
+            "required": false,
+            "in": "query",
+            "description": "Which field to use when ordering the results.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "read_at",
+            "required": false,
+            "in": "query",
+            "description": "read_at",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "read_at__gte",
+            "required": false,
+            "in": "query",
+            "description": "Consumption timestamp must be after or equal to `X`",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "read_at__lte",
+            "required": false,
+            "in": "query",
+            "description": "Consumption timestamp must be before or equal to `X`",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "integer",
+                      "example": 123
+                    },
+                    "next": {
+                      "type": "string",
+                      "nullable": true,
+                      "format": "uri",
+                      "example": "http://api.example.org/accounts/?offset=400&limit=100"
+                    },
+                    "previous": {
+                      "type": "string",
+                      "nullable": true,
+                      "format": "uri",
+                      "example": "http://api.example.org/accounts/?offset=200&limit=100"
+                    },
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/GasConsumption"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "api"
+        ]
+      }
+    },
+    "/api/v2/consumption/gas-live": {
+      "get": {
+        "operationId": "Gas consumption: Live",
+        "description": "Returns the latest gas consumption.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {}
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "api"
+        ]
+      }
+    },
+    "/api/v2/consumption/today": {
+      "get": {
+        "operationId": "Today's consumption: Get",
+        "description": "Returns the consumption of the current day so far.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {}
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "api"
+        ]
+      }
+    },
+    "/api/v2/statistics/day": {
+      "get": {
+        "operationId": "Day statistics: List",
+        "description": "Retrieves any aggregated day statistics, as displayed in the Archive.\n\n### Notes\n- These are automatically generated a few hours after midnight, based on the consumption data.\n\n### Query parameters\n- *Only mandatory when explicitly marked with the **required** label. Can be omitted otherwise.*\n- ``limit`` / ``offset``: Pagination for iterating when having large result sets.\n- ``ordering``: Order by either ``day`` (ASC) or ``-day`` (DESC).\n- ``day__gte`` / ``day__lte``: Can be used for generic filtering the results     returned by dates with the given date as placeholder `X` below.  ote the ``Y-m-d`` format for `X`.\n- ⚠️ **Deprecated** ~`day`: Date must **exactly match** the given value (``Y-m-d HH:MM:SS``).~\n\n### Changes\n- Deprecated the ``day`` query parameter in DSMR-reader v5.3, will be dropped completely in v6.x",
+        "parameters": [
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "Number of results to return per page.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "offset",
+            "required": false,
+            "in": "query",
+            "description": "The initial index from which to return the results.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "ordering",
+            "required": false,
+            "in": "query",
+            "description": "Which field to use when ordering the results.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "day",
+            "required": false,
+            "in": "query",
+            "description": "day",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "day__gte",
+            "required": false,
+            "in": "query",
+            "description": "Date must be after or equal to `X`",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "day__lte",
+            "required": false,
+            "in": "query",
+            "description": "Date must be before or equal to `X`",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "integer",
+                      "example": 123
+                    },
+                    "next": {
+                      "type": "string",
+                      "nullable": true,
+                      "format": "uri",
+                      "example": "http://api.example.org/accounts/?offset=400&limit=100"
+                    },
+                    "previous": {
+                      "type": "string",
+                      "nullable": true,
+                      "format": "uri",
+                      "example": "http://api.example.org/accounts/?offset=200&limit=100"
+                    },
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/DayStatistics"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "api"
+        ]
+      },
+      "post": {
+        "operationId": "Day statistics: Create",
+        "description": "Creates statistics for a day, overriding any DSMR-reader internals.\n\n### Notes\n- Should only be used to import historic data.",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DayStatistics"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/DayStatistics"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/DayStatistics"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DayStatistics"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "api"
+        ]
+      }
+    },
+    "/api/v2/statistics/hour": {
+      "get": {
+        "operationId": "Hour statistics: List",
+        "description": "Retrieves any aggregated hour statistics, as displayed in the Archive.\n\n### Notes\n- These are automatically generated a few hours after midnight, based on the consumption data.\n\n### Query parameters\n- *Only mandatory when explicitly marked with the **required** label. Can be omitted otherwise.*\n- ``limit`` / ``offset``: Pagination for iterating when having large result sets.\n- ``ordering``: Order by either ``hour_start`` (ASC) or ``-hour_start`` (DESC).\n- ``hour_start__gte`` / ``hour_start__lte``: Can be used for generic filtering the results     returned by hour start timestamp with the given datetime as placeholder `X` below. Note the ``Y-m-d HH:MM:SS``     format for `X`, in the local timezone. **Should be changed to ISO 8601 some day, supporting timezone hints.**\n- ⚠️ **Deprecated** ~`hour_start`: Hour start timestamp must **exactly match** the given value (`Y-m-d HH:MM:SS`).~\n\n### Changes\n- Deprecated the ``hour_start`` query parameter in DSMR-reader v5.3, will be dropped completely in v6.x",
+        "parameters": [
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "Number of results to return per page.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "offset",
+            "required": false,
+            "in": "query",
+            "description": "The initial index from which to return the results.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "ordering",
+            "required": false,
+            "in": "query",
+            "description": "Which field to use when ordering the results.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "hour_start",
+            "required": false,
+            "in": "query",
+            "description": "hour_start",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "hour_start__gte",
+            "required": false,
+            "in": "query",
+            "description": "Hour start must be after or equal to `X`",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "hour_start__lte",
+            "required": false,
+            "in": "query",
+            "description": "Hour start must be before or equal to `X`",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "integer",
+                      "example": 123
+                    },
+                    "next": {
+                      "type": "string",
+                      "nullable": true,
+                      "format": "uri",
+                      "example": "http://api.example.org/accounts/?offset=400&limit=100"
+                    },
+                    "previous": {
+                      "type": "string",
+                      "nullable": true,
+                      "format": "uri",
+                      "example": "http://api.example.org/accounts/?offset=200&limit=100"
+                    },
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/HourStatistics"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "api"
+        ]
+      }
+    },
+    "/api/v2/application/version": {
+      "get": {
+        "operationId": "Application: Version",
+        "description": "Returns the version of DSMR-reader you are running.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {}
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "api"
+        ]
+      }
+    },
+    "/api/v2/application/monitoring": {
+      "get": {
+        "operationId": "Application: Monitoring",
+        "description": "Returns any monitoring issues found. Reflects the same (issue) data as displayed on the Status page.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {}
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "api"
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "DsmrReading": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "readOnly": true
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Timestamp indicating when the reading was taken, according to the smart meter"
+          },
+          "electricity_delivered_1": {
+            "type": "string",
+            "format": "decimal",
+            "multipleOf": 0.001,
+            "maximum": 1000000,
+            "minimum": -1000000,
+            "description": "Meter position stating electricity delivered (Dutch users: low tariff) in kWh"
+          },
+          "electricity_returned_1": {
+            "type": "string",
+            "format": "decimal",
+            "multipleOf": 0.001,
+            "maximum": 1000000,
+            "minimum": -1000000,
+            "description": "Meter position stating electricity returned (Dutch users: low tariff) in kWh"
+          },
+          "electricity_delivered_2": {
+            "type": "string",
+            "format": "decimal",
+            "multipleOf": 0.001,
+            "maximum": 1000000,
+            "minimum": -1000000,
+            "description": "Meter position stating electricity delivered (normal tariff) in kWh"
+          },
+          "electricity_returned_2": {
+            "type": "string",
+            "format": "decimal",
+            "multipleOf": 0.001,
+            "maximum": 1000000,
+            "minimum": -1000000,
+            "description": "Meter position stating electricity returned (normal tariff) in kWh"
+          },
+          "electricity_currently_delivered": {
+            "type": "string",
+            "format": "decimal",
+            "multipleOf": 0.001,
+            "maximum": 1000000,
+            "minimum": -1000000,
+            "description": "Current electricity delivered in kW"
+          },
+          "electricity_currently_returned": {
+            "type": "string",
+            "format": "decimal",
+            "multipleOf": 0.001,
+            "maximum": 1000000,
+            "minimum": -1000000,
+            "description": "Current electricity returned in kW"
+          },
+          "phase_currently_delivered_l1": {
+            "type": "string",
+            "format": "decimal",
+            "multipleOf": 0.001,
+            "maximum": 1000000,
+            "minimum": -1000000,
+            "nullable": true,
+            "description": "Current electricity used by phase L1 (in kW)"
+          },
+          "phase_currently_delivered_l2": {
+            "type": "string",
+            "format": "decimal",
+            "multipleOf": 0.001,
+            "maximum": 1000000,
+            "minimum": -1000000,
+            "nullable": true,
+            "description": "Current electricity used by phase L2 (in kW)"
+          },
+          "phase_currently_delivered_l3": {
+            "type": "string",
+            "format": "decimal",
+            "multipleOf": 0.001,
+            "maximum": 1000000,
+            "minimum": -1000000,
+            "nullable": true,
+            "description": "Current electricity used by phase L3 (in kW)"
+          },
+          "extra_device_timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true,
+            "description": "Last timestamp read from the extra device connected (gas meter)"
+          },
+          "extra_device_delivered": {
+            "type": "string",
+            "format": "decimal",
+            "multipleOf": 0.001,
+            "maximum": 1000000,
+            "minimum": -1000000,
+            "nullable": true,
+            "description": "Last value read from the extra device connected (gas meter)"
+          },
+          "phase_currently_returned_l1": {
+            "type": "string",
+            "format": "decimal",
+            "multipleOf": 0.001,
+            "maximum": 1000000,
+            "minimum": -1000000,
+            "nullable": true,
+            "description": "Current electricity returned by phase L1 (in kW)"
+          },
+          "phase_currently_returned_l2": {
+            "type": "string",
+            "format": "decimal",
+            "multipleOf": 0.001,
+            "maximum": 1000000,
+            "minimum": -1000000,
+            "nullable": true,
+            "description": "Current electricity returned by phase L2 (in kW)"
+          },
+          "phase_currently_returned_l3": {
+            "type": "string",
+            "format": "decimal",
+            "multipleOf": 0.001,
+            "maximum": 1000000,
+            "minimum": -1000000,
+            "nullable": true,
+            "description": "Current electricity returned by phase L3 (in kW)"
+          },
+          "phase_voltage_l1": {
+            "type": "string",
+            "format": "decimal",
+            "multipleOf": 0.1,
+            "maximum": 1000,
+            "minimum": -1000,
+            "nullable": true,
+            "description": "Current voltage for phase L1 (in V)"
+          },
+          "phase_voltage_l2": {
+            "type": "string",
+            "format": "decimal",
+            "multipleOf": 0.1,
+            "maximum": 1000,
+            "minimum": -1000,
+            "nullable": true,
+            "description": "Current voltage for phase L2 (in V)"
+          },
+          "phase_voltage_l3": {
+            "type": "string",
+            "format": "decimal",
+            "multipleOf": 0.1,
+            "maximum": 1000,
+            "minimum": -1000,
+            "nullable": true,
+            "description": "Current voltage for phase L3 (in V)"
+          },
+          "phase_power_current_l1": {
+            "type": "integer",
+            "maximum": 999,
+            "nullable": true,
+            "description": "Power/current for phase L1 (in A)",
+            "minimum": 0
+          },
+          "phase_power_current_l2": {
+            "type": "integer",
+            "maximum": 999,
+            "nullable": true,
+            "description": "Power/current for phase L2 (in A)",
+            "minimum": 0
+          },
+          "phase_power_current_l3": {
+            "type": "integer",
+            "maximum": 999,
+            "nullable": true,
+            "description": "Power/current for phase L3 (in A)",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "timestamp",
+          "electricity_delivered_1",
+          "electricity_returned_1",
+          "electricity_delivered_2",
+          "electricity_returned_2",
+          "electricity_currently_delivered",
+          "electricity_currently_returned"
+        ]
+      },
+      "MeterStatistics": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "readOnly": true
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Timestamp indicating when the reading was taken"
+          },
+          "dsmr_version": {
+            "type": "string",
+            "nullable": true,
+            "description": "DSMR version",
+            "maxLength": 2
+          },
+          "electricity_tariff": {
+            "type": "integer",
+            "maximum": 2147483647,
+            "minimum": -2147483648,
+            "nullable": true,
+            "description": "Tariff indicator electricity. The tariff indicator can be used to switch tariff  dependent loads e.g boilers. This is responsibility of the P1 user."
+          },
+          "power_failure_count": {
+            "type": "integer",
+            "maximum": 2147483647,
+            "minimum": -2147483648,
+            "nullable": true,
+            "description": "Number of power failures in any phase"
+          },
+          "long_power_failure_count": {
+            "type": "integer",
+            "maximum": 2147483647,
+            "minimum": -2147483648,
+            "nullable": true,
+            "description": "Number of long power failures in any phase"
+          },
+          "voltage_sag_count_l1": {
+            "type": "integer",
+            "maximum": 2147483647,
+            "minimum": -2147483648,
+            "nullable": true,
+            "description": "Number of voltage sags/dips in phase L1"
+          },
+          "voltage_sag_count_l2": {
+            "type": "integer",
+            "maximum": 2147483647,
+            "minimum": -2147483648,
+            "nullable": true,
+            "description": "Number of voltage sags/dips in phase L2 (polyphase meters only)"
+          },
+          "voltage_sag_count_l3": {
+            "type": "integer",
+            "maximum": 2147483647,
+            "minimum": -2147483648,
+            "nullable": true,
+            "description": "Number of voltage sags/dips in phase L3 (polyphase meters only)"
+          },
+          "voltage_swell_count_l1": {
+            "type": "integer",
+            "maximum": 2147483647,
+            "minimum": -2147483648,
+            "nullable": true,
+            "description": "Number of voltage swells in phase L1"
+          },
+          "voltage_swell_count_l2": {
+            "type": "integer",
+            "maximum": 2147483647,
+            "minimum": -2147483648,
+            "nullable": true,
+            "description": "Number of voltage swells in phase L2 (polyphase meters only)"
+          },
+          "voltage_swell_count_l3": {
+            "type": "integer",
+            "maximum": 2147483647,
+            "minimum": -2147483648,
+            "nullable": true,
+            "description": "Number of voltage swells in phase L3 (polyphase meters only)"
+          },
+          "rejected_telegrams": {
+            "type": "integer",
+            "maximum": 2147483647,
+            "minimum": -2147483648,
+            "description": "Number of rejected telegrams due to invalid CRC checksum"
+          },
+          "latest_telegram": {
+            "type": "string",
+            "nullable": true,
+            "description": "The latest telegram succesfully read. Please note that only the latest telegram is saved here and will be overwritten each time."
+          }
+        }
+      },
+      "EnergySupplierPrice": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "readOnly": true
+          },
+          "start": {
+            "type": "string",
+            "format": "date"
+          },
+          "end": {
+            "type": "string",
+            "format": "date",
+            "description": "Set to a far future date when there is not contract end."
+          },
+          "description": {
+            "type": "string",
+            "description": "For your own reference, i.e. the name of your supplier",
+            "maxLength": 255
+          },
+          "electricity_delivered_1_price": {
+            "type": "string",
+            "format": "decimal",
+            "multipleOf": 1e-06,
+            "maximum": 100000,
+            "minimum": 0,
+            "description": "Set to zero when: Unused / Defined in other contract / Not applicable to your situation"
+          },
+          "electricity_delivered_2_price": {
+            "type": "string",
+            "format": "decimal",
+            "multipleOf": 1e-06,
+            "maximum": 100000,
+            "minimum": 0,
+            "description": "Set to zero when: Unused / Defined in other contract / Not applicable to your situation"
+          },
+          "gas_price": {
+            "type": "string",
+            "format": "decimal",
+            "multipleOf": 1e-06,
+            "maximum": 100000,
+            "minimum": 0,
+            "description": "Set to zero when: Unused / Defined in other contract / Not applicable to your situation"
+          },
+          "electricity_returned_1_price": {
+            "type": "string",
+            "format": "decimal",
+            "multipleOf": 1e-06,
+            "maximum": 100000,
+            "minimum": 0,
+            "description": "Set to zero when: Unused / Defined in other contract / Not applicable to your situation"
+          },
+          "electricity_returned_2_price": {
+            "type": "string",
+            "format": "decimal",
+            "multipleOf": 1e-06,
+            "maximum": 100000,
+            "minimum": 0,
+            "description": "Set to zero when: Unused / Defined in other contract / Not applicable to your situation"
+          },
+          "fixed_daily_cost": {
+            "type": "string",
+            "format": "decimal",
+            "multipleOf": 1e-06,
+            "maximum": 100000,
+            "minimum": -100000,
+            "description": "Both positive and negative prices allowed. Set to zero when: Unused / Defined in other contract / Not applicable to your situation"
+          }
+        },
+        "required": [
+          "start",
+          "end",
+          "description"
+        ]
+      },
+      "ElectricityConsumption": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "readOnly": true
+          },
+          "read_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "delivered_1": {
+            "type": "string",
+            "format": "decimal",
+            "multipleOf": 0.001,
+            "maximum": 1000000,
+            "minimum": -1000000,
+            "description": "Meter Reading electricity delivered to client (Dutch users: low tariff) in 0,001 kWh"
+          },
+          "returned_1": {
+            "type": "string",
+            "format": "decimal",
+            "multipleOf": 0.001,
+            "maximum": 1000000,
+            "minimum": -1000000,
+            "description": "Meter Reading electricity delivered by client (Dutch users: low tariff) in 0,001 kWh"
+          },
+          "delivered_2": {
+            "type": "string",
+            "format": "decimal",
+            "multipleOf": 0.001,
+            "maximum": 1000000,
+            "minimum": -1000000,
+            "description": "Meter Reading electricity delivered to client (normal tariff) in 0,001 kWh"
+          },
+          "returned_2": {
+            "type": "string",
+            "format": "decimal",
+            "multipleOf": 0.001,
+            "maximum": 1000000,
+            "minimum": -1000000,
+            "description": "Meter Reading electricity delivered by client (normal tariff) in 0,001 kWh"
+          },
+          "currently_delivered": {
+            "type": "string",
+            "format": "decimal",
+            "multipleOf": 0.001,
+            "maximum": 1000000,
+            "minimum": -1000000,
+            "description": "Actual electricity power delivered (+P) in 1 Watt resolution"
+          },
+          "currently_returned": {
+            "type": "string",
+            "format": "decimal",
+            "multipleOf": 0.001,
+            "maximum": 1000000,
+            "minimum": -1000000,
+            "description": "Actual electricity power received (-P) in 1 Watt resolution"
+          },
+          "phase_currently_delivered_l1": {
+            "type": "string",
+            "format": "decimal",
+            "multipleOf": 0.001,
+            "maximum": 1000000,
+            "minimum": -1000000,
+            "nullable": true,
+            "description": "Instantaneous active power L1 (+P) in W resolution"
+          },
+          "phase_currently_delivered_l2": {
+            "type": "string",
+            "format": "decimal",
+            "multipleOf": 0.001,
+            "maximum": 1000000,
+            "minimum": -1000000,
+            "nullable": true,
+            "description": "Instantaneous active power L2 (+P) in W resolution"
+          },
+          "phase_currently_delivered_l3": {
+            "type": "string",
+            "format": "decimal",
+            "multipleOf": 0.001,
+            "maximum": 1000000,
+            "minimum": -1000000,
+            "nullable": true,
+            "description": "Instantaneous active power L3 (+P) in W resolution"
+          },
+          "phase_currently_returned_l1": {
+            "type": "string",
+            "format": "decimal",
+            "multipleOf": 0.001,
+            "maximum": 1000000,
+            "minimum": -1000000,
+            "nullable": true,
+            "description": "Instantaneous active power L1 (-P) in W resolution"
+          },
+          "phase_currently_returned_l2": {
+            "type": "string",
+            "format": "decimal",
+            "multipleOf": 0.001,
+            "maximum": 1000000,
+            "minimum": -1000000,
+            "nullable": true,
+            "description": "Instantaneous active power L2 (-P) in W resolution"
+          },
+          "phase_currently_returned_l3": {
+            "type": "string",
+            "format": "decimal",
+            "multipleOf": 0.001,
+            "maximum": 1000000,
+            "minimum": -1000000,
+            "nullable": true,
+            "description": "Instantaneous active power L3 (-P) in W resolution"
+          },
+          "phase_voltage_l1": {
+            "type": "string",
+            "format": "decimal",
+            "multipleOf": 0.1,
+            "maximum": 1000,
+            "minimum": -1000,
+            "nullable": true,
+            "description": "Current voltage for phase L1 (in V)"
+          },
+          "phase_voltage_l2": {
+            "type": "string",
+            "format": "decimal",
+            "multipleOf": 0.1,
+            "maximum": 1000,
+            "minimum": -1000,
+            "nullable": true,
+            "description": "Current voltage for phase L2 (in V)"
+          },
+          "phase_voltage_l3": {
+            "type": "string",
+            "format": "decimal",
+            "multipleOf": 0.1,
+            "maximum": 1000,
+            "minimum": -1000,
+            "nullable": true,
+            "description": "Current voltage for phase L3 (in V)"
+          },
+          "phase_power_current_l1": {
+            "type": "integer",
+            "maximum": 999,
+            "nullable": true,
+            "description": "Power/current for phase L1 (in A)",
+            "minimum": 0
+          },
+          "phase_power_current_l2": {
+            "type": "integer",
+            "maximum": 999,
+            "nullable": true,
+            "description": "Power/current for phase L2 (in A)",
+            "minimum": 0
+          },
+          "phase_power_current_l3": {
+            "type": "integer",
+            "maximum": 999,
+            "nullable": true,
+            "description": "Power/current for phase L3 (in A)",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "read_at",
+          "delivered_1",
+          "returned_1",
+          "delivered_2",
+          "returned_2",
+          "currently_delivered",
+          "currently_returned"
+        ]
+      },
+      "QuarterHourPeakElectricityConsumption": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "readOnly": true
+          },
+          "read_at_start": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The timestamp of the first reading used for average calculation"
+          },
+          "read_at_end": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The timestamp of the last reading used for average calculation"
+          },
+          "average_delivered": {
+            "type": "string",
+            "format": "decimal",
+            "multipleOf": 0.001,
+            "maximum": 1000000,
+            "minimum": -1000000,
+            "description": "In kW. Calculated by tracking the kWh/15m consumption during the given start/end and multiplying it by 4"
+          }
+        },
+        "required": [
+          "read_at_start",
+          "read_at_end",
+          "average_delivered"
+        ]
+      },
+      "GasConsumption": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "readOnly": true
+          },
+          "read_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "delivered": {
+            "type": "string",
+            "format": "decimal",
+            "multipleOf": 0.001,
+            "maximum": 1000000,
+            "minimum": -1000000,
+            "description": "Last meter position read"
+          },
+          "currently_delivered": {
+            "type": "string",
+            "format": "decimal",
+            "multipleOf": 0.001,
+            "maximum": 1000000,
+            "minimum": -1000000,
+            "description": "Delivered value, based on the previous reading"
+          }
+        },
+        "required": [
+          "read_at",
+          "delivered",
+          "currently_delivered"
+        ]
+      },
+      "DayStatistics": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "readOnly": true
+          },
+          "day": {
+            "type": "string",
+            "format": "date"
+          },
+          "electricity1": {
+            "type": "string",
+            "format": "decimal",
+            "multipleOf": 0.001,
+            "maximum": 1000000,
+            "minimum": -1000000,
+            "description": "The difference between the first and last reading of the day"
+          },
+          "electricity2": {
+            "type": "string",
+            "format": "decimal",
+            "multipleOf": 0.001,
+            "maximum": 1000000,
+            "minimum": -1000000,
+            "description": "The difference between the first and last reading of the day"
+          },
+          "electricity1_returned": {
+            "type": "string",
+            "format": "decimal",
+            "multipleOf": 0.001,
+            "maximum": 1000000,
+            "minimum": -1000000,
+            "description": "The difference between the first and last reading of the day"
+          },
+          "electricity2_returned": {
+            "type": "string",
+            "format": "decimal",
+            "multipleOf": 0.001,
+            "maximum": 1000000,
+            "minimum": -1000000,
+            "description": "The difference between the first and last reading of the day"
+          },
+          "electricity1_cost": {
+            "type": "string",
+            "format": "decimal",
+            "multipleOf": 0.01,
+            "maximum": 1000000,
+            "minimum": -1000000
+          },
+          "electricity2_cost": {
+            "type": "string",
+            "format": "decimal",
+            "multipleOf": 0.01,
+            "maximum": 1000000,
+            "minimum": -1000000
+          },
+          "gas": {
+            "type": "string",
+            "format": "decimal",
+            "multipleOf": 0.001,
+            "maximum": 1000000,
+            "minimum": -1000000,
+            "nullable": true,
+            "description": "The difference between the first and last reading of the day"
+          },
+          "gas_cost": {
+            "type": "string",
+            "format": "decimal",
+            "multipleOf": 0.01,
+            "maximum": 1000000,
+            "minimum": -1000000,
+            "nullable": true
+          },
+          "lowest_temperature": {
+            "type": "string",
+            "format": "decimal",
+            "multipleOf": 0.1,
+            "maximum": 1000,
+            "minimum": -1000,
+            "nullable": true
+          },
+          "highest_temperature": {
+            "type": "string",
+            "format": "decimal",
+            "multipleOf": 0.1,
+            "maximum": 1000,
+            "minimum": -1000,
+            "nullable": true
+          },
+          "average_temperature": {
+            "type": "string",
+            "format": "decimal",
+            "multipleOf": 0.1,
+            "maximum": 1000,
+            "minimum": -1000,
+            "nullable": true
+          },
+          "fixed_cost": {
+            "type": "string",
+            "format": "decimal",
+            "multipleOf": 0.01,
+            "maximum": 1000000,
+            "minimum": -1000000
+          },
+          "total_cost": {
+            "type": "string",
+            "format": "decimal",
+            "multipleOf": 0.01,
+            "maximum": 1000000,
+            "minimum": -1000000
+          },
+          "electricity1_reading": {
+            "type": "string",
+            "format": "decimal",
+            "multipleOf": 0.001,
+            "maximum": 1000000,
+            "minimum": -1000000,
+            "nullable": true,
+            "description": "The first absolute value read at the start of the day"
+          },
+          "electricity2_reading": {
+            "type": "string",
+            "format": "decimal",
+            "multipleOf": 0.001,
+            "maximum": 1000000,
+            "minimum": -1000000,
+            "nullable": true,
+            "description": "The first absolute value read at the start of the day"
+          },
+          "electricity1_returned_reading": {
+            "type": "string",
+            "format": "decimal",
+            "multipleOf": 0.001,
+            "maximum": 1000000,
+            "minimum": -1000000,
+            "nullable": true,
+            "description": "The first absolute value read at the start of the day"
+          },
+          "electricity2_returned_reading": {
+            "type": "string",
+            "format": "decimal",
+            "multipleOf": 0.001,
+            "maximum": 1000000,
+            "minimum": -1000000,
+            "nullable": true,
+            "description": "The first absolute value read at the start of the day"
+          },
+          "gas_reading": {
+            "type": "string",
+            "format": "decimal",
+            "multipleOf": 0.001,
+            "maximum": 1000000,
+            "minimum": -1000000,
+            "nullable": true,
+            "description": "The first absolute value read at the start of the day"
+          }
+        },
+        "required": [
+          "day",
+          "electricity1",
+          "electricity2",
+          "electricity1_returned",
+          "electricity2_returned",
+          "electricity1_cost",
+          "electricity2_cost",
+          "total_cost"
+        ]
+      },
+      "HourStatistics": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "readOnly": true
+          },
+          "hour_start": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "electricity1": {
+            "type": "string",
+            "format": "decimal",
+            "multipleOf": 0.001,
+            "maximum": 1000000,
+            "minimum": -1000000
+          },
+          "electricity2": {
+            "type": "string",
+            "format": "decimal",
+            "multipleOf": 0.001,
+            "maximum": 1000000,
+            "minimum": -1000000
+          },
+          "electricity1_returned": {
+            "type": "string",
+            "format": "decimal",
+            "multipleOf": 0.001,
+            "maximum": 1000000,
+            "minimum": -1000000
+          },
+          "electricity2_returned": {
+            "type": "string",
+            "format": "decimal",
+            "multipleOf": 0.001,
+            "maximum": 1000000,
+            "minimum": -1000000
+          },
+          "gas": {
+            "type": "string",
+            "format": "decimal",
+            "multipleOf": 0.001,
+            "maximum": 1000000,
+            "minimum": -1000000
+          }
+        },
+        "required": [
+          "hour_start",
+          "electricity1",
+          "electricity2",
+          "electricity1_returned",
+          "electricity2_returned"
+        ]
+      }
+    }
+  }
+}

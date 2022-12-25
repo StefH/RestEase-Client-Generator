@@ -12,6 +12,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Examples\dsmr\schema.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Examples\PetStore.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -24,6 +27,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Examples\dsmr\Api\" />
+    <Folder Include="Examples\dsmr\Models\" />
     <Folder Include="Examples\Pitane\Api\" />
     <Folder Include="Examples\Pitane\Models\" />
     <Folder Include="Examples\Replicate\Api\" />

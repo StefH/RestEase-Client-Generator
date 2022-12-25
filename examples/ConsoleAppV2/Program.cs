@@ -5,6 +5,19 @@ using RestEaseClientGeneratorV2;
 
 var generator = new GeneratorV2();
 
+var settingsDsmr = new GeneratorSettings
+{
+    SingleFile = false,
+    Namespace = "ConsoleAppV2.Examples.dsmr",
+    ApiName = "DSMR"
+};
+foreach (var file in generator.Map(settingsDsmr, @"Examples\dsmr\schema.json", out var stableDiag))
+{
+    File.WriteAllText($"../../../../ConsoleAppV2/Examples/dsmr/{file.Path}/{file.Name}", file.Content);
+}
+
+return;
+
 //var settingsStableDiffusionModel = new GeneratorSettings
 //{
 //    SingleFile = false,
