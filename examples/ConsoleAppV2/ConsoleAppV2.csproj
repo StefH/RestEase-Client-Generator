@@ -28,7 +28,6 @@
 
   <ItemGroup>
     <Folder Include="Examples\dsmr\Api\" />
-    <Folder Include="Examples\dsmr\Models\" />
     <Folder Include="Examples\Pitane\Api\" />
     <Folder Include="Examples\Pitane\Models\" />
     <Folder Include="Examples\Replicate\Api\" />

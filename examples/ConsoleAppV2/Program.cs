@@ -1,3 +1,5 @@
+using System.Net.Http.Headers;
+using ConsoleAppV2.Examples.DSMR.Api;
 using Microsoft.OpenApi.Readers;
 using RestEaseClientGenerator.Settings;
 using RestEaseClientGenerator.Types;
@@ -5,16 +7,22 @@ using RestEaseClientGeneratorV2;
 
 var generator = new GeneratorV2();
 
-var settingsDsmr = new GeneratorSettings
-{
-    SingleFile = false,
-    Namespace = "ConsoleAppV2.Examples.dsmr",
-    ApiName = "DSMR"
-};
-foreach (var file in generator.Map(settingsDsmr, @"Examples\dsmr\schema.json", out var stableDiag))
-{
-    File.WriteAllText($"../../../../ConsoleAppV2/Examples/dsmr/{file.Path}/{file.Name}", file.Content);
-}
+var da = RestEase.RestClient.For<IDSMRApi>("http://192.168.50.180:7777/");
+da.AuthKey = new AuthenticationHeaderValue("Token", "BW1NY53R71O0BMHXVT4B7R0LD7UBO9K02D4LCCG4D92V279QG1DPT8M9NR7F11UP");
+
+var live = await da.ElectricityConsumptionLiveAsync();
+
+
+//var settingsDsmr = new GeneratorSettings
+//{
+//    SingleFile = false,
+//    Namespace = "ConsoleAppV2.Examples.DSMR",
+//    ApiName = "DSMR"
+//};
+//foreach (var file in generator.Map(settingsDsmr, @"Examples\dsmr\schema.json", out var ddd))
+//{
+//    File.WriteAllText($"../../../../ConsoleAppV2/Examples/dsmr/{file.Path}/{file.Name}", file.Content);
+//}
 
 return;
 
