@@ -231,7 +231,7 @@ internal class SchemaMapper : BaseMapper
             return (PropertyType.Normal, className, model);
         }
 
-        var propertyIsNullable = schema.Type == JsonSchemaType.Null || Settings.SupportExtensionXNullable && schema.TryGetXNullable(out var x) && x;
+        var propertyIsNullable = schema.IsNullable() || Settings.SupportExtensionXNullable && schema.TryGetXNullable(out var x) && x;
         var property = MapSchema(@interface, schema, parentName, objectName, propertyIsNullable, true, openApiSpecVersion, directory);
         if (property.IsFirst)
         {
@@ -286,7 +286,7 @@ internal class SchemaMapper : BaseMapper
                         internalSchema,
                         schema.Reference.Id,
                         null,
-                        internalSchema.Type == JsonSchemaType.Null,
+                        internalSchema.IsNullable(),
                         true,
                         OpenApiSpecVersion.OpenApi3_0, // TODO
                         directory);

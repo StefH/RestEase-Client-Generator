@@ -137,7 +137,12 @@ internal class InterfaceMapper : BaseMapper
         }
     }
 
-    private RestEaseInterfaceMethodDetails MapOperationToMappingModel(RestEaseInterface @interface, string path, string httpMethod, OpenApiOperation operation, IReadOnlyList<OpenApiParameter> commonParameters, string? directory)
+    private RestEaseInterfaceMethodDetails MapOperationToMappingModel(
+        RestEaseInterface @interface,
+        string path, string httpMethod,
+        OpenApiOperation operation,
+        IReadOnlyList<IOpenApiParameter> commonParameters,
+        string? directory)
     {
         string methodRestEaseForAnnotation = httpMethod.ToPascalCase();
 
@@ -303,9 +308,9 @@ internal class InterfaceMapper : BaseMapper
         }
     }
 
-    private string? GetReturnType(RestEaseInterface @interface, OpenApiSchema? schema, string methodRestEaseMethodName, string? directory)
+    private string? GetReturnType(RestEaseInterface @interface, IOpenApiSchema? schema, string methodRestEaseMethodName, string? directory)
     {
-        string nullable = schema?.Type == JsonSchemaType.Null ? "?" : string.Empty;
+        var nullable = schema.IsNullable() ? "?" : string.Empty;
 
         switch (schema?.GetSchemaType())
         {
@@ -347,7 +352,7 @@ internal class InterfaceMapper : BaseMapper
                 if (schema.AdditionalProperties != null)
                 {
                     // Use AdditionalProperties
-                    var additionalResult = _schemaMapper.MapSchema(@interface, schema.AdditionalProperties, string.Empty, null, schema.AdditionalProperties.Nullable, false, null, directory);
+                    var additionalResult = _schemaMapper.MapSchema(@interface, schema.AdditionalProperties, string.Empty, null, schema.AdditionalProperties.IsNullable(), false, null, directory);
                     if (additionalResult.IsFirst)
                     {
                         return additionalResult.First.Type;
@@ -395,7 +400,7 @@ internal class InterfaceMapper : BaseMapper
                         var dummyOpenApiSchema = new OpenApiSchema
                         {
                             Type = "object",
-                            Properties = new Dictionary<string, OpenApiSchema>()
+                            Properties = new Dictionary<string, IOpenApiSchema>()
                         };
 
                         foreach (var one in schema.OneOf)
@@ -450,11 +455,11 @@ internal class InterfaceMapper : BaseMapper
 
                 if (schema.Properties.Any())
                 {
-                    extensionMethodParameterList.AddRange(schema.Properties.Select(p => BuildValidParameter(@interface, p.Key, p.Value, p.Value.Nullable, p.Value.Description, null, Array.Empty<string>(), directory)));
+                    extensionMethodParameterList.AddRange(schema.Properties.Select(p => BuildValidParameter(@interface, p.Key, p.Value, p.Value.IsNullable(), p.Value.Description, null, Array.Empty<string>(), directory)));
                 }
                 else if (schema.GetSchemaType() == SchemaType.Array)
                 {
-                    extensionMethodParameterList.Add(BuildValidParameter(@interface, "content", schema, schema.Nullable, schema.Description, null, Array.Empty<string>(), directory));
+                    extensionMethodParameterList.Add(BuildValidParameter(@interface, "content", schema, schema.IsNullable(), schema.Description, null, Array.Empty<string>(), directory));
                 }
             }
 
@@ -487,7 +492,7 @@ internal class InterfaceMapper : BaseMapper
                 httpContentDescription = "An extension method is generated to support the exact parameters.";
                 var extensionParameter = BuildValidParameter(@interface, "file", detected.Value.Schema, true, "The content.", null, Array.Empty<string>(), directory);
                 extensionMethodParameterList.Add(extensionParameter);
-                extensionMethodParameterList.AddRange(detected.Value.Schema.Properties.Select(p => BuildValidParameter(@interface, p.Key, p.Value, p.Value.Nullable, p.Value.Description, null, Array.Empty<string>(), directory)));
+                extensionMethodParameterList.AddRange(detected.Value.Schema.Properties.Select(p => BuildValidParameter(@interface, p.Key, p.Value, p.Value.Type == JsonSchemaType.Null, p.Value.Description, null, Array.Empty<string>(), directory)));
             }
 
             bodyParameterList.Add(new RestEaseParameter
@@ -517,7 +522,7 @@ internal class InterfaceMapper : BaseMapper
             else
             {
                 description = "An extension method is generated to support the exact parameters.";
-                extensionMethodParameterList.AddRange(detected.Value.Schema.Properties.Select(p => BuildValidParameter(@interface, p.Key, p.Value, p.Value.Nullable, p.Value.Description, null, Array.Empty<string>(), directory)));
+                extensionMethodParameterList.AddRange(detected.Value.Schema.Properties.Select(p => BuildValidParameter(@interface, p.Key, p.Value, p.Value.IsNullable(), p.Value.Description, null, Array.Empty<string>(), directory)));
             }
 
             bodyParameterList.Add(new RestEaseParameter
@@ -716,7 +721,7 @@ internal class InterfaceMapper : BaseMapper
     private RestEaseParameter BuildValidParameter(
         RestEaseInterface @interface,
         string identifier,
-        OpenApiSchema schema,
+        IOpenApiSchema schema,
         bool required,
         string description,
         ParameterLocation? parameterLocation,

@@ -6,6 +6,11 @@ namespace RestEaseClientGenerator.Extensions;
 
 internal static class OpenApiSchemaExtensions
 {
+    public static bool IsNullable(this IOpenApiSchema? schema)
+    {
+        return schema?.Type == JsonSchemaType.Null;
+    }
+
     /// <summary>
     /// https://stackoverflow.com/questions/48111459/how-to-define-a-property-that-can-be-string-or-null-in-openapi-swagger
     /// </summary>
