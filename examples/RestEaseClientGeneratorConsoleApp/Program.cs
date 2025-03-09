@@ -13,6 +13,18 @@ namespace RestEaseClientGeneratorConsoleApp
         {
             var generator = new Generator();
 
+            var mistralSettings = new GeneratorSettings
+            {
+                Namespace = "Mistral",
+                ApiName = "Mistral",
+                SingleFile = false
+            };
+            foreach (var file in generator.FromFile("Examples\\Mistral\\plugin-redoc-0.yaml", mistralSettings, out OpenApiDiagnostic diagnosticMistral))
+            {
+                File.WriteAllText($"../../../../RestEaseClientGeneratorConsoleApp/Examples/Mistral/{file.Path}/{file.Name}", file.Content);
+            }
+            return;
+
             var wiremockOrgSettings = new GeneratorSettings
             {
                 Namespace = "WireMockOrg",
