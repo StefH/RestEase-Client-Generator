@@ -1,6 +1,6 @@
 using Microsoft.OpenApi;
 using Microsoft.OpenApi.Models;
-using Microsoft.OpenApi.Readers;
+using Microsoft.OpenApi.Reader;
 using RestEaseClientGenerator.Models.External;
 using RestEaseClientGenerator.Settings;
 

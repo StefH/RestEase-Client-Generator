@@ -1,6 +1,5 @@
-using Microsoft.OpenApi.Any;
-using Microsoft.OpenApi.Interfaces;
 using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi.Models.Interfaces;
 using RestEaseClientGenerator.Types.Internal;
 
 namespace RestEaseClientGenerator.Extensions;
@@ -10,50 +9,50 @@ internal static class OpenApiSchemaExtensions
     /// <summary>
     /// https://stackoverflow.com/questions/48111459/how-to-define-a-property-that-can-be-string-or-null-in-openapi-swagger
     /// </summary>
-    public static bool TryGetXNullable(this OpenApiSchema schema, out bool value)
+    public static bool TryGetXNullable(this IOpenApiSchema schema, out bool value)
     {
         value = false;
 
-        if (schema.Extensions.TryGetValue("x-nullable", out IOpenApiExtension e) && e is OpenApiBoolean openApiBoolean)
+        if (schema.Extensions.TryGetValue("x-nullable", out var e)) // TODO && e is OpenApiBoolean openApiBoolean
         {
-            value = openApiBoolean.Value;
+            value = false; // openApiBoolean.Value; TODO
             return true;
         }
 
         return false;
     }
 
-    public static SchemaType GetSchemaType(this OpenApiSchema schema)
+    public static SchemaType GetSchemaType(this IOpenApiSchema schema)
     {
         switch (schema.Type)
         {
-            case "object":
+            case JsonSchemaType.Object:
                 return SchemaType.Object;
 
-            case "array":
+            case JsonSchemaType.Array:
                 return SchemaType.Array;
 
-            case "integer":
+            case JsonSchemaType.Integer:
                 return SchemaType.Integer;
 
-            case "number":
+            case JsonSchemaType.Number:
                 return SchemaType.Number;
 
-            case "boolean":
+            case JsonSchemaType.Boolean:
                 return SchemaType.Boolean;
 
-            case "string":
+            case JsonSchemaType.String:
                 return SchemaType.String;
 
-            case "file":
-                return SchemaType.File;
+            //case "file":
+            //    return SchemaType.File;
 
             default:
                 return SchemaType.Unknown;
         }
     }
 
-    public static SchemaFormat GetSchemaFormat(this OpenApiSchema schema)
+    public static SchemaFormat GetSchemaFormat(this IOpenApiSchema schema)
     {
         switch (schema.Format)
         {

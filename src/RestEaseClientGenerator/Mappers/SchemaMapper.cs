@@ -1,7 +1,9 @@
+using System.Text.Json.Nodes;
 using AnyOfTypes;
 using Microsoft.OpenApi;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi.Models.Interfaces;
 using RestEaseClientGenerator.Extensions;
 using RestEaseClientGenerator.Models.Internal;
 using RestEaseClientGenerator.Settings;
@@ -19,7 +21,7 @@ internal class SchemaMapper : BaseMapper
 
     public AnyOf<PropertyDto, IList<PropertyDto>> MapSchema(
         RestEaseInterface @interface,
-        OpenApiSchema schema,
+        IOpenApiSchema schema,
         string parentName,
         string? name,
         bool isNullable,
@@ -93,7 +95,7 @@ internal class SchemaMapper : BaseMapper
                 var list = new List<PropertyDto>();
                 if (schema.AdditionalProperties != null)
                 {
-                    var additionalResult = MapSchema(@interface, schema.AdditionalProperties, string.Empty, null, schema.AdditionalProperties.Nullable, false, null, directory);
+                    var additionalResult = MapSchema(@interface, schema.AdditionalProperties, string.Empty, null, schema.AdditionalProperties.Type == JsonSchemaType.Null, false, null, directory);
                     if (additionalResult.IsFirst)
                     {
                         var dictionaryType = $"Dictionary<string, {additionalResult.First}>";
@@ -177,7 +179,7 @@ internal class SchemaMapper : BaseMapper
     public (PropertyType Type, string TypeName, AnyOf<PropertyDto, RestEaseModel> Result) TryMapProperty(
         RestEaseInterface @interface,
         OpenApiSpecVersion? openApiSpecVersion,
-        OpenApiSchema schema,
+        IOpenApiSchema schema,
         string parentName,
         string objectName,
         string? directory)
@@ -229,7 +231,7 @@ internal class SchemaMapper : BaseMapper
             return (PropertyType.Normal, className, model);
         }
 
-        var propertyIsNullable = schema.Nullable || Settings.SupportExtensionXNullable && schema.TryGetXNullable(out var x) && x;
+        var propertyIsNullable = schema.Type == JsonSchemaType.Null || Settings.SupportExtensionXNullable && schema.TryGetXNullable(out var x) && x;
         var property = MapSchema(@interface, schema, parentName, objectName, propertyIsNullable, true, openApiSpecVersion, directory);
         if (property.IsFirst)
         {
@@ -242,7 +244,7 @@ internal class SchemaMapper : BaseMapper
     // Object is defined `inline`, create a new Model and use that one.
     private RestEaseModel MapInlineModel(
         RestEaseInterface @interface,
-        OpenApiSchema schema,
+        IOpenApiSchema schema,
         string parentName,
         string? directory,
         string className)
@@ -266,7 +268,7 @@ internal class SchemaMapper : BaseMapper
         return model;
     }
 
-    public PropertyDto? TryMapPropertyReference(RestEaseInterface @interface, OpenApiSchema schema, string? name, string? directory)
+    public PropertyDto? TryMapPropertyReference(RestEaseInterface @interface, IOpenApiSchema schema, string? name, string? directory)
     {
         switch (schema.Reference)
         {
@@ -284,7 +286,7 @@ internal class SchemaMapper : BaseMapper
                         internalSchema,
                         schema.Reference.Id,
                         null,
-                        internalSchema.Nullable,
+                        internalSchema.Type == JsonSchemaType.Null,
                         true,
                         OpenApiSpecVersion.OpenApi3_0, // TODO
                         directory);
@@ -312,14 +314,14 @@ internal class SchemaMapper : BaseMapper
         }
     }
 
-    private PropertyDto MapEnumSchema(RestEaseInterface @interface, OpenApiSchema schema, string parentName, string name, string nameCamelCase, string nullable)
+    private PropertyDto MapEnumSchema(RestEaseInterface @interface, IOpenApiSchema schema, string parentName, string name, string nameCamelCase, string nullable)
     {
         var enumNamePostfix = Settings.PreferredEnumType == EnumType.Enum ? "EnumType" : "Constants";
 
         var enumName = $"{parentName}{name}{enumNamePostfix}".ToPascalCase();
         var basename = enumName;
-        var enumValues = schema.Enum.OfType<OpenApiString>()
-            .SelectMany(str => str.Value.Split(new[] { '|' }, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim())).ToList();
+        var enumValues = schema.Enum.Select(jn => jn.GetPropertyName())
+            .SelectMany(str => str.Split(new[] { '|' }, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim())).ToList();
 
         var existingEnums = @interface.ExtraEnums.Where(e => e.BaseName == enumName).ToList();
         if (!existingEnums.Any())

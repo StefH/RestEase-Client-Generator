@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Text.RegularExpressions;
 using Microsoft.OpenApi;
 using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi.Models.Interfaces;
 using RestEaseClientGenerator.Constants;
 using RestEaseClientGenerator.Extensions;
 using RestEaseClientGenerator.Models.Internal;
@@ -124,7 +125,7 @@ internal class InterfaceMapper : BaseMapper
         return @interface;
     }
 
-    private void MapPath(RestEaseInterface @interface, string path, OpenApiPathItem pathItem, string? directory)
+    private void MapPath(RestEaseInterface @interface, string path, IOpenApiPathItem pathItem, string? directory)
     {
         // The pathItem can also have common parameters (e.g. wiremock.org)
         var commonParameters = new ParametersMapper(@interface, Settings, directory).Map(pathItem.Parameters);
@@ -304,7 +305,7 @@ internal class InterfaceMapper : BaseMapper
 
     private string? GetReturnType(RestEaseInterface @interface, OpenApiSchema? schema, string methodRestEaseMethodName, string? directory)
     {
-        string nullable = schema?.Nullable == true ? "?" : string.Empty;
+        string nullable = schema?.Type == JsonSchemaType.Null ? "?" : string.Empty;
 
         switch (schema?.GetSchemaType())
         {
@@ -342,7 +343,8 @@ internal class InterfaceMapper : BaseMapper
                 {
                     return propertyReference.Type;
                 }
-                else if (schema.AdditionalProperties != null)
+
+                if (schema.AdditionalProperties != null)
                 {
                     // Use AdditionalProperties
                     var additionalResult = _schemaMapper.MapSchema(@interface, schema.AdditionalProperties, string.Empty, null, schema.AdditionalProperties.Nullable, false, null, directory);
@@ -359,33 +361,31 @@ internal class InterfaceMapper : BaseMapper
 
                     throw new InvalidOperationException($"AdditionalProperties should return a single {nameof(PropertyDto)} or an empty object.");
                 }
-                else
+
+                // Object is defined `inline`, create a new Model and use that one.
+                var className = !string.IsNullOrEmpty(schema.Title)
+                    ? MakeValidClassName(schema.Title)
+                    : $"{methodRestEaseMethodName.ToPascalCase()}Result";
+
+                var existingModel = @interface.ExtraModels.FirstOrDefault(m => string.Equals(m.ClassName, className, StringComparison.InvariantCultureIgnoreCase));
+                if (existingModel == null)
                 {
-                    // Object is defined `inline`, create a new Model and use that one.
-                    var className = !string.IsNullOrEmpty(schema.Title)
-                        ? MakeValidClassName(schema.Title)
-                        : $"{methodRestEaseMethodName.ToPascalCase()}Result";
-
-                    var existingModel = @interface.ExtraModels.FirstOrDefault(m => string.Equals(m.ClassName, className, StringComparison.InvariantCultureIgnoreCase));
-                    if (existingModel == null)
+                    var inlineModel = _schemaMapper.MapSchema(@interface, schema, string.Empty, null, false, true, null, directory);
+                    if (inlineModel.IsSecond)
                     {
-                        var inlineModel = _schemaMapper.MapSchema(@interface, schema, string.Empty, null, false, true, null, directory);
-                        if (inlineModel.IsSecond)
+                        var newModel = new RestEaseModel
                         {
-                            var newModel = new RestEaseModel
-                            {
-                                Description = schema.Description,
-                                Namespace = Settings.Namespace,
-                                ClassName = className,
-                                Properties = inlineModel.Second,
-                                Priority = 1002
-                            };
-                            @interface.ExtraModels.Add(newModel);
-                        }
+                            Description = schema.Description,
+                            Namespace = Settings.Namespace,
+                            ClassName = className,
+                            Properties = inlineModel.Second,
+                            Priority = 1002
+                        };
+                        @interface.ExtraModels.Add(newModel);
                     }
-
-                    return className;
                 }
+
+                return className;
 
             default:
                 if (schema?.OneOf.Any() == true || schema?.AnyOf.Any() == true)

@@ -1,6 +1,7 @@
 using AnyOfTypes;
 using Microsoft.OpenApi;
 using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi.Models.Interfaces;
 using RestEaseClientGenerator.Models.Internal;
 using RestEaseClientGenerator.Settings;
 
@@ -26,11 +27,11 @@ internal class ModelsMapper : BaseMapper
         _directory = directory;
     }
 
-    public IEnumerable<AnyOf<RestEaseModel, RestEaseEnum>> Map(IDictionary<string, OpenApiSchema> schemas)
+    public IEnumerable<AnyOf<RestEaseModel, RestEaseEnum>> Map(IDictionary<string, IOpenApiSchema> schemas)
     {
         foreach (var entry in schemas.OrderBy(s => s.Key))
         {
-            var result = _schemaMapper.MapSchema(_interface, entry.Value, string.Empty, entry.Key, entry.Value.Nullable, true, _openApiSpecVersion, _directory);
+            var result = _schemaMapper.MapSchema(_interface, entry.Value, string.Empty, entry.Key, entry.Value.Type == JsonSchemaType.Null, true, _openApiSpecVersion, _directory);
 
             if (result.IsSecond)
             {

@@ -1,4 +1,5 @@
 using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi.Models.Interfaces;
 using RestEaseClientGenerator.Models.Internal;
 using RestEaseClientGenerator.Settings;
 
@@ -18,7 +19,7 @@ internal class ParametersMapper : BaseMapper
         _directory = directory;
     }
 
-    public IReadOnlyList<OpenApiParameter> Map(IList<OpenApiParameter> parameters)
+    public IReadOnlyList<IOpenApiParameter> Map(IList<IOpenApiParameter> parameters)
     {
         var allOpenApiParameters = parameters.Where(p => p.Reference is null).ToList();
 
@@ -34,7 +35,7 @@ internal class ParametersMapper : BaseMapper
         return allOpenApiParameters;
     }
 
-    private OpenApiParameter? TryMapParameterReference(RestEaseInterface @interface, OpenApiReference reference, string? directory)
+    private IOpenApiParameter? TryMapParameterReference(RestEaseInterface @interface, OpenApiReference reference, string? directory)
     {
         switch (reference)
         {

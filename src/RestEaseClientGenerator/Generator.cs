@@ -1,5 +1,6 @@
 using Microsoft.OpenApi;
 using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi.Reader;
 using Microsoft.OpenApi.Readers;
 using RamlToOpenApiConverter;
 using RestEaseClientGenerator.Builders;
@@ -8,6 +9,7 @@ using RestEaseClientGenerator.Models.External;
 using RestEaseClientGenerator.Models.Internal;
 using RestEaseClientGenerator.Settings;
 using RestEaseClientGenerator.Types;
+using RestEaseClientGenerator.Utils;
 
 namespace RestEaseClientGenerator;
 
@@ -15,40 +17,54 @@ public class Generator : IGenerator
 {
     public ICollection<GeneratedFile> FromFile(string path, GeneratorSettings settings, out OpenApiDiagnostic diagnostic)
     {
-        var directory = Path.GetDirectoryName(path);
-
-        OpenApiDocument document;
-        if (Path.GetExtension(path).EndsWith("raml", StringComparison.OrdinalIgnoreCase))
-        {
-            diagnostic = new OpenApiDiagnostic();
-            document = new RamlConverter().ConvertToOpenApiDocument(path);
-        }
-        else
-        {
-            var reader = new OpenApiStreamReader();
-            document = reader.Read(File.OpenRead(path), out diagnostic);
-        }
+        var directory = ReadFile(path, out diagnostic, out var document);
 
         return FromDocument(document, settings, diagnostic.SpecificationVersion, directory);
     }
 
     internal InternalDto FromFileInternal(string path, GeneratorSettings settings, out OpenApiDiagnostic diagnostic, OpenApiSpecVersion openApiSpecVersion = OpenApiSpecVersion.OpenApi2_0)
     {
-        var directory = Path.GetDirectoryName(path);
-
-        OpenApiDocument document;
-        if (Path.GetExtension(path).EndsWith("raml", StringComparison.OrdinalIgnoreCase))
-        {
-            diagnostic = new OpenApiDiagnostic();
-            document = new RamlConverter().ConvertToOpenApiDocument(path);
-        }
-        else
-        {
-            var reader = new OpenApiStreamReader();
-            document = reader.Read(File.OpenRead(path), out diagnostic);
-        }
+        var directory = ReadFile(path, out diagnostic, out var document);
 
         return FromDocumentInternal(document, settings, openApiSpecVersion, directory);
+    }
+
+    private static string ReadFile(string path, out OpenApiDiagnostic diagnostic, out OpenApiDocument document)
+    {
+        var directory = Path.GetDirectoryName(path)!;
+        var extension = Path.GetExtension(path).ToLowerInvariant();
+
+        switch (extension)
+        {
+            case ".raml":
+                diagnostic = new OpenApiDiagnostic();
+                document = new RamlConverter().ConvertToOpenApiDocument(path);
+                break;
+
+            case ".yaml":
+            case ".yml":
+                var openApiYamlReaderSettings = new OpenApiReaderSettings
+                {
+                };
+                var yamlResult = new OpenApiYamlReader().Read(FileHelper.GetFileAsMemoryStream(path), openApiYamlReaderSettings);
+                document = yamlResult.Document;
+                diagnostic = yamlResult.Diagnostic;
+                break;
+
+            case ".json":
+                var openApiJsonReaderSettings = new OpenApiReaderSettings
+                {
+                };
+                var jsonResult = new OpenApiJsonReader().Read(FileHelper.GetFileAsMemoryStream(path), openApiJsonReaderSettings);
+                document = jsonResult.Document;
+                diagnostic = jsonResult.Diagnostic;
+                break;
+
+            default:
+                throw new NotSupportedException($"File extension '{extension}' is not supported.");
+        }
+
+        return directory;
     }
 
     internal InternalDto FromDocumentInternal(OpenApiDocument document, GeneratorSettings settings, OpenApiSpecVersion openApiSpecVersion = OpenApiSpecVersion.OpenApi2_0, string? directory = null)

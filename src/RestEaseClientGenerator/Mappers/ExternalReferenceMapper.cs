@@ -1,4 +1,5 @@
 using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi.Models.Interfaces;
 using RestEaseClientGenerator.Models.Internal;
 using RestEaseClientGenerator.Settings;
 using RestEaseClientGenerator.Types;
@@ -17,7 +18,7 @@ internal class ExternalReferenceMapper : BaseMapper
         _interface = @interface;
     }
 
-    public OpenApiParameter? MapParameter(OpenApiReference reference, string? directory)
+    public IOpenApiParameter? MapParameter(OpenApiReference reference, string? directory)
     {
         var (className, dto) = CallFromFileInternal(reference, directory);
 
@@ -73,7 +74,7 @@ internal class ExternalReferenceMapper : BaseMapper
 
     private (string className, InternalDto dto) CallFromFileInternal(OpenApiReference reference, string? directory)
     {
-        if (directory is null)
+        if (directory == null)
         {
             throw new InvalidOperationException($"This schema contains an external reference ({reference.ExternalResource}) but no value for 'directory' is provided.");
         }
