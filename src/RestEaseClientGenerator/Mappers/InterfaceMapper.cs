@@ -335,9 +335,9 @@ internal class InterfaceMapper : BaseMapper
                 };
 
             case SchemaType.Array:
-                var arrayType = schema.Items.Reference != null
-                    ? MakeValidReferenceId(schema.Items.Reference.Id)
-                    : _schemaMapper.MapSchema(@interface, schema.Items, string.Empty, null, false, true, null, directory).First.Type;
+                var arrayType = schema.Items.TryGetReference(out var reference) ?
+                    MakeValidReferenceId(reference.Id) :
+                    _schemaMapper.MapSchema(@interface, schema.Items, string.Empty, null, false, true, null, directory).First.Type;
 
                 return ArrayTypeMapper.Map(Settings.ArrayType, FixReservedType(arrayType));
 
@@ -399,7 +399,7 @@ internal class InterfaceMapper : BaseMapper
                     {
                         var dummyOpenApiSchema = new OpenApiSchema
                         {
-                            Type = "object",
+                            Type = JsonSchemaType.Object,
                             Properties = new Dictionary<string, IOpenApiSchema>()
                         };
 
@@ -421,14 +421,13 @@ internal class InterfaceMapper : BaseMapper
 
                     return "object";
                 }
-                else if (Settings.ReturnResponseObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified)
+
+                if (Settings.ReturnResponseObjectFromMethodWhenResponseIsDefinedButNoModelIsSpecified)
                 {
                     return "object";
                 }
-                else
-                {
-                    return null;
-                }
+
+                return null;
         }
     }
 
@@ -561,7 +560,7 @@ internal class InterfaceMapper : BaseMapper
 
                 case SchemaType.Object:
                 case SchemaType.Unknown:
-                    bodyParameterType = detected.Value.Schema.Reference != null ? MakeValidReferenceId(detected.Value.Schema.Reference.Id) : null;
+                    bodyParameterType = detected.Value.Schema.TryGetReference(out var reference) ? reference.Id : null;
                     break;
             }
 

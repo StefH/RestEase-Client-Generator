@@ -1,11 +1,26 @@
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.OpenApi.Models;
 using Microsoft.OpenApi.Models.Interfaces;
+using Microsoft.OpenApi.Models.References;
 using RestEaseClientGenerator.Types.Internal;
 
 namespace RestEaseClientGenerator.Extensions;
 
 internal static class OpenApiSchemaExtensions
 {
+    public static bool TryGetReference(this IOpenApiSchema schema, [NotNullWhen(true)] out OpenApiReference? reference)
+    {
+        reference = null;
+
+        if (schema is OpenApiSchemaReference referenceSchema)
+        {
+            reference = referenceSchema.Reference;
+            
+        }
+
+        return reference != null;
+    }
+
     public static bool IsNullable(this IOpenApiSchema? schema)
     {
         return schema?.Type == JsonSchemaType.Null;
